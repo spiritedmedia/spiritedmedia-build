@@ -1,0 +1,52 @@
+{% import "macros/macros.twig" as macros %}
+
+<section class="c-stream  c-stream--isolated  js-stream">
+
+    <div class="c-stream__items js-stream-items">
+
+        {% if pinned.enabled and pinned.content and not is_search %}
+            {% set item = pinned.content %}
+            {% include [
+                'partials/stream/isolated/' ~ pinned.content.get_type ~ '.twig',
+                'partials/stream/isolated/entity.twig'
+            ] %}
+        {% endif %}
+
+        {% for index, item in items %}
+
+            {% if loop.index == 4 %}
+                {{ macros.nativo( 'home-stream-04' ) }}
+            {% endif %}
+
+            {% if loop.index == 8 %}
+                {% include 'partials/adverts/dfp-stream-08.twig' %}
+            {% endif %}
+
+            {% if loop.index == 12 %}
+                {{ macros.nativo( 'home-stream-12' ) }}
+            {% endif %}
+
+            {% if loop.index == 16 %}
+                {% include 'partials/adverts/dfp-stream-16.twig' %}
+            {% endif %}
+
+            {% include [
+                'partials/stream/isolated/' ~ item.get_type ~ '.twig',
+                'partials/stream/isolated/entity.twig'
+            ] %}
+
+        {% endfor %}
+
+    </div>
+
+    {% if is_search and found_results == 0 %}
+        <h2 class="c-stream  is-empty">No results found!</h2>
+    {% endif %}
+
+    {% if pagination %}
+    <footer class="c-stream__footer {{ last_page_classes }}">
+        {{ macros.pagination( pagination, { 'show_text': false } ) }}
+    </footer>
+    {% endif %}
+
+</section>

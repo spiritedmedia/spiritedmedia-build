@@ -1,0 +1,24 @@
+{% extends "layout-flat.twig" %}
+
+
+{% block title_bar %}
+    {{ macros.title_bar( _context, { background_color : item.get_inline_styles } ) }}
+{% endblock %}
+
+
+{% block content__header %}
+    <div class="c-content__hero  c-hero">
+        <div class="c-hero__inner">
+            {% include 'partials/factchecks/statement.twig' %}
+        </div>
+    </div>
+    {{ parent() }}
+{% endblock %}
+
+
+{% block content__body %}
+    <div class="s-post-content">
+        {% include 'partials/factchecks/content.twig' %}
+    </div>
+{% endblock %}
+

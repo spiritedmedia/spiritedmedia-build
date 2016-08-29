@@ -1,0 +1,17 @@
+{% if item.get_statement_full %}
+<h1>Statement</h1>
+{% endif %}
+
+{% include 'partials/factchecks/statement-content.twig' %}
+
+<p><b>Who:</b> {{ item.get_statement_speaker.get_title }}</p>
+
+{% if item.get_statement_setting %}
+<p><b>Where:</b> {{ item.get_statement_setting }}</p>
+{% endif %}
+
+{% if item.get_statement_date_str %}
+<p><b>When:</b> {{ item.get_statement_date_str }}</p>
+{% endif %}
+
+{% include 'partials/factchecks/content.twig' %}

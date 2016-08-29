@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<main role="main" class="{{ main_classes }}">
+
+    <article class="c-content  c-panel  has-title-bar  {{ item.css_classes }}"
+        {{ item.get_the_data_atts }} >
+
+        {{ macros.title_bar( _context, { 'title': 'Newsletter' } ) }}
+
+        <div class="c-panel__inner">
+
+            <header class="c-content__header">
+                {{ ped_slot( 'single_lead' ) }}
+                <h2 class="c-content__headline">{{ item.get_the_title }}</h2>
+            </header>
+
+            <section class="c-content__body  s-post-content">
+                {{ item.get_the_content }}
+            </section>
+
+            <footer class="c-content__footer  [ o-rule--closure  o-rule ]"></footer>
+
+        </div>
+
+    </article>
+
+</main>
+
+{% endblock %}

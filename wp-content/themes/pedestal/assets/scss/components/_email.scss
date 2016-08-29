@@ -1,0 +1,269 @@
+// ==========================================================================
+// Pedestal // Components // EMAIL
+// ==========================================================================
+
+
+// scss-lint:disable all
+
+
+.email-constrain {
+  max-width: $email-max-width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.email-body {
+  background-color: $white;
+
+  #entity-container {
+    margin-left: $base-spacing-unit;
+    margin-right: $base-spacing-unit;
+    color: $grey-darker;
+  }
+
+  .c-title-bar {
+    margin: 0;
+  }
+
+  .entity {
+
+    /*img*/.size-full,
+    /*img*/.size-lead-image {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+}
+
+.entity-meta--email {
+  .inline-list {
+    margin-left: -( $base-spacing-unit / 2 );
+
+    > li {
+      margin-left: ( $base-spacing-unit / 2 );
+    }
+  }
+}
+
+#email-header,
+#email-footer {
+  table tr { background-color: $white; }
+}
+
+
+
+
+
+//
+// Header
+// ==========================================================================
+
+
+#email-header {
+  padding-top: 0;
+
+  .email-constrain > table,
+  table.iconset--email {
+    border: 0;
+  }
+
+  .email-constrain,
+  /*td*/#email-header-social {
+    > table {
+      margin: 0 auto;
+    }
+  }
+
+  table.iconset--email {
+    thead {
+      th.cta {
+        padding-top: $iconset-email-cta-p-t;
+        padding-bottom: $iconset-email-cta-p-b;
+      }
+    }
+
+    td {
+      padding: 0;
+    }
+  }
+}
+
+  #email-header-logo,
+  #email-header-social {
+    text-align: center;
+  }
+
+  #email-header-logo a,
+  #email-header-social /*ul*/.iconset {
+    display: inline-block;
+  }
+
+
+  #email-header-logo {
+    width: $email-header-logo-w;
+
+    a {
+      background-image: none;
+    }
+
+      img {
+        width: $email-header-logo-img-w;
+      }
+  }
+
+  /*td*/#email-header-social {
+    padding: 0;
+
+    > table {
+      width: $email-header-social-w;
+    }
+  }
+
+
+
+
+
+//
+// Stream
+// ==========================================================================
+
+
+.email-constrain {
+  .c-stream--ladder {
+
+    .c-item-title {
+      margin-bottom: ( $base-spacing-unit / 2 );
+    }
+
+      // @TODO
+      //
+      // Only setting this specifically here until we do some better email
+      // typography
+      //
+      // https://github.com/spiritedmedia/pedestal/issues/342
+      .c-item-title__title {
+        font-size: 20px;
+      }
+  }
+}
+
+
+
+
+
+//
+// Footer
+// ==========================================================================
+
+
+#email-footer {
+  color: $grey-lightish;
+  text-align: center;
+  font-size: $email-footer-f-z;
+  margin-left: $email-footer-m-h;
+  margin-right: $email-footer-m-h;
+  padding-bottom: $email-footer-p-b;
+
+  table.iconset--email {
+    margin-bottom: $base-spacing-unit;
+
+    thead {
+      th.cta {
+        padding-top: $base-font-size;
+      }
+    }
+
+    td {
+      padding-bottom: $base-font-size;
+    }
+  }
+}
+
+
+
+
+
+//
+// Newsletter
+// ==========================================================================
+
+
+// This method is easier than introducing an entirely new class just for text-
+// transform override. But there sure is a lot of text-transform overriding
+// going on, enough for a refactoring at some point.
+.email-newsletter {
+  .cta:first-of-type {
+    text-transform: none;
+  }
+
+  .entity {
+    border: none;
+  }
+}
+
+
+
+
+
+//
+// Email Subscription Confirmation Page
+// ==========================================================================
+
+
+.email-subscription {
+  text-align: center;
+
+    /*h3*/.h-email-subscription-confirmed {
+      text-transform: uppercase;
+    }
+
+    /*h2*/.h-email-subscription-confirmed-msg {}
+
+}
+
+
+
+
+
+//
+// Follow Updates
+// ==========================================================================
+
+
+  .email-follow-update__date {
+    font-size: $email-follow-update-date-f-z;
+    margin-top: 0;
+  }
+
+  .email-follow-update__header {}
+
+  .email-follow-update__entities {}
+
+  .email-follow-update__footer {}
+
+
+
+
+
+//
+// Breaking News
+// ==========================================================================
+
+
+.email-breaking-news {
+
+  .c-stream__item__img {
+    width: 100%;
+    text-align: center;
+  }
+
+  .entity-excerpt {
+    font-style: italic;
+  }
+}
+
+
+  .email-breaking-news__header {
+    text-align: center;
+  }

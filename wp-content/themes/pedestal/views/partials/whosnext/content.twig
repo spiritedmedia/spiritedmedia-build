@@ -1,0 +1,44 @@
+{{ item.get_the_content }}
+
+{% if is_feed %}
+    {% set people_element = 'div' %}
+    <figure class="op-ad">
+        {% include 'partials/adverts/dfp-fias-auto-300x250.twig' %}
+    </figure>
+{% else %}
+    {% set people_element = 'header' %}
+{% endif %}
+
+{% if item.get_items %}
+<section class="c-whos-next__items  c-stream--ladder  c-stream">
+    {% for item in item.get_items %}
+
+        <section class="c-whos-next-item  c-stream__item" data-whos-next-people-count="{{ item.people|length }}">
+            {% if item.img %}
+            <div class="c-whos-next-item__img">{{ item.img }}</div>
+            {% endif %}
+
+            <{{ people_element }} class="c-whos-next-item__people">
+                {% for person in item.people %}
+                    {% if is_feed %}
+                        {% include 'partials/whosnext/person-feed.twig' %}
+                    {% else %}
+                        {% include 'partials/whosnext/person.twig' %}
+                    {% endif %}
+                {% endfor %}
+            </{{ people_element }}>
+
+            <div class="c-whos-next-item__description  s-post-content">
+                {{ item.description }}
+            </div>
+        </section>
+
+        {% if is_feed and loop.index is divisible by( 3 ) %}
+        <figure class="op-ad">
+            {% include 'partials/adverts/dfp-fias-auto-300x250.twig' %}
+        </figure>
+        {% endif %}
+
+    {% endfor %}
+</section>
+{% endif %}

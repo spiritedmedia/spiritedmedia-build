@@ -1,0 +1,10 @@
+// ==========================================================================
+// Pedestal // Components // Exporter // CONFIGURATION
+// ==========================================================================
+
+
+$c-exporter-item-p-v          : halve( $base-spacing-unit );
+$c-exporter-item-p-t          : $c-exporter-item-p-v !default;
+$c-exporter-item-p-b          : $c-exporter-item-p-v !default;
+$c-exporter-item-icon-spacing : quarter( $base-spacing-unit ) !default;
+$c-exporter-item-icon-f-z     : $small-font-size !default;

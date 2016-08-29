@@ -1,0 +1,49 @@
+{% spaceless %}
+<figure {{ id }} class="c-figure  c-figure--{{ type }}  wp-caption  {{ align }}  {{ classes }}" {{ fias_presentation }} {{ style }}>
+
+    {% if wrap %}
+    <{{ wrap }} class="column-width">
+    {% endif %}
+
+        {% if url %}
+        <a href="{{ url }}" target="_blank" class="c-figure__link">
+        {% endif %}
+
+            {{ content }}
+
+        {% if url %}
+        </a>
+        {% endif %}
+
+    {% if wrap %}
+    </{{ wrap }}>
+    {% endif %}
+
+    {% if caption or credit %}
+    <figcaption {{ capid }} class="c-figure__text  wp-caption-text">
+
+        {% if caption %}
+        <h1 class="c-figure__text__caption">{{ caption }}</h1>
+        {% endif %}
+
+        {% if credit %}
+        <cite class="c-figure__text__credit">
+
+            {% if credit_link %}
+            <a href="{{ credit_link }}" target="_blank">
+            {% endif %}
+
+            {{ credit }}
+
+            {% if credit_link %}
+            </a>
+            {% endif %}
+
+        </cite>
+        {% endif %}
+
+    </figcaption>
+    {% endif %}
+
+</figure>
+{% endspaceless %}

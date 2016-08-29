@@ -1,0 +1,140 @@
+// ==========================================================================
+// Pedestal // Components // PANELS
+// ==========================================================================
+
+
+/**
+ * Bordered, backgrounded boxes of content.
+ *
+ * Based off Foundation, but their implementation was too aggressive.
+ */
+
+.c-panel {
+  @include radius;
+  @include stdbd;
+  background-color: $c-panel-bg;
+}
+
+  .c-panel__inner {
+    padding: $c-panel-padding;
+    min-height: ( $base-spacing-unit * 5 );
+  }
+
+
+
+
+
+/**
+ * Grouped `.c-panel__inner`, divided by a border
+ */
+.c-panel--grouped {
+  .c-panel__inner {
+
+  }
+}
+
+
+
+
+
+//
+// Pinned Panels
+// ==========================================================================
+
+
+.c-panel__pin {
+  margin-top: $c-panel-pin-offset-v;
+  position: absolute;
+  top: 0;
+  right: $c-panel-pinned-border-size;
+
+  .c-title-bar__pin & {
+    position: static;
+
+    .c-panel__pin__text,
+    .c-panel__pin__icon {
+      color: currentColor;
+    }
+  }
+}
+
+  .c-panel__pin__inner {}
+
+  .c-panel__pin__text,
+  .c-panel__pin__icon {
+    color: $c-panel-pin-color;
+    line-height: $base-spacing-unit;
+    font-size: $c-panel-pin-text-size;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .c-panel__pin__text {
+    text-transform: uppercase;
+  }
+
+  .c-panel__pin__icon {
+    // Gotta get specific when dealing with icon text
+    &.o-icon-text__icon {
+      margin-left: quarter( $o-icon-text-spacing );
+    }
+  }
+
+
+.c-panel--pinned {
+  border-color: $c-panel-pinned-border-color;
+  border-width: $c-panel-pinned-border-size;
+
+  .c-panel__inner {
+    padding: double( $c-panel-padding );
+
+    @media #{$medium-up} {
+      padding: $c-panel-padding;
+    }
+  }
+
+
+  .c-title-bar {
+    margin-top: $c-panel-pinned-title-bar-offset;
+    margin-right: -( $c-panel-pinned-border-size );
+    margin-left: -( $c-panel-pinned-border-size );
+  } // end .c-title-bar
+
+
+  .c-title-bar__inner {
+    padding-right: ( $c-panel-pinned-border-size * 2 );
+    display: block;
+  }
+
+
+  .c-title-bar__text {
+    @media #{$small-only} {
+      display: block;
+    }
+  }
+
+
+  .c-title-bar--customized {
+
+    .c-title-bar__item {
+      @media #{$small-only} {
+        padding-bottom: quarter( $base-spacing-unit );
+      }
+    }
+
+    .c-title-bar__suffix {
+      @media #{$small-only} {
+        display: inline-block;
+        vertical-align: text-top;
+        padding-left: 0;
+        float: none;
+      }
+    }
+
+  } // end .c-title-bar--customized
+
+  &.has-title-bar {
+    margin-top: 0;
+  }
+
+} // end .c-panel--pinned

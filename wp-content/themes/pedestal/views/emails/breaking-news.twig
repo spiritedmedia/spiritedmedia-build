@@ -1,0 +1,36 @@
+{% extends "base-email.twig" %}
+
+{% block content %}
+
+<div class="email-constrain content-wrapper">
+
+    <div id="entity-container" class="email-breaking-news  c-panel  has-title-bar  has-cap">
+
+        <div class="email-breaking-news__header">
+            {{ macros.title_bar( _context, {
+                'location': 'header',
+                'require_fallback' : true,
+                'title': 'BREAKING NEWS'
+            } ) }}
+        </div>
+
+        <div class="email-breaking-news__entity  c-stream  c-stream--ladder">
+            <div class="c-stream__items">
+                {% include [
+                    'partials/stream/ladder/' ~ item.get_type ~ '.twig',
+                    'partials/stream/ladder/entity.twig'
+                ] %}
+            </div>
+        </div>
+
+        <div class="email-breaking-news__footer">
+            <p class="cap">
+                <a class="cap__btn" href="{{ item.get_the_permalink }}">Full Story On {{ site.name }}</a>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+<div id="follow-cluster" class="reveal-modal dark-reveal-modal small" data-reveal>
+    <a class="close-reveal-modal">&#215;</a>
+    <form method="POST" action="{{ site.url }}/api/subscription/follow-cluster/" data-confirm-id="follow-cluster-confirm">
+        <h3>Follow this {{ cluster.get_type_name|lower }}</h3>
+        <div class="row">
+            <label>
+                For updates, please enter your email address and we'll send you important developments as they happen.
+                <input type="email" name="email_address" value="{{ current_user.get_email_address() }}" placeholder="william.penn@example.org" required />
+            </label>
+        </div>
+        <input type="hidden" name="cluster_id" value="{{ cluster.get_id }}" />
+        {% include 'partials/emails/form-honeypot.twig' %}
+        <div class="row">
+            <button class="form-submit button--rounded button--dark button small js-form-submit" type="submit" name="Follow">
+                <span class="form-submit__text">Follow</span>
+                <div class="form-submit__loader">{% include 'partials/loading.twig' %}</div>
+            </button>
+        </div>
+    </form>
+</div>
+
+<div id="follow-cluster-confirm" class="reveal-modal dark-reveal-modal small" data-reveal>
+    <a class="close-reveal-modal">&#215;</a>
+    <form>
+        <h3>Success! You're now subscribed to “{{ cluster.get_the_title }}”</h3>
+        <p>You'll get emails from {{ site.name }} as this {{ cluster.get_type_name|lower }} develops. You can unsubscribe in every email.</p>
+    </form>
+</div>

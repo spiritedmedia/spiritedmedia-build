@@ -1,0 +1,28 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<main role="main" class="{{ main_classes }}">
+
+    <article class="archive  [ c-content--archive  c-content ]  c-panel">
+
+        {{ macros.title_bar( _context, {
+            'location': 'header',
+            'title': archive_title
+        } ) }}
+
+        <div class="c-panel__inner">
+
+            <section class="c-content__entities  archive__nav  c-stream--imglist  c-stream">
+            {% for item in items %}
+                {% include 'partials/stream/imglist/item.twig' %}
+            {% endfor %}
+            </section>
+
+        </div>
+
+    </article>
+
+</main>
+
+{% endblock %}

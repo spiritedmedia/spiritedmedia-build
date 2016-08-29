@@ -1,0 +1,28 @@
+// ==========================================================================
+// Pedestal // Base // Global // UNITS
+// ==========================================================================
+
+
+$global-base-font-size   : 16px;
+$global-base-line-height : 24px;
+
+$base-font-size          : $global-base-font-size !default;
+$base-line-height        : $global-base-line-height !default;
+
+// 16px, in this stylesheet's unit
+//
+// This variable is used to calculate `$body-font-size`
+$base-font-size-reset : 16px !default;
+
+// One unit to rule them all - this should be the basis of all horizontal and
+// vertical spacing adjustments
+//
+// This should be equal to $base-line-height, but will require some refactoring
+// https://github.com/spiritedmedia/pedestal/issues/426
+$base-spacing-unit       : $base-font-size !default;
+$half-spacing-unit       : ( $base-spacing-unit / 2 ) !default;
+
+$border-offset: -1px !default;
+
+
+@import 'functions-unitize';

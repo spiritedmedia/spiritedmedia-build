@@ -1,0 +1,18 @@
+{% import "macros/macros.twig" as macros %}
+{% if styles %}
+<style type="text/css">
+{{ styles }}
+</style>
+{% endif %}
+
+<div class="email-body no-js">
+
+{% include 'partials/emails/header.twig' %}
+
+{% block content %}
+{% endblock %}
+
+{% include 'partials/emails/footer.twig' %}
+
+</div>
+

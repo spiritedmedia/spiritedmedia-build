@@ -1,0 +1,10 @@
+<div class="{{ macros.get_stream_item_classes( 'ladder' ) }} {% if loop.first %} first {% endif %} {{ item.css_classes }}">
+    <a id="{{ item.get_name }}"></a>
+    <div class="entity__inner  c-stream__item__inner">
+        <div class="c-stream__item__body  entity__body">
+            {% include 'partials/item-title.twig' %}
+            {% include 'partials/events/details.twig' %}
+            {% include 'partials/events/export.twig' %}
+        </div>
+    </div>
+</div>

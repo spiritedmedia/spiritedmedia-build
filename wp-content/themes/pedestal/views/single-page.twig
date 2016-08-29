@@ -1,0 +1,29 @@
+{% extends "base.twig" %}
+{% set hide_sidebar = true %}
+{% set content_before = true %}
+
+{% block content_before %}
+
+{% include 'partials/pages/super-quote.twig' %}
+
+{% endblock %}
+
+{% block content %}
+
+<main role="main" class="{{ main_classes }}">
+
+    <article class="c-content  {{ item.css_classes }}" {{ item.get_the_data_atts }} >
+
+        <header class="c-content__header">
+            <h2 class="c-content__title  serify  u-size-h1">{{ item.get_the_title }}</h2>
+        </header>
+
+        <section class="c-content__body  s-post-content">
+            {{ item.get_the_content }}
+        </section>
+
+    </article>
+
+</main>
+
+{% endblock %}

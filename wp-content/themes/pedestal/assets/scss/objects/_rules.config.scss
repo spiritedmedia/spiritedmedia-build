@@ -1,0 +1,24 @@
+// ==========================================================================
+// Pedestal // Objects // Rules // CONFIGURATION
+// ==========================================================================
+
+
+$section-header-p-t       : double( $base-spacing-unit ) !default;
+
+// @TODO ~~rule height should not depend on base spacing unit, but this is for
+//     now an easy way to avoid unit issues~~ nope now that we have `unitize()`
+//     we can do this better :)
+$o-rule-height              : quarter( $base-spacing-unit ) !default;
+$o-rule-p-t                 : quarter( $base-spacing-unit ) !default;
+$o-rule-color               : $grey-lightest !default;
+
+$o-rule--pedal-color        : $accent !default;
+$o-rule--pedal-w            : unitize( 50px ) !default;
+$o-rule--pedal-h            : $o-rule-height !default;
+$o-rule--pedal-position     : -( double( $o-rule-height ) ) !default;
+
+$o-rule--closure-h          : halve( $o-rule-height );
+$o-rule--closure-m-t        : ( $base-spacing-unit * 3 ) !default;
+$o-rule--closure-icon-size  : $icon-diameter--med !default;
+$o-rule--closure-spacing-h  : $o-rule-p-t;
+$o-rule--closure-sum-height : ( $o-rule--closure-h + $o-rule-p-t + $o-rule--closure-icon-size ) !default;

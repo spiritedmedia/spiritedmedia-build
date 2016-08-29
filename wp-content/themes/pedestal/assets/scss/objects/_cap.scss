@@ -1,0 +1,40 @@
+// ==========================================================================
+// Pedestal // Objects // CAPS
+//
+// Attachments on the top or bottom of a panel
+//
+// Generally, a cap element must have a child `.cap__btn`.
+// The cap must be a `<p>` element because some email clients will add in an
+// empty `<p>` below the cap.
+//
+// Example:
+//
+// ```
+// <p class="cap">
+//   <a class="cta cap__btn" href="{{ item.get_the_permalink }}">View Newsletter on {{ site.name }}</a>
+// </p>
+// ```
+// ==========================================================================
+
+
+// @TODO
+// scss-lint:disable SelectorFormat
+
+
+/*p*/.cap {
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+  .cap__btn {
+    @include button-base;
+    @include button-style;
+    @include single-transition( background-color );
+    padding-top: $cap-pd-v;
+    padding-right: 0;
+    padding-bottom: $cap-pd-v;
+    padding-left: 0;
+    margin-bottom: 0;
+    width: 100%;
+  }

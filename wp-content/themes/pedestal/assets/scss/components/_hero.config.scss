@@ -1,0 +1,22 @@
+// ==========================================================================
+// Pedestal // Components // Hero // CONFIGURATION
+// ==========================================================================
+
+
+$c-hero-settings: (
+  bg-c: $truth-serum,
+  pd: double( $base-spacing-unit ),
+) !default;
+
+
+
+
+
+//
+// Functions
+// ==========================================================================
+
+
+@function c-hero-property-get( $properties... ) {
+  @return map-deep-get( $c-hero-settings, $properties... );
+}

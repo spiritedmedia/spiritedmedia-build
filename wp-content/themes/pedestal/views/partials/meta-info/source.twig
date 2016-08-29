@@ -1,0 +1,17 @@
+<ul class="c-meta-info__source">
+    <li class="c-meta-info__source__icon c-meta-info__source__item">
+        {% include [
+            'partials/meta-info/source-icon-'  ~ item.get_type ~ '.twig',
+            'partials/meta-info/source-icon.twig'
+        ] %}
+    </li>
+    <li class="c-meta-info__source__name c-meta-info__source__item">
+        {% include [
+            'partials/meta-info/source-name-'  ~ item.get_type ~ '.twig',
+            'partials/meta-info/source-name.twig'
+        ] %}
+    </li>
+</ul>
+
+
+

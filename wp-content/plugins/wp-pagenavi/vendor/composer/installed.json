@@ -1,0 +1,45 @@
+[
+    {
+        "name": "scribu/scb-framework",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/scribu/wp-scb-framework.git",
+            "reference": "95b23ac342fce16bf5eb8d939ac5a361b94b104b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/scribu/wp-scb-framework/zipball/95b23ac342fce16bf5eb8d939ac5a361b94b104b",
+            "reference": "95b23ac342fce16bf5eb8d939ac5a361b94b104b",
+            "shasum": ""
+        },
+        "time": "2015-10-25 20:19:41",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "."
+            ],
+            "files": [
+                "load-composer.php",
+                "Util.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0+"
+        ],
+        "authors": [
+            {
+                "name": "Cristi Burcă",
+                "homepage": "http://scribu.net/"
+            }
+        ],
+        "description": "A set of useful classes for faster plugin development",
+        "homepage": "https://github.com/scribu/wp-scb-framework",
+        "keywords": [
+            "wordpress"
+        ]
+    }
+]

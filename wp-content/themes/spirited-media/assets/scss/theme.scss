@@ -1,0 +1,31 @@
+@charset 'UTF-8';
+/*!*
+ * Spirited Media
+ *
+ * Version: 3.4.17
+ *
+ * Copyright ( c ) 2016 Spirited Media
+ */
+
+@import 'base/variables';
+@import 'base/functions';
+@import 'base/normalize';
+
+/* General */
+@import 'components/general';
+@import 'components/visibility';
+@import 'components/header';
+@import 'components/footer';
+@import 'components/buttons';
+
+/* Homepage - home.php */
+@import 'components/home';
+@import 'components/home-hero';
+@import 'components/home-about';
+@import 'components/home-description';
+@import 'components/home-cities';
+@import 'components/home-strengths';
+@import 'components/home-advertising-partners';
+@import 'components/home-our-board';
+@import 'components/home-press-coverage';
+@import 'components/home-contact';

@@ -1,0 +1,105 @@
+@charset 'UTF-8';
+/*!*
+ * Pedestal // Admin
+ *
+ * Version: 3.8.3
+ *
+ * Copyright ( c ) 2016 Spirited Media
+ */
+
+
+// scss-lint:disable all
+
+
+@import 'spectrum/spectrum';
+@import 'SassyLists/dist/SassyLists';
+
+
+.fm-headline-wrapper {
+  input {
+    padding: 3px 8px;
+    width: 100%;
+    font-size: 1.7em;
+  }
+}
+
+.fm-enabled-wrapper .fm-option {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+// Improve distinction between repeating FM fields
+.fm-slot_item_placement_rules {
+   margin-bottom: 3em;
+   padding-bottom: 3em;
+   border-bottom: 0.1em solid #ccc;
+}
+
+.wp-list-table {
+  th.column-pedestal_id,
+  td.column-pedestal_id {
+    width: 40px;
+  }
+}
+
+body.taxonomy-pedestal_subscriptions.edit-tags-php #col-left,
+body.taxonomy-pedestal_subscriptions.edit-tags-php .wrap .search-form,
+body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right .tablenav {
+    display: none
+}
+
+body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right {
+    width: 100%
+}
+
+// Hide the user description field on profile page
+.user-description-wrap {
+  display: none;
+}
+
+// Slug field width in post editor
+#slugdiv #post_name {
+  width: 100%;
+  font-size: 90%;
+}
+
+
+
+
+
+//
+// Metaboxes
+// ==========================================================================
+
+
+/**
+ * Posts to Posts
+ */
+
+.p2p-box {
+  .p2p-tab-create-post,
+  .p2p-tab-search {
+    background-color: white;
+  }
+}
+
+
+
+
+
+//
+// Taxonomies
+// ==========================================================================
+
+
+$advanced-cluster-types: ( 'org', 'place', 'locality' );
+$advanced-cluster-types-selectors: ();
+@each $type in $advanced_cluster_types {
+  $advanced-cluster-types-selectors: append( $advanced-cluster-types-selectors, '#pedestal_#{$type}_type-adder' );
+}
+$advanced-cluster-types-selectors: sl-to-string( $advanced-cluster-types-selectors, ', ' );
+
+#{$advanced-cluster-types-selectors} {
+  display: none;
+}
+

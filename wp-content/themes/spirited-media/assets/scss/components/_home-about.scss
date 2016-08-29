@@ -1,0 +1,37 @@
+.home-about {
+  padding-bottom: em(180px);
+}
+
+.home-about--heading,
+.about-statement--heading {
+  font-size: em(40px);
+  font-weight: 700;
+}
+
+.home-about p,
+.about-statement--blurb {
+  font-size: em(20px);
+  font-weight: 400;
+}
+
+.home-about--columns {
+  display: table;
+}
+
+.home-about--column {
+  display: table-cell;
+  padding-right: em(60px);
+  width: 33.3333%;
+}
+
+@media( max-width: em(640px) ) {
+  .home-about {
+    padding-bottom: em(30px);
+  }
+
+  .home-about--column {
+    padding-right: 0;
+    display: block;
+    width: auto;
+  }
+}

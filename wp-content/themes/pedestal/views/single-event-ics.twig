@@ -1,0 +1,12 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//BillyPenn.com v1.0//EN
+BEGIN:VEVENT
+STATUS:CONFIRMED
+DTSTART:{{ item.get_dtstart() }}
+DTEND:{{ item.get_dtend() }}
+SUMMARY:{{ item.get_summary(true) }}
+DESCRIPTION:{{ item.get_description(true) }}
+LOCATION:{{ item.get_location(true) }}
+END:VEVENT
+END:VCALENDAR

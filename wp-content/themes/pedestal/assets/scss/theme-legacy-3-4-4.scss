@@ -1,0 +1,55 @@
+@charset 'UTF-8';
+/*!*
+ * Pedestal // Legacy: <= v3.4.4
+ *
+ * Version: 3.8.3
+ *
+ * Copyright ( c ) 2016 Spirited Media
+ */
+
+
+// scss-lint:disable SelectorFormat IdSelector
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Legacy: <= v3.4.4 * // SETUP
+// ==========================================================================
+
+
+@import 'base/setup-core';
+
+
+//
+// Configuration
+// ==========================================================================
+
+
+@import 'SassyLists/dist/SassyLists';
+
+// scss-lint:disable ImportPath
+@import 'base/theme/settings';
+@import 'base/global/__config';
+// scss-lint:enable ImportPath
+
+
+/**
+ * High-level styles and mixins
+ */
+
+@import 'base/global/mixins';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Legacy: <= v3.4.4 * // STYLES
+// ==========================================================================
+
+
+.s-post-content h3 {
+  font-size: $h3-font-size;
+}

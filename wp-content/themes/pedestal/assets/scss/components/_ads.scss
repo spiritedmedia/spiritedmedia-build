@@ -1,0 +1,156 @@
+// ==========================================================================
+// Pedestal // Components // ADVERTISING
+// ==========================================================================
+
+
+// scss-lint:disable ImportantRule SelectorFormat SelectorDepth QualifyingElement
+
+
+//
+// Nativo
+// ==========================================================================
+
+
+.c-content--promotional-content {
+
+  .ntvShare,
+  .ntv_share {
+    margin: $nativo-vertical-m 0 !important;
+  }
+
+  .ntv-bullet {
+    padding-left: 0;
+
+    li {
+      list-style-type: none;
+    }
+
+  }
+
+  [class*=ntvShare] {
+
+    img {
+      display: none !important;
+    }
+
+    td {
+      width: 38px !important;
+    }
+
+    a[class*=ntvShare] {
+      display: block;
+      width: 32px;
+      height: 32px;
+      background-size: 32px;
+    }
+
+    a.ntvShareFacebook {
+      background-image: url( $pedestal-social-icons-abspath + '/png/circle_64x64_facebook.png' );
+    }
+
+    a.ntvShareTwitter {
+      background-image: url( $pedestal-social-icons-abspath + '/png/circle_64x64_twitter.png' );
+    }
+
+    a.ntvShareLinkedIn {
+      background-image: url( $pedestal-social-icons-abspath + '/png/circle_64x64_linkedin.png' );
+    }
+
+    a.ntvShareGoogle {
+      background-image: url( $pedestal-social-icons-abspath + '/png/circle_64x64_gplus.png' );
+    }
+
+    a.ntvSharePinterest {
+      background-image: url( $pedestal-social-icons-abspath + '/png/circle_64x64_pinterest.png' );
+    }
+
+    a.ntvShareStumbleUpon {
+      background-image: url( $pedestal-social-icons-abspath + '/png/circle_64x64_stumbleupon.png' );
+    }
+  } // end [class*=ntvShare]
+} // end .c-content--promotional-content
+
+
+.entity--promo {
+
+  .nativo-home-stream-04 & {}
+
+  .nativo-home-stream-12 & {}
+
+  .nativo-cluster-stream-04 & {}
+
+  .nativo-cluster-stream-12 & {}
+
+  .nativo-content-below & {}
+
+  .rail & {}
+
+
+  .nativo-content-below &,
+  .rail & {
+    &,
+    .c-meta-info--bar {
+      background-color: rgba( $c-panel-bg, 0.55 );
+    }
+  }
+
+
+  &.has-title-bar {
+    @extend %has-title-bar;
+  }
+
+}
+
+
+
+
+
+//
+// Doubleclick For Publishers
+// ==========================================================================
+
+
+.dfp {
+  [id^="div-gpt-ad"] {
+    margin: 0 auto;
+  }
+
+  iframe {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.dfp-rail-right {}
+
+.dfp-stream-08-wrapper {}
+
+.dfp-stream-08 {}
+
+  .dfp-stream-08--larger {}
+
+.dfp-stream-08--smaller,
+.dfp-stream-08-premium--smaller,
+.dfp-stream-16--smaller,
+.dfp-stream-16-premium--smaller {
+  margin-left: $dfp-mobile-ad-offset;
+  margin-right: $dfp-mobile-ad-offset;
+
+  .c-panel & {
+    margin-left: $dfp-mobile-ad-offset--panelled;
+    margin-right: $dfp-mobile-ad-offset--panelled;
+  }
+}
+
+
+.rail {
+  .widget_pedestal_dfp_rail_right {
+    // Override default widget padding for BP-RailRight
+    padding: 0;
+
+    // Ad divs will not display if ad unit is empty, so hide it from the
+    // rail. These will be enabled after the ad has successfully loaded.
+    border-bottom: 0;
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,9 @@
+<cite class="c-statement__speaker__name">{{ item.get_statement_speaker.get_title }}</cite>
+
+{% if item.get_statement_setting %}
+<div class="c-statement__speaker__setting">{{ item.get_statement_setting }}</div>
+{% endif %}
+
+{% if item.get_statement_date_str %}
+<div class="c-statement__speaker__date">{{ item.get_statement_date_str }}</div>
+{% endif %}

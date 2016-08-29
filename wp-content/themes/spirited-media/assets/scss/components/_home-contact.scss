@@ -1,0 +1,81 @@
+.home-contact {
+  background-color: #333;
+  padding-bottom: em(200px);
+  padding-top: em(75px);
+  overflow: auto;
+  height: 100%;
+}
+
+.home-contact--heading {
+  color: #ffffff;
+}
+
+.home-contact--form {
+  float:left;
+  overflow: auto;
+  width: 70%;
+}
+
+.home-contact--field-label {
+  display: block;
+  color: #b3b3b3;
+  cursor: pointer;
+}
+
+.home-contact--field {
+  background-color: #454545;
+  border: 0 none;
+  color: #b3b3b3;
+  display: block;
+  width: 100%;
+  margin-bottom: em(24px);
+  padding: em(12px) em(6px) em(12px) em(12px);
+}
+
+.home-contact--button {
+  text-transform: uppercase;
+  background-color: $sm-link-color;
+  text-align: center;
+  color: #D8FCF5;
+  border: 0 none;
+  padding: em(20px) 0;
+  min-width: em(135px);
+  float: right;
+}
+
+.home-contact--contact-details {
+  width: 27%;
+  float: left;
+  color: #ffffff;
+  font-size: em(20px);
+  margin-left: 3%;
+}
+
+.home-contact--contact-details .icon {
+  fill: $sm-link-color;
+  position: relative;
+  top: 0.2em;
+  margin-right: em(5px);
+}
+
+.home-contact--form-sent {
+  text-align: center;
+  color: #ffffff;
+}
+
+@media ( max-width: em(1000px) ) {
+  .home-contact {
+    padding-bottom: em(40px);
+  }
+
+  .home-contact--form,
+  .home-contact--contact-details {
+    float: none;
+    margin-left: 0;
+    width: auto;
+  }
+
+  .home-contact--contact-details {
+    padding-top: 40px;
+  }
+}

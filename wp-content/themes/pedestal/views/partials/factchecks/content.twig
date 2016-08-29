@@ -1,0 +1,26 @@
+{% if item.get_statement_full %}
+<section class="c-factcheck__full-statement">
+    <h1>Full Statement</h1>
+    <blockquote>{{ item.get_the_statement_full }}</blockquote>
+</section>
+{% endif %}
+
+<section class="c-factcheck__analysis">
+    {% if item.get_statement_full %}
+    <h1>Our Analysis</h1>
+    {% endif %}
+    {{ item.get_the_analysis }}
+</section>
+
+{% if item.get_ruling %}
+<section class="c-factcheck__ruling">
+    {% if is_fias_feed and item.get_rating %}
+        {{ item.get_meter_html_fias( {
+            'classes': '',
+        } ) }}
+    {% else %}
+        <h1>Our Ruling</h1>
+    {% endif %}
+    {{ item.get_the_ruling }}
+</section>
+{% endif %}

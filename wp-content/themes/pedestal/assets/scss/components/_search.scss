@@ -1,0 +1,134 @@
+// ==========================================================================
+// Pedestal // Components // SEARCH
+// ==========================================================================
+
+
+.c-search {
+  margin-top: -( $base-spacing-unit );
+
+  .c-spinner {
+    margin-top: $half-spacing-unit;
+    margin-bottom: $half-spacing-unit;
+    position: absolute;
+  }
+}
+
+
+  .c-search__form {
+    position: relative;
+
+    .is-active-search & {
+      margin-bottom: c-search-property-get( form-m-b );
+    }
+
+    .is-loading {
+      opacity: 0.25;
+    }
+  }
+
+
+    /*div*/.c-search__input {
+
+    }
+
+
+      // scss-lint:disable SelectorFormat QualifyingElement
+      input.c-search__field {
+        @include stdbd(
+          $side: 'bottom',
+          $color: c-search-property-get( input-bd-color ),
+          $neut: true
+        );
+
+        box-shadow: none;
+        height: auto;
+        font-size: c-search-property-get( input-f-z );
+        padding: c-search-property-get( input-pd );
+        padding-left: c-search-property-get( input-icon-w );
+        color: c-search-property-get( input-color );
+
+        &,
+        &:focus {
+          background: transparent;
+        }
+
+      }
+      // scss-lint:enable SelectorFormat QualifyingElement
+
+
+      .c-search__icon {
+        padding: c-search-property-get( input-pd );
+        position: absolute;
+        top: c-search-property-get( input-pd );
+        color: c-search-property-get( input-icon-color );
+        background-color: transparent;
+
+        &:hover,
+        &:focus {
+          background-color: transparent;
+          color: $black;
+        }
+
+        &--search {}
+
+        &--reset {
+          display: none;
+          right: 0;
+        }
+      }
+
+
+    .c-search__tools {
+      display: none;
+      position: relative;
+    }
+
+    .is-active-search .c-search__tools {
+      display: block;
+    }
+
+      .c-search__tools__item {
+        display: inline-block;
+      }
+
+
+      .c-search__total-results {
+        padding: c-search-property-get( filter-link-pd );
+      }
+
+        .c-search__total-results__count {
+          font-weight: 600;
+        }
+
+
+      .c-search__filters {
+        position: absolute;
+        right: 0;
+      }
+
+          .c-search__filters__label {
+            margin-left: c-search-property-get( filter-link-spacing );
+            margin-bottom: 0;
+            padding: c-search-property-get( filter-link-pd );
+            display: inline-block;
+            position: relative;
+
+            &.is-active {
+              font-weight: 600;
+            }
+          }
+          // scss-lint:disable SelectorFormat
+          .c-search__filters__radio[type="radio"] {
+            margin: 0;
+          }
+          // scss-lint:enable SelectorFormat
+
+          // scss-lint:disable SelectorFormat
+          .js .c-search__filters__radio {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+          }
+          // scss-lint:enable SelectorFormat

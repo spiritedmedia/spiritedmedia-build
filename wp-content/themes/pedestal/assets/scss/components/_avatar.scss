@@ -1,0 +1,54 @@
+// ==========================================================================
+// Pedestal // Components // AVATAR
+// ==========================================================================
+
+
+.c-avatar {
+  position: relative;
+  margin: 0 auto;
+}
+
+
+  .c-avatar__img {
+    border-radius: $global-rounded;
+    overflow: hidden;
+
+    @if $email {
+      @include box-sizing( border-box );
+    } @else {
+      border: c-avatar-property-get( 'bd-w-sm' ) solid c-avatar-property-get( 'bd-c', 'default' );
+    }
+  }
+
+
+  @if global-variable-exists( site-theme-name ) {
+
+    .c-avatar__img--fallback {
+      $path: $site-theme-logo-abspath + '/logo_default_avatar';
+      $fallback: true;
+
+      @if $email {
+        $path: $site-theme-logo-abspath + '/logo_default_avatar-32';
+        $fallback: false;
+      }
+
+      @include iconize(
+        $path: $path,
+        $size: c-avatar-property-get( size-sm ),
+        $fallback: $fallback
+      );
+    }
+  }
+
+
+
+
+
+.c-avatar--staff {}
+
+
+.c-avatar--contributor {
+  .c-avatar__img {
+    border-color: c-avatar-property-get( 'bd-c', 'contributor' );
+  }
+}

@@ -1,0 +1,21 @@
+// ==========================================================================
+// Pedestal // Objects // Media Object // CONFIGURATION
+// ==========================================================================
+
+
+$o-media-gutter             : $base-spacing-unit !default;
+$o-media-gutter--tiny       : ( $o-media-gutter / 4 ) !default;
+$o-media-gutter--small      : ( $o-media-gutter / 2 ) !default;
+$o-media-gutter--large      : ( $o-media-gutter * 2 ) !default;
+$o-media-gutter--huge       : ( $o-media-gutter * 4 ) !default;
+
+$enable-o-media--tiny       : false !default;
+$enable-o-media--small      : false !default;
+$enable-o-media--large      : true !default;
+$enable-o-media--huge       : false !default;
+$enable-o-media--rev        : true !default;
+$enable-o-media--flush      : false !default;
+$enable-o-media--responsive : true !default;
+
+// Minimum width for media objects to float
+$o-media-collapse-at        : lower-bound( $medium-range );

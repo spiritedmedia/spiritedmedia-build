@@ -1,0 +1,20 @@
+// ==========================================================================
+// Pedestal // Base // Email // UNITS
+// ==========================================================================
+
+
+@import '../global/units';
+
+
+$base-font-size: $global-base-font-size;
+$base-line-height: $global-base-line-height;
+
+$base-font-size-reset: 16px;
+
+$base-spacing-unit: $base-font-size;
+$half-spacing-unit: $base-spacing-unit / 2;
+
+$border-offset: -1px;
+
+
+@import '../global/functions-unitize';

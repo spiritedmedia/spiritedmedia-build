@@ -1,0 +1,7 @@
+<article class="[ c-everyblock-item--{{ item.schema }}  c-everyblock-item ]  c-stream__item  {{ hood.css_classes }} js-stream-item" data-entity-type="everyblock">
+    <div class="c-stream__item__inner">
+        <a id="{{ item.get_name }}"></a>
+        {% include 'partials/hood/everyblock/item-title.twig' %}
+        {% include 'partials/hood/everyblock/schemata/' ~ item.schema ~ '.twig' %}
+    </div>
+</article>

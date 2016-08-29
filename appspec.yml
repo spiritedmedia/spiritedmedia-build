@@ -1,0 +1,8 @@
+version: 0.0
+os: linux
+files:
+hooks:
+  BeforeInstall:
+    - location: bin/codedeploy.sh
+      timeout: 60
+      runas: root

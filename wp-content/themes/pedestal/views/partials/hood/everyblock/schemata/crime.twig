@@ -1,0 +1,27 @@
+<div class="c-details-table">
+    <table class="[ everyblock-details--{{ item.schema }}  everyblock-details ]  c-details-table__inner">
+
+        {% if item.section_name %}
+        <tr>
+            <th scope="row">{{ everyblock.labels.section }}</th>
+            <td>{{ item.section_name }}</td>
+        </tr>
+        {% endif %}
+
+        <tr>
+            <th scope="row">{{ everyblock.labels.location }}</th>
+            <td>{{ item.location_name }}</td>
+        </tr>
+
+        <tr>
+            <th scope="row">{{ everyblock.labels.dispatch_date }}</th>
+            <td>{{ item.item_date|date() }}</td>
+        </tr>
+
+        <tr>
+            <th scope="row">{{ everyblock.labels.dispatch_time }}</th>
+            <td>{{ item.attributes.dispatch_time|date( 'h:i a' ) }}</td>
+        </tr>
+
+    </table>
+</div>

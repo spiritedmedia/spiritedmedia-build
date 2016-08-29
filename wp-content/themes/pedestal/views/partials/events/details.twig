@@ -1,0 +1,38 @@
+<div class="event-details  c-details-table">
+
+    <table class="c-details-table__inner">
+
+        {% if item.get_what %}
+        <tr>
+            <th scope="row">What</th>
+            <td>{{ item.get_what }}</td>
+        </tr>
+        {% endif %}
+
+        <tr>
+            <th scope="row">Where</th>
+            <td>
+                {% if item.get_venue_name() %}{{ item.get_venue_name() }}{% endif %}<!--
+                -->{% if item.get_address() %} at {{ item.get_address() }}{% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">When</th>
+            <td>{{ item.get_when }}</td>
+        </tr>
+
+        <tr>
+            {% if item.get_cost() %}
+            <th scope="row">How much</th>
+            <td>{{ item.get_cost() }}</td>
+            {% endif %}
+        </tr>
+
+    </table>
+
+    {% if item.get_details_link %}
+    {{ item.get_details_link }}
+    {% endif %}
+
+</div>

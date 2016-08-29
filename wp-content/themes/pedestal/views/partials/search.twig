@@ -1,0 +1,18 @@
+<div class="c-search">
+    <form class="c-search__form  js-search-form" action="{{ site.url }}" role="search">
+
+        <div class="c-search__input js-search-input">
+            <button type="submit" class="c-search__icon--search  c-search__icon"><i class="fa fa-lg fa-search" aria-hidden="true"></i> <span class="show-for-sr">submit</span></button>
+
+            <input type="text" class="c-search__field  js-search-field" name="s" placeholder="Enter search term" value="{{ search_query }}" />
+
+            <a class="c-search__icon--reset  c-search__icon  fa fa-lg fa-times  js-search-icon-reset" href="#">
+                <span class="show-for-sr">cancel search</span>
+            </a>
+        </div>
+
+        {% include 'partials/loading.twig' %}
+        {% include 'partials/search-tools.twig' %}
+
+    </form>
+</div>

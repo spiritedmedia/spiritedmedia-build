@@ -1,0 +1,23 @@
+// ==========================================================================
+// Pedestal // Base // Theme // SETTINGS
+// ==========================================================================
+
+
+@import 'units';
+@import '../../base/global/settings';
+
+$email: false;
+
+// Handle block grids ourselves to reduce bloat
+$include-html-block-grid-classes: false;
+
+
+
+
+
+//
+// Forms
+// ==========================================================================
+
+
+$input-font-color : rgba( 0, 0, 0, 0.75 ); // !default
