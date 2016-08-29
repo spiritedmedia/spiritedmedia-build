@@ -39,7 +39,7 @@
 # !.jshintrc
 # !.scss-lint.yml
 # !.editorconfig
-# !pedestal-cs.xml
+# !phpcs.ruleset.xml
 
 # Unit Tests
 # !/tests/
@@ -53,7 +53,7 @@
 !README.md
 !CONTRIBUTING.md
 !DEPLOYMENTS.md
-!/PEDESTAL_VERSION
+!/VERSION
 
 !loaderio-97d0d5de5929cb5b907888c30422a41a.txt
 

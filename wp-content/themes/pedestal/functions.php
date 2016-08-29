@@ -62,7 +62,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         private function define_constants() {
 
             // The following constants can not be modified so we set them first.
-            $version = file_get_contents( ABSPATH . '/PEDESTAL_VERSION' );
+            $version = file_get_contents( ABSPATH . '/VERSION' );
             $version = str_replace( 'Version: ', '', $version );
             define( 'PEDESTAL_VERSION', $version );
 
