@@ -1,6 +1,6 @@
-Build [#1090](https://circleci.com/gh/spiritedmedia/pedestal/1090) by montchr at 2016-08-29 06:32 PM UTC
+Build [#1116](https://circleci.com/gh/spiritedmedia/spiritedmedia/1116) by kingkool68 at 2016-08-30 05:51 AM UTC
 
-[https://github.com/spiritedmedia/pedestal/compare/v4.0.0](https://github.com/spiritedmedia/pedestal/compare/v4.0.0)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v4.0.2](https://github.com/spiritedmedia/spiritedmedia/compare/v4.0.2)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/pedestal/compare/v3.8.4...v4.0.0)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/...)
 

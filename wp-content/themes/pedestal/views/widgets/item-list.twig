@@ -1,5 +1,0 @@
-<ul>
-{% for item in items %}
-    <li {% if item.get_id == current_item.get_id %} class="active"{% endif %}><a href="{{ item.get_the_permalink }}">{{ item.get_the_title }}</a></li>
-{% endfor %}
-</ul>
