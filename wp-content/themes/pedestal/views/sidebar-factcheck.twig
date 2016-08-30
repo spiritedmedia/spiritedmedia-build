@@ -1,0 +1,29 @@
+<li class="c-factcheck__logo  l-flat__logo  widget  has-border--bottom  widget_pedestal_layout_flat_logo">
+    <a href="http://www.politifact.com/pennsylvania/" class="c-factcheck__logo__img  l-flat__logo__img"></a>
+</li>
+
+<li class="l-flat__explainer  widget has-border--bottom  widget_pedestal_explainer">
+
+    <p>PolitiFact Pennsylvania is a partnership of {{ site.name }} and
+    PolitiFact.com, a Pulitzer Prize-winning Web site of the Tampa Bay Times, to
+    help you find the truth in politics.</p>
+
+    <p>Every day, reporters and researchers examine statements by Pennsylvania
+    elected officials and candidates and anyone else who speaks up on matters of
+    public importance. We research their statements and then rate the accuracy on
+    our <a href="http://www.politifact.com/truth-o-meter/article/2011/feb/21/principles-truth-o-meter/" target="_blank">Truth-O-Meter.</a></p>
+
+</li>
+
+{% if item.get_sources %}
+<li class="c-factcheck__sources  widget has-border--bottom widget_pedestal_factcheck_sources">
+    <h3 class="widget-title">Sources</h3>
+    {{ item.get_the_sources }}
+</li>
+{% endif %}
+
+{% if item.get_editor %}
+<li class="c-factcheck__editor  widget has-border--bottom widget_pedestal_factcheck_editor">
+    <p><strong>Edited by:</strong> {{ item.get_editor }}</p>
+</li>
+{% endif %}

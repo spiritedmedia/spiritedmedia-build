@@ -1,0 +1,22 @@
+<h1>{{ person.get_the_title }}</h1>
+
+<p>
+    {% if person.get_known_for %}
+    <strong>Known For:</strong>
+    {{ person.get_known_for }}
+    <br />
+    {% endif %}
+
+    {% if person.get_age %}
+    <strong>Age:</strong>
+    {{ person.get_age }} years old
+    <br />
+    {% endif %}
+
+    {% if person.get_twitter_handle %}
+    <strong>Twitter:</strong>
+    <a href="{{ person.get_twitter_profile_url }}" title="@{{ person.get_twitter_handle }} on twitter">
+        @{{ person.get_twitter_handle }}
+    </a>
+    {% endif %}
+</p>

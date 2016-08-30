@@ -1,0 +1,26 @@
+<div class="c-exporter">
+    <div class="inner">
+        {% spaceless %}
+
+        <div class="c-exporter__item">
+            <a href="{{ item.get_google_calendar_link() }}" class="[ o-icon-text  o-icon-text--responsive ]  c-exporter__item__link">
+                <i class="o-icon-text__icon  c-exporter__item__icon  [ fa  fa-calendar ]"></i>
+                <span class="o-icon-text__text  c-exporter__item__text">Google</span>
+            </a>
+        </div>
+        <div class="c-exporter__item">
+            <a href="{{ item.get_ics_link() }}" class="[ o-icon-text  o-icon-text--responsive ]  c-exporter__item__link">
+                <i class="o-icon-text__icon  c-exporter__item__icon  [ fa  fa-calendar ]"></i>
+                <span class="o-icon-text__text  c-exporter__item__text">iCal</span>
+            </a>
+        </div>
+        <div class="c-exporter__item">
+            <a href="{{ item.get_ics_link() }}" class="[ o-icon-text  o-icon-text--responsive ]  c-exporter__item__link">
+                <i class="o-icon-text__icon  c-exporter__item__icon  [ fa fa-calendar ]"></i>
+                <span class="o-icon-text__text  c-exporter__item__text">Outlook</span>
+            </a>
+        </div>
+
+        {% endspaceless %}
+    </div>
+</div>

@@ -1,0 +1,54 @@
+// ==========================================================================
+// Pedestal // Components // ITEM TITLE
+// ==========================================================================
+
+
+// scss-lint:disable SelectorFormat
+
+
+.c-entity-title,
+.c-item-title {
+  @extend %o-media;
+  @extend %o-media--responsive;
+  margin-top: 0;
+  margin-bottom: $half-spacing-unit;
+
+  // Override `%o-media--responsive`
+  .c-item-title__label {
+    margin-bottom: 0;
+  }
+}
+
+  .c-entity-title__title,
+  /*h3*/.c-item-title__title {
+    @extend %o-media__body;
+    margin: 0;
+    font-weight: 500;
+
+    // Allow title to wrap under floated label
+    // Overrides `.o-media__body`
+    overflow: visible;
+
+    // @TODO Nasty hack to support Nativo which doesn't use the proper link
+    //     class
+    .entity--promo & {
+      a {
+        color: $grey-darker;
+      }
+    }
+  }
+
+  .c-entity-title__link,
+  /*a*/.c-item-title__link {
+    color: $grey-darker;
+  }
+
+  .c-entity-title__label,
+  .c-item-title__label {
+    @extend %o-media__img;
+    margin-right: $half-spacing-unit;
+
+    a {
+      color: $white;
+    }
+  }

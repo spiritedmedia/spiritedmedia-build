@@ -1,0 +1,32 @@
+{% spaceless %}
+
+<ul class="c-meta-info--{{ item.get_type }} c-meta-info--entity c-meta-info--email c-meta-info">
+    <li class="c-meta-info__item">
+        <ul class="c-meta-info__source">
+            <li class="c-meta-info__source__icon c-meta-info__source__item">
+                {% include [
+                    'partials/meta-info/source-icon-'  ~ item.get_type ~ '.twig',
+                    'partials/meta-info/source-icon.twig'
+                ] %}
+            </li>
+        </ul>
+    </li>
+    <li class="c-meta-info__item c-meta-info__item--stacked">
+
+        <div class="c-meta-info__source__name hidden-for-medium-up">
+        {% if 'article' == item.get_type %}
+            {{ item.get_the_authors }}
+        {% else %}
+            {% include 'partials/meta-info/source-name-'  ~ item.get_type ~ '.twig' ignore missing %}
+        {% endif %}
+        </div>
+
+        {% include [
+            'partials/meta-info/timestamp-' ~ item.get_type ~ '.twig',
+            'partials/meta-info/timestamp.twig'
+        ] %}
+
+    </li>
+</ul>
+
+{% endspaceless %}

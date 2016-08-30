@@ -1,0 +1,65 @@
+// Utilities
+// =========
+
+/// Add map values together
+/// @access private
+/// @group x_private
+/// @param {Map} $base - Initial map
+/// @param {Map} $add - Extra map
+/// @return {Map}
+@function _true-map-increment(
+  $base,
+  $add
+) {
+  @each $key in map-keys($add) {
+    $value: map-get($add, $key);
+
+    @if $value {
+      $base-value: map-get($base, $key);
+      $new-value: if($base-value, $base-value + $value, $value);
+      $base: map-merge($base, ($key: $new-value));
+    }
+  }
+
+  @return $base;
+}
+
+/// Split a string
+/// @access private
+/// @group x_private
+/// @param {String} $string - String to split
+/// @param {String} $substring - Delimiter
+/// @return {List} - `$string` fragments
+@function _true-str-split(
+  $string,
+  $substring
+) {
+  $strings: ();
+  $found-at: str-index($string, $substring);
+  @while $found-at {
+    $strings: append($strings, if($found-at > 1, str-slice($string, 1, $found-at - 1), ""));
+    $string: str-slice($string, $found-at + str-length($substring));
+    $found-at: str-index($string, $substring);
+  }
+  $strings: append($strings, $string);
+  @return $strings;
+}
+
+
+/// Check for strict equality
+/// @access private
+/// @group x_private
+/// @param {*} $one - First value
+/// @param {*} $two - Second value
+/// @return {Bool}
+@function _true-is-equal($one, $two) {
+  @if type-of($one) == number and type-of($two) == number {
+    @if unit($one) == unit($two) {
+      @return $one == $two;
+    } @else {
+      @return false;
+    }
+  } @else {
+    @return $one == $two;
+  }
+}

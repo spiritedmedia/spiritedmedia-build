@@ -1,0 +1,21 @@
+{
+    "name": "spiritedmedia/everyblock-php-api",
+    "description": "A simple PHP wrapper for the EveryBlock API.",
+    "keywords": ["everyblock", "api"],
+    "homepage": "https://github.com/spiritedmedia/everyblock-php-api",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Spirited Media Inc.",
+            "email": "product@billypenn.com"
+        },
+        {
+            "name": "Chris Montgomery",
+            "email": "cmontgomery@billypenn.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "ext-curl": "*"
+    }
+}

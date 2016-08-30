@@ -1,0 +1,70 @@
+// ==========================================================================
+// Pedestal // Components // STATEMENT
+// ==========================================================================
+
+
+
+
+
+/*figure*/.c-statement {
+  margin: 0;
+}
+
+
+  .c-statement__img {
+    // scss-lint:disable SelectorFormat
+
+    > img {
+      height: c-statement-property-get( meter-width );
+
+      @media #{$small-only} {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+
+
+  .c-statement__body {}
+
+
+    .c-statement__content {
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+      padding-bottom: $base-spacing-unit;
+      border: 0;
+      font-size: 0;
+
+      /*blockquote*/&--quote {}
+
+      &--summary {}
+    }
+
+
+      /*h3*/.c-statement__content__text {
+        color: $header-font-color;
+        margin: 0;
+        padding: 0;
+        font-size: $small-font-size;
+        font-weight: 500;
+
+        @media #{$medium-up} {
+          font-size: $h3-font-size;
+        }
+      }
+
+
+    /*figcaption*/.c-statement__speaker {
+      font-size: $small-font-size;
+    }
+
+      .c-statement__speaker__name {
+        font-style: normal;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .c-statement__speaker__setting {}
+
+      .c-statement__speaker__date {}

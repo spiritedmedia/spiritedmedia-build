@@ -1,0 +1,67 @@
+// ==========================================================================
+// Pedestal // Components // OFFCANVAS MENU
+// ==========================================================================
+
+
+// @TODO
+// scss-lint:disable SelectorFormat
+
+
+.off-canvas-menu {
+  font-weight: 400;
+  letter-spacing: 0.1em;
+
+  a { text-transform: uppercase; }
+}
+
+  .off-canvas-menu__search {
+    padding: $off-canvas-link-padding;
+    padding-top: $base-line-height;
+    margin-bottom: 1px;
+    background: $off-canvas-bg;
+
+    form {
+
+      &,
+      & input {
+        margin: 0;
+      }
+
+      .prefix,
+      input {
+        border: 0;
+      }
+
+      .prefix {
+        background-color: $white;
+
+        i {
+          color: $off-canvas-search-form-icon-color;
+          padding-left: 0.4rem;
+        }
+      }
+
+      input {
+        box-shadow: none;
+      }
+    }
+  }
+
+
+  .off-canvas-menu__list {}
+
+    .off-canvas-menu__item {}
+
+    .off-canvas-menu__follow {
+      position: relative;
+    }
+
+      .off-canvas-menu__follow__icons {
+        @include iconset-sizing( 2rem );
+        @include iconset-coloring( $white, $off-canvas-bg );
+        float: right;
+        margin-top: ( $base-line-height / 3 );
+        margin-right: $base-line-height;
+      }
+
+

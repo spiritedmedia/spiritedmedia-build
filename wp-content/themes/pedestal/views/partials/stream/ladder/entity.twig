@@ -1,0 +1,25 @@
+<div class="{{ macros.get_stream_item_classes( 'ladder' ) }} {% if loop.first %} first {% endif %} {{ item.css_classes }}">
+    <div class="c-stream__item__inner  entity__inner">
+
+        {% if is_email and 'breaking-news' == template_name and item.has_featured_image %}
+        <div class="c-stream__item__img">
+            {% include 'partials/stream/item-img.twig' %}
+        </div>
+        {% endif %}
+
+        <div class="c-stream__item__body">
+            {% include 'partials/item-title.twig' %}
+
+            {% if is_email and 'breaking-news' == template_name and item.get_excerpt %}
+            <div class="entity-excerpt js-entity-excerpt">
+                {{ item.get_the_excerpt }}
+            </div>
+            {% endif %}
+
+            {% include 'partials/meta-info/emails/meta-info-entity.twig' %}
+        </div>
+
+        <div class="clear-both"></div>
+
+    </div>
+</div>

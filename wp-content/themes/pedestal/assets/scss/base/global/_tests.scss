@@ -1,0 +1,30 @@
+// ==========================================================================
+// Pedestal // Base // Global // TESTS
+// ==========================================================================
+
+
+@import '../../../vendor/true/sass/true';
+
+
+
+
+
+@include test-module('Settings') {
+
+
+  /**
+   * Check to see that `$qa-test` is set to false
+   *
+   * `$qa-test` sets the email icon paths to the QA site (the value of
+   * `$site-url-qa`). This should only be set to true when testing locally.
+   */
+  @include test('QA Testing [setting]') {
+    $desc: 'Checks whether the `$qa-test` variable is enabled.';
+    $test: $qa-test;
+    $expect: false;
+
+    @include assert-equal( $test, $expect, $desc );
+  }
+
+
+} // end Settings

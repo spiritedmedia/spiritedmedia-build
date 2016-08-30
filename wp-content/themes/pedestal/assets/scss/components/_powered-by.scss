@@ -1,0 +1,37 @@
+// ==========================================================================
+// Pedestal // Components // POWERED BY
+// ==========================================================================
+
+
+.c-powered-by {
+  // @TODO
+  // scss-lint:disable SelectorFormat
+  /*a*/.inner {
+    color: $black;
+    display: block;
+  }
+}
+
+  .c-powered-by__logo,
+  .c-powered-by__power {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .c-powered-by__power {}
+
+  .c-powered-by__logo {
+    width: $c-powered-by-logo-w;
+    height: $c-powered-by-logo-h;
+    display: inline-block;
+    background: no-repeat top left;
+    background-size: contain;
+  }
+
+
+.c-powered-by--everyblock {
+  .c-powered-by__logo {
+    background-image: url( $pedestal-abspath + '/assets/images/partners/everyblock-400.png' );
+    background-image: url( $pedestal-abspath + '/assets/images/partners/everyblock-white.svg' );
+  }
+}

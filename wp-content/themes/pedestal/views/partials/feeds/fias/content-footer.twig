@@ -1,0 +1,13 @@
+<footer>
+    {# <!-- Credits for your article --> #}
+    {% if item.get_footnotes %}
+    <aside>{{ item.get_footnotes }}</aside>
+    {% endif %}
+
+    {% if 'factcheck' == item.get_type %}
+    <aside><ul>{% include 'sidebar-factcheck.twig' %}</ul></aside>
+    {% endif %}
+
+    {# <!-- Copyright details for your article --> #}
+    <small>{{ copyright_text }}</small>
+</footer>

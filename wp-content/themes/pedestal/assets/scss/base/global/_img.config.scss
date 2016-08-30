@@ -1,0 +1,14 @@
+// ==========================================================================
+// Pedestal // Base // Global // Images // CONFIGURATION
+// ==========================================================================
+
+
+/**
+ * Get the value for the specified WP image size
+ *
+ * @param  {string} $size    Name of the size
+ * @return {unit}
+ */
+@function img-size-get( $size ) {
+  @return map-deep-get( $global-img-sizes, $size );
+}

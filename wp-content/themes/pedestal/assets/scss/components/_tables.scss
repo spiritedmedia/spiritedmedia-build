@@ -1,0 +1,50 @@
+// ==========================================================================
+// Pedestal // Components // TABLES
+// ==========================================================================
+
+
+.c-details-table {
+  @include stdbd;
+}
+
+
+  .c-details-table__inner {
+    // @TODO
+    // scss-lint:disable SelectorFormat
+
+    width: 100%;
+    border: 0;
+
+    th {
+      @include stdbd( 'right' );
+      text-align: right;
+      text-transform: uppercase;
+      width: 30%;
+    }
+
+    .email-body & {
+      tr {
+        @include stdbd( 'bottom' );
+      }
+    }
+  }
+
+
+  .c-details-table__link {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+    .c-details-table__link__btn {
+      @include button-base( $display: block );
+      @include button-size( $padding: false );
+      @include button-style(
+        $bg: $c-details-table-link-bg-c,
+        $border-color: $c-details-table-link-bg-c
+      );
+      @include single-transition( background-color );
+
+      margin-bottom: 0;
+      padding: $table-row-padding;
+      text-transform: uppercase;
+    }

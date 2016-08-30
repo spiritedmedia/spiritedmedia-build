@@ -1,0 +1,20 @@
+<title>{{ item.get_title }}</title>
+<link>{{ item.get_permalink }}</link>
+<pubDate>{{ item.get_post_date_gmt('c') }}</pubDate>
+<dc:creator><![CDATA[{{ item.get_author_names_rss }}]]></dc:creator>
+<guid isPermaLink="false">{{ item.get_guid }}</guid>
+
+<description><![CDATA[{{ item.get_excerpt }}]]></description>
+
+{% if item.get_the_content_rss %}
+<content:encoded><![CDATA[
+    {% include 'partials/events/details.twig' %}
+    {{ item.get_the_content_rss }}
+]]></content:encoded>
+{% else %}
+<content:encoded><![CDATA[{{ item.get_excerpt }}]]></content:encoded>
+{% endif %}
+
+{% if item.get_featured_image_enclosure %}
+{{ item.get_featured_image_enclosure }}
+{% endif %}

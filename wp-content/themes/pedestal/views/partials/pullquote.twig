@@ -1,0 +1,32 @@
+{% spaceless %}
+
+{% if url %}
+{% set cite_attr = 'cite="' ~ url ~ '"' %}
+{% endif %}
+
+{# Use WP alignment helper class #}
+{% set align = 'align' ~ align %}
+
+<aside class="c-pullquote  {{ align }}">
+    <blockquote class="c-pullquote__content" {{ cite_attr }}>
+        {{ content }}
+    </blockquote>
+
+    {% if credit %}
+    <cite class="c-pullquote__credit">
+
+        {% if credit_link %}
+        <a href="{{ credit_link }}" target="_blank">
+        {% endif %}
+
+        {{ credit }}
+
+        {% if credit_link %}
+        </a>
+        {% endif %}
+
+    </cite>
+    {% endif %}
+
+</aside>
+{% endspaceless %}

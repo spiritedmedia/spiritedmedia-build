@@ -1,0 +1,622 @@
+<?php
+
+namespace Pedestal\Registrations\Post_Types;
+
+use \Pedestal\Utils\Utils;
+
+use \Pedestal\Posts\Post;
+
+class Types {
+
+    protected $post_types = [];
+
+    private static $post_type_names = [];
+
+    /**
+     * Map post types to their classes
+     *
+     * Some WP default post types are added to class mapping by default. Some
+     * other types are not included because they should be hidden.
+     *
+     * @var array
+     */
+    protected static $class_map = [
+        'post'         => 'Posts\\Post',
+        'page'         => 'Posts\\Page',
+        'attachment'   => 'Posts\\Attachment',
+        'guest-author' => 'Objects\\Guest_Author',
+    ];
+
+    private static $overridden_types = [
+        'attachment',
+        'page',
+    ];
+
+    public static $groups = [];
+
+    private static $instance;
+
+    public static function get_instance() {
+
+        if ( ! isset( self::$instance ) ) {
+            self::$instance = new Types;
+            self::$instance->setup_types();
+            self::$instance->setup_actions();
+            self::$instance->setup_filters();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * Set up general post type actions
+     */
+    private function setup_actions() {
+
+        add_action( 'init', [ $this, 'action_init_register_post_types' ] );
+        add_action( 'init', [ $this, 'action_init_disable_default_post_type' ] );
+        add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
+        add_action( 'manage_posts_custom_column', [ $this, 'action_manage_posts_custom_column' ], 10, 2 );
+
+    }
+
+    /**
+     * Set up general post type filters
+     */
+    private function setup_filters() {
+
+        add_filter( 'post_type_link', [ $this, 'filter_post_type_link' ], 10, 2 );
+        add_filter( 'wp_unique_post_slug', [ $this, 'filter_wp_unique_post_slug' ], 10, 6 );
+
+        foreach ( self::get_post_types() as $post_type ) {
+            add_filter( "manage_{$post_type}_posts_columns", [ $this, 'filter_manage_posts_columns' ] );
+        }
+
+        // Disable canonical urls for pagination
+        // https://core.trac.wordpress.org/ticket/15551
+        add_filter( 'redirect_canonical', function( $redirect_url ) {
+            global $post;
+            if ( ! empty( $post ) ) {
+                if ( is_single( $id = $post->ID ) ) {
+                    $ptype = Post::get_post_type( $id );
+                    if ( 'pedestal_story' == $ptype ) {
+                        $redirect_url = false;
+                    }
+                }
+            }
+            return $redirect_url;
+        } );
+
+    }
+
+    private function setup_types() {
+        self::$groups['general']  = General_Types::get_instance();
+        self::$groups['entities'] = Entity_Types::get_instance();
+        self::$groups['clusters'] = Cluster_Types::get_instance();
+        self::$groups['slots']    = Slot_Types::get_instance();
+    }
+
+    protected function get_type_settings() {
+        return $this->post_types;
+    }
+
+    /**
+     * Register the custom post types
+     */
+    public function action_init_register_post_types() {
+
+        foreach ( self::$groups as $group ) :
+
+            foreach ( $group->get_type_settings() as $post_type => $settings ) :
+
+                extract( $settings );
+
+                // If the post type supports the editor, then make sure it supports
+                // storing revisions
+                if ( in_array( 'editor', $args['supports'] ) ) {
+                    $args['supports'][] = 'revisions';
+                }
+
+                $args['labels'] = [
+                    'name'                => $plural,
+                    'singular_name'       => $singular,
+                    'all_items'           => $plural,
+                    'new_item'            => sprintf( esc_html__( 'New %s', 'pedestal' ), $singular ),
+                    'add_new'             => sprintf( esc_html__( 'Add New', 'pedestal' ), $singular ),
+                    'add_new_item'        => sprintf( esc_html__( 'Add New %s', 'pedestal' ), $singular ),
+                    'edit_item'           => sprintf( esc_html__( 'Edit %s', 'pedestal' ), $singular ),
+                    'view_item'           => sprintf( esc_html__( 'View %s', 'pedestal' ), $singular ),
+                    'search_items'        => sprintf( esc_html__( 'Search %s', 'pedestal' ), $plural ),
+                    'not_found'           => sprintf( esc_html__( 'No %s found', 'pedestal' ), $plural ),
+                    'not_found_in_trash'  => sprintf( esc_html__( 'No %s found in trash', 'pedestal' ), $plural ),
+                    'parent_item_colon'   => sprintf( esc_html__( 'Parent %s', 'pedestal' ), $singular ),
+                    'menu_name'           => $plural,
+                ];
+
+                $this->post_types[] = $post_type;
+                self::$class_map[ $post_type ] = $class;
+                register_post_type( $post_type, $args );
+
+            endforeach;
+
+        endforeach;
+
+    }
+
+    /**
+     * Disable the default post type
+     *
+     * Unsetting causes errors, so hiding is better.
+     */
+    public function action_init_disable_default_post_type() {
+        global $wp_post_types;
+        $wp_post_types['post']->public = false;
+        $wp_post_types['post']->show_ui = false;
+        $wp_post_types['post']->show_in_menu = false;
+        $wp_post_types['post']->show_in_admin_bar = false;
+        $wp_post_types['post']->show_in_nav_menus = false;
+    }
+
+    /**
+     * Register rewrites
+     */
+    public function action_init_register_rewrites() {
+        // Rewrite rules for our custom post types
+        $post_types = '';
+        $date_based_pagination_pattern = '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/]+)/page/?([0-9]{1,})/?$';
+        foreach ( self::get_date_based_post_types() as $ptype ) {
+            $post_types .= '&post_type[]=' . $ptype;
+        }
+
+        add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/]+)/ics/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&page=$matches[5]&post_type=pedestal_event&ics=true', 'top' );
+        add_rewrite_rule( $date_based_pagination_pattern, 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&paged=$matches[5]' . $post_types, 'top' );
+        add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/]+)(/[0-9]+)?/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&page=$matches[5]' . $post_types, 'top' );
+
+        // Rewrite rules we don't want
+        add_filter( 'post_rewrite_rules', '__return_empty_array' );
+        foreach ( self::get_date_based_post_types() as $post_type ) {
+            add_filter( "{$post_type}_rewrite_rules", '__return_empty_array' );
+        }
+    }
+
+    /**
+     * Handle the output for a custom column
+     */
+    public function action_manage_posts_custom_column( $column_name, $post_id ) {
+
+        $obj = \Pedestal\Posts\Post::get_by_post_id( $post_id );
+        switch ( $column_name ) {
+            case 'pedestal_external_url':
+                echo '<a href="' . esc_url( $obj->get_external_url() ) . '">' . esc_url( $obj->get_external_url() ) . '</a>';
+                break;
+            case 'pedestal_event_start_time':
+                echo esc_html( $obj->get_start_time( sprintf( __( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ) ) );
+                break;
+            case 'pedestal_event_end_time':
+                echo esc_html( $obj->get_end_time( sprintf( __( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ) ) );
+                break;
+            case 'pedestal_event_venue_name':
+                echo esc_html( $obj->get_venue_name() );
+                break;
+            case 'pedestal_entity_cluster_connections':
+                if ( ! empty( $obj->get_clusters_with_links() ) ) {
+                    echo $obj->get_clusters_with_links();
+                } else {
+                    echo '&mdash;';
+                }
+                break;
+            case 'pedestal_entity_story_connections':
+                if ( ! empty( $obj->has_story() ) ) {
+                    echo $obj->get_story_with_link();
+                } else {
+                    echo '&mdash;';
+                }
+                break;
+            case 'pedestal_cluster_followers_count':
+                echo esc_html__( $obj->get_following_users_count(), 'pedestal' );
+                break;
+            case 'pedestal_id':
+                echo esc_html( $obj->get_id() );
+                break;
+        }
+
+    }
+
+    /**
+     * Customize columns on the "Manage Posts" views
+     */
+    public function filter_manage_posts_columns( $columns ) {
+
+        $new_columns = [];
+
+        foreach ( $columns as $key => $label ) {
+            $new_columns[ $key ] = $label;
+
+            // Link columns
+            if ( 'pedestal_link' == get_current_screen()->post_type && 'title' == $key ) {
+                $new_columns['pedestal_external_url'] = esc_html__( 'External URL', 'pedestal' );
+            }
+
+            // Event columns
+            if ( 'pedestal_event' == get_current_screen()->post_type ) {
+                if ( 'title' == $key ) {
+                    $new_columns['pedestal_event_start_time'] = esc_html__( 'Start Time', 'pedestal' );
+                    $new_columns['pedestal_event_end_time'] = esc_html__( 'End Time', 'pedestal' );
+                    $new_columns['pedestal_event_venue_name'] = esc_html__( 'Venue Name', 'pedestal' );
+                }
+                if ( 'coauthors' == $key ) {
+                    $new_columns[ $key ] = esc_html__( 'Creator', 'pedestal' );
+                }
+            }
+
+            // Entity columns
+            if ( self::is_entity( get_current_screen()->post_type ) ) {
+                if ( 'coauthors' === $key ) {
+                    $new_columns['pedestal_entity_story_connections'] = esc_html__( 'Story', 'pedestal' );
+                    $new_columns['pedestal_entity_cluster_connections'] = esc_html__( 'Connected Clusters', 'pedestal' );
+                }
+            }
+
+            // Cluster followers column
+            if ( in_array( get_current_screen()->post_type, self::get_cluster_post_types() ) ) {
+                if ( 'title' === $key ) {
+                    $new_columns['pedestal_cluster_followers_count'] = esc_html__( '№ of Followers', 'pedestal' );
+                }
+            }
+        }
+
+        $new_columns['pedestal_id'] = esc_html__( 'ID', 'pedestal' );
+        return $new_columns;
+    }
+
+    /**
+     * Filter post type links
+     */
+    public function filter_post_type_link( $link, $post ) {
+
+        if ( 'pedestal_link' === $post->post_type ) {
+            $obj = new \Pedestal\Posts\Entities\Link( $post );
+            $link = $obj->get_external_url();
+        } else if ( in_array( $post->post_type, self::get_date_based_post_types() ) ) {
+
+            $query = parse_url( $link, PHP_URL_QUERY );
+            parse_str( $query, $args );
+            // Generating a preview link
+            if ( ! empty( $args['post_type'] ) && $args['post_type'] === $post->post_type ) {
+                return $link;
+            }
+
+            // Sometimes the permalink is passed for preview links
+            if ( 'publish' === $post->post_status && $post->post_name ) {
+                $post_name = $post->post_name;
+            } else {
+                $post_name = '%' . $post->post_type . '%';
+            }
+
+            $unixtime = strtotime( $post->post_date );
+            $date = explode( ' ', date( 'Y m d H i s', $unixtime ) );
+            $search_replace = [
+                '%year%'       => $date[0],
+                '%monthnum%'   => $date[1],
+                '%day%'        => $date[2],
+                '%postname%'   => $post_name,
+            ];
+
+            $permalink_struct = '%year%/%monthnum%/%day%/%postname%/';
+            $link = home_url( str_replace( array_keys( $search_replace ), array_values( $search_replace ), $permalink_struct ) );
+        }
+
+        return $link;
+    }
+
+    /**
+     * Filter unique slugs to ensure slugs are unique across all post types
+     */
+    public function filter_wp_unique_post_slug( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug ) {
+        global $wpdb, $wp_rewrite;
+
+        if ( ! in_array( $post_type, self::get_post_types() ) ) {
+            return $slug;
+        }
+
+        $feeds = $wp_rewrite->feeds;
+        if ( ! is_array( $feeds ) ) {
+            $feeds = [];
+        }
+
+        $post_type_permastruct = array_diff( self::get_post_types(), self::get_date_based_post_types() );
+        $permastruct_groups = [
+            'date_based' => self::get_date_based_post_types(),
+            'post_type'  => $post_type_permastruct,
+        ];
+
+        // Loop through the groups of permastructs looking for the post type and
+        // break upon the first match - if a match is not found in any of the
+        // permastruct groups, then return the unaltered slug
+        foreach ( $permastruct_groups as $group ) {
+            if ( in_array( $post_type, $group ) ) {
+                $permastruct_group = $group;
+                break;
+            }
+            return $slug;
+        }
+
+        // Use the selected permastruct group to determine the group of post
+        // types between which duplicates are disallowed
+        $post_types_sql = "'" . implode( "','", array_map( 'sanitize_key', $permastruct_group ) ) . "'";
+        $check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name = %s AND post_type IN ({$post_types_sql}) AND ID != %d LIMIT 1";
+        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_id ) );
+        if ( $post_name_check || in_array( $slug, $feeds ) ) {
+            $suffix = 2;
+            do {
+                $alt_post_name = _truncate_post_slug( $slug, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
+                $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_id ) );
+                $suffix++;
+            } while ( $post_name_check );
+            $slug = $alt_post_name;
+        }
+
+        return $slug;
+
+    }
+
+    /**
+     * Get the name of the class associated with the given post type
+     *
+     * @param string $post_type The name of the post type
+     */
+    public static function get_post_type_class( $post_type ) {
+        return '\\Pedestal\\' . self::$class_map[ $post_type ];
+    }
+
+    /**
+     * Get the Entities-to-Clusters connection types
+     *
+     * @return array
+     */
+    public static function get_connection_types_entities_to_clusters() {
+        $clusters = self::$groups['clusters'];
+        return $clusters->connection_types_entities;
+    }
+
+    /**
+     * Get an array of post types with label as value
+     *
+     * This is useful for setting up select field options based on post types.
+     *
+     * @param  array  $types Optional array of post types to use as keys
+     * @param  string $label Post type label to use as value. Defaults to 'name'.
+     * @return array
+     */
+    public static function get_post_types_with_label( $types = [], $label = 'name' ) {
+        $types_with_labels = [];
+
+        if ( empty( $types ) ) {
+            $types = self::get_post_types();
+        }
+
+        foreach ( $types as $type ) {
+            if ( ! post_type_exists( $type ) ) {
+                continue;
+            }
+            $labels = self::get_post_type_labels( $type );
+            $types_with_labels[ $type ] = $labels[ $label ];
+        }
+        return $types_with_labels;
+    }
+
+    /**
+     * Get a post type's singular and plural labels in English
+     *
+     * Only works for our custom post types.
+     *
+     * @param  string $post_type Name of the post type
+     * @return array             English singular and plural labels
+     */
+    public static function get_post_type_labels( $post_type ) {
+        $obj = get_post_type_object( $post_type );
+        return (array) $obj->labels;
+    }
+
+    /**
+     * Get a post type's sanitized singular and plural labels
+     *
+     * Only works for our custom post types.
+     *
+     * @param  string $post_type Name of the post type
+     * @return array             Sanitized singualr and plural labels
+     */
+    public static function get_sanitized_post_type_labels( $post_type ) {
+        $sanitized_labels = array_map( function( $value ) {
+            return Utils::sanitize_name( $value );
+        }, self::get_post_type_labels( $post_type ) );
+        return $sanitized_labels;
+    }
+
+    /**
+     * Get all the post types with date-based permalinks
+     *
+     * @param bool $sort  Sort alphabetically or not?
+     * @return array
+     */
+    public static function get_date_based_post_types( $sort = true ) {
+        $types = array_merge( self::get_entity_post_types(), [ 'pedestal_story' ] );
+        if ( $sort ) {
+            sort( $types );
+        }
+        return $types;
+    }
+
+    /**
+     * Get all the cluster post types, minus stories
+     */
+    public static function get_cluster_post_types_sans_story() {
+        $types = self::get_cluster_post_types();
+        return Utils::remove_array_item( 'pedestal_story', $types );
+    }
+
+    /**
+     * Get all post types that support the specified feature
+     *
+     * @param  string $feature Post type feature
+     * @return array
+     */
+    public static function get_post_types_by_supported_feature( $feature ) {
+        $types = [];
+
+        if ( ! is_string( $feature ) ) {
+            return [];
+        }
+
+        foreach ( self::get_post_types() as $type ) {
+            if ( post_type_supports( $type, $feature ) ) {
+                $types[] = $type;
+            }
+        }
+        return $types;
+    }
+
+    /**
+     * Get all the Geospace post types
+     *
+     * @param bool $sort  Sort alphabetically or not?
+     *
+     * @return array
+     */
+    public static function get_geospace_post_types( $sort = true ) {
+        $types = [
+            'pedestal_place',
+            'pedestal_locality',
+        ];
+        if ( $sort ) {
+            sort( $types );
+        }
+        return $types;
+    }
+
+    /**
+     * Get all the cluster post types
+     *
+     * @param bool   $sort  Sort alphabetically or not?
+     */
+    public static function get_cluster_post_types( $sort = true ) {
+        return self::get_post_types( 'clusters', $sort );
+    }
+
+    /**
+     * Get all the entity post types
+     *
+     * @param bool   $sort  Sort alphabetically or not?
+     */
+    public static function get_entity_post_types( $sort = true ) {
+        return self::get_post_types( 'entities', $sort );
+    }
+
+    /**
+     * Get all post types with custom classes
+     *
+     * @param bool   $sort  Sort alphabetically or not?
+     *
+     * @return array Array of all post type names for which we've defined our own classes
+     */
+    public static function get_pedestal_post_types( $sort = true ) {
+        $types = array_merge(
+            self::get_post_types(),
+            self::get_overridden_post_types()
+        );
+        if ( $sort ) {
+            sort( $types );
+        }
+        return $types;
+    }
+
+    public static function get_overridden_post_types() {
+        return self::$overridden_types;
+    }
+
+    /**
+     * Determine whether a post type is an entity
+     *
+     * @param string $post_type The post type to check
+     * @return boolean
+     */
+    public static function is_entity( $post_type ) {
+        return in_array( $post_type, self::get_entity_post_types() );
+    }
+
+    /**
+     * Determine whether a post type is an cluster
+     *
+     * @param string $post_type The post type to check
+     * @return boolean
+     */
+    public static function is_cluster( $post_type ) {
+        return in_array( $post_type, self::get_cluster_post_types() );
+    }
+
+    /**
+     * Determine whether a post type is a story
+     *
+     * @param string $post_type The post type to check
+     * @return boolean
+     */
+    public static function is_story( $post_type ) {
+        if ( 'pedestal_story' === $post_type ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get editorial post types
+     *
+     * @param bool   $sort  Sort alphabetically or not?
+     */
+    public static function get_editorial_post_types( $sort = true ) {
+        $general_types = self::$groups['general']->editorial_post_types;
+        $entity_types = self::$groups['entities']->editorial_post_types;
+        $types = array_merge( $general_types, $entity_types );
+        if ( $sort ) {
+            sort( $types );
+        }
+        return $types;
+    }
+
+    /**
+     * Get the emailable post types
+     *
+     * @param  boolean $sort Sort alphabetically or not?
+     * @return array
+     */
+    public static function get_emailable_post_types( $sort = true ) {
+        $types = array_merge(
+            [ 'pedestal_newsletter' ],
+            self::get_cluster_post_types(),
+            self::get_post_types_by_supported_feature( 'breaking' )
+        );
+        if ( $sort ) {
+            sort( $types );
+        }
+        return $types;
+    }
+
+    /**
+     * Get all of our registered post types
+     *
+     * @param string $group Group name
+     * @param bool   $sort  Sort alphabetically or not?
+     */
+    public static function get_post_types( $group = '', $sort = true ) {
+        $types = [];
+        if ( ! empty( $group ) ) {
+            $types = array_keys( self::$groups[ $group ]->post_types );
+        } else {
+            foreach ( self::$groups as $group ) {
+                $types = array_merge( array_keys( $group->post_types ), $types );
+            }
+        }
+        if ( $sort ) {
+            sort( $types );
+        }
+        return $types;
+    }
+}

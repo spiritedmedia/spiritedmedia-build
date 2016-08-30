@@ -1,0 +1,84 @@
+// ==========================================================================
+// Pedestal // Components // TITLE BAR
+// ==========================================================================
+
+
+.c-title-bar {
+  margin-left: $border-offset;
+  margin-right: $border-offset;
+  position: relative;
+
+  @if $email == false {
+    z-index: $z-c-title-bar;
+  }
+}
+
+
+  .c-title-bar__inner {}
+
+
+    .c-title-bar__item {}
+
+
+      /*h2/h4*/.c-title-bar__text {
+        @if $email {
+          max-width: 85%;
+        }
+      }
+
+        /*a*/.c-title-bar__text__link {}
+
+          /*span*/.c-title-bar__text__item {
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+
+            .o-blox--expand & {
+              letter-spacing: 0.025em;
+              text-transform: none;
+            }
+
+          }
+
+          /*span*/.c-title-bar__text__title {}
+
+          /*span*/.c-title-bar__text__subtitle {}
+
+
+    .c-title-bar__pin {}
+
+
+
+
+
+/**
+ * Title bar with special customized appearance
+ */
+
+.c-title-bar--customized {
+  .c-title-bar__text {
+    @media #{$small-only} {
+      display: block;
+    }
+  }
+}
+
+
+
+
+
+/**
+ * Story bar for Nativo
+ */
+
+.c-title-bar--promo {
+
+  .c-title-bar__inner {
+    background-color: map-get-strict( $c-title-bar-settings, 'promo-bg' );
+    color: $black;
+  }
+
+  &,
+  .c-title-bar__text__link {
+    @include text-color( map-get-strict( $c-title-bar-settings, 'promo-bg' ) );
+  }
+}

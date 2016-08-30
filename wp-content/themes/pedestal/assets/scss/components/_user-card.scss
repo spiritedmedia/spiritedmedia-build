@@ -1,0 +1,159 @@
+// ==========================================================================
+// Pedestal // Components // USER CARD
+// ==========================================================================
+
+
+.c-user-card {
+  text-align: center;
+
+  @media #{$medium-up} {
+    text-align: left;
+  }
+}
+
+
+    .c-user-card__title {}
+
+
+    .c-user-card__img {
+      display: block;
+      margin-bottom: c-user-card-property-get( img-m-b );
+
+      // Accommodate for all the different image sizes
+      @each $size-name, $dimensions in sm-pedestal-img-sizes-get() {
+        $width: map-get-strict( $dimensions, width );
+
+        &.img--#{$size-name} {
+          .c-avatar {
+            &,
+            &__img {
+              width: c-user-card-property-get( img-size );
+              height: c-user-card-property-get( img-size );
+              background-size: c-user-card-property-get( img-size );
+
+              @media #{$large-up} {
+                width: $width;
+                height: $width;
+                background-size: $width;
+              }
+            }
+          }
+        }
+      }
+
+      .c-avatar {
+        &__img {
+          margin: 0 auto;
+          border-width: c-avatar-property-get( 'bd-w-lg' );
+        }
+      }
+    } // .c-user-card__img
+
+
+    .c-user-card__name {
+      margin: 0;
+    }
+
+
+    .c-user-card__details {
+      @include inline-list-min(
+        $no-stacking: false
+      );
+
+      &__item {
+        margin-bottom: c-user-card-property-get( section-spacing );
+        margin-right: c-user-card-property-get( section-spacing );
+
+        .o-icon-text__icon {
+          margin-right: halve( $o-icon-text-spacing );
+        }
+      }
+
+    }
+
+
+      .c-user-card__title {
+        font-weight: c-user-card-property-get( title-weight );
+      }
+
+      .c-user-card__email {}
+
+      .c-user-card__twitter {}
+
+
+    .c-user-card__bio {
+      text-align: left;
+    }
+
+
+
+
+.c-user-card--grid,
+.c-user-card--compact {
+
+  .c-user-card__bio {
+    font-style: italic;
+    font-size: $h5-font-size;
+  }
+
+}
+
+
+
+
+
+.c-user-card--extended,
+.c-user-card--grid {
+
+  .c-avatar {
+    &__img {
+      border: 0;
+    }
+  }
+
+}
+
+
+
+
+
+.c-user-card--grid {
+
+  .c-user-card__rule {
+    width: 60%;
+
+    @media #{$medium-only} {
+      width: 50%;
+    }
+
+    @media #{$large-up} {
+      width: 65%;
+    }
+
+  }
+
+  .c-user-card__details__item {
+    display: block;
+    margin-right: 0;
+  }
+}
+
+
+
+
+
+.c-user-card--compact {
+  .c-user-card__details {
+    padding-bottom: halve( $base-spacing-unit );
+  }
+}
+
+
+
+
+
+.c-user-card--extended {
+  .c-user-card__details {
+    padding-bottom: $base-spacing-unit;
+  }
+}

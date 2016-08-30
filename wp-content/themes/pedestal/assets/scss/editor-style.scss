@@ -1,0 +1,157 @@
+@charset 'UTF-8';
+/*!*
+ * Pedestal // Editor Style
+ *
+ * Version: 4.0.3
+ *
+ * Copyright ( c ) 2016 Spirited Media
+ */
+
+
+// scss-lint:disable QualifyingElement IdSelector ImportantRule SelectorFormat
+
+
+// ==========================================================================
+// Pedestal // * Editor Style * // SETUP
+// ==========================================================================
+
+
+@import 'setup-core';
+
+
+//
+// Configuration
+// ==========================================================================
+
+
+@import 'SassyLists/dist/SassyLists';
+@import 'susy/sass/susy';
+
+// scss-lint:disable ImportPath
+@import 'base/theme/settings';
+@import 'base/global/__config';
+@import 'objects/__config';
+@import 'components/__config';
+@import 'scopes/__config';
+// scss-lint:enable ImportPath
+
+
+
+
+
+//
+// Vendor
+// ==========================================================================
+
+
+@import 'base/theme/foundation';
+@import 'font-awesome/scss/font-awesome';
+
+
+
+
+
+//
+// High-Level
+// ==========================================================================
+
+@import 'base/global/mixins';
+@import 'base/global/general';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Editor Style * // OBJECTS
+// ==========================================================================
+
+
+@import 'objects/buttons';
+@import 'objects/cap';
+@import 'objects/icon-text';
+@import 'objects/media';
+@import 'objects/rules';
+@import 'objects/blox';
+@import 'objects/list-bare';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Editor Style * // COMPONENTS
+// ==========================================================================
+
+@import 'components/title-bar';
+@import 'components/entity';
+@import 'components/item-title';
+@import 'components/figure';
+@import 'components/exporter';
+@import 'components/tables';
+@import 'components/icons';
+@import 'components/content';
+@import 'components/stream';
+@import 'components/meta-info';
+@import 'components/avatar';
+@import 'components/slots';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Editor Style * // SCOPES
+// ==========================================================================
+
+
+@import 'scopes/post-content';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Editor Style * // UTILITIES
+// ==========================================================================
+
+
+@import 'utilities/utilities';
+
+
+body#tinymce {
+  // `html`/`body` height makes editor go insane
+  height: auto;
+  padding: 15px !important;
+  background-color: $white;
+
+  .entity {
+    border: 0;
+  }
+
+  img {
+    max-width: 25%;
+  }
+
+  .c-figure {
+    max-width: 50%;
+  }
+
+  .c-figure__content {
+    img { max-width: 100%; }
+  }
+
+  // @TODO
+  // Why qualified selector?
+  .o-rule.o-rule--pedal {
+
+    &:first-of-type {
+      border-top: 4px solid $grey-lightest;
+      margin-top: 1.2rem;
+
+      &::before {
+        height: 4px;
+      }
+    }
+  }
+}

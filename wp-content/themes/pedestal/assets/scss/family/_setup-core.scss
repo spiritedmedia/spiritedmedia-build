@@ -1,0 +1,30 @@
+// ==========================================================================
+// Pedestal // Base // SETUP: CORE
+//
+// Set up the basic variables, functions, and libraries we'll need across the
+// project.
+// ==========================================================================
+
+
+// Load Spirited Media configuration from JSON
+@import 'config-sassy.json';
+
+// Functions
+@import 'foundation/scss/foundation/functions';
+@import '../base/global/functions';
+
+
+
+
+
+//
+// Vendor Libraries
+// ==========================================================================
+
+
+// Enable SassyCast strict mode
+$sc-strict-mode: true;
+
+@import 'SassyCast/dist/SassyCast';
+@import 'SassyLists/dist/SassyLists';
+@import 'susy/sass/susy';

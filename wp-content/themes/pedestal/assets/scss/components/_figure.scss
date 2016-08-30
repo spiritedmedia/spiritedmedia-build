@@ -1,0 +1,110 @@
+// ==========================================================================
+// Pedestal // Components // FIGURE
+// ==========================================================================
+
+
+/*figure*/.c-figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+    .c-figure__link {
+      display: block;
+    }
+
+      .c-figure__content {
+        height: auto;
+        padding-bottom: c-figure-property-get( img-p-b );
+      }
+
+
+  /*figcaption*/.c-figure__text {
+    &__caption,
+    &__credit {
+      font-style: italic;
+    }
+  }
+
+    // Chain with h1 to override `.s-post-content h1`
+    //
+    // scss-lint:disable QualifyingElement SelectorFormat
+    h1.c-figure__text__caption {
+      color: c-figure-property-get( caption-color );
+      padding-right: c-figure-property-get( caption-p-r );
+      display: inline-block;
+      font-weight: normal;
+      font-size: c-figure-property-get( f-z );
+    }
+    // scss-lint:enable QualifyingElement SelectorFormat
+
+
+    /*cite*/.c-figure__text__credit {
+      text-transform: uppercase;
+      color: c-figure-property-get( credit-color );
+      font-size: c-figure-property-get( f-z );
+    }
+
+
+
+
+
+/**
+ * Figure for images
+ */
+
+.c-figure--img {
+  // Image figures must display as table so caption matches the width of non-
+  // full-width images
+  display: table;
+
+  .c-figure__text {
+    display: table-caption;
+    caption-side: bottom;
+  }
+}
+
+
+
+
+
+/**
+ * Figure for social media embeds
+ */
+
+.c-figure--social-embed {}
+
+
+
+
+
+/**
+ * Figure for regular embeds
+ */
+
+.c-figure--embed {}
+
+
+
+
+
+/**
+ * Figure for responsive iframes
+ *
+ * See https://www.smashingmagazine.com/2014/02/making-embedded-content-work-in-responsive-design/
+ */
+
+.c-figure--responsive-iframe {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+
+  // scss-lint:disable SelectorFormat
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  // scss-lint:enable SelectorFormat
+}

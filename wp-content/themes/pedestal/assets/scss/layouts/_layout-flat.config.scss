@@ -1,0 +1,22 @@
+// ==========================================================================
+// Pedestal // Layouts // Flat // CONFIGURATION
+// ==========================================================================
+
+
+$l-flat-settings: (
+  logo-height: $base-spacing-unit * 3,
+  explainer-text-color: $dimmed-text-color,
+) !default;
+
+
+
+
+
+//
+// Functions
+// ==========================================================================
+
+
+@function l-flat-property-get( $properties... ) {
+  @return map-deep-get( $l-flat-settings, $properties... );
+}

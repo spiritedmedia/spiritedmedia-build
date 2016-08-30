@@ -1,0 +1,185 @@
+// ==========================================================================
+// PEDESTAL: CORE
+//
+// This is the master Pedestal stylesheet, to be imported by child themes only.
+// ==========================================================================
+
+
+
+
+
+// ==========================================================================
+// Pedestal // SETUP
+// ==========================================================================
+
+
+@import 'setup-core';
+
+
+//
+// Configuration
+// ==========================================================================
+
+
+// scss-lint:disable ImportPath
+@import '../base/theme/settings';
+@import '../base/global/__config';
+@import '../objects/__config';
+@import '../layouts/__config';
+@import '../components/__config';
+@import '../scopes/__config';
+// scss-lint:enable ImportPath
+
+
+
+
+
+//
+// Vendor
+// ==========================================================================
+
+
+@import '../base/theme/foundation';
+@import 'font-awesome/scss/font-awesome';
+
+
+
+
+
+//
+// High-level
+// ==========================================================================
+
+
+@import '../base/global/mixins';
+@import '../base/global/general';
+
+@import '../base/theme/sticky-footer';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // OBJECTS
+//
+// http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/#object-namespaces-o-
+// ==========================================================================
+
+
+@import '../objects/buttons';
+@import '../objects/rules';
+@import '../objects/icon-text';
+@import '../objects/media';
+@import '../objects/cap';
+@import '../objects/blox';
+@import '../objects/list-bare';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // LAYOUTS
+// ==========================================================================
+
+
+@import '../layouts/layout-flat';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // COMPONENTS
+//
+// http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/#component-namespaces-c-
+// ==========================================================================
+
+
+@import '../components/panels';
+@import '../components/modals';
+@import '../components/header';
+@import '../components/spinner';
+@import '../components/offcanvas';
+@import '../components/rail';
+@import '../components/tables';
+@import '../components/icons';
+@import '../components/stream';
+@import '../components/title-bar';
+@import '../components/item-title';
+@import '../components/hero';
+@import '../components/statement';
+@import '../components/content';
+@import '../components/figure';
+@import '../components/factcheck';
+@import '../components/page';
+@import '../components/archive';
+@import '../components/404';
+@import '../components/super-quote';
+@import '../components/entity';
+@import '../components/meta-info';
+@import '../components/avatar';
+@import '../components/user-card';
+@import '../components/story';
+@import '../components/exporter';
+@import '../components/search';
+@import '../components/pagination';
+@import '../components/shortcodes';
+@import '../components/widgets';
+@import '../components/ads';
+@import '../components/slots';
+@import '../components/whos-next';
+@import '../components/everyblock';
+@import '../components/powered-by';
+@import '../components/footer';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // SCOPES
+//
+// http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/#scope-namespaces-s-
+// ==========================================================================
+
+
+@import '../scopes/post-content';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // UTILITIES
+//
+// http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/#utility-namespaces-u-
+// ==========================================================================
+
+
+@import '../utilities/utilities';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // STATES
+//
+// http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/#stateful-namespaces-is-has-
+// ==========================================================================
+
+
+@import '../base/global/states';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // MISCELLANEOUS
+// ==========================================================================
+
+
+@import '../base/global/tests';

@@ -1,0 +1,419 @@
+// ==========================================================================
+// Pedestal // Components // META INFO
+// ==========================================================================
+
+
+/**
+ * 1. Set all `ul`s to minimal inline lists
+ * 2. Prevent Foundation `ul` styles from resetting font size
+ */
+
+/*ul*/.c-meta-info,
+/*ul*/.c-meta-info__source,
+/*ul*/.c-meta-info__timestamp,
+/*ul*/.c-meta-info__published,
+/*ul*/.c-meta-info__modified {
+  @include inline-list-min( false, $c-meta-info-line-height ); /* 1 */
+  font-size: $c-meta-info-f-z; /* 2 */
+}
+
+
+/*ul*/.c-meta-info {
+  @include anchorage( $unhovered: $c-meta-info-color );
+  margin-bottom: $c-meta-info-m-b;
+  color: $c-meta-info-color;
+
+  // Override fa icon color for email
+  .email-body & {
+    @each $icon-name in $fa-icons-used {
+      .fa-#{$icon-name} {
+        @include iconize(
+          $path: $icon-name,
+          $size: $c-meta-info-icon-size--email,
+          $fa-colorize: $c-meta-info-color,
+          $path-only: true,
+          $fallback: false,
+          $live-url: true,
+          $size-1x: true
+        );
+      }
+    }
+  }
+
+}
+
+
+  /*li*/.c-meta-info__item {
+    overflow: hidden;
+
+    &:not( .c-meta-info__label ) {
+      @if $email == false {
+        @media #{$medium-up} {
+          @include inline-divider( $spacing: $c-meta-info-spacing-h );
+        }
+      }
+    }
+
+  }
+
+
+  .c-meta-info__item--stacked {
+    line-height: $c-meta-info-line-height;
+  }
+
+
+  /*ul*/.c-meta-info__source {}
+
+    /*li*/.c-meta-info__source__item {}
+
+
+  .c-meta-info__source__icon {
+    margin-right: ( $o-icon-text-spacing / 2 );
+
+    // @TODO
+    // scss-lint:disable SelectorFormat
+    .icon {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 0;
+
+      .entity--promo & {
+        color: $absinthe;
+      }
+
+      @if not $email {
+        font-size: $c-meta-info-icon-size;
+      } @else {
+        height: $c-meta-info-icon-size--email;
+        width: $c-meta-info-icon-size--email;
+      }
+
+      @media #{$medium-up} {
+        font-size: $c-meta-info-icon-size--screen-md-up;
+      }
+
+    } // end .icon
+    // scss-lint:enable SelectorFormat
+
+    .c-avatar {
+      &,
+      &__img {
+        width: $c-meta-info-icon-size;
+        height: $c-meta-info-icon-size;
+        background-size: $c-meta-info-avatar-bg-size;
+      }
+    }
+
+    [data-author-count="1"] & {
+      font-size: 0;
+    }
+
+  } // end .c-meta-info__source__icon
+
+  .c-meta-info__source__name {
+    display: none;
+
+    @media #{$medium-up} {
+      display: inline-block;
+    }
+
+    .entity--promo & {
+      color: $absinthe;
+    }
+
+    .c-meta-info__item--stacked & {
+      display: inline-block;
+
+      @media #{$medium-up} {
+        display: none;
+      }
+
+    }
+
+  } // end .c-meta-info__source__name
+
+
+  /*li*/.c-meta-info__label {
+    margin-right: ( $c-meta-info-spacing-h / 2 );
+  }
+
+  /*ul*/.c-meta-info__timestamp {}
+
+    /*li*/.c-meta-info__timestamp__item {}
+
+    /*li*/.c-meta-info__date {}
+
+    /*li*/.c-meta-info__time {}
+
+
+// Nativo meta info
+/*ul*/.c-meta-info--promo {}
+
+
+
+
+
+//
+// Bar
+// ==========================================================================
+
+
+/*ul*/.c-meta-info--bar {
+  @include stdbd( 'top' );
+
+  // Approximate the bottom radii of the panel
+  overflow: hidden;
+  border-radius: 0 0 $c-meta-bar-radius-bottom $c-meta-bar-radius-bottom;
+
+  color: $c-meta-info-color;
+  margin-bottom: 0;
+  background-color: $c-meta-bar-bg;
+  position: relative;
+  z-index: $z-c-meta-bar;
+
+
+  /*ul*/.c-meta-info,
+  /*ul*/.c-meta-info__source,
+  /*ul*/.c-meta-info__timestamp {
+    &__item {
+      line-height: $c-meta-bar-line-height;
+    }
+  }
+
+
+  .c-meta-info__source__icon {
+    @include stdbd('right');
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $c-meta-bar-icon-bg;
+    width: $c-meta-bar-icon-bg-size;
+    height: $c-meta-bar-icon-bg-size;
+
+    // @TODO
+    // scss-lint:disable SelectorFormat
+    .icon {
+      padding-top: halve( $c-meta-bar-icon-p-v );
+      padding-bottom: halve( $c-meta-bar-icon-p-v );
+      color: $white;
+    }
+
+    .c-avatar {
+      display: block;
+    }
+  }
+
+
+  [data-editorial-content] & {
+    @if global-variable-exists( site-theme-name ) {
+
+      .c-meta-info__source__icon {
+        $path: $site-theme-logo-abspath + '/logo_icon-white';
+        $size: $c-meta-info-icon-size;
+
+        background-color: $c-meta-bar-icon-bg--edcon;
+
+        // @TODO
+        // scss-lint:disable SelectorFormat
+        .icon {
+          @if $email {
+            @include iconize(
+              $path: $path,
+              $size: $size,
+              $live-url: true,
+              $size-1x: true
+            );
+          } @else {
+            @include iconize( $path, $size );
+          }
+        }
+      }
+    }
+  }
+
+  // We need to accommodate for circular avatars here
+  [data-editorial-content][data-author-count="1"] & {
+    .c-meta-info__source__icon {
+      background-color: $c-panel-bg;
+      border-right: 0;
+      padding-top: quarter( $c-meta-bar-icon-p-v );
+      padding-bottom: quarter( $c-meta-bar-icon-p-v );
+      padding-left: halve( $c-panel-padding );
+    }
+  } // end [data-editorial-content][data-author-count="1"] &
+
+
+  &.c-meta-info--link {
+    // Adjust optical alignment for FontAwesome external link icon
+    .c-meta-info__source__icon {
+      // @TODO
+      // scss-lint:disable SelectorFormat
+      .icon::before {
+        position: relative;
+        left: 1px;
+        top: 3px;
+
+        @media #{$medium-up} {
+          top: 0;
+        }
+      }
+    }
+  }
+
+  @media #{$medium-up} {
+
+    .c-meta-info__source__icon {
+      height: $c-meta-bar-icon-bg-size--screen-md-up;
+      width: $c-meta-bar-icon-bg-size--screen-md-up;
+
+      // @TODO
+      // scss-lint:disable SelectorFormat
+      .icon {
+        font-size: $c-meta-info-icon-size--screen-md-up;
+      }
+
+      .c-avatar {
+        &,
+        &__img {
+          width: $c-meta-bar-avatar-height;
+          height: $c-meta-bar-avatar-height;
+          background-size: $c-meta-bar-avatar-bg-size;
+        }
+      }
+
+    }
+
+    [data-editorial-content] & {
+      .c-meta-info__source__icon {
+        // @TODO
+        // scss-lint:disable SelectorFormat
+        .icon {
+          @include iconize( null, $c-meta-info-icon-size--screen-md-up, true );
+        }
+      } // end .c-meta-info__source__icon
+    } // end [data-editorial-content] &
+
+  } // end medium-up
+} // end .c-meta-info--bar
+
+
+
+
+
+//
+// Entity
+// ==========================================================================
+
+
+/*ul*/.c-meta-info--entity {}
+
+
+// Meta info for Editorial Content
+[data-editorial-content] .c-meta-info {
+  .c-meta-info__source__icon {
+    // @TODO
+    // scss-lint:disable SelectorFormat
+    .icon {
+      @if not $email {
+        @media #{$medium-up} {
+          // Slight visual offset
+          margin-top: -1px;
+        }
+      } @else {
+        width: c-avatar-property-get( 'size-sm' );
+        height: c-avatar-property-get( 'size-sm' );
+      }
+    }
+  }
+}
+
+
+/*ul*/.c-meta-info--link {
+
+  .c-meta-info__source__icon {
+    // @TODO
+    // scss-lint:disable SelectorFormat
+    .icon::before {
+      position: relative;
+      left: 1px;
+      top: 1px;
+    }
+  }
+
+
+  .c-content__entities & {
+
+    .c-meta-info__source__icon {
+      display: none;
+
+      @media #{$medium-up} {
+        display: inline-block;
+      }
+
+      // @TODO
+      // scss-lint:disable SelectorFormat
+      .icon {
+        font-size: $c-meta-info-icon-size--screen-md-up;
+      }
+
+    }
+
+    .c-meta-info__item--stacked {
+      .c-meta-info__source__icon {
+        display: inline-block;
+
+        @media #{$medium-up} {
+          display: none;
+        }
+
+      }
+
+    } // end .c-meta-info__item--stacked
+
+  } // end .c-content__entities &
+
+} // end .c-meta-info--link
+
+
+/*ul*/.c-meta-info--embed {}
+
+
+/*ul*/.c-meta-info--event {}
+
+
+
+
+
+//
+// Cluster
+// ==========================================================================
+
+
+/*ul*/.c-meta-info--cluster {}
+
+
+/*ul*/.c-meta-info--story {}
+
+
+/*ul*/.c-meta-info--hood {}
+
+
+
+
+
+//
+// Email
+// ==========================================================================
+
+
+/*ul*/.c-meta-info--email {
+  // @TODO
+  // scss-lint:disable SelectorFormat
+
+  li {
+    margin-left: 0;
+  }
+
+  &.c-meta-info--entity {}
+
+}

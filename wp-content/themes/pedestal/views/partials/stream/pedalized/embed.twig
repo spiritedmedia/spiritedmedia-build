@@ -1,0 +1,28 @@
+<article class="{{ macros.get_stream_item_classes( 'pedalized' ) }}  {{ item.css_classes }}"
+         {{ item.get_the_data_atts }}>
+    <a id="{{ item.get_name }}"></a>
+    <div class="entity__inner  c-stream__item__inner  [ o-media  o-media--responsive ]">
+
+        {% if item.has_featured_image() %}
+        <div class="c-stream__item__img  o-media__img">
+            {% include 'partials/stream/item-img.twig' %}
+        </div>
+        {% endif %}
+
+        <div class="c-stream__item__body  o-media__body">
+            {% include 'partials/item-title.twig' %}
+            {% include 'partials/meta-info/meta-info-entity.twig' %}
+
+            {% if item.get_excerpt %}
+            <div class="entity-excerpt js-entity-excerpt">
+                {{ item.get_the_excerpt }}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if 'twitter' == item.get_embed_type( item.get_embed_url ) %}
+        {{ item.get_embed_html() }}
+        {% endif %}
+
+    </div>
+</article>

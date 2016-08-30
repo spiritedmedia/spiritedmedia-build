@@ -1,0 +1,62 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "3582882f0e05df623187de8b875ea1c8",
+    "content-hash": "473fc6a9fb2dc4493e2cd1a204852232",
+    "packages": [
+        {
+            "name": "scribu/scb-framework",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scribu/wp-scb-framework.git",
+                "reference": "95b23ac342fce16bf5eb8d939ac5a361b94b104b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/scribu/wp-scb-framework/zipball/95b23ac342fce16bf5eb8d939ac5a361b94b104b",
+                "reference": "95b23ac342fce16bf5eb8d939ac5a361b94b104b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "."
+                ],
+                "files": [
+                    "load-composer.php",
+                    "Util.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Cristi Burcă",
+                    "homepage": "http://scribu.net/"
+                }
+            ],
+            "description": "A set of useful classes for faster plugin development",
+            "homepage": "https://github.com/scribu/wp-scb-framework",
+            "keywords": [
+                "wordpress"
+            ],
+            "time": "2015-10-25 20:19:41"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "scribu/scb-framework": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

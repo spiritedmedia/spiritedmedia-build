@@ -1,0 +1,8 @@
+.button {
+  border: em(2px) solid $sm-text-color;
+  color: $sm-text-color;
+  text-decoration: none;
+  padding: em(15px);
+  text-transform: uppercase;
+  border-radius: 0.25em;
+}

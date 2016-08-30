@@ -1,0 +1,32 @@
+<table class="iconset--email">
+    <thead>
+        <tr>
+            <th class="cta" colspan="4"><h2>Share this Email</h2></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <a class="social-icon" target="_blank" href="{{ item.get_facebook_share_link }}">
+                    <img src="{{ site.live_urls.theme_parent }}/assets/images/social/png/circle_96x96_facebook.png"
+                        alt="Share on Facebook" title="Share on Facebook" height="48px" width="48px" />
+                </a>
+            </td><td>
+                <a class="social-icon" target="_blank" href="{{ item.get_twitter_share_link }}">
+                    <img src="{{ site.live_urls.theme_parent }}/assets/images/social/png/circle_96x96_twitter.png"
+                        alt="Post to Twitter" title="Post to Twitter" height="48px" width="48px" />
+                </a>
+            </td><td>
+                <a class="social-icon" href="{{ item.get_mailto_share_string }}">
+                    <img src="{{ site.live_urls.theme_parent }}/assets/images/social/png/circle_96x96_email_gray.png"
+                        alt="Forward via email" title="Forward via email" height="48px" width="48px" />
+                </a>
+            </td><td>
+                <a class="social-icon" target="_blank" href="{{ item.get_linkedin_share_link }}">
+                    <img src="{{ site.live_urls.theme_parent }}/assets/images/social/png/circle_96x96_linkedin.png"
+                        alt="Share on LinkedIn" title="Share on LinkedIn" height="48px" width="48px" />
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>

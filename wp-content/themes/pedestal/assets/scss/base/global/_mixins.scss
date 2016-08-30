@@ -1,0 +1,490 @@
+// ==========================================================================
+// Pedestal // Base // Global // MIXINS
+// ==========================================================================
+
+
+/**
+ * Set unhovered and hovered link colors and decoration easily.
+ *
+ * Defaults to `a` selector. If included within another selector, just use `&`
+ *
+ * Unvisited/visited will be the same, hover/active will be the same.
+ */
+@mixin anchorage(
+               $selector: 'a',
+               $unhovered: $anchor-font-color,
+               $unhovered-decoration: $anchor-text-decoration,
+               $hovered: $anchor-font-color-hover,
+               $hovered-decoration: $anchor-text-decoration-hover
+               ) {
+
+  #{$selector} {
+
+    &,
+    &:visited {
+      color: $unhovered;
+      text-decoration: $unhovered-decoration;
+    }
+
+    &:hover,
+    &:active {
+      color: $hovered;
+      text-decoration: $hovered-decoration;
+    }
+
+  }
+}
+
+
+/**
+ * Calculate text color with sufficient contrast with a given background color
+ *
+ * Based on Foundation `button-style` mixin
+ *
+ * @param  {color} $bg:          Background color
+ * @param  {color} $text-light:  $mixin-text-color-light
+ * @param  {color} $text-dark:   $mixin-text-color-dark
+ * @param  {percent} $threshold: Lightness threshold
+ */
+@mixin text-color(
+  $bg,
+  $text-light: $mixin-text-color-light,
+  $text-dark: $mixin-text-color-dark,
+  $threshold: 65%
+) {
+  $bg-lightness: lightness( $bg );
+  color: if( $bg-lightness > $threshold, $text-dark, $text-light );
+}
+
+
+/**
+ * Do styles for small mq and email only
+ *
+ * As email doesn't support media queries but we'd like to write less code, this
+ * will check to see whether the current stylesheet is the email stylesheet.
+ *
+ * If current stylesheet is email stylesheet, then straight up output. If not
+ * email sheet, then contents will be enclosed in a small-only media query.
+ *
+ * @param  {bool} $do-email: true Should email styles be generated?
+ *
+ * @return {@content}
+ */
+@mixin mq-base( $do-email: true ) {
+
+  @if $do-email and $email {
+    @content;
+  }
+
+  @if not $email {
+    @media #{$small-only} {
+      @content;
+    }
+  }
+
+}
+
+
+/**
+ * Break a component out of the bounds of its parent to span viewport width
+ *
+ * @param  {string} $selector:             '&'                          Selector
+ * @param  {unit} $inner-vertical-padding: double( $base-spacing-unit ) Interior vertical padding
+ * @param  {unit} $explode-width:          $hoz-explode-side            Blast radius
+ */
+@mixin explode-component(
+  $selector: '&',
+  $inner-vertical-padding: double( $base-spacing-unit ),
+  $explode-width: $hoz-explode-side
+) {
+  #{$selector} {
+    $margin-top: -( $content-wrapper-m-t + $main-m-t );
+    $margin-hoz: -( $explode-width );
+    margin: $margin-top $margin-hoz 0;
+
+    .has-title-bar & {
+      margin: 0 $margin-hoz;
+    }
+
+    &__inner {
+      padding: $inner-vertical-padding $explode-width;
+    }
+  }
+}
+
+
+
+
+
+//
+// Lists
+// ==========================================================================
+
+
+/**
+ * Remove standard bullets from `li`
+ *
+ * Mixin version of Foundation's `.no-bullet`
+ *
+ * Must be used on a `ul`
+ */
+@mixin no-bullet {
+  // scss-lint:disable SelectorFormat
+  list-style-type: none;
+  margin-#{$default-float}: $list-side-margin-no-bullet;
+
+
+  li {
+    ul,
+    ol {
+      margin-#{$default-float}: $list-nested-margin;
+      margin-bottom: 0;
+      list-style: none;
+    }
+  }
+}
+
+
+/**
+ * Remove custom bullets from `li`
+ *
+ * Must be used on a `ul`
+ */
+@mixin no-bullet-custom {
+  // scss-lint:disable SelectorFormat
+  > li::before {
+    // scss-lint:disable ImportantRule
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+
+/**
+ * A minimal inline list mixin
+ *
+ * https://github.com/inuitcss/objects.list-inline/blob/master/_objects.list-inline.scss
+ */
+@mixin inline-list-min(
+  $no-stacking: true,
+  $line-height: $base-line-height
+  ) {
+
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  // Let the child items determine line height
+  line-height: 1;
+
+  @if $no-stacking {
+
+    @media #{$medium-up} {
+      &__item {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: $line-height;
+      }
+    }
+
+  } @else {
+
+    &__item {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: $line-height;
+    }
+
+  }
+
+}
+
+
+
+
+
+//
+// Icons
+// ==========================================================================
+
+
+@mixin iconset(
+  $diameter: $icon-diameter,
+  $background-color: $grey-lightish,
+  $text-color: $white,
+  $spacing: $icon-spacing
+  ) {
+
+  @include iconset-sizing( $diameter );
+  @include iconset-coloring( $background-color, $text-color );
+  margin: 0;
+  display: inline-block;
+  overflow: visible;
+
+  // @TODO
+  // scss-lint:disable SelectorFormat
+  li {
+    display: inline-block;
+    margin-left: $spacing;
+    text-align: center;
+
+    &.social-icon {
+      a {
+        border-radius: 50%;
+        padding: 0;
+      }
+    }
+  }
+}
+
+
+@mixin iconset-sizing( $diameter: $icon-diameter ) {
+  line-height: $diameter;
+
+  // @TODO
+  // scss-lint:disable SelectorFormat
+  li {
+    height: $diameter;
+    width: $diameter;
+  }
+}
+
+
+@mixin iconset-coloring(
+  $background-color: $grey-lightish,
+  $text-color: $white
+  ) {
+
+  // @TODO
+  // scss-lint:disable QualifyingElement SelectorFormat
+  li.social-icon a {
+    &,
+    &:hover {
+      background-color: $background-color;
+      color: $text-color;
+    }
+  }
+
+}
+
+
+/**
+ * Generate icons and fallbacks from PNG/SVG
+ *
+ * @param  {string} $path:        null                Absolute URI path to the icon
+ * @param  {unit}   $size:        $icon-diameter--med Size of icons to generate
+ * @param  {bool}   $resize-only: false               Set whether to rezize only
+ * @param  {bool}   $path-only:   false               Set whether to change path without resizing
+ * @param  {bool}   $fallback:    true                Set whether to use SVG
+ * @param  {bool}   $fa-colorize: false               Set whether this icon is overriding a FontAwesome icon
+ * @param  {bool}   $live-url:    false               If set, base the image path off the live URL
+ */
+@mixin iconize(
+  $path: '',
+  $size: $icon-diameter--med,
+  $resize-only: false,
+  $path-only: false,
+  $fallback: true,
+  $fa-colorize: false,
+  $live-url: false,
+  $size-1x: false
+) {
+
+  @if $path-only == false {
+    width: $size;
+    height: $size;
+    background-position: center;
+    background-size: $size;
+    background-repeat: no-repeat;
+  }
+
+  @if $resize-only == false {
+
+    @if $path {
+
+      // Normal icons
+      $png-path: $path + '.png';
+      $svg-path: $path + '.svg';
+
+      // FontAwesome png fallbacks
+      @if $fa-colorize {
+        $size-2x: $size * 2;
+
+        $size-path: $size-2x / ( $size-2x * 0 + 1 );
+        @if $size-1x {
+          $size-path: $size / ( $size * 0 + 1 );
+        }
+
+        $icon-base-path: $pedestal-abspath + '/assets/images/icons/';
+        @if $live-url {
+          $icon-base-path: $pedestal-live-uri + '/assets/images/icons/';
+        }
+
+        // Convert color to string
+        $color: '"' + $fa-colorize + '"';
+        $color: str-replace( $color, '#', '' );
+
+        $png-path: $icon-base-path + $color + '/png/' + $size-path + '/' + $path + '.png';
+        $svg-path: $icon-base-path + $color + '/svg/' + $path + '.svg';
+
+      } @elseif $live-url {
+        $png-path: $site-live-url + $path + '.png';
+        $svg-path: $site-live-url + $path + '.svg';
+      }
+
+      background-image: url( "#{$png-path}" );
+
+      @if $fallback {
+        background-image: url( "#{$svg-path}" );
+      }
+
+    } // end @if $path
+
+  } // end @if $resize-only == false
+
+}
+
+
+/**
+ * Load an image placeholder on the given element
+ *
+ * @param  {unit} $size  : $icon-diameter Size of the image
+ * @param  {str}  $shape : square
+ */
+@mixin img-placeholder( $size: $icon-diameter, $shape: square ) {
+  display: block;
+
+  @if global-variable-exists( site-theme-name ) {
+    @include iconize(
+      $path: $site-theme-logo-abspath + '/logo_icon_placeholder',
+      $size: $size
+    );
+  }
+}
+
+
+
+
+
+//
+// Borders
+// ==========================================================================
+
+
+@mixin stdbd(
+  $side: 'all',
+  $width: 1px,
+  $color: $border-std-color,
+  $neut: false
+  ) {
+
+  $valid-sides: 'top' 'right' 'bottom' 'left' 'all';
+
+  @if not sl-contain( $valid-sides, $side ) {
+    @error 'Invalid border side argument specified in mixin `stdbd`'
+  }
+
+  @if 'all' == $side {
+    border: $width $color solid;
+  } @else {
+    @if $neut {
+      border: 0;
+    }
+    border-#{$side}: $width $color solid;
+  }
+
+}
+
+
+@mixin border-divider-scaffold(
+  $size: 1px,
+  $color: $border-std-color,
+  $side: 'bottom',
+  $spacing: $border-divider-spacing
+  ) {
+
+  @include stdbd( $side );
+
+  padding-#{$side}: $spacing;
+  margin-#{$side}: $spacing;
+
+  // Leave orphans alone
+  @if 'bottom' == $side or 'right' == $side {
+    &:last-child:not( :first-child ) {
+      border-#{$side}: none;
+      padding-#{$side}: 0;
+      margin-#{$side}: 0;
+    }
+  } @elseif 'top' == $side or 'left' == $side {
+    &:first-child:not( :last-child ) {
+      border-#{$side}: none;
+      padding-#{$side}: 0;
+      margin-#{$side}: 0;
+    }
+  }
+
+}
+
+
+@mixin border-divider(
+  $side: 'bottom',
+  $color: $border-divider-color,
+  $spacing: $border-divider-spacing,
+  $class: true
+  ) {
+
+  @if $class {
+    &.has-border--#{$side} {
+      @include border-divider-scaffold(
+        $side: $side,
+        $color: $color,
+        $spacing: $spacing
+      );
+    }
+  } @else {
+    @include border-divider-scaffold(
+      $side: $side,
+      $color: $color,
+      $spacing: $spacing
+    );
+  }
+
+}
+
+
+@mixin inline-divider(
+  $side: 'right',
+  $color: $border-divider-color,
+  $spacing: $border-divider-spacing--inline
+  ) {
+
+  @include border-divider( $side, $color, $spacing, false );
+}
+
+
+
+
+
+//
+// Shapes
+// ==========================================================================
+
+
+@mixin corner-triangle( $size: $base-spacing-unit, $color: $primary-color, $corner: 'top-right' ) {
+  width: 0;
+  height: 0;
+
+  @if $corner == 'top-left' {
+    border-top: $size solid $color;
+    border-right: $size solid transparent;
+  } @else if $corner == 'top-right' {
+    border-top: $size solid $color;
+    border-left: $size solid transparent;
+  } @else if $corner == 'bottom-left' {
+    border-right: $size solid transparent;
+    border-bottom: $size solid $color;
+  } @else if $corner == 'bottom-right' {
+    border-bottom: $size solid $color;
+    border-left: $size solid transparent;
+  }
+
+}

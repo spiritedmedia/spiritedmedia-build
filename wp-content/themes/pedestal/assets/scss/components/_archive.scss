@@ -1,0 +1,23 @@
+// ==========================================================================
+// Pedestal // Components // ARCHIVES
+// ==========================================================================
+
+
+// @TODO
+// scss-lint:disable SelectorFormat
+.archive {}
+
+  .archive__nav {}
+// scss-lint:enable SelectorFormat
+
+
+
+/**
+ * Overrides `.c-content`
+ */
+
+.c-content--archive {
+  .c-content__header {
+    margin-bottom: 0;
+  }
+}

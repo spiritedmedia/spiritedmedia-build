@@ -1,0 +1,8 @@
+<div class="c-panel  pedestal-shortcode  {{ item.css_classes }}" data-entity-type="event">
+    <div class="c-panel__inner">
+        {% include 'partials/item-title.twig' %}
+        {{ ped_slot( 'shortcode' ) }}
+        {% include 'partials/events/details.twig' %}
+        {% include 'partials/events/export.twig' %}
+    </div>
+</div>

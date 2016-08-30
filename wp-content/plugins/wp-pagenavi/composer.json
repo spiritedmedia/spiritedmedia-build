@@ -1,0 +1,15 @@
+{
+    "name": "spiritedmedia/wp-pagenavi",
+    "description": "Fork of lesterchan/wp-pagenavi",
+    "type": "wordpress-plugin",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Chris Montgomery",
+            "email": "chris@montchr.io"
+        }
+    ],
+    "require": {
+    	"scribu/scb-framework": "dev-master"
+    }
+}

@@ -1,0 +1,19 @@
+// ==========================================================================
+// Pedestal // Components // Factcheck // CONFIGURATION
+// ==========================================================================
+
+
+$c-factcheck-settings: () !default;
+
+
+
+
+
+//
+// Functions
+// ==========================================================================
+
+
+@function c-factcheck-property-get( $property ) {
+  @return map-get-strict( $c-factcheck-settings, $property );
+}

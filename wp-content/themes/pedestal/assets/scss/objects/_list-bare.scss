@@ -1,0 +1,16 @@
+// ==========================================================================
+// Pedestal // Objects // BARE LIST
+// ==========================================================================
+
+/**
+ * The list-bare object simply removes any indents and bullet points from lists.
+ *
+ * https://github.com/inuitcss/objects.list-bare
+ */
+
+.o-list-bare,
+%o-list-bare {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

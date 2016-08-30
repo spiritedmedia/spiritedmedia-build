@@ -1,0 +1,607 @@
+{% macro is_pinned( context, component = null ) %}
+{% spaceless %}
+    {% if context.item.is_pinned and not context.is_search %}
+        {% if component %}
+            c-{{ component }}--pinned
+        {% else %}
+            is-pinned
+        {% endif %}
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+
+
+
+
+{% macro get_pinned_styles( context, element ) %}
+{% spaceless %}
+    {% set story = context.item.get_story %}
+    {% if context.item.is_pinned and story.has_story_branding and not context.is_search %}
+        {% if 'border' == element %}
+            style="border: 3px solid {{ story.get_title_bar_background_color }};"
+        {% elseif 'pin' == element %}
+            style="color: {{ story.get_title_bar_foreground_color }};"
+        {% endif %}
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+
+
+
+
+{% macro has_title_bar( context ) %}
+{% spaceless %}
+    {% if context.item.has_story() %}
+        {% if not context.grouped %}
+            has-title-bar
+        {% endif %}
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
+
+
+
+
+
+{% macro get_stream_item_classes( stream_name ) %}
+    {% spaceless %}
+    {% set classes = 'c-stream__item  js-stream-item' %}
+
+    {% if 'isolated' == stream_name %}
+        {% set classes = 'c-panel' ~ '  ' ~ classes %}
+    {% elseif 'ladder' == stream_name %}
+        {% set classes = 'c-panel__inner' ~ '  ' ~ classes %}
+    {% elseif 'pedalized' == stream_name %}
+        {% set classes = 'o-rule  o-rule--pedal' ~ '  ' ~ classes %}
+    {% endif %}
+
+    {{ classes }}
+    {% endspaceless %}
+{% endmacro %}
+
+
+
+
+
+{% macro blox( context, options ) %}
+    {% set defaults = {
+        'component': '',
+        'blox_classes': '',
+        'component_classes': '',
+        'layout': '',
+        'prefix': '',
+        'suffix': '',
+        'background_color': '',
+        'title_element': 'h4',
+        'title': '',
+        'subtitle': '',
+        'url': '',
+        'size': '',
+        'expand': false,
+        'offset': false
+    } %}
+    {% if options %}
+        {% set options = defaults|merge( options ) %}
+    {% else %}
+        {% set options = defaults %}
+    {% endif %}
+
+    {# Recode/Extract #}
+    {% if options.component starts with 'c-' %}
+        {% set component = options.component %}
+    {% else %}
+        {% set component = 'c-' ~ options.component %}
+    {% endif %}
+    {% set component_js_hook = 'js-' ~ component|replace( { 'c-': '' } ) %}
+    {% set blox_classes = options.blox_classes %}
+    {% set component_classes = options.component_classes %}
+    {% set layout = options.layout %}
+    {% set prefix = options.prefix %}
+    {% set suffix = options.suffix %}
+    {% if options.background_color %}
+        {% set background_color = 'style="background-color: ' ~ options.background_color ~ ';"' %}
+    {% endif %}
+    {% if options.foreground_color %}
+        {% set foreground_color = 'style="color: ' ~ options.foreground_color ~ ';"' %}
+    {% endif %}
+    {% set title_element = options.title_element %}
+    {% set title = options.title %}
+    {% set subtitle = options.subtitle %}
+    {% set url = options.url %}
+    {% set size = options.size %}
+    {% set expand = options.expand %}
+    {% set offset = options.offset %}
+
+    {% set this = 'o-blox' %}
+
+    {# Sizes #}
+    {% if 'sm' == size %}
+        {% set blox_classes = this ~ '--sm' ~ '  ' ~ blox_classes %}
+    {% elseif 'md' == size %}
+        {% set blox_classes = this ~ '--md' ~ '  ' ~ blox_classes %}
+    {% elseif 'lg' == size %}
+        {% set blox_classes = this ~ '--lg' ~ '  ' ~ blox_classes %}
+    {% elseif 'xlg' == size %}
+        {% set blox_classes = this ~ '--xlg' ~ '  ' ~ blox_classes %}
+    {% endif %}
+
+    {% if 'inline' == layout %}
+        {% set blox_classes = this ~ '--inline' ~ '  ' ~ blox_classes %}
+    {% endif %}
+
+    {% if expand %}
+        {% set blox_classes = this ~ '--expand' ~ '  ' ~ blox_classes %}
+    {% endif %}
+
+    {% if offset %}
+        {% set blox_classes = this ~ '--offset' ~ '  ' ~ blox_classes %}
+    {% endif %}
+
+    {% if subtitle %}
+        {% set blox_classes = this ~ '--has-subtitle' ~ '  ' ~ blox_classes %}
+    {% endif %}
+
+    <div class="[ {{ component_classes }}  {{ component }} ]  [ {{ blox_classes }} {{ this }} ]  {{ component_js_hook }}">
+        <div class="{{ component }}__inner  {{ this }}__inner  u-cf" {{ background_color }}>
+
+            {% if prefix %}
+            <div class="[ {{ component }}__prefix  {{ component }}__item ]  [ {{ this }}__prefix  {{ this }}__item ]">
+                {{ prefix }}
+            </div>
+            {% endif %}
+
+            {% if suffix %}
+            <div class="[ {{ component }}__suffix  {{ component }}__item ]  [ {{ this }}__suffix  {{ this }}__item ]">
+                {{ suffix }}
+            </div>
+            {% endif %}
+
+            <{{ title_element }} class="[ {{ component }}__text  {{ component }}__item ]  {{ this }}__text  {{ this }}__item">
+                <a href="{{ url }}" class="{{ component }}__text__link  {{ this }}__text__link  {{ component_js_hook }}-link" {{ foreground_color }}>
+                    <span class="[ {{ component }}__text__title  {{ component }}__text__item ]  [ {{ this }}__text__title  {{ this }}__text__item ]   {{ component_js_hook }}-title">{{ title }}</span>
+                    {% if subtitle %}
+                    <span class="[ {{ component }}__text__subtitle  {{ component }}__text__item ]  [ {{ this }}__text__subtitle  {{ this }}__text__item ]">{{ subtitle }}</span>
+                    {% endif %}
+                </a>
+            </{{ title_element }}>
+
+        </div>
+    </div>
+
+{% endmacro %}
+
+
+
+
+
+{% macro title_bar( context, options ) %}
+    {% import _self as macros %}
+
+    {% set defaults = {
+        'component': 'title-bar',
+        'extra_classes': '',
+        'location': '',
+        'type': '',
+        'layout': '',
+        'title': '',
+        'subtitle': '',
+        'url': '',
+        'size': '',
+        'expand': false,
+        'display': false,
+        'require_fallback': false
+    } %}
+    {% if options %}
+        {% set options = defaults|merge( options ) %}
+    {% else %}
+        {% set options = defaults %}
+    {% endif %}
+
+    {% set item = context.item %}
+    {% set offset = false %}
+    {% set prefix = false %}
+    {% set suffix = false %}
+
+    {# Recode/Extract #}
+    {% if options.component starts with 'c-' %}
+        {% set component = options.component %}
+    {% else %}
+        {% set component = 'c-' ~ options.component %}
+    {% endif %}
+    {% set extra_classes = options.extra_classes %}
+    {% set type = options.type %}
+    {% set layout = options.layout %}
+    {% set expand = options.expand %}
+    {% set size = options.size %}
+    {% set display = options.display %}
+    {% set title = options.title %}
+    {% set subtitle = options.subtitle %}
+    {% set url = options.url %}
+    {% set require_fallback = options.require_fallback %}
+
+    {# Locations #}
+    {% if 'header' == options.location %}
+        {% set title_element = 'h2' %}
+        {% set title_element = 'h2' %}
+        {% set size = 'lg' %}
+        {% set expand = true %}
+    {% else %}
+        {% set title_element = 'h4' %}
+    {% endif %}
+
+    {# Types #}
+    {% if 'promo' == type %}
+        {% set extra_classes = component ~ '--promo' ~ '  ' ~ extra_classes %}
+    {% endif %}
+
+    {# Content #}
+    {% if item.is_entity and item.has_story and item.get_story.get_title %}
+        {% set display = true %}
+        {% set default_title = item.get_story.get_the_title %}
+        {% set story_branding = item.get_story.get_story_branding %}
+        {% set default_url = item.get_story.get_permalink %}
+        {% if not context.grouped %}
+            {% set offset = true %}
+        {% endif %}
+    {% elseif not item.is_entity %}
+        {% set display = true %}
+        {% set story_branding = item.get_story_branding %}
+        {% set default_title = item.get_the_title %}
+        {% set default_url = item.get_permalink %}
+        {% if item.schema %}
+            {% set default_title = item.schema|replace( { '-': ' ' } )|capitalize %}
+        {% endif %}
+    {% endif %}
+
+    {% set title = title|default( default_title ) %}
+    {% set url = url|default( default_url ) %}
+
+    {% if item.is_story or item.has_story and story_branding %}
+        {% set extra_classes = component ~ '--customized' ~ '  ' ~ extra_classes %}
+        {% set background_color = story_branding['background_color'] %}
+        {% set foreground_color = story_branding['foreground_color'] %}
+        {% if story_branding['icon'] %}
+            {% set icon_url = story_branding['icon'] %}
+            {% if require_fallback %}
+                {% set icon_url = story_branding['fallback_icon'] %}
+            {% endif %}
+            {% set prefix = '<img src="' ~ icon_url ~ '" alt="' ~ title ~ '">' %}
+        {% endif %}
+    {% endif %}
+
+
+    {% if display and title %}
+
+        {% if item.is_pinned and context.is_home %}
+        {% set suffix %}
+            <div class="{{ component }}__pin">
+                {% include 'partials/stream/panel-pin.twig' %}
+            </div>
+        {% endset %}
+        {% endif %}
+
+        {{ macros.blox( context, {
+            'component': component,
+            'component_classes': extra_classes,
+            'layout': layout,
+            'suffix': suffix,
+            'prefix': prefix,
+            'title_element': title_element,
+            'title': title,
+            'subtitle': subtitle,
+            'url': url,
+            'size': size,
+            'expand': expand,
+            'offset': offset,
+            'background_color': background_color,
+            'foreground_color': foreground_color
+        } ) }}
+
+    {% endif %}
+
+{% endmacro %}
+
+
+
+
+
+{% macro nativo( name ) %}
+    <div class="nativo-{{ name }}  js-nativo-{{ name }}"></div>
+{% endmacro %}
+
+
+
+
+
+{##
+ # User Cards
+ #}
+{% macro user_card( context, user, options ) %}
+    {% set defaults = {
+        'img_size': 'thumbnail',
+        'twitter': true,
+        'format': 'compact',
+        'float': true,
+        'posts': false
+    } %}
+    {% if options %}
+        {% set options = defaults|merge( options ) %}
+    {% else %}
+        {% set options = defaults %}
+    {% endif %}
+
+
+    {# Valid formats #}
+    {% set valid_format = false %}
+    {% set formats = [
+        'compact',
+        'extended',
+        'grid'
+    ] %}
+    {% if options.format in formats %}
+        {% set valid_format = true %}
+    {% endif %}
+
+    {# Valid image sizes #}
+    {% set valid_img_size = false %}
+    {% set img_sizes = [
+        'thumbnail',
+        'medium',
+        'medium-square',
+        'large'
+    ] %}
+    {% if options.img_size in img_sizes %}
+        {% set valid_img_size = true %}
+    {% endif %}
+
+
+    {% set block_classes = '' %}
+    {% set inner_classes = '' %}
+    {% set name_classes = 'u-size-h4' %}
+    {% set title_classes = 'u-size-h5' %}
+    {% set img_classes = '' %}
+    {% set bio_element = 'p' %}
+
+
+    {% if user.get_email and valid_format and valid_img_size %}
+        {% set type = options.format %}
+        {% set name_element = 'h4' %}
+
+        {% set name = user.get_display_name %}
+        {% set email = user.get_public_email %}
+        {% set url = user.get_permalink %}
+        {% set title = user.get_title %}
+
+        {% set img_size = options.img_size %}
+        {% set img_classes = 'c-user-card__img  img--' ~ img_size ~ '  ' ~ img_classes %}
+        {% set img = user.get_avatar( img_size ) %}
+
+        {% set pagination = user.get_stream_pagination %}
+        {% set is_first_page = user.get_stream.is_first_page %}
+        {% set is_last_page = user.get_stream.is_last_page %}
+
+        {% set site = context.site %}
+        {% set items = context.items %}
+        {% set macros = context.macros %}
+
+        {% if 'compact' == options.format  %}
+            {% set bio = user.get_short_bio %}
+            {% set bio_class = 'c-user-card__bio--short' %}
+        {% elseif 'extended' == options.format %}
+            {% if user.get_extended_bio %}
+                {% set bio = user.get_extended_bio %}
+            {% else %}
+                {% set bio = user.get_short_bio %}
+            {% endif %}
+            {% set bio_class = 'c-user-card__bio--extended' %}
+            {% set bio_element = 'div' %}
+            {% set name_classes = '' %}
+            {% set title_classes = 'u-size-h3' %}
+        {% endif %}
+
+        {% if options.float %}
+            {% set block_classes = 'o-media  o-media--responsive' %}
+            {% if 'medium-square' == img_size %}
+                {% set block_classes = 'o-media--large' ~ '  ' ~ block_classes %}
+            {% endif %}
+            {% set inner_classes = 'o-media__body' %}
+            {% set img_classes = 'o-media__img' ~ '  ' ~ img_classes %}
+        {% endif %}
+
+        {% if options.twitter %}
+            {% set twitter_handle = user.get_twitter_username %}
+            {% set twitter_url = 'https://twitter.com/' ~ twitter_handle %}
+
+            {% if twitter_handle %}
+                {% set twitter_html %}
+                    {% spaceless %}
+                    <a href="{{ twitter_url }}" class="o-icon-text">
+                        <i class="o-icon-text__icon fa fa-twitter"></i>
+                        <span class="c-user-card__twitter__handle">@{{ twitter_handle }}</span>
+                    </a>
+                    {% endspaceless %}
+                {% endset %}
+            {% endif %}
+        {% endif %}
+
+        {% set email_html %}
+            <a href="mailto:{{ email }}" class="o-icon-text">
+                <i class="o-icon-text__icon fa fa-envelope"></i>
+                <span itemprop="email">{{ email }}</span>
+            </a>
+        {% endset %}
+
+        <section class="[ c-user-card  c-user-card--{{ type }} ]  {{ block_classes }}" itemscope itemtype="http://schema.org/Person">
+
+            {% if img %}
+            <a href="{{ url }}" class="{{ img_classes }}">
+                {{ img }}
+            </a>
+            {% endif %}
+
+            <div class="c-user-card__inner {{ inner_classes }}">
+
+                <h1 class="c-user-card__name {{ name_classes }}">
+                    <a href="{{ url }}" itemprop="url">
+                        <span itemprop="name">{{ name }}</span>
+                    </a>
+                </h1>
+
+                <h2 class="c-user-card__title {{ title_classes }}" itemprop="jobTitle">{{ title }}</h2>
+
+                <hr class="c-user-card__rule  o-rule--slim">
+
+                <div class="c-user-card__details">
+
+                    <p class="c-user-card__email  c-user-card__details__item">
+                        {{ email_html }}
+                    </p>
+
+                    {% if options.twitter and twitter_handle %}
+                    <p class="c-user-card__twitter  c-user-card__details__item">
+                        {{ twitter_html }}
+                    </p>
+                    {% endif %}
+                </div>
+
+                {% if bio and is_first_page %}
+                <{{ bio_element }} class="c-user-card__bio lead {{ bio_class }}" itemprop="description">
+                    {{ bio }}
+                </{{ bio_element }}>
+                {% endif %}
+
+                {% if options.posts and items %}
+
+                    <section class="c-user-card__entities  c-stream  c-stream--pedalized  js-stream">
+                        <header class="c-stream__header">
+                            <h1 class="c-stream__title  c-stream__header__item">Recent Articles</h1>
+                            {% if pagination %}
+                                <div class="c-stream__paged  c-stream__header__item">
+                                    {{ macros.pagination( pagination, { 'show_nav': false } ) }}
+                                </div>
+                            {% endif %}
+                            <hr class="c-stream__header__rule  o-rule" />
+                        </header>
+
+                        <div class="c-stream__items  js-stream-items">
+                            {% for item in items %}
+                                {% include [
+                                    'partials/stream/pedalized/' ~ item.get_type ~ '.twig',
+                                    'partials/stream/pedalized/entity.twig'
+                                ] %}
+                            {% endfor %}
+                        </div>
+
+                        {% if pagination or is_last_page %}
+                            {% if is_last_page %}
+                                {% set last_page_classes = 'o-rule--closure  o-rule' %}
+                            {% endif %}
+                            <footer class="c-stream__footer {{ last_page_classes }}">
+                                {{ macros.pagination( pagination ) }}
+                            </footer>
+                        {% endif %}
+                    </section>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+    {% endif %}
+{% endmacro %}
+
+
+
+
+
+{% macro pagination( data, options ) %}
+    {% if data %}
+
+    {% set defaults = {
+        'show_text': true,
+        'show_nav': true
+    } %}
+    {% if options %}
+        {% set options = defaults|merge( options ) %}
+    {% else %}
+        {% set options = defaults %}
+    {% endif %}
+
+    {% set url_prev_disabled = 'is-disabled  js-is-disabled' %}
+    {% set url_next_disabled = 'is-disabled  js-is-disabled' %}
+
+    {# Number of page buttons visible #}
+    {% set num_pages_visible = data.page_numbers.smaller|length + data.page_numbers.larger|length + 1 %}
+    {% if 2 == num_pages_visible %}
+        {% set num_pages_visible_fraction = 'halves' %}
+    {% elseif 3 == num_pages_visible %}
+        {% set num_pages_visible_fraction = 'thirds' %}
+    {% elseif 4 == num_pages_visible %}
+        {% set num_pages_visible_fraction = 'fourths' %}
+    {% elseif 5 == num_pages_visible %}
+        {% set num_pages_visible_fraction = 'fifths' %}
+    {% endif %}
+
+    {# Previous #}
+    {% if data.previous %}
+        {% set url_prev = data.previous %}
+        {% set url_prev_disabled = '' %}
+    {% else %}
+        {% set url_prev = '#' %}
+    {% endif %}
+
+    {# Next #}
+    {% if data.next %}
+        {% set url_next = data.next %}
+        {% set url_next_disabled = '' %}
+    {% else %}
+        {% set url_next = '#' %}
+    {% endif %}
+
+
+    <div class="c-pagination  js-pagination  c-pagination--{{ num_pages_visible_fraction }}" aria-label="Pagination">
+
+        {% if options.show_text %}
+        <div class="c-pagination__text">
+            Page <span class="c-pagination__text__paged">{{ data.pages_text.paged }}</span> of <span class="c-pagination__text__total">{{ data.pages_text.total }}</span>
+        </div>
+        {% endif %}
+
+        {% if options.show_nav %}
+
+        <div class="c-pagination__inner">
+
+            <a href="{{ url_prev }}" class="c-pagination__dir--prev  c-pagination__dir  c-pagination__item {{ url_prev_disabled }}  js-pagination-item">
+                <i class="c-pagination__dir__icon  fa  fa-angle-left"></i>
+            </a>
+
+            {% for num, url in data.page_numbers.smaller %}
+                <a href="{{ url }}" class="c-pagination__num  c-pagination__num--smaller  c-pagination__item  js-pagination-item">
+                    {{ num|replace({ 'p_': '' }) }}
+                </a>
+            {% endfor %}
+
+            <a href="#" class="c-pagination__num  c-pagination__num--current  c-pagination__item  is-disabled  js-is-disabled  js-pagination-item">
+                {{ data.page_numbers.current }}
+            </a>
+
+            {% for num, url in data.page_numbers.larger %}
+                <a href="{{ url }}" class="c-pagination__num  c-pagination__num--larger  c-pagination__item  js-pagination-item">
+                    {{ num|replace({ 'p_': '' }) }}
+                </a>
+            {% endfor %}
+
+            <a href="{{ url_next }}" class="c-pagination__dir--next  c-pagination__dir  c-pagination__item  {{ url_next_disabled }}  js-pagination-item">
+                <i class="c-pagination__dir__icon  fa  fa-angle-right"></i>
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+    {% endif %}
+{% endmacro %}

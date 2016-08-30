@@ -1,0 +1,32 @@
+// ==========================================================================
+// Pedestal // Base // Email // SETTINGS
+// ==========================================================================
+
+
+@import 'units';
+@import '../../base/global/settings';
+
+
+
+
+
+$email                        : true;
+
+$include-html-type-classes    : false;
+$include-html-global-classes  : false;
+
+$email-max-width              : 700px;
+$email-content-padding        : 20px;
+
+$email-header-logo-w          : 300px;
+$email-header-logo-img-w      : 280px;
+$email-header-social-w        : 250px;
+
+$email-footer-f-z             : $small-font-size;
+$email-footer-m-h             : $base-line-height;
+$email-footer-p-b             : $base-line-height * 1.25;
+
+$email-follow-update-date-f-z : $h3-font-size;
+
+$table-head-padding           : $half-spacing-unit;
+$table-row-padding            : $table-head-padding;

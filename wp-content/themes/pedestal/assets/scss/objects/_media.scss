@@ -1,0 +1,380 @@
+// ==========================================================================
+// Pedestal // Objects // MEDIA OBJECT
+//
+// Place any image- and text-like content side-by-side
+//
+// http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/
+// https://github.com/inuitcss/objects.media
+// ==========================================================================
+
+
+
+
+
+
+.o-media,
+%o-media {
+  @include clearfix;
+  display: block;
+}
+
+  .o-media__img,
+  %o-media__img {
+    float: left;
+    margin-right: $o-media-gutter;
+
+    // scss-lint:disable SelectorFormat
+    > img {
+      display: block;
+    }
+
+  }
+
+  .o-media__body,
+  %o-media__body {
+    overflow: hidden;
+    display: block;
+
+    &,
+    > :last-child {
+      margin-bottom: 0;
+    }
+
+  }
+
+
+
+
+
+@if ( $enable-o-media--tiny == true ) {
+
+  /**
+   * Tiny media objects.
+   */
+
+  .o-media--tiny,
+  %o-media--tiny {
+
+    > .o-media__img,
+    > %o-media__img {
+      margin-right: $o-media-gutter--tiny;
+    }
+
+    @if ( $enable-o-media--rev == true ) {
+
+      /**
+       * Tiny reversed media objects.
+       */
+
+      &.o-media--rev,
+      &%o-media--rev {
+
+        > .o-media__img,
+        > %o-media__img {
+          margin-right: 0;
+          margin-left: $o-media-gutter--tiny;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+@if ( $enable-o-media--small == true ) {
+
+  /**
+   * Small media objects.
+   */
+
+  .o-media--small,
+  %o-media--small {
+
+    > .o-media__img,
+    > %o-media__img {
+      margin-right: $o-media-gutter--small;
+    }
+
+    @if ( $enable-o-media--rev == true ) {
+
+      /**
+       * Small reversed media objects.
+       */
+
+      &.o-media--rev,
+      &%o-media--rev {
+
+        > .o-media__img,
+        > %o-media__img {
+          margin-right: 0;
+          margin-left: $o-media-gutter--small;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+@if ( $enable-o-media--large == true ) {
+
+  /**
+   * Large media objects.
+   */
+
+  .o-media--large,
+  %o-media--large {
+
+    > .o-media__img,
+    > %o-media__img {
+      margin-right: $o-media-gutter--large;
+    }
+
+    @if ( $enable-o-media--rev == true ) {
+
+      /**
+       * Large reversed media objects.
+       */
+
+      &.o-media--rev,
+      &%o-media--rev {
+
+        > .o-media__img,
+        > %o-media__img {
+          margin-right: 0;
+          margin-left: $o-media-gutter--large;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+@if ( $enable-o-media--huge == true ) {
+
+  /**
+   * Huge media objects.
+   */
+
+  .o-media--huge,
+  %o-media--huge {
+
+    > .o-media__img,
+    > %o-media__img {
+      margin-right: $o-media-gutter--huge;
+    }
+
+    @if ( $enable-o-media--rev == true ) {
+
+      /**
+       * Huge reversed media objects.
+       */
+
+      &.o-media--rev,
+      &%o-media--rev {
+
+        > .o-media__img,
+        > %o-media__img {
+          margin-right: 0;
+          margin-left: $o-media-gutter--huge;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+
+
+
+
+@if ( $enable-o-media--rev == true ) {
+
+  /**
+   * Reversed image location ( right instead of left ). Extends `.o-media`.
+   */
+
+  .o-media--rev,
+  %o-media--rev {
+
+    > .o-media__img,
+    > %o-media__img {
+      float: right;
+      margin-right: 0;
+      margin-left: $o-media-gutter;
+    }
+
+  }
+
+}
+
+
+
+
+
+@if ( $enable-o-media--flush == true ) {
+
+  /**
+   * Flush media objects have no space between the image- and text-content.
+   */
+
+  .o-media--flush,
+  %o-media--flush {
+
+    > .o-media__img,
+    > %o-media__img {
+      margin-right: 0;
+      margin-left: 0;
+    }
+
+  }
+
+}
+
+
+
+
+
+//
+// Responsive Media Objects
+// ==========================================================================
+// There is a very pragmatic, simple implementation of a responsive o-media
+// object, which simply places the text-content beneath the image-content.
+//
+// We use a `max-width` media query because:
+//
+// a ) it is the least verbose method in terms of amount of code required.
+// b ) the media object’s default state is image-next-to-text, so its stacked
+//    state is the exception, rather than the rule.
+
+
+@if ( $enable-o-media--responsive == true ) {
+
+
+@media screen and ( max-width: $o-media-collapse-at ) {
+
+  .o-media--responsive,
+  %o-media--responsive {
+
+    /**
+     * Rework the spacings on regular media objects.
+     */
+    > .o-media__img,
+    > %o-media__img {
+      float: none;
+      margin-right: 0;
+      margin-bottom: $o-media-gutter;
+      margin-left: 0;
+    }
+
+    @if ( $enable-o-media--tiny == true ) {
+
+      /**
+       * Tiny responsive media objects.
+       *
+       * Take a little more heavy-handed approach to reworking
+       * spacings on media objects that are also tiny media objects
+       * in their regular state.
+       */
+
+      &.o-media--tiny,
+      &%o-media--tiny {
+
+        > .o-media__img,
+        > %o-media__img {
+          margin-right: 0;
+          margin-left: 0;
+          margin-bottom: $o-media-gutter--tiny;
+        }
+
+      }
+
+    } // end @if
+
+    @if ( $enable-o-media--small == true ) {
+
+      /**
+       * Small responsive media objects.
+       *
+       * Take a little more heavy-handed approach to reworking
+       * spacings on media objects that are also small media objects
+       * in their regular state.
+       */
+
+      &.o-media--small,
+      &%o-media--small {
+
+        > .o-media__img,
+        > %o-media__img {
+          margin-right: 0;
+          margin-left: 0;
+          margin-bottom: $o-media-gutter--small;
+        }
+
+      }
+
+    } // end @if
+
+    @if ( $enable-o-media--large == true ) {
+
+      /**
+       * Large responsive media objects.
+       *
+       * Take a little more heavy-handed approach to reworking
+       * spacings on media objects that are also large media objects
+       * in their regular state.
+       */
+
+      &.o-media--large,
+      &%o-media--large {
+
+        > .o-media__img,
+        > %o-media__img {
+          margin-right: 0;
+          margin-left: 0;
+          margin-bottom: $o-media-gutter--large;
+        }
+
+      }
+
+    } // end @if
+
+    @if ( $enable-o-media--huge == true ) {
+
+      /**
+       * Huge responsive media objects.
+       *
+       * Take a little more heavy-handed approach to reworking
+       * spacings on media objects that are also huge media objects
+       * in their regular state.
+       */
+
+      &.o-media--huge,
+      &%o-media--huge {
+
+        > .o-media__img,
+        > %o-media__img {
+          margin-right: 0;
+          margin-left: 0;
+          margin-bottom: $o-media-gutter--huge;
+        }
+
+      }
+
+    } // end @if
+
+  } // end .o-media--responsive
+
+} // end @o-media
+
+} // end @if

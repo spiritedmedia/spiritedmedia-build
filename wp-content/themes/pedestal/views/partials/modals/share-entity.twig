@@ -1,0 +1,29 @@
+<div id="share-article" class="[ reveal-modal  dark-reveal-modal ]  small  js-share-modal" data-reveal>
+    <a class="close-reveal-modal">&#215;</a>
+    <ul class="side-nav">
+        <li>
+            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn" target="_blank" href="{{ item.get_facebook_share_link }}" data-share-dest="facebook">
+                <i class="button--iconic__icon fa fa-facebook"></i>
+                <span class="button--iconic__text">facebook</span>
+            </a>
+        </li>
+        <li>
+            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn" target="_blank" href="{{ item.get_twitter_share_link }}" data-share-dest="twitter">
+                <i class="button--iconic__icon fa fa-twitter"></i>
+                <span class="button--iconic__text">twitter</span>
+            </a>
+        </li>
+        <li>
+            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn" target="_blank" href="{{ item.get_linkedin_share_link }}" data-share-dest="linkedin">
+                <i class="button--iconic__icon fa fa-linkedin"></i>
+                <span class="button--iconic__text">linkedin</span>
+            </a>
+        </li>
+        <li>
+            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn" target="_blank" href="{{ item.get_mailto_share_string }}" data-share-dest="email">
+                <i class="button--iconic__icon fa fa-envelope"></i>
+                <span class="button--iconic__text">email</span>
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,25 @@
+{% extends "base-email.twig" %}
+
+{% block content %}
+
+<div class="email-constrain content-wrapper">
+
+    <div id="entity-container" class="email-subscription  c-panel  has-cap">
+
+        <div class="c-panel__inner">
+
+            <h3 class="h-email-subscription-confirmed">Unsubscribe Successful</h3>
+
+            <h2 class="h-email-subscription-confirmed-msg">You will no longer receive {{ site.name }} Daily or breaking news emails</h2>
+
+        </div>
+
+        <p class="cap">
+            <a class="cap__btn" href="{{ site.url }}">Return to {{ site.name }}</a>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

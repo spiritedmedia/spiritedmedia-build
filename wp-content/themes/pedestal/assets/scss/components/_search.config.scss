@@ -1,0 +1,29 @@
+// ==========================================================================
+// Pedestal // Components // Search // CONFIGURATION
+// ==========================================================================
+
+
+$c-search-settings: (
+  form-m-b: $base-spacing-unit,
+  input-pd: $half-spacing-unit,
+  input-f-z: $h4-font-size,
+  input-icon-w: 40px,
+  input-icon-color: $grey-dark,
+  input-color: $grey-darker,
+  input-bd-color: $grey-80,
+  filter-link-pd: 5px,
+  filter-link-spacing: $base-spacing-unit
+) !default;
+
+
+
+
+
+//
+// Functions
+// ==========================================================================
+
+
+@function c-search-property-get( $property ) {
+  @return map-get-strict( $c-search-settings, $property );
+}

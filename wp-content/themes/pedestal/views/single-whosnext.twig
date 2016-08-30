@@ -1,0 +1,15 @@
+{% extends "layout-flat.twig" %}
+
+
+{% block title_bar %}
+    {{ macros.title_bar( _context, { background_color : item.get_inline_styles } ) }}
+{% endblock %}
+
+
+{% block content__meta %}
+{% endblock %}
+
+
+{% block content__body %}
+    {% include 'partials/whosnext/content.twig' %}
+{% endblock %}

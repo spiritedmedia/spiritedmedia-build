@@ -1,0 +1,44 @@
+// ==========================================================================
+// Pedestal // Components // EXPORTER
+// ==========================================================================
+
+
+.c-exporter {
+  text-align: center;
+
+  // @TODO
+  // scss-lint:disable SelectorFormat
+  > .inner {
+    @include stdbd;
+  }
+}
+
+
+  .c-exporter__item {
+    // Not quite 33% because that doesn't work so well in email clients
+    width: 32%;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    padding-top: $c-exporter-item-p-t;
+    padding-bottom: $c-exporter-item-p-b;
+  }
+
+
+    .c-exporter__item__link {}
+
+
+      .c-exporter__item__icon {
+        // Remove icon text margin when displaying block
+        margin-right: 0;
+      }
+
+
+      .c-exporter__item__text {
+        text-transform: uppercase;
+        text-align: center;
+
+        @media #{$medium-up} {
+          font-size: $c-exporter-item-icon-f-z;
+        }
+      }
