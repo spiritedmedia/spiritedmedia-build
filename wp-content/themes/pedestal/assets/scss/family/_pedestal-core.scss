@@ -25,9 +25,9 @@
 @import '../base/theme/settings';
 @import '../base/global/__config';
 @import '../objects/__config';
+@import '../scopes/__config';
 @import '../layouts/__config';
 @import '../components/__config';
-@import '../scopes/__config';
 // scss-lint:enable ImportPath
 
 
@@ -74,6 +74,19 @@
 @import '../objects/cap';
 @import '../objects/blox';
 @import '../objects/list-bare';
+
+
+
+
+
+// ==========================================================================
+// Pedestal // SCOPES
+//
+// http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/#scope-namespaces-s-
+// ==========================================================================
+
+
+@import '../scopes/post-content';
 
 
 
@@ -133,19 +146,6 @@
 @import '../components/everyblock';
 @import '../components/powered-by';
 @import '../components/footer';
-
-
-
-
-
-// ==========================================================================
-// Pedestal // SCOPES
-//
-// http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/#scope-namespaces-s-
-// ==========================================================================
-
-
-@import '../scopes/post-content';
 
 
 

@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Editor Style
  *
- * Version: 4.0.4
+ * Version: 4.0.5
  *
  * Copyright ( c ) 2016 Spirited Media
  */
@@ -31,8 +31,8 @@
 @import 'base/theme/settings';
 @import 'base/global/__config';
 @import 'objects/__config';
-@import 'components/__config';
 @import 'scopes/__config';
+@import 'components/__config';
 // scss-lint:enable ImportPath
 
 
@@ -80,6 +80,17 @@
 
 
 // ==========================================================================
+// Pedestal // * Editor Style * // SCOPES
+// ==========================================================================
+
+
+@import 'scopes/post-content';
+
+
+
+
+
+// ==========================================================================
 // Pedestal // * Editor Style * // COMPONENTS
 // ==========================================================================
 
@@ -95,17 +106,6 @@
 @import 'components/meta-info';
 @import 'components/avatar';
 @import 'components/slots';
-
-
-
-
-
-// ==========================================================================
-// Pedestal // * Editor Style * // SCOPES
-// ==========================================================================
-
-
-@import 'scopes/post-content';
 
 
 
