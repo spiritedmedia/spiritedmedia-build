@@ -2,49 +2,18 @@
 
 namespace Pedestal\Objects;
 
-use \Maknz\Slack\Client;
-
 class Notifications {
 
     private $client;
 
     private $defaults = [
         'username'       => PEDESTAL_SLACK_BOT_NAME,
-        'icon'           => PEDESTAL_SLACK_BOT_EMOJI,
+        'icon_emoji'     => PEDESTAL_SLACK_BOT_EMOJI,
         'channel'        => PEDESTAL_SLACK_CHANNEL_BOTS_PRODUCT,
         'recipient'      => '',
         'link_names'     => true,
         'allow_markdown' => true,
     ];
-
-    private $team_endpoints = [
-        'billypenn' => PEDESTAL_SLACK_WEBHOOK_ENDPOINT,
-    ];
-
-    public function __construct( $team = 'billypenn' ) {
-        $this->client = $this->setup_client( $team );
-    }
-
-    /**
-     * Setup the Slack client for the specified team
-     *
-     * @param  string $team Team subdomain
-     * @return Client
-     */
-    private function setup_client( $team ) {
-        $endpoint = $this->get_team_endpoint( $team );
-        return new Client( $endpoint, $this->defaults );
-    }
-
-    /**
-     * Get the Slack endpoint based on the subdomain
-     *
-     * @param  string $team Team subdomain
-     * @return string       Team incoming webhook endpoint
-     */
-    private function get_team_endpoint( $team ) {
-        return $this->team_endpoints[ $team ];
-    }
 
     /**
      * Send a message to the specified channel or user
@@ -53,10 +22,33 @@ class Notifications {
      * @param array  $args      Settings to override defaults
      */
     public function send( $msg, $args ) {
-        $args = wp_parse_args( $args, $this->defaults );
-        $recipient = ( ! empty( $args['recipient'] ) ) ? $args['recipient'] : $args['channel'];
-        if ( ! empty( $recipient ) ) {
-            $this->client->to( $recipient )->send( $msg );
-        }
+        // Prepare the data / payload to be posted to Slack
+        $data = [];
+        $payload = wp_parse_args( $args, $this->defaults );
+        $payload['text'] = $msg;
+        $data['payload'] = json_encode( $payload );
+
+        $this->post( $data );
+    }
+
+    /**
+     * Handle POST request to Slack API
+     *
+     * @param  array $data API data
+     * @uses wp_remote_post()
+     *
+     * @return array|WP_Error       Array of results including HTTP headers or WP_Error if the request failed
+     */
+    private function post( $data ) {
+        return wp_remote_post( PEDESTAL_SLACK_WEBHOOK_ENDPOINT, [
+            'method'      => 'POST',
+            'timeout'     => 30,
+            'redirection' => 5,
+            'httpversion' => '1.0',
+            'blocking'    => false,
+            'headers'     => [],
+            'body'        => $data,
+            'cookies'     => [],
+        ] );
     }
 }

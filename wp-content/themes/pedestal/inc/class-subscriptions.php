@@ -1248,7 +1248,7 @@ class Subscriptions {
         }
 
         $notification_args = wp_parse_args( $notification_args, [
-            'channel' => self::$default_notify_channel,
+            'channel' => PEDESTAL_SLACK_CHANNEL_NEWSLETTER,
         ] );
 
         $msg = sprintf( 'There are currently %d email addresses subscribed to the Daily Newsletter and Breaking News emails.', $count );
@@ -1287,11 +1287,9 @@ class Subscriptions {
         }
 
         // If subscription type needs a post ID and the ID is missing, then return
-        if ( ! in_array( $args['type'], $types_needing_post_id ) && empty( $args['post_id'] ) ) {
+        if ( in_array( $args['type'], $types_needing_post_id ) && empty( $args['post_id'] ) ) {
             return;
         }
-
-        $user = new User( $args['user_id'] );
 
         switch ( $args['type'] ) {
             case 'breaking-news':
@@ -1351,6 +1349,7 @@ class Subscriptions {
                     break;
             }
         } else {
+            $user = new User( $args['user_id'] );
             $msg = sprintf( 'User %d with email address %s %s %s',
                 $args['user_id'],
                 $user->get_email(),

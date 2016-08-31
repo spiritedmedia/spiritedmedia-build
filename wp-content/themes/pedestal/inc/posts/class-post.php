@@ -1535,6 +1535,7 @@ abstract class Post {
      *
      * @param  string $new_status Name of the new status
      * @param  array  $args       Settings
+     * @uses \Pedestal\Notifications::send()
      */
     public function notify_on_status_change( $new_status, $args = [] ) {
         $args = wp_parse_args( $args, [

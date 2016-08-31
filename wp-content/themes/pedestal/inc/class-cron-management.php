@@ -30,6 +30,8 @@ class Cron_Management {
 
     /**
      * Schedule cron job for newsletter subscriber count notification
+     *
+     * @uses \Pedestal\Utils\Utils::get_time()
      */
     public function action_wp_cron_notify_newsletter_subscriber_count() {
         if ( ! wp_next_scheduled( 'pedestal_cron_notify_newsletter_subscriber_count' ) ) {
@@ -41,11 +43,10 @@ class Cron_Management {
      * Notify Slack of the current newsletter subscriber count
      *
      * Wrapper for Subscriptions->notify_newsletter_subscriber_count()
+     *
+     * @uses \Pedestal\Subscriptions::notify_newsletter_subscriber_count()
      */
     public function notify_newsletter_subscriber_count() {
-        Pedestal()->subscriptions->notify_newsletter_subscriber_count( [
-            'channel' => PEDESTAL_SLACK_CHANNEL_NEWSLETTER,
-        ] );
+        Pedestal()->subscriptions->notify_newsletter_subscriber_count();
     }
 }
-
