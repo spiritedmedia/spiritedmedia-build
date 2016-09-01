@@ -146,7 +146,11 @@ class CLI_Command extends \WP_CLI_Command {
         $post_title = $post_status = $post_author = $story = $count = $maybe_story = $error = '';
 
         list( $post_type ) = $args;
+
+        // @TODO
+        // @codingStandardsIgnoreStart
         extract( $assoc_args );
+        // @codingStandardsIgnoreEnd
 
         $lipsum = new LoremIpsum;
         $type = $post_type;

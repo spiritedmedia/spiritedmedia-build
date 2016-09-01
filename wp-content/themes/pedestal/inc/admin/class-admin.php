@@ -129,16 +129,23 @@ class Admin {
 
             $metadata = wp_get_attachment_metadata( $post->ID );
             if ( ! empty( $metadata['image_meta'] ) ) {
-                extract( $metadata['image_meta'] );
+                // @TODO clean up ternaries
+                $credit = ( empty( $metadata['image_meta']['credit'] ) )
+                    ? ''
+                    : $metadata['image_meta']['credit'];
+                $credit_link = ( empty( $metadata['image_meta']['credit_link'] ) )
+                    ? ''
+                    : $metadata['image_meta']['credit_link'];
+
                 $fields['pedestal_credit'] = [
                     'label'              => esc_html__( 'Credit', 'pedestal' ),
                     'input'              => 'text',
-                    'value'              => ( empty( $credit ) ) ? '' : $credit,
+                    'value'              => $credit,
                 ];
                 $fields['pedestal_credit_link'] = [
                     'label'              => esc_html__( 'Credit Link', 'pedestal' ),
                     'input'              => 'url',
-                    'value'              => ( empty( $credit_link ) ) ? '' : $credit_link,
+                    'value'              => $credit_link,
                 ];
             }
 
@@ -746,12 +753,12 @@ class Admin {
                     'title'        => $post->get_default_facebook_open_graph_tag( 'title' ),
                     'description'  => $post->get_default_facebook_open_graph_tag( 'description' ),
                 ];
-            } else if ( 'twitter' === $parent->name ) {
+            } elseif ( 'twitter' === $parent->name ) {
                 $placeholders = [
                     'title'        => $post->get_default_twitter_card_tag( 'title' ),
                     'description'  => $post->get_default_twitter_card_tag( 'description' ),
                 ];
-            } else if ( 'seo' === $parent->name ) {
+            } elseif ( 'seo' === $parent->name ) {
                 $placeholders = [
                     'title'        => $post->get_default_seo_title(),
                     'description'  => $post->get_default_seo_description(),

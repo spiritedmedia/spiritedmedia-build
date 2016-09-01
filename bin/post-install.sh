@@ -5,4 +5,6 @@
 cd wp-content/plugins/wp-pagenavi && composer update && cd ../../..
 
 # Make PHPCS aware of WPCS
-./vendor/bin/phpcs --config-set installed_paths ../../wp-coding-standards/wpcs
+if [ -f ./vendor/bin/phpcs ]; then
+  ./vendor/bin/phpcs --config-set installed_paths ../../wp-coding-standards/wpcs
+fi

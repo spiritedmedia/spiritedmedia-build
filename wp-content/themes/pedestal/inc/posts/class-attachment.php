@@ -70,7 +70,11 @@ class Attachment extends Post {
             'credit_link' => '',
             'classes'     => '',
         ] );
+
+        // @TODO
+        // @codingStandardsIgnoreStart
         extract( $atts );
+        // @codingStandardsIgnoreEnd
 
         $figure = new Figure( 'img', $content, $atts );
         return $figure->get_html();

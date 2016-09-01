@@ -47,6 +47,13 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
     {
         // We want all the errors from the PEAR standard, plus some of our own.
         parent::process($phpcsFile, $stackPtr);
+
+        // Just in case.
+        $tokens = $phpcsFile->getTokens();
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            return;
+        }
+
         $this->processOpen($phpcsFile, $stackPtr);
         $this->processClose($phpcsFile, $stackPtr);
 
@@ -157,11 +164,6 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                     $phpcsFile->fixer->replaceToken(($className + 1), ' ');
                 }
             }
-        }
-
-        // Just in case.
-        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            return;
         }
 
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
@@ -334,6 +336,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
             } else if ($tokens[($className - 1)]['code'] !== T_NS_SEPARATOR
                 || $tokens[($className - 2)]['code'] !== T_STRING
             ) {
+                // Not part of a longer fully qualified class name.
                 if ($tokens[($className - 1)]['code'] === T_COMMA
                     || ($tokens[($className - 1)]['code'] === T_NS_SEPARATOR
                     && $tokens[($className - 2)]['code'] === T_COMMA)
@@ -367,7 +370,8 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
                 }//end if
             }//end if
 
-            if ($tokens[($className + 1)]['code'] !== T_NS_SEPARATOR
+            if ($checkingImplements === true
+                && $tokens[($className + 1)]['code'] !== T_NS_SEPARATOR
                 && $tokens[($className + 1)]['code'] !== T_COMMA
             ) {
                 if ($i !== ($classCount - 1)) {
@@ -408,11 +412,6 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
     public function processClose(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        // Just in case.
-        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
-            return;
-        }
 
         // Check that the closing brace comes right after the code body.
         $closeBrace  = $tokens[$stackPtr]['scope_closer'];

@@ -31,7 +31,7 @@ class Neighborhood extends Locality {
         $data = $this->get_everyblock_cache();
         if ( $data ) {
             return $data;
-        } else if ( ! empty( $this->set_everyblock_cache( $force ) ) ) {
+        } elseif ( ! empty( $this->set_everyblock_cache( $force ) ) ) {
             return $this->get_everyblock_cache();
         } else {
             return false;

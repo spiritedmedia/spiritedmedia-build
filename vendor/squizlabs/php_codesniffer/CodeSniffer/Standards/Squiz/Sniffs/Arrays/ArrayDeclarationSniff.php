@@ -79,7 +79,11 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             }
 
             $arrayStart = $tokens[$stackPtr]['parenthesis_opener'];
-            $arrayEnd   = $tokens[$arrayStart]['parenthesis_closer'];
+            if (isset($tokens[$arrayStart]['parenthesis_closer']) === false) {
+                return;
+            }
+
+            $arrayEnd = $tokens[$arrayStart]['parenthesis_closer'];
 
             if ($arrayStart !== ($stackPtr + 1)) {
                 $error = 'There must be no space between the "array" keyword and the opening parenthesis';
@@ -116,11 +120,11 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
                     $phpcsFile->fixer->endChangeset();
                 }
-
-                // We can return here because there is nothing else to check. All code
-                // below can assume that the array is not empty.
-                return;
             }
+
+            // We can return here because there is nothing else to check. All code
+            // below can assume that the array is not empty.
+            return;
         }
 
         if ($tokens[$arrayStart]['line'] === $tokens[$arrayEnd]['line']) {
@@ -851,7 +855,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
                 if ($fix === true) {
                     // Find the end of the line and put a comma there.
-                    for ($i = ($index['value'] + 1); $i < $phpcsFile->numTokens; $i++) {
+                    for ($i = ($index['value'] + 1); $i < $arrayEnd; $i++) {
                         if ($tokens[$i]['line'] > $valueLine) {
                             break;
                         }

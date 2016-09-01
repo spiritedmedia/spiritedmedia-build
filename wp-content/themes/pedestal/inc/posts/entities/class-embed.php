@@ -160,7 +160,7 @@ class Embed extends Entity {
                     }
                     $width = $size_meta['width'];
                     $height = $size_meta['height'];
-                } else if ( is_array( $size ) ) {
+                } elseif ( is_array( $size ) ) {
                     list( $width, $height ) = $size;
                 }
 
@@ -208,7 +208,11 @@ class Embed extends Entity {
      */
     public static function do_embed( $args ) {
         $html = '';
+
+        // @TODO
+        // @codingStandardsIgnoreStart
         extract( $args );
+        // @codingStandardsIgnoreEnd
 
         $embed_type = self::get_embed_type( $url );
         if ( ! $embed_type ) {
@@ -588,7 +592,7 @@ class Embed extends Entity {
             } else {
                 return '';
             }
-        } else if ( 'www.youtube.com' == $host ) {
+        } elseif ( 'www.youtube.com' == $host ) {
             if ( ! empty( $query_args['v'] ) ) {
                 $query['id'] = $query_args['v'];
             } else {

@@ -186,7 +186,7 @@ class Subscriptions {
 
             if ( 'daily-newsletter' == $_GET['subscription'] ) {
                 $subscription_filter = 'daily-newsletter';
-            } else if ( 'cluster' == $_GET['subscription'] && ! empty( $_GET['cluster_id'] ) ) {
+            } elseif ( 'cluster' == $_GET['subscription'] && ! empty( $_GET['cluster_id'] ) ) {
                 $wp_user_query->query_from .= " INNER JOIN {$wpdb->p2p}";
                 $wp_user_query->query_where .= $wpdb->prepare( " AND {$wpdb->p2p}.p2p_from=%d AND {$wpdb->p2p}.p2p_to={$wpdb->users}.ID", (int) $_GET['story_id'] );
             }
@@ -237,7 +237,7 @@ class Subscriptions {
             }
             exit;
 
-        } else if ( get_query_var( 'pedestal-unsubscribe' ) ) {
+        } elseif ( get_query_var( 'pedestal-unsubscribe' ) ) {
 
             nocache_headers();
 
@@ -312,7 +312,7 @@ class Subscriptions {
                 PEDESTAL_EMAIL_CONTACT
             ), 'pedestal' ) );
 
-        } else if ( get_query_var( 'pedestal-test-email' ) && current_user_can( 'manage_options' ) ) {
+        } elseif ( get_query_var( 'pedestal-test-email' ) && current_user_can( 'manage_options' ) ) {
 
             switch ( get_query_var( 'email-type' ) ) {
                 case 'subscribe-daily-confirmation';
@@ -496,7 +496,7 @@ class Subscriptions {
                 'template'   => $email_template,
             ];
 
-            add_meta_box( 'pedestal-' . $email_template .'-notify-subscribers',
+            add_meta_box( 'pedestal-' . $email_template . '-notify-subscribers',
                 esc_html__( 'Notify ' . $email_type . ' Subscribers', 'pedestal' ),
                 [ $this, $callback ],
                 $post_type, 'side', 'default', $callback_args
@@ -768,7 +768,7 @@ class Subscriptions {
         if ( ! empty( $_POST['pedestal-everyblock-notify-subscribers'] ) ) {
             $hood = Neighborhood::get_by_post_id( (int) $post_id );
             $this->send_email_to_users_following_everyblock( $hood );
-        } else if ( ! empty( $_POST['pedestal-everyblock-send-test-email'] ) ) {
+        } elseif ( ! empty( $_POST['pedestal-everyblock-send-test-email'] ) ) {
             $email_addresses = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
             $hood = Neighborhood::get_by_post_id( (int) $post_id );
             $subject = sprintf( '[TEST] %s Update: %s', PEDESTAL_BLOG_NAME, $hood->get_title() );
@@ -786,7 +786,7 @@ class Subscriptions {
         if ( ! empty( $_POST['pedestal-cluster-notify-subscribers'] ) ) {
             $cluster = Cluster::get_by_post_id( (int) $post_id );
             $this->send_email_to_users_following_cluster( $cluster );
-        } else if ( ! empty( $_POST['pedestal-cluster-send-test-email'] ) ) {
+        } elseif ( ! empty( $_POST['pedestal-cluster-send-test-email'] ) ) {
             $email_addresses = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
             $cluster = Cluster::get_by_post_id( (int) $post_id );
             $subject = sprintf( '[TEST] %s Update: %s', PEDESTAL_BLOG_NAME, $cluster->get_title() );
@@ -803,7 +803,7 @@ class Subscriptions {
         if ( ! empty( $_POST['pedestal-newsletter-notify-subscribers'] ) ) {
             $newsletter = Newsletter::get_by_post_id( (int) $post_id );
             $this->send_primary_list_email( $newsletter );
-        } else if ( ! empty( $_POST['pedestal-newsletter-send-test-email'] ) ) {
+        } elseif ( ! empty( $_POST['pedestal-newsletter-send-test-email'] ) ) {
             $email_addresses = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
             $newsletter = Newsletter::get_by_post_id( (int) $post_id );
             $subject = sprintf( '[TEST] %s Daily: %s', PEDESTAL_BLOG_NAME, $newsletter->get_title() );
@@ -821,7 +821,7 @@ class Subscriptions {
             && 'SEND BREAKING NEWS' === strtoupper( $_POST['confirm-send-email'] ) ) {
             $post = Post::get_by_post_id( (int) $post_id );
             $this->send_primary_list_email( $post );
-        } else if ( ! empty( $_POST['pedestal-breaking-news-send-test-email'] ) ) {
+        } elseif ( ! empty( $_POST['pedestal-breaking-news-send-test-email'] ) ) {
             $email_addresses = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
             $post = Post::get_by_post_id( (int) $post_id );
             $subject = sprintf( '[TEST] BREAKING NEWS: %s', $post->get_title() );

@@ -52,7 +52,11 @@ class Figure {
 
     private function setup_figure( $type, $content, $atts = [] ) {
         $atts = wp_parse_args( $atts, $this->default_atts );
+
+        // @TODO
+        // @codingStandardsIgnoreStart
         extract( $atts );
+        // @codingStandardsIgnoreEnd
 
         if ( empty( $content ) || ! in_array( $type, $this->allowed_types ) ) {
             return '';

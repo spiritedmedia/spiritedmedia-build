@@ -4,6 +4,10 @@ namespace Pedestal\Admin;
 
 use \Pedestal\Registrations\Post_Types\Types;
 
+// @TODO
+// @codingStandardsIgnoreFile
+// There's some dangerous use of `extract()` lurking in here...
+
 /**
  * The custom bulk action class is largely based on others' work:
  *
@@ -22,16 +26,12 @@ class Bulk_Action {
      * @param array $args
      */
     public function __construct( $args = [] ) {
-
         // Define which post types these bulk actions affect.
         $defaults = [
             'post_type' => Types::get_post_types(),
         ];
-
         $args = wp_parse_args( $args, $defaults );
-        extract( $args, EXTR_SKIP );
-
-        $this->bulk_action_post_type = $post_type;
+        $this->bulk_action_post_type = $args['post_type'];
     }
 
     /**

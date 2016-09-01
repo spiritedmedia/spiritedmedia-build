@@ -374,7 +374,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             $editor_stylesheets = [ '/assets/dist/css/editor-style.css' ];
             array_walk( $editor_stylesheets, function( &$value ) {
-                $value = get_template_directory_uri() . $value;
+                $value = get_stylesheet_directory_uri() . $value;
             } );
             add_editor_style( $editor_stylesheets );
 

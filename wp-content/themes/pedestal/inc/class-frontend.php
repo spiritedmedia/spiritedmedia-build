@@ -94,7 +94,7 @@ class Frontend {
             if ( $obj ) {
                 if ( 'link' == $obj->get_type() && $source = $obj->get_source() ) {
                     $content = esc_html__( 'See it at: ', 'pedestal' ) . '<a href="' . esc_url( $obj->get_permalink() ) . '">' . esc_html( $obj->get_source()->get_name() ) . '</a>';
-                } else if ( 'embed' == $obj->get_type() && $source = $obj->get_source() ) {
+                } elseif ( 'embed' == $obj->get_type() && $source = $obj->get_source() ) {
                     $content = esc_html__( 'See it at: ', 'pedestal' ) . '<a href="' . esc_url( $obj->get_embed_url() ) . '">' . esc_html( $obj->get_source() ) . '</a>';
                 }
             }
@@ -256,7 +256,7 @@ class Frontend {
         $amp_url .= $parts['host'];
         $amp_url .= $parts['path'];
 
-        echo '<link rel="amphtml" href="' . esc_url( $amp_url ) . '">'. PHP_EOL;
+        echo '<link rel="amphtml" href="' . esc_url( $amp_url ) . '">' . PHP_EOL;
     }
 
     /**
@@ -289,7 +289,7 @@ class Frontend {
         if ( is_single() || is_page() || is_singular() ) {
             $post = Post::get_by_post_id( get_queried_object_id() );
             $meta_description = $post->get_seo_description();
-        } else if ( ( is_tax() || is_author() ) && get_queried_object()->description ) {
+        } elseif ( ( is_tax() || is_author() ) && get_queried_object()->description ) {
             $meta_description = get_queried_object()->description;
         }
         return $meta_description;
@@ -369,7 +369,7 @@ class Frontend {
             'Follow'     => '#',
         ];
 
-        $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) .' Spirited Media. All rights reserved.';
+        $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) . ' Spirited Media. All rights reserved.';
 
         if ( is_main_query() ) {
             global $wp_query;
@@ -439,15 +439,15 @@ class Frontend {
 
         if ( is_home() ) {
             return PEDESTAL_CITY_NAME . ' News, Local News, Breaking News - ' . PEDESTAL_BLOG_NAME;
-        } else if ( is_singular() ) {
+        } elseif ( is_singular() ) {
             $obj = \Pedestal\Posts\Post::get_by_post_id( get_queried_object_id() );
             if ( ! is_object( $obj ) ) {
                 return $wp_title;
             }
             return $obj->get_seo_title();
-        } else if ( is_search() ) {
+        } elseif ( is_search() ) {
             return 'Search - ' . PEDESTAL_BLOG_NAME;
-        } else if ( is_archive() ) {
+        } elseif ( is_archive() ) {
             return self::get_archive_title() . ' — ' . PEDESTAL_BLOG_NAME;
         } else {
             return get_bloginfo( 'name' );

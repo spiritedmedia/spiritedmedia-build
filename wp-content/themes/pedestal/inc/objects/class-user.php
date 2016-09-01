@@ -27,9 +27,9 @@ class User extends Author {
 
         if ( is_numeric( $user ) ) {
             $user = get_user_by( 'id', $user );
-        } else if ( is_string( $user ) && is_email( $user ) ) {
+        } elseif ( is_string( $user ) && is_email( $user ) ) {
             $user = get_user_by( 'email', $user );
-        } else if ( is_string( $user ) ) {
+        } elseif ( is_string( $user ) ) {
             $user = get_user_by( 'login', $user );
         }
 
@@ -413,7 +413,7 @@ class User extends Author {
 
         if ( empty( $cluster_types ) ) {
             $cluster_types = Types::get_cluster_post_types();
-        } else if ( ! is_array( $cluster_types ) ) {
+        } elseif ( ! is_array( $cluster_types ) ) {
             return false;
         }
 

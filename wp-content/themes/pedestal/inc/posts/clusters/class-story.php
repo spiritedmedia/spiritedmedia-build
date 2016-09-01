@@ -51,7 +51,7 @@ class Story extends Cluster {
     public function get_seo_title() {
         if ( $title = $this->get_fm_field( 'pedestal_distribution', 'seo', 'title' ) ) {
             return $title;
-        } else if ( $headline = $this->get_headline() ) {
+        } elseif ( $headline = $this->get_headline() ) {
             return $headline;
         } else {
             return $this->get_default_seo_title();

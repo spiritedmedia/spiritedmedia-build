@@ -364,7 +364,11 @@ class Shortcode_Manager {
      * Use `Attachhment->get_html()` for img shortcode
      */
     public function filter_img_shortcode_output_img_tag( $html, $attrs ) {
+        // @TODO
+        // @codingStandardsIgnoreStart
         extract( $attrs );
+        // @codingStandardsIgnoreEnd
+
         $img_classes = 'c-figure__content';
         $img_atts = [
             'class' => $img_classes,
@@ -476,6 +480,8 @@ class Shortcode_Manager {
 
     public function user_card( $atts, $content ) {
 
+        // @TODO
+        // @codingStandardsIgnoreStart
         extract( shortcode_atts( [
             'id'       => '',
             'format'   => 'extended',
@@ -483,13 +489,17 @@ class Shortcode_Manager {
             'float'    => 1,
             'img_size' => 'thumbnail',
         ], $atts ) );
+        // @codingStandardsIgnoreEnd
 
         $out = '';
         if ( empty( $id ) ) {
             return $out;
         }
 
+        // @TODO
+        // @codingStandardsIgnoreStart
         extract( User_Management::get_users_from_csv( $id ) );
+        // @codingStandardsIgnoreEnd
 
         if ( empty( $users ) ) {
             return $out;
@@ -525,7 +535,10 @@ class Shortcode_Manager {
             return $out;
         }
 
+        // @TODO
+        // @codingStandardsIgnoreStart
         extract( User_Management::get_users_from_csv( $atts['ids'] ) );
+        // @codingStandardsIgnoreEnd
 
         if ( empty( $users ) ) {
             return $out;

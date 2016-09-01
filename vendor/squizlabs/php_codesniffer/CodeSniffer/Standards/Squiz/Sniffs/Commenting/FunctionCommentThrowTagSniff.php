@@ -68,35 +68,32 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
 
         $tokens = $phpcsFile->getTokens();
 
-        $find = array(
-                 T_COMMENT,
-                 T_DOC_COMMENT_CLOSE_TAG,
-                 T_CLASS,
-                 T_FUNCTION,
-                 T_OPEN_TAG,
-                );
+        $find   = PHP_CodeSniffer_Tokens::$methodPrefixes;
+        $find[] = T_WHITESPACE;
 
-        $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1));
-        if ($commentEnd === false) {
+        $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1), null, true);
+        if ($tokens[$commentEnd]['code'] === T_COMMENT) {
+            // Function is using the wrong type of comment.
             return;
         }
 
-        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
-            // Function doesn't have a comment. Let someone else warn about that.
+        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
+            && $tokens[$commentEnd]['code'] !== T_COMMENT
+        ) {
+            // Function doesn't have a doc comment.
             return;
         }
 
-        // Find the position where the current function scope ends.
-        $currScopeEnd = 0;
-        if (isset($tokens[$currScope]['scope_closer']) === true) {
-            $currScopeEnd = $tokens[$currScope]['scope_closer'];
-        }
+        $currScopeEnd = $tokens[$currScope]['scope_closer'];
 
         // Find all the exception type token within the current scope.
         $throwTokens = array();
         $currPos     = $stackPtr;
-        if ($currScopeEnd !== 0) {
-            while ($currPos < $currScopeEnd && $currPos !== false) {
+        $foundThrows = false;
+        while ($currPos < $currScopeEnd && $currPos !== false) {
+            if ($phpcsFile->hasCondition($currPos, T_CLOSURE) === false) {
+                $foundThrows = true;
+
                 /*
                     If we can't find a NEW, we are probably throwing
                     a variable, so we ignore it, but they still need to
@@ -138,10 +135,14 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                         }
                     }//end if
                 }//end if
+            }//end if
 
-                $currPos = $phpcsFile->findNext(T_THROW, ($currPos + 1), $currScopeEnd);
-            }//end while
-        }//end if
+            $currPos = $phpcsFile->findNext(T_THROW, ($currPos + 1), $currScopeEnd);
+        }//end while
+
+        if ($foundThrows === false) {
+            return;
+        }
 
         // Only need one @throws tag for each type of exception thrown.
         $throwTokens = array_unique($throwTokens);

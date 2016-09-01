@@ -232,7 +232,7 @@ class Utils {
         if ( $added_protocol && $ret ) {
             if ( -1 === $component && isset( $ret['scheme'] ) ) {
                 unset( $ret['scheme'] );
-            } else if ( PHP_URL_SCHEME === $component ) {
+            } elseif ( PHP_URL_SCHEME === $component ) {
                 $ret = '';
             }
         }
@@ -288,16 +288,16 @@ class Utils {
 
         if ( 1 == count( $items ) ) {
             $out = sprintf( $pretext, $items[0] );
-        } else if ( 2 == count( $items ) ) {
+        } elseif ( 2 == count( $items ) ) {
             $out = sprintf( $pretext, $items[0] ) . $posttext . $items[1];
-        } else if ( count( $items ) >= 3 ) {
+        } elseif ( count( $items ) >= 3 ) {
             if ( $args['truncate'] ) {
                 $out .= sprintf( $pretext, esc_html__( $args['truncated_str'], 'pedestal' ) );
             } else {
                 foreach ( $items as $i => $item ) {
                     if ( 0 == $i ) {
                         $out .= sprintf( $pretext, $item ) . ', ';
-                    } else if ( count( $items ) == ( $i + 1 ) ) {
+                    } elseif ( count( $items ) == ( $i + 1 ) ) {
                         $out .= $posttext . ' ' . $item;
                     } else {
                         $out .= $item . ', ';

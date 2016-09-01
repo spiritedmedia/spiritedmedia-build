@@ -187,7 +187,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             return;
         }//end if
 
-        if ($tokens[$stackPtr]['code'] === T_MINUS) {
+        if ($tokens[$stackPtr]['code'] === T_MINUS || $tokens[$stackPtr]['code'] === T_PLUS) {
             // Check minus spacing, but make sure we aren't just assigning
             // a minus value or returning one.
             $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
@@ -281,6 +281,10 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             }//end if
         }//end if
 
+        if (isset($tokens[($stackPtr + 1)]) === false) {
+            return;
+        }
+
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $error = "Expected 1 space after \"$operator\"; 0 found";
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfter');
@@ -290,7 +294,9 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
 
             $phpcsFile->recordMetric($stackPtr, 'Space after operator', 0);
         } else {
-            if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
+            if (isset($tokens[($stackPtr + 2)]) === true
+                && $tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']
+            ) {
                 $found = 'newline';
             } else {
                 $found = $tokens[($stackPtr + 1)]['length'];

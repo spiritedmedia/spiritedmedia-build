@@ -1227,7 +1227,7 @@ abstract class Post {
 
         if ( 9999 == $height ) {
             $transform_args = [ 'w' => $width ];
-        } else if ( 9999 == $width ) {
+        } elseif ( 9999 == $width ) {
             $transform_args = [ 'h' => $height ];
         } else {
             $transform_args = [ 'resize' => $width . ',' . $height ];
@@ -1420,9 +1420,9 @@ abstract class Post {
 
         if ( is_object( $post ) ) {
             $post_type = self::get_post_type( $post );
-        } else if ( is_string( $post ) && in_array( $post, Types::get_post_types() ) ) {
+        } elseif ( is_string( $post ) && in_array( $post, Types::get_post_types() ) ) {
             $post_type = $post;
-        } else if ( empty( $post ) ) {
+        } elseif ( empty( $post ) ) {
             return false;
         }
 

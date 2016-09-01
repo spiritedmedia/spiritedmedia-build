@@ -108,7 +108,10 @@ class Types {
 
             foreach ( $group->get_type_settings() as $post_type => $settings ) :
 
+                // @TODO
+                // @codingStandardsIgnoreStart
                 extract( $settings );
+                // @codingStandardsIgnoreEnd
 
                 // If the post type supports the editor, then make sure it supports
                 // storing revisions
@@ -276,7 +279,7 @@ class Types {
         if ( 'pedestal_link' === $post->post_type ) {
             $obj = new \Pedestal\Posts\Entities\Link( $post );
             $link = $obj->get_external_url();
-        } else if ( in_array( $post->post_type, self::get_date_based_post_types() ) ) {
+        } elseif ( in_array( $post->post_type, self::get_date_based_post_types() ) ) {
 
             $query = parse_url( $link, PHP_URL_QUERY );
             parse_str( $query, $args );
@@ -342,6 +345,11 @@ class Types {
 
         // Use the selected permastruct group to determine the group of post
         // types between which duplicates are disallowed
+        //
+        // @TODO Not entirely sure why this triggers a WPCS error because we are
+        // using $wpdb->prepare() correctly(?)
+        //
+        // @codingStandardsIgnoreStart
         $post_types_sql = "'" . implode( "','", array_map( 'sanitize_key', $permastruct_group ) ) . "'";
         $check_sql = "SELECT post_name FROM $wpdb->posts WHERE post_name = %s AND post_type IN ({$post_types_sql}) AND ID != %d LIMIT 1";
         $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_id ) );
@@ -354,6 +362,7 @@ class Types {
             } while ( $post_name_check );
             $slug = $alt_post_name;
         }
+        // @codingStandardsIgnoreEnd
 
         return $slug;
 

@@ -37,20 +37,22 @@ Make sure you have `~/.composer/vendor/bin/` in your PATH.
 
 Or alternatively, include a dependency for `squizlabs/php_codesniffer` in your `composer.json` file. For example:
 
-    {
-        "require-dev": {
-            "squizlabs/php_codesniffer": "2.*"
-        }
+```json
+{
+    "require-dev": {
+        "squizlabs/php_codesniffer": "2.*"
     }
+}
+```
 
 You will then be able to run PHP_CodeSniffer from the vendor bin directory:
 
     ./vendor/bin/phpcs -h
     ./vendor/bin/phpcbf -h
 
-You can also download the PHP\_CodeSniffer source and run the `phpcs` and `phpcbf` commands directly from the Git checkout:
+You can also download the PHP\_CodeSniffer source and run the `phpcs` and `phpcbf` commands directly from the Git clone:
 
-    git clone git://github.com/squizlabs/PHP_CodeSniffer.git
+    git clone https://github.com/squizlabs/PHP_CodeSniffer.git
     cd PHP_CodeSniffer
     php scripts/phpcs -h
     php scripts/phpcbf -h
