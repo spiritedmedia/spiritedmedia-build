@@ -15,15 +15,15 @@ class Entity_Types extends Types {
     protected $editorial_post_types = [];
 
     private static $politifact_ratings = [
-        'Pants on Fire!' => 'pants',
-        'False'          => 'false',
-        'Mostly False'   => 'mostly_false',
-        'Half True'      => 'half_true',
-        'Mostly True'    => 'mostly_true',
-        'True'           => 'true',
-        'Full Flop'      => 'full_flop',
-        'Half Flip'      => 'half_flip',
-        'No Flip'        => 'no_flip',
+        'pants'        => 'Pants on Fire!',
+        'false'        => 'False',
+        'mostly_false' => 'Mostly False',
+        'half_true'    => 'Half True',
+        'mostly_true'  => 'Mostly True',
+        'true'         => 'True',
+        'full_flop'    => 'Full Flop',
+        'half_flip'    => 'Half Flip',
+        'no_flip'      => 'No Flip',
     ];
 
     protected $post_types = [
@@ -573,6 +573,6 @@ class Entity_Types extends Types {
      * @return array
      */
     public static function get_politifact_ratings() {
-        return array_flip( self::$politifact_ratings );
+        return self::$politifact_ratings;
     }
 }

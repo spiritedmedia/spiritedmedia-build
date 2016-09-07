@@ -72,7 +72,6 @@ class The_Incline extends Pedestal {
 
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#pgh-botcountry',
-                'PEDESTAL_SLACK_CHANNEL_NEWSLETTER'     => '#pgh-newsletter',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'TheInclineBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':theincline:',
             ];

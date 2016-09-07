@@ -36,7 +36,7 @@ $site-theme-name: 'pedestal' !default;
 // URLs and paths
 $site-live-url            : sm-theme-setting-get( siteLiveURL );
 $site-theme-abspath       : '/' + sm-theme-setting-get( themePath );
-$site-theme-logo-abspath  : $site-theme-abspath + '/assets/images/logos/';
+$site-theme-logo-abspath  : $site-theme-abspath + '/assets/images/logos';
 
 // Colors
 $site-theme-brand-color   : to-color( sm-theme-setting-get( brandColor ) );

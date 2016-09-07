@@ -116,7 +116,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_SLACK_WEBHOOK_ENDPOINT'       => 'https://hooks.slack.com/services/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',
                 'PEDESTAL_SLACK_CHANNEL_BOTS_PRODUCT'   => '#botcountry',
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '',
-                'PEDESTAL_SLACK_CHANNEL_NEWSLETTER'     => '',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'PedestalBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => '',
             ];
@@ -134,11 +133,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $twitter_share_text_max_length = 140 - strlen( ' via @' . PEDESTAL_TWITTER_USERNAME );
             define( 'PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH', $twitter_share_text_max_length );
 
-            // TODO: Change this when we move to AWS
-            $dev_auth_user = 'wpenn';
-            $dev_auth_pass = 'tu312';
-            $dev_auth_str = $dev_auth_user . ':' . $dev_auth_pass;
-            define( 'PEDESTAL_DEV_AUTH', $dev_auth_str );
+            $dev_auth_user = 'spirited';
+            $dev_auth_pass = 'media';
+            define( 'PEDESTAL_DEV_AUTH', $dev_auth_user . ':' . $dev_auth_pass );
         }
 
         /**

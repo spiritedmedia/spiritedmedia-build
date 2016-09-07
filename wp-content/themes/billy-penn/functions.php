@@ -72,7 +72,6 @@ class Billy_Penn extends Pedestal {
 
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#phl-botcountry',
-                'PEDESTAL_SLACK_CHANNEL_NEWSLETTER'     => '#phl-newsletter',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'BillyPennBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':billypenn:',
             ];

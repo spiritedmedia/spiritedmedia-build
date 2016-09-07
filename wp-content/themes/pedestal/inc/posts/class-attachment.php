@@ -208,15 +208,6 @@ class Attachment extends Post {
     }
 
     /**
-     * Get the raw file
-     *
-     * Especially useful for inline SVG
-     */
-    public function get_raw_file() {
-        return Utils::file_get_contents_with_auth( $this->get_url() );
-    }
-
-    /**
      * Get the attachment's FIAS presentation mode
      *
      * @param  boolean $allow_fullscreen Allow fullscreen mode if attachment is
