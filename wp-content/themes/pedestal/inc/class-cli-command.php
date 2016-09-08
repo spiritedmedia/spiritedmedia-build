@@ -779,6 +779,81 @@ class CLI_Command extends \WP_CLI_Command {
         file_put_contents( ABSPATH . 'config/config-sassy.json', json_encode( $sassy_config, JSON_PRETTY_PRINT ) );
         WP_CLI::success( 'Generated config-sassy.json file.' );
     }
+
+    /**
+     * Update Amazon S3 meta data for media items
+     *
+     * The WP Offload S3 plugin we use requires the presence of this meta data
+     * before rewriting URLs.
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal update-aws-media-meta
+     *
+     * @subcommand update-aws-media-meta
+     */
+    public function update_s3_meta_for_media( $args, $assoc_args ) {
+        global $wpdb;
+
+        // Get the options for the WP Offload S3 plugin
+        $options = get_site_option( 'tantan_wordpress_s3' );
+        if ( ! isset( $options['bucket'] ) || ! $options ) {
+            WP_CLI::error( 'No S3 Bucket is defined. Exiting...' );
+            exit;
+        }
+        $bucket_name = $options['bucket'];
+
+        // The array we're going to store for each item
+        $meta_value = [
+            'bucket' => $bucket_name,
+            'key' => '',
+            'region' => '',
+        ];
+
+        // Get the path prefix for the S3 key value
+        // i.e. /wp-content/uploads/sites/2
+        $wp_upload_dir = wp_upload_dir();
+        $path_prefix = str_replace( trailingslashit( get_site_url() ), '', $wp_upload_dir['baseurl'] );
+        $path_prefix = trailingslashit( $path_prefix );
+        if ( '/' == $path_prefix[0] ) {
+            $path_prefix = ltrim( $path_prefix . '/' );
+        }
+
+        // Get all of the items that have a '_wp_attached_file' meta_key set and
+        // don't have the  'amazonS3_info' already set
+        $rows = $wpdb->get_results( $wpdb->prepare( "
+            SELECT `post_id`, `meta_key`, `meta_value`
+            FROM `$wpdb->postmeta`
+            WHERE `meta_key` = '_wp_attached_file'
+                AND `post_id` NOT IN (
+                    SELECT `post_id`
+                    FROM `$wpdb->postmeta`
+                    WHERE `meta_key` = '%s'
+                )
+        ", [ 'amazonS3_info' ] ) );
+        $total_rows = count( $rows );
+        foreach ( $rows as $index => $row ) {
+            if ( '_wp_attached_file' != $row->meta_key ) {
+                continue;
+            }
+            $meta_value['key'] = $path_prefix . $row->meta_value;
+            $post_id = intval( $row->post_id );
+            $updated = update_post_meta( $post_id, 'amazonS3_info', $meta_value );
+
+            // Provide some indication the script is working
+            if ( 0 === $index % 500 ) {
+                $message = number_format( $index ) . ' done';
+
+                if ( 0 === $index ) {
+                    $message = number_format( $total_rows ) . ' items to update';
+                    $message = WP_CLI::colorize( '%Y' . $message . '%n' ); // Yellow text
+                }
+
+                WP_CLI::line( $message );
+            }
+        }
+        WP_CLI::success( 'All done!' );
+    }
 }
 
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI_Command' );

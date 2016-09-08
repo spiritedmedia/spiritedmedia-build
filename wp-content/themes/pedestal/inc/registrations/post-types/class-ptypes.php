@@ -56,7 +56,7 @@ class Types {
         add_action( 'init', [ $this, 'action_init_disable_default_post_type' ] );
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'manage_posts_custom_column', [ $this, 'action_manage_posts_custom_column' ], 10, 2 );
-
+        add_action( 'template_redirect', [ $this, 'action_redirect_found_post_names' ], 10, 2 );
     }
 
     /**
@@ -166,7 +166,7 @@ class Types {
         // Rewrite rules for our custom post types
         $post_types = '';
         $date_based_pagination_pattern = '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/]+)/page/?([0-9]{1,})/?$';
-        foreach ( self::get_date_based_post_types() as $ptype ) {
+        foreach ( self::get_entity_post_types() as $ptype ) {
             $post_types .= '&post_type[]=' . $ptype;
         }
 
@@ -176,7 +176,7 @@ class Types {
 
         // Rewrite rules we don't want
         add_filter( 'post_rewrite_rules', '__return_empty_array' );
-        foreach ( self::get_date_based_post_types() as $post_type ) {
+        foreach ( self::get_entity_post_types() as $post_type ) {
             add_filter( "{$post_type}_rewrite_rules", '__return_empty_array' );
         }
     }
@@ -279,7 +279,7 @@ class Types {
         if ( 'pedestal_link' === $post->post_type ) {
             $obj = new \Pedestal\Posts\Entities\Link( $post );
             $link = $obj->get_external_url();
-        } elseif ( in_array( $post->post_type, self::get_date_based_post_types() ) ) {
+        } elseif ( in_array( $post->post_type, self::get_entity_post_types() ) ) {
 
             $query = parse_url( $link, PHP_URL_QUERY );
             parse_str( $query, $args );
@@ -366,6 +366,33 @@ class Types {
 
         return $slug;
 
+    }
+
+    /**
+     * If we encounter a 404 and have a 'name' query_var set, try and find a post to redirect to
+     */
+    public function action_redirect_found_post_names() {
+        $post_name = get_query_var( 'name' );
+
+        if ( ! is_404() || ! $post_name ) {
+            // Not a 404 page or we don't have a $post_name to search for, so bail
+            return;
+        }
+
+        $post = Post::get_by_post_name( $post_name );
+        if ( ! $post ) {
+            // No post found, so bail
+            return;
+        }
+
+        $permalink = $post->get_permalink();
+        if ( ! $permalink ) {
+            // We don't have a permalink to redirect to, so bail
+            return;
+        }
+
+        wp_safe_redirect( $permalink, 301 );
+        die();
     }
 
     /**

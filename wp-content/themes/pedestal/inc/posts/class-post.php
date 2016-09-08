@@ -110,6 +110,34 @@ abstract class Post {
     }
 
     /**
+     * Get an instantiated proper object based on a post name (aka slug)
+     *
+     * @param  string $post_name  Name of post to search for
+     * @param  array $args        Optional arguments to modify the WP_Query
+     * @return object|array|bool  Post object, array of post objects, or false
+     */
+    public static function get_by_post_name( $post_name = '', $args = [] ) {
+        $defaults = [
+            'name'                   => $post_name,
+            'post_type'              => 'any',
+            'post_status'            => 'publish',
+            'numberposts'            => 1,
+            'no_found_rows'          => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
+        ];
+        $args = wp_parse_args( $args, $defaults );
+        $posts = self::get_posts( $args );
+        if ( ! is_array( $posts ) || ! isset( $posts[0] ) ) {
+            return false;
+        }
+        if ( 1 == $args['numberposts'] ) {
+            return $posts[0];
+        }
+        return $posts;
+    }
+
+    /**
      * Get an array of posts using our objects from a query or array of posts
      *
      * @param  WP_Query|array $query

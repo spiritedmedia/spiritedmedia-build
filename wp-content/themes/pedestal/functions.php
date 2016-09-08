@@ -17,6 +17,13 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
     abstract class Pedestal {
 
         /**
+         * The root URL for the CDN i.e. https://a.spirited.media
+         *
+         * @var string
+         */
+        protected $cdn_url;
+
+        /**
          * Map controller classes to the correct theme
          *
          * @var array
@@ -86,6 +93,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_CITY_NAME' => '',
                 'PEDESTAL_CITY_NICKNAME' => '',
                 'PEDESTAL_DATETIME_FORMAT' => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
+                'PEDESTAL_GOOGLE_ANALYTICS_ID'    => '',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT' => '',
@@ -319,18 +327,15 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 return $sizes;
             }, 10, 2 );
 
-        }
+            // Serve static assets through a CDN, if available
+            if ( $this->get_cdn_url() ) {
+                add_filter( 'wp_resource_hints', [ $this, 'filter_resource_hints_for_cdn' ], 10, 2 );
+                add_filter( 'style_loader_src', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
+                add_filter( 'script_loader_src', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
+                add_filter( 'template_directory_uri', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
+                add_filter( 'stylesheet_directory_uri', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
+            }
 
-        /**
-         * [filter_oembed_result description]
-         *
-         * @param  [type] $data [description]
-         * @param  [type] $url  [description]
-         * @param  [type] $args [description]
-         * @return [type]       [description]
-         */
-        public function filter_oembed_result( $data, $url, $args ) {
-            return Embed::do_embed( [ 'url' => $url ] );
         }
 
         /**
@@ -449,6 +454,18 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         }
 
         /**
+         * [filter_oembed_result description]
+         *
+         * @param  [type] $data [description]
+         * @param  [type] $url  [description]
+         * @param  [type] $args [description]
+         * @return [type]       [description]
+         */
+        public function filter_oembed_result( $data, $url, $args ) {
+            return Embed::do_embed( [ 'url' => $url ] );
+        }
+
+        /**
          * Filter Timber's default context variables
          *
          * Most of this filtering happens in \Pedestal\Frontend but some basic
@@ -485,7 +502,58 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'color' => PEDESTAL_BRAND_COLOR,
             ];
 
+            $parsely = new \Pedestal\Objects\Parsely;
+            $context['site']->analytics = [
+                'ga_id' => PEDESTAL_GOOGLE_ANALYTICS_ID,
+                'parsely' => [
+                    'site' => parse_url( home_url(), PHP_URL_HOST ),
+                    'data' => $parsely->get_data(),
+                ],
+            ];
+
             return $context;
+        }
+
+        /**
+         * Adds the CDN URL as a preconnect resource hint.
+         *
+         * @link https://make.wordpress.org/core/2016/07/06/resource-hints-in-4-6/
+         *
+         * @param  array $hints           Array of URLs
+         * @param  string $relation_type  Type of hint used to determine if we should modify $hints
+         * @return array                  Modified $hints
+         */
+        public function filter_resource_hints_for_cdn( $hints = [], $relation_type = '' ) {
+            // Let's preconnect to the CDN URL that we're about to make requests to
+            if ( $this->get_cdn_url() && 'preconnect' == $relation_type ) {
+                $hints[] = $this->get_cdn_url();
+            }
+
+            // We don't need to do a dns-prefetch if we're already going to preconnect ot the CDN URL
+            if ( $this->get_cdn_url() && 'dns-prefetch' == $relation_type ) {
+                $needle = $this->get_cdn_url();
+                $needle = str_replace( 'https://', '', $needle );
+                $needle = str_replace( 'http://', '', $needle );
+                foreach ( $hints as $index => $hint ) {
+                    if ( $hint == $needle ) {
+                        unset( $hints[ $index ] );
+                    }
+                }
+            }
+            return $hints;
+        }
+
+        /**
+         * Rewrite URL so request goes through the CDN
+         *
+         * @param  string $url  URL to be rewritten
+         * @return string       Modified $url
+         */
+        public function filter_rewrite_url_for_cdn( $url = '' ) {
+            if ( $this->get_cdn_url() ) {
+                return str_replace( get_site_url(), $this->cdn_url, $url );
+            }
+            return $url;
         }
 
         /**
@@ -606,6 +674,42 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'label'   => '',
                 'content' => 0,
             ] );
+        }
+
+        /**
+         * Returns the CDN URL
+         *
+         * If the CDN URL is not set, then set it.
+         *
+         * @return string|false The CDN URL
+         */
+        public function get_cdn_url() {
+            if ( empty( $this->cdn_url ) ) {
+                $this->set_cdn_url();
+            }
+            return $this->cdn_url;
+        }
+
+        /**
+         * Set the CDN URL
+         */
+        protected function set_cdn_url() {
+            $s3_options = get_site_option( 'tantan_wordpress_s3' );
+            if (
+                ! is_array( $s3_options )
+                || empty( $s3_options['cloudfront'] )
+                || ! isset( $s3_options['cloudfront'] )
+                || '0' === $s3_options['serve-from-s3']
+            ) {
+                $this->cdn_url = false;
+                return;
+            }
+
+            $proto = 'http://';
+            if ( isset( $s3_options['force-https'] ) && '1' === $s3_options['force-https'] ) {
+                $proto = 'https://';
+            }
+            $this->cdn_url = $proto . $s3_options['cloudfront'];
         }
     }
 

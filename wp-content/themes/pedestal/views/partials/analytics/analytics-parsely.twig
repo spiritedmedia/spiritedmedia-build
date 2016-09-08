@@ -1,6 +1,8 @@
+{% if site.analytics.parsely.site and site.analytics.parsely.data %}
+
 <!-- START Parse.ly Include: Standard -->
 <div id="parsely-root" style="display: none">
-  <div id="parsely-cfg" data-parsely-site="{{ parsely.site }}"></div>
+  <div id="parsely-cfg" data-parsely-site="{{ site.analytics.parsely.site }}"></div>
 </div>
 <script>
 (function(s, p, d) {
@@ -14,3 +16,5 @@
 })("script", "parsely", document);
 </script>
 <!-- END Parse.ly Include -->
+
+{% endif %}

@@ -58,6 +58,7 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_CITY_NAME'              => 'Philadelphia',
                 'PEDESTAL_CITY_NICKNAME'          => 'Philly',
                 'PEDESTAL_BLOG_URL'               => 'https://medium.com/billy-penn',
+                'PEDESTAL_GOOGLE_ANALYTICS_ID'    => 'UA-54099407-1',
 
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'       => 'billy_penn',

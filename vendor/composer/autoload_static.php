@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit80239424766c7ca95d46ec61d15f77d4
+class ComposerStaticInit43261ead221c25258fa07689e19d79eb
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -477,6 +477,7 @@ class ComposerStaticInit80239424766c7ca95d46ec61d15f77d4
         'Timber\\Image\\Operation\\ToJpg' => __DIR__ . '/..' . '/timber/timber/lib/Image/Operation/ToJpg.php',
         'Timber\\Integrations' => __DIR__ . '/..' . '/timber/timber/lib/Integrations.php',
         'Timber\\Integrations\\ACF' => __DIR__ . '/..' . '/timber/timber/lib/Integrations/ACF.php',
+        'Timber\\Integrations\\CoAuthorsPlus' => __DIR__ . '/..' . '/timber/timber/lib/Integrations/CoAuthorsPlus.php',
         'Timber\\Integrations\\Command' => __DIR__ . '/..' . '/timber/timber/lib/Integrations/Command.php',
         'Timber\\Integrations\\Timber_WP_CLI_Command' => __DIR__ . '/..' . '/timber/timber/lib/Integrations/Timber_WP_CLI_Command.php',
         'Timber\\Loader' => __DIR__ . '/..' . '/timber/timber/lib/Loader.php',
@@ -716,11 +717,11 @@ class ComposerStaticInit80239424766c7ca95d46ec61d15f77d4
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit80239424766c7ca95d46ec61d15f77d4::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit80239424766c7ca95d46ec61d15f77d4::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit80239424766c7ca95d46ec61d15f77d4::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit80239424766c7ca95d46ec61d15f77d4::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit80239424766c7ca95d46ec61d15f77d4::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit43261ead221c25258fa07689e19d79eb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit43261ead221c25258fa07689e19d79eb::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit43261ead221c25258fa07689e19d79eb::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit43261ead221c25258fa07689e19d79eb::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit43261ead221c25258fa07689e19d79eb::$classMap;
 
         }, null, ClassLoader::class);
     }

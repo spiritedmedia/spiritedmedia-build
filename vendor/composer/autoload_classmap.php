@@ -420,6 +420,7 @@ return array(
     'Timber\\Image\\Operation\\ToJpg' => $vendorDir . '/timber/timber/lib/Image/Operation/ToJpg.php',
     'Timber\\Integrations' => $vendorDir . '/timber/timber/lib/Integrations.php',
     'Timber\\Integrations\\ACF' => $vendorDir . '/timber/timber/lib/Integrations/ACF.php',
+    'Timber\\Integrations\\CoAuthorsPlus' => $vendorDir . '/timber/timber/lib/Integrations/CoAuthorsPlus.php',
     'Timber\\Integrations\\Command' => $vendorDir . '/timber/timber/lib/Integrations/Command.php',
     'Timber\\Integrations\\Timber_WP_CLI_Command' => $vendorDir . '/timber/timber/lib/Integrations/Timber_WP_CLI_Command.php',
     'Timber\\Loader' => $vendorDir . '/timber/timber/lib/Loader.php',

@@ -353,15 +353,15 @@
         "source": {
             "type": "git",
             "url": "git@github.com:spiritedmedia/amazon-s3-and-cloudfront-pro.git",
-            "reference": "50147741e7be1bd58e1b2bdc97b8c34c6598b969"
+            "reference": "19e0a24b67d1b853a5bdd3b9a416e3f45ac41143"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/amazon-s3-and-cloudfront-pro/zipball/50147741e7be1bd58e1b2bdc97b8c34c6598b969",
-            "reference": "50147741e7be1bd58e1b2bdc97b8c34c6598b969",
+            "url": "https://api.github.com/repos/spiritedmedia/amazon-s3-and-cloudfront-pro/zipball/19e0a24b67d1b853a5bdd3b9a416e3f45ac41143",
+            "reference": "19e0a24b67d1b853a5bdd3b9a416e3f45ac41143",
             "shasum": ""
         },
-        "time": "2016-08-25 18:58:19",
+        "time": "2016-09-01 21:47:23",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "authors": [
@@ -633,17 +633,17 @@
     },
     {
         "name": "twig/twig",
-        "version": "v1.24.1",
-        "version_normalized": "1.24.1.0",
+        "version": "v1.24.2",
+        "version_normalized": "1.24.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twigphp/Twig.git",
-            "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512"
+            "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig/zipball/3566d311a92aae4deec6e48682dc5a4528c4a512",
-            "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512",
+            "url": "https://api.github.com/repos/twigphp/Twig/zipball/33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
+            "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
             "shasum": ""
         },
         "require": {
@@ -653,7 +653,7 @@
             "symfony/debug": "~2.7",
             "symfony/phpunit-bridge": "~2.7"
         },
-        "time": "2016-05-30 09:11:59",
+        "time": "2016-09-01 17:50:53",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -752,17 +752,17 @@
     },
     {
         "name": "timber/timber",
-        "version": "1.1.3",
-        "version_normalized": "1.1.3.0",
+        "version": "1.1.5",
+        "version_normalized": "1.1.5.0",
         "source": {
             "type": "git",
             "url": "https://github.com/timber/timber.git",
-            "reference": "b7c04c66d7e488cc3bcb6c29bb9f4d1788809597"
+            "reference": "76fb42ec9c64a6ec7dbf264ff8ee1852560bde87"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/timber/timber/zipball/b7c04c66d7e488cc3bcb6c29bb9f4d1788809597",
-            "reference": "b7c04c66d7e488cc3bcb6c29bb9f4d1788809597",
+            "url": "https://api.github.com/repos/timber/timber/zipball/76fb42ec9c64a6ec7dbf264ff8ee1852560bde87",
+            "reference": "76fb42ec9c64a6ec7dbf264ff8ee1852560bde87",
             "shasum": ""
         },
         "require": {
@@ -777,9 +777,10 @@
             "phpdocumentor/phpdocumentor": "2.*",
             "phpunit/phpunit": "~4.0",
             "satooshi/php-coveralls": "1.0.*",
-            "wpackagist-plugin/advanced-custom-fields": "4.*"
+            "wpackagist-plugin/advanced-custom-fields": "4.*",
+            "wpackagist-plugin/co-authors-plus": "3.*"
         },
-        "time": "2016-08-16 19:28:12",
+        "time": "2016-09-02 17:45:55",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

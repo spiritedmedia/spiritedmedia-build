@@ -585,6 +585,9 @@ class User extends Author {
      */
     public function get_primary_role() {
         $roles = $this->get_roles();
+        if ( empty( $roles ) ) {
+            return '';
+        }
         return $roles[0];
     }
 

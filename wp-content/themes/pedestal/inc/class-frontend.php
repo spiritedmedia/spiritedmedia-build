@@ -389,11 +389,6 @@ class Frontend {
             'content'         => Pedestal()->get_pinned_post(),
         ];
 
-        $parsely = new \Pedestal\Objects\Parsely;
-        $context['parsely'] = [];
-        $context['parsely']['site'] = parse_url( home_url(), PHP_URL_HOST );
-        $context['parsely']['data'] = $parsely->get_data();
-
         if ( is_singular( 'pedestal_story' ) ) {
             if ( is_active_sidebar( 'sidebar-story' ) ) {
                 $context['sidebar'] = Timber::get_widgets( 'sidebar-story' );
