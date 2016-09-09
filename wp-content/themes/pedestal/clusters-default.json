@@ -1,0 +1,882 @@
+{
+  "locality": {
+    "types": {
+      "boroughs": {
+        "singular": "Borough",
+        "plural": "Boroughs"
+      },
+      "corridors": {
+        "singular": "Corridor",
+        "plural": "Corridors"
+      },
+      "city-sections": {
+        "singular": "City Section",
+        "plural": "City Sections"
+      },
+      "neighborhoods": {
+        "singular": "Neighborhood",
+        "plural": "Neighborhoods"
+      },
+      "townships": {
+        "singular": "Township",
+        "plural": "Townships"
+      },
+      "towns": {
+        "singular": "Town",
+        "plural": "Towns"
+      },
+      "cities": {
+        "singular": "City",
+        "plural": "Cities"
+      },
+      "counties": {
+        "singular": "County",
+        "plural": "Counties"
+      },
+      "states": {
+        "singular": "State",
+        "plural": "States"
+      }
+    },
+    "items": {
+      "nyc": {
+        "title": "New York City",
+        "type": "cities",
+        "connections": [
+          {
+            "to": "ny",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "harrisburg": {
+        "title": "Harrisburg",
+        "type": "cities",
+        "connections": [
+          {
+            "to": "dauphin-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pittsburgh": {
+        "title": "Pittsburgh",
+        "type": "cities",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "allegheny-county": {
+        "title": "Allegheny County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "dauphin-county": {
+        "title": "Dauphin County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "philadelphia": {
+        "title": "Philadelphia",
+        "type": "cities",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pa": {
+        "title": "Pennsylvania",
+        "type": "states"
+      },
+      "nj": {
+        "title": "New Jersey",
+        "type": "states"
+      },
+      "dc": {
+        "title": "District of Columbia",
+        "type": "cities"
+      },
+      "ri": {
+        "title": "Rhode Island",
+        "type": "states"
+      },
+      "sc": {
+        "title": "South Carolina",
+        "type": "states"
+      },
+      "sd": {
+        "title": "South Dakota",
+        "type": "states"
+      },
+      "tn": {
+        "title": "Tennessee",
+        "type": "states"
+      },
+      "tx": {
+        "title": "Texas",
+        "type": "states"
+      },
+      "ut": {
+        "title": "Utah",
+        "type": "states"
+      },
+      "vt": {
+        "title": "Vermont",
+        "type": "states"
+      },
+      "va": {
+        "title": "Virginia",
+        "type": "states"
+      },
+      "wa": {
+        "title": "Washington",
+        "type": "states"
+      },
+      "wv": {
+        "title": "West Virginia",
+        "type": "states"
+      },
+      "wi": {
+        "title": "Wisconsin",
+        "type": "states"
+      },
+      "wy": {
+        "title": "Wyoming",
+        "type": "states"
+      },
+      "nm": {
+        "title": "New Mexico",
+        "type": "states"
+      },
+      "ny": {
+        "title": "New York",
+        "type": "states"
+      },
+      "nc": {
+        "title": "North Carolina",
+        "type": "states"
+      },
+      "nd": {
+        "title": "North Dakota",
+        "type": "states"
+      },
+      "oh": {
+        "title": "Ohio",
+        "type": "states"
+      },
+      "ok": {
+        "title": "Oklahoma",
+        "type": "states"
+      },
+      "or": {
+        "title": "Oregon",
+        "type": "states"
+      },
+      "md": {
+        "title": "Maryland",
+        "type": "states"
+      },
+      "ma": {
+        "title": "Massachusetts",
+        "type": "states"
+      },
+      "mi": {
+        "title": "Michigan",
+        "type": "states"
+      },
+      "mn": {
+        "title": "Minnesota",
+        "type": "states"
+      },
+      "ms": {
+        "title": "Mississippi",
+        "type": "states"
+      },
+      "mo": {
+        "title": "Missouri",
+        "type": "states"
+      },
+      "mt": {
+        "title": "Montana",
+        "type": "states"
+      },
+      "ne": {
+        "title": "Nebraska",
+        "type": "states"
+      },
+      "nv": {
+        "title": "Nevada",
+        "type": "states"
+      },
+      "nh": {
+        "title": "New Hampshire",
+        "type": "states"
+      },
+      "hi": {
+        "title": "Hawaii",
+        "type": "states"
+      },
+      "id": {
+        "title": "Idaho",
+        "type": "states"
+      },
+      "il": {
+        "title": "Illinois",
+        "type": "states"
+      },
+      "in": {
+        "title": "Indiana",
+        "type": "states"
+      },
+      "ia": {
+        "title": "Iowa",
+        "type": "states"
+      },
+      "ks": {
+        "title": "Kansas",
+        "type": "states"
+      },
+      "ky": {
+        "title": "Kentucky",
+        "type": "states"
+      },
+      "la": {
+        "title": "Louisiana",
+        "type": "states"
+      },
+      "me": {
+        "title": "Maine",
+        "type": "states"
+      },
+      "fl": {
+        "title": "Florida",
+        "type": "states"
+      },
+      "ga": {
+        "title": "Georgia",
+        "type": "states"
+      },
+      "al": {
+        "title": "Alabama",
+        "type": "states"
+      },
+      "ak": {
+        "title": "Alaska",
+        "type": "states"
+      },
+      "az": {
+        "title": "Arizona",
+        "type": "states"
+      },
+      "ar": {
+        "title": "Arkansas",
+        "type": "states"
+      },
+      "ca": {
+        "title": "California",
+        "type": "states"
+      },
+      "co": {
+        "title": "Colorado",
+        "type": "states"
+      },
+      "ct": {
+        "title": "Connecticut",
+        "type": "states"
+      },
+      "de": {
+        "title": "Delaware",
+        "type": "states"
+      }
+    }
+  },
+  "person": {
+    "items": {
+      "donald-trump": {
+        "title": "Donald Trump",
+        "prefix": "",
+        "first": "Donald",
+        "middle": "",
+        "nickname": "",
+        "last": "Trump",
+        "suffix": ""
+      },
+      "hillary-clinton": {
+        "title": "Hillary Clinton",
+        "prefix": "",
+        "first": "Hillary",
+        "middle": "",
+        "nickname": "",
+        "last": "Clinton",
+        "suffix": ""
+      },
+      "tom-wolf": {
+        "title": "Tom Wolf",
+        "prefix": "",
+        "first": "Tom",
+        "middle": "",
+        "nickname": "",
+        "last": "Wolf",
+        "suffix": ""
+      }
+    }
+  },
+  "org": {
+    "items": {
+      "seiu": {
+        "types": [
+          "unions"
+        ],
+        "alias": "SEIU",
+        "title": "Service Employees International Union"
+      },
+      "ibew": {
+        "types": [
+          "unions"
+        ],
+        "alias": "IBEW",
+        "title": "International Brotherhood of Electrical Workers"
+      },
+      "iww": {
+        "types": [
+          "unions"
+        ],
+        "alias": "IWW",
+        "title": "Industrial Workers of the World"
+      },
+      "spca": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "SPCA",
+        "title": "Society for the Prevention of Cruelty to Animals"
+      },
+      "aclu": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "ACLU",
+        "title": "American Civil Liberties Union"
+      },
+      "afl-cio": {
+        "types": [
+          "unions"
+        ],
+        "alias": "AFL-CIO",
+        "title": "American Federation of Labor and Congress of Industrial Organizations"
+      },
+      "atf": {
+        "types": [
+          "federal-gov"
+        ],
+        "alias": "ATF",
+        "title": "Bureau of Alcohol, Tobacco and Firearms"
+      },
+      "cia": {
+        "types": [
+          "federal-gov"
+        ],
+        "alias": "CIA",
+        "title": "Central Intelligence Agency"
+      },
+      "department-of-homeland-security": {
+        "types": [
+          "federal-gov"
+        ],
+        "alias": "",
+        "title": "Department of Homeland Security"
+      },
+      "fbi": {
+        "types": [
+          "federal-gov"
+        ],
+        "alias": "FBI",
+        "title": "Federal Bureau of Investigation"
+      },
+      "nsa": {
+        "types": [
+          "federal-gov"
+        ],
+        "alias": "NSA",
+        "title": "National Security Agency"
+      },
+      "us-secret-service": {
+        "types": [
+          "federal-gov"
+        ],
+        "alias": "",
+        "title": "U.S. Secret Service"
+      },
+      "city-council": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "City Council"
+      },
+      "district-attorneys-office": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "District Attorney’s Office"
+      },
+      "amtrak": {
+        "types": [
+          "businesses"
+        ],
+        "alias": "",
+        "title": "Amtrak"
+      },
+      "comcast": {
+        "types": [
+          "businesses"
+        ],
+        "alias": "",
+        "title": "Comcast"
+      },
+      "verizon": {
+        "types": [
+          "businesses"
+        ],
+        "alias": "",
+        "title": "Verizon"
+      }
+    },
+    "types": {
+      "businesses": {
+        "children": [
+
+        ],
+        "singular": "Business",
+        "plural": "Businesses"
+      },
+      "nonprofits": {
+        "children": [
+
+        ],
+        "singular": "Non-Profit / Charitable Organization",
+        "plural": "Non-Profit / Charitable Organizations"
+      },
+      "education": {
+        "singular": "Education",
+        "plural": "",
+        "children": {
+          "colleges-universities": {
+            "singular": "College / University",
+            "plural": "Colleges / Universities"
+          },
+          "k-12": {
+            "singular": "K-12",
+            "plural": ""
+          }
+        }
+      },
+      "sports-teams": {
+        "children": [
+
+        ],
+        "singular": "Sports Team",
+        "plural": "Sports Teams"
+      },
+      "ngos": {
+        "children": [
+
+        ],
+        "singular": "NGO",
+        "plural": "NGOs"
+      },
+      "authorities": {
+        "children": [
+
+        ],
+        "singular": "Authority / Board / Commission",
+        "plural": "Authorities / Boards / Commissions"
+      },
+      "government": {
+        "children": {
+          "county-gov": {
+            "singular": "County Government",
+            "plural": ""
+          },
+          "state-gov": {
+            "singular": "State Government",
+            "plural": ""
+          },
+          "city-gov": {
+            "singular": "City Government",
+            "plural": ""
+          },
+          "federal-gov": {
+            "singular": "Federal Government",
+            "plural": ""
+          }
+        },
+        "singular": "Government",
+        "plural": ""
+      },
+      "political-orgs": {
+        "children": [
+
+        ],
+        "singular": "Political Organization / PAC",
+        "plural": "Political Organizations / PACs"
+      },
+      "unions": {
+        "children": [
+
+        ],
+        "singular": "Union",
+        "plural": "Unions"
+      },
+      "civic-groups": {
+        "children": [
+
+        ],
+        "singular": "Civic Group",
+        "plural": "Civic Groups"
+      },
+      "arts-groups": {
+        "children": [
+
+        ],
+        "singular": "Arts Group",
+        "plural": "Arts Groups"
+      }
+    }
+  },
+  "place": {
+    "items": {
+
+    },
+    "types": {
+      "landmarks": {
+        "children": [
+
+        ],
+        "singular": "Landmark",
+        "plural": "Landmarks"
+      },
+      "parks": {
+        "children": [
+
+        ],
+        "singular": "Park",
+        "plural": "Parks"
+      },
+      "farms": {
+        "children": [
+
+        ],
+        "singular": "Farm",
+        "plural": "Farms"
+      },
+      "squares": {
+        "children": [
+
+        ],
+        "singular": "Square",
+        "plural": "Squares"
+      },
+      "schools-campuses": {
+        "children": [
+
+        ],
+        "singular": "School / Campus",
+        "plural": "Schools / Campuses"
+      },
+      "galleries": {
+        "children": [
+
+        ],
+        "singular": "Gallery",
+        "plural": "Galleries"
+      },
+      "museums": {
+        "children": [
+
+        ],
+        "singular": "Museum",
+        "plural": "Museums"
+      },
+      "restaurants": {
+        "children": [
+
+        ],
+        "singular": "Restaurant",
+        "plural": "Restaurants"
+      },
+      "bars": {
+        "children": [
+
+        ],
+        "singular": "Bar",
+        "plural": "Bars"
+      },
+      "cafes": {
+        "children": [
+
+        ],
+        "singular": "Cafe",
+        "plural": "Cafes"
+      },
+      "retail-stores": {
+        "children": [
+
+        ],
+        "singular": "Retail Store",
+        "plural": "Retail Stores"
+      },
+      "clubs-venues": {
+        "children": [
+
+        ],
+        "singular": "Club / Venue",
+        "plural": "Clubs / Venues"
+      },
+      "corporate-hqs": {
+        "children": [
+
+        ],
+        "singular": "Corporate Headquarters",
+        "plural": ""
+      },
+      "transportation": {
+        "children": [
+
+        ],
+        "singular": "Transportation",
+        "plural": ""
+      }
+    }
+  },
+  "topic": {
+    "items": {
+      "animals": {
+        "title": "Animals"
+      },
+      "architecture": {
+        "title": "Architecture"
+      },
+      "arts": {
+        "title": "Arts"
+      },
+      "books": {
+        "title": "Books"
+      },
+      "breaking-news": {
+        "title": "Breaking News"
+      },
+      "business": {
+        "title": "Business"
+      },
+      "celebrities": {
+        "title": "Celebrities"
+      },
+      "charities": {
+        "title": "Charities"
+      },
+      "civics": {
+        "title": "Civics"
+      },
+      "comedy": {
+        "title": "Comedy"
+      },
+      "comics": {
+        "title": "Comics"
+      },
+      "corruption": {
+        "title": "Corruption"
+      },
+      "criminal-justice": {
+        "title": "Criminal Justice"
+      },
+      "cycling": {
+        "title": "Cycling"
+      },
+      "demographics": {
+        "title": "Demographics"
+      },
+      "development": {
+        "title": "Development"
+      },
+      "economy": {
+        "title": "Economy"
+      },
+      "education": {
+        "title": "Education"
+      },
+      "elections": {
+        "title": "Elections"
+      },
+      "entertainment": {
+        "title": "Entertainment"
+      },
+      "environment": {
+        "title": "Environment"
+      },
+      "ethnicity": {
+        "title": "Ethnicity"
+      },
+      "fashion": {
+        "title": "Fashion"
+      },
+      "health-fitness": {
+        "title": "Health & Fitness"
+      },
+      "food-drink": {
+        "title": "Food & Drink"
+      },
+      "gambling": {
+        "title": "Gambling"
+      },
+      "gentrification": {
+        "title": "Gentrification"
+      },
+      "government": {
+        "title": "Government"
+      },
+      "history": {
+        "title": "History"
+      },
+      "holidays": {
+        "title": "Holidays"
+      },
+      "homelessness": {
+        "title": "Homelessness"
+      },
+      "immigration": {
+        "title": "Immigration"
+      },
+      "jobs": {
+        "title": "Jobs"
+      },
+      "landmarks": {
+        "title": "Landmarks"
+      },
+      "lawsuits": {
+        "title": "Lawsuits"
+      },
+      "lgbtq": {
+        "title": "LGBTQ"
+      },
+      "lobbying": {
+        "title": "Lobbying"
+      },
+      "marijuana": {
+        "title": "Marijuana"
+      },
+      "medical-marijuana": {
+        "title": "Medical Marijuana"
+      },
+      "media": {
+        "title": "Media"
+      },
+      "movies": {
+        "title": "Movies"
+      },
+      "murals": {
+        "title": "Murals"
+      },
+      "music": {
+        "title": "Music"
+      },
+      "neighborhoods": {
+        "title": "Neighborhoods"
+      },
+      "organized-labor": {
+        "title": "Organized Labor"
+      },
+      "parades": {
+        "title": "Parades"
+      },
+      "parks": {
+        "title": "Parks"
+      },
+      "parties": {
+        "title": "Parties"
+      },
+      "policing": {
+        "title": "Policing"
+      },
+      "policy": {
+        "title": "Policy"
+      },
+      "politics": {
+        "title": "Politics"
+      },
+      "profiles": {
+        "title": "Profiles"
+      },
+      "protests": {
+        "title": "Protests"
+      },
+      "public-safety": {
+        "title": "Public Safety"
+      },
+      "real-estate": {
+        "title": "Real Estate"
+      },
+      "religion": {
+        "title": "Religion"
+      },
+      "ride-sharing": {
+        "title": "Ride Sharing"
+      },
+      "science": {
+        "title": "Science"
+      },
+      "shopping": {
+        "title": "Shopping"
+      },
+      "social-media": {
+        "title": "Social Media"
+      },
+      "sports": {
+        "title": "Sports"
+      },
+      "startups": {
+        "title": "Startups"
+      },
+      "taxes": {
+        "title": "Taxes"
+      },
+      "technology": {
+        "title": "Technology"
+      },
+      "tourism": {
+        "title": "Tourism"
+      },
+      "transit": {
+        "title": "Transit"
+      },
+      "travel": {
+        "title": "Travel"
+      },
+      "veterans": {
+        "title": "Veterans"
+      },
+      "volunteering": {
+        "title": "Volunteering"
+      },
+      "zoning": {
+        "title": "Zoning"
+      }
+    }
+  }
+}

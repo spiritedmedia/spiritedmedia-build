@@ -75,6 +75,9 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#pgh-botcountry',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'TheInclineBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':theincline:',
+
+                // API Keys
+                'MANDRILL_API_KEY' => 'uUnTV4kMlDRY6Mokh-deqw',
             ];
         } );
     }

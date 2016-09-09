@@ -117,7 +117,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_BRAND_COLOR' => '',
 
                 // API Keys
-                'MANDRILL_API_KEY' => '0h1-xD3bRFb5x10ULwJusA',
+                'MANDRILL_API_KEY' => '',
                 'EVERYBLOCK_API_KEY' => '31f70243ea980f63a6545a6bc4bfabd3a284dfa7',
 
                 // Slack
@@ -186,7 +186,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             // require_once dirname( __FILE__ ) . '/lib/codebird/class-wp-codebird.php';
 
             if ( defined( 'WP_CLI' ) && WP_CLI ) {
-                require_once dirname( __FILE__ ) . '/inc/class-cli-command.php';
+                require_once dirname( __FILE__ ) . '/inc/cli/class-cli.php';
+                require_once dirname( __FILE__ ) . '/inc/cli/class-cli-clusters.php';
             }
 
             if ( is_admin() ) {

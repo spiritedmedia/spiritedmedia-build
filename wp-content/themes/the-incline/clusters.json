@@ -1,0 +1,6400 @@
+{
+  "locality": {
+    "types": {
+      "police-zones": {
+        "singular": "Police Zone",
+        "plural": "Police Zones"
+      }
+    },
+    "items": {
+      "aleppo-township": {
+        "title": "Aleppo Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "baldwin-township": {
+        "title": "Baldwin Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "collier-township": {
+        "title": "Collier Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "crescent-township": {
+        "title": "Crescent Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "east-deer-township": {
+        "title": "East Deer Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "elizabeth-township": {
+        "title": "Elizabeth Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "fawn-township": {
+        "title": "Fawn Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "findlay-township": {
+        "title": "Findlay Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "forward-township": {
+        "title": "Forward Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "frazer-township": {
+        "title": "Frazer Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "hampton-township": {
+        "title": "Hampton Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "harmar-township": {
+        "title": "Harmar Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "harrison-township": {
+        "title": "Harrison Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "indiana-township": {
+        "title": "Indiana Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "kennedy-township": {
+        "title": "Kennedy Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "kilbuck-township": {
+        "title": "Kilbuck Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "leet-township": {
+        "title": "Leet Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "marshall-township": {
+        "title": "Marshall Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mccandless-township": {
+        "title": "McCandless Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "moon-township": {
+        "title": "Moon Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mount-lebanon-township": {
+        "title": "Mount Lebanon Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "neville-township": {
+        "title": "Neville Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "north-fayette-township": {
+        "title": "North Fayette Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "north-versailles-township": {
+        "title": "North Versailles Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "ohara-township": {
+        "title": "O'Hara Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "ohio-township": {
+        "title": "Ohio Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "penn-hills-township": {
+        "title": "Penn Hills Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pine-township": {
+        "title": "Pine Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "reserve-township": {
+        "title": "Reserve Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "richland-township": {
+        "title": "Richland Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "robinson-township": {
+        "title": "Robinson Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "ross-township": {
+        "title": "Ross Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "scott-township": {
+        "title": "Scott Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "shaler-township": {
+        "title": "Shaler Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "south-fayette-township": {
+        "title": "South Fayette Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "south-park-township": {
+        "title": "South Park Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "south-versailles-township": {
+        "title": "South Versailles Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "springdale-township": {
+        "title": "Springdale Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "stowe-township": {
+        "title": "Stowe Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "upper-saint-clair-township": {
+        "title": "Upper Saint Clair Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "west-deer-township": {
+        "title": "West Deer Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "wilkins-township": {
+        "title": "Wilkins Township",
+        "type": "townships",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "clairton": {
+        "title": "Clairton",
+        "type": "cities",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "duquesne": {
+        "title": "Duquesne",
+        "type": "cities",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mckeesport": {
+        "title": "McKeesport",
+        "type": "cities",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "aspinwall": {
+        "title": "Aspinwall",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "avalon": {
+        "title": "Avalon",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "baldwin": {
+        "title": "Baldwin",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bell-acres": {
+        "title": "Bell Acres",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bellevue": {
+        "title": "Bellevue",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "ben-avon": {
+        "title": "Ben Avon",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "ben-avon-heights": {
+        "title": "Ben Avon Heights",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bethel-park": {
+        "title": "Bethel Park",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "blawnox": {
+        "title": "Blawnox",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "brackenridge": {
+        "title": "Brackenridge",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "braddock": {
+        "title": "Braddock",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "braddock-hills": {
+        "title": "Braddock Hills",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bradford-woods": {
+        "title": "Bradford Woods",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "brentwood": {
+        "title": "Brentwood",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bridgeville": {
+        "title": "Bridgeville",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "carnegie": {
+        "title": "Carnegie",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "castle-shannon": {
+        "title": "Castle Shannon",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "chalfant": {
+        "title": "Chalfant",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cheswick": {
+        "title": "Cheswick",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "churchill": {
+        "title": "Churchill",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "coraopolis": {
+        "title": "Coraopolis",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "crafton": {
+        "title": "Crafton",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "dormont": {
+        "title": "Dormont",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "dravosburg": {
+        "title": "Dravosburg",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "east-mckeesport": {
+        "title": "East McKeesport",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "east-pittsburgh": {
+        "title": "East Pittsburgh",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "edgewood": {
+        "title": "Edgewood",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "edgeworth": {
+        "title": "Edgeworth",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "elizabeth": {
+        "title": "Elizabeth",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "emsworth": {
+        "title": "Emsworth",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "etna": {
+        "title": "Etna",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "forest-hills": {
+        "title": "Forest Hills",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "fox-chapel": {
+        "title": "Fox Chapel",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "franklin-park": {
+        "title": "Franklin Park",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "glassport": {
+        "title": "Glassport",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "glen-osborne": {
+        "title": "Glen Osborne",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "glenfield": {
+        "title": "Glenfield",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "green-tree": {
+        "title": "Green Tree",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "haysville": {
+        "title": "Haysville",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "heidelberg": {
+        "title": "Heidelberg",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "homestead": {
+        "title": "Homestead",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "ingram": {
+        "title": "Ingram",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "jefferson-hills": {
+        "title": "Jefferson Hills",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "leetsdale": {
+        "title": "Leetsdale",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "liberty": {
+        "title": "Liberty",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "lincoln": {
+        "title": "Lincoln",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mckees-rocks": {
+        "title": "McKees Rocks",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "millvale": {
+        "title": "Millvale",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "monroeville": {
+        "title": "Monroeville",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mount-oliver-borough": {
+        "title": "Mount Oliver (Borough)",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "munhall": {
+        "title": "Munhall",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "north-braddock": {
+        "title": "North Braddock",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "oakdale": {
+        "title": "Oakdale",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "oakmont": {
+        "title": "Oakmont",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pennsbury-village": {
+        "title": "Pennsbury Village",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pitcairn": {
+        "title": "Pitcairn",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pleasant-hills": {
+        "title": "Pleasant Hills",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "plum": {
+        "title": "Plum",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "port-vue": {
+        "title": "Port Vue",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "rankin": {
+        "title": "Rankin",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "rosslyn-farms": {
+        "title": "Rosslyn Farms",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "sewickley": {
+        "title": "Sewickley",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "sewickley-heights": {
+        "title": "Sewickley Heights",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "sewickley-hills": {
+        "title": "Sewickley Hills",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "sharpsburg": {
+        "title": "Sharpsburg",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "springdale": {
+        "title": "Springdale",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "swissvale": {
+        "title": "Swissvale",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "tarentum": {
+        "title": "Tarentum",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "thornburg": {
+        "title": "Thornburg",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "turtle-creek": {
+        "title": "Turtle Creek",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "verona": {
+        "title": "Verona",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "versailles": {
+        "title": "Versailles",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "wall": {
+        "title": "Wall",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "west-elizabeth": {
+        "title": "West Elizabeth",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "west-homestead": {
+        "title": "West Homestead",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "west-mifflin": {
+        "title": "West Mifflin",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "west-view": {
+        "title": "West View",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "whitaker": {
+        "title": "Whitaker",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "white-oak": {
+        "title": "White Oak",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "whitehall": {
+        "title": "Whitehall",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "wilkinsburg": {
+        "title": "Wilkinsburg",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "wilmerding": {
+        "title": "Wilmerding",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mcdonald": {
+        "title": "McDonald",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          },
+          {
+            "to": "washington-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "trafford": {
+        "title": "Trafford",
+        "type": "boroughs",
+        "connections": [
+          {
+            "to": "allegheny-county",
+            "rel": "contained_in"
+          },
+          {
+            "to": "westmoreland-county",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "allegheny-county": {
+        "title": "Allegheny County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "armstrong-county": {
+        "title": "Armstrong County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "beaver-county": {
+        "title": "Beaver County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bedford-county": {
+        "title": "Bedford County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "blair-county": {
+        "title": "Blair County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "butler-county": {
+        "title": "Butler County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cambria-county": {
+        "title": "Cambria County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cameron-county": {
+        "title": "Cameron County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "clarion-county": {
+        "title": "Clarion County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "clearfield-county": {
+        "title": "Clearfield County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "crawford-county": {
+        "title": "Crawford County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "elk-county": {
+        "title": "Elk County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "erie-county": {
+        "title": "Erie County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "fayette-county": {
+        "title": "Fayette County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "forest-county": {
+        "title": "Forest County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "greene-county": {
+        "title": "Greene County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "indiana-county": {
+        "title": "Indiana County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "jefferson-county": {
+        "title": "Jefferson County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "lawrence-county": {
+        "title": "Lawrence County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mckean-county": {
+        "title": "McKean County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mercer-county": {
+        "title": "Mercer County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "somerset-county": {
+        "title": "Somerset County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "venango-county": {
+        "title": "Venango County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "warren-county": {
+        "title": "Warren County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "washington-county": {
+        "title": "Washington County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "westmoreland-county": {
+        "title": "Westmoreland County",
+        "type": "counties",
+        "connections": [
+          {
+            "to": "pa",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "zone-one": {
+        "title": "Police Zone One",
+        "type": "police-zones",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "zone-three": {
+        "title": "Police Zone Three",
+        "type": "police-zones",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "zone-four": {
+        "title": "Police Zone Four",
+        "type": "police-zones",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "zone-five": {
+        "title": "Police Zone Five",
+        "type": "police-zones",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "zone-six": {
+        "title": "Police Zone Six",
+        "type": "police-zones",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "zone-two": {
+        "title": "Police Zone Two",
+        "type": "police-zones",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "allegheny-center": {
+        "title": "Allegheny Center",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "allegheny-west": {
+        "title": "Allegheny West",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "allentown": {
+        "title": "Allentown",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "arlington": {
+        "title": "Arlington",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "arlington-heights": {
+        "title": "Arlington Heights",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "banksville": {
+        "title": "Banksville",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bedford-dwellings": {
+        "title": "Bedford Dwellings",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "beechview": {
+        "title": "Beechview",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "beltzhoover": {
+        "title": "Beltzhoover",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bloomfield": {
+        "title": "Bloomfield",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bluff": {
+        "title": "Bluff",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bon-air": {
+        "title": "Bon Air",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "brighton-heights": {
+        "title": "Brighton Heights",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "brookline": {
+        "title": "Brookline",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "california-kirkbride": {
+        "title": "California-Kirkbride",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "carrick": {
+        "title": "Carrick",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "central-business-district": {
+        "title": "Central Business District",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "central-north-side": {
+        "title": "Central North Side",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cultural-district": {
+        "title": "Cultural District",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "deutschtown": {
+        "title": "Deutschtown",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mexican-war-streets": {
+        "title": "Mexican War Streets",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "west-oakland": {
+        "title": "West Oakland",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "central-oakland": {
+        "title": "Central Oakland",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "south-oakland": {
+        "title": "South Oakland",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "chartiers": {
+        "title": "Chartiers",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "chateau": {
+        "title": "Chateau",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "crafton-heights": {
+        "title": "Crafton Heights",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "crawford-roberts": {
+        "title": "Crawford Roberts",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "duquesne-heights": {
+        "title": "Duquesne Heights",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "east-carnegie": {
+        "title": "East Carnegie",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "east-hills": {
+        "title": "East Hills",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "east-liberty": {
+        "title": "East Liberty",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "elliott": {
+        "title": "Elliott",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "esplen": {
+        "title": "Esplen",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "fairywood": {
+        "title": "Fairywood",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "fineview": {
+        "title": "Fineview",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "friendship": {
+        "title": "Friendship",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "garfield": {
+        "title": "Garfield",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "glen-hazel": {
+        "title": "Glen Hazel",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "greenfield": {
+        "title": "Greenfield",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "hays": {
+        "title": "Hays",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "hazelwood": {
+        "title": "Hazelwood",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "highland-park": {
+        "title": "Highland Park",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "homewood": {
+        "title": "Homewood",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "hill-district": {
+        "title": "Hill District",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "knoxville": {
+        "title": "Knoxville",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "larimer": {
+        "title": "Larimer",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "lower-lawrenceville": {
+        "title": "Lower Lawrenceville",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "upper-lawrenceville": {
+        "title": "Upper Lawrenceville",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "central-lawrenceville": {
+        "title": "Central Lawrenceville",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "lincoln-lemington-belmar": {
+        "title": "Lincoln–Lemington–Belmar",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "lincoln-place": {
+        "title": "Lincoln Place",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "manchester": {
+        "title": "Manchester",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "marshall-shadeland": {
+        "title": "Marshall-Shadeland",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "middle-hill": {
+        "title": "Middle Hill",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "morningside": {
+        "title": "Morningside",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mount-oliver": {
+        "title": "Mount Oliver",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mount-washington": {
+        "title": "Mount Washington",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "chatham-village": {
+        "title": "Chatham Village",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "new-homestead": {
+        "title": "New Homestead",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "north-oakland": {
+        "title": "North Oakland",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "north-point-breeze": {
+        "title": "North Point Breeze",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "north-side": {
+        "title": "North Side",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "north-shore": {
+        "title": "North Shore",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "northview-heights": {
+        "title": "Northview Heights",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "oakwood": {
+        "title": "Oakwood",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "overbrook": {
+        "title": "Overbrook",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "perry-north": {
+        "title": "Perry North / Observatory Hill",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "perry-south": {
+        "title": "Perry South / Perry Hilltop",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "point-breeze": {
+        "title": "Point Breeze",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "polish-hill": {
+        "title": "Polish Hill",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "regent-square": {
+        "title": "Regent Square",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "ridgemont": {
+        "title": "Ridgemont",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-six",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "saint-clair": {
+        "title": "Saint Clair",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "shadyside": {
+        "title": "Shadyside",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-five",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "sheraden": {
+        "title": "Sheraden",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "south-shore": {
+        "title": "South Shore",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "south-side": {
+        "title": "South Side",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "south-side-slopes": {
+        "title": "South Side Slopes",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-three",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "spring-garden": {
+        "title": "Spring Garden",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-one",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "spring-hill-city-view": {
+        "title": "Spring Hill–City View",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "squirrel-hill-north": {
+        "title": "Squirrel Hill North",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "squirrel-hill-south": {
+        "title": "Squirrel Hill South",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "stanton-heights": {
+        "title": "Stanton Heights",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "strip-district": {
+        "title": "Strip District",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "summer-hill": {
+        "title": "Summer Hill",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "swisshelm-park": {
+        "title": "Swisshelm Park",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-four",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "troy-hill": {
+        "title": "Troy Hill",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "upper-hill": {
+        "title": "Upper Hill",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "zone-two",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "washingtons-landing": {
+        "title": "Washington's Landing",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "west-end": {
+        "title": "West End",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "westwood": {
+        "title": "Westwood",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "windgap": {
+        "title": "Windgap",
+        "type": "neighborhoods",
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      }
+    }
+  },
+  "person": {
+    "items": {
+      "bill-peduto": {
+        "title": "Bill Peduto",
+        "prefix": "",
+        "first": "Bill",
+        "middle": "",
+        "nickname": "",
+        "last": "Peduto",
+        "suffix": ""
+      },
+      "michael-lamb": {
+        "title": "Michael Lamb",
+        "prefix": "",
+        "first": "Michael",
+        "middle": "",
+        "nickname": "",
+        "last": "Lamb",
+        "suffix": ""
+      },
+      "rich-fitzgerald": {
+        "title": "Rich Fitzgerald",
+        "prefix": "",
+        "first": "Rich",
+        "middle": "",
+        "nickname": "",
+        "last": "Fitzgerald",
+        "suffix": ""
+      },
+      "chelsa-wagner": {
+        "title": "Chelsa Wagner",
+        "prefix": "",
+        "first": "Chelsa",
+        "middle": "",
+        "nickname": "",
+        "last": "Wagner",
+        "suffix": ""
+      },
+      "cameron-mclay": {
+        "title": "Cameron McLay",
+        "prefix": "",
+        "first": "Cameron",
+        "middle": "",
+        "nickname": "",
+        "last": "McLay",
+        "suffix": ""
+      },
+      "darlene-harris": {
+        "title": "Darlene Harris",
+        "prefix": "",
+        "first": "Darlene",
+        "middle": "",
+        "nickname": "",
+        "last": "Harris",
+        "suffix": ""
+      },
+      "theresa-kail-smith": {
+        "title": "Theresa Kail-Smith",
+        "prefix": "",
+        "first": "Theresa",
+        "middle": "",
+        "nickname": "",
+        "last": "Kail-Smith",
+        "suffix": ""
+      },
+      "bruce-kraus": {
+        "title": "Bruce Kraus",
+        "prefix": "",
+        "first": "Bruce",
+        "middle": "",
+        "nickname": "",
+        "last": "Kraus",
+        "suffix": ""
+      },
+      "natalia-rudiak": {
+        "title": "Natalia Rudiak",
+        "prefix": "",
+        "first": "Natalia",
+        "middle": "",
+        "nickname": "",
+        "last": "Rudiak",
+        "suffix": ""
+      },
+      "corey-o-connor": {
+        "title": "Corey O’Connor",
+        "prefix": "",
+        "first": "Corey",
+        "middle": "",
+        "nickname": "",
+        "last": "O’Connor",
+        "suffix": ""
+      },
+      "daniel-lavelle": {
+        "title": "Daniel Lavelle",
+        "prefix": "",
+        "first": "Daniel",
+        "middle": "",
+        "nickname": "",
+        "last": "Lavelle",
+        "suffix": ""
+      },
+      "deborah-gross": {
+        "title": "Deborah Gross",
+        "prefix": "",
+        "first": "Deborah",
+        "middle": "",
+        "nickname": "",
+        "last": "Gross",
+        "suffix": ""
+      },
+      "dan-gilman": {
+        "title": "Dan Gilman",
+        "prefix": "",
+        "first": "Dan",
+        "middle": "",
+        "nickname": "",
+        "last": "Gilman",
+        "suffix": ""
+      },
+      "ricky-burgess": {
+        "title": "Ricky Burgess",
+        "prefix": "",
+        "first": "Ricky",
+        "middle": "",
+        "nickname": "",
+        "last": "Burgess",
+        "suffix": ""
+      },
+      "ben-roethlisberger": {
+        "title": "Ben Roethlisberger",
+        "prefix": "",
+        "first": "Ben",
+        "middle": "",
+        "nickname": "",
+        "last": "Roethlisberger",
+        "suffix": ""
+      },
+      "sidney-crosby": {
+        "title": "Sidney Crosby",
+        "prefix": "",
+        "first": "Sidney",
+        "middle": "",
+        "nickname": "",
+        "last": "Crosby",
+        "suffix": ""
+      },
+      "andy-warhol": {
+        "title": "Andy Warhol",
+        "prefix": "",
+        "first": "Andy",
+        "middle": "",
+        "nickname": "",
+        "last": "Warhol",
+        "suffix": ""
+      },
+      "justin-severino": {
+        "title": "Justin Severino",
+        "prefix": "",
+        "first": "Justin",
+        "middle": "",
+        "nickname": "",
+        "last": "Severino",
+        "suffix": ""
+      },
+      "wei-zhu": {
+        "title": "Wei Zhu",
+        "prefix": "",
+        "first": "Wei",
+        "middle": "",
+        "nickname": "",
+        "last": "Zhu",
+        "suffix": ""
+      },
+      "rick-easton": {
+        "title": "Rick Easton",
+        "prefix": "",
+        "first": "Rick",
+        "middle": "",
+        "nickname": "",
+        "last": "Easton",
+        "suffix": ""
+      },
+      "nate-hobart": {
+        "title": "Nate Hobart",
+        "prefix": "",
+        "first": "Nate",
+        "middle": "",
+        "nickname": "",
+        "last": "Hobart",
+        "suffix": ""
+      },
+      "kristin-a-butterworth": {
+        "title": "Kristin A. Butterworth",
+        "prefix": "",
+        "first": "Kristin",
+        "middle": "A.",
+        "nickname": "",
+        "last": "Butterworth",
+        "suffix": ""
+      },
+      "casey-renee": {
+        "title": "Casey Renee",
+        "prefix": "",
+        "first": "Casey",
+        "middle": "",
+        "nickname": "",
+        "last": "Renee",
+        "suffix": ""
+      }
+    }
+  },
+  "org": {
+    "items": {
+      "boilermakers-local-154": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Boilermakers Local 154"
+      },
+      "united-electrical-radio-and-machine": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "United Electrical Radio and Machine"
+      },
+      "pittsburgh-area-postal-union": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Area Postal Union"
+      },
+      "sheet-metal-workers-journeymen": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Sheet Metal Workers Journeymen"
+      },
+      "millwrights-local-union-2235": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Millwright’s Local Union 2235"
+      },
+      "piledrivers-local-union-2235": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Piledriver’s Local Union 2235"
+      },
+      "united-steelworkers": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "United Steelworkers"
+      },
+      "amalgamated-transit-local-85": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Amalgamated Transit Local 85"
+      },
+      "iron-workers": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Iron Workers"
+      },
+      "newspaper-guild-of-pittsburgh": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Newspaper Guild of Pittsburgh"
+      },
+      "teamsters-local-250": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Teamsters Local 250"
+      },
+      "allegheny-county-labor-council": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Allegheny County Labor Council"
+      },
+      "iron-worker-local-union-no-3": {
+        "types": [
+          "unions"
+        ],
+        "alias": "",
+        "title": "Iron Worker Local Union No. 3"
+      },
+      "pittsburgh-penguins": {
+        "types": [
+          "sports-teams"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Penguins"
+      },
+      "pittsburgh-steelers": {
+        "types": [
+          "sports-teams"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Steelers"
+      },
+      "pittsburgh-pirates": {
+        "types": [
+          "sports-teams"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Pirates"
+      },
+      "pittsburgh-panthers": {
+        "types": [
+          "sports-teams"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Panthers"
+      },
+      "pittsburgh-riverhounds": {
+        "types": [
+          "sports-teams"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Riverhounds"
+      },
+      "penn-state-nittany-lions": {
+        "types": [
+          "sports-teams"
+        ],
+        "alias": "",
+        "title": "Penn State Nittany Lions"
+      },
+      "republican-committee-of-allegheny-county": {
+        "types": [
+          "political-orgs"
+        ],
+        "alias": "",
+        "title": "Republican Committee of Allegheny County"
+      },
+      "republican-committee-of-pittsburgh": {
+        "types": [
+          "political-orgs"
+        ],
+        "alias": "",
+        "title": "Republican Committee of Pittsburgh"
+      },
+      "young-republicans-of-allegheny-county": {
+        "types": [
+          "political-orgs"
+        ],
+        "alias": "",
+        "title": "Young Republicans of Allegheny County"
+      },
+      "allegheny-county-democratic-committee": {
+        "types": [
+          "political-orgs"
+        ],
+        "alias": "",
+        "title": "Allegheny County Democratic Committee"
+      },
+      "young-democrats-of-allegheny-county": {
+        "types": [
+          "political-orgs"
+        ],
+        "alias": "",
+        "title": "Young Democrats of Allegheny County"
+      },
+      "libertarian-party-of-pittsburgh": {
+        "types": [
+          "political-orgs"
+        ],
+        "alias": "",
+        "title": "The Libertarian Party Of Pittsburgh"
+      },
+      "allegheny-health-network": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "",
+        "title": "Allegheny Health Network"
+      },
+      "university-of-pittsburgh-medical-center": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "",
+        "title": "University of Pittsburgh Medical Center"
+      },
+      "animal-friends": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "",
+        "title": "Animal Friends"
+      },
+      "carnegie-library-of-pittsburgh": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "",
+        "title": "Carnegie Library of Pittsburgh"
+      },
+      "greater-pittsburgh-community-food-bank": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "",
+        "title": "Greater Pittsburgh Community Food Bank"
+      },
+      "animal-rescue-league-shelter-and-wildlife-center": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "",
+        "title": "Animal Rescue League Shelter and Wildlife Center"
+      },
+      "wesa": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "",
+        "title": "90.5 WESA"
+      },
+      "pittsburgh-city-council": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Pittsburgh City Council"
+      },
+      "pittsburgh-bureau-of-police": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Bureau of Police"
+      },
+      "pittsburgh-city-controller": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Pittsburgh City Controller"
+      },
+      "animal-care-&-control": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Animal Care & Control"
+      },
+      "citiparks": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Citiparks"
+      },
+      "city-controller": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "City Controller"
+      },
+      "city-county-task-force-on-disabilities": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "City County Task Force on Disabilities"
+      },
+      "city-planning-commission": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "City Planning Commission"
+      },
+      "commission-on-human-relations": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Commission on Human Relations"
+      },
+      "emergency-management-agency": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Emergency Management Agency"
+      },
+      "emergency-medical-services": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Emergency Medical Services"
+      },
+      "law-department": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Law Department"
+      },
+      "municipal-investigations": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Municipal Investigations"
+      },
+      "permits-licenses-inspections": {
+        "types": [
+          "city-gov"
+        ],
+        "alias": "",
+        "title": "Permits, Licenses, and Inspections"
+      },
+      "allegheny-county-district-attorney": {
+        "types": [
+          "county-gov"
+        ],
+        "alias": "",
+        "title": "Allegheny County District Attorney"
+      },
+      "allegheny-county-sheriff": {
+        "types": [
+          "county-gov"
+        ],
+        "alias": "",
+        "title": "Allegheny County Sheriff"
+      },
+      "allegheny-county-police-department": {
+        "types": [
+          "county-gov"
+        ],
+        "alias": "",
+        "title": "Allegheny County Police Department"
+      },
+      "brightside-academy": {
+        "title": "Brightside Academy",
+        "types": [
+          "k-12"
+        ],
+        "alias": ""
+      },
+      "pittsburgh-public-schools": {
+        "types": [
+          "k-12"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Public Schools"
+      },
+      "carnegie-mellon-university": {
+        "types": [
+          "colleges-universities"
+        ],
+        "alias": "",
+        "title": "Carnegie Mellon University"
+      },
+      "duquesne-university": {
+        "types": [
+          "colleges-universities"
+        ],
+        "alias": "",
+        "title": "Duquesne University"
+      },
+      "carlow-university": {
+        "types": [
+          "colleges-universities"
+        ],
+        "alias": "",
+        "title": "Carlow University"
+      },
+      "chatham-university": {
+        "types": [
+          "colleges-universities"
+        ],
+        "alias": "",
+        "title": "Chatham University"
+      },
+      "pitt": {
+        "types": [
+          "colleges-universities"
+        ],
+        "alias": "Pitt",
+        "title": "University of Pittsburgh"
+      },
+      "point-park": {
+        "types": [
+          "colleges-universities"
+        ],
+        "alias": "Point Park",
+        "title": "Point Park University"
+      },
+      "penn-state": {
+        "types": [
+          "colleges-universities"
+        ],
+        "alias": "Penn State",
+        "title": "Pennsylvania State University"
+      },
+      "brightwood-civic-group": {
+        "types": [
+          "civic-groups"
+        ],
+        "alias": "",
+        "title": "Brightwood Civic Group"
+      },
+      "pittsburgh-cares": {
+        "types": [
+          "civic-groups"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Cares"
+      },
+      "new-pittsburgh-collaborative": {
+        "types": [
+          "civic-groups"
+        ],
+        "alias": "",
+        "title": "New Pittsburgh Collaborative"
+      },
+      "catholic-charities": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "",
+        "title": "Catholic Charities"
+      },
+      "pittsburgh-foundation": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "",
+        "title": "The Pittsburgh Foundation"
+      },
+      "heinz-endowments": {
+        "types": [
+          "nonprofits"
+        ],
+        "alias": "",
+        "title": "The Heinz Endowments"
+      },
+      "shell": {
+        "types": [
+          "businesses"
+        ],
+        "alias": "",
+        "title": "Shell"
+      },
+      "zambelli-fireworks": {
+        "types": [
+          "businesses"
+        ],
+        "alias": "",
+        "title": "Zambelli Fireworks"
+      },
+      "trib-total-media": {
+        "types": [
+          "businesses"
+        ],
+        "alias": "",
+        "title": "Trib Total Media"
+      },
+      "pittsburgh-post-gazette": {
+        "types": [
+          "businesses"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Post-Gazette"
+      },
+      "heinz": {
+        "types": [
+          "businesses"
+        ],
+        "alias": "",
+        "title": "Heinz"
+      },
+      "port-authority": {
+        "types": [
+          "authorities"
+        ],
+        "alias": "",
+        "title": "Port Authority"
+      },
+      "pittsburgh-parking-authority": {
+        "types": [
+          "authorities"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Parking Authority"
+      },
+      "sports-and-exhibition-authority": {
+        "types": [
+          "authorities"
+        ],
+        "alias": "",
+        "title": "Sports and Exhibition Authority"
+      },
+      "citizen-police-review-board": {
+        "types": [
+          "authorities"
+        ],
+        "alias": "",
+        "title": "Citizen Police Review Board"
+      },
+      "shade-tree-commission": {
+        "types": [
+          "authorities"
+        ],
+        "alias": "",
+        "title": "Shade Tree Commission"
+      },
+      "ica": {
+        "types": [
+          "authorities"
+        ],
+        "alias": "ICA",
+        "title": "Pittsburgh Intergovernmental Cooperation Authority"
+      },
+      "alcosan": {
+        "types": [
+          "authorities"
+        ],
+        "alias": "ALCOSAN",
+        "title": "Allegheny County Sanitary Authority"
+      },
+      "rad": {
+        "types": [
+          "authorities"
+        ],
+        "alias": "RAD",
+        "title": "Allegheny Regional Asset District Board"
+      },
+      "ura": {
+        "types": [
+          "authorities"
+        ],
+        "alias": "URA",
+        "title": "Urban Redevelopment Authority of Pittsburgh"
+      },
+      "pwsa": {
+        "types": [
+          "authorities"
+        ],
+        "alias": "PWSA",
+        "title": "Pittsburgh Water and Sewer Authority"
+      },
+      "greater-pittsburgh-arts-council": {
+        "types": [
+          "arts-groups"
+        ],
+        "alias": "",
+        "title": "Greater Pittsburgh Arts Council"
+      },
+      "pittsburgh-symphony-orchestra": {
+        "types": [
+          "arts-groups"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Symphony Orchestra"
+      },
+      "pittsburgh-cultural-trust": {
+        "types": [
+          "arts-groups"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Cultural Trust"
+      },
+      "pittsburgh-opera": {
+        "types": [
+          "arts-groups"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Opera"
+      },
+      "pittsburgh-ballet-theatre": {
+        "types": [
+          "arts-groups"
+        ],
+        "alias": "",
+        "title": "Pittsburgh Ballet Theatre"
+      },
+      "parents-united-pa": {
+        "types": [
+          "civic-groups"
+        ],
+        "alias": "",
+        "title": "Parents United PA"
+      },
+      "pa-working-families": {
+        "types": [
+          "political-orgs"
+        ],
+        "alias": "",
+        "title": "PA Working Families"
+      },
+      "pennsylvanians-for-judicial-reform": {
+        "types": [
+          "political-orgs"
+        ],
+        "alias": "",
+        "title": "Pennsylvanians for Judicial Reform"
+      },
+      "pa-department-of-education": {
+        "types": [
+          "state-gov"
+        ],
+        "alias": "",
+        "title": "PA Department of Education"
+      },
+      "pa-department-of-environmental-protection": {
+        "types": [
+          "state-gov"
+        ],
+        "alias": "",
+        "title": "PA Department of Environmental Protection"
+      },
+      "pa-department-of-public-health": {
+        "types": [
+          "state-gov"
+        ],
+        "alias": "",
+        "title": "PA Department of Public Health"
+      },
+      "pa-office-of-the-governor": {
+        "types": [
+          "state-gov"
+        ],
+        "alias": "",
+        "title": "PA Office of the Governor"
+      },
+      "pa-house": {
+        "types": [
+          "state-gov"
+        ],
+        "alias": "",
+        "title": "PA House"
+      },
+      "pa-senate": {
+        "types": [
+          "state-gov"
+        ],
+        "alias": "",
+        "title": "PA Senate"
+      },
+      "pa-supreme-court": {
+        "types": [
+          "state-gov"
+        ],
+        "alias": "",
+        "title": "PA Supreme Court"
+      },
+      "penndot": {
+        "types": [
+          "state-gov"
+        ],
+        "alias": "PennDOT",
+        "title": "Department of Transportation"
+      },
+      "committee-of-seventy": {
+        "types": [
+          "ngo"
+        ],
+        "alias": "",
+        "title": "Committee of Seventy"
+      },
+      "penn-state-university": {
+        "types": [
+          "colleges-universities"
+        ],
+        "alias": "",
+        "title": "Penn State University"
+      }
+    },
+    "types": {
+
+    }
+  },
+  "place": {
+    "items": {
+      "market-square": {
+        "title": "Market Square",
+        "types": [
+          "squares"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "all-saints-school": {
+        "title": "All Saints School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "allegheny-traditional-academy-middle-school": {
+        "title": "Allegheny Traditional Academy Middle School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "arsenal-middle-school": {
+        "title": "Arsenal Middle School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "assumption-elementary-school": {
+        "title": "Assumption Elementary School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "barack-obama-academy-of-international-studies": {
+        "title": "Barack Obama Academy of International Studies",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "beulah-christian-preschool": {
+        "title": "Beulah Christian Preschool",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bishop-canevin-high-school": {
+        "title": "Bishop Canevin High School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "brashear-high-school": {
+        "title": "Brashear High School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "brookline-school": {
+        "title": "Brookline School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cardinal-wright-regional-school": {
+        "title": "Cardinal Wright Regional School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "carmalt-academy-of-science-and-technology": {
+        "title": "Carmalt Academy of Science and Technology",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "carrick-high-school": {
+        "title": "Carrick High School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "central-catholic-high-schools": {
+        "title": "Central Catholic High Schools",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "childrens-school-at-carnegie-mellon": {
+        "title": "Childrens School at Carnegie Mellon",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "city-charter-high-school": {
+        "title": "City Charter High School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "colfax-accelerated-learning-academy": {
+        "title": "Colfax Accelerated Learning Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "community-day-school": {
+        "title": "Community Day School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "day-school-at-the-childrens-institute": {
+        "title": "Day School at the Children’s Institute",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "eden-christian-academy": {
+        "title": "Eden Christian Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "environmental-charter-school": {
+        "title": "Environmental Charter School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "fort-pitt-accelerated-learning-academy": {
+        "title": "Fort Pitt Accelerated Learning Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "greenfield-school": {
+        "title": "Greenfield School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "helen-s-faison-school": {
+        "title": "Helen S. Faison School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "hillel-academy-pittsburgh": {
+        "title": "Hillel Academy Pittsburgh",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "imani-christian-academy": {
+        "title": "Imani Christian Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "immaculate-conception-school": {
+        "title": "Immaculate Conception School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "jubilee-christian-school": {
+        "title": "Jubilee Christian School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "langley-high-school": {
+        "title": "Langley High School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "manchester-school": {
+        "title": "Manchester School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "martin-luther-king-accelerated-learning-academy": {
+        "title": "Martin Luther King Accelerated Learning Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mifflin-school": {
+        "title": "Mifflin School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "miller-african-centered-academy": {
+        "title": "Miller African Centered Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "murray-accelerated-learning-academy": {
+        "title": "Murray Accelerated Learning Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "northside-catholic-school": {
+        "title": "Northside Catholic School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "northview-accelerated-learning-academy": {
+        "title": "Northview Accelerated Learning Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "our-lady-of-grace-school": {
+        "title": "Our Lady of Grace School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pace-school": {
+        "title": "Pace School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "penn-hills-charter-school-of-entrepreneurship": {
+        "title": "Penn Hills Charter School of Entrepreneurship",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "perry-traditional-academy-high-school": {
+        "title": "Perry Traditional Academy High School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pittsburgh-arlington": {
+        "title": "Pittsburgh Arlington",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pittsburgh-classical-academy-middle-school": {
+        "title": "Pittsburgh Classical Academy Middle School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pittsburgh-creative-and-performing-arts-school": {
+        "title": "Pittsburgh Creative and Performing Arts School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pittsburgh-milliones": {
+        "title": "Pittsburgh Milliones",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pittsburgh-science-and-technology-academy": {
+        "title": "Pittsburgh Science and Technology Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pittsburgh-urban-christian-school": {
+        "title": "Pittsburgh Urban Christian School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "propel-schools": {
+        "title": "Propel Schools",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "schiller-classical-academy-middle-school": {
+        "title": "Schiller Classical Academy Middle School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "south-brook-middle-school": {
+        "title": "South Brook Middle School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "south-hills-middle-school": {
+        "title": "South Hills Middle School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "st-anne-elementary-school": {
+        "title": "St. Anne Elementary School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "sterrett-classical-academy": {
+        "title": "Sterrett Classical Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "sunnyside-school": {
+        "title": "Sunnyside School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "taylor-allderdice-high-school": {
+        "title": "Taylor Allderdice High School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "ellis-school": {
+        "title": "The Ellis School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "neighborhood-academy": {
+        "title": "The Neighborhood Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "urban-pathways": {
+        "title": "Urban Pathways",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "weil-technology-accelerated-learning-academy": {
+        "title": "Weil Technology Accelerated Learning Academy",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "westinghouse-high-school": {
+        "title": "Westinghouse High School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "westwood-school": {
+        "title": "Westwood School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "young-scholars-of-western-pa-charter-school": {
+        "title": "Young Scholars of Western PA Charter School",
+        "types": [
+          "schools-campuses"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "amazing-books-records": {
+        "title": "Amazing Books & Records",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "attic-record-store": {
+        "title": "Attic Record Store",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "banker-supply": {
+        "title": "Banker Supply",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "boutique-la-passerelle": {
+        "title": "Boutique la Passerelle",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "broke-little-rich-girl-inc": {
+        "title": "Broke Little Rich Girl Inc.",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cruel-noise-records": {
+        "title": "Cruel Noise Records",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "culture-shop": {
+        "title": "Culture Shop",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "decade": {
+        "title": "Decade",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "e-b-pepper": {
+        "title": "e.b. Pepper",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "fascino": {
+        "title": "Fascino",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "figleaf-boutique": {
+        "title": "Figleaf Boutique",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "glitter-and-grit": {
+        "title": "Glitter & Grit",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "global-market-retail": {
+        "title": "Global Market Retail",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "heinz-healeys": {
+        "title": "Heinz Healey’s",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "henne-jewelers": {
+        "title": "Henne Jewelers",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "highway-robbery-vintage": {
+        "title": "Highway Robbery Vintage",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "house-of-the-dead": {
+        "title": "House of the Dead",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "jerrys-records": {
+        "title": "Jerry’s Records",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "journeys-of-life": {
+        "title": "Journeys of Life",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "kinsman-shop": {
+        "title": "Kinsman Shop",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "knit-one": {
+        "title": "Knit One",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "larrimors": {
+        "title": "Larrimor’s",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "lucys-handmade-clothing-shop": {
+        "title": "Lucy’s Handmade Clothing Shop",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mid-atlantic-mercantile": {
+        "title": "Mid-Atlantic Mercantile",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "moda": {
+        "title": "Moda",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "no-14": {
+        "title": "No. 14",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pavement": {
+        "title": "Pavement",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "phoenix-upscale-consignment-boutique": {
+        "title": "Phoenix Upscale Consignment Boutique",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "ross-park-mall": {
+        "title": "Ross Park Mall",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "scribe": {
+        "title": "Scribe",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "sound-cat-records": {
+        "title": "Sound Cat Records",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "exchange": {
+        "title": "The Exchange",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "garage-at-charles-spiegel": {
+        "title": "The Garage at Charles Spiegel",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "threads-on-carson": {
+        "title": "Threads on Carson",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "three-rivers-vintage": {
+        "title": "Three Rivers Vintage",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "thriftique": {
+        "title": "Thriftique",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "vestis": {
+        "title": "Vestis",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "wild-card": {
+        "title": "Wild Card",
+        "types": [
+          "retail-stores"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "aihans-mediterranean-cuisine": {
+        "title": "Aihan’s Mediterranean Cuisine",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "alla-famiglia": {
+        "title": "Alla Famiglia",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "altius": {
+        "title": "Altius",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "amazing-cafe": {
+        "title": "Amazing Cafe",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "apteka": {
+        "title": "Apteka",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "b52-cafe": {
+        "title": "B52 Cafe",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bakersfield-penn-ave": {
+        "title": "Bakersfield Penn Ave",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bar-marco": {
+        "title": "Bar Marco",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "big-shot-bobs-house-of-wings": {
+        "title": "Big Shot Bob’s House of Wings",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "bigham-tavern": {
+        "title": "Bigham Tavern",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "burgatory": {
+        "title": "Burgatory",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "butcher-and-the-rye": {
+        "title": "Butcher and The Rye",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "butterjoint": {
+        "title": "Butterjoint",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cafe-du-jour": {
+        "title": "Cafe Du Jour",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cafe-raymond": {
+        "title": "Cafe Raymond",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cop-out-pierogies": {
+        "title": "Cop Out Pierogies",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cure": {
+        "title": "Cure",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "delucas-diner": {
+        "title": "Deluca’s Diner",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "dish-osteria-and-bar": {
+        "title": "Dish Osteria and Bar",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "doce-taqueria": {
+        "title": "Doce Taqueria",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "e2": {
+        "title": "E2",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "edgar-tacos-stand": {
+        "title": "Edgar Tacos Stand",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "eleven": {
+        "title": "Eleven",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "gaucho-parrilla-argentina": {
+        "title": "Gaucho Parrilla Argentina",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "kaleidoscope-cafe": {
+        "title": "Kaleidoscope Cafe",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "kaya": {
+        "title": "Kaya",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "las-palmas": {
+        "title": "Las Palmas",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "legume": {
+        "title": "Legume",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "meat-and-potatoes": {
+        "title": "Meat & Potatoes",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "monterey-bay-fish-grotto": {
+        "title": "Monterey Bay Fish Grotto",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "morcilla": {
+        "title": "Morcilla",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "muddy-waters-oyster-bar": {
+        "title": "Muddy Waters Oyster Bar",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "nickys-thai-kitchen": {
+        "title": "Nicky’s Thai Kitchen",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "noodlehead": {
+        "title": "Noodlehead",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "penn-ave-fish-company": {
+        "title": "Penn Ave Fish Company",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "peppis": {
+        "title": "Peppi’s",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "point-brugge-cafe": {
+        "title": "Point Brugge Cafe",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "proper-brick-oven-tap-room": {
+        "title": "Proper Brick Oven & Tap Room",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pusadees-garden": {
+        "title": "Pusadee’s Garden",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "showcase-bbq": {
+        "title": "Showcase BBQ",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "sienna-mercato": {
+        "title": "Sienna Mercato",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "simple-fourmet": {
+        "title": "Simple Fourmet",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "smallman-galley": {
+        "title": "Smallman Galley",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "spice-island-tea-house": {
+        "title": "Spice Island Tea House",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "station": {
+        "title": "Station",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "dor-stop-restaurant": {
+        "title": "The Dor-Stop Restaurant",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "milk-shake-factory": {
+        "title": "The Milk Shake Factory",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pub-chip-shop": {
+        "title": "The Pub Chip Shop",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "summit": {
+        "title": "The Summit",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "twisted-frenchman": {
+        "title": "The Twisted Frenchman",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "vandal": {
+        "title": "The Vandal",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "tilted-kilt-pub-and-eatery": {
+        "title": "Tilted Kilt Pub and Eatery",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "tako": {
+        "title": "Täkō",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "umbrella-cafe": {
+        "title": "Umbrella Cafe",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "wingharts-burger-whiskey-bar": {
+        "title": "Winghart’s Burger & Whiskey Bar",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "yinzburgh-bbq": {
+        "title": "YinzBurgh BBQ",
+        "types": [
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "enright-parklet": {
+        "title": "Enright Parklet",
+        "types": [
+          "parks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "frick-park": {
+        "title": "Frick Park",
+        "types": [
+          "parks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "highland-park": {
+        "title": "Highland Park",
+        "types": [
+          "parks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "schenley-park": {
+        "title": "Schenley Park",
+        "types": [
+          "parks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "north-park": {
+        "title": "North Park",
+        "types": [
+          "parks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "south-park": {
+        "title": "South Park",
+        "types": [
+          "parks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "carnegie-museum-of-art": {
+        "title": "Carnegie Museum of Art",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "carnegie-museum-of-natural-history": {
+        "title": "Carnegie Museum of Natural History",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "carnegie-science-center": {
+        "title": "Carnegie Science Center",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "andy-warhol-museum": {
+        "title": "The Andy Warhol Museum",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "senator-john-heinz-history-center": {
+        "title": "Senator John Heinz History Center",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "western-pennsylvania-sports-museum": {
+        "title": "Western Pennsylvania Sports Museum",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mattress-factory": {
+        "title": "Mattress Factory",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "childrens-museum-of-pittsburgh": {
+        "title": "Children’s Museum of Pittsburgh",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "frick-art-and-historical-center": {
+        "title": "Frick Art and Historical Center",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "fort-pitt-museum": {
+        "title": "Fort Pitt Museum",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "clemente-museum": {
+        "title": "The Clemente Museum",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "national-aviary": {
+        "title": "The National Aviary",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pittsburgh-zoo-and-ppg-aquarium": {
+        "title": "Pittsburgh Zoo and PPG Aquarium",
+        "types": [
+          "museums"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "flight-93-national-memorial": {
+        "title": "Flight 93 National Memorial",
+        "types": [
+          "landmarks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mount-washington": {
+        "title": "Mount Washington",
+        "types": [
+          "landmarks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cathedral-of-learning": {
+        "title": "Cathedral of Learning",
+        "types": [
+          "landmarks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "duquesne-incline": {
+        "title": "Duquesne Incline",
+        "types": [
+          "landmarks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "monongahela-incline": {
+        "title": "Monongahela Incline",
+        "types": [
+          "landmarks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "allegheny-river": {
+        "title": "Allegheny River",
+        "types": [
+          "landmarks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "monongahela-river": {
+        "title": "Monongahela River",
+        "types": [
+          "landmarks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "ohio-river": {
+        "title": "Ohio River",
+        "types": [
+          "landmarks"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "707-709-penn-gallery": {
+        "title": "707/709 Penn Gallery",
+        "types": [
+          "galleries"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "943-gallery": {
+        "title": "943 Gallery",
+        "types": [
+          "galleries"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "art-institute-of-pittsburgh-gallery-of-art": {
+        "title": "Art Institute of Pittsburgh Gallery of Art",
+        "types": [
+          "galleries"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "capa-gallery": {
+        "title": "CAPA Gallery",
+        "types": [
+          "galleries"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "space-gallery": {
+        "title": "SPACE Gallery",
+        "types": [
+          "galleries"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "shaw-galleries": {
+        "title": "Shaw Galleries",
+        "types": [
+          "galleries"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "wood-space-galleries": {
+        "title": "Wood Space Galleries",
+        "types": [
+          "galleries"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "garden-dreams-urban-farm-nursery": {
+        "title": "Garden Dreams Urban Farm & Nursery",
+        "types": [
+          "farms"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "espresso-a-mano": {
+        "title": "Espresso A Mano",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "big-dog-coffee": {
+        "title": "Big Dog Coffee",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "crazy-mocha": {
+        "title": "Crazy Mocha",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "lili-coffee-shop": {
+        "title": "Lili Coffee Shop",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "delanies-coffee": {
+        "title": "Delanie’s Coffee",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "beehive-coffeehouse": {
+        "title": "Beehive Coffeehouse",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "21st-street-coffee-and-tea": {
+        "title": "21st Street Coffee and Tea",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "la-prima-espresso-company": {
+        "title": "La Prima Espresso Company",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "constellation-coffee": {
+        "title": "Constellation Coffee",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "commonplace-coffeehouse": {
+        "title": "The Commonplace Coffeehouse",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "commonplace-coffee": {
+        "title": "Commonplace Coffee",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "simpatico-espresso": {
+        "title": "Simpatico Espresso",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "coffee-tree-roasters": {
+        "title": "The Coffee Tree Roasters",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "nicholas-coffee-co": {
+        "title": "Nicholas Coffee Co",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "zekes-coffee": {
+        "title": "Zeke’s Coffee",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "prestogeorge-coffee-tea": {
+        "title": "Prestogeorge Coffee & Tea",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "tazza-doro": {
+        "title": "Tazza D’Oro",
+        "types": [
+          "cafes"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "benedum-center": {
+        "title": "Benedum Center",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "heinz-hall": {
+        "title": "Heinz Hall",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "oreilly-theater": {
+        "title": "O’Reilly Theater",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "new-hazlett-theater": {
+        "title": "New Hazlett Theater",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "byham-theater": {
+        "title": "Byham Theater",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "arcade-comedy-theater": {
+        "title": "Arcade Comedy Theater",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "august-wilson-center": {
+        "title": "August Wilson Center",
+        "types": [
+          "galleries",
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "rex-theater": {
+        "title": "Rex Theater",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mr-smalls-fun-house": {
+        "title": "Mr. Smalls Fun House",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "smiling-moose": {
+        "title": "The Smiling Moose",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "stage-ae": {
+        "title": "Stage AE",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "howlers": {
+        "title": "Howlers",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "charlie-murdochs": {
+        "title": "Charlie Murdoch’s",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "consol-energy-center": {
+        "title": "CONSOL Energy Center",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pnc-park": {
+        "title": "PNC Park",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "heinz-field": {
+        "title": "Heinz Field",
+        "types": [
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "941-saloon": {
+        "title": "941 Saloon",
+        "types": [
+          "bars"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "andys-bar": {
+        "title": "Andys Bar",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "beerhead-bar": {
+        "title": "Beerhead Bar",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "biergarten": {
+        "title": "Biergarten",
+        "types": [
+          "bars"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "brillobox": {
+        "title": "Brillobox",
+        "types": [
+          "bars",
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "buckhead-saloon": {
+        "title": "Buckhead Saloon",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "cruze-bar": {
+        "title": "Cruze Bar",
+        "types": [
+          "bars"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "gooskis": {
+        "title": "Gooski’s",
+        "types": [
+          "bars",
+          "clubs-venues"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "grapperia": {
+        "title": "Grapperia",
+        "types": [
+          "bars"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "hemingways-cafe": {
+        "title": "Hemingway’s Cafe",
+        "types": [
+          "bars"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "howl-at-the-moon-pittsburgh": {
+        "title": "Howl at the Moon Pittsburgh",
+        "types": [
+          "bars"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "images-bar": {
+        "title": "Images Bar",
+        "types": [
+          "bars"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "local-bar-kitchen": {
+        "title": "Local Bar + Kitchen",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mcfaddens": {
+        "title": "McFadden’s",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "monterey-pub": {
+        "title": "Monterey Pub",
+        "types": [
+          "bars"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "mullens-bar-grill": {
+        "title": "Mullen’s Bar & Grill",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "olive-or-twist": {
+        "title": "Olive or Twist",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pipers-pub": {
+        "title": "Piper’s Pub",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "church-brew-works": {
+        "title": "The Church Brew Works",
+        "types": [
+          "bars",
+          "restaurants"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      },
+      "pittsburgh-international-airport": {
+        "title": "Pittsburgh International Airport",
+        "types": [
+          "transportation"
+        ],
+        "connections": [
+          {
+            "to": "pittsburgh",
+            "rel": "contained_in"
+          }
+        ]
+      }
+    },
+    "types": {
+
+    }
+  },
+  "topic": {
+    "items": {
+
+    }
+  }
+}
