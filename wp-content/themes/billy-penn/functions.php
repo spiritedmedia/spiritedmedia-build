@@ -62,8 +62,9 @@ class Billy_Penn extends Pedestal {
 
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'       => 'billy_penn',
-                'PEDESTAL_FACEBOOK_PAGE'          => 'https://www.facebook.com/billypennnews',
                 'PEDESTAL_INSTAGRAM_USERNAME'     => 'billy_penn',
+                'PEDESTAL_FACEBOOK_PAGE'          => 'https://www.facebook.com/billypennnews',
+                'PEDESTAL_FACEBOOK_PAGE_ID'       => '666155016815882',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => 'contact@billypenn.com',

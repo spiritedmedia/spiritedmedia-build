@@ -62,8 +62,9 @@ class The_Incline extends Pedestal {
 
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'       => 'theinclinepgh',
+                'PEDESTAL_INSTAGRAM_USERNAME'     => 'theinclinepgh',
                 'PEDESTAL_FACEBOOK_PAGE'          => 'https://www.facebook.com/theinclinepgh/',
-                // 'PEDESTAL_INSTAGRAM_USERNAME'  => 'billy_penn',
+                'PEDESTAL_FACEBOOK_PAGE_ID'       => '1558758474422919',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => 'contact@billypenn.com',

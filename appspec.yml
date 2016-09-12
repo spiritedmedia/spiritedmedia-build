@@ -4,5 +4,5 @@ files:
 hooks:
   BeforeInstall:
     - location: bin/codedeploy.sh
-      timeout: 60
+      timeout: 120
       runas: root

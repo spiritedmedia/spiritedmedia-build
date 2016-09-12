@@ -108,6 +108,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_TWITTER_CONSUMER_SECRET' => 'IcWL0dryn9VB2SRW0U6D447GmGorvig30jWLHlXabWzIWGe0oC',
                 'PEDESTAL_INSTAGRAM_USERNAME' => '',
                 'PEDESTAL_FACEBOOK_PAGE' => '',
+                'PEDESTAL_FACEBOOK_PAGE_ID' => '',
 
                 // Users
                 'PEDESTAL_USER_TITLE_MAX_LENGTH' => 72,
@@ -482,9 +483,10 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $context['datetime_format'] = PEDESTAL_DATETIME_FORMAT;
 
             $context['site']->social = [
-                'twitter_url'   => 'https://twitter.com/' . PEDESTAL_TWITTER_USERNAME,
-                'facebook_url'  => PEDESTAL_FACEBOOK_PAGE,
-                'instagram_url' => 'https://www.instagram.com/' . PEDESTAL_INSTAGRAM_USERNAME . '/',
+                'twitter_url'      => 'https://twitter.com/' . PEDESTAL_TWITTER_USERNAME,
+                'facebook_url'     => PEDESTAL_FACEBOOK_PAGE,
+                'facebook_page_id' => PEDESTAL_FACEBOOK_PAGE_ID,
+                'instagram_url'    => 'https://www.instagram.com/' . PEDESTAL_INSTAGRAM_USERNAME . '/',
             ];
 
             $context['site']->emails = [
