@@ -67,8 +67,8 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_FACEBOOK_PAGE_ID'       => '1558758474422919',
 
                 // Email
-                'PEDESTAL_EMAIL_CONTACT'          => 'contact@billypenn.com',
-                'PEDESTAL_EMAIL_NEWS'             => 'news@billypenn.com',
+                'PEDESTAL_EMAIL_CONTACT'          => 'contact@theincline.com',
+                'PEDESTAL_EMAIL_NEWS'             => 'news@theincline.com',
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => 'billypennnews',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => 'gmail.com',
                 'PEDESTAL_EMAIL_PLACEHOLDER'      => 'the.incline@example.org',
