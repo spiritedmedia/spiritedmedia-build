@@ -70,16 +70,34 @@ class Whos_Next extends Entity {
                 $item['people'][] = $person;
             }
 
+            // Sort the people by last name / first name within this item
+            usort( $item['people'], function( $a, $b ) {
+                return strcasecmp( $a->get_full_name( true ), $b->get_full_name( true ) );
+            } );
+
             $_img = Attachment::get_by_post_id( $item['img'] );
             $item['img'] = '';
             if ( ! $_img instanceof Attachment ) {
                 continue;
             }
-            $item['img'] = $_img->get_img_caption_html( $_img->get_html( 'large' ) );
+
+            $atts = [
+                'caption'                => $_img->get_caption(),
+                'credit'                 => $_img->get_credit(),
+                'credit_link'            => $_img->get_credit_link(),
+                'omit_presentation_mode' => true,
+            ];
+            $item['img'] = $_img::get_img_caption_html( $_img->get_html( 'large' ), $atts );
         }
 
         // Remove empty/null items
         $items = array_filter( $items );
+
+        // Sort all of the items by the name of the first listed person in each
+        usort( $items, function( $a, $b ) {
+            return strcasecmp( $a['people'][0]->get_full_name( true ), $b['people'][0]->get_full_name( true ) );
+        } );
+
         return $items;
     }
 

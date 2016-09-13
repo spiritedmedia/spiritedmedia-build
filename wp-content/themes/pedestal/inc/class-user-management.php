@@ -87,6 +87,16 @@ class User_Management {
             $this->merge_role_caps( 'feat_contributor', [
                 'upload_files' => true,
             ] );
+
+            // Give the editor role the ability to add users
+            $this->merge_role_caps( 'editor', [
+                'delete_users' => true,
+                'create_users' => true,
+                'edit_users' => true,
+                'list_users' => true,
+                'promote_users' => true,
+                'add_users' => true,
+            ] );
         } );
 
         add_action( 'init', [ $this, 'action_author_permalink_role' ] );
@@ -116,6 +126,23 @@ class User_Management {
 
         // @TODO Doesn't work?
         // add_filter( 'author_link', [ $this, 'filter_author_link' ], 10, 3 );
+
+        // Allow admins of the site to manage users again without making them super admins
+        add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
+            global $pagenow;
+            $whitelisted_pages = [ 'user-new.php', 'users.php', 'user-edit.php' ];
+            if ( ! in_array( $pagenow, $whitelisted_pages ) ) {
+                return $allcaps;
+            }
+            if ( 'manage_network_users' != $args[0] || ! isset( $args[0] ) ) {
+                return $allcaps;
+            }
+            if ( $allcaps['delete_users'] && $allcaps['create_users'] ) {
+                $allcaps['manage_network_users'] = true;
+            }
+
+            return $allcaps;
+        }, 10, 4 );
 
     }
 

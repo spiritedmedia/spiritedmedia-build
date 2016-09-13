@@ -143,23 +143,23 @@
     },
     {
         "name": "deliciousbrains/wp-amazon-web-services",
-        "version": "0.3.6",
-        "version_normalized": "0.3.6.0",
+        "version": "0.3.7",
+        "version_normalized": "0.3.7.0",
         "source": {
             "type": "git",
             "url": "https://github.com/deliciousbrains/wp-amazon-web-services.git",
-            "reference": "14500c7b15294b8b4cba34b87b6c01e6c88a2d4c"
+            "reference": "87953d61ce15f635eadfcf23b1f9dd864fa1f152"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/deliciousbrains/wp-amazon-web-services/zipball/14500c7b15294b8b4cba34b87b6c01e6c88a2d4c",
-            "reference": "14500c7b15294b8b4cba34b87b6c01e6c88a2d4c",
+            "url": "https://api.github.com/repos/deliciousbrains/wp-amazon-web-services/zipball/87953d61ce15f635eadfcf23b1f9dd864fa1f152",
+            "reference": "87953d61ce15f635eadfcf23b1f9dd864fa1f152",
             "shasum": ""
         },
         "require": {
             "composer/installers": "~1.0.6"
         },
-        "time": "2016-05-30 11:46:35",
+        "time": "2016-09-01 14:10:28",
         "type": "wordpress-plugin",
         "installation-source": "dist",
         "license": [
@@ -174,7 +174,7 @@
             "plugin"
         ],
         "support": {
-            "source": "https://github.com/deliciousbrains/wp-amazon-web-services/tree/0.3.6",
+            "source": "https://github.com/deliciousbrains/wp-amazon-web-services/tree/0.3.7",
             "issues": "https://github.com/deliciousbrains/wp-amazon-web-services/issues"
         }
     },
@@ -952,6 +952,28 @@
         "type": "wordpress-plugin",
         "installation-source": "dist",
         "homepage": "https://wordpress.org/plugins/co-authors-plus/"
+    },
+    {
+        "name": "wpackagist-plugin/nginx-helper",
+        "version": "1.9.8",
+        "version_normalized": "1.9.8.0",
+        "source": {
+            "type": "svn",
+            "url": "https://plugins.svn.wordpress.org/nginx-helper/",
+            "reference": "tags/1.9.8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.8.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "~1.0"
+        },
+        "type": "wordpress-plugin",
+        "installation-source": "dist",
+        "homepage": "https://wordpress.org/plugins/nginx-helper/"
     },
     {
         "name": "wpackagist-plugin/posts-to-posts",

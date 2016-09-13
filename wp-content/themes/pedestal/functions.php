@@ -338,7 +338,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 add_filter( 'template_directory_uri', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
                 add_filter( 'stylesheet_directory_uri', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
             }
-
         }
 
         /**

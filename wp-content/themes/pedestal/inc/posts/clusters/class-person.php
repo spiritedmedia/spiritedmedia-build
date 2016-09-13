@@ -171,24 +171,44 @@ class Person extends Cluster {
      *
      * Full name is a combination of all the available name fields.
      *
+     * @param bool $sortable Display last name first?
      * @return string
      */
-    public function get_full_name() {
+    public function get_full_name( $sortable = false ) {
         $name = '';
-        if ( $prefix = $this->get_name_prefix() ) {
+        $prefix = $this->get_name_prefix();
+        $middle = $this->get_middle_name();
+        $nickname = $this->get_nickname();
+        $suffix = $this->get_name_suffix();
+
+        if ( $prefix ) {
             $name .= $prefix . ' ';
         }
-        $name .= $this->get_first_name() . ' ';
-        if ( $middle = $this->get_middle_name() ) {
+
+        if ( $sortable ) {
+            $name .= $this->get_last_name() . ', ';
+        } else {
+            $name .= $this->get_first_name() . ' ';
+        }
+
+        if ( $middle && ! $sortable ) {
             $name .= $middle . ' ';
         }
-        if ( $nickname = $this->get_nickname() ) {
+
+        if ( $nickname && ! $sortable ) {
             $name .= '“' . $nickname . '” ';
         }
-        $name .= $this->get_last_name();
-        if ( $suffix = $this->get_name_suffix() ) {
+
+        if ( $sortable ) {
+            $name .= $this->get_first_name() . $middle;
+        } else {
+            $name .= $this->get_last_name();
+        }
+
+        if ( $suffix ) {
             $name .= ' ' . $suffix;
         }
+
         return $name;
     }
 

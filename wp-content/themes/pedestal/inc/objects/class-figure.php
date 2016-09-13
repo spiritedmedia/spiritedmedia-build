@@ -53,34 +53,31 @@ class Figure {
     private function setup_figure( $type, $content, $atts = [] ) {
         $atts = wp_parse_args( $atts, $this->default_atts );
 
-        // @TODO
-        // @codingStandardsIgnoreStart
-        extract( $atts );
-        // @codingStandardsIgnoreEnd
-
         if ( empty( $content ) || ! in_array( $type, $this->allowed_types ) ) {
             return '';
         }
 
-        if ( ! isset( $allow_fullscreen ) ) {
-            $allow_fullscreen = false;
+        if ( ! isset( $atts['allow_fullscreen'] ) ) {
+            $atts['allow_fullscreen'] = false;
         }
 
         // Cover images should not use a presentation mode, so allow this option
-        if ( ! isset( $omit_presentation_mode ) ) {
-            $omit_presentation_mode = false;
+        if ( ! isset( $atts['omit_presentation_mode'] ) ) {
+            $atts['omit_presentation_mode'] = false;
         }
 
         $id = $this->hash;
-        if ( ! empty( $attachment ) ) {
-            $id .= '_' . $attachment;
+        if ( ! empty( $atts['attachment'] ) ) {
+            $id .= '_' . $atts['attachment'];
         }
-        $id = esc_attr( $id );
+        $id = esc_attr( $atts['id'] );
         $capid = 'id="figcaption_' . $id . '" ';
         $id_str = sprintf( 'id="figure_%s" ', $id );
+        $classes = $atts['classes'];
+        $style = $atts['style'];
 
         // Only use `aria-labelledby` if caption is present
-        if ( ! empty( $caption ) ) {
+        if ( ! empty( $atts['caption'] ) ) {
             $id_str .= sprintf( 'aria-labelledby="figcaption_%s" ', $id );
         }
 
@@ -122,7 +119,7 @@ class Figure {
                 // @codingStandardsIgnoreStart
                 if ( 'iframe' === $node->nodeName && is_feed( 'fias' ) ) {
                     // @codingStandardsIgnoreEnd
-                    $element_wrap = null;
+                    $atts['element_wrap'] = null;
                     $this->content = str_replace( 'class="', 'class="column-width ', $this->content );
                 }
             }
@@ -145,21 +142,21 @@ class Figure {
             'type'        => $type,
             'id'          => $id_str,
             'capid'       => $capid,
-            'align'       => esc_attr( $align ),
+            'align'       => esc_attr( $atts['align'] ),
             'classes'     => $classes,
-            'url'         => $url,
+            'url'         => $atts['url'],
             'content'     => $this->content,
-            'caption'     => $caption,
-            'credit'      => $credit,
-            'credit_link' => $credit_link,
-            'wrap'        => $element_wrap,
+            'caption'     => $atts['caption'],
+            'credit'      => $atts['credit'],
+            'credit_link' => $atts['credit_link'],
+            'wrap'        => $atts['element_wrap'],
             'style'       => $style,
         ];
 
-        if ( ! empty( $attachment ) ) {
-            $obj = new Attachment( $attachment );
-            if ( ! $omit_presentation_mode ) {
-                $context['fias_presentation'] = $obj->get_fias_presentation_mode( $allow_fullscreen );
+        if ( ! empty( $atts['attachment'] ) ) {
+            $obj = new Attachment( $atts['attachment'] );
+            if ( ! $atts['omit_presentation_mode'] ) {
+                $context['fias_presentation'] = $obj->get_fias_presentation_mode( $atts['allow_fullscreen'] );
             } else {
                 $context['fias_presentation'] = '';
             }
