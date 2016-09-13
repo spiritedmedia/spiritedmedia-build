@@ -1,0 +1,25 @@
+{% set statement = pages.about.statement %}
+
+<figure class="c-statement--page  c-statement  show-for-medium-up">
+    <div class="c-statement__body  o-media__body">
+
+    {% if statement.body %}
+        {% if statement.is_quote %}
+        <blockquote class="c-statement__content  c-statement__content--quote">
+            <h2 class="c-statement__content__text">&ldquo;{{ statement.body }}&rdquo;</h2>
+        </blockquote>
+        {% else %}
+        <div class="c-statement__content">
+            <h2 class="c-statement__content__text">{{ statement.body }}</h2>
+        </div>
+        {% endif %}
+    {% endif %}
+
+    {% if statement.is_quote and statement.speaker %}
+    <figcaption class="c-statement__speaker">
+        <cite class="c-statement__speaker__name">&mdash;{{ statement.speaker }}</cite>
+    </figcaption>
+    {% endif %}
+
+    </div>
+</figure>

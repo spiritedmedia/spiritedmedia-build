@@ -52,13 +52,13 @@
 
                         {% if loop.index == 8 %}
                             <div class="c-stream__item  js-stream-item">
-                                {% include 'partials/adverts/dfp-stream-08.twig' %}
+                                {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
                             </div>
                         {% endif %}
 
                         {% if loop.index == 16 %}
                             <div class="c-stream__item  js-stream-item">
-                            {% include 'partials/adverts/dfp-stream-16.twig' %}
+                            {% include 'partials/adverts/dfp-stream-16.twig' ignore missing %}
                             </div>
                         {% endif %}
 
@@ -66,7 +66,7 @@
 
                         {% if loop.length < 8 and loop.last %}
                             <div class="c-stream__item  js-stream-item">
-                                {% include 'partials/adverts/dfp-stream-08.twig' %}
+                                {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
                             </div>
                         {% endif %}
 

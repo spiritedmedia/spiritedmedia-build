@@ -3,7 +3,7 @@
 {% if is_feed %}
     {% set people_element = 'div' %}
     <figure class="op-ad">
-        {% include 'partials/adverts/dfp-fias-auto-300x250.twig' %}
+        {% include 'partials/adverts/dfp-fias-auto-300x250.twig' ignore missing %}
     </figure>
 {% else %}
     {% set people_element = 'header' %}
@@ -35,7 +35,7 @@
 
         {% if is_feed and loop.index is divisible by( 3 ) %}
         <figure class="op-ad">
-            {% include 'partials/adverts/dfp-fias-auto-300x250.twig' %}
+            {% include 'partials/adverts/dfp-fias-auto-300x250.twig' ignore missing %}
         </figure>
         {% endif %}
 

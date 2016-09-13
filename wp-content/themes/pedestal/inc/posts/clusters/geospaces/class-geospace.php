@@ -9,6 +9,15 @@ use Pedestal\Posts\Clusters\Cluster;
 abstract class Geospace extends Cluster {
 
     /**
+     * Get the Geospace's full name
+     *
+     * @return string
+     */
+    public function get_full_name() {
+        return $this->get_place_details_field( 'full_name' );
+    }
+
+    /**
      * Get the Geospace's URL
      *
      * @link http://schema.org/url

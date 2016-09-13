@@ -61,7 +61,7 @@
                         {% endif %}
 
                         {% if counter == 8 %}
-                            {% include 'partials/adverts/dfp-stream-08.twig' %}
+                            {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
                         {% endif %}
 
                         {% if counter == 12 %}
@@ -69,7 +69,7 @@
                         {% endif %}
 
                         {% if counter == 16 %}
-                            {% include 'partials/adverts/dfp-stream-16.twig' %}
+                            {% include 'partials/adverts/dfp-stream-16.twig' ignore missing %}
                         {% endif %}
 
                         {% include [
@@ -80,7 +80,7 @@
                     {% endif %}
 
                     {% if loop.length < 8 and loop.last %}
-                        {% include 'partials/adverts/dfp-stream-08.twig' %}
+                        {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
                     {% endif %}
 
                 {% endfor %}

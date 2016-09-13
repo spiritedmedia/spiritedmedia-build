@@ -2,6 +2,8 @@
 
 namespace Pedestal;
 
+use \Pedestal\Utils\Utils;
+
 use \Pedestal\Registrations\Post_Types\Types;
 
 use \Pedestal\Posts\Post;
@@ -83,42 +85,43 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $constants = apply_filters( 'pedestal_constants', [] );
             $defaults = [
                 // Network Details
-                'SPIRITEDMEDIA_LIVE_SITE_URL' => 'http://spiritedmedia.com',
+                'SPIRITEDMEDIA_LIVE_SITE_URL'    => 'http://spiritedmedia.com',
                 'SPIRITEDMEDIA_STAGING_SITE_URL' => 'http://staging.spiritedmedia.com',
 
                 // Site Details
-                'PEDESTAL_BLOG_URL' => '',
-                'PEDESTAL_BLOG_NAME' => get_bloginfo( 'name' ),
-                'PEDESTAL_BLOG_DESCRIPTION' => get_bloginfo( 'description' ),
-                'PEDESTAL_CITY_NAME' => '',
-                'PEDESTAL_CITY_NICKNAME' => '',
-                'PEDESTAL_DATETIME_FORMAT' => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
-                'PEDESTAL_GOOGLE_ANALYTICS_ID'    => '',
+                'PEDESTAL_BLOG_URL'            => '',
+                'PEDESTAL_BLOG_NAME'           => get_bloginfo( 'name' ),
+                'PEDESTAL_BLOG_DESCRIPTION'    => get_bloginfo( 'description' ),
+                'PEDESTAL_CITY_NAME'           => '',
+                'PEDESTAL_CITY_NICKNAME'       => '',
+                'PEDESTAL_DATETIME_FORMAT'     => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
+                'PEDESTAL_GOOGLE_ANALYTICS_ID' => '',
 
                 // Email
-                'PEDESTAL_EMAIL_CONTACT' => '',
-                'PEDESTAL_EMAIL_NEWS' => '',
+                'PEDESTAL_EMAIL_CONTACT'          => '',
+                'PEDESTAL_EMAIL_NEWS'             => '',
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => '',
-                'PEDESTAL_EMAIL_INTERNAL_DOMAIN' => '',
-                'PEDESTAL_EMAIL_FROM_NAME' => get_bloginfo( 'name' ),
+                'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => '',
+                'PEDESTAL_EMAIL_FROM_NAME'        => get_bloginfo( 'name' ),
+                'PEDESTAL_EMAIL_PLACEHOLDER'      => '',
 
                 // Social Media
-                'PEDESTAL_TWITTER_USERNAME' => '',
-                'PEDESTAL_TWITTER_CONSUMER_KEY' => 'v28fnuzyBOGCFxIksqC6kOixd',
+                'PEDESTAL_TWITTER_USERNAME'        => '',
+                'PEDESTAL_TWITTER_CONSUMER_KEY'    => 'v28fnuzyBOGCFxIksqC6kOixd',
                 'PEDESTAL_TWITTER_CONSUMER_SECRET' => 'IcWL0dryn9VB2SRW0U6D447GmGorvig30jWLHlXabWzIWGe0oC',
-                'PEDESTAL_INSTAGRAM_USERNAME' => '',
-                'PEDESTAL_FACEBOOK_PAGE' => '',
-                'PEDESTAL_FACEBOOK_PAGE_ID' => '',
+                'PEDESTAL_INSTAGRAM_USERNAME'      => '',
+                'PEDESTAL_FACEBOOK_PAGE'           => '',
+                'PEDESTAL_FACEBOOK_PAGE_ID'        => '',
 
                 // Users
                 'PEDESTAL_USER_TITLE_MAX_LENGTH' => 72,
-                'PEDESTAL_USER_HASH_PHRASE' => 'billy penn is so cool ',
+                'PEDESTAL_USER_HASH_PHRASE'      => 'billy penn is so cool ',
 
                 // Branding
                 'PEDESTAL_BRAND_COLOR' => '',
 
                 // API Keys
-                'MANDRILL_API_KEY' => '',
+                'MANDRILL_API_KEY'   => '',
                 'EVERYBLOCK_API_KEY' => '31f70243ea980f63a6545a6bc4bfabd3a284dfa7',
 
                 // Slack
@@ -198,7 +201,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 $this->frontend = Frontend::get_instance();
             }
 
-            $this->utilities         = Utils\Utils::get_instance();
+            $this->utilities         = Utils::get_instance();
             $this->post_types        = Registrations\Post_Types\Types::get_instance();
             $this->taxonomies        = Registrations\Taxonomies\Taxonomies::get_instance();
             $this->user_management   = User_Management::get_instance();
@@ -252,8 +255,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 // Allow editors and above
                 return 'edit_others_posts';
             });
-
-            add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
 
             /*
              * Convert Mandrill emails to inline styles
@@ -468,56 +469,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         }
 
         /**
-         * Filter Timber's default context variables
-         *
-         * Most of this filtering happens in \Pedestal\Frontend but some basic
-         * sitewide variables should be available to Timber across the board.
-         *
-         * @return $context Timber context
-         */
-        public function filter_timber_context( $context ) {
-            $site_config = Pedestal()->get_site_config();
-            $theme_path = PEDESTAL_WP_THEMES_PATH . '/' . wp_get_theme()->get_stylesheet();
-
-            $context['is_email'] = false;
-            $context['datetime_format'] = PEDESTAL_DATETIME_FORMAT;
-
-            $context['site']->social = [
-                'twitter_url'      => 'https://twitter.com/' . PEDESTAL_TWITTER_USERNAME,
-                'facebook_url'     => PEDESTAL_FACEBOOK_PAGE,
-                'facebook_page_id' => PEDESTAL_FACEBOOK_PAGE_ID,
-                'instagram_url'    => 'https://www.instagram.com/' . PEDESTAL_INSTAGRAM_USERNAME . '/',
-            ];
-
-            $context['site']->emails = [
-                'contact' => PEDESTAL_EMAIL_CONTACT,
-                'news'    => PEDESTAL_EMAIL_NEWS,
-            ];
-
-            $context['site']->live_urls = [
-                'corporate'    => SPIRITEDMEDIA_LIVE_SITE_URL,
-                'current'      => $site_config['site_live_url'],
-                'theme'        => $site_config['site_live_url'] . $theme_path,
-                'theme_parent' => SPIRITEDMEDIA_PEDESTAL_LIVE_DIR,
-            ];
-
-            $context['site']->branding = [
-                'color' => PEDESTAL_BRAND_COLOR,
-            ];
-
-            $parsely = new \Pedestal\Objects\Parsely;
-            $context['site']->analytics = [
-                'ga_id' => PEDESTAL_GOOGLE_ANALYTICS_ID,
-                'parsely' => [
-                    'site' => parse_url( home_url(), PHP_URL_HOST ),
-                    'data' => $parsely->get_data(),
-                ],
-            ];
-
-            return $context;
-        }
-
-        /**
          * Adds the CDN URL as a preconnect resource hint.
          *
          * @link https://make.wordpress.org/core/2016/07/06/resource-hints-in-4-6/
@@ -557,6 +508,73 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 return str_replace( get_site_url(), $this->cdn_url, $url );
             }
             return $url;
+        }
+
+        /**
+         * Filter Timber's default context variables
+         *
+         * Most of this filtering happens in \Pedestal\Frontend but some basic
+         * sitewide variables should be available to Timber across the board.
+         *
+         * This must be called by child themes and not used as a filter directly.
+         *
+         * @return $context Timber context
+         */
+        protected function handle_filter_timber_context( $context ) {
+            $site_config = Pedestal()->get_site_config();
+            $theme_path = PEDESTAL_WP_THEMES_PATH . '/' . wp_get_theme()->get_stylesheet();
+
+            $context['is_email'] = false;
+            $context['datetime_format'] = PEDESTAL_DATETIME_FORMAT;
+
+            $context['site']->social = [
+                'twitter_url'      => 'https://twitter.com/' . PEDESTAL_TWITTER_USERNAME,
+                'facebook_url'     => PEDESTAL_FACEBOOK_PAGE,
+                'facebook_page_id' => PEDESTAL_FACEBOOK_PAGE_ID,
+                'instagram_url'    => 'https://www.instagram.com/' . PEDESTAL_INSTAGRAM_USERNAME . '/',
+            ];
+
+            $context['site']->emails = [
+                'contact'     => PEDESTAL_EMAIL_CONTACT,
+                'news'        => PEDESTAL_EMAIL_NEWS,
+                'placeholder' => PEDESTAL_EMAIL_PLACEHOLDER,
+            ];
+
+            $context['site']->live_urls = [
+                'corporate'    => SPIRITEDMEDIA_LIVE_SITE_URL,
+                'current'      => $site_config['site_live_url'],
+                'theme'        => $site_config['site_live_url'] . $theme_path,
+                'theme_parent' => SPIRITEDMEDIA_PEDESTAL_LIVE_DIR,
+            ];
+
+            $context['site']->branding = [
+                'color' => PEDESTAL_BRAND_COLOR,
+            ];
+
+            $parsely = new \Pedestal\Objects\Parsely;
+            $context['site']->analytics = [
+                'ga_id' => PEDESTAL_GOOGLE_ANALYTICS_ID,
+                'parsely' => [
+                    'site' => parse_url( home_url(), PHP_URL_HOST ),
+                    'data' => $parsely->get_data(),
+                ],
+            ];
+
+            if ( ! empty( $context['pages'] ) && is_array( $context['pages'] ) ) {
+                $pages_defaults = [
+                    'about' => [
+                        'statement' => [
+                            'body'     => '',
+                            'is_quote' => false,
+                            'speaker'  => '',
+                        ],
+                    ],
+                    '404' => [],
+                ];
+                $context['pages'] = Utils::array_merge_recursive( $pages_defaults, $context['pages'] );
+            }
+
+            return $context;
         }
 
         /**

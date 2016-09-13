@@ -71,6 +71,7 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_EMAIL_NEWS'             => 'news@billypenn.com',
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => 'billypennnews',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => 'gmail.com',
+                'PEDESTAL_EMAIL_PLACEHOLDER'      => 'the.incline@example.org',
 
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#pgh-botcountry',
@@ -81,6 +82,25 @@ class The_Incline extends Pedestal {
                 'MANDRILL_API_KEY' => 'uUnTV4kMlDRY6Mokh-deqw',
             ];
         } );
+
+        add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
+    }
+
+    /**
+     * Filter Timber context
+     *
+     * @param  array $context Timber context
+     * @return array          Filtered Timber context
+     */
+    public function filter_timber_context( $context ) {
+        $context['pages'] = [
+            'about' => [
+                'statement' => [
+                    'body'     => esc_html__( 'Elevating news in Pittsburgh', 'pedestal' ),
+                ],
+            ],
+        ];
+        return parent::handle_filter_timber_context( $context );
     }
 
     /**

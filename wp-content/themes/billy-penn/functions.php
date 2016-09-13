@@ -5,6 +5,8 @@
 
 namespace Pedestal;
 
+use \Pedestal\Utils\Utils;
+
 class Billy_Penn extends Pedestal {
 
     /**
@@ -71,6 +73,7 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_EMAIL_NEWS'             => 'news@billypenn.com',
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => 'billypennnews',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => 'gmail.com',
+                'PEDESTAL_EMAIL_PLACEHOLDER'      => 'william.penn@example.org',
 
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#phl-botcountry',
@@ -81,6 +84,27 @@ class Billy_Penn extends Pedestal {
                 'MANDRILL_API_KEY' => '0h1-xD3bRFb5x10ULwJusA',
             ];
         } );
+
+        add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
+    }
+
+    /**
+     * Filter Timber context
+     *
+     * @param  array $context Timber context
+     * @return array          Filtered Timber context
+     */
+    public function filter_timber_context( $context ) {
+        $context['pages'] = [
+            'about' => [
+                'statement' => [
+                    'body'     => esc_html__( 'Knowledge is the treasure of a wise man.', 'pedestal' ),
+                    'speaker'  => 'William Penn',
+                    'is_quote' => true,
+                ],
+            ],
+        ];
+        return parent::handle_filter_timber_context( $context );
     }
 
     /**

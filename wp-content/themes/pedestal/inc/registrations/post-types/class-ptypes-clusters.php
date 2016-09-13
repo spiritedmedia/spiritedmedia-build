@@ -647,6 +647,10 @@ class Cluster_Types extends Types {
 
     private function register_geospace_fields() {
         $details_children = [
+            'full_name' => new \Fieldmanager_Textfield( esc_html__( 'Full Name', 'pedestal' ), [
+                'name'        => 'full_name',
+                'description' => esc_html__( 'The full name of the cluster, if it\'s not the common name / title.', 'pedestal' ),
+            ] ),
             'url' => new \Fieldmanager_Link( esc_html__( 'URL', 'pedestal' ), [
                 'name'     => 'url',
                 'required' => false,

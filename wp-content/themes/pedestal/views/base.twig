@@ -19,7 +19,6 @@
         {% block head %}
         {% endblock %}
         {% include 'partials/header/favicons.twig' ignore missing %}
-        {% include 'partials/header/dfp.twig' %}
         {{ site.analytics.parsely.data }}
     </head>
     <body class="{{ body_class }} {{ layout_class }}" data-template="{{ template_name ?: 'base.twig' }}">

@@ -1,5 +1,7 @@
 // ==========================================================================
 // Pedestal // Components // STATEMENT
+//
+// Statements and quotes for Factchecks and Pages
 // ==========================================================================
 
 
@@ -8,27 +10,48 @@
 
 /*figure*/.c-statement {
   margin: 0;
+
+  &__img {}
+  &__body {}
+  &__content {
+    &__text {}
+    /*blockquote*/&--quote {}
+  }
+
+  /*figcaption*/&__speaker {
+    &__name {}
+    &__setting {}
+    &__date {}
+  }
 }
 
 
-  .c-statement__img {
-    // scss-lint:disable SelectorFormat
 
-    > img {
-      height: c-statement-property-get( meter-width );
 
-      @media #{$small-only} {
-        margin-left: auto;
-        margin-right: auto;
+
+//
+// Statement: Factcheck
+// ==========================================================================
+
+
+.c-statement--factcheck {
+  .c-statement {
+
+    &__img {
+      // scss-lint:disable SelectorFormat
+
+      > img {
+        height: c-statement-property-get( meter-width );
+
+        @media #{$small-only} {
+          margin-left: auto;
+          margin-right: auto;
+        }
       }
     }
-  }
 
 
-  .c-statement__body {}
-
-
-    .c-statement__content {
+    &__content {
       line-height: 1;
       margin: 0;
       padding: 0;
@@ -36,13 +59,7 @@
       border: 0;
       font-size: 0;
 
-      /*blockquote*/&--quote {}
-
-      &--summary {}
-    }
-
-
-      /*h3*/.c-statement__content__text {
+      &__text {
         color: $header-font-color;
         margin: 0;
         padding: 0;
@@ -53,18 +70,54 @@
           font-size: $h3-font-size;
         }
       }
-
-
-    /*figcaption*/.c-statement__speaker {
-      font-size: $small-font-size;
     }
 
-      .c-statement__speaker__name {
+
+    &__speaker {
+      font-size: $small-font-size;
+
+      &__name {
         font-style: normal;
         font-weight: 600;
         text-transform: uppercase;
       }
+    }
 
-      .c-statement__speaker__setting {}
+  }
+}
 
-      .c-statement__speaker__date {}
+
+
+
+
+//
+// Statement: Page
+// ==========================================================================
+
+
+.c-statement--page {
+  @if global-variable-exists( site-theme-name ) {
+    background: url( $site-theme-abspath + '/assets/images/page-about-statement-bg.jpg' );
+  }
+
+  text-align: center;
+  padding: 2rem;
+
+  .c-statement {
+
+    &__content__text {
+      font-size: $h2-font-size;
+      font-weight: 300;
+      padding-top: 0;
+      border-left: 0;
+    }
+
+
+    &__speaker__name {
+      font-size: $h4-font-size;
+      font-weight: 100;
+      font-style: italic;
+    }
+
+  }
+}

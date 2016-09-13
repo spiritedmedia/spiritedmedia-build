@@ -605,3 +605,19 @@
     </div>
     {% endif %}
 {% endmacro %}
+
+
+
+
+
+{% macro dfp_unit( id = '' ) %}
+{% spaceless %}
+    {% if id %}
+    <div id='div-gpt-ad-{{ id }}-0'>
+    <script type='text/javascript'>
+    googletag.cmd.push(function() { googletag.display('div-gpt-ad-{{ id }}-0'); });
+    </script>
+    </div>
+    {% endif %}
+{% endspaceless %}
+{% endmacro %}
