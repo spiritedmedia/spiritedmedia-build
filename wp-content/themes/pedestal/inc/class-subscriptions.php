@@ -874,6 +874,13 @@ class Subscriptions {
             exit;
         }
 
+        if ( ! $user->is_site_member() ) {
+            $add_to_site = $user->add_to_site( 'subscriber' );
+            if ( is_wp_error( $add_to_site ) ) {
+                return;
+            }
+        }
+
         if ( ! $user->is_following_cluster( $cluster ) ) {
             $user->follow_cluster( $cluster );
             $subject = sprintf( 'You are now following "%s"', $cluster->get_title() );
@@ -940,6 +947,13 @@ class Subscriptions {
 
         if ( is_wp_error( $user ) ) {
             return $user;
+        }
+
+        if ( ! $user->is_site_member() ) {
+            $add_to_site = $user->add_to_site( 'subscriber' );
+            if ( is_wp_error( $add_to_site ) ) {
+                return;
+            }
         }
 
         if ( ! $user->is_subscribed_daily_newsletter() ) {

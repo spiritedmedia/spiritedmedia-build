@@ -70,7 +70,7 @@ class Figure {
         if ( ! empty( $atts['attachment'] ) ) {
             $id .= '_' . $atts['attachment'];
         }
-        $id = esc_attr( $atts['id'] );
+        $id = esc_attr( $id );
         $capid = 'id="figcaption_' . $id . '" ';
         $id_str = sprintf( 'id="figure_%s" ', $id );
         $classes = $atts['classes'];

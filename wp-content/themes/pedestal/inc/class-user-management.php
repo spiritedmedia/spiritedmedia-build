@@ -343,7 +343,7 @@ class User_Management {
      *
      * @return array
      */
-    private static function get_roles() {
+    public static function get_roles() {
         global $wp_roles;
         return $wp_roles->role_names;
     }

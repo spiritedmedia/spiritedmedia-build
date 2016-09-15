@@ -21,6 +21,8 @@ use Pedestal\Posts\Clusters\Story;
  */
 class User extends Author {
 
+    protected static $errors;
+
     private $user;
 
     public function __construct( $user ) {
@@ -39,6 +41,12 @@ class User extends Author {
 
     /**
      * Get or create a user given their email address
+     *
+     * Note that this method will not check to see if the user is added to the
+     * current site. If the user doesn't exist and needs to be created, then it
+     * will be created as a member of the current site, but if the user does
+     * exist in the network, it may not necessarily be a member of the
+     * current site.
      *
      * @param  string $email_address Email address for the user
      * @param  array  $user_data     User data
@@ -65,6 +73,41 @@ class User extends Author {
 
         }
         return new User( $user );
+    }
+
+    /**
+     * Is the User a member of the current or specified site?
+     *
+     * @param  int  $site_id Site ID. Defaults to current site ID.
+     * @return boolean
+     */
+    public function is_site_member( $site_id = null ) {
+        if ( null === $site_id || ! is_numeric( $site_id ) ) {
+            $site_id = get_current_blog_id();
+        }
+        return is_user_member_of_blog( $this->get_id(), $site_id );
+    }
+
+    /**
+     * Add the User to site current or specified site
+     *
+     * @param string $role    Role to assign to the user
+     * @param int    $site_id Site ID. Defaults to current site ID.
+     * @return bool|WP_Error
+     */
+    public function add_to_site( string $role, $site_id = null ) {
+        self::$errors = new \WP_Error;
+
+        if ( null === $site_id || ! is_numeric( $site_id ) ) {
+            $site_id = get_current_blog_id();
+        }
+
+        if ( ! isset( User_Management::get_roles()[ strtolower( $role ) ] ) ) {
+            self::$errors->add( 'invalid_role', sprintf( '%s is not a valid role!', $role ) );
+            return self::$errors;
+        }
+
+        return add_user_to_blog( $site_id, $this->get_id(), $role );
     }
 
     /**
@@ -246,13 +289,20 @@ class User extends Author {
      * @return html
      */
     public function get_image_html( $size = 'full' ) {
-        // FM Media fields are saved as strings, so type must be converted
-        $id = (int) $this->get_meta( 'user_img' );
-        if ( $attachment = Attachment::get_by_post_id( $id ) ) {
-            return $attachment->get_html( $size );
-        } else {
-            return false;
+        global $wpdb;
+        $meta_name = $wpdb->prefix . 'user_img';
+        $id = $this->get_meta( $meta_name );
+        if ( ! $id ) {
+            $meta_name = 'user_img';
+            $id = $this->get_meta( $meta_name );
         }
+        // FM Media fields are saved as strings, so type must be converted
+        $id = absint( $id );
+        $attachment = Attachment::get_by_post_id( $id );
+        if ( $attachment instanceof Attachment ) {
+            return $attachment->get_html( $size );
+        }
+        return false;
     }
 
     /**

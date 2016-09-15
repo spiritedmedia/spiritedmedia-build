@@ -359,6 +359,7 @@ class Admin {
     }
 
     public function action_user_fields() {
+        global $wpdb;
 
         $title = new \Fieldmanager_TextField( [
             'name' => 'user_title',
@@ -384,8 +385,10 @@ class Admin {
             ],
         ] );
 
+        // We need a dynamic field name because the value is site specifc
+        $img_name = $wpdb->prefix . 'user_img';
         $img = new \Fieldmanager_Media( [
-            'name'               => 'user_img',
+            'name'               => $img_name,
             'button_label'       => 'Add Image',
             'modal_title'        => 'Select Image',
             'modal_button_label' => 'Use Image as User Image',
