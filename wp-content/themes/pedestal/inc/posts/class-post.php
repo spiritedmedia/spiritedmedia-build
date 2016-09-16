@@ -594,10 +594,15 @@ abstract class Post {
     /**
      * Get the permalink for the post
      *
+     * @param bool $preview Return the preview link?
      * @return string
      */
-    public function get_permalink() {
-        return get_permalink( $this->get_id() );
+    public function get_permalink( $preview = false ) {
+        $link = get_permalink( $this->get_id() );
+        if ( $preview ) {
+            $link = add_query_arg( [ 'preview' => true ], $link );
+        }
+        return $link;
     }
 
     /**
@@ -613,9 +618,16 @@ abstract class Post {
 
     /**
      * Get the filtered permalink for the post
+     *
+     * @param bool $preview Return the preview link?
+     * @return string Filtered permalink
      */
-    public function get_the_permalink() {
-        return apply_filters( 'the_permalink', $this->get_permalink() );
+    public function get_the_permalink( $preview = false ) {
+        $link = apply_filters( 'the_permalink', $this->get_permalink() );
+        if ( $preview ) {
+            $link = add_query_arg( [ 'preview' => true ], $link );
+        }
+        return $link;
     }
 
     /**
@@ -1581,6 +1593,18 @@ abstract class Post {
             $notifier = new Notifications;
             $notifier->send( $msg, $args );
         }
+    }
+
+    /**
+     * Can the currently logged in user edit this post?
+     *
+     * @return boolean
+     */
+    public function is_editable_by_current_user() {
+        if ( current_user_can( 'edit_post', $this->get_id() ) ) {
+            return true;
+        }
+        return false;
     }
 }
 

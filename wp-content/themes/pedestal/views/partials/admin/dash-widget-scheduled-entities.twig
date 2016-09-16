@@ -1,0 +1,30 @@
+{% if items %}
+{% set current_date = '' %}
+
+<table style="width: 100%;">
+    {% for item in items %}
+        {% set date = item.get_post_date( site.date_format ) %}
+
+        {% if current_date != date %}
+            {% set current_date = date %}
+            <tr><td colspan="2" style="padding-top: 15px;"><strong>{{ date }}</strong></td></tr>
+        {% endif %}
+
+        <tr>
+            <td>{{ item.get_post_date( site.time_format ) }}</td>
+            <td>
+                {% if item.is_editable_by_current_user %}
+                    <a href="{{ item.get_the_permalink( true )|e( 'esc_url' ) }}">{{ item.get_the_title }}</a>
+                {% else %}
+                    <em>{{ item.get_the_title }}</em>
+                {% endif %}
+            </td>
+            <td>{{ item.get_post_type_name( 'pedestal_' ~ item.get_type, false ) }}</td>
+        </tr>
+
+    {% endfor %}
+</table>
+
+{% else %}
+<em>** crickets **</em>
+{% endif %}

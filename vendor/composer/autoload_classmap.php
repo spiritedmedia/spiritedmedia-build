@@ -404,6 +404,7 @@ return array(
     'Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/SuperfluousWhitespaceSniff.php',
     'Timber\\Admin' => $vendorDir . '/timber/timber/lib/Admin.php',
     'Timber\\Archives' => $vendorDir . '/timber/timber/lib/Archives.php',
+    'Timber\\Cache\\Cleaner' => $vendorDir . '/timber/timber/lib/Cache/Cleaner.php',
     'Timber\\Cache\\KeyGenerator' => $vendorDir . '/timber/timber/lib/Cache/KeyGenerator.php',
     'Timber\\Cache\\TimberKeyGeneratorInterface' => $vendorDir . '/timber/timber/lib/Cache/TimberKeyGeneratorInterface.php',
     'Timber\\Cache\\WPObjectCacheAdapter' => $vendorDir . '/timber/timber/lib/Cache/WPObjectCacheAdapter.php',

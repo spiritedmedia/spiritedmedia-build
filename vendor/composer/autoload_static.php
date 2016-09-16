@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit061bdd6063b714ba70979926f5019c58
+class ComposerStaticInitcdd8bbf5ab936216f027845db4d219df
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -461,6 +461,7 @@ class ComposerStaticInit061bdd6063b714ba70979926f5019c58
         'Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/SuperfluousWhitespaceSniff.php',
         'Timber\\Admin' => __DIR__ . '/..' . '/timber/timber/lib/Admin.php',
         'Timber\\Archives' => __DIR__ . '/..' . '/timber/timber/lib/Archives.php',
+        'Timber\\Cache\\Cleaner' => __DIR__ . '/..' . '/timber/timber/lib/Cache/Cleaner.php',
         'Timber\\Cache\\KeyGenerator' => __DIR__ . '/..' . '/timber/timber/lib/Cache/KeyGenerator.php',
         'Timber\\Cache\\TimberKeyGeneratorInterface' => __DIR__ . '/..' . '/timber/timber/lib/Cache/TimberKeyGeneratorInterface.php',
         'Timber\\Cache\\WPObjectCacheAdapter' => __DIR__ . '/..' . '/timber/timber/lib/Cache/WPObjectCacheAdapter.php',
@@ -718,11 +719,11 @@ class ComposerStaticInit061bdd6063b714ba70979926f5019c58
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit061bdd6063b714ba70979926f5019c58::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit061bdd6063b714ba70979926f5019c58::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit061bdd6063b714ba70979926f5019c58::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit061bdd6063b714ba70979926f5019c58::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit061bdd6063b714ba70979926f5019c58::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitcdd8bbf5ab936216f027845db4d219df::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitcdd8bbf5ab936216f027845db4d219df::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitcdd8bbf5ab936216f027845db4d219df::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitcdd8bbf5ab936216f027845db4d219df::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitcdd8bbf5ab936216f027845db4d219df::$classMap;
 
         }, null, ClassLoader::class);
     }

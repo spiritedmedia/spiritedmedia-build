@@ -4,6 +4,8 @@ namespace Pedestal\Admin;
 
 use function Pedestal\Pedestal;
 
+use Timber\Timber;
+
 use \Pedestal\Utils\Utils;
 
 use \Pedestal\Registrations\Post_Types\Types;
@@ -116,6 +118,20 @@ class Admin {
         remove_action( 'set_current_user', 'kses_init' );
         add_action( 'init', [ $this, 'action_kses_init' ] );
         add_action( 'set_current_user', [ $this, 'action_kses_init' ] );
+
+        // Modify dashboard widgets
+        add_action( 'wp_dashboard_setup', function() {
+            // Remove the Activity widget
+            remove_meta_box( 'dashboard_activity', 'dashboard', 'normal' );
+
+            // Add Scheduled Entities widget
+            wp_add_dashboard_widget(
+                'pedestal_scheduled_entities',
+                'Scheduled Entities',
+                [ $this, 'handle_dashboard_widget_scheduled_entities' ]
+            );
+        });
+
     }
 
     /**
@@ -225,6 +241,16 @@ class Admin {
                 // Limit suggested formats
                 $arr['block_formats'] = 'Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3';
             }
+
+            // Set-up custom CSS classes to add to the Formats dropwdown
+            $style_formats = [
+                [
+                    'title' => 'Site Color',
+                    'selector' => '*', // Add this class to every element
+                    'classes' => 'u-text-color-primary',
+                ],
+            ];
+            $arr['style_formats'] = json_encode( $style_formats );
             return $arr;
         } );
 
@@ -236,6 +262,18 @@ class Admin {
             }
             return $can;
         } );
+
+        // Modify which tinyMCE buttons we show
+        add_filter( 'mce_buttons_2', function( $buttons ) {
+            array_unshift( $buttons, 'styleselect' );
+            $buttons_to_remove = [ 'alignjustify', 'forecolor', 'charmap' ];
+            foreach ( $buttons as $index => $button ) {
+                if ( in_array( $button, $buttons_to_remove ) ) {
+                    unset( $buttons[ $index ] );
+                }
+            }
+	        return $buttons;
+        });
 
     }
 
@@ -891,5 +929,22 @@ class Admin {
             $attachment_src = get_attached_file( $attachment_id ); // Gets path to attachment
             unlink( str_replace( '.svg','.png', $attachment_src ) );
         }
+    }
+
+    /**
+     * Handle the display of the Scheduled Entities dashboard widget
+     */
+    public function handle_dashboard_widget_scheduled_entities() {
+        $args = [
+            'post_type'      => Types::get_entity_post_types(),
+            'posts_per_page' => 15,
+            'post_status'    => 'future',
+            'orderby'        => 'date',
+            'order'          => 'ASC',
+        ];
+        $future_posts = new \WP_Query( $args );
+        $future_posts = Post::get_posts( $future_posts );
+        $context = array_merge( Timber::get_context(), [ 'items' => $future_posts ] );
+        Timber::render( 'partials/admin/dash-widget-scheduled-entities.twig', $context );
     }
 }

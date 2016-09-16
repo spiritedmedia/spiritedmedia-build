@@ -224,19 +224,19 @@
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/shortcake-bakery.git",
-            "reference": "a7f4ca02c413eb413b35752ec63f5f175165acaa"
+            "reference": "a7e0509c5f838c6a872412937cf351c37589a619"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/shortcake-bakery/zipball/a7f4ca02c413eb413b35752ec63f5f175165acaa",
-            "reference": "a7f4ca02c413eb413b35752ec63f5f175165acaa",
+            "url": "https://api.github.com/repos/spiritedmedia/shortcake-bakery/zipball/a7e0509c5f838c6a872412937cf351c37589a619",
+            "reference": "a7e0509c5f838c6a872412937cf351c37589a619",
             "shasum": ""
         },
         "require-dev": {
             "squizlabs/php_codesniffer": "2.3.4",
             "wp-coding-standards/wpcs": "dev-master"
         },
-        "time": "2016-08-04 16:17:44",
+        "time": "2016-09-15 17:46:58",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -254,7 +254,7 @@
             }
         ],
         "support": {
-            "source": "https://github.com/spiritedmedia/shortcake-bakery/tree/spiritedmedia-composer-package-type"
+            "source": "https://github.com/spiritedmedia/shortcake-bakery/tree/spiritedmedia"
         }
     },
     {
@@ -752,17 +752,17 @@
     },
     {
         "name": "timber/timber",
-        "version": "1.1.5",
-        "version_normalized": "1.1.5.0",
+        "version": "1.1.6",
+        "version_normalized": "1.1.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/timber/timber.git",
-            "reference": "76fb42ec9c64a6ec7dbf264ff8ee1852560bde87"
+            "reference": "7631b3dd3e37a100c6cbc23522b1f3630e907d58"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/timber/timber/zipball/76fb42ec9c64a6ec7dbf264ff8ee1852560bde87",
-            "reference": "76fb42ec9c64a6ec7dbf264ff8ee1852560bde87",
+            "url": "https://api.github.com/repos/timber/timber/zipball/7631b3dd3e37a100c6cbc23522b1f3630e907d58",
+            "reference": "7631b3dd3e37a100c6cbc23522b1f3630e907d58",
             "shasum": ""
         },
         "require": {
@@ -780,7 +780,7 @@
             "wpackagist-plugin/advanced-custom-fields": "4.*",
             "wpackagist-plugin/co-authors-plus": "3.*"
         },
-        "time": "2016-09-02 17:45:55",
+        "time": "2016-09-15 03:46:53",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1018,28 +1018,6 @@
         "type": "wordpress-plugin",
         "installation-source": "dist",
         "homepage": "https://wordpress.org/plugins/redirection/"
-    },
-    {
-        "name": "wpackagist-plugin/registered-users-only",
-        "version": "1.0.4",
-        "version_normalized": "1.0.4.0",
-        "source": {
-            "type": "svn",
-            "url": "https://plugins.svn.wordpress.org/registered-users-only/",
-            "reference": "tags/1.0.4"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/registered-users-only.1.0.4.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "composer/installers": "~1.0"
-        },
-        "type": "wordpress-plugin",
-        "installation-source": "dist",
-        "homepage": "https://wordpress.org/plugins/registered-users-only/"
     },
     {
         "name": "wpackagist-plugin/shortcode-ui",

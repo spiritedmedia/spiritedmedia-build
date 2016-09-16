@@ -3,10 +3,19 @@
 // ==========================================================================
 
 
-/**
- * Type sizing
- */
+//
+// Typography
+// ==========================================================================
 
+
+// Set text color to primary color
+.u-text-color-primary {
+  // scss-lint:disable ImportantRule
+  color: $primary-color !important;
+}
+
+
+// Heading sizing
 .u-size-h1 { font-size: $h1-font-size; }
 .u-size-h2 { font-size: $h2-font-size; }
 .u-size-h3 { font-size: $h3-font-size; }
@@ -14,10 +23,6 @@
 .u-size-h5 { font-size: $h5-font-size; }
 .u-size-h6 { font-size: $h6-font-size; }
 
-
-/**
- * Punctuation
- */
 
 // Hanging punctuation margin nudge
 .u-hang-punc {
@@ -27,8 +32,12 @@
 }
 
 
-/**
- * Loading indicator
- */
+
+
+
+//
+// Loading Spinners
+// ==========================================================================
+
 
 @import '../../vendor/spinkit/scss/spinners/7-three-bounce';
