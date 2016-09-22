@@ -1614,6 +1614,20 @@ abstract class Post {
 trait EditorialContent {
 
     /**
+     * Generated footnotes for the post
+     *
+     * @var array
+     */
+    protected $footnotes_generated_notes = [];
+
+    /**
+     * Generated footnotes start number
+     *
+     * @var integer
+     */
+    protected $footnotes_generated_start = 1;
+
+    /**
      * Setup data attributes
      */
     public function set_data_atts() {
@@ -1635,12 +1649,66 @@ trait EditorialContent {
     }
 
     /**
+     * Get the filtered footnotes for this post
+     *
+     * Includes the generated footnotes from the main post content.
+     *
+     * @return string
+     */
+    public function get_the_footnotes() {
+        $footnotes = apply_filters( 'the_content', $this->get_footnotes() );
+
+        /**
+         * Filter the output of the footnotes field
+         *
+         * @param string $footnotes Footnotes field content
+         * @param int    $post_id   Post ID
+         */
+        $footnotes = apply_filters( 'the_footnotes', $footnotes, $this->get_id() );
+        return $footnotes;
+    }
+
+    /**
      * Get the footnotes for this post
+     *
+     * Does not include the generated footnotes from the main post content.
      *
      * @return string
      */
     public function get_footnotes() {
         return $this->get_meta( 'footnotes' );
+    }
+
+    /**
+     * Get the start offset of the generated footnotes
+     *
+     * @return int Start offset number. Usually is 1.
+     */
+    public function get_footnotes_generated_start() {
+        return $this->footnotes_generated_start;
+    }
+
+    /**
+     * Get the generated footnotes array
+     *
+     * @return array Generated footnotes
+     */
+    public function get_footnotes_generated_notes() {
+        return $this->footnotes_generated_notes;
+    }
+
+    /**
+     * Set up the generated footnotes
+     *
+     * @param array $notes Notes
+     * @param int   $start Start offset
+     */
+    public function set_footnotes_generated( array $notes, int $start ) {
+        if ( empty( $notes ) ) {
+            return $notes;
+        }
+        $this->footnotes_generated_notes = $notes;
+        $this->footnotes_generated_start = $start;
     }
 
     /**

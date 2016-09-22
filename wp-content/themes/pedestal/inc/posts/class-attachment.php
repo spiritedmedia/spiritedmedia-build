@@ -89,10 +89,10 @@ class Attachment extends Post {
 
         $html = '';
         list( $src, $width, $height ) = $image;
-
         // Apply default classes to the user-specified classes
         $size_str = is_array( $size ) ? $size[0] . '-' . $size[1] : $size;
         $default_classes = "attachment-$size_str";
+        $id = $this->get_id();
 
         // Set alt text with fallbacks
         $alt_text = '';
@@ -106,9 +106,11 @@ class Attachment extends Post {
         $alt_text = trim( strip_tags( $alt_text ) );
 
         $default_attr = [
-            'src'   => $src,
-            'class' => $default_classes,
-            'alt'   => $alt_text,
+            'src'    => $src,
+            'sizes'  => wp_get_attachment_image_sizes( $id, $size ),
+            'srcset' => wp_get_attachment_image_srcset( $id ),
+            'class'  => $default_classes,
+            'alt'    => $alt_text,
         ];
         $attrs = wp_parse_args( $args, $default_attr );
 

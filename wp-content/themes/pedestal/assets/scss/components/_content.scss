@@ -139,23 +139,32 @@
   .c-content__body {}
 
 
-    /**
-     * Footnote Text
-     */
+  /**
+   * Footer
+   */
 
-    /*aside*/.c-content__footnotes {
-      // scss-lint:disable SelectorFormat
+  .c-content__footer {}
 
-      font-style: italic;
-      color: $dimmed-text-color;
 
-      // Since footnotes are already italic, when adding "italics" to footnotes,
-      // they should be normal text
-      em,
-      i {
-        font-style: normal;
-      }
+  /**
+   * Footnote Text
+   */
+
+  /*aside*/.c-content__footnotes {
+    // scss-lint:disable SelectorFormat
+
+    font-style: italic;
+    color: $dimmed-text-color;
+
+    &__list {}
+
+    // Since footnotes are already italic, when adding "italics" to footnotes,
+    // they should be normal text
+    em,
+    i {
+      font-style: normal;
     }
+  }
 
 
   /**

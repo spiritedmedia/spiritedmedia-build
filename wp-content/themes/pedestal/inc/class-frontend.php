@@ -101,6 +101,9 @@ class Frontend {
             return $content;
         });
 
+        add_filter( 'the_content', [ $this, 'filter_the_content_prepare_footnotes' ] );
+        add_filter( 'the_footnotes', [ $this, 'filter_the_footnotes_render' ], 10, 2 );
+
     }
 
     /**
@@ -319,6 +322,8 @@ class Frontend {
         wp_enqueue_script( 'nativo', '//a.postrelease.com/serve/load.js?async=true' );
         wp_enqueue_script( 'boxter-funnl', 'https://boxter.co/f23.js', [], null );
 
+        wp_register_script( 'pedestal-footnotes', get_template_directory_uri() . '/assets/dist/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, true );
+
         // Functionality-specific assets
         wp_register_script( 'soundcite', '//cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js' );
         wp_register_style( 'soundcite', '//cdn.knightlab.com/libs/soundcite/latest/css/player.css' );
@@ -476,7 +481,88 @@ class Frontend {
         }
 
         return $template;
+    }
 
+    /**
+     * Process the post content for any generated footnotes
+     */
+    public function filter_the_content_prepare_footnotes( $content ) {
+        $post_id = get_the_ID();
+
+        // Need to correct wpautop() which smart-quoteify's the " in the numoffset argument.
+        $content = preg_replace( '/numoffset=&#8221;(\d+)&#8243;/i', 'numoffset="$1"', $content );
+
+        // Microsoft has some weird space characters that Mac/Unix systems don't
+        // have. What the next line does is replace the weird space characters
+        // with a real space character which makes the regex work...
+        $content = str_replace( '[ref ', '[ref ', $content );
+
+        $start = 1;
+        $notes = [];
+
+        // Given `[0. numoffset="5" This is a footnote]`
+        //
+        // `$matches[0]` = The whole match including the square brackets: `[0. numoffset="5" This is a footnote]`
+        // `$matches[4]` = numoffset value: 5
+        // `$matches[5]` = The footnote text: This is a footnote
+        if ( preg_match_all( '/\[(\d+\.((\s+)?numoffset="(\d+)+")? (.*?))\]/s', $content, $matches ) ) {
+            foreach ( $matches[0] as $index => $target ) {
+                $offset_value = (int) $matches[4][ $index ];
+                $text = trim( $matches[5][ $index ] );
+
+                // Footnotes that have [ or ] in the text break. Use double
+                // curly quotes as an escape to workaround this.
+                $text = str_replace( '{{', '[', $text );
+                $text = str_replace( '}}', ']', $text );
+
+                if ( $offset_value > 0 ) {
+                    $start = $offset_value;
+                }
+
+                $notes[] = $text;
+            }
+
+            $n = $start;
+            foreach ( $matches[0] as $index => $target ) {
+                $content = str_replace( $target, "<sup class=\"footnote\"><a href=\"#footnote-$post_id-$n\" id=\"fnref-$post_id-$n\" class=\"js-footnote-link\">$n</a></sup>", $content );
+                $n++;
+            }
+
+            $post_obj = Post::get_by_post_id( $post_id );
+            if ( is_a( $post_obj, '\\Pedestal\\Posts\\Post' ) && method_exists( $post_obj, 'set_footnotes_generated' ) ) {
+                $post_obj->set_footnotes_generated( $notes, $start );
+            }
+
+            // Workaround for wpautop() bug. Otherwise it sometimes inserts an
+            // opening <p> but not the closing </p>. There are a bunch of open
+            // wpautop tickets. See 4298 and 7988 in particular.
+            $content .= "\n\n";
+        }
+
+        return $content ;
+    }
+
+    /**
+     * Filter the footnotes field below post content to include generated notes
+     */
+    public function filter_the_footnotes_render( $footnotes, $post_id ) {
+        $post = Post::get_by_post_id( $post_id );
+        if (
+            is_a( $post, '\\Pedestal\\Posts\\Post' )
+            && method_exists( $post, 'get_footnotes_generated_notes' )
+            && preg_match_all( '/<sup class=\"footnote/s', $post->get_the_content() )
+        ) {
+            $context = [
+                'post_id' => $post_id,
+                'count'   => $post->get_footnotes_generated_start(),
+                'items'   => $post->get_footnotes_generated_notes(),
+            ];
+            ob_start();
+            $footnotes .= Timber::render( 'partials/footnotes-generated.twig', $context );
+            ob_get_clean();
+        }
+        wp_enqueue_script( 'pedestal-footnotes' );
+        return $footnotes;
     }
 
     /**

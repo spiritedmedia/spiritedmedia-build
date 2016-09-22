@@ -123,11 +123,15 @@ $spiritedmedia-brand       : #333333;
 $primary-color             : $spiritedmedia-brand !default;
 $secondary-color           : lighten( $spiritedmedia-brand, 10% ) !default;
 
-$dimmed-text-color         : $grey-lightish !default;
 $body-bg                   : $grey-lightest !default;
 $c-panel-bg                : $white !default;
 $anchor-font-color-hover   : $black !default;
 $border-std-color          : $grey-lighter !default;
+
+// WCAG 2.0 guidelines require a text contrast ratio of at least 4.5:1 (#767676)
+// for AA and 7:1 for AAA (#595959).
+// https://www.w3.org/TR/WCAG20/#visual-audio-contrast
+$dimmed-text-color         : #767676 !default;
 
 // User role colors
 $user-staff-color          : $primary-color !default;

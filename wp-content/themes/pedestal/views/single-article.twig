@@ -41,9 +41,9 @@
                 {{ item.get_the_content }}
             </section>
 
-            {% if item.get_footnotes %}
-            <aside class="c-content__footnotes">
-                {{ item.get_footnotes }}
+            {% if item.get_the_footnotes %}
+            <aside class="c-content__footnotes  js-content-footnotes">
+                {{ item.get_the_footnotes }}
             </aside>
             {% endif %}
 

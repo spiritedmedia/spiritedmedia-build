@@ -1,0 +1,20 @@
+// ==========================================================================
+// Pedestal // Components // FOOTNOTES
+//
+// Generated footnotes at the bottom of a post.
+// ==========================================================================
+
+
+/*ol*/.c-footnotes {
+  /*li*/&__item {
+    font-size: $footnotes-font-size;
+    font-weight: 300;
+  }
+
+  /*a*/&__return {
+    &__icon {
+      transform: rotate( 90deg );
+      margin-left: $footnotes-icon-spacing;
+    }
+  }
+}
