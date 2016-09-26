@@ -602,6 +602,9 @@ class Cluster_Types extends Types {
             'twitter' => new \Fieldmanager_Link( esc_html__( 'Twitter', 'pedestal' ), [
                 'name' => 'twitter',
             ] ),
+            'instagram' => new \Fieldmanager_Textfield( esc_html__( 'Instagram Username', 'pedestal' ), [
+                'name' => 'instagram',
+            ] ),
         ];
         $social = new \Fieldmanager_Group( false, [
             'name'           => 'person_social',

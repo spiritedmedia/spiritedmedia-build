@@ -150,6 +150,26 @@ class Person extends Cluster {
     }
 
     /**
+     * Get the Person's Instagram handle
+     * @return string
+     */
+    public function get_instagram_handle() {
+        return $this->get_person_social_field( 'instagram' );
+    }
+
+    /**
+     * Get the Person's Instagram URL
+     * @return string URL
+     */
+    public function get_instagram_url() {
+        $handle = $this->get_instagram_handle();
+        if ( ! $handle ) {
+            return;
+        }
+        return 'https://www.instagram.com/' . $handle . '/';
+    }
+
+    /**
      * Get the Person's short name
      *
      * Short name is a combination of the `first_name` and `last_name` fields.

@@ -30,4 +30,19 @@
     </div>
     {% endif %}
 
+    {% if person.get_instagram_handle %}
+    <div class="c-whos-next-item__person__instagram">
+        <i class="c-whos-next-item__person__icon  fa-instagram  fa-fw  fa"></i>
+
+        <a href="{{ person.get_instagram_url }}"
+            title="@{{ person.get_instagram_handle }} on Instagram"
+            class="c-whos-next-item__person__text">
+
+            @{{ person.get_instagram_handle }}
+
+        </a>
+
+    </div>
+    {% endif %}
+
 </div>
