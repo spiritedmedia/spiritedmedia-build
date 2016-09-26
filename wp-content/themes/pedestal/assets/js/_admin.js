@@ -43,6 +43,9 @@
         this.manageConnectionsMetaboxes(this.connections[k], k);
       }
 
+      // Expand and remove the + Create Connection links #uglyButItWorks™
+      setTimeout(function() { $('.p2p-toggle-tabs a').click().hide(); }, 1500);
+
       this.bindColorPickers();
       this.reorderExcerptBox();
     },

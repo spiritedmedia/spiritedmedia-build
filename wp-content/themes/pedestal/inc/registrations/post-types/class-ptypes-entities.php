@@ -522,6 +522,7 @@ class Entity_Types extends Types {
                     'name'           => 'people',
                     'minimum_count'  => 1,
                     'limit'          => 3,
+                    'sortable'       => true,
                     'save_empty'     => false,
                     'extra_elements' => 0,
                     'add_more_label' => esc_html__( 'Add Additional Person', 'pedestal' ),

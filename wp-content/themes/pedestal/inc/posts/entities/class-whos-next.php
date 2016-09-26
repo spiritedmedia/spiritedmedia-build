@@ -70,11 +70,6 @@ class Whos_Next extends Entity {
                 $item['people'][] = $person;
             }
 
-            // Sort the people by last name / first name within this item
-            usort( $item['people'], function( $a, $b ) {
-                return strcasecmp( $a->get_full_name( true ), $b->get_full_name( true ) );
-            } );
-
             $_img = Attachment::get_by_post_id( $item['img'] );
             $item['img'] = '';
             if ( ! $_img instanceof Attachment ) {
