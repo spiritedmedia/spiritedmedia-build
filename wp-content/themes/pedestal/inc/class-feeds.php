@@ -105,7 +105,7 @@ class Feeds {
                 // https://developers.facebook.com/docs/instant-articles/checklist
                 $query->set( 'posts_per_page', '111' );
             } else {
-                $title .= ' » ' . Post::get_post_type_name( $post_type );
+                $title .= ' » ' . Types::get_post_type_name( $post_type );
             }
             $this->set_feed_title( $query, $title );
         }

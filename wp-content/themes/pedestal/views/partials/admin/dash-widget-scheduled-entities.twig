@@ -19,7 +19,7 @@
                     <em>{{ item.get_the_title }}</em>
                 {% endif %}
             </td>
-            <td>{{ item.get_post_type_name( 'pedestal_' ~ item.get_type, false ) }}</td>
+            <td>{{ item.get_post_type_name( false ) }}</td>
         </tr>
 
     {% endfor %}

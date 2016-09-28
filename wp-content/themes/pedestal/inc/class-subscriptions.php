@@ -505,96 +505,6 @@ class Subscriptions {
     }
 
     /**
-     * Handle the meta box to trigger an email send to EveryBlock/hood subscribers
-     *
-     * @param  object $post WP_Post
-     * @return string HTML
-     */
-    public function handle_notify_hood_subscribers_meta_box( $post ) {
-        $post_id = $post->ID;
-        $hood = Neighborhood::get_by_post_id( (int) $post_id );
-        $hood_type = Post::get_post_type( $hood );
-        $type = $hood->get_type_name();
-
-        if ( ! $hood->get_everyblock_slug() ) {
-            ob_start();
-            ?>
-
-<p><?php esc_html_e( 'This neighborhood does not have an EveryBlock slug defined!', 'pedestal' ); ?></p>
-<p><?php _e( 'To notify subscribers, you\'ll need to add a custom field with the key <code>everyblock-slug</code> (no backticks) with the EveryBlock slug as the value.', 'pedestal' ); ?></p>
-<p><?php _e( 'If you have any other questions, ping the dev team on #product.', 'pedestal' ); ?></p>
-
-            <?php
-            echo ob_get_clean();
-            return;
-        }
-
-        if ( $last_sent = $hood->get_last_everyblock_email_notification_date() ) {
-            $last_sent = get_date_from_gmt( date( 'Y-m-d H:i:s', $last_sent ) );
-            $last_sent = sprintf( esc_html__( 'It was last sent: %s.', 'pedestal' ), $last_sent );
-        } else {
-            $last_sent = esc_html__( 'It has never been sent.', 'pedestal' );
-        }
-
-        $attributes = [];
-        $eb_item_count = 0;
-
-        if ( $eb_items = $hood->get_items_since_last_everyblock_email_notification() ) :
-
-            ob_start();
-            ?>
-
-<p><?php esc_html_e( 'Are you ready to send an email notification to those following this ' . $type . '?', 'pedestal' ); ?></p>
-
-<p><?php esc_html_e( 'These items will be included:', 'pedestal' ); ?>
-    <ol>
-    <?php foreach ( $eb_items as $eb_item ) : ?>
-        <li>
-            <strong><?php echo $eb_item->title ?></strong>
-            <br>
-            <?php echo date( 'Y-m-d H:i:s', strtotime( $eb_item->pub_date ) ); ?>
-        </li>
-    <?php endforeach; ?>
-    </ol>
-</p>
-
-            <?php
-            echo ob_get_clean();
-
-        else :
-
-            $attributes['disabled'] = 'disabled';
-
-            ob_start();
-            ?>
-
-<p><?php esc_html_e( 'There are no new EveryBlock items since the last email notification was sent.', 'pedestal' ); ?></p>
-
-            <?php
-            echo ob_get_clean();
-
-        endif;
-
-        ob_start();
-        ?>
-
-<p><?php echo esc_html( $last_sent ); ?></p>
-
-<?php if ( empty( $attributes['disabled'] ) ) : ?>
-    <input type="text" name="test-email-addresses" placeholder="<?php esc_attr_e( 'Separate addresses by commas' ); ?>" style="width:100%" />
-    <?php submit_button( esc_html__( 'Send Test Email', 'pedestal' ), 'secondary', 'pedestal-everyblock-send-test-email' ); ?>
-<?php endif; ?>
-
-<hr />
-
-<?php submit_button( sprintf( esc_html__( 'Send EveryBlock Email To %d Followers', 'pedestal' ), $hood->get_following_users_count() ), 'primary', 'pedestal-everyblock-notify-subscribers', true, $attributes ); ?>
-
-        <?php
-        echo ob_get_clean();
-
-    }
-
-    /**
      * Handle the meta box to trigger an email send to cluster subscribers
      *
      * @param  object $post WP_Post
@@ -603,7 +513,6 @@ class Subscriptions {
     public function handle_notify_cluster_subscribers_meta_box( $post ) {
         $post_id = $post->ID;
         $cluster = Cluster::get_by_post_id( (int) $post_id );
-        $cluster_type = Post::get_post_type( $cluster );
         $type = $cluster->get_type();
 
         if ( $last_sent = $cluster->get_last_email_notification_date() ) {
@@ -727,7 +636,7 @@ class Subscriptions {
 
             $context['message'] = esc_html__( sprintf(
                 'The %s must be published in order to send it to subscribers on the primary email list.',
-                strtolower( Post::get_post_type_name( Post::get_post_type( $post ), false ) )
+                strtolower( Types::get_post_type_name( Types::get_post_type( $post ), false ) )
             ), 'pedestal' );
 
         } else {
@@ -1127,7 +1036,7 @@ class Subscriptions {
 
             add_filter( 'mandrill_wp_mail_pre_message_args', $merge_vars_func );
 
-            if ( post_type_supports( Post::get_post_type( $post ), 'breaking' ) ) {
+            if ( post_type_supports( Types::get_post_type( $post ), 'breaking' ) ) {
                 $email_type = 'Breaking News';
                 $subject_email_type = strtoupper( $email_type );
                 $template = 'breaking-news';

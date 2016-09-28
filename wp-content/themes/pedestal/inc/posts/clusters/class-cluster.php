@@ -204,7 +204,7 @@ abstract class Cluster extends Post {
     /**
      * Get the name of the connection type by post type.
      *
-     * @uses parent::get_connection_type()
+     * @uses Pedestal\Registrations\Post_Types\Types::get_connection_type()
      *
      * @param  string $rel  The relationship to return. Can be one of either 'entity' or 'user'.
      * @param  mixed  $post The post object or post type string to check. Defaults to the current post object.
@@ -214,7 +214,7 @@ abstract class Cluster extends Post {
         if ( empty( $post ) ) {
             $post = self::get_by_post_id( $this->get_id() );
         }
-        return parent::get_connection_type( $rel, $post );
+        return Types::get_connection_type( $rel, $post );
     }
 
     /**

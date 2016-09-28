@@ -131,6 +131,15 @@ class Locality extends Place {
     }
 
     /**
+     * Get the Locality's Type slug
+     *
+     * @return string|bool
+     */
+    public function get_locality_type_slug() {
+        return $this->get_locality_type_term_property( 'slug' );
+    }
+
+    /**
      * Get the Locality's Type name
      *
      * @return string|bool

@@ -202,8 +202,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
 
             $this->utilities         = Utils::get_instance();
-            $this->post_types        = Registrations\Post_Types\Types::get_instance();
             $this->taxonomies        = Registrations\Taxonomies\Taxonomies::get_instance();
+            $this->post_types        = Registrations\Post_Types\Types::get_instance();
             $this->user_management   = User_Management::get_instance();
             $this->subscriptions     = Subscriptions::get_instance();
             $this->shortcode_manager = Shortcode_Manager::get_instance();
@@ -580,8 +580,12 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * Handle Slack notifications
          */
         public function handle_post_notifications( $post ) {
-            if ( in_array( Post::get_post_type( $post ), Types::get_pedestal_post_types() ) ) {
-                $post_obj = Post::get_by_post_id( $post->ID );
+            if ( ! is_object( $post ) || ! property_exists( $post, 'ID' ) ) {
+                return;
+            }
+            $post_id = $post->ID;
+            if ( in_array( Types::get_post_type( $post_id ), Types::get_pedestal_post_types() ) ) {
+                $post_obj = Post::get_by_post_id( $post_id );
                 $post_obj->notify_on_publish();
             }
         }
@@ -590,8 +594,12 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * Save the current Pedestal version to post meta on publish
          */
         public function handle_set_post_pedestal_version( $post ) {
-            if ( in_array( Post::get_post_type( $post ), Types::get_pedestal_post_types() ) ) {
-                $post_obj = Post::get_by_post_id( $post->ID );
+            if ( ! is_object( $post ) || ! property_exists( $post, 'ID' ) ) {
+                return;
+            }
+            $post_id = $post->ID;
+            if ( in_array( Types::get_post_type( $post_id ), Types::get_pedestal_post_types() ) ) {
+                $post_obj = Post::get_by_post_id( $post_id );
                 $post_obj->set_published_pedestal_ver();
             }
         }

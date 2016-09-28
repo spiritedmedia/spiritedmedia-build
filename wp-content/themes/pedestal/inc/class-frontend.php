@@ -164,7 +164,7 @@ class Frontend {
 
         if ( $query->is_feed() ) {
             if ( $query->is_post_type_archive() ) {
-                $post_type_name = Post::get_post_type_name( $query->get( 'post_type' ) );
+                $post_type_name = Types::get_post_type_name( $query->get( 'post_type' ) );
                 add_filter( 'wp_title_rss', function( $title, $sep ) use ( $post_type_name ) {
                     echo ' ' . $sep . ' ';
                     echo $post_type_name;
@@ -399,28 +399,64 @@ class Frontend {
             'content'         => Pedestal()->get_pinned_post(),
         ];
 
-        if ( is_singular( 'pedestal_story' ) ) {
-            if ( is_active_sidebar( 'sidebar-story' ) ) {
-                $context['sidebar'] = Timber::get_widgets( 'sidebar-story' );
-            }
-        } elseif ( is_singular( 'pedestal_hood' ) || is_post_type_archive( 'pedestal_hood' ) ) {
-            if ( is_active_sidebar( 'sidebar-hood' ) ) {
-                $context['sidebar'] = Timber::get_widgets( 'sidebar-hood' );
-            }
-        } elseif ( is_singular() && Types::is_entity( Post::get_post_type( get_queried_object_id() ) ) ) {
-            if ( is_active_sidebar( 'sidebar-entity' ) ) {
-                $context['sidebar'] = Timber::get_widgets( 'sidebar-entity' );
-            }
+        if ( wp_get_current_user() ) {
+            $context['current_user'] = new User( wp_get_current_user() );
         } else {
+            $context['current_user'] = false;
+        }
+
+        if ( is_singular() ) :
+            $post = Post::get_by_post_id( get_queried_object_id() );
+            if ( is_a( $post, '\\Pedestal\\Posts\\Post' ) ) :
+                $post_type = $post->get_post_type();
+
+                if ( Types::is_entity( $post_type ) ) {
+                    if ( is_active_sidebar( 'sidebar-entity' ) ) {
+                        $context['sidebar'] = Timber::get_widgets( 'sidebar-entity' );
+                    }
+                } elseif ( Types::is_cluster( $post_type ) ) {
+                    $context['is_cluster'] = true;
+                }
+
+                switch ( $post_type ) :
+                    case 'pedestal_story':
+                        $context['grouped'] = true;
+                        if ( is_active_sidebar( 'sidebar-story' ) ) {
+                            $context['sidebar'] = Timber::get_widgets( 'sidebar-story' );
+                        }
+                        break;
+
+                    case 'pedestal_event':
+                        $context['heading'] = [];
+                        $context['heading']['details'] = esc_html__( 'Details', 'pedestal' );
+                        break;
+
+                    default:
+                        break;
+                endswitch;
+
+                if ( 'layout-flat.twig' === $post->get_single_base_template() ) {
+                    $context['sidebar_class'] = 'sidebar--' . $post->get_type();
+
+                    ob_start();
+                    $context['sidebar'] = Timber::render( 'sidebar-' . $post->get_type() . '.twig', $context );
+                    ob_get_clean();
+                }
+            endif;
+        else :
             if ( is_active_sidebar( 'sidebar-stream' ) ) {
                 $context['sidebar'] = Timber::get_widgets( 'sidebar-stream' );
             }
-        }
+        endif;
 
         if ( empty( $context['sidebar'] ) ) {
             ob_start();
             $context['sidebar'] = Timber::render( 'sidebar-default.twig', $context );
             ob_get_clean();
+        }
+
+        if ( is_page() || is_404() ||is_author() ) {
+            $context['sidebar'] = false;
         }
 
         // Load some WP conditional functions as Timber context variables

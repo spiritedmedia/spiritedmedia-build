@@ -90,6 +90,39 @@ class Cluster_Types extends Types {
         add_filter( 'p2p_connected_title', [ $this, 'filter_p2p_item_title' ], 10, 3 );
         add_filter( 'post_type_link', [ $this, 'filter_post_type_link' ], 10, 2 );
 
+        // Fix canonical urls for pagination
+        // https://core.trac.wordpress.org/ticket/15551
+        add_filter( 'redirect_canonical', function( $redirect_url, $requested_url ) {
+            $post = get_post();
+            if ( ! $post ) {
+                return $redirect_url;
+            }
+
+            // Check for a query string
+            $parts = explode( '?', $redirect_url );
+            $url = $parts[0];
+            $query_string = '';
+            if ( isset( $parts[1] ) ) {
+                $query_string = '?' . $parts[1];
+            }
+
+            $paged = get_query_var( 'paged' );
+            if ( 1 == $paged ) {
+                $paged = false;
+            }
+
+            $id = $post->ID;
+            $post_obj = Post::get_by_post_id( $id );
+            if (
+                Types::is_post( $post_obj ) &&
+                is_single( $id ) &&
+                $paged
+            ) {
+                $redirect_url = trailingslashit( $url ) . 'page/' . $paged . '/' . $query_string;
+            }
+            return $redirect_url;
+        }, 10, 2 );
+
     }
 
     /**
@@ -141,8 +174,6 @@ class Cluster_Types extends Types {
                         'slug' => 'topics',
                         'with_front' => false,
                     ];
-                    // Prevent this cluster from displaying publicly
-                    $args['publicly_queryable'] = false;
                     break;
 
                 case 'pedestal_person':
@@ -159,8 +190,6 @@ class Cluster_Types extends Types {
                         'slug' => 'people',
                         'with_front' => false,
                     ];
-                    // Prevent this cluster from displaying publicly
-                    $args['publicly_queryable'] = false;
                     break;
 
                 case 'pedestal_org':
@@ -177,8 +206,6 @@ class Cluster_Types extends Types {
                         'slug' => 'organizations',
                         'with_front' => false,
                     ];
-                    // Prevent this cluster from displaying publicly
-                    $args['publicly_queryable'] = false;
                     break;
 
                 case 'pedestal_place':
@@ -192,11 +219,9 @@ class Cluster_Types extends Types {
                         'thumbnail',
                     ];
                     $args['rewrite'] = [
-                        'slug' => 'locations',
+                        'slug' => 'places',
                         'with_front' => false,
                     ];
-                    // Prevent this cluster from displaying publicly
-                    $args['publicly_queryable'] = false;
                     break;
 
                 case 'pedestal_locality':
@@ -216,7 +241,6 @@ class Cluster_Types extends Types {
                         'with_front' => false,
                     ];
                     $args['has_archive'] = false;
-                    $args['publicly_queryable'] = true;
                     break;
 
             }
@@ -448,7 +472,6 @@ class Cluster_Types extends Types {
     public function filter_post_type_link( $link, $post ) {
         $post_id = $post->ID;
         if ( 'pedestal_locality' === get_post_type( $post ) ) {
-            $locality = Locality::get_by_post_id( $post_id );
             $terms = wp_get_object_terms( $post_id, 'pedestal_locality_type' );
             if ( ! empty( $terms ) ) {
                 return str_replace( '%locality_type%', $terms[0]->slug, $link );

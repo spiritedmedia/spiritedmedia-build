@@ -242,7 +242,7 @@ class CLI extends \WP_CLI_Command {
 
             if ( Types::is_entity( $post_type ) || 'entity' === $post_type ) {
                 if ( ( $story && ! $maybe_story ) || ( $story && $maybe_story && mt_rand( 0, 1 ) ) ) {
-                    if ( Types::is_story( Post::get_post_type( Post::get_by_post_id( $story ) ) ) ) {
+                    if ( Types::is_story( Types::get_post_type( Post::get_by_post_id( $story ) ) ) ) {
                         p2p_type( 'entities_to_stories' )->connect( $post->get_id(), $story );
                         $message .= " in story with ID {$story}";
                     } else {

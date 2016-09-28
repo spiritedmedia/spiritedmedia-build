@@ -1,4 +1,4 @@
-{% extends "layout-flat.twig" %}
+{% extends item.get_single_base_template %}
 
 
 {% block title_bar %}
@@ -21,4 +21,3 @@
         {% include 'partials/factchecks/content.twig' %}
     </div>
 {% endblock %}
-

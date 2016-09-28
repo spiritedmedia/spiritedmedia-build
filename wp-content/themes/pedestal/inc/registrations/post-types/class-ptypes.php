@@ -71,21 +71,6 @@ class Types {
             add_filter( "manage_{$post_type}_posts_columns", [ $this, 'filter_manage_posts_columns' ] );
         }
 
-        // Disable canonical urls for pagination
-        // https://core.trac.wordpress.org/ticket/15551
-        add_filter( 'redirect_canonical', function( $redirect_url ) {
-            global $post;
-            if ( ! empty( $post ) ) {
-                if ( is_single( $id = $post->ID ) ) {
-                    $ptype = Post::get_post_type( $id );
-                    if ( 'pedestal_story' == $ptype ) {
-                        $redirect_url = false;
-                    }
-                }
-            }
-            return $redirect_url;
-        } );
-
     }
 
     private function setup_types() {
@@ -415,6 +400,61 @@ class Types {
     }
 
     /**
+     * Get the name of the user connection type by post type
+     *
+     * @uses self::get_connection_type()
+     *
+     * @param  obj    $post The post object or post type string to check.
+     * @return string       The name of the user connection type
+     */
+    public static function get_user_connection_type( $post = null ) {
+        return self::get_connection_type( 'user', $post );
+    }
+
+    /**
+     * Get the name of the entity connection type by post type
+     *
+     * @uses self::get_connection_type()
+     *
+     * @param  obj    $post The post object or post type string to check.
+     * @return string       The name of the entity connection type
+     */
+    public static function get_entity_connection_type( $post = null ) {
+        return self::get_connection_type( 'entity', $post );
+    }
+
+    /**
+     * Get the name of the connection type by post type
+     *
+     * @param  string $rel  The relationship to return. Can be one of either 'entity' or 'user'.
+     * @param  mixed  $post The post object or post type string to check.
+     * @return string       The name of the user connection type
+     */
+    public static function get_connection_type( $rel, $post ) {
+
+        if ( is_object( $post ) ) {
+            $post_type = self::get_post_type( $post );
+        } elseif ( is_string( $post ) && in_array( $post, self::get_post_types() ) ) {
+            $post_type = $post;
+        } else {
+            return false;
+        }
+
+        $sanitized_labels = self::get_sanitized_post_type_labels( $post_type );
+        $plural = $sanitized_labels['name'];
+
+        switch ( $rel ) {
+            case 'user':
+                return $plural . '_to_users';
+            case 'entity':
+                return 'entities_to_' . $plural;
+        }
+
+        return false;
+
+    }
+
+    /**
      * Get an array of post types with label as value
      *
      * This is useful for setting up select field options based on post types.
@@ -438,6 +478,23 @@ class Types {
             $types_with_labels[ $type ] = $labels[ $label ];
         }
         return $types_with_labels;
+    }
+
+    /**
+     * Get a post type's label name
+     *
+     * @param  string $post_type The post type
+     * @param  bool   $plural    Whether to return the plural name or singular.
+     *     Default is plural.
+     * @return string            The label name of the post type
+     */
+    public static function get_post_type_name( $post_type, $plural = true ) {
+        $labels = self::get_post_type_labels( $post_type );
+        if ( $plural ) {
+            return $labels['name'];
+        } else {
+            return $labels['singular_name'];
+        }
     }
 
     /**
@@ -565,38 +622,87 @@ class Types {
         return $types;
     }
 
+    /**
+     * Get the default WordPress post types for which we have custom classes
+     *
+     * @return array Some default WP post types
+     */
     public static function get_overridden_post_types() {
         return self::$overridden_types;
     }
 
     /**
-     * Determine whether a post type is an entity
+     * Determine whether a post type or object is an entity
      *
-     * @param string $post_type The post type to check
+     * @param string|obj $post_token The post type or object to check
      * @return boolean
      */
-    public static function is_entity( $post_type ) {
-        return in_array( $post_type, self::get_entity_post_types() );
+    public static function is_entity( $post_token ) {
+        if (
+            ( is_string( $post_token ) && in_array( $post_token, self::get_entity_post_types() ) ) ||
+            ( is_object( $post_token ) && is_a( $post_token, 'Pedestal\\Posts\\Entities\\Entity' ) )
+        ) {
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Determine whether a post type is an cluster
+     * Determine whether a post type or object is a cluster
      *
-     * @param string $post_type The post type to check
+     * @param string|obj $post_token The post type or object to check
      * @return boolean
      */
-    public static function is_cluster( $post_type ) {
-        return in_array( $post_type, self::get_cluster_post_types() );
+    public static function is_cluster( $post_token ) {
+        if (
+            ( is_string( $post_token ) && in_array( $post_token, self::get_cluster_post_types() ) ) ||
+            ( is_object( $post_token ) && is_a( $post_token, 'Pedestal\\Posts\\Clusters\\Cluster' ) )
+        ) {
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Determine whether a post type is a story
+     * Determine whether a post type or object is a Story
      *
-     * @param string $post_type The post type to check
+     * @param string|obj $post_token The post type or object to check
      * @return boolean
      */
-    public static function is_story( $post_type ) {
-        if ( 'pedestal_story' === $post_type ) {
+    public static function is_story( $post_token ) {
+        if (
+            ( is_string( $post_token ) && 'pedestal_story' === $post_token ) ||
+            ( $post_token instanceof Pedestal\Posts\Clusters\Story )
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Determine whether a post type or object is a Locality
+     *
+     * @param string|obj $post_token The post type or object to check
+     * @return boolean
+     */
+    public static function is_locality( $post_token ) {
+        if (
+            ( is_string( $post_token ) && 'pedestal_locality' === $post_token ) ||
+            ( is_object( $post_token ) && is_a( $post_token, 'Pedestal\\Posts\\Clusters\\Geospaces\\Localities\\Locality' ) )
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Determine whether an object is one of our Post objects
+     *
+     * @param  mixed  $post_obj An object to test
+     * @return boolean
+     */
+    public static function is_post( $post_obj ) {
+        if ( is_a( $post_obj, 'Pedestal\\Posts\\Post' ) ) {
             return true;
         }
         return false;
@@ -654,5 +760,20 @@ class Types {
             sort( $types );
         }
         return $types;
+    }
+
+    /**
+     * Get a post type for internal use
+     *
+     * Handles our Post objects with a fallback to the core get_post_type() method.
+     *
+     * @param  int|obj     $post Post ID or post object.
+     * @return string|bool
+     */
+    public static function get_post_type( $post = '' ) {
+        if ( ! empty( $post ) && is_a( $post, '\\Pedestal\\Posts\\Post' ) ) {
+            return $post->get_post_type();
+        }
+        return get_post_type( $post );
     }
 }

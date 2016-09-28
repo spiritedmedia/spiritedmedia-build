@@ -19,6 +19,16 @@ use \Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
  */
 abstract class Post {
 
+    /**
+     * Single post view base template
+     *
+     * The base template for Twig to use when rendering the single view
+     * for this post.
+     *
+     * @var string
+     */
+    protected $single_base_template = 'base.twig';
+
     protected $data_attributes = [];
 
     protected $p2p_data = [];
@@ -184,6 +194,15 @@ abstract class Post {
     }
 
     /**
+     * Get the name of the base template for this post's single view
+     *
+     * @return string
+     */
+    public function get_single_base_template() {
+        return $this->single_base_template;
+    }
+
+    /**
      * Get the Post's HTML data attributes in string format
      *
      * @return string HTML
@@ -300,7 +319,7 @@ abstract class Post {
      * @return string
      */
     public function get_type_name_plural() {
-        return self::get_post_type_name( static::$post_type );
+        return Types::get_post_type_name( static::$post_type );
     }
 
     /**
@@ -309,7 +328,7 @@ abstract class Post {
      * @return string
      */
     public function get_type_name() {
-        return self::get_post_type_name( static::$post_type, false );
+        return Types::get_post_type_name( static::$post_type, false );
     }
 
     /**
@@ -319,38 +338,6 @@ abstract class Post {
      */
     public function get_type() {
         return Utils::remove_name_prefix( static::$post_type );
-    }
-
-    /**
-     * Get a post type's label name
-     *
-     * @param  string $post_type The post type
-     * @param  bool   $plural    Whether to return the plural name or singular.
-     *     Default is plural.
-     * @return string            The label name of the post type
-     */
-    public static function get_post_type_name( $post_type, $plural = true ) {
-        $post_type = get_post_type_object( $post_type );
-        if ( $plural ) {
-            return $post_type->labels->name;
-        } else {
-            return $post_type->labels->singular_name;
-        }
-    }
-
-    /**
-     * Get a post type for internal use
-     *
-     * Handles our Post objects with a fallback to the core get_post_type() method.
-     *
-     * @param  int|obj     $post Post ID or post object.
-     * @return string|bool
-     */
-    public static function get_post_type( $post ) {
-        if ( is_a( $post, '\\Pedestal\\Posts\\Post' ) ) {
-            return $post::$post_type;
-        }
-        return get_post_type( $post );
     }
 
     /**
@@ -1426,59 +1413,6 @@ abstract class Post {
     }
 
     /**
-     * Get the name of the user connection type by post type
-     *
-     * @uses self::get_connection_type()
-     *
-     * @param  obj    $post The post object or post type string to check.
-     * @return string       The name of the user connection type
-     */
-    public static function get_user_connection_type( $post = null ) {
-        return self::get_connection_type( 'user', $post );
-    }
-
-    /**
-     * Get the name of the entity connection type by post type
-     *
-     * @uses self::get_connection_type()
-     *
-     * @param  obj    $post The post object or post type string to check.
-     * @return string       The name of the entity connection type
-     */
-    public static function get_entity_connection_type( $post = null ) {
-        return self::get_connection_type( 'entity', $post );
-    }
-
-    /**
-     * Get the name of the connection type by post type
-     *
-     * @param  string $rel  The relationship to return. Can be one of either 'entity' or 'user'.
-     * @param  mixed  $post The post object or post type string to check.
-     * @return string       The name of the user connection type
-     */
-    public static function get_connection_type( $rel, $post ) {
-
-        if ( is_object( $post ) ) {
-            $post_type = self::get_post_type( $post );
-        } elseif ( is_string( $post ) && in_array( $post, Types::get_post_types() ) ) {
-            $post_type = $post;
-        } elseif ( empty( $post ) ) {
-            return false;
-        }
-
-        $sanitized_labels = Types::get_sanitized_post_type_labels( $post_type );
-        $plural = $sanitized_labels['name'];
-
-        if ( 'user' === $rel ) {
-            return $plural . '_to_users';
-        } elseif ( 'entity' === $rel ) {
-            return 'entities_to_' . $plural;
-        }
-        return false;
-
-    }
-
-    /**
      * Determine whether a post type is an entity
      *
      * @param string The post type to check. Defaults to the current post's type
@@ -1509,6 +1443,37 @@ abstract class Post {
      */
     public function is_story() {
         return Types::is_story( static::$post_type );
+    }
+
+    /**
+     * Determine whether a post type is a Locality
+     *
+     * @param string The post type to check. Defaults to the current post's type
+     *
+     * @return boolean
+     */
+    public function is_locality() {
+        return Types::is_locality( static::$post_type );
+    }
+
+    /**
+     * Get the Post's post type name label
+     *
+     * @param  boolean $plural Whether to return the plural name or singular.
+     *     Default is plural.
+     * @return string          The label name of the post type
+     */
+    public function get_post_type_name( $plural = true ) {
+        return Types::get_post_type_name( static::$post_type, $plural );
+    }
+
+    /**
+     * Get the post type
+     *
+     * @return string Post type
+     */
+    public function get_post_type() {
+        return static::$post_type;
     }
 
     /**

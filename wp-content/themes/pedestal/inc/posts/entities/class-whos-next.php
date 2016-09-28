@@ -19,6 +19,8 @@ class Whos_Next extends Entity {
      */
     private $fias_use_automatic_ad_placement = 'false';
 
+    protected $single_base_template = 'layout-flat.twig';
+
     protected static $post_type = 'pedestal_whosnext';
 
     /**

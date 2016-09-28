@@ -470,7 +470,7 @@ class User extends Author {
         $connected_types = [];
 
         foreach ( $cluster_types as $cluster_type ) {
-            $connected_types[] = Post::get_user_connection_type( $cluster_type );
+            $connected_types[] = Types::get_user_connection_type( $cluster_type );
         }
 
         $args = [
@@ -498,7 +498,7 @@ class User extends Author {
      */
     public function is_following_cluster( $cluster ) {
 
-        $cluster_type = Post::get_post_type( $cluster );
+        $cluster_type = Types::get_post_type( $cluster );
         $cluster_class = Types::get_post_type_class( $cluster_type );
         $connected_type = $cluster->get_cluster_user_connection_type( $cluster_type );
 

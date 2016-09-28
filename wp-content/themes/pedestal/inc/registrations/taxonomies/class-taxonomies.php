@@ -2,36 +2,40 @@
 
 namespace Pedestal\Registrations\Taxonomies;
 
+use Pedestal\Registrations\Post_Types\Types;
+
+use Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
+
 class Taxonomies {
 
     private static $ptypes_types_tax = [
         'pedestal_story_type' => [
-            'post_types'    => [ 'pedestal_story' ],
+            'post_type'    => 'pedestal_story',
             'name'          => 'Stories',
             'singular_name' => 'Story',
         ],
         'pedestal_org_type' => [
-            'post_types'    => [ 'pedestal_org' ],
+            'post_type'    => 'pedestal_org',
             'name'          => 'Organizations',
             'singular_name' => 'Organization',
         ],
         'pedestal_place_type' => [
-            'post_types'    => [ 'pedestal_place' ],
+            'post_type'    => 'pedestal_place',
             'name'          => 'Places',
             'singular_name' => 'Place',
         ],
         'pedestal_locality_type' => [
-            'post_types'    => [ 'pedestal_locality' ],
+            'post_type'    => 'pedestal_locality',
             'name'          => 'Localities',
             'singular_name' => 'Locality',
         ],
         'pedestal_article_type' => [
-            'post_types'    => [ 'pedestal_article' ],
+            'post_type'    => 'pedestal_article',
             'name'          => 'Articles',
             'singular_name' => 'Article',
         ],
         'pedestal_slot_item_type' => [
-            'post_types'    => [ 'pedestal_slot_item' ],
+            'post_type'    => 'pedestal_slot_item',
             'name'          => 'Slot Items',
             'singular_name' => 'Slot Item',
         ],
@@ -57,6 +61,8 @@ class Taxonomies {
      */
     private function setup_actions() {
         add_action( 'init', [ $this, 'action_init_register_taxonomies' ] );
+        add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
+        add_action( 'template_redirect', [ $this, 'action_template_redirect' ], 9 );
 
         // Register additional fields for each of the Types taxonomies
         foreach ( self::$ptypes_types_tax as $tax_name => $v ) {
@@ -89,7 +95,10 @@ class Taxonomies {
                 'show_ui'           => true,
                 'show_admin_column' => true,
                 'query_var'         => true,
-                'rewrite'           => true,
+                'rewrite'           => [
+                    'slug'       => strtolower( $tax_settings['name'] ) . '/types',
+                    'with_front' => false,
+                ],
                 'capabilities'      => [
                     'manage_terms'  => 'edit_posts',
                     'edit_terms'    => 'edit_posts',
@@ -116,10 +125,10 @@ class Taxonomies {
             ];
 
             if ( 'pedestal_locality_type' === $tax_name ) {
-                $args['rewrite'] = [ 'with_front' => false ];
+                $args['rewrite']['slug'] = '';
             }
 
-            register_taxonomy( $tax_name, $tax_settings['post_types'], $args );
+            register_taxonomy( $tax_name, $tax_settings['post_type'], $args );
 
         endforeach;
 
@@ -217,6 +226,60 @@ class Taxonomies {
             ],
         ] );
 
+    }
+
+    /**
+     * Register rewrites for taxonomies
+     */
+    public function action_init_register_rewrites() {
+        $taxonomy = get_taxonomy( 'pedestal_locality_type' );
+
+        if ( empty( $taxonomy ) || ! is_object( $taxonomy ) || 'pedestal_locality_type' !== $taxonomy->name ) {
+            return;
+        }
+
+        $terms = get_terms( [
+            'taxonomy'   => $taxonomy->name,
+            'hide_empty' => false,
+            'fields'     => 'id=>slug',
+        ] );
+        $slugs = array_values( $terms );
+
+        $slugs_str = '(' . implode( '|', $slugs ) . ')';
+        add_rewrite_rule( '^' . $slugs_str . '/?$', 'index.php?pedestal_locality_type=$matches[1]&post_type=pedestal_locality', 'top' );
+        add_rewrite_rule( '^' . $slugs_str . '/([^/]+)/?$', 'index.php?pedestal_locality_type=$matches[1]&name=$matches[2]&post_type=pedestal_locality', 'top' );
+    }
+
+    /**
+     * Handle template redirection
+     */
+    public function action_template_redirect() {
+        $queried_locality_type = get_query_var( 'pedestal_locality_type' );
+        $name = get_query_var( 'name' );
+
+        if ( ! $queried_locality_type || ! $name ) {
+            return;
+        }
+
+        $locality = Locality::get_by_post_name( $name );
+        if ( ! Types::is_locality( $locality ) ) {
+            return;
+        }
+
+        // Check if the requested Locality URL uses the correct Locality Type at
+        // the root-level of the URL. Without this, a Locality could be accessed
+        // at any arbitrary URL part before the name.
+        //
+        // ## E.G.
+        //
+        // http://site.com/asdfasdfasdf/philadelphia/
+        // redirects to
+        // http://site.com/cities/philadelphia/
+        $canonical_locality_type = $locality->get_locality_type_slug();
+        if ( $queried_locality_type !== $canonical_locality_type ) {
+            wp_safe_redirect( home_url( trailingslashit( $canonical_locality_type . '/' . $name ) ) );
+            exit;
+        }
     }
 
     /**
