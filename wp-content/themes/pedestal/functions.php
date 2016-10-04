@@ -248,7 +248,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             /*
              * Co-Authors Plus tweaks
              */
-            add_filter( 'coauthors_guest_authors_enabled', '__return_true' );
+            add_filter( 'coauthors_guest_authors_enabled', '__return_false' );
             add_filter( 'coauthors_plus_should_query_post_author', '__return_false' );
             add_filter( 'coauthors_guest_author_avatar_sizes', '__return_empty_array' );
             add_filter( 'coauthors_guest_author_manage_cap', function() {

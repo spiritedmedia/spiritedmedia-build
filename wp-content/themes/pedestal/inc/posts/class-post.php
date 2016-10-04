@@ -8,8 +8,6 @@ use Pedestal\Registrations\Post_Types\Types;
 
 use \Pedestal\Objects\User;
 
-use \Pedestal\Objects\Guest_Author;
-
 use \Pedestal\Objects\Notifications;
 
 use \Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
@@ -504,11 +502,7 @@ abstract class Post {
         }
         $authors = get_coauthors( $this->get_id() );
         foreach ( $authors as &$author ) {
-            if ( 'guest-author' == $author->type ) {
-                $author = new Guest_Author( $author );
-            } else {
-                $author = new User( $author );
-            }
+            $author = new User( $author );
         }
         $wp->pedestal_author_cache[ $this->get_id() ] = $authors;
         return $authors;

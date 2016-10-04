@@ -774,7 +774,7 @@ class Admin {
     public function filter_fm_element_markup_start( $out, $fm ) {
 
         $screen = get_current_screen();
-        if ( 'post' !== $screen->base || 'guest-author' == $screen->post_type ) {
+        if ( 'post' !== $screen->base ) {
             return $out;
         }
 

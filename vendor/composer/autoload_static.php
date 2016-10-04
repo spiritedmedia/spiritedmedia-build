@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita77483a929e17e6a2bc2fe46c3f155ea
+class ComposerStaticInit9a2f2423601568b548ab19317a9e6a55
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -300,7 +300,6 @@ class ComposerStaticInita77483a929e17e6a2bc2fe46c3f155ea
         'Pedestal\\Frontend' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-frontend.php',
         'Pedestal\\Objects\\Author' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-author.php',
         'Pedestal\\Objects\\Figure' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-figure.php',
-        'Pedestal\\Objects\\Guest_Author' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-guest-author.php',
         'Pedestal\\Objects\\Notifications' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-notifications.php',
         'Pedestal\\Objects\\Parsely' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-parsely.php',
         'Pedestal\\Objects\\Source' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-source.php',
@@ -645,6 +644,7 @@ class ComposerStaticInita77483a929e17e6a2bc2fe46c3f155ea
         'Twig_Profiler_Node_EnterProfile' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Profiler/Node/EnterProfile.php',
         'Twig_Profiler_Node_LeaveProfile' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Profiler/Node/LeaveProfile.php',
         'Twig_Profiler_Profile' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Profiler/Profile.php',
+        'Twig_RuntimeLoaderInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/RuntimeLoaderInterface.php',
         'Twig_Sandbox_SecurityError' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityError.php',
         'Twig_Sandbox_SecurityNotAllowedFilterError' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityNotAllowedFilterError.php',
         'Twig_Sandbox_SecurityNotAllowedFunctionError' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityNotAllowedFunctionError.php',
@@ -719,11 +719,11 @@ class ComposerStaticInita77483a929e17e6a2bc2fe46c3f155ea
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita77483a929e17e6a2bc2fe46c3f155ea::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita77483a929e17e6a2bc2fe46c3f155ea::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInita77483a929e17e6a2bc2fe46c3f155ea::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInita77483a929e17e6a2bc2fe46c3f155ea::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInita77483a929e17e6a2bc2fe46c3f155ea::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9a2f2423601568b548ab19317a9e6a55::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9a2f2423601568b548ab19317a9e6a55::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit9a2f2423601568b548ab19317a9e6a55::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit9a2f2423601568b548ab19317a9e6a55::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit9a2f2423601568b548ab19317a9e6a55::$classMap;
 
         }, null, ClassLoader::class);
     }

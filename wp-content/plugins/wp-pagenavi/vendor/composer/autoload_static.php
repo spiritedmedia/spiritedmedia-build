@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita827dfaafba3f8b71fa25d6102048449
+class ComposerStaticInitcf56efe4a6a5cd9e04c4ac5888a826fa
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -38,7 +38,7 @@ class ComposerStaticInita827dfaafba3f8b71fa25d6102048449
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInita827dfaafba3f8b71fa25d6102048449::$classMap;
+            $loader->classMap = ComposerStaticInitcf56efe4a6a5cd9e04c4ac5888a826fa::$classMap;
 
         }, null, ClassLoader::class);
     }

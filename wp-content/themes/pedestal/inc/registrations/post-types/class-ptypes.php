@@ -24,7 +24,6 @@ class Types {
         'post'         => 'Posts\\Post',
         'page'         => 'Posts\\Page',
         'attachment'   => 'Posts\\Attachment',
-        'guest-author' => 'Objects\\Guest_Author',
     ];
 
     private static $overridden_types = [

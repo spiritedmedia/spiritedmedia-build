@@ -1,7 +1,7 @@
-Build [#1406](https://circleci.com/gh/spiritedmedia/spiritedmedia/1406) by montchr at 2016-09-28 03:16 PM UTC
+Build [#1418](https://circleci.com/gh/spiritedmedia/spiritedmedia/1418) by kingkool68 at 2016-10-04 03:01 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v4.4.0](https://github.com/spiritedmedia/spiritedmedia/compare/v4.4.0)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v4.4.1](https://github.com/spiritedmedia/spiritedmedia/compare/v4.4.1)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.3.7...v4.4.0)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.4.0...v4.4.1)
 
- - [#1639](https://github.com/spiritedmedia/spiritedmedia/pull/1639): Expose basic cluster archives
+ - [#1656](https://github.com/spiritedmedia/spiritedmedia/pull/1656): Disable Guest Author Functionality
