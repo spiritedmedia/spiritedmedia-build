@@ -255,6 +255,18 @@ class Utils {
     }
 
     /**
+     * Flatten an array
+     *
+     * @param  array  $array Array to flatten
+     * @return array         Flattened array
+     */
+    public static function array_flatten( array $array ) {
+        $return = [];
+        array_walk_recursive( $array, function( $a ) use ( &$return ) { $return[] = $a; } );
+        return $return;
+    }
+
+    /**
      * Format an array as a byline list string
      *
      * @param  array  $items    An array of strings to format

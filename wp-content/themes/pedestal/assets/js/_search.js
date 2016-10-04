@@ -8,6 +8,22 @@ jQuery(document).ready(function($) {
   var $stream = $('.js-stream');
   var $spinner = $('.js-spinner');
 
+  $body.on('click keyup', '.js-sitewide-search-icon', function(e) {
+    // Key up is to detect keyboard actions on the search icon for accessibility
+    // Ignore any key event other than return/enter (keycode = 13)
+    if (e.type === 'keyup' && e.which !== 13) {
+      return;
+    }
+
+    $body.toggleClass('is-search-open');
+
+    // Set the tab index to 1 so the search form has a natural
+    // tab order even though it's at the end of the markup
+    var targetID = $(this).attr('for');
+    $target = $('#' + targetID);
+    $target.attr('tabindex', 1).select();
+  });
+
   // Simple feature detection for History Management (borrowed from Modernizr)
   function supportsHistory() {
     return !!(window.history && history.pushState);
@@ -26,30 +42,20 @@ jQuery(document).ready(function($) {
   }
 
   function startLoading() {
-    $form.find('.js-search-input, .js-search-tools').addClass('is-loading');
-    $stream.addClass('is-loading');
+    $form.find('.js-search-input').addClass('is-loading');
+    $main.addClass('is-loading');
     $spinner.show();
     scrollTop();
   }
 
   function stopLoading() {
     $form.find('.is-loading').removeClass('is-loading');
-    $stream.removeClass('is-loading');
+    $main.removeClass('is-loading');
     $spinner.removeAttr('style');
   }
 
-  function showReset() {
-    $form.find('.js-search-icon-reset').show();
-  }
-
-  function hideReset() {
-    $form.find('.js-search-icon-reset').hide();
-  }
-
-  function resetForm() {
-    $form.find('.js-search-field').val('').focus();
-    $form.find('.js-search-icon-reset').hide();
-    hideReset();
+  function closeForm() {
+    $body.removeClass('is-search-open');
   }
 
   function doSearch(url) {
@@ -96,7 +102,16 @@ jQuery(document).ready(function($) {
         $main.addClass('is-active-search');
 
         window.history.pushState(null, newPageTitle, url);
-        showReset();
+
+        // Send pageview to Google Analytics
+        // See https://developers.google.com/analytics/devguides/collection/analyticsjs/pages
+        if (typeof ga === 'function') {
+          ga('send', {
+            hitType: 'pageview',
+            title: newPageTitle,
+            location: url
+          });
+        }
         stopLoading();
       },
       error: function() {
@@ -126,6 +141,13 @@ jQuery(document).ready(function($) {
   });
 
   $form.on('submit', function(e) {
+    startLoading();
+    // No stream, let the form submit normally
+    if (!$stream.length) {
+      // Show loading animation before page reloads
+      return;
+    }
+
     var url = $form.attr('action');
     // Ensure url ends with a '/'
     url = url.replace(/\/?$/, '/');
@@ -134,28 +156,22 @@ jQuery(document).ready(function($) {
     // this query arg to the URL
     url = url.replace(/&orderby=relevance/ig, '');
     if (window.location.href === url) {
+      setTimeout(function() {
+        stopLoading();
+      }, 450);
       e.preventDefault();
       return;
     }
     // Force the search box to lose focus in order to hide a virtual keyboard
     // Virtual keyboards block the loading search results
     $form.find('.js-search-field').blur();
-    startLoading();
     doSearch(url);
     e.preventDefault();
   });
 
-  $form.on('click', '.js-search-icon-reset', function(e) {
-    resetForm();
+  $form.on('click', '.js-search-icon-close', function(e) {
+    closeForm();
     e.preventDefault();
-  });
-
-  $form.on('keyup', '.js-search-field', function(e) {
-    if (this.value) {
-      showReset();
-    } else {
-      hideReset();
-    }
   });
 
   $('.js-search-tools').on('change', '.js-search-filters-radio', function() {
@@ -170,8 +186,8 @@ jQuery(document).ready(function($) {
     $form.submit();
   });
 
-  // Init
-  if ($form.find('.js-search-field').val()) {
-    showReset();
-  }
+  $(window).bind('popstate', function() {
+    startLoading();
+    window.location = window.location.href;
+  });
 });

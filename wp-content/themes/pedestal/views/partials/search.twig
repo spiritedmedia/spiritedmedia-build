@@ -1,18 +1,22 @@
-<div class="c-search">
-    <form class="c-search__form  js-search-form" action="{{ site.url }}" role="search">
+{% set container_classes = "c-search" %}
+{% if sitewide %}
+    {% set container_classes = "c-search c-search--sitewide" %}
+{% endif %}
+
+<div class="{{ container_classes }}">
+    <form class="c-search__form row js-search-form" action="{{ site.url }}" role="search">
 
         <div class="c-search__input js-search-input">
             <button type="submit" class="c-search__icon--search  c-search__icon"><i class="fa fa-lg fa-search" aria-hidden="true"></i> <span class="show-for-sr">submit</span></button>
 
-            <input type="text" class="c-search__field  js-search-field" name="s" placeholder="Enter search term" value="{{ search_query }}" />
+            <input type="text" class="c-search__field  js-search-field" name="s" id="the-search-field" placeholder="Enter search term" value="{{ search_query }}" tabindex="1" />
 
-            <a class="c-search__icon--reset  c-search__icon  fa fa-lg fa-times  js-search-icon-reset" href="#">
-                <span class="show-for-sr">cancel search</span>
+            <a class="c-search__icon--close  c-search__icon  fa fa-lg fa-times  js-search-icon-close" href="#">
+                <span class="show-for-sr">close search</span>
             </a>
         </div>
 
         {% include 'partials/loading.twig' %}
-        {% include 'partials/search-tools.twig' %}
 
     </form>
 </div>

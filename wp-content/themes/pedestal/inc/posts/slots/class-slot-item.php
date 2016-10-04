@@ -34,15 +34,6 @@ class Slot_Item extends Post {
     }
 
     /**
-     * Get the default date for the Placement
-     *
-     * @return int Unix timestamp date
-     */
-    public function get_placement_default_date() {
-        return (int) $this->get_placement_defaults_field( 'date' );
-    }
-
-    /**
      * Get the items for a given Placement Type
      *
      * @return string Empty string or post ID

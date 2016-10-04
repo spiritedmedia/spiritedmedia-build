@@ -16,8 +16,9 @@
     font-size: $h3-font-size;
   }
 
+  .is-loading &,
   &.is-loading {
-    opacity: 0.25;
+    opacity: $loading-default-opacity;
   }
 }
 

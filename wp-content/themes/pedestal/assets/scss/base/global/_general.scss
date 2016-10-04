@@ -11,6 +11,7 @@ html,
 body {
   font-size: $body-font-size;
   line-height: $body-line-height;
+  position: static;
 }
 
 
@@ -95,4 +96,23 @@ a.disabled {
 .serify {
   font-family: $font-family-serif;
   font-weight: normal;
+}
+
+
+
+
+
+//
+// Foundation: Offcanvas
+// ==========================================================================
+// Adjust Foundation's Offcanvas component to account for our search component
+
+
+.off-canvas-wrap {
+  z-index: $z-off-canvas-wrap;
+  transition: transform 0.3s ease;
+
+  .is-search-open & {
+    transform: translateY( unitize(60) );
+  }
 }

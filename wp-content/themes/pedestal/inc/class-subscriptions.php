@@ -1171,7 +1171,7 @@ class Subscriptions {
         }
 
         $notification_args = wp_parse_args( $notification_args, [
-            'channel' => PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL,
+            'channel' => PEDESTAL_SLACK_CHANNEL_NEWSLETTER,
         ] );
 
         $msg = sprintf( 'There are currently %d email addresses subscribed to the Daily Newsletter and Breaking News emails.', $count );

@@ -156,6 +156,12 @@ class Slot_Types extends Types {
         least one of these overriding options or else the additional rule will
         do nothing.';
 
+        $days_desc = 'If you have an End Date set, you can select the days of
+        the week this slot item should display. These options only take effect
+        if you have an end date set. If you want the slot item to display for
+        all days of the week during the range, just leave all of these
+        unchecked.';
+
         // Slot Item Type specific fields
         $boxes['type'] = [];
         $boxes['type']['name'] = 'Item Type';
@@ -236,9 +242,12 @@ class Slot_Types extends Types {
             ] );
         }
 
-        // Add the date field after everything else
-        $placement_fields['date'] = new \Fieldmanager_Datepicker( esc_html__( 'Placement Date', 'pedestal' ), [
-            'name' => 'date',
+        // Add the date fields after everything else
+        $placement_fields['date_start']         = new \Fieldmanager_Datepicker( esc_html__( 'Start Date', 'pedestal' ) );
+        $placement_fields['date_end']           = new \Fieldmanager_Datepicker( esc_html__( 'End Date (Optional)', 'pedestal' ) );
+        $placement_fields['date_subrange_days'] = new \Fieldmanager_Checkboxes( esc_html__( 'Sub-range Days of Week (Optional)', 'pedestal' ), [
+            'description' => esc_html__( $days_desc, 'pedestal' ),
+            'options'     => Utils::get_days_of_week(),
         ] );
 
         // Setup Placement Default fields

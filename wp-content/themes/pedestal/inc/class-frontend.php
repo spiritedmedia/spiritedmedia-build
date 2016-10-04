@@ -86,6 +86,10 @@ class Frontend {
                 $body_classes[] = 'full-width';
             }
 
+            if ( is_search() ) {
+                $body_classes[] = 'is-search-open';
+            }
+
             return $body_classes;
         });
 

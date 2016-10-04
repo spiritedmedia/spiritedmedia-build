@@ -4,131 +4,174 @@
 
 
 .c-search {
-  margin-top: -( $base-spacing-unit );
 
-  .c-spinner {
-    margin-top: $half-spacing-unit;
-    margin-bottom: $half-spacing-unit;
-    position: absolute;
-  }
-}
-
-
-  .c-search__form {
+  &__form {
     position: relative;
 
     .is-active-search & {
       margin-bottom: c-search-property-get( form-m-b );
     }
 
-    .is-loading {
-      opacity: 0.25;
+    .is-loading & {
+      opacity: $loading-default-opacity;
     }
   }
 
 
-    /*div*/.c-search__input {
+  &__input {}
 
+
+  &__icon {
+    padding: c-search-property-get( input-pd );
+    position: absolute;
+    top: c-search-property-get( input-pd );
+    color: c-search-property-get( input-icon-color );
+    background-color: transparent;
+
+    &:hover,
+    &:focus {
+      background-color: transparent;
+      color: $black;
     }
 
+    &--search {}
 
-      // scss-lint:disable SelectorFormat QualifyingElement
-      input.c-search__field {
-        @include stdbd(
-          $side: 'bottom',
-          $color: c-search-property-get( input-bd-color ),
-          $neut: true
-        );
-
-        box-shadow: none;
-        height: auto;
-        font-size: c-search-property-get( input-f-z );
-        padding: c-search-property-get( input-pd );
-        padding-left: c-search-property-get( input-icon-w );
-        color: c-search-property-get( input-color );
-
-        &,
-        &:focus {
-          background: transparent;
-        }
-
-      }
-      // scss-lint:enable SelectorFormat QualifyingElement
-
-
-      .c-search__icon {
-        padding: c-search-property-get( input-pd );
-        position: absolute;
-        top: c-search-property-get( input-pd );
-        color: c-search-property-get( input-icon-color );
-        background-color: transparent;
-
-        &:hover,
-        &:focus {
-          background-color: transparent;
-          color: $black;
-        }
-
-        &--search {}
-
-        &--reset {
-          display: none;
-          right: 0;
-        }
-      }
-
-
-    .c-search__tools {
+    &--close {
+      right: 0;
       display: none;
-      position: relative;
+
+      // scss-lint:disable SelectorFormat
+      .js & {
+        display: block;
+      }
+    }
+  }
+
+
+  &__tools {
+    display: none;
+    position: relative;
+
+    .is-loading & {
+      opacity: $loading-default-opacity;
     }
 
-    .is-active-search .c-search__tools {
+    .is-active-search & {
       display: block;
     }
 
-      .c-search__tools__item {
-        display: inline-block;
+    &__item {
+      display: inline-block;
+    }
+  }
+
+
+  &__total-results {
+    padding: c-search-property-get( filter-link-pd );
+
+    &__count {
+      font-weight: 600;
+    }
+  }
+
+
+  &--sitewide {
+    // scss-lint:disable SelectorFormat
+
+    .js &,
+    .is-search-open & {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 1; // So it displays under the header
+
+      .c-spinner {
+        margin-top: 0;
+        margin-bottom: 0;
+        top: 0;
       }
+    }
 
+    // Account for the WP admin bar height
+    .admin-bar.is-search-open &,
+    .js .admin-bar & {
+      top: $wp-admin-bar-height-mobile;
 
-      .c-search__total-results {
-        padding: c-search-property-get( filter-link-pd );
+      @media #{$wp-admin-bar-breakpoint} {
+        top: $wp-admin-bar-height-desktop;
       }
-
-        .c-search__total-results__count {
-          font-weight: 600;
-        }
+    }
+  }
 
 
-      .c-search__filters {
+  &__filters {
+    position: absolute;
+    right: 0;
+
+    &__label {
+      margin-left: c-search-property-get( filter-link-spacing );
+      margin-bottom: 0;
+      padding: c-search-property-get( filter-link-pd );
+      display: inline-block;
+      position: relative;
+
+      &.is-active {
+        font-weight: 600;
+      }
+    }
+
+    &__radio {
+      // scss-lint:disable SelectorFormat
+
+      .js & {
+        opacity: 0;
         position: absolute;
+        top: 0;
         right: 0;
+        left: 0;
       }
 
-          .c-search__filters__label {
-            margin-left: c-search-property-get( filter-link-spacing );
-            margin-bottom: 0;
-            padding: c-search-property-get( filter-link-pd );
-            display: inline-block;
-            position: relative;
+      &[type="radio"] {
+        margin: 0;
+      }
+    }
+  }
 
-            &.is-active {
-              font-weight: 600;
-            }
-          }
-          // scss-lint:disable SelectorFormat
-          .c-search__filters__radio[type="radio"] {
-            margin: 0;
-          }
-          // scss-lint:enable SelectorFormat
 
-          // scss-lint:disable SelectorFormat
-          .js .c-search__filters__radio {
-            opacity: 0;
-            position: absolute;
-            top: 0;
-            right: 0;
-            left: 0;
-          }
-          // scss-lint:enable SelectorFormat
+  .c-spinner {
+    margin-top: $half-spacing-unit;
+    margin-bottom: $half-spacing-unit;
+    position: absolute;
+
+    .is-loading & {
+      position: absolute;
+      z-index: 1;
+    }
+  }
+}
+
+
+// We style the search field down here because we need to use a qualifying
+// element selector
+//
+// scss-lint:disable SelectorFormat QualifyingElement
+input.c-search__field {
+  @include stdbd(
+    $side: 'bottom',
+    $color: c-search-property-get( input-bd-color ),
+    $neut: true
+  );
+
+  box-shadow: none;
+  height: auto;
+  font-size: c-search-property-get( input-f-z );
+  padding: c-search-property-get( input-pd );
+  padding-left: c-search-property-get( input-icon-w );
+  color: c-search-property-get( input-color );
+
+  &,
+  &:focus {
+    background: transparent;
+  }
+}
+// scss-lint:enable SelectorFormat QualifyingElement

@@ -14,6 +14,8 @@ use \Pedestal\Registrations\Post_Types\Types;
 
 use \Pedestal\Posts\Post;
 
+use Pedestal\Posts\Slots\Slot_Item;
+
 use \Pedestal\Objects\User;
 
 class CLI extends \WP_CLI_Command {
@@ -24,56 +26,59 @@ class CLI extends \WP_CLI_Command {
      * https://github.com/spiritedmedia/spiritedmedia/issues/1468
      */
     public function migrate_sponsorship_meta( $args, $assoc_args ) {
-        $count_migrated = 0;
-        $count_drafted = 0;
+        $slot_item_count_migrated = 0;
+        $slot_item_count_drafted = 0;
 
-        $slot_items = new \Pedestal\Objects\Stream( [
+        $slot_items = Post::get_posts( [
             'post_type'      => 'pedestal_slot_item',
             'posts_per_page' => 500,
-        ] );
-        $slot_items = $slot_items->get_stream();
-
-        foreach ( $slot_items as $slot_item ) {
-            $legacy_url = $slot_item->get_meta( 'slot_item_details_url' );
-            $legacy_attachment_id = $slot_item->get_meta( 'slot_item_details_img_upload' );
-            $post_title = $slot_item->get_title();
-
-            if ( empty( $legacy_url ) || empty( $legacy_attachment_id )
-                || ! is_string( $legacy_url ) || ! is_string( $legacy_attachment_id ) ) {
-                wp_update_post( [
-                    'ID'          => $slot_item->get_id(),
-                    'post_status' => 'draft',
-                ] );
-                WP_CLI::warning( "Slot Item \"{$post_title}\" with ID {$slot_item->get_id()} was saved as draft due to invalid legacy data!" );
-                $count_drafted++;
-                continue;
-            }
-
-            $term_sponsors = get_term_by( 'slug', 'sponsors-partners', 'pedestal_slot_item_type' );
-            if ( ! empty( $term_sponsors ) && is_a( $term_sponsors, 'WP_Term' ) ) {
-                $term_sponsors_id = (int) $term_sponsors->term_id;
-            } else {
-                WP_CLI::error( "The 'sponsors-partners' term does not exist! Something is amiss..." );
-            }
-
-            $slot_item->set_meta( 'slot_item_type', [
-                'type' => $term_sponsors_id,
-                'sponsorship' => [
-                    'url'    => $legacy_url,
-                    'label'  => 'Sponsored By',
-                    'upload' => $legacy_attachment_id,
+            // We don't want to process the really old format
+            'meta_query'     => [
+                [
+                    'key'     => 'slot_item_details_slot',
+                    'compare' => 'NOT EXISTS',
                 ],
-            ] );
-            $slot_item->set_taxonomy_terms( 'pedestal_slot_item_type', 'sponsors-partners' );
+            ],
+        ] );
 
-            WP_CLI::line( "Slot Item \"{$post_title}\" with ID {$slot_item->get_id()} was successfully migrated to new format" );
-            $count_migrated++;
+        if ( empty( $slot_items ) ) {
+            WP_CLI::line( 'No slot items found (；一_一)' );
         }
 
-        $success_message = "Migrated {$count_migrated} slot item sponsors to new format.";
-        if ( 0 !== $count_drafted ) {
-            $success_message .= " {$count_drafted} slot items were saved as drafts due to invalid legacy data.";
-        }
+        foreach ( $slot_items as $slot_item ) :
+
+            $defaults = $slot_item->get_meta( 'slot_item_placement_defaults' );
+            $placements = $slot_item->get_placement_rules();
+
+            if ( is_array( $defaults ) && isset( $defaults['date'] ) ) {
+                $defaults['date_start'] = $defaults['date'];
+                $defaults['date_end'] = 0;
+            }
+
+            if ( ! empty( $placements ) ) {
+                foreach ( $placements as &$placement ) {
+                    if ( isset( $placement['date'] ) ) {
+                        $placement['date_start'] = $placement['date'];
+                        $placement['date_end'] = 0;
+                        unset( $placement['date'] );
+                    }
+                }
+            }
+
+            $slot_item->set_meta( 'slot_item_placement_defaults', $defaults );
+            $slot_item->set_meta( 'slot_item_placement_rules', $placements );
+            $_POST['slot_item_placement_defaults'] = $defaults;
+            $_POST['slot_item_placement_rules'] = $placements;
+
+            // We update the post here to trigger the `save_post_pedestal_slot_item` hook
+            wp_update_post( [ 'ID' => $slot_item->get_id() ] );
+
+            WP_CLI::line( "Slot Item \"{$slot_item->get_title()}\" with ID {$slot_item->get_id()} was successfully migrated to new format" );
+            $slot_item_count_migrated++;
+
+        endforeach;
+
+        $success_message = "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ Migrated {$slot_item_count_migrated} slot items to new format!";
         WP_CLI::success( $success_message );
     }
 

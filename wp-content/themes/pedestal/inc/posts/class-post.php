@@ -1328,11 +1328,13 @@ abstract class Post {
     /**
      * Get a meta value for a post
      *
-     * @param string
+     * @param string $key
+     * @param bool   $single Return a single value?
+     *
      * @return mixed
      */
-    public function get_meta( $key ) {
-        return get_post_meta( $this->get_id(), $key, true );
+    public function get_meta( $key, $single = true ) {
+        return get_post_meta( $this->get_id(), $key, $single );
     }
 
     /**

@@ -128,6 +128,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_SLACK_WEBHOOK_ENDPOINT'       => 'https://hooks.slack.com/services/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',
                 'PEDESTAL_SLACK_CHANNEL_BOTS_PRODUCT'   => '#botcountry',
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '',
+                'PEDESTAL_SLACK_CHANNEL_NEWSLETTER'     => '',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'PedestalBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => '',
             ];

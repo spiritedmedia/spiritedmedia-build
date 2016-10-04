@@ -4,7 +4,9 @@ namespace Pedestal\Posts\Slots;
 
 use Timber\Timber;
 
-use \Pedestal\Utils\Utils;
+use Pedestal\Utils\Utils;
+
+use Pedestal\Registrations\Post_Types\Types;
 
 use Pedestal\Posts\Post;
 
@@ -19,9 +21,20 @@ class Slots {
      */
     private static $day_format = 'Y-m-d';
 
+    /**
+     * Keys of the placement date fields
+     *
+     * @var array
+     */
+    private static $placement_date_keys = [
+        'date_start',
+        'date_end',
+    ];
+
     private $placement_required_base_post_meta = [
         'type',
-        'date',
+        'date_start',
+        'date_end',
     ];
 
     /**
@@ -93,51 +106,67 @@ class Slots {
      */
     public function action_save_post_update_placements( $post_id, $post, $update ) {
 
+        // Store the date in ISO-8601 date format, compensate for
+        // FM's weird date array storage
+        $setup_dates = function( &$array ) {
+            foreach ( self::$placement_date_keys as $date_keys ) {
+                if ( empty( $array[ $date_keys ] ) ) {
+                    continue;
+                }
+                $array[ $date_keys ] = date( self::$day_format, strtotime( $array[ $date_keys ]['date'] ) );
+            }
+            if ( empty( $array['date_end'] ) ) {
+                $array['date_end'] = 0;
+            }
+        };
+
         if ( isset( $post->post_status ) && ( 'publish' !== $post->post_status ) ) {
             return;
         }
 
-        // Delete all child posts and start fresh
         $slot_item = Slot_Item::get_by_post_id( $post_id );
+        if ( ! $slot_item instanceof Slot_Item ) {
+            return;
+        }
+
+        // Delete all child posts and start fresh
         foreach ( $slot_item->get_placement_post_ids() as $id ) {
             wp_delete_post( $id, true );
         }
 
-        // Create a single placement post based on the default settings
         $placement_defaults = $_POST['slot_item_placement_defaults'];
+        $placement_rules = $_POST['slot_item_placement_rules'];
 
-        // For some reason FM stores date in an array, and we have to convert
-        // its value to a numeric date format
-        $placement_defaults['date'] = $this->convert_date_to_day( $placement_defaults['date']['date'] );
-
-        // Set the index to zero for the default post
+        if ( empty( $placement_defaults['date_end']['date'] ) ) {
+            $placement_defaults['date_end'] = $placement_defaults['date_start'];
+        } elseif ( empty( $placement_defaults['date_start']['date'] ) ) {
+            $placement_defaults['date_start'] = $placement_defaults['date_end'];
+        }
+        $_POST['slot_item_placement_defaults'] = $placement_defaults;
         $default_placement_data = $placement_defaults + [ 'index' => 0 ];
-
-        // Create the default placement post
+        $setup_dates( $default_placement_data );
         $this->handle_setup_placement_post( $post_id, $default_placement_data );
 
-        // Set up placement rules from the repeating fields
-        $placement_rules = $_POST['slot_item_placement_rules'];
-        // FM creates an extra key in repeating fields, let's get rid of that
         unset( $placement_rules['proto'] );
-
-        // Loop through the placement rules and create a post for each
         if ( ! empty( $placement_rules ) ) {
             $placement_number = 0;
-            foreach ( $placement_rules as $placement_rule ) {
-                // Count the field index
+            foreach ( $placement_rules as &$placement_rule ) {
                 $placement_number++;
-
-                // Store the date in ISO-8601 date format, compensate for
-                // FM's weird date array storage
-                $placement_rule['date'] = $placement_rule['date']['date'];
-                if ( ! empty( $placement_rule['date'] ) ) {
-                    $placement_rule['date'] = $this->convert_date_to_day( $placement_rule['date'] );
+                if ( empty( $placement_rule['date_end']['date'] ) ) {
+                    if ( empty( $placement_rule['date_start']['date'] ) ) {
+                        $placement_rule['date_start'] = $placement_defaults['date_start'];
+                        $placement_rule['date_end'] = $placement_defaults['date_end'];
+                    } else {
+                        $placement_rule['date_end'] = $placement_rule['date_start'];
+                    }
+                } elseif ( empty( $placement_rule['date_start']['date'] ) ) {
+                    $placement_rule['date_start'] = $placement_rule['date_end'];
                 }
-
-                // Create the placement rules posts
-                $this->handle_setup_placement_rules_posts( $post_id, $placement_defaults, $placement_rule, $placement_number );
+                $placement_rule_data = $placement_rule;
+                $setup_dates( $placement_rule_data );
+                $this->handle_setup_placement_rules_posts( $post_id, $default_placement_data, $placement_rule_data, $placement_number );
             }
+            $_POST['slot_item_placement_rules'] = $placement_rules;
         }
     }
 
@@ -155,9 +184,10 @@ class Slots {
 
         foreach ( $placement_defaults as $key => $value ) {
             $placement_data[ $key ] = $placement_defaults[ $key ];
-            if ( ! empty( $placement_rule[ $key ] ) ) {
-                $placement_data[ $key ] = $placement_rule[ $key ];
+            if ( empty( $placement_rule[ $key ] ) ) {
+                continue;
             }
+            $placement_data[ $key ] = $placement_rule[ $key ];
         }
 
         // Set up the placement number post meta if provided -- helps with debugging
@@ -249,6 +279,101 @@ class Slots {
     }
 
     /**
+     * Get the single most recent slot item for a slot
+     *
+     * If the slot item's rules are met, then return the
+     *
+     * @param  string $slot_position Slot name
+     * @return Post
+     */
+    private static function get_slot_data( $slot_position, $options ) {
+        $data = [];
+        $today = date( self::$day_format );
+        $today_day_of_week_num = date( 'w' );
+
+        $args = [
+            'post_type' => '_slot_item_placement',
+            'posts_per_page' => 1000,
+            'meta_query' => [
+                'relation' => 'AND',
+                [
+                    'key'   => 'positions',
+                    'value' => $slot_position,
+                ],
+                [
+                    'key'     => 'date_start',
+                    'value'   => $today,
+                    'compare' => '<=',
+                ],
+                [
+                    'key'     => 'date_end',
+                    'value'   => $today,
+                    'compare' => '>=',
+                ],
+                [
+                    'key'   => 'type',
+                    'value' => $options['post_type'],
+                ],
+            ],
+        ];
+
+        $query = new \WP_Query( $args );
+        $placements = $query->posts;
+
+        if ( empty( $placements ) ) {
+            return false;
+        }
+
+        $placement_id = 0;
+        $valid_slot_items = [];
+        foreach ( $placements as $k => $placement ) {
+            $placement = Placement::get_by_post_id( $placement->ID );
+            if ( ! $placement instanceof Placement ) {
+                continue;
+            }
+
+            $slot_item = Slot_Item::get_by_post_id( wp_get_post_parent_id( $placement->get_id() ) );
+            if ( ! $slot_item instanceof Slot_Item ) {
+                continue;
+            }
+
+            if ( 'publish' !== $slot_item->get_status() ) {
+                continue;
+            }
+
+            $placement_type = $placement->get_placement_type();
+            $placement_selected_post = $placement->get_selected_post_id();
+            $placement_date_start = $placement->get_date_start();
+            $placement_date_end = $placement->get_date_end();
+            $placement_subrange_days = $placement->get_date_subrange_days();
+
+            // Omit some placements that don't fit within our date / day of week criteria
+            if (
+                ( empty( $placement_date_start ) || empty( $placement_date_end ) ) ||
+                ( ! empty( $placement_subrange_days ) && ! in_array( $today_day_of_week_num, $placement_subrange_days )
+                )
+            ) {
+                continue;
+            }
+
+            // Prioritize specific post over other types of placements
+            if (
+                ( ! empty( $placement_selected_post ) ) &&
+                ( $options['post_id'] == $placement_selected_post )
+            ) {
+                return $slot_item;
+            }
+
+            $valid_slot_items[] = $slot_item;
+        }
+
+        if ( empty( $valid_slot_items ) ) {
+            return false;
+        }
+        return $valid_slot_items[0];
+    }
+
+    /**
      * Handle the `ped_slot()` Twig function
      *
      * @param  array $context        Twig context -- provided automatically
@@ -267,7 +392,7 @@ class Slots {
 
         // Get some of the default options from the item in the context
         $item = $context['item'];
-        if ( is_a( $item, 'Pedestal\Posts\Post' ) ) {
+        if ( Types::is_post( $item ) ) {
             $default_options = [
                 'post_id'   => $item->get_id(),
                 'post_type' => 'pedestal_' . $item->get_type(),
@@ -285,7 +410,7 @@ class Slots {
         $slot_position = $scope . '_' . $slot_position;
 
         $slot_item = self::get_slot_data( $slot_position, $options );
-        if ( $slot_item && is_a( $slot_item, 'Pedestal\Posts\Slots\Slot_Item' ) ) {
+        if ( $slot_item instanceof Slot_Item ) {
             $slot_item_type = $slot_item->get_slot_item_type_slug();
 
             $context['slots']['active'] = $slot_item;
@@ -309,9 +434,8 @@ class Slots {
             ob_get_clean();
             $html .= '</div>';
             return $html;
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**
@@ -331,66 +455,6 @@ class Slots {
      */
     public static function get_placement_types() {
         return array_keys( self::$slot_positions );
-    }
-
-    /**
-     * Get the single most recent slot item for a slot
-     *
-     * If the slot item's rules are met, then return the
-     *
-     * @param  string $slot_position Slot name
-     * @return Post
-     */
-    private static function get_slot_data( $slot_position, $options ) {
-        $data = [];
-
-        $args = [
-            'post_type' => '_slot_item_placement',
-            'posts_per_page' => 1000,
-            'meta_query' => [
-                'relation' => 'AND',
-                [
-                    'key'   => 'positions',
-                    'value' => $slot_position,
-                ],
-                [
-                    'key'   => 'date',
-                    'value' => date( self::$day_format ),
-                ],
-                [
-                    'key'   => 'type',
-                    'value' => $options['post_type'],
-                ],
-            ],
-        ];
-
-        $query = new \WP_Query( $args );
-        $placements = $query->posts;
-
-        if ( empty( $placements ) ) {
-            return false;
-        }
-
-        $placement_id = 0;
-        foreach ( $placements as $placement ) {
-            $placement = Placement::get_by_post_id( $placement->ID );
-            $placement_type = $placement->get_placement_type();
-            $placement_selected_post = $placement->get_selected_post_id();
-
-            // Prioritize specific post over other types of placements
-            if ( ! empty( $placement_selected_post )
-                && $options['post_id'] == $placement_selected_post
-                ) {
-                $placement_id = $placement->get_id();
-                break;
-            } elseif ( empty( $placement_selected_post ) ) {
-                // By default, the first queried placement will be used
-                $placement_id = $placements[0]->ID;
-            }
-        }
-
-        // Return the Slot Item object based on the Placement's parent ID
-        return Slot_Item::get_by_post_id( wp_get_post_parent_id( $placement_id ) );
     }
 
     /**
@@ -414,8 +478,8 @@ class Slots {
             return false;
         }
 
-        // Return false if the date is undefined
-        if ( empty( $defaults['date'] ) || empty( $defaults['date']['date'] ) ) {
+        // Return false if the start date field is undefined
+        if ( empty( $defaults['date_start'] ) || empty( $defaults['date_start']['date'] ) ) {
             return false;
         }
 
@@ -424,12 +488,15 @@ class Slots {
     }
 
     /**
-     * Convert a date string to another date string in YYYY-MM-DD format
+     * Convert a date string to YYYY-MM-DD format
      *
      * @param  string $date Date string to convert
      * @return string       YYYY-MM-DD date string
      */
     private function convert_date_to_day( $date ) {
+        if ( empty( $date ) ) {
+            return '';
+        }
         return date( self::$day_format, strtotime( $date ) );
     }
 }
