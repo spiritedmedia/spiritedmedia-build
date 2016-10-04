@@ -52,14 +52,14 @@ class CLI extends \WP_CLI_Command {
 
             if ( is_array( $defaults ) && isset( $defaults['date'] ) ) {
                 $defaults['date_start'] = $defaults['date'];
-                $defaults['date_end'] = 0;
+                $defaults['date_end'] = $defaults['date'];
             }
 
             if ( ! empty( $placements ) ) {
                 foreach ( $placements as &$placement ) {
                     if ( isset( $placement['date'] ) ) {
                         $placement['date_start'] = $placement['date'];
-                        $placement['date_end'] = 0;
+                        $placement['date_end'] = $placement['date'];
                         unset( $placement['date'] );
                     }
                 }
