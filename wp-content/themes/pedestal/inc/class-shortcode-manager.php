@@ -364,15 +364,17 @@ class Shortcode_Manager {
      * Use `Attachhment->get_html()` for img shortcode
      */
     public function filter_img_shortcode_output_img_tag( $html, $attrs ) {
-        // @TODO
-        // @codingStandardsIgnoreStart
-        extract( $attrs );
-        // @codingStandardsIgnoreEnd
+        $attachment = $attrs['attachment'];
+        $size = $attrs['size'];
 
         $img_classes = 'c-figure__content';
         $img_atts = [
             'class' => $img_classes,
         ];
+        if ( isset( $attrs['ignore_srcset'] ) && 'true' === $attrs['ignore_srcset'] ) {
+            $img_atts['srcset'] = '';
+            $img_atts['sizes'] = '';
+        }
         if ( ! empty( $attachment ) && ! empty( $size ) ) {
             $obj = Attachment::get_by_post_id( (int) $attachment );
 
@@ -438,6 +440,11 @@ class Shortcode_Manager {
             'type'        => 'url',
             'placeholder' => esc_attr__( 'URL to link the credit', 'pedestal' ),
             'description' => esc_html__( 'Must be a valid URL', 'pedestal' ),
+        ];
+        $shortcode_ui_args['attrs'][] = [
+            'label'       => esc_html__( 'Ignore srcset', 'pedestal' ),
+            'attr'        => 'ignore_srcset',
+            'type'        => 'checkbox',
         ];
         return $shortcode_ui_args;
     }
