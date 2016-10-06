@@ -423,13 +423,16 @@ class Entity_Types extends Types {
                 ] ),
                 'speaker' => new \Fieldmanager_Autocomplete( esc_html__( 'Speaker', 'pedestal' ), [
                     'name'                => 'speaker',
-                    'description'         => esc_html__( 'Select a Person.', 'pedestal' ),
+                    'description'         => esc_html__( 'Select a Person or Organization.', 'pedestal' ),
                     'required'            => true,
                     'validation_rules'    => 'required',
                     'validation_messages' => esc_html__( 'Required', 'pedestal' ),
                     'datasource'          => new \Fieldmanager_Datasource_Post( [
                         'query_args' => [
-                            'post_type' => 'pedestal_person',
+                            'post_type' => [
+                                'pedestal_person',
+                                'pedestal_org',
+                            ],
                         ],
                     ] ),
                 ] ),

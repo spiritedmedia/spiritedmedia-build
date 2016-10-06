@@ -8,6 +8,8 @@ use \Pedestal\Posts\Attachment;
 
 use \Pedestal\Posts\Clusters\Person;
 
+use \Pedestal\Posts\Clusters\Org;
+
 class Factcheck extends Entity {
 
     use \Pedestal\Posts\EditorialContent;
@@ -83,8 +85,8 @@ class Factcheck extends Entity {
      *
      * @return boolean
      */
-    public function has_speaker_headshot() {
-        return (bool) $this->get_statement_speaker_headshot_html();
+    public function has_speaker_image() {
+        return (bool) $this->get_statement_speaker_image_html();
     }
 
     /**
@@ -93,7 +95,7 @@ class Factcheck extends Entity {
      * @param  string $size Image size. Defaults to thumbnail.
      * @return string       HTML or empty
      */
-    public function get_statement_speaker_headshot_html( $size = 'thumbnail' ) {
+    public function get_statement_speaker_image_html( $size = 'thumbnail' ) {
         if ( empty( $this->get_statement_speaker() ) ) {
             return '';
         }
@@ -106,17 +108,11 @@ class Factcheck extends Entity {
      * @return obj Person
      */
     public function get_statement_speaker() {
-        $speaker_id = $this->get_statement_meta( 'speaker' );
-        if ( ! is_numeric( $speaker_id ) ) {
-            return false;
+        $speaker = static::get_by_post_id( $this->get_statement_meta( 'speaker' ) );
+        if ( $speaker instanceof Person || $speaker instanceof Org ) {
+            return $speaker;
         }
-
-        $speaker = Person::get_by_post_id( $speaker_id );
-        if ( 'person' !== $speaker->get_type() ) {
-            return false;
-        }
-
-        return $speaker;
+        return false;
     }
 
     /**
@@ -158,8 +154,8 @@ class Factcheck extends Entity {
     public function get_statement_img() {
         if ( $this->has_rating() ) {
             return $this->get_meter_html();
-        } elseif ( $this->has_speaker_headshot() ) {
-            return $this->get_statement_speaker_headshot_html();
+        } elseif ( $this->has_speaker_image() ) {
+            return $this->get_statement_speaker_image_html();
         } elseif ( $this->has_featured_image() ) {
             return $this->get_featured_image_html( 'thumbnail' );
         }

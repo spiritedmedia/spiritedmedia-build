@@ -101,7 +101,10 @@ jQuery(document).ready(function($) {
         $('.js-search-tools').html(newSearchToolsHTML);
         $main.addClass('is-active-search');
 
-        window.history.pushState(null, newPageTitle, url);
+        // We need to tag our pushState events because some browsers fire the
+        // popstate event on page load
+        // See http://stackoverflow.com/questions/10756893/how-to-ignore-popstate-initial-load-working-with-pjax
+        window.history.pushState({spiritedSearch: true}, newPageTitle, url);
 
         // Send pageview to Google Analytics
         // See https://developers.google.com/analytics/devguides/collection/analyticsjs/pages
@@ -186,7 +189,15 @@ jQuery(document).ready(function($) {
     $form.submit();
   });
 
-  $(window).bind('popstate', function() {
+  $(window).bind('popstate', function(e) {
+    if (!e.originalEvent.state.spiritedSearch) {
+      // The popstate event was fired but it didn't come from us, so ignore
+      return;
+    }
+    // Prevent endless redirects...
+    if (window.location.href === document.referrer) {
+      return;
+    }
     startLoading();
     window.location = window.location.href;
   });
