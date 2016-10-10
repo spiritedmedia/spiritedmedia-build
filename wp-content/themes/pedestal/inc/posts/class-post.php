@@ -905,6 +905,9 @@ abstract class Post {
             $content = $this->get_field( 'post_content' );
             $description = Utils::str_limit( $content, $len );
         }
+        if ( ! $description ) {
+            return false;
+        }
         return strip_tags( $description );
     }
 

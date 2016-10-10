@@ -770,9 +770,15 @@ class Subscriptions {
         }
 
         $cluster = Cluster::get_by_post_id( (int) $_POST['cluster_id'] );
-        $valid_type = in_array( Cluster::get_post_type( $cluster ), Types::get_cluster_post_types() );
-        if ( ! $cluster || ! $valid_type || 'publish' !== $cluster->get_status() ) {
+        if ( ! Types::is_cluster( $cluster ) ) {
             status_header( 400 );
+            echo printf( 'Invalid Cluster ID, please email %s with this error message.', PEDESTAL_EMAIL_CONTACT );
+            exit;
+        }
+
+        if ( 'publish' !== $cluster->get_status() ) {
+            status_header( 400 );
+            echo printf( 'Cluster unavailable, please email %s with this error message.', PEDESTAL_EMAIL_CONTACT );
             exit;
         }
 

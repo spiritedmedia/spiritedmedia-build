@@ -1,8 +1,8 @@
-Build [#1447](https://circleci.com/gh/spiritedmedia/spiritedmedia/1447) by kingkool68 at 2016-10-06 04:50 PM UTC
+Build [#1458](https://circleci.com/gh/spiritedmedia/spiritedmedia/1458) by montchr at 2016-10-10 06:34 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v4.5.3](https://github.com/spiritedmedia/spiritedmedia/compare/v4.5.3)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v4.5.4](https://github.com/spiritedmedia/spiritedmedia/compare/v4.5.4)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.5.2...v4.5.3)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.5.3...v4.5.4)
 
- - [#1665](https://github.com/spiritedmedia/spiritedmedia/pull/1665): Fix Endless Redirects in Old Safari Browsers
- - [#1662](https://github.com/spiritedmedia/spiritedmedia/pull/1662): Allow Organizations as Factcheck speakers
+ - [#1669](https://github.com/spiritedmedia/spiritedmedia/pull/1669): Fix static call to Cluster::get_post_type()
+ - [#1652](https://github.com/spiritedmedia/spiritedmedia/pull/1652): Improve Twitter card image and description fallbacks

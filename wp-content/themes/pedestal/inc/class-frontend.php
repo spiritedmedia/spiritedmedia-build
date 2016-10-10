@@ -293,9 +293,11 @@ class Frontend {
     public function get_current_meta_description() {
 
         $meta_description = get_bloginfo( 'description' );
-        if ( is_single() || is_page() || is_singular() ) {
+        if ( is_single() ) {
             $post = Post::get_by_post_id( get_queried_object_id() );
-            $meta_description = $post->get_seo_description();
+            if ( Types::is_post( $post ) && $post->get_seo_description() ) {
+                $meta_description = $post->get_seo_description();
+            }
         } elseif ( ( is_tax() || is_author() ) && get_queried_object()->description ) {
             $meta_description = get_queried_object()->description;
         }
@@ -617,6 +619,7 @@ class Frontend {
             'og:title'            => get_bloginfo( 'name' ),
             'og:description'      => $this->get_current_meta_description(),
             'og:url'              => esc_url( home_url( Utils::get_request_uri() ) ),
+            'og:image'            => get_stylesheet_directory_uri() . '/assets/images/logos/logo_icon_placeholder.png',
         ];
 
         // Single posts
@@ -653,17 +656,24 @@ class Frontend {
             'twitter:title'       => get_bloginfo( 'name' ),
             'twitter:description' => $this->get_current_meta_description(),
             'twitter:url'         => esc_url( home_url( Utils::get_request_uri() ) ),
+            'twitter:image'       => get_stylesheet_directory_uri() . '/assets/images/logos/logo_icon_placeholder.png',
         ];
 
         // Single posts
         if ( is_singular() ) {
-            $obj = Post::get_by_post_id( get_queried_object_id() );
-            $tags['twitter:title'] = $obj->get_twitter_card_tag( 'title' );
-            $tags['twitter:description'] = $obj->get_twitter_card_tag( 'description' );
-            $tags['twitter:url'] = $obj->get_twitter_card_tag( 'url' );
+            $post_obj = Post::get_by_post_id( get_queried_object_id() );
+            if ( Types::is_post( $post_obj ) ) {
+                $tags['twitter:title'] = $post_obj->get_twitter_card_tag( 'title' );
+                $tags['twitter:url'] = $post_obj->get_twitter_card_tag( 'url' );
 
-            if ( $image = $obj->get_twitter_card_tag( 'image' ) ) {
-                $tags['twitter:image'] = $image;
+                $post_description = $post_obj->get_twitter_card_tag( 'description' );
+                if ( ! empty( $post_description ) ) {
+                    $tags['twitter:description'] = $post_description;
+                }
+
+                if ( $image = $post_obj->get_twitter_card_tag( 'image' ) ) {
+                    $tags['twitter:image'] = $image;
+                }
             }
         }
 
