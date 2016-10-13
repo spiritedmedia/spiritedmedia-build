@@ -27,13 +27,7 @@
                     {% include 'partials/meta-info/meta-info-entity.twig' %}
                 </div>
 
-                <div class="c-content__share">
-                {% if item.has_story() %}
-                    {% include 'partials/entity-share.twig' %}
-                {% else %}
-                    {% include 'partials/entity-share-sans-story.twig' %}
-                {% endif %}
-                </div>
+                {% include 'partials/entity-share.twig' %}
 
             </header>
 
@@ -54,6 +48,8 @@
                 </div>
                 {% endif %}
             </footer>
+
+            {% include 'partials/modals/entity-share-modal.twig' %}
 
         </div>
 

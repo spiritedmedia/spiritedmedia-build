@@ -224,19 +224,19 @@
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/shortcake-bakery.git",
-            "reference": "a7e0509c5f838c6a872412937cf351c37589a619"
+            "reference": "6dcd2796f724b46630bc440303887ac78d2b05d8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/shortcake-bakery/zipball/a7e0509c5f838c6a872412937cf351c37589a619",
-            "reference": "a7e0509c5f838c6a872412937cf351c37589a619",
+            "url": "https://api.github.com/repos/spiritedmedia/shortcake-bakery/zipball/6dcd2796f724b46630bc440303887ac78d2b05d8",
+            "reference": "6dcd2796f724b46630bc440303887ac78d2b05d8",
             "shasum": ""
         },
         "require-dev": {
             "squizlabs/php_codesniffer": "2.3.4",
             "wp-coding-standards/wpcs": "dev-master"
         },
-        "time": "2016-09-15 17:46:58",
+        "time": "2016-10-03 22:00:37",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -254,7 +254,7 @@
             }
         ],
         "support": {
-            "source": "https://github.com/spiritedmedia/shortcake-bakery/tree/spiritedmedia"
+            "source": "https://github.com/spiritedmedia/shortcake-bakery/tree/disable-fb-regex-validation"
         }
     },
     {
@@ -633,17 +633,17 @@
     },
     {
         "name": "twig/twig",
-        "version": "v1.26.0",
-        "version_normalized": "1.26.0.0",
+        "version": "v1.26.1",
+        "version_normalized": "1.26.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twigphp/Twig.git",
-            "reference": "81c2b5fd36581370c7731387f05dcdb577050513"
+            "reference": "a09d8ee17ac1cfea29ed60c83960ad685c6a898d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig/zipball/81c2b5fd36581370c7731387f05dcdb577050513",
-            "reference": "81c2b5fd36581370c7731387f05dcdb577050513",
+            "url": "https://api.github.com/repos/twigphp/Twig/zipball/a09d8ee17ac1cfea29ed60c83960ad685c6a898d",
+            "reference": "a09d8ee17ac1cfea29ed60c83960ad685c6a898d",
             "shasum": ""
         },
         "require": {
@@ -653,7 +653,7 @@
             "symfony/debug": "~2.7",
             "symfony/phpunit-bridge": "~2.7"
         },
-        "time": "2016-10-02 16:19:13",
+        "time": "2016-10-05 18:57:41",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -930,6 +930,28 @@
             "standards",
             "wordpress"
         ]
+    },
+    {
+        "name": "wpackagist-plugin/bwp-google-xml-sitemaps",
+        "version": "1.4.1",
+        "version_normalized": "1.4.1.0",
+        "source": {
+            "type": "svn",
+            "url": "https://plugins.svn.wordpress.org/bwp-google-xml-sitemaps/",
+            "reference": "tags/1.4.1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://downloads.wordpress.org/plugin/bwp-google-xml-sitemaps.1.4.1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "~1.0"
+        },
+        "type": "wordpress-plugin",
+        "installation-source": "dist",
+        "homepage": "https://wordpress.org/plugins/bwp-google-xml-sitemaps/"
     },
     {
         "name": "wpackagist-plugin/co-authors-plus",

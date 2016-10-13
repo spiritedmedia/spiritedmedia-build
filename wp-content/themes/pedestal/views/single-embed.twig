@@ -21,13 +21,7 @@
                     {% include 'partials/meta-info/meta-info-entity.twig' %}
                 </div>
 
-                <div class="c-content__share">
-                {% if item.has_story() %}
-                    {% include 'partials/entity-share.twig' %}
-                {% else %}
-                    {% include 'partials/entity-share-sans-story.twig' %}
-                {% endif %}
-                </div>
+                {% include 'partials/entity-share.twig' %}
 
                 {% if item.get_excerpt %}
                 <div class="entity-excerpt js-entity-excerpt">
@@ -40,6 +34,8 @@
             <section class="c-content__body">
                 {{ item.get_embed_html() }}
             </section>
+
+            {% include 'partials/modals/entity-share-modal.twig' %}
 
         </div>
 

@@ -13,9 +13,7 @@
 
             <header class="c-content__header">
 
-                <div class="c-content__share">
-                    {% include 'partials/entity-share.twig' %}
-                </div>
+                {% include 'partials/entity-share.twig' %}
 
                 {% if not item.is_stream_first_page %}
                     <div class="c-content__paged">
@@ -97,6 +95,8 @@
                 {% endif %}
 
             </section>
+
+            {% include 'partials/modals/entity-share-modal.twig' %}
 
         </div>
 

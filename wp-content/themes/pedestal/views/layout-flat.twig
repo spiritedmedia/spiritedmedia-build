@@ -34,13 +34,7 @@
                         </div>
                     {% endblock %}
 
-                    <div class="c-content__share">
-                    {% if item.has_story %}
-                        {% include 'partials/entity-share.twig' %}
-                    {% else %}
-                        {% include 'partials/entity-share-sans-story.twig' %}
-                    {% endif %}
-                    </div>
+                    {% include 'partials/entity-share.twig' %}
 
                 {% endblock %}
 
@@ -58,6 +52,8 @@
             {% endif %}
 
             <footer class="c-content__footer  [ o-rule--closure  o-rule ]"></footer>
+
+            {% include 'partials/modals/entity-share-modal.twig' %}
 
         </div>
 

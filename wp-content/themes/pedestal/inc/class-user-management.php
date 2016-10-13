@@ -144,6 +144,11 @@ class User_Management {
             return $allcaps;
         }, 10, 4 );
 
+        add_filter( 'author_link', function( $url ) {
+            $url = str_replace( '%author_role%', 'about', $url );
+            return $url;
+        });
+
     }
 
     /**
@@ -191,7 +196,7 @@ class User_Management {
      */
     public function filter_author_link( $link, $author_id, $author_nicename ) {
         $user = new User( $author_id );
-        $link = str_replace( '%author_role%', $user->get_permalink_role(), $link );
+        $link = str_replace( '%author_role%', 'about', $link );
         return $link;
     }
 

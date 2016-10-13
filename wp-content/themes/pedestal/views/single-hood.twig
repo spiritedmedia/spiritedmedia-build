@@ -18,9 +18,7 @@
 
             <header class="c-content__header">
 
-                <div class="c-content__share">
-                    {% include 'partials/entity-share.twig' %}
-                </div>
+                {% include 'partials/entity-share.twig' %}
 
                 {% if item.has_featured_image() %}
                 <div class="c-content__lead-img">
@@ -80,6 +78,8 @@
             </section>
 
             <footer class="c-content__footer  [ o-rule--closure  o-rule ]"></footer>
+
+            {% include 'partials/modals/entity-share-modal.twig' %}
 
         </div>
 
