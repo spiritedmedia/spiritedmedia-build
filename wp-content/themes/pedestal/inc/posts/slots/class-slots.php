@@ -357,11 +357,11 @@ class Slots {
             }
 
             // Prioritize specific post over other types of placements
-            if (
-                ( ! empty( $placement_selected_post ) ) &&
-                ( $options['post_id'] == $placement_selected_post )
-            ) {
-                return $slot_item;
+            if ( ! empty( $placement_selected_post ) ) {
+                if ( $options['post_id'] == $placement_selected_post ) {
+                    return $slot_item;
+                }
+                continue;
             }
 
             $valid_slot_items[] = $slot_item;
