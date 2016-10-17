@@ -45,6 +45,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->define_constants();
             $this->set_site_config();
             $this->require_files();
+            $this->setup_cache();
             $this->setup_theme();
             $this->setup_actions();
             $this->setup_filters();
@@ -183,6 +184,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 }
                 return $plugins_url;
             }, 10, 3 );
+
+            // Include WP_oEmbed class
+            require_once ABSPATH . WPINC . '/class-oembed.php';
 
             // Components
             require_once dirname( __FILE__ ) . '/lib/jetpack-photon.php';
@@ -348,6 +352,14 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          */
         public static function get_theme_class_map() {
             return self::$theme_class_map;
+        }
+
+        /**
+         * Set up the object cache
+         */
+        private function setup_cache() {
+            // Set up non-persistent object caching groups
+            wp_cache_add_non_persistent_groups( [ '_np_pedestal' ] );
         }
 
         /**
@@ -525,6 +537,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $theme_path = PEDESTAL_WP_THEMES_PATH . '/' . wp_get_theme()->get_stylesheet();
 
             $context['is_email'] = false;
+
+            $context['date_format'] = get_option( 'date_format' );
+            $context['time_format'] = get_option( 'time_format' );
             $context['datetime_format'] = PEDESTAL_DATETIME_FORMAT;
 
             $context['site']->social = [

@@ -42,12 +42,20 @@ $body-line-height         : ( $base-line-height / $base-font-size ) !default; //
 $font-family-sans-serif   : "Source Sans Pro", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif !default;
 $font-family-serif        : "PT Serif", Georgia, Cambria, "Times New Roman", Times, serif !default;
 
-$h1-font-size             : unitize( $base-font-size * 2.75 )   !default; // 44px
+$h1-font-size             : unitize( $base-font-size * 2.75 ) !default; // 44px
 $h2-font-size             : unitize( $base-font-size * 2.3125 ) !default; // 37px
 $h3-font-size             : unitize( $base-font-size * 1.6875 ) !default; // 27px
 $h4-font-size             : unitize( $base-font-size * 1.4375 ) !default; // 23px
-$h5-font-size             : unitize( $base-font-size * 1.125 )  !default; // 18px
-$h6-font-size             : unitize( $base-font-size )              !default;
+$h5-font-size             : unitize( $base-font-size * 1.125 ) !default; // 18px
+$h6-font-size             : unitize( $base-font-size ) !default;
+
+// Header size reduction on small screens
+$h1-font-reduction        : unitize( 10 ) !default;
+$h2-font-reduction        : unitize( 10 ) !default;
+$h3-font-reduction        : unitize( 5 ) !default;
+$h4-font-reduction        : unitize( 5 ) !default;
+$h5-font-reduction        : 0 !default;
+$h6-font-reduction        : 0 !default;
 
 $small-font-size          : unitize( $base-font-size * 0.8 ) !default;
 
@@ -64,7 +72,6 @@ $site-header-pd-v         : $base-spacing-unit !default;
 $main-m-t                 : $base-spacing-unit !default;
 
 $heading-minor-f-z        : $base-font-size;
-$heading-minor-lts        : 0.05em;
 
 
 
@@ -114,7 +121,7 @@ $latte                     : #e6e6de;
 $mystery-color-from-beyond : #d3e5e5; // only used once
 $twitter-blue              : #4fa8e0;
 $mustard-gas               : #b26536;
-$truth-serum               : #efeeec; // only used once, for hero background
+$truth-serum               : #efeeec;
 $spiritedmedia-brand       : #333333;
 
 

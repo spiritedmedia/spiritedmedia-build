@@ -87,15 +87,8 @@ a.disabled {
 .u-heading--minor,
 %u-heading--minor {
   text-transform: uppercase;
-  letter-spacing: $heading-minor-lts;
   font-size: $heading-minor-f-z;
-  font-weight: bold;
-}
-
-
-.serify {
-  font-family: $font-family-serif;
-  font-weight: normal;
+  font-weight: 700;
 }
 
 

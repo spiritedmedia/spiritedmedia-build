@@ -10,6 +10,10 @@ use Pedestal\Posts\Slots\Slots;
 
 class Slot_Types extends Types {
 
+    protected static $component_support = [
+        'daily_insta' => 'Instagram of the Day',
+    ];
+
     /**
      * Slot post types
      *
@@ -142,6 +146,7 @@ class Slot_Types extends Types {
         $post_type_support = Types::get_post_types_with_label(
             Types::get_post_types_by_supported_feature( 'slots' )
         );
+        $placement_types = $post_type_support + static::$component_support;
 
         $label_desc = 'The text to display alongside the image. Defaults to "Sponsored By" if unset.';
 
@@ -216,7 +221,7 @@ class Slot_Types extends Types {
         // Set up a template for all placement fields including defaults and additional rules
         $placement_fields = [
             'type' => new \Fieldmanager_Select( esc_html__( 'Placement Type', 'pedestal' ), [
-                'options'     => $post_type_support,
+                'options'     => $placement_types,
                 'first_empty' => true,
             ] ),
         ];

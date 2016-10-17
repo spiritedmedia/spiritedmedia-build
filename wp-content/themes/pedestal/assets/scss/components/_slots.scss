@@ -72,8 +72,10 @@
 // ==========================================================================
 
 
-// Shortcode Position -- All Scopes
-[data-slot-position*="shortcode"] {
+// * Shortcode Position -- All Scopes
+// * Component Position -- All Scopes
+[data-slot-position*="shortcode"],
+[data-slot-position*="component"] {
   .c-slot__item {
     padding-bottom: $c-slot-item-shortcode-pd;
     padding-left: $c-slot-item-shortcode-pd;
@@ -88,10 +90,22 @@
 }
 
 
-// Lead Position -- All Scopes
-[data-slot-position*="lead"] {
+// * Lead Position -- All Scopes
+// * Component Position -- All Scopes
+[data-slot-position*="lead"],
+[data-slot-position*="component"] {
   &.c-slot {
     text-align: center;
+  }
+}
+
+
+// * Lead Position -- Email Scope
+// * Daily Instagram Component Type
+[data-slot-position="email_lead"],
+[data-slot-component-type="daily_insta"] {
+  &.c-slot {
+    @include stdbd( 'bottom' );
   }
 }
 
@@ -99,13 +113,25 @@
 // Lead Position -- Email Scope
 [data-slot-position="email_lead"] {
   &.c-slot {
-    @include stdbd( 'bottom' );
     background-color: $body-bg;
   }
 
   .c-slot__item {
     padding-top: $c-slot-item-lead-pd;
     padding-bottom: $c-slot-item-lead-pd;
+  }
+}
+
+
+// Daily Instagram Component Type
+[data-slot-component-type="daily_insta"] {
+  &.c-slot {
+    background-color: $truth-serum;
+  }
+
+  .c-slot__item {
+    padding-top: $half-spacing-unit;
+    padding-bottom: $half-spacing-unit;
   }
 }
 

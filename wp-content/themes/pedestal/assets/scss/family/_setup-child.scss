@@ -18,7 +18,7 @@ $site-theme-name: 'pedestal' !default;
 
 @function sm-theme-setting-get( $setting ) {
   @if global-variable-exists( site-theme-name ) {
-    @return map-deep-get( $spiritedmedia-pedestal, children, $site-theme-name, $setting );
+    @return map-fetch( $spiritedmedia-pedestal, children, $site-theme-name, $setting );
   } @else {
     @error 'The theme name is not defined!';
   }

@@ -23,7 +23,8 @@ $c-title-bar-settings: (
   pd-h                  : ( map-get-strict( $c-title-bar-defaults, 'item-spacing' ) * 2 ),
   item-spacing          : map-get-strict( $c-title-bar-defaults, 'item-spacing' ),
   offset                : o-blox-offset-get(),
-  promo-bg              : $hello-yellow
+  promo-bg              : $hello-yellow,
+  lighter-bg             : $truth-serum
 ) !default;
 
 $c-title-bar-settings: map-merge( $c-title-bar-settings, (
@@ -35,15 +36,30 @@ $c-title-bar-settings: map-merge( $c-title-bar-settings, (
 
 
 //
-// Functions
+// Functions + Mixins
 // ==========================================================================
 
 
-@function c-title-bar-property-get( $property, $size: null ) {
-  @if $size and sl-contain( $o-blox-sizes, $size ) and map-has-key( $o-blox-settings, $property ) {
-    $value: map-deep-get( $o-blox-sizes-data, $size, $property );
-  } @elseif not $size {
-    $value: map-get-strict( $o-blox-settings, $property );
+@function c-title-bar-property-get( $property, $font-size: null ) {
+  @return map-fetch( $c-title-bar-settings, $property );
+}
+
+
+/**
+ * Set up base styles for a title bar BEM varient
+ *
+ * @param {string} $mod Name of a BEM modifier
+ */
+@mixin c-title-bar-mod-color( $mod ) {
+  $bg: "#{$mod}-bg";
+
+  &,
+  .c-title-bar__text__link {
+    @include text-color( c-title-bar-property-get( $bg ) );
   }
-  @return $value;
+
+  .c-title-bar__inner {
+    background-color: c-title-bar-property-get( $bg );
+    color: $black;
+  }
 }

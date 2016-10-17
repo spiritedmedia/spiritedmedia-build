@@ -13,6 +13,14 @@
         {{ ped_slot( 'lead' ) }}
 
         <div class="c-panel__inner">
+            <h4 class="c-content__subtitle">{{ item.get_newsletter_subtitle }}</h4>
+
+            {% if item.get_instagram_of_the_day %}
+            <div class="c-content__lead-img">
+                {{ item.get_instagram_of_the_day }}
+            </div>
+            {% endif %}
+
             {{ item.get_the_content }}
         </div>
 

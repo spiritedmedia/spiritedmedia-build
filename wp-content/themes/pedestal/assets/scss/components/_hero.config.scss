@@ -18,5 +18,5 @@ $c-hero-settings: (
 
 
 @function c-hero-property-get( $properties... ) {
-  @return map-deep-get( $c-hero-settings, $properties... );
+  @return map-fetch( $c-hero-settings, $properties... );
 }

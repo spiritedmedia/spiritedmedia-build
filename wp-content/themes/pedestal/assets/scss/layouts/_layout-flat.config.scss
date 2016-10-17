@@ -18,5 +18,5 @@ $l-flat-settings: (
 
 
 @function l-flat-property-get( $properties... ) {
-  @return map-deep-get( $l-flat-settings, $properties... );
+  @return map-fetch( $l-flat-settings, $properties... );
 }

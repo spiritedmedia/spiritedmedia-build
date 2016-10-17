@@ -20,7 +20,7 @@
             {% endif %}
         </div>
 
-        {% if 'twitter' == item.get_embed_type( item.get_embed_url ) %}
+        {% if 'twitter' == item.get_embed_type %}
         {{ item.get_embed_html() }}
         {% endif %}
 

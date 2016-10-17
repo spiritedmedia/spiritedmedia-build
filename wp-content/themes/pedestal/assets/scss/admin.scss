@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Admin
  *
- * Version: 4.5.6
+ * Version: 4.6.0
  *
  * Copyright ( c ) 2016 Spirited Media
  */
@@ -35,6 +35,12 @@
    border-bottom: 0.1em solid #ccc;
 }
 
+// Resize Embed Caption text area field
+#fm-embed_caption-0 {
+  width: 100%;
+  height: 4em;
+}
+
 .wp-list-table {
   th.column-pedestal_id,
   td.column-pedestal_id {
@@ -44,17 +50,16 @@
 
 body.taxonomy-pedestal_subscriptions.edit-tags-php #col-left,
 body.taxonomy-pedestal_subscriptions.edit-tags-php .wrap .search-form,
-body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right .tablenav {
+body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right .tablenav,
+// Hide the user description field on profile page
+.user-description-wrap,
+// Hide Instagram of the Day metabox by default
+#fm_meta_box_daily_insta_date {
     display: none
 }
 
 body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right {
     width: 100%
-}
-
-// Hide the user description field on profile page
-.user-description-wrap {
-  display: none;
 }
 
 // Slug field width in post editor
@@ -102,4 +107,3 @@ $advanced-cluster-types-selectors: sl-to-string( $advanced-cluster-types-selecto
 #{$advanced-cluster-types-selectors} {
   display: none;
 }
-

@@ -48,6 +48,24 @@
 
       this.bindColorPickers();
       this.reorderExcerptBox();
+      this.toggleIOTDEmbedField();
+    },
+
+    /**
+     * Extract the domain from a URL string
+     *
+     * http://stackoverflow.com/a/23945027
+     */
+    extractDomain: function(url) {
+      var domain;
+      if (url.indexOf('://') > -1) {
+        domain = url.split('/')[2];
+      } else {
+        domain = url.split('/')[0];
+      }
+      domain.replace('www.', '');
+      domain = domain.split(':')[0];
+      return domain;
     },
 
     /**
@@ -111,6 +129,25 @@
     reorderExcerptBox: function() {
       $('#postexcerpt').insertAfter('#titlediv');
       $('#postexcerpt').css('margin-top', 20);
+    },
+
+    /**
+     * Hide the Instagram of the Day date selection field by default
+     *
+     * Show if the `embed_url` field contains a domain matching `instagr*`.
+     */
+    toggleIOTDEmbedField: function() {
+      var $embedURLField = $('.post-type-pedestal_embed #fm-embed_url-0');
+      $embedURLField.on('blur',function(e) {
+        var $target = $(e.target);
+        var $dailyInsta = $('#fm_meta_box_daily_insta_date');
+        var url = $target.val();
+        if (url.indexOf('instagr') !== -1) {
+          $dailyInsta.show();
+        } else {
+          $dailyInsta.hide();
+        }
+      }).blur();
     }
   };
 

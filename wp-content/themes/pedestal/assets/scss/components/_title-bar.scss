@@ -11,74 +11,83 @@
   @if $email == false {
     z-index: $z-c-title-bar;
   }
-}
+
+  &__inner {}
+
+  &__item {}
+
+  /*h2/h4*/&__text {
+    @if $email {
+      max-width: 85%;
+    }
+
+    &__item {
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+
+      .o-blox--expand & {
+        letter-spacing: 0.025em;
+        text-transform: none;
+      }
+    }
+
+    &__link {}
+
+    &__title {}
+
+    &__subtitle {}
+
+  } // end __item
+
+  &__pin {}
 
 
-  .c-title-bar__inner {}
 
 
-    .c-title-bar__item {}
+
+  //
+  // Title Bar: Lighter
+  // ==========================================================================
+  // A title bar with a lighter background.
 
 
-      /*h2/h4*/.c-title-bar__text {
-        @if $email {
-          max-width: 85%;
+  &--lighter {
+    @include c-title-bar-mod-color( lighter );
+  } // end --lighter
+
+
+
+
+
+
+
+
+
+  //
+  // Title Bar: Customized
+  // ==========================================================================
+
+
+  &--customized {
+    .c-title-bar {
+      &__text {
+        @media #{$small-only} {
+          display: block;
         }
       }
-
-        /*a*/.c-title-bar__text__link {}
-
-          /*span*/.c-title-bar__text__item {
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-
-            .o-blox--expand & {
-              letter-spacing: 0.025em;
-              text-transform: none;
-            }
-
-          }
-
-          /*span*/.c-title-bar__text__title {}
-
-          /*span*/.c-title-bar__text__subtitle {}
-
-
-    .c-title-bar__pin {}
-
-
-
-
-
-/**
- * Title bar with special customized appearance
- */
-
-.c-title-bar--customized {
-  .c-title-bar__text {
-    @media #{$small-only} {
-      display: block;
     }
-  }
-}
+  } // end --customized
 
 
 
 
 
-/**
- * Story bar for Nativo
- */
+  //
+  // Title Bar: Promo / Nativo
+  // ==========================================================================
 
-.c-title-bar--promo {
 
-  .c-title-bar__inner {
-    background-color: map-get-strict( $c-title-bar-settings, 'promo-bg' );
-    color: $black;
-  }
-
-  &,
-  .c-title-bar__text__link {
-    @include text-color( map-get-strict( $c-title-bar-settings, 'promo-bg' ) );
-  }
-}
+  &--promo {
+    @include c-title-bar-mod-color( promo );
+  } // end --promo
+} // end title-bar

@@ -13,6 +13,7 @@
     }
 
       .c-figure__content {
+        display: block;
         height: auto;
         padding-bottom: c-figure-property-get( img-p-b );
       }
@@ -25,17 +26,17 @@
     }
   }
 
-    // Chain with h1 to override `.s-post-content h1`
-    //
-    // scss-lint:disable QualifyingElement SelectorFormat
-    h1.c-figure__text__caption {
-      color: c-figure-property-get( caption-color );
-      padding-right: c-figure-property-get( caption-p-r );
-      display: inline-block;
-      font-weight: normal;
-      font-size: c-figure-property-get( f-z );
+    .c-figure__text__caption {
+      // Make sure we override `.s-post-content` specifically
+      &,
+      .s-post-content & {
+        color: c-figure-property-get( caption-color );
+        padding-right: c-figure-property-get( caption-p-r );
+        display: inline-block;
+        font-weight: normal;
+        font-size: c-figure-property-get( f-z );
+      }
     }
-    // scss-lint:enable QualifyingElement SelectorFormat
 
 
     /*cite*/.c-figure__text__credit {

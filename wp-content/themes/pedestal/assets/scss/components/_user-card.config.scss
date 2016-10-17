@@ -22,5 +22,5 @@ $c-user-card-settings: (
 
 
 @function c-user-card-property-get( $properties... ) {
-  @return map-deep-get( $c-user-card-settings, $properties... );
+  @return map-fetch( $c-user-card-settings, $properties... );
 }

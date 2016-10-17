@@ -45,21 +45,36 @@
 
     /**
      * Title
-     *
-     * Primarily for use on Pages.
      */
 
     .c-content__title {
-      text-align: center;
-      margin-bottom: $c-content-title-margin-bottom;
+
+      + .c-content__subtitle {
+        margin-top: $c-content-subtitle-margin-top;
+      }
+
+      &--page {
+        text-align: center;
+        font-weight: normal;
+        font-size: $h1-font-size;
+        font-family: $font-family-serif;
+        margin-bottom: $c-content-title-margin-bottom;
+      }
+
+      &--headline {}
+
     }
 
 
     /**
-     * Headline
+     * Subtitle
      */
 
-    /*h2*/.c-content__headline {}
+    .c-content__subtitle {
+      font-size: $h4-font-size;
+      font-weight: $c-content-subtitle-font-weight;
+      color: $dimmed-text-color;
+    }
 
 
     /**

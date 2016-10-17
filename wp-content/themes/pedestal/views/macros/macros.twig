@@ -234,6 +234,8 @@
     {# Types #}
     {% if 'promo' == type %}
         {% set extra_classes = component ~ '--promo' ~ '  ' ~ extra_classes %}
+    {% elseif 'lighter' == type %}
+        {% set extra_classes = component ~ '--lighter' ~ '  ' ~ extra_classes %}
     {% endif %}
 
     {# Content #}
@@ -272,7 +274,7 @@
     {% endif %}
 
 
-    {% if display and title %}
+    {% if title %}
 
         {% if item.is_pinned and context.is_home %}
         {% set suffix %}

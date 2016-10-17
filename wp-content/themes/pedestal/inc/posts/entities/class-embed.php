@@ -6,6 +6,13 @@ use \Pedestal\Utils\Utils;
 
 class Embed extends Entity {
 
+    /**
+     * Embed type
+     *
+     * @var string
+     */
+    protected $embed_type = '';
+
     protected static $post_type = 'pedestal_embed';
 
     /**
@@ -31,7 +38,7 @@ class Embed extends Entity {
      */
     public function get_css_classes() {
         $classes = parent::get_css_classes();
-        if ( $embed_type = $this->get_embed_type( $this->get_embed_url() ) ) {
+        if ( $embed_type = $this->get_embed_type() ) {
             $classes = array_merge( [
                 'embed-' . $embed_type
             ], $classes );
@@ -61,6 +68,35 @@ class Embed extends Entity {
     }
 
     /**
+     * Get the Instagram of the Day date as Unix timestamp
+     *
+     * @return int Unix timestamp
+     */
+    public function get_daily_insta_date() {
+        return $this->get_meta( 'daily_insta_date' );
+    }
+
+    /**
+     * Get the name of the author of the embedded media
+     *
+     * This is *not* the same as the author of our Embed post.
+     *
+     * @return string|false
+     */
+    public function get_embed_author_name() {
+        return $this->get_meta( 'embed_author_name' );
+    }
+
+    /**
+     * Get the Embed's caption
+     *
+     * @return string|false
+     */
+    public function get_embed_caption() {
+        return $this->get_meta( 'embed_caption' );
+    }
+
+    /**
      * Get the embed URL for the post
      *
      * @return string
@@ -83,7 +119,7 @@ class Embed extends Entity {
      */
     public function has_featured_image() {
 
-        switch ( $this->get_embed_type( $this->get_embed_url() ) ) {
+        switch ( $this->get_embed_type() ) {
             case 'instagram':
 
                 $embed_data = $this->get_embed_data();
@@ -119,8 +155,7 @@ class Embed extends Entity {
 
         $image_url = '';
         $embed_data = $this->get_embed_data();
-        $embed_type = $this->get_embed_type( $this->get_embed_url() );
-        switch ( $embed_type ) {
+        switch ( $this->get_embed_type() ) {
             case 'youtube':
                 if ( ! empty( $embed_data['thumbnail_url'] ) ) {
                     $image_url = $embed_data['thumbnail_url'];
@@ -146,8 +181,7 @@ class Embed extends Entity {
     public function get_featured_image_html( $size = 'full', $args = [] ) {
 
         $html = '';
-        $embed_type = $this->get_embed_type( $this->get_embed_url() );
-        switch ( $embed_type ) {
+        switch ( $this->get_embed_type() ) {
             case 'youtube':
             case 'instagram':
 
@@ -185,8 +219,8 @@ class Embed extends Entity {
      */
     public function get_embed_html() {
         $args = [];
-        $url = $this->get_embed_url();
         $args['url'] = $this->get_embed_url();
+        $args['caption'] = $this->get_embed_caption();
         $args['media_visibility'] = 'true';
         if ( ! is_singular( self::$post_type ) ) {
             $args['media_visibility'] = 'false';
@@ -195,7 +229,7 @@ class Embed extends Entity {
         $html = self::do_embed( $args );
 
         if ( ! empty( $html ) ) {
-            $html = '<div class="' . esc_attr( 'pedestal-embed pedestal-embed-' . self::get_embed_type( $url ) ) . '">' . $html . '</div>';
+            $html = '<div class="' . esc_attr( 'pedestal-embed pedestal-embed-' . $this->get_embed_type() ) . '">' . $html . '</div>';
         }
         return $html;
     }
@@ -208,31 +242,27 @@ class Embed extends Entity {
      */
     public static function do_embed( $args ) {
         $html = '';
+        $url = $args['url'];
 
-        // @TODO
-        // @codingStandardsIgnoreStart
-        extract( $args );
-        // @codingStandardsIgnoreEnd
-
-        $embed_type = self::get_embed_type( $url );
+        $embed_type = self::get_embed_type_from_url( $url );
         if ( ! $embed_type ) {
             return '';
         }
 
+        $shortcode = sprintf( '[%s url="%s" ', $embed_type, $url );
+
         switch ( $embed_type ) {
             case 'twitter':
-                if ( ! isset( $media_visibility ) ) {
-                    $media_visibility = 'true';
+                $media_visibility = 'true';
+                if ( isset( $args['media_visibility'] ) ) {
+                    $media_visibility = $args['media_visibility'];
                 }
-                $shortcode = sprintf( '[twitter url="%s" media_visibility="%s"]', $url, $media_visibility );
-                $html = do_shortcode( $shortcode );
-                break;
-            default:
-                $shortcode = sprintf( '[%s url="%s"]', $embed_type, $url );
-                $html = do_shortcode( $shortcode );
+                $shortcode .= sprintf( 'media_visibility="%s" ', $media_visibility );
                 break;
         }
-        return $html;
+
+        $shortcode .= sprintf( 'caption="%s"]', $args['caption'] );
+        return do_shortcode( $shortcode );
     }
 
     /**
@@ -262,29 +292,6 @@ class Embed extends Entity {
     }
 
     /**
-     * Inspect embed data to see if it's currently errored
-     *
-     * @return bool
-     */
-    public function is_embed_data_errored() {
-
-        $embed_data = $this->get_embed_data();
-        $embed_type = $this->get_embed_type( $this->get_embed_url() );
-        switch ( $embed_type ) {
-            case 'twitter':
-                return false;
-
-            // @todo error handling.
-            case 'instagram':
-                return false;
-
-            default:
-                return true;
-        }
-
-    }
-
-    /**
      * Get the meta key for the embed data
      */
     protected function get_embed_data_key() {
@@ -296,6 +303,63 @@ class Embed extends Entity {
     }
 
     /**
+     * Store an oEmbed data property as Embed post meta
+     *
+     * @param string $property Name of the oEmbed property
+     * @param string $url      Optional URL to get the oEmbed data for. Defaults
+     *     to the instantiated Embed's URL.
+     * @return void
+     */
+    public function set_embed_meta_from_oembed( string $property, string $url = '' ) {
+        if ( empty( $url ) ) {
+            $url = $this->get_embed_url();
+        }
+        $oembed_data = $this->get_oembed_data( $url );
+        if ( is_object( $oembed_data ) && property_exists( $oembed_data, $property ) ) {
+            $this->set_meta( 'embed_' . $property, $oembed_data->$property );
+        }
+    }
+
+    /**
+     * Get the oEmbed data for a URL
+     *
+     * @param  string $url Optional URL to get the oEmbed data for. Defaults
+     *     to the instantiated Embed's URL.
+     * @return object|false Object of oEmbed data if successful, false if not
+     */
+    protected function get_oembed_data( string $url = '' ) {
+        if ( empty( $url ) ) {
+            $url = $this->get_embed_url();
+        }
+
+        $cache_key = 'oembed_' . $url;
+
+        if ( $data = wp_cache_get( $cache_key ) ) {
+            return $data;
+        }
+
+        $wp_oembed = new \WP_oEmbed;
+        $data = $wp_oembed->fetch( $this->get_oembed_provider_url( $url ), $url );
+        wp_cache_set( $cache_key, $data );
+        return $data;
+    }
+
+    /**
+     * Get the oEmbed provider URL for a given URL
+     *
+     * @param  string $url Optional URL to get the provider URL for. Defaults
+     *     to the instantiated Embed's URL.
+     * @return string|false Provider URL if successful, false if not
+     */
+    protected function get_oembed_provider_url( string $url = '' ) {
+        if ( empty( $url ) ) {
+            $url = $this->get_embed_url();
+        }
+        $wp_oembed = new \WP_oEmbed;
+        return $wp_oembed->get_provider( $url );
+    }
+
+    /**
      * Get the name of the icon for this entity's source
      *
      * The name should align with Font Awesome icon names. If there is no
@@ -304,9 +368,8 @@ class Embed extends Entity {
      * @return string
      */
     public function get_source_icon_name() {
-        $embed_type = $this->get_embed_type( $this->get_embed_url() );
+        $embed_type = $this->get_embed_type();
         switch ( $embed_type ) {
-            case 'scribd':
             case 'giphy':
             case 'infogram':
                 return 'external-link';
@@ -324,7 +387,7 @@ class Embed extends Entity {
      * @return string
      */
     public function get_source() {
-        if ( $embed_type = $this->get_embed_type( $this->get_embed_url() ) ) {
+        if ( $embed_type = $this->get_embed_type() ) {
             $sources = self::get_providers();
             return $sources[ $embed_type ];
         } else {
@@ -333,17 +396,43 @@ class Embed extends Entity {
     }
 
     /**
-     * Get the embed type
+     * Get the Embed type
      *
      * @return string|false
      */
-    public static function get_embed_type( $embed_url = '' ) {
+    public function get_embed_type() {
+        if ( $this->embed_type ) {
+            return $this->embed_type;
+        }
+        $this->embed_type = static::get_embed_type_from_url( $this->get_embed_url() );
+        return $this->embed_type;
+    }
 
-        if ( ! $embed_url ) {
+    /**
+     * Set the embed type
+     *
+     * @param string $embed_type Embed type
+     */
+    public function set_embed_type( string $embed_type = '' ) {
+        if ( empty( $embed_type ) ) {
+            $embed_type = $this->get_embed_type();
+        }
+        $this->set_meta( 'embed_type', $embed_type );
+    }
+
+    /**
+     * Get an embed type string from a URL
+     *
+     * @param string $url URL
+     * @return string|false
+     */
+    public static function get_embed_type_from_url( string $url = '' ) {
+
+        if ( ! $url ) {
             return false;
         }
 
-        $domain = parse_url( $embed_url, PHP_URL_HOST );
+        $domain = parse_url( $url, PHP_URL_HOST );
 
         $base_types = [
             'twitter.com'     => 'twitter',
@@ -377,41 +466,24 @@ class Embed extends Entity {
      * Update stored embed data without overwriting existing data
      */
     public function update_embed_data() {
-        $url = $this->get_embed_url();
-        if ( ! $this->get_embed_data() || $this->is_embed_data_errored() ) {
-            $data = self::fetch_embed_data( $url );
-            switch ( self::get_embed_type( $url ) ) {
-                case 'twitter':
-                    if ( $this->is_embed_data_errored() ) {
-                        // Errored Tweets shouldn't be published
-                        $this->set_status( 'pending' );
-                    }
-
-                    $content = $data->text;
-                    if ( ! empty( $content ) ) {
-                        $this->set_content( $content );
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-            $this->set_embed_data( $data );
+        if ( ! $this->get_embed_data() ) {
+            $this->set_embed_data( $this->fetch_embed_data() );
         }
     }
 
     /**
      * Fetch embed data from the remote source
      */
-    public static function fetch_embed_data( $url = '' ) {
+    public function fetch_embed_data() {
 
+        $url = $this->get_embed_url();
         if ( ! $url ) {
             return;
         }
 
-        switch ( self::get_embed_type( $url ) ) {
+        switch ( $this->get_embed_type() ) {
             case 'youtube':
-                $id = self::get_youtube_id_from_url( $url );
+                $id = static::get_youtube_id_from_url( $url );
                 if ( ! $id ) {
                     break;
                 }
@@ -440,7 +512,7 @@ class Embed extends Entity {
                 break;
 
             case 'instagram':
-                $id = self::get_instagram_id_from_url( $url );
+                $id = static::get_instagram_id_from_url( $url );
                 if ( ! $id ) {
                     break;
                 }
@@ -472,8 +544,8 @@ class Embed extends Entity {
      *
      * @return string Twitter username
      */
-    public static function get_twitter_username() {
-        return self::get_twitter_username_from_url( $this->get_embed_url() );
+    public function get_twitter_username() {
+        return static::get_twitter_username_from_url( $this->get_embed_url() );
     }
 
     /**
@@ -630,5 +702,57 @@ class Embed extends Entity {
                 return '/https?:\/\/youtu\.be\/([a-zA-Z0-9-]+)/i';
                 break;
         }
+    }
+
+    /**
+     * Get the Instagram of the Day for a given date
+     *
+     * @param  string $date Optional date string. Defaults to current date.
+     * @return HTML Rendered template
+     */
+    public static function get_instagram_of_the_day( string $date = '' ) {
+        $date_format = 'Y-m-d';
+
+        if ( $date ) {
+            $date = date( $date_format, strtotime( $date ) );
+        } else {
+            $date = current_time( $date_format );
+        }
+
+        $args = [
+            'post_type'              => static::$post_type,
+            'post_status'            => 'publish',
+            'posts_per_page'         => 1,
+            'no_found_rows'          => true,
+            'update_post_term_cache' => false,
+            'meta_query'     => [
+                'relation' => 'AND',
+                [
+                    'key' => 'daily_insta_date',
+                    'value' => strtotime( $date ),
+                ],
+                [
+                    'key' => 'embed_type',
+                    'value' => 'instagram',
+                ],
+            ],
+        ];
+        $posts = static::get_posts( $args );
+        if ( empty( $posts ) ) {
+            return false;
+        }
+
+        $daily_insta = $posts[0];
+        if ( ! $daily_insta instanceof self ) {
+            return '';
+        }
+
+        $context = \Timber\Timber::get_context();
+        $context['item'] = $daily_insta;
+
+        ob_start();
+        \Timber\Timber::render( 'partials/daily-insta.twig', $context );
+        $html = ob_get_clean();
+        return $html;
     }
 }

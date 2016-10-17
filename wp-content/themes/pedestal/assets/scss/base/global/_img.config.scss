@@ -10,5 +10,5 @@
  * @return {unit}
  */
 @function img-size-get( $size ) {
-  @return map-deep-get( $global-img-sizes, $size );
+  @return map-fetch( $global-img-sizes, $size );
 }

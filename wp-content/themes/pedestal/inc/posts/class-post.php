@@ -1365,6 +1365,17 @@ abstract class Post {
     }
 
     /**
+     * Delete a meta value for a post
+     *
+     * @param  string $key   Meta key
+     * @param  string $value Optional meta value to match
+     * @return void
+     */
+    public function delete_meta( string $key, $value = '' ) {
+        delete_post_meta( $this->get_id(), $key, $value );
+    }
+
+    /**
      * Get the taxonomy terms for a post
      *
      * @param string $taxonomy

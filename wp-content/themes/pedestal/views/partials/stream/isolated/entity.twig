@@ -25,7 +25,7 @@
             </div>
             {% endif %}
 
-            {% if 'embed' == item.get_type and 'twitter' == item.get_embed_type( item.get_embed_url ) %}
+            {% if 'embed' == item.get_type and 'twitter' == item.get_embed_type %}
                 {{ item.get_embed_html }}
             {% endif %}
         </div>

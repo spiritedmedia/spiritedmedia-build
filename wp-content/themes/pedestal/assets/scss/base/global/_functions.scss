@@ -3,6 +3,9 @@
 // ==========================================================================
 
 
+@import 'functions-type-checking';
+
+
 //
 // Units
 // ==========================================================================
@@ -31,6 +34,19 @@
 
 @function quadruple( $number ) {
   @return $number * 4;
+}
+
+
+/// Clamp `$number` between `$min` and `$max`
+///
+/// @link https://css-tricks.com/snippets/sass/clamping-number/
+///
+/// @param {Number} $number - Number to clamp
+/// @param {Number} $min - Minimum value
+/// @param {Number} $max - Maximum value
+/// @return {Number}
+@function clamp($number, $min, $max) {
+  @return min(max($number, $min), $max);
 }
 
 
@@ -68,7 +84,7 @@
   @if map-has-key( $map, $key ) {
     @return map-get( $map, $key );
   } @else {
-    @error 'ERROR: Specified index does not exist in the map.';
+    @error "ERROR: Specified index `#{$key}` does not exist in the map `#{$map}`!";
   }
 }
 
@@ -82,7 +98,7 @@
  * @param  {arglist} $keys key chain
  * @return {*}             Desired value
  */
-@function map-deep-get( $map, $keys... ) {
+@function map-fetch( $map, $keys... ) {
   @each $key in $keys {
     $map: map-get-strict( $map, $key );
   }
@@ -139,10 +155,10 @@
   $new-sizes: ();
 
   @if ( $size != null and string == type-of( $size ) ) {
-    $dimensions: map-deep-get( $spiritedmedia-pedestal, imageSizes, $size );
+    $dimensions: map-fetch( $spiritedmedia-pedestal, imageSizes, $size );
     @return unitize-map-values( $dimensions );
   } @else {
-    $sizes: map-deep-get( $spiritedmedia-pedestal, imageSizes );
+    $sizes: map-fetch( $spiritedmedia-pedestal, imageSizes );
     @each $size, $dimensions in $sizes {
       $new-dims: unitize-map-values( $dimensions );
       $new-sizes: map-merge( $new-sizes, ( $size: $new-dims ) );

@@ -13,8 +13,17 @@
 
             <header class="c-content__header">
                 {{ ped_slot( 'single_lead' ) }}
-                <h2 class="c-content__headline">{{ item.get_the_title }}</h2>
+                <h2 class="c-content__title">{{ item.get_the_title }}</h2>
+                <h3 class="c-content__subtitle">{{ item.get_newsletter_subtitle }}</h3>
             </header>
+
+            {% if item.get_instagram_of_the_day %}
+            <section class="c-content__lead-img">
+                {{ item.get_instagram_of_the_day }}
+            </section>
+            {% endif %}
+
+            </section>
 
             <section class="c-content__body  s-post-content">
                 {{ item.get_the_content }}

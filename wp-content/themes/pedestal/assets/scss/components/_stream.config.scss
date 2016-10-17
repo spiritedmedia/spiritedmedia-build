@@ -28,5 +28,5 @@ $c-stream-settings: (
 
 
 @function c-stream-property-get( $properties... ) {
-  @return map-deep-get( $c-stream-settings, $properties... );
+  @return map-fetch( $c-stream-settings, $properties... );
 }

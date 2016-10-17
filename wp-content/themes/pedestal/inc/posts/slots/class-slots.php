@@ -63,6 +63,10 @@ class Slots {
             'site'  => [ 'single_lead', 'shortcode' ],
             'email' => [],
         ],
+        'daily_insta' => [
+            'site'  => [ 'component' ],
+            'email' => [ 'component' ],
+        ],
     ];
 
     public static function get_instance() {
@@ -231,11 +235,12 @@ class Slots {
             }
         }
 
-        $short_type = Utils::remove_name_prefix( $placement_data['type'] );
+        $type = $placement_data['type'];
+        $short_type = Utils::remove_name_prefix( $type );
 
         // If the post select field is not set, then quit and delete...
         $expected_post_select_field_name = 'select_' . $short_type;
-        if ( ! isset( $placement_data[ $expected_post_select_field_name ] ) ) {
+        if ( in_array( $type, Types::get_post_types() ) && ! isset( $placement_data[ $expected_post_select_field_name ] ) ) {
             wp_delete_post( $placement_post_id, true );
             return;
         }
@@ -312,7 +317,7 @@ class Slots {
                 ],
                 [
                     'key'   => 'type',
-                    'value' => $options['post_type'],
+                    'value' => $options['type'],
                 ],
             ],
         ];
@@ -376,12 +381,14 @@ class Slots {
     /**
      * Handle the `ped_slot()` Twig function
      *
-     * @param  array $context        Twig context -- provided automatically
+     * @param  array  $context       Twig context -- provided automatically
      * @param  string $slot_position Slot position
+     * @param  string $type          Placement type
      * @param  array  $options       Options to override defaults
      * @return string                Slot HTML
      */
-    public function handle_twig_func_slot( $context, $slot_position = '', $options = [] ) {
+    public function handle_twig_func_slot( $context, string $slot_position = '', string $type = '', array $options = [] ) {
+
         if ( empty( $slot_position ) || ! is_string( $slot_position ) || ! is_array( $options ) ) {
             return '';
         }
@@ -394,12 +401,20 @@ class Slots {
         $item = $context['item'];
         if ( Types::is_post( $item ) ) {
             $default_options = [
-                'post_id'   => $item->get_id(),
-                'post_type' => 'pedestal_' . $item->get_type(),
+                'post_id' => $item->get_id(),
+                'type'    => $item->get_post_type(),
             ];
             $options = array_merge( $options, $default_options );
         } else {
             return '';
+        }
+
+        $data_atts = [];
+        if ( ! empty( $type ) ) {
+            $options['type'] = $type;
+            if ( 'component' === $slot_position ) {
+                $data_atts['component-type'] = $type;
+            }
         }
 
         // Set slot position name according to the scope
@@ -415,7 +430,7 @@ class Slots {
 
             $context['slots']['active'] = $slot_item;
 
-            $data_atts = [
+            $data_atts = $data_atts + [
                 'position'   => $slot_position,
                 'item-id'    => $slot_item->get_id(),
                 'item-type'  => $slot_item_type,
@@ -485,18 +500,5 @@ class Slots {
 
         // Return true if all the conditions are met
         return true;
-    }
-
-    /**
-     * Convert a date string to YYYY-MM-DD format
-     *
-     * @param  string $date Date string to convert
-     * @return string       YYYY-MM-DD date string
-     */
-    private function convert_date_to_day( $date ) {
-        if ( empty( $date ) ) {
-            return '';
-        }
-        return date( self::$day_format, strtotime( $date ) );
     }
 }

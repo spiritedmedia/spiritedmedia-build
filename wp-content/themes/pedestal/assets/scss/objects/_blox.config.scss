@@ -55,7 +55,7 @@ $o-blox-sizes-data : (
   @if $size {
     @if sl-contain( $o-blox-sizes, $size ) {
       @if map-has-key( $o-blox-settings, $property ) {
-        @return map-deep-get( $o-blox-sizes-data, $size, $property );
+        @return map-fetch( $o-blox-sizes-data, $size, $property );
       } @else {
         @error "Property #{$property} not found in map `$o-blox-settings`.";
       }

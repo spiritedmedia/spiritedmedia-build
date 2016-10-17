@@ -1,0 +1,59 @@
+// ==========================================================================
+// Pedestal // Components // INSTAGRAM OF THE DAY
+// ==========================================================================
+
+
+.c-daily-insta {
+  margin-bottom: ( $base-spacing-unit * 2 );
+  display: table;
+
+  /*header*/&__header {}
+
+  &__title {
+    @extend %u-heading--minor;
+    text-align: center;
+
+    .c-title-bar__text__title {
+      @include h-size( 4 );
+    }
+  }
+
+  /*figure*/&__body {
+    margin: 0;
+  }
+
+  &__img {
+    // scss-lint:disable SelectorFormat
+    padding-bottom: 0;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  /*figcaption*/&__text {
+    background-color: $truth-serum;
+    padding: $half-spacing-unit;
+
+    &__caption {
+      font-size: $h5-font-size;
+      margin-top: 0;
+    }
+  }
+
+  &__date,
+  &__author {
+    margin: 0;
+  }
+
+  &__date {
+    @extend %u-heading--minor;
+    font-weight: 500;
+  }
+
+  &__author {
+    font-size: $h5-font-size;
+    font-weight: 700;
+  }
+
+}

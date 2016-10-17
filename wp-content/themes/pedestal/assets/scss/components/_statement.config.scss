@@ -18,5 +18,5 @@ $c-statement-settings: (
 
 
 @function c-statement-property-get( $properties... ) {
-  @return map-deep-get( $c-statement-settings, $properties... );
+  @return map-fetch( $c-statement-settings, $properties... );
 }

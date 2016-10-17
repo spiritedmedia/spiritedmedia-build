@@ -4,60 +4,6 @@
 
 
 /**
- * Set unhovered and hovered link colors and decoration easily.
- *
- * Defaults to `a` selector. If included within another selector, just use `&`
- *
- * Unvisited/visited will be the same, hover/active will be the same.
- */
-@mixin anchorage(
-               $selector: 'a',
-               $unhovered: $anchor-font-color,
-               $unhovered-decoration: $anchor-text-decoration,
-               $hovered: $anchor-font-color-hover,
-               $hovered-decoration: $anchor-text-decoration-hover
-               ) {
-
-  #{$selector} {
-
-    &,
-    &:visited {
-      color: $unhovered;
-      text-decoration: $unhovered-decoration;
-    }
-
-    &:hover,
-    &:active {
-      color: $hovered;
-      text-decoration: $hovered-decoration;
-    }
-
-  }
-}
-
-
-/**
- * Calculate text color with sufficient contrast with a given background color
- *
- * Based on Foundation `button-style` mixin
- *
- * @param  {color} $bg:          Background color
- * @param  {color} $text-light:  $mixin-text-color-light
- * @param  {color} $text-dark:   $mixin-text-color-dark
- * @param  {percent} $threshold: Lightness threshold
- */
-@mixin text-color(
-  $bg,
-  $text-light: $mixin-text-color-light,
-  $text-dark: $mixin-text-color-dark,
-  $threshold: 65%
-) {
-  $bg-lightness: lightness( $bg );
-  color: if( $bg-lightness > $threshold, $text-dark, $text-light );
-}
-
-
-/**
  * Do styles for small mq and email only
  *
  * As email doesn't support media queries but we'd like to write less code, this
@@ -196,6 +142,116 @@
 
   }
 
+}
+
+
+
+
+
+//
+// Typography
+// ==========================================================================
+
+
+/**
+ * Set unhovered and hovered link colors and decoration easily.
+ *
+ * Defaults to `a` selector. If included within another selector, just use `&`
+ *
+ * Unvisited/visited will be the same, hover/active will be the same.
+ */
+@mixin anchorage(
+               $selector: 'a',
+               $unhovered: $anchor-font-color,
+               $unhovered-decoration: $anchor-text-decoration,
+               $hovered: $anchor-font-color-hover,
+               $hovered-decoration: $anchor-text-decoration-hover
+               ) {
+
+  #{$selector} {
+
+    &,
+    &:visited {
+      color: $unhovered;
+      text-decoration: $unhovered-decoration;
+    }
+
+    &:hover,
+    &:active {
+      color: $hovered;
+      text-decoration: $hovered-decoration;
+    }
+
+  }
+}
+
+
+/**
+ * Calculate text color with sufficient contrast with a given background color
+ *
+ * Based on Foundation `button-style` mixin
+ *
+ * @param  {color} $bg:          Background color
+ * @param  {color} $text-light:  $mixin-text-color-light
+ * @param  {color} $text-dark:   $mixin-text-color-dark
+ * @param  {percent} $threshold: Lightness threshold
+ */
+@mixin text-color(
+  $bg,
+  $text-light: $mixin-text-color-light,
+  $text-dark: $mixin-text-color-dark,
+  $threshold: 65%
+) {
+  $bg-lightness: lightness( $bg );
+  color: if( $bg-lightness > $threshold, $text-dark, $text-light );
+}
+
+
+/// Generate heading font size styles including size reduction
+///
+/// Couples Foundation's `$h*-font-size` and `$h*-font-reduction` variables.
+///
+/// @access public
+/// @param {number} $h-level - Heading level number
+/// @param {bool}   $do-reduction [true] - Include reduction sizing?
+@mixin h-size( $h-level, $do-reduction: true ) {
+  @if not is-number( $h-level ) {
+    @error "Parameter `$h-level` with value `#{$h-level}` is not a number!";
+  }
+
+  $h-level-cl: clamp( $h-level, 1, 6 );
+  @if $h-level-cl != $h-level {
+    @error 'Parameter `$h-level` with value `#{$h-level}` is not a valid heading level!'
+  }
+
+  $h-size-vars: (
+    1: $h1-font-size,
+    2: $h2-font-size,
+    3: $h3-font-size,
+    4: $h4-font-size,
+    5: $h5-font-size,
+    6: $h6-font-size,
+  );
+
+  $h-reduction-vars: (
+    1: $h1-font-reduction,
+    2: $h2-font-reduction,
+    3: $h3-font-reduction,
+    4: $h4-font-reduction,
+    5: $h5-font-reduction,
+    6: $h6-font-reduction,
+  );
+
+  $base-size: map-fetch( $h-size-vars, $h-level );
+  $size: $base-size;
+  @if $do-reduction {
+    $size: $size - map-fetch( $h-reduction-vars, $h-level );
+  }
+  font-size: $size;
+
+  @media #{$medium-up} {
+    font-size: $base-size;
+  }
 }
 
 

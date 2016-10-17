@@ -54,6 +54,7 @@ class Entity_Types extends Types {
     private function setup_actions() {
         add_action( 'init', [ $this, 'action_init_after_post_types_registered' ], 11 );
         add_action( 'edit_form_after_title', [ $this, 'action_edit_form_after_title' ] );
+        add_action( 'save_post_pedestal_embed', [ $this, 'action_save_post_pedestal_embed' ], 10, 3 );
         add_action( 'save_post_pedestal_whosnext', [ $this, 'action_save_post_whosnext_clusters' ], 10, 3 );
     }
 
@@ -223,6 +224,28 @@ class Entity_Types extends Types {
     }
 
     /**
+     * Perform actions on saving Embeds
+     */
+    public function action_save_post_pedestal_embed( $post_id, $post, $update ) {
+        if ( isset( $post->post_status ) && ( 'publish' !== $post->post_status ) ) {
+            return;
+        }
+
+        $embed = Embed::get_by_post_id( $post_id );
+        $embed_url = $_POST['embed_url'];
+        if ( ! $embed instanceof Embed || empty( $embed_url ) ) {
+            return;
+        }
+
+        $embed_type = Embed::get_embed_type_from_url( $embed_url );
+        if ( $embed_type !== $embed->get_meta( 'embed_type' ) ) {
+            $embed->set_embed_type( $embed_type );
+        }
+
+        $embed->set_embed_meta_from_oembed( 'author_name', $embed_url );
+    }
+
+    /**
      * Connect Who's Next entities to clusters upon save
      */
     public function action_save_post_whosnext_clusters( $post_id, $post, $update ) {
@@ -315,7 +338,7 @@ class Entity_Types extends Types {
                     return '';
                 }
 
-                if ( Embed::get_embed_type( $url ) ) {
+                if ( Embed::get_embed_type_from_url( $url ) ) {
                     return esc_url_raw( $url );
                 } else {
                     return '';
@@ -323,6 +346,20 @@ class Entity_Types extends Types {
             },
         ] );
         $fm->add_meta_box( esc_html__( 'Embed URL', 'pedestal' ), [ 'pedestal_embed' ], 'normal', 'high' );
+
+        $caption = new \Fieldmanager_Textarea( false, [
+            'name' => 'embed_caption',
+        ] );
+        $caption->add_meta_box( esc_html__( 'Embed Caption', 'pedestal' ), [ 'pedestal_embed' ], 'normal', 'high' );
+
+        $daily_insta_description = esc_html__( "If you'd like this Instagram Embed to
+        be featured as Instagram of the Day, set the date here. To cancel, just
+        clear the contents of the date field.", 'pedestal' );
+        $daily_insta = new \Fieldmanager_Datepicker( false, [
+            'name' => 'daily_insta_date',
+            'description' => $daily_insta_description,
+        ] );
+        $daily_insta->add_meta_box( esc_html__( 'Instagram of the Day', 'pedestal' ), [ 'pedestal_embed' ], 'normal', 'high' );
 
     }
 

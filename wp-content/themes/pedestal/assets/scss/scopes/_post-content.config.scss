@@ -39,5 +39,5 @@ $s-post-content-settings: (
 
 
 @function s-post-content-property-get( $properties... ) {
-  @return map-deep-get( $s-post-content-settings, $properties... );
+  @return map-fetch( $s-post-content-settings, $properties... );
 }

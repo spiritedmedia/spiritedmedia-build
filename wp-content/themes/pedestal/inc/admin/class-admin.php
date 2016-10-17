@@ -523,10 +523,14 @@ class Admin {
     public function filter_wp_insert_post_data( $data, $postarr ) {
         $redirect_arg = '';
 
+        if ( ! empty( $data['post_status'] ) && 'auto-draft' === $data['post_status'] ) {
+            return $data;
+        }
+
         switch ( $data['post_type'] ) {
             case 'pedestal_embed':
                 $url = $postarr['embed_url'];
-                if ( empty( $url ) || false === Embed::get_embed_type( $url ) ) {
+                if ( empty( $url ) || empty( Embed::get_embed_type_from_url( $url ) ) ) {
                     $redirect_arg = 'unembeddable_url';
                 }
                 break;

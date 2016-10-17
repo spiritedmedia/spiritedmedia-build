@@ -621,18 +621,18 @@ class Shortcode_Manager {
             'private',
         ];
 
-        $obj = \Pedestal\Posts\Entities\Embed::get_by_post_id( (int) $attrs['id'] );
-        if ( ! $obj || 'embed' !== $obj->get_type() || ! in_array( $obj->get_status(), $ok_statuses ) ) {
+        $embed = Embed::get_by_post_id( (int) $attrs['id'] );
+        if ( ! $embed instanceof Embed || ! in_array( $embed->get_status(), $ok_statuses ) ) {
             return '';
         }
 
-        $embed_type = $obj->get_embed_type( $obj->get_embed_url() );
+        $embed_type = $embed->get_embed_type();
         if ( ! array_key_exists( $embed_type, Embed::get_providers() ) ) {
             return '';
         }
 
         $context = [
-            'item'               => $obj,
+            'item'               => $embed,
             'datetime_format'    => PEDESTAL_DATETIME_FORMAT,
         ];
         $files = [

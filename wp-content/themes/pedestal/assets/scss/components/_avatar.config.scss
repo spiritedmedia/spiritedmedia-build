@@ -25,5 +25,5 @@ $c-avatar-settings: (
 
 
 @function c-avatar-property-get( $properties... ) {
-  @return map-deep-get( $c-avatar-settings, $properties... );
+  @return map-fetch( $c-avatar-settings, $properties... );
 }
