@@ -147,6 +147,10 @@
         } else {
           $dailyInsta.hide();
         }
+        // Reload the Fieldmanager datepicker
+        // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+        fm.datepicker.add_datepicker(e);
+        // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
       }).blur();
     }
   };
