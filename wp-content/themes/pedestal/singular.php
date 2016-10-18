@@ -3,8 +3,8 @@
 use Timber\Timber;
 use Pedestal\Posts\Post;
 
-$post = Timber::query_post();
-$item = Post::get_by_post_id( $post->ID );
+$p = Timber::query_post();
+$item = Post::get_by_post_id( $p->ID );
 
 $context = Timber::get_context();
 
