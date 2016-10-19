@@ -71,5 +71,15 @@ var PedestalChildSlotsConfig = [
       640,
       150
     ]
+  },
+  {
+    name: 'PGH_Header_300x50_M',
+    class: 'js-dfp-header',
+    location: 'header',
+    wrapper: null,
+    size: [
+      300,
+      50
+    ]
   }
 ];

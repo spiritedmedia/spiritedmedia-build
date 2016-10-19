@@ -100,5 +100,15 @@ var PedestalChildSlotsConfig = [
       640,
       400
     ]
+  },
+  {
+    name: 'BP_Header_300x50_M',
+    class: 'js-dfp-header',
+    location: 'header',
+    wrapper: null,
+    size: [
+      300,
+      50
+    ]
   }
 ];

@@ -1,7 +1,7 @@
-Build [#1511](https://circleci.com/gh/spiritedmedia/spiritedmedia/1511) by montchr at 2016-10-18 09:17 PM UTC
+Build [#1515](https://circleci.com/gh/spiritedmedia/spiritedmedia/1515) by kingkool68 at 2016-10-19 08:34 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.2](https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.2)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.3](https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.3)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.1...v4.6.2)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.2...v4.6.3)
 
- - [#1678](https://github.com/spiritedmedia/spiritedmedia/pull/1678): Fix SoundCite JS and Legacy Fallback Stylesheets
+ - [#1680](https://github.com/spiritedmedia/spiritedmedia/pull/1680): Create 300x50 Premium Mobile Ad Spot
