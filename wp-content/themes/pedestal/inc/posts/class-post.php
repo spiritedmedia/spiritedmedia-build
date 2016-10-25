@@ -901,6 +901,9 @@ abstract class Post {
     public function get_default_seo_description( $len = 150 ) {
 
         $description = $this->get_field( 'post_excerpt' );
+        if ( $this instanceof Newsletter ) {
+            $description = $this->get_newsletter_subtitle();
+        }
         if ( ! $description ) {
             $content = $this->get_field( 'post_content' );
             $description = Utils::str_limit( $content, $len );

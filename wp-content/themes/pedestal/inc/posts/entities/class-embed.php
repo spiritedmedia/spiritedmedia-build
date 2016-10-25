@@ -721,7 +721,7 @@ class Embed extends Entity {
 
         $args = [
             'post_type'              => static::$post_type,
-            'post_status'            => 'publish',
+            'post_status'            => [ 'publish', 'future' ],
             'posts_per_page'         => 1,
             'no_found_rows'          => true,
             'update_post_term_cache' => false,

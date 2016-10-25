@@ -227,7 +227,8 @@ class Entity_Types extends Types {
      * Perform actions on saving Embeds
      */
     public function action_save_post_pedestal_embed( $post_id, $post, $update ) {
-        if ( isset( $post->post_status ) && ( 'publish' !== $post->post_status ) ) {
+        $accepted_post_statuses = [ 'publish', 'future' ];
+        if ( ! isset( $post->post_status ) || ! in_array( $post->post_status, $accepted_post_statuses ) ) {
             return;
         }
 

@@ -1,7 +1,8 @@
-Build [#1515](https://circleci.com/gh/spiritedmedia/spiritedmedia/1515) by kingkool68 at 2016-10-19 08:34 PM UTC
+Build [#1528](https://circleci.com/gh/spiritedmedia/spiritedmedia/1528) by kingkool68 at 2016-10-25 08:37 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.3](https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.3)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.4](https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.4)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.2...v4.6.3)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.3...v4.6.4)
 
- - [#1680](https://github.com/spiritedmedia/spiritedmedia/pull/1680): Create 300x50 Premium Mobile Ad Spot
+ - [#1689](https://github.com/spiritedmedia/spiritedmedia/pull/1689): 1688 Improve Workflow for Posting Instagram of the Day
+ - [#1685](https://github.com/spiritedmedia/spiritedmedia/pull/1685): Use newsletter date as social media description
