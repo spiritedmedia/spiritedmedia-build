@@ -9,8 +9,10 @@
 
 .site-footer {
   clear: both;
+  margin-top: $base-spacing-unit;
   padding-top: $base-spacing-unit;
   background-color: $white;
+  border-top: 1px solid $grey-lighter;
 }
 
   .site-footer-social {

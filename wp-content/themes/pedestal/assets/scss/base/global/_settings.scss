@@ -89,7 +89,7 @@ $heading-minor-f-z        : $base-font-size;
 $black                     : #000000;
 $white                     : #ffffff;
 
-$grey-95                   : lighten( $black, 95% );
+$grey-95                   : lighten( $black, 95% ); // #f2f2f2
 $grey-90                   : lighten( $black, 90% );
 $grey-80                   : lighten( $black, 80% );
 $grey-70                   : lighten( $black, 70% ); // #b3b3b3
@@ -130,7 +130,7 @@ $spiritedmedia-brand       : #333333;
 $primary-color             : $spiritedmedia-brand !default;
 $secondary-color           : lighten( $spiritedmedia-brand, 10% ) !default;
 
-$body-bg                   : $grey-lightest !default;
+$body-bg                   : $white !default;
 $c-panel-bg                : $white !default;
 $anchor-font-color-hover   : $black !default;
 $border-std-color          : $grey-lighter !default;
