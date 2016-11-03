@@ -97,6 +97,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_CITY_NICKNAME'       => '',
                 'PEDESTAL_DATETIME_FORMAT'     => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
                 'PEDESTAL_GOOGLE_ANALYTICS_ID' => '',
+                'PEDESTAL_BOXTERCO_SCRIPT'     => '',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => '',

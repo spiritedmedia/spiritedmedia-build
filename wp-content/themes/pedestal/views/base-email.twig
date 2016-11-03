@@ -1,9 +1,5 @@
+{% spaceless %}
 {% import "macros/macros.twig" as macros %}
-{% if styles %}
-<style type="text/css">
-{{ styles }}
-</style>
-{% endif %}
 
 <div class="email-body no-js">
 
@@ -16,3 +12,4 @@
 
 </div>
 
+{% endspaceless %}

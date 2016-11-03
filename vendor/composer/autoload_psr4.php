@@ -8,6 +8,8 @@ $baseDir = dirname($vendorDir);
 return array(
     'joshtronic\\' => array($vendorDir . '/joshtronic/php-loremipsum/src'),
     'Timber\\' => array($vendorDir . '/timber/timber/lib'),
+    'TijsVerkoyen\\CssToInlineStyles\\' => array($vendorDir . '/tijsverkoyen/css-to-inline-styles/src'),
+    'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
     '' => array($vendorDir . '/asm89/twig-cache-extension/lib'),
 );

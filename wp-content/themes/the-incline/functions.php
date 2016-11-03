@@ -59,6 +59,7 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_CITY_NICKNAME'          => 'Steel City',
                 // 'PEDESTAL_BLOG_URL'            => 'https://medium.com/billy-penn',
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'    => 'UA-77560864-1',
+                'PEDESTAL_BOXTERCO_SCRIPT'        => 'https://boxter.co/f177.js',
 
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'       => 'theinclinepgh',

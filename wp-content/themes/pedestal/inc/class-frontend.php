@@ -326,7 +326,9 @@ class Frontend {
         wp_enqueue_script( $dfp_site_config_handle, get_stylesheet_directory_uri() . '/assets/dist/js/dfp-config.js', [], PEDESTAL_VERSION );
         wp_enqueue_script( 'dfp-load', get_template_directory_uri() . '/assets/dist/js/dfp-load.js', [ $dfp_site_config_handle ], PEDESTAL_VERSION );
         wp_enqueue_script( 'nativo', '//a.postrelease.com/serve/load.js?async=true' );
-        wp_enqueue_script( 'boxter-funnl', 'https://boxter.co/f23.js', [], null );
+        if ( defined( 'PEDESTAL_BOXTERCO_SCRIPT' ) ) {
+            wp_enqueue_script( 'boxter-funnl', PEDESTAL_BOXTERCO_SCRIPT, [], null );
+        }
 
         wp_register_script( 'pedestal-footnotes', get_template_directory_uri() . '/assets/dist/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, true );
 
