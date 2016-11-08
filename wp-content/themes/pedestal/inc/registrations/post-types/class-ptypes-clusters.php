@@ -527,8 +527,8 @@ class Cluster_Types extends Types {
                     'default_value'     => 0,
                     'options'           => [
                         'data' => [
-                            esc_html__( 'Off', 'pedestal' ) => 0,
-                            esc_html__( 'On', 'pedestal' )  => 1,
+                            0 => esc_html__( 'Off', 'pedestal' ),
+                            1 => esc_html__( 'On', 'pedestal' ),
                         ],
                     ],
                     'sanitize'          => 'intval',
