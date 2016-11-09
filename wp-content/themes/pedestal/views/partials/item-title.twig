@@ -1,7 +1,11 @@
+{% if not title %}
+    {% set title = item.get_the_title %}
+{% endif %}
+
 <div class="c-item-title">
     {% if item.get_type == 'link' %}
-    <h3 class="c-item-title__title"><a href="{{ item.get_permalink }}" class="c-item-title__link  [ js-entity-title  js-entity-permalink ]" target="_blank">{{ item.get_the_title }}</a></h3>
+    <h3 class="c-item-title__title"><a href="{{ item.get_permalink }}" class="c-item-title__link  [ js-entity-title  js-entity-permalink ]" target="_blank">{{ title }}</a></h3>
     {% else %}
-    <h3 class="c-item-title__title"><a href="{{ item.get_permalink }}" class="c-item-title__link  [ js-entity-title  js-entity-permalink ]">{{ item.get_the_title }}</a></h3>
+    <h3 class="c-item-title__title"><a href="{{ item.get_permalink }}" class="c-item-title__link  [ js-entity-title  js-entity-permalink ]">{{ title }}</a></h3>
     {% endif %}
 </div>

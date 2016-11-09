@@ -14,6 +14,7 @@
       this.revealModalClose();
       this.revealModalPreventScrolling();
       this.analyticsEventTracking();
+      this.honeyPotHelper();
     },
 
     /**
@@ -215,7 +216,12 @@
         });
       });
 
-    } // end analyticsEventTracking()
+    }, // end analyticsEventTracking()
+
+    honeyPotHelper: function() {
+      var fullYear = new Date().getFullYear();
+      $('.js-pedestal-current-year-check').val(fullYear);
+    }
 
   };
 

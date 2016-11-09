@@ -6,6 +6,11 @@ use Pedestal\Utils\Utils;
 
 class General_Types extends Types {
 
+    /**
+     * Newsletter item types
+     */
+    protected static $newsletter_item_types;
+
     protected $editorial_post_types = [];
 
     protected $post_types = [
@@ -19,6 +24,7 @@ class General_Types extends Types {
         if ( ! isset( self::$instance ) ) {
             self::$instance = new General_Types;
             self::$instance->setup_types();
+            self::$instance->setup_item_types();
             self::$instance->setup_actions();
         }
         return self::$instance;
@@ -51,8 +57,6 @@ class General_Types extends Types {
                     $args['menu_icon'] = 'dashicons-email-alt';
                     $args['supports'] = [
                         'title',
-                        'editor',
-                        'author',
                         'slots',
                     ];
                     $args['rewrite'] = [
@@ -71,9 +75,115 @@ class General_Types extends Types {
     }
 
     /**
+     * Set up the Newsletter item types
+     *
+     * @return void
+     */
+    private function setup_item_types() {
+        static::$newsletter_item_types = [
+            'post'    => esc_html__( 'Post', 'pedestal' ),
+            'heading' => esc_html__( 'Heading', 'pedestal' ),
+            'heading_likes' => esc_html__( sprintf( 'Heading: %s Likes', PEDESTAL_BLOG_NAME ), 'pedestal' ),
+            'heading_event_feat' => esc_html__( 'Heading: Featured Event', 'pedestal' ),
+            'heading_on_calendar' => esc_html__( 'Heading: On the Calendar', 'pedestal' ),
+        ];
+    }
+
+    /**
      * Setup actions
      */
     private function setup_actions() {
+        add_action( 'init', [ $this, 'action_init_after_post_types_registered' ], 11 );
+    }
 
+    /**
+     * Register newsletter fields
+     */
+    public function action_init_after_post_types_registered() {
+        $items = new \Fieldmanager_Group( esc_html__( 'Item', 'pedestal' ), [
+            'name'           => 'newsletter_items',
+            'limit'          => 0,
+            'save_empty'     => false,
+            'extra_elements' => 0,
+            'sortable'       => true,
+            'save_empty'     => false,
+            'extra_elements' => 0,
+            'add_more_label' => esc_html__( 'Add Item', 'pedestal' ),
+            'collapsible'    => true,
+            'label_macro'    => [
+                '%s',
+                'type',
+            ],
+            'children'       => [
+                'type' => new \Fieldmanager_Select( esc_html__( 'Type', 'pedestal' ), [
+                    'options' => static::get_newsletter_item_types(),
+                    'default_value'       => 'post',
+                    'first_empty'         => false,
+                    'required'            => true,
+                    'validation_rules'    => 'required',
+                    'validation_messages' => esc_html__( 'Required', 'pedestal' ),
+                ] ),
+                'post' => new \Fieldmanager_Autocomplete( esc_html__( 'Post Selection (Required)', 'pedestal' ), [
+                    'name'        => 'post',
+                    'description' => esc_html__( 'Select an Entity', 'pedestal' ),
+                    'display_if'  => [
+                        'src'   => 'type',
+                        'value' => 'post',
+                    ],
+                    'required'            => true,
+                    'validation_rules'    => 'required',
+                    'validation_messages' => esc_html__( 'Required', 'pedestal' ),
+                    'show_edit_link'      => true,
+                    'datasource'          => new \Fieldmanager_Datasource_Post( [
+                        'query_args' => [
+                            'post_type'      => Types::get_entity_post_types(),
+                            'posts_per_page' => 1000,
+                        ],
+                    ] ),
+
+                ] ),
+                'post_title'     => new \Fieldmanager_Textfield( esc_html__( 'Title', 'pedestal' ), [
+                    'name'        => 'post_title',
+                    'description' => esc_html__( 'Customize the display title. Defaults to the Entity\'s original title. Not used for Events.', 'pedestal' ),
+                    'display_if'  => [
+                        'src'   => 'type',
+                        'value' => 'post',
+                    ],
+                ] ),
+                'description' => new \Fieldmanager_RichTextArea( esc_html__( 'Description', 'pedestal' ), [
+                    'name'        => 'description',
+                    'description' => esc_html__( 'Customize the blurb. Not used for Events.', 'pedestal' ),
+                    'display_if'  => [
+                        'src'   => 'type',
+                        'value' => 'post',
+                    ],
+                    'editor_settings' => [
+                        'teeny'         => true,
+                        'media_buttons' => false,
+                        'editor_height' => 300,
+                    ],
+                ] ),
+                'heading_title'     => new \Fieldmanager_Textfield( esc_html__( 'Heading Text', 'pedestal' ), [
+                    'name'        => 'heading_title',
+                    'display_if'  => [
+                        'src'   => 'type',
+                        'value' => 'heading',
+                    ],
+                    'required'            => true,
+                    'validation_rules'    => 'required',
+                    'validation_messages' => esc_html__( 'Required', 'pedestal' ),
+                ] ),
+            ],
+        ] );
+        $items->add_meta_box( esc_html__( 'Newsletter Items', 'pedestal' ), [ 'pedestal_newsletter' ], 'normal', 'high' );
+    }
+
+    /**
+     * Get the Newsletter item types
+     *
+     * @return array
+     */
+    public static function get_newsletter_item_types() {
+        return static::$newsletter_item_types;
     }
 }

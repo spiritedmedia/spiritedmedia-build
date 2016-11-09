@@ -6,6 +6,8 @@ use \Pedestal\Utils\Utils;
 
 use \Pedestal\Posts\Post;
 
+use Pedestal\Registrations\Taxonomies\Taxonomies;
+
 use Pedestal\Posts\Slots\Slots;
 
 class Slot_Types extends Types {
@@ -119,29 +121,11 @@ class Slot_Types extends Types {
     public function action_init_after_post_types_registered() {
         $boxes = [];
 
-        // The Sponsorship / Partnership term ID depends on a predictable
-        // slug, so a term with this slug must be created if it doesn't exist
-        $term_sponsors = get_term_by( 'slug', 'sponsors-partners', 'pedestal_slot_item_type' );
-        if ( ! empty( $term_sponsors ) && is_a( $term_sponsors, 'WP_Term' ) ) {
-            $term_sponsors_id = (int) $term_sponsors->term_id;
-        } else {
-            $term_sponsors_data = wp_insert_term( 'Sponsorship / Partnership', 'pedestal_slot_item_type', [
-                'slug' => 'sponsors-partners',
-            ] );
-
-            if ( is_array( $term_sponsors_data ) && ! is_wp_error( $term_sponsors_data ) && isset( $term_sponsors_data['term_id'] ) ) {
-                $term_sponsors_id = $term_sponsors_data['term_id'];
-                if ( ! is_numeric( $term_sponsors_id ) ) {
-                    return;
-                }
-                add_term_meta( $term_sponsors_id, 'plural', 'Sponsorships / Partnerships', true );
-            } elseif ( is_wp_error( $term_sponsors_data ) ) {
-                trigger_error( $term_sponsors_data->get_error_message(), E_USER_ERROR );
-                return;
-            } else {
-                return;
-            }
-        }
+        $term_id_sponsors = Taxonomies::get_or_create_term( 'pedestal_slot_item_type',
+            'sponsors-partners',
+            'Sponsorship / Partnership',
+            'Sponsorships / Partnerships'
+        );
 
         $post_type_support = Types::get_post_types_with_label(
             Types::get_post_types_by_supported_feature( 'slots' )
@@ -192,7 +176,7 @@ class Slot_Types extends Types {
                     'name'           => 'sponsorship',
                     'display_if'  => [
                         'src'   => 'type',
-                        'value' => $term_sponsors_id,
+                        'value' => $term_id_sponsors,
                     ],
                     'children'       => [
                         'url' => new \Fieldmanager_Link( esc_html__( 'Link URL', 'pedestal' ), [
@@ -244,6 +228,7 @@ class Slot_Types extends Types {
                         'post_type' => $post_type,
                     ],
                 ] ),
+                'show_edit_link' => true,
             ] );
         }
 

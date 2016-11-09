@@ -22,8 +22,6 @@ class CLI extends \WP_CLI_Command {
 
     /**
      * Migrate legacy Slot Item Sponsor meta to new format
-     *
-     * https://github.com/spiritedmedia/spiritedmedia/issues/1468
      */
     public function migrate_sponsorship_meta( $args, $assoc_args ) {
         $slot_item_count_migrated = 0;
@@ -50,20 +48,8 @@ class CLI extends \WP_CLI_Command {
             $defaults = $slot_item->get_meta( 'slot_item_placement_defaults' );
             $placements = $slot_item->get_placement_rules();
 
-            if ( is_array( $defaults ) && isset( $defaults['date'] ) ) {
-                $defaults['date_start'] = $defaults['date'];
-                $defaults['date_end'] = $defaults['date'];
-            }
-
-            if ( ! empty( $placements ) ) {
-                foreach ( $placements as &$placement ) {
-                    if ( isset( $placement['date'] ) ) {
-                        $placement['date_start'] = $placement['date'];
-                        $placement['date_end'] = $placement['date'];
-                        unset( $placement['date'] );
-                    }
-                }
-            }
+            // Specific migration changes go here, between the getting and setting of placements
+            // ...
 
             $slot_item->set_meta( 'slot_item_placement_defaults', $defaults );
             $slot_item->set_meta( 'slot_item_placement_rules', $placements );

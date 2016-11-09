@@ -4,7 +4,7 @@
 
 <div class="email-constrain content-wrapper">
 
-    <div id="entity-container" class="email-newsletter  c-panel  has-cap">
+    <div id="entity-container" class="c-content  c-newsletter  c-panel  has-cap">
 
         <p class="cap">
             <a class="cta cap__btn" href="{{ item.get_the_permalink }}">Email not displaying correctly? <strong>View it in your browser</strong>.</a>
@@ -21,7 +21,17 @@
             </div>
             {% endif %}
 
-            {{ item.get_the_content }}
+            {% if item.get_items %}
+            <div class="c-content__entities  c-stream  c-stream--simple  c-stream--pedalized">
+                {% include 'partials/stream/stream-newsletter-items.twig' %}
+            </div>
+
+            {% else %}
+
+            <section class="c-content__body  s-post-content">
+                {{ item.get_the_content }}
+            </section>
+            {% endif %}
         </div>
 
         <p class="cap">

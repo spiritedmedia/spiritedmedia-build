@@ -1,0 +1,40 @@
+// ==========================================================================
+// Pedestal // Components // NEWSLETTER
+// ==========================================================================
+
+
+.c-newsletter {
+  $-event: '.c-stream__item[data-post-type="event"]';
+
+  #{$-event} + #{$-event} {
+    border-top: 0;
+    margin-top: 0;
+
+    &::before {
+      width: 0;
+    }
+  }
+
+
+  // @TODO Override default item title color until we can decouple color
+  // from item title entirely
+  .c-item-title__link {
+    @include anchorage( '&' );
+  }
+
+
+  @if $email {
+    // scss-lint:disable SelectorFormat
+
+    // This method is easier than introducing an entirely new class just for text-
+    // transform override. But there sure is a lot of text-transform overriding
+    // going on, enough for a refactoring at some point.
+    .cta:first-of-type {
+      text-transform: none;
+    }
+
+    .entity {
+      border: 0;
+    }
+  }
+}

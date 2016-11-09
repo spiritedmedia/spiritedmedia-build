@@ -1,4 +1,8 @@
-<label class="website">
-    {{ __( 'Humans: What is two plus three?', 'pedestal' ) }}
-    <input type="text" name="website" value="" placeholder="Your answer goes here" />
+<label class="pedestal-current-year-check" for="pedestal-current-year-check">
+    {{ __( 'What is the current year?', 'pedestal' ) }}
+    <input type="text" name="pedestal-current-year-check" id="pedestal-current-year-check" class="js-pedestal-current-year-check" value="" placeholder="YYYY" >
+</label>
+<label style="display:none;" for="pedestal-blank-field-check">
+    {{ __( 'Leave this field blank.', 'pedestal' ) }}
+    <input type="text" name="pedestal-blank-field-check" id="pedestal-blank-field-check" value="" placeholder="">
 </label>

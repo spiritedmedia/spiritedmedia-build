@@ -292,4 +292,45 @@ class Taxonomies {
         $term = get_term_by( 'slug', $type_slug, 'pedestal_locality_type' );
         return (int) $term->term_id;
     }
+
+    /**
+     * Get a term ID, create term if it doesn't exist
+     *
+     * @param  string $taxonomy Taxonomy slug
+     * @param  string $slug     Term slug
+     * @param  string $name     Term singular name
+     * @param  string $plural   Term plural name
+     * @return int Term ID if successful
+     */
+    public static function get_or_create_term( string $taxonomy, string $slug, string $name, string $plural ) {
+        if ( empty( $taxonomy ) || empty( $slug ) || empty( $name ) || empty( $plural ) ) {
+            return;
+        }
+
+        $term = get_term_by( 'slug', $slug, $taxonomy );
+        if ( ! empty( $term ) && is_a( $term, 'WP_Term' ) ) {
+            $term_id = (int) $term->term_id;
+            return $term_id;
+        }
+
+        $term_data = wp_insert_term( $name, $taxonomy, [
+            'slug' => $slug,
+        ] );
+
+        if ( is_wp_error( $term_data ) ) {
+            trigger_error( $term_data->get_error_message(), E_USER_ERROR );
+            return;
+        }
+
+        if ( ! is_array( $term_data ) || ! isset( $term_data['term_id'] ) ) {
+            return;
+        }
+
+        $term_id = $term_data['term_id'];
+        if ( ! is_numeric( $term_id ) ) {
+            return;
+        }
+        add_term_meta( $term_id, 'plural', $plural, true );
+        return $term_id;
+    }
 }

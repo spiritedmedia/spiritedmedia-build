@@ -26,13 +26,6 @@ class Subscriptions {
 
     private static $default_notify_channel = PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL;
 
-    private $math_honeypot_answers = [
-        '5',
-        'five',
-        'Five',
-        'FIVE',
-    ];
-
     private static $instance;
 
     public static function get_instance() {
@@ -755,12 +748,7 @@ class Subscriptions {
             exit;
         }
 
-        // Honeypot
-        if ( ! in_array( $_POST['website'], $this->math_honeypot_answers ) ) {
-            status_header( 400 );
-            echo sprintf( 'Incorrect answer! It seems you are a bot. If you are not a bot, please email %s.', PEDESTAL_EMAIL_CONTACT );
-            exit;
-        }
+        $this->handle_honeypot_check();
 
         $email_address = sanitize_email( $_POST['email_address'] );
         if ( ! is_email( $email_address ) ) {
@@ -823,12 +811,7 @@ class Subscriptions {
             exit;
         }
 
-        // Honeypot
-        if ( ! in_array( $_POST['website'], $this->math_honeypot_answers ) ) {
-            status_header( 400 );
-            echo sprintf( 'Incorrect answer! It seems you are a bot. If you are not a bot, please email %s.', PEDESTAL_EMAIL_CONTACT );
-            exit;
-        }
+        $this->handle_honeypot_check();
 
         $newsletter_subscribe = $this->subscribe_daily_newsletter( $_POST['email_address'] );
 
@@ -841,6 +824,18 @@ class Subscriptions {
         status_header( 200 );
         exit;
 
+    }
+
+    private function handle_honeypot_check() {
+        if ( isset( $_POST['pedestal-current-year-check'] ) && isset( $_POST['pedestal-blank-field-check'] ) ) {
+            if ( empty( $_POST['pedestal-blank-field-check'] ) && date( 'Y' ) == $_POST['pedestal-current-year-check'] ) {
+                return true;
+            }
+        }
+
+        status_header( 400 );
+        echo sprintf( 'It seems you are a bot. If you are not a bot, please email %s.', PEDESTAL_EMAIL_CONTACT );
+        exit;
     }
 
     /**

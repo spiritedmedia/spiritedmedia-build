@@ -73,8 +73,10 @@
 
 
 // * Shortcode Position -- All Scopes
+// * Newsletter Item Position -- All Scopes
 // * Component Position -- All Scopes
 [data-slot-position*="shortcode"],
+[data-slot-position*="newsletter_item"],
 [data-slot-position*="component"] {
   .c-slot__item {
     padding-bottom: $c-slot-item-shortcode-pd;

@@ -4,7 +4,7 @@
 
 <main role="main" class="{{ main_classes }}">
 
-    <article class="c-content  c-panel  has-title-bar  {{ item.css_classes }}"
+    <article class="c-newsletter  c-content  c-panel  has-title-bar  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
         {{ macros.title_bar( _context, { 'title': 'Newsletter' } ) }}
@@ -23,11 +23,19 @@
             </section>
             {% endif %}
 
+            {% if item.get_items %}
+
+            <section class="c-content__entities  c-stream  c-stream--simple  c-stream--pedalized  js-stream">
+                {% include 'partials/stream/stream-newsletter-items.twig' %}
             </section>
+
+            {% else %}
 
             <section class="c-content__body  s-post-content">
                 {{ item.get_the_content }}
             </section>
+
+            {% endif %}
 
             <footer class="c-content__footer  [ o-rule--closure  o-rule ]"></footer>
 

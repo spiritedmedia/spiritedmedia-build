@@ -639,7 +639,7 @@ class Types {
     public static function is_entity( $post_token ) {
         if (
             ( is_string( $post_token ) && in_array( $post_token, self::get_entity_post_types() ) ) ||
-            ( is_object( $post_token ) && is_a( $post_token, 'Pedestal\\Posts\\Entities\\Entity' ) )
+            ( is_object( $post_token ) && is_a( $post_token, '\\Pedestal\\Posts\\Entities\\Entity' ) )
         ) {
             return true;
         }
@@ -655,7 +655,7 @@ class Types {
     public static function is_cluster( $post_token ) {
         if (
             ( is_string( $post_token ) && in_array( $post_token, self::get_cluster_post_types() ) ) ||
-            ( is_object( $post_token ) && is_a( $post_token, 'Pedestal\\Posts\\Clusters\\Cluster' ) )
+            ( is_object( $post_token ) && is_a( $post_token, '\\Pedestal\\Posts\\Clusters\\Cluster' ) )
         ) {
             return true;
         }
@@ -687,7 +687,7 @@ class Types {
     public static function is_locality( $post_token ) {
         if (
             ( is_string( $post_token ) && 'pedestal_locality' === $post_token ) ||
-            ( is_object( $post_token ) && is_a( $post_token, 'Pedestal\\Posts\\Clusters\\Geospaces\\Localities\\Locality' ) )
+            ( is_object( $post_token ) && is_a( $post_token, '\\Pedestal\\Posts\\Clusters\\Geospaces\\Localities\\Locality' ) )
         ) {
             return true;
         }
@@ -701,10 +701,7 @@ class Types {
      * @return boolean
      */
     public static function is_post( $post_obj ) {
-        if ( is_a( $post_obj, 'Pedestal\\Posts\\Post' ) ) {
-            return true;
-        }
-        return false;
+        return is_a( $post_obj, '\\Pedestal\\Posts\\Post' );
     }
 
     /**

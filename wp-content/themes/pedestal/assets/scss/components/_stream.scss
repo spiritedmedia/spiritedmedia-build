@@ -7,7 +7,10 @@
 // scss-lint:disable SelectorFormat
 
 
-.c-stream {
+$c: '.c-stream';
+
+
+#{$c} {
   @include clearfix;
   text-align: left;
 
@@ -20,71 +23,70 @@
   &.is-loading {
     opacity: $loading-default-opacity;
   }
-}
 
 
-  .c-stream__header {
+  &__header {
     margin-top: c-stream-property-get( item-spacing );
 
     @media #{$small-only} {
       text-align: center;
     }
-  }
 
-    .c-stream__header__item {
+    &__item {
       display: inline-block;
     }
 
-
-    .c-stream__header__rule {
+    &__rule {
       margin-top: 0;
-    }
-
-
-    /*h1*/.c-stream__title {
-      font-size: $h4-font-size;
-      font-weight: normal;
-      text-transform: uppercase;
-      font-style: italic;
-      color: $grey-mid;
-    }
-
-
-    .c-stream__paged {
-      .c-stream__header & {
-        text-align: left;
-        margin-left: c-stream-property-get( header-paged-m-l );
-      }
-    }
-
-
-  .c-stream__footer {
-    .c-pagination {
-      .c-panel & {
-        position: relative;
-        margin-right: -( $c-panel-padding );
-        margin-left: -( $c-panel-padding );
-        bottom: -( $c-panel-padding );
-      }
     }
   }
 
 
+  /*h1*/&__title {
+    font-size: $h4-font-size;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-style: italic;
+    color: $grey-mid;
+  }
 
 
+  &__paged {
+    #{$c}__header & {
+      text-align: left;
+      margin-left: c-stream-property-get( header-paged-m-l );
+    }
+  }
 
-//
-// Stream // Items
-// ==========================================================================
+
+  &__items {}
 
 
-.c-stream__items {}
+  // A stream heading may appear alongside stream items as a way of separating items
+  &__heading {
+    text-transform: uppercase;
+
+    @if $email {
+      font-size: $h5-font-size;
+      margin-top: $base-spacing-unit;
+    } @else {
+      font-size: $h4-font-size;
+      margin-top: $base-spacing-unit * 2.5;
+    }
+
+    + #{$c}__item {
+      margin-top: 0;
+    }
+  }
 
 
-  .c-stream__item {
+  &__item {
     @include clearfix;
     position: relative;
-    margin-top: c-stream-property-get( item-spacing );
+
+    @if not $email {
+      margin-top: c-stream-property-get( item-spacing );
+    }
 
     &:first-child {
       margin-top: 0;
@@ -99,13 +101,12 @@
         margin-top: halve( map-get-strict( $c-title-bar-settings, 'm-t' ) );
       }
     }
-  }
 
 
-    .c-stream__item__body {}
+    &__body {}
 
-    .stream-preview-image,
-    .c-stream__item__img {
+
+    &__img {
 
       @media #{$medium-up} {
         width: c-stream-property-get( item-img-thumbnail-w );
@@ -119,236 +120,250 @@
       .rail & {
         width: auto;
       }
+    } // __item__img
+  } // __item
 
+
+  .c-pagination {
+    .c-panel & {
+      position: relative;
+      margin-right: -( $c-panel-padding );
+      margin-left: -( $c-panel-padding );
+      bottom: -( $c-panel-padding );
     }
-
-
-    .c-stream__item__title {}
-
-
-
-
-
-//
-// Stream Variations
-// ==========================================================================
-
-
-/**
- * Stream with items in separate panels
- *
- * Extends `.c-stream`.
- */
-
-.c-stream--isolated {
-
-
-  // scss-lint:disable Indentation SelectorFormat
-
-
-  [data-post-type="article"],
-  [data-post-type="whosnext"] {
-
-    @media #{$medium-up} {
-
-      .c-stream__item__body {
-        position: relative;
-        z-index: $z-entity-body;
-      }
-
-      .stream-preview-image,
-      .c-stream__item__img {
-        margin: 0;
-        overflow: hidden;
-        float: none;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0.15;
-        z-index: $z-stream-item-img;
-
-        img {
-          position: absolute;
-          bottom: -20%;
-          width: 100%;
-          height: auto;
-        }
-      }
-
-    }
-
-  } // end article / whosnext
-
-}
+  }
 
 
 
 
 
-/**
- * Stream with items separated by a pedal rule
- *
- * Extends `.c-stream`.
- */
+  //
+  // Stream Variations
+  // ==========================================================================
 
-.c-stream--pedalized {
 
-  // Remove pedal rule from first stream item if header is present
-  .c-stream__header {
-    // scss-lint:disable NestingDepth
-    + .c-stream__items {
-      .c-stream__item {
-        &:first-child {
-          border-top: 0;
+  /// Stream with items in separate panels
+  ///
+  /// Extends `.c-stream`.
+  &--isolated {
+    // scss-lint:disable Indentation SelectorFormat
 
-          &::before {
-            width: 0;
+    [data-post-type="article"],
+    [data-post-type="whosnext"] {
+
+      @media #{$medium-up} {
+
+        #{$c}__item {
+          // scss-lint:disable NestingDepth
+
+          &__body {
+            position: relative;
+            z-index: $z-entity-body;
           }
-        }
+
+          &__img {
+            margin: 0;
+            overflow: hidden;
+            float: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.15;
+            z-index: $z-stream-item-img;
+
+            img {
+              position: absolute;
+              bottom: -20%;
+              width: 100%;
+              height: auto;
+            }
+          } // end __item__img
+        } // end __item
+      } // end @media
+    } // end article / whosnext
+  } // end --isolated
+
+
+
+
+
+  /// Stream with items separated by a pedal rule
+  ///
+  /// Extends `.c-stream`.
+  &--pedalized {
+
+    // Remove pedal rule from:
+    // 1. First stream item after stream header
+    // 2. First stream item after heading
+    #{$c}__header + #{$c}__items #{$c}__item:first-child, /* 1 */
+    #{$c}__heading + #{$c}__item /* 2 */ {
+      border-top: 0;
+
+      &::before {
+        width: 0;
+      }
+    }
+
+
+    #{$c}__item {
+      &__body {
+        padding-top: halve( $c-panel-padding );
+      }
+
+      &__img {
+        padding-top: $c-panel-padding;
+      }
+    }
+
+
+    .o-rule {
+      padding-top: 0;
+    }
+  } // end --pedalized
+
+
+
+
+
+  /// Stream with items in singular panel separated by standard borders
+  ///
+  /// Extends `.c-stream`.
+  &--ladder {
+    #{$c}__item {
+      @include stdbd( 'top' );
+      min-height: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-bottom: $c-panel-padding;
+
+      &:first-of-type {
+        border: 0;
       }
     }
   }
 
-  .o-rule {
-    padding-top: 0;
-  }
-
-  .stream-preview-image,
-  .c-stream__item__img {
-    padding-top: $c-panel-padding;
-  }
-
-  .c-stream__item__body {
-    padding-top: halve( $c-panel-padding );
-  }
-
-}
 
 
 
 
+   /// Stream with even top and bottom spacing and increased horizontal padding
+   ///
+   /// Extends `.c-stream`.
+  &--inset {
+    #{$c}__item {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: c-stream-property-get( even-spacing-sm );
+      padding-bottom: c-stream-property-get( even-spacing-sm );
 
-/**
- * Stream with items in singular panel separated by standard borders
- *
- * Extends `.c-stream`.
- */
+      @media #{$medium-up} {
+        padding-top: c-stream-property-get( even-spacing-lg );
+        padding-bottom: c-stream-property-get( even-spacing-lg );
+      }
 
-.c-stream--ladder {
-  .c-stream__item {
-    @include stdbd( 'top' );
-    min-height: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-bottom: $c-panel-padding;
-
-    &:first-of-type {
-      border: 0;
-    }
-  }
-}
+      &__inner {
+        @media #{$medium-up} {
+          margin-left: c-stream-property-get( inset-spacing );
+          margin-right: c-stream-property-get( inset-spacing );
+        }
+      }
+    } // end __item
+  } // end --inset
 
 
 
 
 
-/**
- * Stream with even top and bottom spacing and increased horizontal padding
- *
- * Extends `.c-stream`.
- */
+  /// Stream with small always-floated thumbnails and title only
+  &--imglist {
 
-.c-stream--inset {
+    #{$c}__item {
+      &__img {
+        width: c-stream-property-get( imglist, img-size-sm );
+        height: c-stream-property-get( imglist, img-size-sm );
 
-  .c-stream__item {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: c-stream-property-get( even-spacing-sm );
-    padding-bottom: c-stream-property-get( even-spacing-sm );
+        @media #{$medium-up} {
+          width: c-stream-property-get( imglist, img-size-lg );
+          height: c-stream-property-get( imglist, img-size-lg );
+        }
 
-    @media #{$medium-up} {
-      padding-top: c-stream-property-get( even-spacing-lg );
-      padding-bottom: c-stream-property-get( even-spacing-lg );
-    }
-  }
+        // scss-lint:disable NestingDepth
+        &--placeholder {
+          @include img-placeholder( c-stream-property-get( imglist, img-size-sm ) );
 
-  .c-stream__item__inner {
-    @media #{$medium-up} {
-      margin-left: c-stream-property-get( inset-spacing );
-      margin-right: c-stream-property-get( inset-spacing );
-    }
-  }
-
-}
+          @media #{$medium-up} {
+            @include img-placeholder( c-stream-property-get( imglist, img-size-lg ) );
+          }
+        } // __item__img--placeholder
+      } // __item__img
+    } // __item
 
 
+    .c-item-title {
+      &__title {
+        font-size: c-stream-property-get( imglist, f-z-sm );
+
+        @media #{$medium-up} {
+          font-size: c-stream-property-get( imglist, f-z-lg );
+        }
+      }
+
+      &__link:not( .entity--promo ) {
+        @include anchorage( '&' );
+      }
+    } // item-title
 
 
+    &.c-stream--sm {
+      #{$c}__item {
+        margin-top: halve( c-stream-property-get( item-spacing ) );
 
-/**
- * Simple stream with small always-floated thumbnails and title only
- */
-.c-stream--imglist {
+        // scss-lint:disable NestingDepth
+        &__img {
+          width: c-stream-property-get( imglist, img-size-sm );
+          height: c-stream-property-get( imglist, img-size-sm );
 
-  .stream-preview-image,
-  .c-stream__item__img {
-    width: c-stream-property-get( imglist, img-size-sm );
-    height: c-stream-property-get( imglist, img-size-sm );
-
-    @media #{$medium-up} {
-      width: c-stream-property-get( imglist, img-size-lg );
-      height: c-stream-property-get( imglist, img-size-lg );
-    }
-  }
-
-  .c-stream__item__img--placeholder {
-    @include img-placeholder( c-stream-property-get( imglist, img-size-sm ) );
-
-    @media #{$medium-up} {
-      @include img-placeholder( c-stream-property-get( imglist, img-size-lg ) );
-    }
-  }
+          &--placeholder {
+            @include img-placeholder( c-stream-property-get( imglist, img-size-sm ) );
+          } // __item__img--placeholder
+        } // __item__img
+      } // __item
 
 
-  .c-stream__item__body {}
-
-
-  .c-item-title__title {
-    font-size: c-stream-property-get( imglist, f-z-sm );
-
-    @media #{$medium-up} {
-      font-size: c-stream-property-get( imglist, f-z-lg );
-    }
-  }
-
-  .c-item-title__link:not( .entity--promo ) {
-    @include anchorage( '&' );
-  }
-
-
-  &.c-stream--sm {
-    .c-stream__item {
-      margin-top: halve( c-stream-property-get( item-spacing ) );
+      .c-item-title__title {
+        font-size: $paragraph-font-size;
+      }
     }
 
-    .stream-preview-image,
-    .c-stream__item__img {
-      width: c-stream-property-get( imglist, img-size-sm );
-      height: c-stream-property-get( imglist, img-size-sm );
+  }
+
+
+
+
+
+  /// Stream with minor headings as item titles
+  &--simple {
+    #{$c}__item {
+      margin-bottom: $base-spacing-unit;
     }
 
-    .c-stream__item__img--placeholder {
-      @include img-placeholder( c-stream-property-get( imglist, img-size-sm ) );
+    @if $email {
+      #{$c}__heading {
+        margin-bottom: $half-spacing-unit;
+      }
+    }
+
+    .entity-excerpt p {
+      margin-bottom: 0;
     }
 
     .c-item-title__title {
-      font-size: $paragraph-font-size;
+      @extend %u-heading--minor;
     }
-  }
-
-}
+  } // &--simple
+} // end stream
 
 
 
@@ -380,4 +395,3 @@
 
 
 .c-stream--sm {}
-

@@ -131,33 +131,3 @@
   }
 
 }
-
-
-
-
-
-//
-// Events
-// ==========================================================================
-
-
-.entity--event {
-
-  .email-body & {
-    .c-exporter {
-      > .inner {
-        border-top: 0;
-      }
-    }
-  }
-
-}
-
-  .event-details {
-    border-bottom: 0;
-
-    /*table*/.c-details-table__inner {
-      margin-bottom: 0;
-    }
-
-  }

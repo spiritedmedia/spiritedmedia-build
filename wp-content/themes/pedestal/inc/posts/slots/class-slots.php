@@ -48,8 +48,17 @@ class Slots {
             'email' => [ 'lead' ],
         ],
         'event' => [
-            'site'  => [ 'single_lead', 'shortcode' ],
-            'email' => [ 'shortcode' ],
+            'site'  => [
+                'single_lead',
+                'shortcode',
+                'newsletter_item',
+                'newsletter_promoted_event',
+            ],
+            'email' => [
+                'shortcode',
+                'newsletter_item',
+                'newsletter_promoted_event',
+            ],
         ],
         'article' => [
             'site'  => [ 'single_lead', 'shortcode' ],
@@ -113,11 +122,15 @@ class Slots {
         // Store the date in ISO-8601 date format, compensate for
         // FM's weird date array storage
         $setup_dates = function( &$array ) {
-            foreach ( self::$placement_date_keys as $date_keys ) {
-                if ( empty( $array[ $date_keys ] ) ) {
+            foreach ( self::$placement_date_keys as $key ) {
+                if ( empty( $array[ $key ] ) ) {
                     continue;
                 }
-                $array[ $date_keys ] = date( self::$day_format, strtotime( $array[ $date_keys ]['date'] ) );
+                $value = $array[ $key ];
+                if ( ! empty( $value['date'] ) && is_string( $value['date'] ) ) {
+                    $value = strtotime( $value['date'] );
+                }
+                $array[ $key ] = date( self::$day_format, $value );
             }
             if ( empty( $array['date_end'] ) ) {
                 $array['date_end'] = 0;
@@ -141,17 +154,24 @@ class Slots {
         $placement_defaults = $_POST['slot_item_placement_defaults'];
         $placement_rules = $_POST['slot_item_placement_rules'];
 
-        if ( empty( $placement_defaults['date_end']['date'] ) ) {
+        // Handle missing start/end dates
+        if (
+            ( empty( $placement_defaults['date_end'] ) )
+            || ( isset( $placement_defaults['date_end']['date'] ) && empty( $placement_defaults['date_end']['date'] ) )
+        ) {
             $placement_defaults['date_end'] = $placement_defaults['date_start'];
-        } elseif ( empty( $placement_defaults['date_start']['date'] ) ) {
+        } elseif (
+            ( empty( $placement_defaults['date_end'] ) )
+            || ( isset( $placement_defaults['date_start']['date'] ) && empty( $placement_defaults['date_start']['date'] ) )
+        ) {
             $placement_defaults['date_start'] = $placement_defaults['date_end'];
         }
+
         $_POST['slot_item_placement_defaults'] = $placement_defaults;
         $default_placement_data = $placement_defaults + [ 'index' => 0 ];
         $setup_dates( $default_placement_data );
         $this->handle_setup_placement_post( $post_id, $default_placement_data );
 
-        unset( $placement_rules['proto'] );
         if ( ! empty( $placement_rules ) ) {
             $placement_number = 0;
             foreach ( $placement_rules as &$placement_rule ) {
@@ -167,6 +187,7 @@ class Slots {
                     $placement_rule['date_start'] = $placement_rule['date_end'];
                 }
                 $placement_rule_data = $placement_rule;
+                unset( $placement_rule_data['proto'] );
                 $setup_dates( $placement_rule_data );
                 $this->handle_setup_placement_rules_posts( $post_id, $default_placement_data, $placement_rule_data, $placement_number );
             }
@@ -284,15 +305,16 @@ class Slots {
     }
 
     /**
-     * Get the single most recent slot item for a slot
+     * Query placements based on provided criteria
      *
-     * If the slot item's rules are met, then return the
-     *
-     * @param  string $slot_position Slot name
-     * @return Post
+     * @param  array  $options Query options
+     * @return array|false     Array of Placement objects if successful, false on failure
      */
-    private static function get_slot_data( $slot_position, $options ) {
-        $data = [];
+    private static function get_placements( array $options ) {
+        if ( ! $options ) {
+            return false;
+        }
+
         $today = date( self::$day_format );
         $today_day_of_week_num = date( 'w' );
 
@@ -301,10 +323,6 @@ class Slots {
             'posts_per_page' => 1000,
             'meta_query' => [
                 'relation' => 'AND',
-                [
-                    'key'   => 'positions',
-                    'value' => $slot_position,
-                ],
                 [
                     'key'     => 'date_start',
                     'value'   => $today,
@@ -322,6 +340,13 @@ class Slots {
             ],
         ];
 
+        if ( ! empty( $options['slot_position'] ) ) {
+            $args['meta_query'][] = [
+                'key'   => 'positions',
+                'value' => $options['slot_position'],
+            ];
+        }
+
         $query = new \WP_Query( $args );
         $placements = $query->posts;
 
@@ -329,28 +354,18 @@ class Slots {
             return false;
         }
 
-        $placement_id = 0;
-        $valid_slot_items = [];
         foreach ( $placements as $k => $placement ) {
-            $placement = Placement::get_by_post_id( $placement->ID );
-            if ( ! $placement instanceof Placement ) {
+            $placement_obj = Placement::get_by_post_id( $placement->ID );
+            if ( ! $placement_obj instanceof Placement ) {
+                unset( $placements[ $k ] );
                 continue;
             }
 
-            $slot_item = Slot_Item::get_by_post_id( wp_get_post_parent_id( $placement->get_id() ) );
-            if ( ! $slot_item instanceof Slot_Item ) {
-                continue;
-            }
-
-            if ( 'publish' !== $slot_item->get_status() ) {
-                continue;
-            }
-
-            $placement_type = $placement->get_placement_type();
-            $placement_selected_post = $placement->get_selected_post_id();
-            $placement_date_start = $placement->get_date_start();
-            $placement_date_end = $placement->get_date_end();
-            $placement_subrange_days = $placement->get_date_subrange_days();
+            $placement_type = $placement_obj->get_placement_type();
+            $placement_selected_post = $placement_obj->get_selected_post_id();
+            $placement_date_start = $placement_obj->get_date_start();
+            $placement_date_end = $placement_obj->get_date_end();
+            $placement_subrange_days = $placement_obj->get_date_subrange_days();
 
             // Omit some placements that don't fit within our date / day of week criteria
             if (
@@ -358,62 +373,113 @@ class Slots {
                 ( ! empty( $placement_subrange_days ) && ! in_array( $today_day_of_week_num, $placement_subrange_days )
                 )
             ) {
+                unset( $placements[ $k ] );
                 continue;
             }
 
-            // Prioritize specific post over other types of placements
-            if ( ! empty( $placement_selected_post ) ) {
-                if ( $options['post_id'] == $placement_selected_post ) {
-                    return $slot_item;
-                }
-                continue;
-            }
-
-            $valid_slot_items[] = $slot_item;
+            $placements[ $k ] = $placement_obj;
         }
 
-        if ( empty( $valid_slot_items ) ) {
+        if ( empty( $placements ) ) {
             return false;
         }
-        return $valid_slot_items[0];
+        return $placements;
+    }
+
+    /**
+     * Get the post object for a slot
+     *
+     * @param  string $return_type       Non-prefixed post type to return
+     *     instance of, e.g. 'slot_item'
+     * @param  array  $placement_options Options for restricting Placements
+     * @return Post|false                Post family object on success, false on fail
+     */
+    private static function get_slot_data( string $return_type, array $placement_options ) {
+        if ( ! $return_type ) {
+            return false;
+        }
+
+        $post_type = 'pedestal_' . $return_type;
+        $post_class = Types::get_post_type_class( $post_type );
+
+        if ( 'slot_item' !== $return_type ) {
+            $placement_options['type'] = $post_type;
+        }
+
+        $placements = static::get_placements( $placement_options );
+        if ( empty( $placements ) || ! is_array( $placements ) ) {
+            return false;
+        }
+
+        foreach ( $placements as $k => $placement ) {
+            $post_id = 0;
+            $placement_selected_post = $placement->get_selected_post_id();
+
+            if ( 'slot_item' === $return_type ) {
+                // Prioritize specific post over other types of placements
+                if ( ! empty( $placement_selected_post ) && $placement_options['post_id'] != $placement_selected_post ) {
+                    continue;
+                }
+                $post_id = wp_get_post_parent_id( $placement->get_id() );
+            } elseif ( ! empty( $placement_selected_post ) ) {
+                $post_id = $placement_selected_post;
+            }
+
+            $post_obj = $post_class::get_by_post_id( $post_id );
+            if ( ! $post_obj instanceof $post_class ) {
+                continue;
+            }
+
+            if ( 'publish' !== $post_obj->get_status() ) {
+                continue;
+            }
+
+            return $post_obj;
+        }
     }
 
     /**
      * Handle the `ped_slot()` Twig function
      *
-     * @param  array  $context       Twig context -- provided automatically
-     * @param  string $slot_position Slot position
-     * @param  string $type          Placement type
-     * @param  array  $options       Options to override defaults
+     * @param  array  $context            Twig context -- provided automatically
+     * @param  string $slot_position      Slot position
+     * @param  string $placement_type     Placement type
+     * @param  array  $placement_options  Options to override defaults
      * @return string                Slot HTML
      */
-    public function handle_twig_func_slot( $context, string $slot_position = '', string $type = '', array $options = [] ) {
+    public function handle_twig_func_slot( $context,
+        string $slot_position = '',
+        string $placement_type = '',
+        array $placement_options = []
+    ) {
 
-        if ( empty( $slot_position ) || ! is_string( $slot_position ) || ! is_array( $options ) ) {
+        if ( empty( $slot_position ) || ! isset( $context['is_email'] ) || empty( $context['item'] ) ) {
             return '';
         }
 
-        if ( ! isset( $context['is_email'] ) || empty( $context['item'] ) ) {
-            return '';
-        }
-
-        // Get some of the default options from the item in the context
-        $item = $context['item'];
-        if ( Types::is_post( $item ) ) {
-            $default_options = [
-                'post_id' => $item->get_id(),
-                'type'    => $item->get_post_type(),
-            ];
-            $options = array_merge( $options, $default_options );
+        $default_options = [];
+        $slot_data_return_type = 'slot_item';
+        if ( 'newsletter_promoted_event' === $slot_position ) {
+            $slot_data_return_type = 'event';
         } else {
-            return '';
+            // Get some of the default options from the item in the context
+            $item = $context['item'];
+            if ( Types::is_post( $item ) ) {
+                $default_options = [
+                    'post_id' => $item->get_id(),
+                    'type'    => $item->get_post_type(),
+                ];
+            } else {
+                return '';
+            }
         }
+        $placement_options = array_merge( $placement_options, $default_options );
 
         $data_atts = [];
-        if ( ! empty( $type ) ) {
-            $options['type'] = $type;
+        if ( ! empty( $placement_type ) ) {
+            $placement_options['type'] = $placement_type;
             if ( 'component' === $slot_position ) {
-                $data_atts['component-type'] = $type;
+                $data_atts['component-type'] = $placement_type;
             }
         }
 
@@ -422,30 +488,46 @@ class Slots {
         if ( ! empty( $context['is_email'] ) && $context['is_email'] ) {
             $scope = 'email';
         }
-        $slot_position = $scope . '_' . $slot_position;
+        $scoped_slot_position = $scope . '_' . $slot_position;
+        $placement_options['slot_position'] = $scoped_slot_position;
 
-        $slot_item = self::get_slot_data( $slot_position, $options );
-        if ( $slot_item instanceof Slot_Item ) {
-            $slot_item_type = $slot_item->get_slot_item_type_slug();
+        $slot_data = self::get_slot_data( $slot_data_return_type, $placement_options );
+        if ( Types::is_post( $slot_data ) ) {
+            $template = '';
+            $additional_classes = '';
+            if ( $slot_data instanceof Slot_Item ) {
+                $item_type = $slot_data->get_slot_item_type_slug();
+                $template = 'partials/slots/' . $item_type . '.twig';
+            } elseif ( 'newsletter_promoted_event' === $slot_position ) {
+                $context['item'] = $slot_data;
+                $item_type = $slot_data->get_type();
+                $additional_classes = 'c-stream__item js-stream-item o-rule o-rule--pedal';
+                $template = 'partials/slots/' . str_replace( '_', '-', $slot_position ) . '.twig';
+            }
 
-            $context['slots']['active'] = $slot_item;
+            if ( ! $template ) {
+                return '';
+            }
+
+            $context['slots']['active'] = $slot_data;
 
             $data_atts = $data_atts + [
-                'position'   => $slot_position,
-                'item-id'    => $slot_item->get_id(),
-                'item-type'  => $slot_item_type,
-                'item-title' => $slot_item->get_the_title(),
+                'position'   => $scoped_slot_position,
+                'item-id'    => $slot_data->get_id(),
+                'item-type'  => $item_type,
+                'item-title' => $slot_data->get_the_title(),
             ];
             $data_atts_str = Utils::array_to_data_atts_str( $data_atts, 'slot' );
 
-            $slot_item_type_class = str_replace( '_', '-', $slot_item_type );
-            $html = sprintf( '<div class="c-slot--%s  c-slot  js-slot-%s" %s>',
-                $slot_item_type_class,
-                $slot_item_type_class,
+            $item_type_class = str_replace( '_', '-', $item_type );
+            $html = sprintf( '<div class="c-slot--%s  c-slot  js-slot-%s %s" %s>',
+                $item_type_class,
+                $item_type_class,
+                $additional_classes,
                 $data_atts_str
             );
             ob_start();
-            $html .= Timber::render( 'partials/slots/' . $slot_item_type . '.twig', $context );
+            $html .= Timber::render( $template, $context );
             ob_get_clean();
             $html .= '</div>';
             return $html;

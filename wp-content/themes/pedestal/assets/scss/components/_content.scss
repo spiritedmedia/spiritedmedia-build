@@ -49,10 +49,6 @@
 
     .c-content__title {
 
-      + .c-content__subtitle {
-        margin-top: $c-content-subtitle-margin-top;
-      }
-
       &--page {
         text-align: center;
         font-weight: normal;
@@ -225,23 +221,4 @@
 
   .c-content__entities {}
 
-}
-
-
-
-
-
-//
-// Newsletters
-// ==========================================================================
-
-
-.c-content[data-post-type="newsletter"] {
-  // scss-lint:disable SelectorFormat
-  .s-post-content {
-    img {
-      display: block;
-      margin: 0 auto;
-    }
-  }
 }

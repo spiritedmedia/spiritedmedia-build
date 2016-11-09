@@ -1,0 +1,22 @@
+{% set stream_item_classes = macros.get_stream_item_classes( 'pedalized' ) %}
+{% if is_email %}
+    {% set stream_item_classes = macros.get_stream_item_classes %}
+{% endif %}
+
+
+<{{ el__item }} class="{{ stream_item_classes }}  {{ item.css_classes }}"
+         {{ item.get_the_data_atts }}>
+    <a id="{{ item.get_name }}"></a>
+    <div class="entity__inner  c-stream__item__inner">
+
+        <div class="c-stream__item__body">
+            {% include 'partials/item-title.twig' with { 'title': newsletter_item.title } %}
+
+            <div class="entity-excerpt s-post-content js-entity-excerpt">
+                {{ newsletter_item.description }}
+            </div>
+        </div>
+
+    </div>
+
+</{{ el__item }}>

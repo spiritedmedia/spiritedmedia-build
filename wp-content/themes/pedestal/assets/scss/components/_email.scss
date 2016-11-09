@@ -185,28 +185,6 @@
 
 
 //
-// Newsletter
-// ==========================================================================
-
-
-// This method is easier than introducing an entirely new class just for text-
-// transform override. But there sure is a lot of text-transform overriding
-// going on, enough for a refactoring at some point.
-.email-newsletter {
-  .cta:first-of-type {
-    text-transform: none;
-  }
-
-  .entity {
-    border: none;
-  }
-}
-
-
-
-
-
-//
 // Email Subscription Confirmation Page
 // ==========================================================================
 

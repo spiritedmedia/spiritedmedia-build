@@ -6,35 +6,7 @@
 
 
 
-.pedestal-shortcode {
-
-  &.entity--event {
-    border: 0;
-    margin-bottom: $paragraph-margin-bottom;
-    padding-bottom: 0;
-    margin-top: 0;
-
-    // @TODO this should be `.entity__inner`
-    .c-panel__inner {
-      padding: $c-panel-padding 0 0;
-    }
-
-    .c-item-title,
-    .c-slot {
-      @include stdbd;
-      border-bottom: 0;
-      padding: halve( $c-panel-padding ) $c-panel-padding;
-      margin-bottom: 0;
-    }
-
-    .c-slot {
-      border-top: 0;
-      padding: 0 halve( $c-panel-padding );
-    }
-
-  } // end &.entity--event
-
-} // end .pedestal-shortcode
+.pedestal-shortcode {}
 
 
 

@@ -4,6 +4,11 @@ namespace Pedestal\Posts;
 
 use Pedestal\Posts\Entities\Embed;
 
+use Pedestal\Registrations\Post_Types\{
+    Types,
+    General_Types
+};
+
 class Newsletter extends Post {
 
     use \Pedestal\Posts\Emailable;
@@ -45,5 +50,72 @@ class Newsletter extends Post {
      */
     public function get_instagram_of_the_day() {
         return Embed::get_instagram_of_the_day( $this->get_post_date( 'Y-m-d' ) );
+    }
+
+    /**
+     * Get the newsletter items
+     *
+     * @return array|false Array of item data on success, false if failure
+     */
+    public function get_items() {
+        $items = $this->get_meta( 'newsletter_items' );
+        $types = General_Types::get_newsletter_item_types();
+
+        if ( empty( $items ) || ! is_array( $items ) || empty( $types ) || ! is_array( $types ) ) {
+            return false;
+        }
+
+        foreach ( $items as $key => &$item ) {
+            if ( empty( $item['type'] ) ) {
+                unset( $items[ $key ] );
+                continue;
+            }
+            $type = $item['type'];
+
+            if ( 'post' === $type ) :
+
+                if ( empty( $item['post'] ) ) {
+                    unset( $items[ $key ] );
+                    continue;
+                }
+
+                $post = static::get_by_post_id( $item['post'] );
+                if ( ! Types::is_post( $post ) ) {
+                    unset( $items[ $key ] );
+                    continue;
+                }
+                $item['post'] = $post;
+
+                if ( 'event' !== $post->get_type() && empty( $item['description'] ) ) {
+                    unset( $items[ $key ] );
+                    continue;
+                }
+
+                if ( empty( $item['post_title'] ) ) {
+                    $item['post_title'] = $post->get_the_title();
+                }
+
+                $item['title'] = $item['post_title'];
+                unset( $item['post_title'] );
+
+            elseif ( strpos( $type, 'heading_' ) !== false && isset( $types[ $type ] ) ) :
+
+                $item['type'] = 'heading';
+                $item['heading_variant'] = str_replace( 'heading_', '', $type );
+                $item['title'] = str_replace( esc_html( 'Heading: ', 'pedestal' ), '', $types[ $type ] );
+
+            elseif ( 'heading' === $type ) :
+
+                if ( empty( $item['heading_title'] ) ) {
+                    unset( $items[ $key ] );
+                    continue;
+                }
+                $item['title'] = $item['heading_title'];
+                unset( $item['heading_title'] );
+
+            endif;
+        }
+
+        return $items;
     }
 }

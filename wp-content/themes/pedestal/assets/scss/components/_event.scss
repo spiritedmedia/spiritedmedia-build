@@ -1,0 +1,74 @@
+// ==========================================================================
+// Pedestal // Components // EVENT
+// ==========================================================================
+
+
+.c-event {
+  border: 0;
+  margin-bottom: $paragraph-margin-bottom;
+  padding-bottom: 0;
+  margin-top: 0;
+
+  .c-item-title,
+  .c-slot {
+    @include stdbd;
+    border-bottom: 0;
+    padding: halve( $c-panel-padding ) $c-panel-padding;
+    margin-bottom: 0;
+  }
+
+  .c-slot {
+    border-top: 0;
+    padding: 0 halve( $c-panel-padding );
+  }
+
+
+  &__details {
+    border-bottom: 0;
+
+    /*table*/.c-details-table__inner {
+      margin-bottom: 0;
+    }
+  }
+
+
+  &__export {
+    text-align: center;
+
+    // @TODO
+    // scss-lint:disable SelectorFormat
+    > .inner {
+      @include stdbd;
+
+      @if $email {
+        border-top: 0;
+      }
+    }
+
+    &__item {
+      // Not quite 33% because that doesn't work so well in email clients
+      width: 32%;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      padding-top: $half-spacing-unit;
+      padding-bottom: $half-spacing-unit;
+    }
+
+    &__link {}
+
+    &__icon {
+      // Remove icon text margin when displaying block
+      margin-right: 0;
+    }
+
+    &__text {
+      text-transform: uppercase;
+      text-align: center;
+
+      @media #{$medium-up} {
+        font-size: $small-font-size;
+      }
+    } // __text
+  } // __export
+}
