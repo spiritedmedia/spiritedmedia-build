@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4e5755496c033367cfa55d8866eec7bc
+class ComposerStaticInit5b501f3265f3294db9e7ac03e5ad2b7b
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -311,6 +311,7 @@ class ComposerStaticInit4e5755496c033367cfa55d8866eec7bc
         'Pedestal\\Cron_Management' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-cron-management.php',
         'Pedestal\\Feeds' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-feeds.php',
         'Pedestal\\Frontend' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-frontend.php',
+        'Pedestal\\Objects\\ActiveCampaign' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-activecampaign.php',
         'Pedestal\\Objects\\Author' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-author.php',
         'Pedestal\\Objects\\Figure' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-figure.php',
         'Pedestal\\Objects\\Notifications' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-notifications.php',
@@ -554,16 +555,18 @@ class ComposerStaticInit4e5755496c033367cfa55d8866eec7bc
         'Timber\\MenuItem' => __DIR__ . '/..' . '/timber/timber/lib/MenuItem.php',
         'Timber\\Pagination' => __DIR__ . '/..' . '/timber/timber/lib/Pagination.php',
         'Timber\\Post' => __DIR__ . '/..' . '/timber/timber/lib/Post.php',
+        'Timber\\PostCollection' => __DIR__ . '/..' . '/timber/timber/lib/PostCollection.php',
         'Timber\\PostGetter' => __DIR__ . '/..' . '/timber/timber/lib/PostGetter.php',
         'Timber\\PostPreview' => __DIR__ . '/..' . '/timber/timber/lib/PostPreview.php',
+        'Timber\\PostQuery' => __DIR__ . '/..' . '/timber/timber/lib/PostQuery.php',
         'Timber\\PostType' => __DIR__ . '/..' . '/timber/timber/lib/PostType.php',
-        'Timber\\PostsCollection' => __DIR__ . '/..' . '/timber/timber/lib/PostsCollection.php',
-        'Timber\\PostsIterator' => __DIR__ . '/..' . '/timber/timber/lib/PostsCollection.php',
+        'Timber\\PostsIterator' => __DIR__ . '/..' . '/timber/timber/lib/PostCollection.php',
         'Timber\\QueryIterator' => __DIR__ . '/..' . '/timber/timber/lib/QueryIterator.php',
         'Timber\\Request' => __DIR__ . '/..' . '/timber/timber/lib/Request.php',
         'Timber\\Site' => __DIR__ . '/..' . '/timber/timber/lib/Site.php',
         'Timber\\Term' => __DIR__ . '/..' . '/timber/timber/lib/Term.php',
         'Timber\\TermGetter' => __DIR__ . '/..' . '/timber/timber/lib/TermGetter.php',
+        'Timber\\TextHelper' => __DIR__ . '/..' . '/timber/timber/lib/TextHelper.php',
         'Timber\\Theme' => __DIR__ . '/..' . '/timber/timber/lib/Theme.php',
         'Timber\\Timber' => __DIR__ . '/..' . '/timber/timber/lib/Timber.php',
         'Timber\\Twig' => __DIR__ . '/..' . '/timber/timber/lib/Twig.php',
@@ -715,12 +718,16 @@ class ComposerStaticInit4e5755496c033367cfa55d8866eec7bc
         'Twig_Sandbox_SecurityError' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityError.php',
         'Twig_Sandbox_SecurityNotAllowedFilterError' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityNotAllowedFilterError.php',
         'Twig_Sandbox_SecurityNotAllowedFunctionError' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityNotAllowedFunctionError.php',
+        'Twig_Sandbox_SecurityNotAllowedMethodError' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityNotAllowedMethodError.php',
+        'Twig_Sandbox_SecurityNotAllowedPropertyError' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityNotAllowedPropertyError.php',
         'Twig_Sandbox_SecurityNotAllowedTagError' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityNotAllowedTagError.php',
         'Twig_Sandbox_SecurityPolicy' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityPolicy.php',
         'Twig_Sandbox_SecurityPolicyInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Sandbox/SecurityPolicyInterface.php',
         'Twig_SimpleFilter' => __DIR__ . '/..' . '/twig/twig/lib/Twig/SimpleFilter.php',
         'Twig_SimpleFunction' => __DIR__ . '/..' . '/twig/twig/lib/Twig/SimpleFunction.php',
         'Twig_SimpleTest' => __DIR__ . '/..' . '/twig/twig/lib/Twig/SimpleTest.php',
+        'Twig_Source' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Source.php',
+        'Twig_SourceContextLoaderInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/SourceContextLoaderInterface.php',
         'Twig_Template' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Template.php',
         'Twig_TemplateInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TemplateInterface.php',
         'Twig_Test' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Test.php',
@@ -786,11 +793,11 @@ class ComposerStaticInit4e5755496c033367cfa55d8866eec7bc
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4e5755496c033367cfa55d8866eec7bc::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4e5755496c033367cfa55d8866eec7bc::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit4e5755496c033367cfa55d8866eec7bc::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit4e5755496c033367cfa55d8866eec7bc::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit4e5755496c033367cfa55d8866eec7bc::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5b501f3265f3294db9e7ac03e5ad2b7b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5b501f3265f3294db9e7ac03e5ad2b7b::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit5b501f3265f3294db9e7ac03e5ad2b7b::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit5b501f3265f3294db9e7ac03e5ad2b7b::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit5b501f3265f3294db9e7ac03e5ad2b7b::$classMap;
 
         }, null, ClassLoader::class);
     }

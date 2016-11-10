@@ -737,17 +737,17 @@
     },
     {
         "name": "twig/twig",
-        "version": "v1.26.1",
-        "version_normalized": "1.26.1.0",
+        "version": "v1.27.0",
+        "version_normalized": "1.27.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twigphp/Twig.git",
-            "reference": "a09d8ee17ac1cfea29ed60c83960ad685c6a898d"
+            "reference": "3c6c0033fd3b5679c6e1cb60f4f9766c2b424d97"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig/zipball/a09d8ee17ac1cfea29ed60c83960ad685c6a898d",
-            "reference": "a09d8ee17ac1cfea29ed60c83960ad685c6a898d",
+            "url": "https://api.github.com/repos/twigphp/Twig/zipball/3c6c0033fd3b5679c6e1cb60f4f9766c2b424d97",
+            "reference": "3c6c0033fd3b5679c6e1cb60f4f9766c2b424d97",
             "shasum": ""
         },
         "require": {
@@ -757,11 +757,11 @@
             "symfony/debug": "~2.7",
             "symfony/phpunit-bridge": "~2.7"
         },
-        "time": "2016-10-05 18:57:41",
+        "time": "2016-10-25 19:17:17",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.26-dev"
+                "dev-master": "1.27-dev"
             }
         },
         "installation-source": "dist",
@@ -856,17 +856,17 @@
     },
     {
         "name": "timber/timber",
-        "version": "1.1.6",
-        "version_normalized": "1.1.6.0",
+        "version": "1.1.8",
+        "version_normalized": "1.1.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/timber/timber.git",
-            "reference": "7631b3dd3e37a100c6cbc23522b1f3630e907d58"
+            "reference": "aa03c9aaf9055990abf578050770c7f5f6db8d13"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/timber/timber/zipball/7631b3dd3e37a100c6cbc23522b1f3630e907d58",
-            "reference": "7631b3dd3e37a100c6cbc23522b1f3630e907d58",
+            "url": "https://api.github.com/repos/timber/timber/zipball/aa03c9aaf9055990abf578050770c7f5f6db8d13",
+            "reference": "aa03c9aaf9055990abf578050770c7f5f6db8d13",
             "shasum": ""
         },
         "require": {
@@ -884,7 +884,7 @@
             "wpackagist-plugin/advanced-custom-fields": "4.*",
             "wpackagist-plugin/co-authors-plus": "3.*"
         },
-        "time": "2016-09-15 03:46:53",
+        "time": "2016-10-25 14:41:41",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1047,7 +1047,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/bwp-google-xml-sitemaps.1.4.1.zip",
-            "reference": "tags/1.4.1",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1069,7 +1069,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/co-authors-plus.3.2.1.zip",
-            "reference": "tags/3.2.1",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1091,7 +1091,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.8.zip",
-            "reference": "tags/1.9.8",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1113,7 +1113,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/posts-to-posts.1.6.5.zip",
-            "reference": "tags/1.6.5",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1135,7 +1135,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/redirection.2.4.5.zip",
-            "reference": "tags/2.4.5",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1157,7 +1157,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/shortcode-ui.0.6.2.zip",
-            "reference": "tags/0.6.2",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1179,7 +1179,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/tablepress.1.7.zip",
-            "reference": "tags/1.7",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1201,7 +1201,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/user-switching.1.0.9.zip",
-            "reference": "tags/1.0.9",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1223,7 +1223,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/wp-redis.0.5.0.zip",
-            "reference": "tags/0.5.0",
+            "reference": null,
             "shasum": null
         },
         "require": {

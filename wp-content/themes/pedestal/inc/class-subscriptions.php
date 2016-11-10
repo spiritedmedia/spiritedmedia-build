@@ -20,6 +20,8 @@ use \Pedestal\Posts\Clusters\Story;
 use \Pedestal\Objects\User;
 use \Pedestal\Objects\Notifications;
 
+use \Pedestal\Objects\ActiveCampaign;
+
 class Subscriptions {
 
     private static $errors;
@@ -716,6 +718,15 @@ class Subscriptions {
                 'shareable'                 => true,
             ] );
             mandrill_wp_mail( implode( ',', $email_addresses ), $subject, $body );
+            $args = [
+                'html' => $body,
+                'subject' => $subject,
+                'name' => $subject,
+                // 'email' => implode( ',', $email_addresses ),
+                'email' => 'product@spiritedmedia.com', // For now just send test emails to me through ActiveCampaign
+            ];
+            $activecampaign = new ActiveCampaign;
+            $activecampaign->send_test_campaign( $args );
         }
 
         if ( ! empty( $_POST['pedestal-breaking-news-notify-subscribers'] )
@@ -734,6 +745,15 @@ class Subscriptions {
                 'shareable'                 => true,
             ] );
             mandrill_wp_mail( implode( ',', $email_addresses ), $subject, $body );
+            $args = [
+                'html' => $body,
+                'subject' => $subject,
+                'name' => $subject,
+                // 'email' => implode( ',', $email_addresses ),
+                'email' => 'product@spiritedmedia.com', // For now just send test emails to me through ActiveCampaign
+            ];
+            $activecampaign = new ActiveCampaign;
+            $activecampaign->send_test_campaign( $args );
         }
 
     }
@@ -1075,6 +1095,22 @@ class Subscriptions {
             $offset += $limit;
             $num_emails++;
         }
+
+        $subject = sprintf( '%s: %s', $subject_email_type, $post->get_title() );
+        $body = $this->get_email_template( $template, [
+            'item'                      => $post,
+            'email_type'                => $email_type,
+            'mandrill_unsubscribe_link' => false,
+            'shareable'                 => true,
+        ] );
+        $args = [
+            'html' => $body,
+            'subject' => $subject,
+            'name' => $subject,
+            'list' => 'Spirited Media Testers',
+        ];
+        $activecampaign = new ActiveCampaign;
+        $activecampaign->send_campaign( $args );
 
         $notification_args = [
             'type'       => $template,

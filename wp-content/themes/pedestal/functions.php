@@ -95,6 +95,11 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_BLOG_DESCRIPTION'    => get_bloginfo( 'description' ),
                 'PEDESTAL_CITY_NAME'           => '',
                 'PEDESTAL_CITY_NICKNAME'       => '',
+                'PEDESTAL_STATE_NAME'          => '',
+                'PEDESTAL_STATE'               => '',
+                'PEDESTAL_ZIPCODE'             => '',
+                'PEDESTAL_BUILDING_NAME'       => '',
+                'PEDESTAL_STREET_ADDRESS'      => '',
                 'PEDESTAL_DATETIME_FORMAT'     => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
                 'PEDESTAL_GOOGLE_ANALYTICS_ID' => '',
                 'PEDESTAL_BOXTERCO_SCRIPT'     => '',
@@ -548,6 +553,14 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'facebook_url'     => PEDESTAL_FACEBOOK_PAGE,
                 'facebook_page_id' => PEDESTAL_FACEBOOK_PAGE_ID,
                 'instagram_url'    => 'https://www.instagram.com/' . PEDESTAL_INSTAGRAM_USERNAME . '/',
+            ];
+
+            $context['site']->address = [
+                'building_name' => PEDESTAL_BUILDING_NAME,
+                'street_address' => PEDESTAL_STREET_ADDRESS,
+                'city' => PEDESTAL_CITY_NAME,
+                'state' => PEDESTAL_STATE,
+                'zipcode' => PEDESTAL_ZIPCODE,
             ];
 
             $context['site']->emails = [

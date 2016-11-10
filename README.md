@@ -1,9 +1,7 @@
-Build [#1597](https://circleci.com/gh/spiritedmedia/spiritedmedia/1597) by montchr at 2016-11-09 07:03 PM UTC
+Build [#1602](https://circleci.com/gh/spiritedmedia/spiritedmedia/1602) by kingkool68 at 2016-11-10 04:35 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.0](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.0)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.1](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.1)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.6.8...v4.7.0)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.0...v4.7.1)
 
- - [#1679](https://github.com/spiritedmedia/spiritedmedia/pull/1679): Standardize Email Newsletter Building + Include Sponsored Event Automatically
- - [#1710](https://github.com/spiritedmedia/spiritedmedia/pull/1710): Replace math question with tow simpler automated checks.
- - [#1711](https://github.com/spiritedmedia/spiritedmedia/pull/1711): HOTFIX: Remove Ruby version constraint
+ - [#1698](https://github.com/spiritedmedia/spiritedmedia/pull/1698): Send Newsletters Through ActiveCampaign to Small Group of Test Contacts
