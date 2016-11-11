@@ -374,7 +374,7 @@
         {% set name = user.get_display_name %}
         {% set email = user.get_public_email %}
         {% set url = user.get_permalink %}
-        {% set title = user.get_title %}
+        {% set user_title = user.get_title %}
 
         {% set img_size = options.img_size %}
         {% set img_classes = 'c-user-card__img  img--' ~ img_size ~ '  ' ~ img_classes %}
@@ -400,7 +400,7 @@
             {% set bio_class = 'c-user-card__bio--extended' %}
             {% set bio_element = 'div' %}
             {% set name_classes = '' %}
-            {% set title_classes = 'u-size-h3' %}
+            {% set user_title_classes = 'u-size-h3' %}
         {% endif %}
 
         {% if options.float %}
@@ -451,7 +451,7 @@
                     </a>
                 </h1>
 
-                <h2 class="c-user-card__title {{ title_classes }}" itemprop="jobTitle">{{ title }}</h2>
+                <h2 class="c-user-card__title {{ user_title_classes }}" itemprop="jobTitle">{{ user_title }}</h2>
 
                 <hr class="c-user-card__rule  o-rule--slim">
 
