@@ -1,6 +1,6 @@
 <article class="{{ macros.get_stream_item_classes( 'isolated' ) }}  {{ macros.has_title_bar( _context ) }}  {{ item.css_classes }}"
          {{ item.get_the_data_atts }}>
-    {% include 'partials/item-title.twig' %}
+    {% include 'partials/stream/item-title.twig' %}
     {% if item.get_excerpt %}
     <div class="entity-excerpt js-entity-excerpt">
         {{ item.get_the_excerpt }}

@@ -1,7 +1,11 @@
 <div class="pedestal-shortcode  {{ item.css_classes }}" data-entity-type="event">
     <div class="c-event">
-        {% include 'partials/item-title.twig' %}
-        {{ ped_slot( 'shortcode' ) }}
+        <div class="c-event__title">
+            {% include 'partials/item-title.twig' %}
+        </div>
+        <div class="c-event__sponsorship">
+            {{ ped_slot( 'shortcode' ) }}
+        </div>
         {% include 'partials/events/details.twig' %}
         {% include 'partials/events/export.twig' %}
     </div>

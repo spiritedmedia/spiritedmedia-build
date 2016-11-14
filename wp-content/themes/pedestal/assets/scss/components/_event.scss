@@ -9,15 +9,17 @@
   padding-bottom: 0;
   margin-top: 0;
 
-  .c-item-title,
-  .c-slot {
+
+  &__title,
+  &__sponsorship {
     @include stdbd;
     border-bottom: 0;
     padding: halve( $c-panel-padding ) $c-panel-padding;
     margin-bottom: 0;
   }
 
-  .c-slot {
+
+  &__sponsorship {
     border-top: 0;
     padding: 0 halve( $c-panel-padding );
   }

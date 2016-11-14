@@ -131,20 +131,10 @@
 
 .email-constrain {
   .c-stream--ladder {
-
-    .c-item-title {
+    .c-stream__item__title {
       margin-bottom: ( $base-spacing-unit / 2 );
+      font-size: $h5-font-size;
     }
-
-      // @TODO
-      //
-      // Only setting this specifically here until we do some better email
-      // typography
-      //
-      // https://github.com/spiritedmedia/spiritedmedia/issues/342
-      .c-item-title__title {
-        font-size: 20px;
-      }
   }
 }
 

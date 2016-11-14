@@ -87,7 +87,7 @@
   // ==========================================================================
 
 
-  &--promo {
+  .entity--promo & {
     @include c-title-bar-mod-color( promo );
   } // end --promo
 } // end title-bar

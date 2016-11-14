@@ -8,10 +8,12 @@
         {% include 'partials/stream/panel-pin.twig' %}
     {% endif %}
 
-    <div class="c-panel__inner  c-stream__item__inner  entity__inner  [ o-media  o-media--responsive ]">
+    <div class="c-event  c-panel__inner  c-stream__item__inner  entity__inner  [ o-media  o-media--responsive ]">
 
         <div class="c-stream__item__body  o-media__body">
-            {% include 'partials/item-title.twig' %}
+            <div class="c-event__title">
+                {% include 'partials/stream/item-title.twig' %}
+            </div>
             {% include 'partials/events/details.twig' %}
             {% include 'partials/events/export.twig' %}
         </div>

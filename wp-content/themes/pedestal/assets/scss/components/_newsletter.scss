@@ -16,9 +16,7 @@
   }
 
 
-  // @TODO Override default item title color until we can decouple color
-  // from item title entirely
-  .c-item-title__link {
+  .c-stream__item__link {
     @include anchorage( '&' );
   }
 

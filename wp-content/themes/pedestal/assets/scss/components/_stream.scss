@@ -3,10 +3,6 @@
 // ==========================================================================
 
 
-// @TODO
-// scss-lint:disable SelectorFormat
-
-
 $c: '.c-stream';
 
 
@@ -106,6 +102,16 @@ $c: '.c-stream';
     &__body {}
 
 
+    &__title {
+      font-weight: 500;
+    }
+
+
+    &__link {
+      color: $grey-darker;
+    }
+
+
     &__img {
 
       @media #{$medium-up} {
@@ -117,9 +123,11 @@ $c: '.c-stream';
         margin-bottom: $base-spacing-unit;
       }
 
+      // scss-lint:disable SelectorFormat
       .rail & {
         width: auto;
       }
+      // scss-lint:enable SelectorFormat
     } // __item__img
   } // __item
 
@@ -280,6 +288,20 @@ $c: '.c-stream';
   &--imglist {
 
     #{$c}__item {
+      &__title {
+        font-size: c-stream-property-get( imglist, f-z-sm );
+
+        @media #{$medium-up} {
+          font-size: c-stream-property-get( imglist, f-z-lg );
+        }
+      }
+
+
+      &__link:not( .entity--promo ) {
+        @include anchorage( '&' );
+      }
+
+
       &__img {
         width: c-stream-property-get( imglist, img-size-sm );
         height: c-stream-property-get( imglist, img-size-sm );
@@ -301,26 +323,15 @@ $c: '.c-stream';
     } // __item
 
 
-    .c-item-title {
-      &__title {
-        font-size: c-stream-property-get( imglist, f-z-sm );
-
-        @media #{$medium-up} {
-          font-size: c-stream-property-get( imglist, f-z-lg );
-        }
-      }
-
-      &__link:not( .entity--promo ) {
-        @include anchorage( '&' );
-      }
-    } // item-title
-
-
     &.c-stream--sm {
       #{$c}__item {
+        // scss-lint:disable NestingDepth
         margin-top: halve( c-stream-property-get( item-spacing ) );
 
-        // scss-lint:disable NestingDepth
+        &__title {
+          font-size: $paragraph-font-size;
+        }
+
         &__img {
           width: c-stream-property-get( imglist, img-size-sm );
           height: c-stream-property-get( imglist, img-size-sm );
@@ -330,13 +341,7 @@ $c: '.c-stream';
           } // __item__img--placeholder
         } // __item__img
       } // __item
-
-
-      .c-item-title__title {
-        font-size: $paragraph-font-size;
-      }
-    }
-
+    } // &.c-stream--sm
   }
 
 
@@ -347,6 +352,10 @@ $c: '.c-stream';
   &--simple {
     #{$c}__item {
       margin-bottom: $base-spacing-unit;
+
+      &__title {
+        @extend %u-heading--minor;
+      }
     }
 
     @if $email {
@@ -355,13 +364,11 @@ $c: '.c-stream';
       }
     }
 
+    // scss-lint:disable SelectorFormat
     .entity-excerpt p {
       margin-bottom: 0;
     }
-
-    .c-item-title__title {
-      @extend %u-heading--minor;
-    }
+    // scss-lint:enable SelectorFormat
   } // &--simple
 } // end stream
 

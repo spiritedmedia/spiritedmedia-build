@@ -9,8 +9,12 @@
     <a id="{{ item.get_name }}"></a>
     <div class="c-event  entity__inner  c-stream__item__inner">
         <div class="c-stream__item__body  entity__body">
-            {% include 'partials/item-title.twig' %}
-            {{ ped_slot( 'newsletter_item' ) }}
+            <div class="c-event__title">
+                {% include 'partials/stream/item-title.twig' %}
+            </div>
+            <div class="c-event__sponsorship">
+                {{ ped_slot( 'newsletter_item' ) }}
+            </div>
             {% include 'partials/events/details.twig' %}
             {% include 'partials/events/export.twig' %}
         </div>

@@ -82,9 +82,13 @@
 // ==========================================================================
 
 
-/*h5*/.entity__label {}
+/*h5*/.entity__label {
+  margin-bottom: 0;
+}
 
   /*a*/.entity__label__inner {
+    text-transform: uppercase;
+
     .entity--promo & {
       color: $absinthe;
     }
