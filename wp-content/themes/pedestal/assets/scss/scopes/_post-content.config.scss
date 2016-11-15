@@ -3,41 +3,14 @@
 // ==========================================================================
 
 
-$s-post-content-blockquote: (
-  f-z-lg        : $h5-font-size,
-  color         : $dimmed-text-color,
-  bd-color      : $primary-color,
-  bd-w          : 2px,
-) !default;
+// Blockquote
+$s-post-content-blockquote-color   : $grey-dark;
 
-$s-post-content-headings: (
-  h1: $h3-font-size,
-  h2: $h4-font-size,
-  h3: $h5-font-size,
-) !default;
+// Pullquote
+$s-post-content-pullquote-pos-h    : -7px;
+$s-post-content-pullquote-pos-v    : -14px;
+$s-post-content-pullquote-border-v : 2px solid $grey-lightish;
 
-$s-post-content-list-item: (
-  color       : $primary-color,
-  p-b         : 0.25em,
-  bullet-size : 5px,
-  num-size    : $h5-font-size,
-) !default;
-
-$s-post-content-settings: (
-  blockquote: $s-post-content-blockquote,
-  headings: $s-post-content-headings,
-  li: $s-post-content-list-item,
-) !default;
-
-
-
-
-
-//
-// Functions
-// ==========================================================================
-
-
-@function s-post-content-property-get( $properties... ) {
-  @return map-fetch( $s-post-content-settings, $properties... );
-}
+// Lists
+$s-post-content-li-color           : $primary-color;
+$s-post-content-li-bullet-size     : 5px;

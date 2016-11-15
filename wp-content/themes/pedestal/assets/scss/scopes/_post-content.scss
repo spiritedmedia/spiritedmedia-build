@@ -20,9 +20,9 @@
 // ==========================================================================
 
 
-  h1 { font-size: s-post-content-property-get( headings, h1 ); }
-  h2 { font-size: s-post-content-property-get( headings, h2 ); }
-  h3 { font-size: s-post-content-property-get( headings, h3 ); }
+  h1 { font-size: $h3-font-size; }
+  h2 { font-size: $h4-font-size; }
+  h3 { font-size: $h5-font-size; }
 
 
 
@@ -78,20 +78,88 @@
 
   blockquote {
     font-style: italic;
-    color: s-post-content-property-get( blockquote, color );
-    line-height: 1.4;
-    padding: 0;
-    padding-left: $half-spacing-unit;
-    border-left: s-post-content-property-get( blockquote, bd-w ) solid s-post-content-property-get( blockquote, bd-color );
+    color: $s-post-content-blockquote-color;
+    padding: 0 0 0 $base-spacing-unit;
+    border-left: 4px solid $primary-color;
+
+    p {
+      margin: 0;
+      padding-bottom: 0;
+      color: $s-post-content-blockquote-color;
+    }
+
+    cite {
+      text-align: right;
+      display: block;
+    }
 
     @media #{$medium-up} {
-      padding-left: $base-spacing-unit;
-
       p {
-        font-size: s-post-content-property-get( blockquote, f-z-lg );
+        font-size: $h6-font-size;
+        color: $s-post-content-blockquote-color;
       }
     }
 
+  }
+
+
+
+
+
+//
+// Pullquotes
+// ==========================================================================
+// Pullquotes must be nested within post content because they need to override
+// the default behavior of blockquotes
+
+  .c-pullquote {
+    border-top: $s-post-content-pullquote-border-v;
+    border-bottom: $s-post-content-pullquote-border-v;
+    position: relative;
+    margin-bottom: $base-spacing-unit;
+    font-size: $h5-font-size;
+
+    @media #{$medium-up} {
+      font-size: $h4-font-size;
+    }
+
+
+    &::before,
+    &::after {
+      font-size: unitize( 4rem );
+      line-height: 0;
+      padding-top: 0.4em;
+      position: absolute;
+      color: $primary-color;
+      background-color: $white;
+    }
+
+    &::before {
+      content: '\201C';
+      left: $s-post-content-pullquote-pos-h;
+      top: $s-post-content-pullquote-pos-v;
+    }
+
+    &::after {
+      content: '\201D';
+      right: $s-post-content-pullquote-pos-h;
+      bottom: $s-post-content-pullquote-pos-v;
+    }
+
+
+    &__content {
+      border: 0;
+      line-height: 1.6;
+      padding: $base-spacing-unit $base-spacing-unit 0;
+      margin-bottom: 0;
+    }
+
+
+    &__credit {
+      padding: ($base-spacing-unit / 2) ($base-spacing-unit * 2) $base-spacing-unit;
+      display: block;
+      text-align: right;
+    }
   }
 
 
@@ -108,7 +176,7 @@
     list-style-type: none;
 
     li {
-      padding-bottom: s-post-content-property-get( li, p-b );
+      padding-bottom: 0.25em;
 
       // scss-lint:disable NestingDepth
       &::before {
@@ -131,8 +199,8 @@
       &::before {
         line-height: 1;
         content: counter( ordered-list, decimal );
-        color: s-post-content-property-get( li, color );
-        font-size: s-post-content-property-get( li, num-size );
+        color: $s-post-content-li-color;
+        font-size: $h5-font-size;
         font-weight: 800;
       }
     }
@@ -142,10 +210,10 @@
 
     li {
       &::before {
-        width: s-post-content-property-get( li, bullet-size );
-        height: s-post-content-property-get( li, bullet-size );
+        width: $s-post-content-li-bullet-size;
+        height: $s-post-content-li-bullet-size;
         content: '';
-        background-color: s-post-content-property-get( li, color );
+        background-color: $s-post-content-li-color;
         border-radius: 1000px;
       }
     }

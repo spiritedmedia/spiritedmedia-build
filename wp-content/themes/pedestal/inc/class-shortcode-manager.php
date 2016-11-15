@@ -275,6 +275,7 @@ class Shortcode_Manager {
         $new = [
             // Order matters here.
             // Iframe class should be last as it is more generic then other embed code.
+            '\Pedestal\Shortcodes\Pullquote',
             '\Pedestal\Shortcodes\Soundcite',
             '\Pedestal\Shortcodes\Twitter',
             '\Pedestal\Shortcodes\Script',
@@ -300,12 +301,11 @@ class Shortcode_Manager {
 
     /**
      * Filter the output HTML of Bakery shortcodes
+     *
+     * Wraps most shortcode content in a figure element
      */
     public function filter_shortcake_bakery_shortcode_callback( $output, $shortcode_tag, $attrs, $content ) {
 
-        if ( 'soundcite' === $shortcode_tag ) {
-            return $output;
-        }
         $default_classes = 'pedestal-shortcode shortcake-bakery-shortcode shortcake-bakery-shortcode-' . $shortcode_tag;
         $embed_type = 'embed';
 
@@ -337,6 +337,12 @@ class Shortcode_Manager {
                 }
                 $embed_url = apply_filters( 'shortcake_bakery_youtube_embed_url', $embed_url, $attrs );
                 $output = sprintf( '<iframe class="%s shortcake-bakery-responsive" width="640" height="360" src="%s" frameborder="0"></iframe>', $default_classes, $embed_url );
+                break;
+
+            case 'soundcite':
+            case 'pullquote':
+                // These shortcodes need no additional processing, so just return
+                return $output;
                 break;
 
             default:

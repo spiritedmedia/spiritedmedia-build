@@ -11,7 +11,7 @@ class Pullquote extends Shortcode {
     public static function get_shortcode_ui_args() {
         return [
             'label'          => esc_html__( 'Pullquote', 'pedestal' ),
-            'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-twitter.svg' ) . '" />',
+            'listItemImage'  => 'dashicons-format-quote',
             'attrs'          => [
                 [
                     'label'        => esc_html__( 'Pullquote Content', 'pedestal' ),
