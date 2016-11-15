@@ -19,9 +19,9 @@
     {% set story = context.item.get_story %}
     {% if context.item.is_pinned and story.has_story_branding and not context.is_search %}
         {% if 'border' == element %}
-            style="border: 3px solid {{ story.get_title_bar_background_color }};"
+            style="border: 3px solid {{ story.get_story_bar_background_color }};"
         {% elseif 'pin' == element %}
-            style="color: {{ story.get_title_bar_foreground_color }};"
+            style="color: {{ story.get_story_bar_foreground_color }};"
         {% endif %}
     {% endif %}
 {% endspaceless %}
@@ -31,11 +31,11 @@
 
 
 
-{% macro has_title_bar( context ) %}
+{% macro has_story_bar( context ) %}
 {% spaceless %}
     {% if context.item.has_story() %}
         {% if not context.grouped %}
-            has-title-bar
+            has-story-bar
         {% endif %}
     {% endif %}
 {% endspaceless %}
@@ -65,20 +65,20 @@
 
 
 
-{% macro blox( context, options ) %}
+{% macro blox( context, options, type ) %}
     {% set defaults = {
-        'component': '',
+        'format': '',
         'blox_classes': '',
-        'component_classes': '',
-        'layout': '',
+        'type_classes': '',
         'prefix': '',
         'suffix': '',
-        'background_color': '',
+        'background': '',
         'title_element': 'h4',
         'title': '',
         'subtitle': '',
         'url': '',
         'size': '',
+        'case': '',
         'expand': false,
         'offset': false
     } %}
@@ -88,219 +88,153 @@
         {% set options = defaults %}
     {% endif %}
 
-    {# Recode/Extract #}
-    {% if options.component starts with 'c-' %}
-        {% set component = options.component %}
-    {% else %}
-        {% set component = 'c-' ~ options.component %}
-    {% endif %}
-    {% set component_js_hook = 'js-' ~ component|replace( { 'c-': '' } ) %}
-    {% set blox_classes = options.blox_classes %}
-    {% set component_classes = options.component_classes %}
-    {% set layout = options.layout %}
-    {% set prefix = options.prefix %}
-    {% set suffix = options.suffix %}
-    {% if options.background_color %}
-        {% set background_color = 'style="background-color: ' ~ options.background_color ~ ';"' %}
-    {% endif %}
-    {% if options.foreground_color %}
-        {% set foreground_color = 'style="color: ' ~ options.foreground_color ~ ';"' %}
-    {% endif %}
+    {% set el = 'c-blox' %}
+    {% set js = 'js-blox' %}
+    {% set item = context.item %}
+    {% set el_classes = options.blox_classes %}
     {% set title_element = options.title_element %}
-    {% set title = options.title %}
-    {% set subtitle = options.subtitle %}
-    {% set url = options.url %}
     {% set size = options.size %}
+    {% set case = options.case %}
     {% set expand = options.expand %}
     {% set offset = options.offset %}
 
-    {% set this = 'o-blox' %}
 
-    {# Sizes #}
-    {% if 'sm' == size %}
-        {% set blox_classes = this ~ '--sm' ~ '  ' ~ blox_classes %}
-    {% elseif 'md' == size %}
-        {% set blox_classes = this ~ '--md' ~ '  ' ~ blox_classes %}
-    {% elseif 'lg' == size %}
-        {% set blox_classes = this ~ '--lg' ~ '  ' ~ blox_classes %}
-    {% elseif 'xlg' == size %}
-        {% set blox_classes = this ~ '--xlg' ~ '  ' ~ blox_classes %}
+    {# Types #}
+    {% if type %}
+        {% set type_js_hook = 'js-' ~ type %}
+        {% set type_class = el ~ '--' ~ type %}
+        {% set type_classes = '%s  %s  %s'|format(
+            type_class, type_js_hook, options.type_classes
+        ) %}
+    {% else %}
+        {% set type_classes = '' %}
     {% endif %}
 
-    {% if 'inline' == layout %}
-        {% set blox_classes = this ~ '--inline' ~ '  ' ~ blox_classes %}
+
+    {# Display Format #}
+    {% if options.format %}
+        {% set format = options.format %}
+        {% set el_classes = el ~ '--' ~ format ~ '  ' ~ el_classes %}
+        {% if 'header' == format %}
+            {% set title_element = 'h2' %}
+            {% set size = 'lg' %}
+            {% set expand = true %}
+        {% elseif 'cap' == format %}
+            {% set expand = true %}
+            {% set default_case = 'upper' %}
+        {% endif %}
+    {% endif %}
+
+
+    {# Type: Story Bar #}
+    {% if 'story-bar' == type %}
+        {% if 'header' != format %}
+            {% set default_case = 'upper' %}
+        {% endif %}
+
+        {# Content #}
+        {% if item.is_entity and item.has_story and item.get_story.get_title %}
+            {% set default_title = item.get_story.get_the_title %}
+            {% set story_branding = item.get_story.get_story_branding %}
+            {% set default_url = item.get_story.get_permalink %}
+            {% if not context.grouped %}
+                {% set offset = true %}
+                {% set extra_classes = 'u-tt-upper' ~ extra_classes %}
+            {% endif %}
+        {% elseif not item.is_entity %}
+            {% set story_branding = item.get_story_branding %}
+            {% set default_title = item.get_the_title %}
+            {% set default_url = item.get_permalink %}
+            {% if item.schema %}
+                {% set default_title = item.schema|replace( { '-': ' ' } )|capitalize %}
+            {% endif %}
+        {% endif %}
+
+        {# Story Branding #}
+        {% if item.is_story or item.has_story and story_branding %}
+            {% set extra_classes = el ~ '--customized' ~ '  ' ~ extra_classes %}
+            {% set inline_background_color = 'style="background-color: ' ~ story_branding['background_color'] ~ ';"' %}
+            {% set inline_foreground_color = 'style="color: ' ~ story_branding['foreground_color'] ~ ';"' %}
+            {% if story_branding['icon'] %}
+                {% set icon_url = story_branding['icon'] %}
+                {% if is_email %}
+                    {% set icon_url = story_branding['fallback_icon'] %}
+                {% endif %}
+                {% set prefix = '<img src="' ~ icon_url ~ '" alt="' ~ title ~ '">' %}
+            {% endif %}
+        {% endif %}
+
+        {# Pinned Items #}
+        {% if item.is_pinned and context.is_home %}
+        {% set suffix %}
+            <div class="{{ type_class }}__pin">
+                {% include 'partials/stream/panel-pin.twig' %}
+            </div>
+        {% endset %}
+        {% endif %}
+    {% endif %}
+
+    {% set title = options.title|default( default_title ) %}
+    {% set url = options.url|default( default_url ) %}
+    {% set case = case|default( default_case ) %}
+
+    {# Sizes #}
+    {% if size in ['sm', 'md', 'lg', 'xlg'] %}
+        {% set el_classes = el ~ '--' ~ size ~ '  ' ~ el_classes %}
+    {% endif %}
+
+
+    {# Background Colors #}
+    {% if 'promo' == options.background %}
+        {% set el_classes = el ~ '--promo' ~ '  ' ~ el_classes %}
+    {% elseif 'lighter' == options.background %}
+        {% set el_classes = el ~ '--lighter' ~ '  ' ~ el_classes %}
+    {% endif %}
+
+
+    {% if case and 'ignore' != case %}
+        {% set el_classes = 'u-tt-' ~ case ~ '  ' ~ el_classes %}
     {% endif %}
 
     {% if expand %}
-        {% set blox_classes = this ~ '--expand' ~ '  ' ~ blox_classes %}
+        {% set el_classes = el ~ '--expand' ~ '  ' ~ el_classes %}
     {% endif %}
 
     {% if offset %}
-        {% set blox_classes = this ~ '--offset' ~ '  ' ~ blox_classes %}
+        {% set el_classes = el ~ '--offset' ~ '  ' ~ el_classes %}
     {% endif %}
 
-    {% if subtitle %}
-        {% set blox_classes = this ~ '--has-subtitle' ~ '  ' ~ blox_classes %}
+    {% if options.subtitle %}
+        {% set el_classes = el ~ '--has-subtitle' ~ '  ' ~ el_classes %}
     {% endif %}
 
-    <div class="[ {{ component_classes }}  {{ component }} ]  [ {{ blox_classes }} {{ this }} ]  {{ component_js_hook }}">
-        <div class="{{ component }}__inner  {{ this }}__inner  u-cf" {{ background_color }}>
+    {% if title %}
+    <div class="{{ type_classes }}  {{ el_classes }}  {{ el }}">
+        <div class="{{ el }}__inner  u-cf" {{ inline_background_color }}>
 
-            {% if prefix %}
-            <div class="[ {{ component }}__prefix  {{ component }}__item ]  [ {{ this }}__prefix  {{ this }}__item ]">
-                {{ prefix }}
+            {% if options.prefix %}
+            <div class="{{ el }}__prefix  {{ el }}__item">
+                {{ options.prefix }}
             </div>
             {% endif %}
 
             {% if suffix %}
-            <div class="[ {{ component }}__suffix  {{ component }}__item ]  [ {{ this }}__suffix  {{ this }}__item ]">
+            <div class="{{ el }}__suffix  {{ el }}__item">
                 {{ suffix }}
             </div>
             {% endif %}
 
-            <{{ title_element }} class="[ {{ component }}__text  {{ component }}__item ]  {{ this }}__text  {{ this }}__item">
-                <a href="{{ url }}" class="{{ component }}__text__link  {{ this }}__text__link  {{ component_js_hook }}-link" {{ foreground_color }}>
-                    <span class="[ {{ component }}__text__title  {{ component }}__text__item ]  [ {{ this }}__text__title  {{ this }}__text__item ]   {{ component_js_hook }}-title">{{ title }}</span>
-                    {% if subtitle %}
-                    <span class="[ {{ component }}__text__subtitle  {{ component }}__text__item ]  [ {{ this }}__text__subtitle  {{ this }}__text__item ]">{{ subtitle }}</span>
+            <{{ title_element }} class="{{ el }}__text  {{ el }}__item">
+                <a href="{{ url }}" class="{{ el }}__text__link  {{ js }}-link" {{ inline_foreground_color }}>
+                    <span class="{{ el }}__text__title  {{ el }}__text__item  {{ js }}-title">{{ title }}</span>
+                    {% if options.subtitle %}
+                    <span class="{{ el }}__text__subtitle  {{ el }}__text__item  {{ js }}-subtitle">{{ options.subtitle }}</span>
                     {% endif %}
                 </a>
             </{{ title_element }}>
 
         </div>
     </div>
-
-{% endmacro %}
-
-
-
-
-
-{% macro title_bar( context, options ) %}
-    {% import _self as macros %}
-
-    {% set defaults = {
-        'component': 'title-bar',
-        'extra_classes': '',
-        'location': '',
-        'type': '',
-        'layout': '',
-        'title': '',
-        'subtitle': '',
-        'url': '',
-        'size': '',
-        'expand': false,
-        'display': false,
-        'require_fallback': false
-    } %}
-    {% if options %}
-        {% set options = defaults|merge( options ) %}
-    {% else %}
-        {% set options = defaults %}
-    {% endif %}
-
-    {% set item = context.item %}
-    {% set offset = false %}
-    {% set prefix = false %}
-    {% set suffix = false %}
-
-    {# Recode/Extract #}
-    {% if options.component starts with 'c-' %}
-        {% set component = options.component %}
-    {% else %}
-        {% set component = 'c-' ~ options.component %}
-    {% endif %}
-    {% set extra_classes = options.extra_classes %}
-    {% set type = options.type %}
-    {% set layout = options.layout %}
-    {% set expand = options.expand %}
-    {% set size = options.size %}
-    {% set display = options.display %}
-    {% set title = options.title %}
-    {% set subtitle = options.subtitle %}
-    {% set url = options.url %}
-    {% set require_fallback = options.require_fallback %}
-
-    {# Locations #}
-    {% if 'header' == options.location %}
-        {% set title_element = 'h2' %}
-        {% set title_element = 'h2' %}
-        {% set size = 'lg' %}
-        {% set expand = true %}
-    {% else %}
-        {% set title_element = 'h4' %}
-    {% endif %}
-
-    {# Types #}
-    {% if 'promo' == type %}
-        {% set extra_classes = component ~ '--promo' ~ '  ' ~ extra_classes %}
-    {% elseif 'lighter' == type %}
-        {% set extra_classes = component ~ '--lighter' ~ '  ' ~ extra_classes %}
-    {% endif %}
-
-    {# Content #}
-    {% if item.is_entity and item.has_story and item.get_story.get_title %}
-        {% set display = true %}
-        {% set default_title = item.get_story.get_the_title %}
-        {% set story_branding = item.get_story.get_story_branding %}
-        {% set default_url = item.get_story.get_permalink %}
-        {% if not context.grouped %}
-            {% set offset = true %}
-        {% endif %}
-    {% elseif not item.is_entity %}
-        {% set display = true %}
-        {% set story_branding = item.get_story_branding %}
-        {% set default_title = item.get_the_title %}
-        {% set default_url = item.get_permalink %}
-        {% if item.schema %}
-            {% set default_title = item.schema|replace( { '-': ' ' } )|capitalize %}
-        {% endif %}
-    {% endif %}
-
-    {% set title = title|default( default_title ) %}
-    {% set url = url|default( default_url ) %}
-
-    {% if item.is_story or item.has_story and story_branding %}
-        {% set extra_classes = component ~ '--customized' ~ '  ' ~ extra_classes %}
-        {% set background_color = story_branding['background_color'] %}
-        {% set foreground_color = story_branding['foreground_color'] %}
-        {% if story_branding['icon'] %}
-            {% set icon_url = story_branding['icon'] %}
-            {% if require_fallback %}
-                {% set icon_url = story_branding['fallback_icon'] %}
-            {% endif %}
-            {% set prefix = '<img src="' ~ icon_url ~ '" alt="' ~ title ~ '">' %}
-        {% endif %}
-    {% endif %}
-
-
-    {% if title %}
-
-        {% if item.is_pinned and context.is_home %}
-        {% set suffix %}
-            <div class="{{ component }}__pin">
-                {% include 'partials/stream/panel-pin.twig' %}
-            </div>
-        {% endset %}
-        {% endif %}
-
-        {{ macros.blox( context, {
-            'component': component,
-            'component_classes': extra_classes,
-            'layout': layout,
-            'suffix': suffix,
-            'prefix': prefix,
-            'title_element': title_element,
-            'title': title,
-            'subtitle': subtitle,
-            'url': url,
-            'size': size,
-            'expand': expand,
-            'offset': offset,
-            'background_color': background_color,
-            'foreground_color': foreground_color
-        } ) }}
-
     {% endif %}
 
 {% endmacro %}

@@ -1,9 +1,9 @@
-<article class="{{ macros.get_stream_item_classes( 'isolated' ) }}  {{ macros.is_pinned( _context, 'panel' ) }}  {{ macros.has_title_bar( _context ) }}  {{ item.css_classes }}"
+<article class="{{ macros.get_stream_item_classes( 'isolated' ) }}  {{ macros.is_pinned( _context, 'panel' ) }}  {{ macros.has_story_bar( _context ) }}  {{ item.css_classes }}"
          {{ macros.get_pinned_styles( _context, 'border' ) }}
          {{ item.get_the_data_atts }}>
 
     {% if item.get_story %}
-        {{ macros.title_bar( _context ) }}
+        {{ macros.blox( _context, {}, 'story-bar' ) }}
     {% elseif item.is_pinned %}
         {% include 'partials/stream/panel-pin.twig' %}
     {% endif %}

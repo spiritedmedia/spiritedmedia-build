@@ -6,12 +6,12 @@
 
 <main role="main" class="main columns">
 
-    <article class="c-content  {{ macros.has_title_bar( _context ) }}  {{ item.css_classes }}  {{ item.css_classes_content }}"
+    <article class="c-content  {{ macros.has_story_bar( _context ) }}  {{ item.css_classes }}  {{ item.css_classes_content }}"
         {{ item.get_the_data_atts }} >
 
         <div class="c-content__main large-8 columns">
 
-            {% block title_bar %}
+            {% block story_bar %}
             {% endblock %}
 
             <header class="c-content__header">

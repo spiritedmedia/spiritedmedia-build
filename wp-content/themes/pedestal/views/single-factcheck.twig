@@ -1,8 +1,8 @@
 {% extends item.get_single_base_template %}
 
 
-{% block title_bar %}
-    {{ macros.title_bar( _context, { background_color : item.get_inline_styles } ) }}
+{% block story_bar %}
+    {{ macros.blox( _context, {}, 'story-bar' ) }}
 {% endblock %}
 
 

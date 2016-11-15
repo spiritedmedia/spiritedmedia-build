@@ -21,7 +21,7 @@
     color: $grey-darker;
   }
 
-  .c-title-bar {
+  .c-blox {
     margin: 0;
   }
 
@@ -133,7 +133,11 @@
   .c-stream--ladder {
     .c-stream__item__title {
       margin-bottom: ( $base-spacing-unit / 2 );
-      font-size: $h5-font-size;
+      font-size: $h6-font-size;
+
+      @media #{$medium-up} {
+        font-size: $h5-font-size;
+      }
     }
   }
 }
@@ -182,11 +186,12 @@
 .email-subscription {
   text-align: center;
 
-    /*h3*/.h-email-subscription-confirmed {
-      text-transform: uppercase;
-    }
+  /*h3*/.h-email-subscription-confirmed {
+    text-transform: uppercase;
+    font-size: $h5-font-size;
+  }
 
-    /*h2*/.h-email-subscription-confirmed-msg {}
+  /*p*/.email-subscription-confirmed-msg {}
 
 }
 

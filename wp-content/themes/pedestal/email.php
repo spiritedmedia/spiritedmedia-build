@@ -6,8 +6,16 @@ use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 use Pedestal\Posts\Slots\Slots;
 
-add_filter( 'timber_context', function( $context ) {
+$css = file_get_contents( get_stylesheet_directory() . '/assets/dist/css/email.css' );
+
+$debug_styles = false;
+if ( defined( 'PEDESTAL_DEBUG_EMAIL_CSS' ) && true === PEDESTAL_DEBUG_EMAIL_CSS ) {
+    $debug_styles = $css;
+}
+
+add_filter( 'timber_context', function( $context ) use ( $debug_styles ) {
     $context['is_email'] = true;
+    $context['email_styles'] = $debug_styles;
 
     $context['everyblock'] = $context['everyblock']['labels'] = [];
     $context['everyblock']['labels']['section']       = esc_html( 'Section', 'pedestal' );
@@ -21,12 +29,15 @@ add_filter( 'timber_context', function( $context ) {
     return $context;
 } );
 
-$css = file_get_contents( get_stylesheet_directory() . '/assets/dist/css/email.css' );
 $context = array_merge( Timber::get_context(), $vars );
 
 ob_start();
 Timber::render( 'emails/' . $template_name . '.twig', $context );
 $html = ob_get_clean();
 
-$inliner = new CssToInlineStyles();
-echo $inliner->convert( $html, $css );
+if ( false === $debug_styles ) {
+    $inliner = new CssToInlineStyles();
+    $html = $inliner->convert( $html, $css );
+}
+
+echo $html;

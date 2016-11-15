@@ -3,9 +3,9 @@
 // ==========================================================================
 
 
-.has-title-bar,
-%has-title-bar {
-  margin-top: map-get-strict( $c-title-bar-settings, 'm-t' );
+.has-story-bar,
+%has-story-bar {
+  margin-top: map-get-strict( $story-bar-settings, 'm-t' );
 }
 
 

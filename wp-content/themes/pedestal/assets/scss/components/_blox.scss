@@ -1,0 +1,270 @@
+// ==========================================================================
+// Pedestal // Components // BLOX
+// ==========================================================================
+
+
+$c: '.c-blox';
+
+#{$c} {
+  line-height: 0;
+
+
+  // scss-lint:disable SelectorFormat
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 0;
+    font-weight: map-get-strict( $c-blox-settings, 'title-font-weight' );
+  }
+  // scss-lint:enable SelectorFormat
+
+
+  &,
+  &__text__link {
+    @include text-color( map-get-strict( $c-blox-settings, 'bg' ) );
+  }
+
+
+  &__inner,
+  &__item,
+  &__text__item {
+    line-height: map-get-strict( $c-blox-settings, 'line-height' );
+  }
+
+
+  &__inner {
+    background-color: map-get-strict( $c-blox-settings, 'bg' );
+    padding: map-get-strict( $c-blox-settings, 'pd-v' ) map-get-strict( $c-blox-settings, 'pd-h' );
+
+    @media #{$medium-up} {
+      display: inline-block;
+    }
+  }
+
+
+  &__item {
+    margin: 0;
+
+    @if $email {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+
+  &__text {
+
+    &__item {
+      font-size: c-blox-font-size-get();
+      letter-spacing: 0.03em;
+    }
+
+    &__title {
+      font-weight: map-get-strict( $c-blox-settings, 'title-font-weight' );
+
+      #{$c}--has-subtitle & {
+        font-weight: map-get-strict( $c-blox-settings, 'title-font-weight-alt' );
+      }
+    }
+
+    &__subtitle {
+      margin-left: 0.25em;
+    }
+
+  } // end __text
+
+
+  &__prefix {
+    margin-right: map-get-strict( $c-blox-settings, 'prefix-spacing' );
+    width: c-blox-font-size-get();
+    height: c-blox-font-size-get();
+
+    @if not $email {
+      float: left;
+    }
+  }
+
+
+  &__suffix {
+    float: right;
+    padding-left: map-get-strict( $c-blox-settings, 'item-spacing' );
+  }
+
+
+
+
+
+
+  //
+  // Blox: Offset
+  // ==========================================================================
+
+
+  &--offset {
+    @include c-blox-offset;
+  }
+
+
+
+
+
+  //
+  // Blox: Expanding
+  // ==========================================================================
+  // Blox that expand to the full width of their container.
+
+
+  &--expand {
+    margin-top: $border-offset;
+
+    #{$c}__inner {
+      display: block;
+    }
+
+    #{$c}__text {
+      float: none;
+    }
+  }
+
+
+
+
+
+  //
+  // Blox: Inliners
+  // ==========================================================================
+  // Label-like Blox that display inline.
+
+
+  &--inline {
+    margin: 0;
+    display: inline-block;
+
+    #{$c}__text__title {
+      font-weight: map-get-strict( $c-blox-settings, 'title-font-weight-alt' );
+    }
+  }
+
+
+
+
+
+  //
+  // Blox: Customized
+  // ==========================================================================
+
+
+  &--customized {
+    #{$c} {
+      &__text {
+        @media #{$small-only} {
+          display: block;
+        }
+      }
+    }
+  } // end --customized
+
+
+
+
+
+  //
+  // Blox: Story Bar
+  // ==========================================================================
+
+
+  &--story-bar {
+    margin-left: $border-offset;
+    margin-right: $border-offset;
+    position: relative;
+
+    @if $email == false {
+      z-index: $z-blox-story-bar;
+    }
+
+    #{$c}__text {
+      .c-panel--pinned & {
+        @if $email {
+          max-width: 85%;
+        }
+      }
+    } // __text
+  } // --story-bar
+
+
+
+
+
+
+  //
+  // Blox: Caps
+  // ==========================================================================
+
+
+  &--cap {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+
+
+
+
+  //
+  // Blox: Colors
+  // ==========================================================================
+
+
+  &--lighter {
+    @include c-blox-mod-color( lighter );
+  } // end --lighter
+
+
+  &--promo {
+    @include c-blox-mod-color( promo );
+  } // end --promo
+
+
+
+
+
+  //
+  // Blox: Size Modifiers
+  // ==========================================================================
+
+
+  @each $size in $c-blox-sizes {
+    $font-size: c-blox-font-size-get( $size );
+    $pd-v: c-blox-pd-v-get( $size );
+    $pd-h: c-blox-pd-h-get( $size );
+
+    &--#{$size} {
+
+      #{$c} {
+        &__inner {
+          padding: $pd-v $pd-h;
+        }
+
+        // Provide a mobile-friendly small font size for these big guys
+        @if 'lg' == $size or 'xlg' == $size {
+          @include c-blox-font-size-adjust( c-blox-font-size-get( 'md' ) );
+
+          @media #{$medium-up} {
+            @include c-blox-font-size-adjust( $font-size );
+          }
+        } @else {
+          @include c-blox-font-size-adjust( $font-size );
+        }
+
+        &.c-blox--offset {
+          @include c-blox-offset( $size );
+        }
+
+      } // end -- $size .c-blox
+    } // end -- $size
+  } // end @each
+} // end blox

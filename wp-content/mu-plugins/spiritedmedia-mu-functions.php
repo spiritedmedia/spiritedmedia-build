@@ -104,3 +104,26 @@ add_filter( 'pre_option_bwp_gxs_extensions', function( $value ) {
     ];
     return $bwp_option;
 });
+
+// Default options for WP SES plugin
+add_filter( 'pre_option_wpses_options', function( $value ) {
+    // If the option is trying to be accessed before our constants are set, just return the default value
+    if ( ! defined( 'PEDESTAL_EMAIL_NEWS' ) ) {
+        return $value;
+    }
+    $ses_option = [
+        'reply_to' => PEDESTAL_EMAIL_NEWS,
+        'access_key' => AWS_SES_ACCESS_KEY,
+        'secret_key' => AWS_SES_SECRET_KEY,
+        'from_email' => PEDESTAL_EMAIL_NEWS,
+        'from_name' => PEDESTAL_BLOG_NAME,
+        'return_path' => PEDESTAL_EMAIL_NEWS,
+        'sender_ok' => 1,
+        'credentials_ok' => 1,
+        'force' => 0,
+        'log' => '',
+        'active' => 1,
+        'endpoint' => 'email.us-east-1.amazonaws.com',
+    ];
+    return $ses_option;
+});

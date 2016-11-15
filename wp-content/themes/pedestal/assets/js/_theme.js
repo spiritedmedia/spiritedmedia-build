@@ -151,7 +151,7 @@
       var el, position, $storyBarTitle, sourceName, postType, isExternal,
         isOriginal, storyTitle, btnHTML, shareDest;
       var entityLink = '.js-stream-items .js-entity-permalink';
-      var storyLink = '.js-stream-item .js-title-bar-link';
+      var storyLink = '.js-stream-item .js-story-bar .js-blox-link';
       $shareButtons    = $('.js-share-modal-btn');
 
       // Entities in stream
@@ -190,7 +190,7 @@
         entityHTML = $entity[0];
         i          = $entity.index();
 
-        $storyBarTitle  = $entity.find('.js-title-bar-title');
+        $storyBarTitle  = $entity.find('.js-story-bar .js-blox-title');
         storyTitle = ($storyBarTitle.text()) ? $storyBarTitle.text() : null;
 
         ga('send', {

@@ -71,8 +71,6 @@
 @import '../objects/rules';
 @import '../objects/icon-text';
 @import '../objects/media';
-@import '../objects/cap';
-@import '../objects/blox';
 @import '../objects/list-bare';
 
 
@@ -110,6 +108,8 @@
 // ==========================================================================
 
 
+@import '../components/blox';
+
 @import '../components/panels';
 @import '../components/modals';
 @import '../components/honeypot';
@@ -120,7 +120,6 @@
 @import '../components/tables';
 @import '../components/icons';
 @import '../components/stream';
-@import '../components/title-bar';
 @import '../components/hero';
 @import '../components/statement';
 @import '../components/content';

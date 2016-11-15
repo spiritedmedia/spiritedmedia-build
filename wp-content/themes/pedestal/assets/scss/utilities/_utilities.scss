@@ -3,6 +3,9 @@
 // ==========================================================================
 
 
+// scss-lint:disable ImportantRule
+
+
 //
 // Typography
 // ==========================================================================
@@ -10,7 +13,6 @@
 
 // Set text color to primary color
 .u-text-color-primary {
-  // scss-lint:disable ImportantRule
   color: $primary-color !important;
 }
 
@@ -30,6 +32,13 @@
     margin-left: $nudge-punctuation;
   }
 }
+
+
+// Text transform
+.u-tt-upper   { text-transform: uppercase; }
+.u-tt-lower   { text-transform: lowercase; }
+.u-tt-capital { text-transform: capitalize; }
+.u-tt-none    { text-transform: none; }
 
 
 

@@ -48,7 +48,7 @@
     $margin-hoz: -( $explode-width );
     margin: $margin-top $margin-hoz 0;
 
-    .has-title-bar & {
+    .has-story-bar & {
       margin: 0 $margin-hoz;
     }
 

@@ -9,12 +9,13 @@ metadata.dimension1 = "page";
 
 <main role="main" class="{{ main_classes }}">
 
-    <article class="[ c-content--promotional-content  c-content ]  c-panel  entity  promotional-content  has-title-bar">
+    <article class="[ c-content--promotional-content  c-content ]  c-panel  entity  promotional-content  has-story-bar">
 
-        {{ macros.title_bar( {
-            'title': promo_story_title,
-            'type': 'promo'
-        } ) }}
+        {{ macros.blox( _context, {
+            title: promo_story_title,
+            background: 'promo',
+            offset: true,
+        }, 'story-bar' ) }}
 
         <div class="c-panel__inner">
 

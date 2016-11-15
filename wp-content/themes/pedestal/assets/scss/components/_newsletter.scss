@@ -22,17 +22,9 @@
 
 
   @if $email {
-    // scss-lint:disable SelectorFormat
-
-    // This method is easier than introducing an entirely new class just for text-
-    // transform override. But there sure is a lot of text-transform overriding
-    // going on, enough for a refactoring at some point.
-    .cta:first-of-type {
-      text-transform: none;
-    }
-
-    .entity {
-      border: 0;
+    .c-content__subtitle {
+      margin-bottom: $base-spacing-unit * 2;
+      font-size: $h5-font-size;
     }
   }
 }

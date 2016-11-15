@@ -68,11 +68,9 @@
 
 
 @import '../objects/buttons';
-@import '../objects/cap';
 @import '../objects/icon-text';
 @import '../objects/media';
 @import '../objects/rules';
-@import '../objects/blox';
 @import '../objects/list-bare';
 
 
@@ -94,7 +92,10 @@
 // Pedestal // * Editor Style * // COMPONENTS
 // ==========================================================================
 
-@import '../components/title-bar';
+
+@import '../components/blox';
+
+
 @import '../components/entity';
 @import '../components/figure';
 @import '../components/event';

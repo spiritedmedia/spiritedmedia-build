@@ -73,7 +73,7 @@ class Admin {
                     break;
                 case 'pedestal_story':
                     $story = new Story( $post_id );
-                    if ( $story->has_story_branding() && $story->has_title_bar_icon() ) {
+                    if ( $story->has_story_branding() && $story->has_story_bar_icon() ) {
                         $this->update_story_branding( $post_id );
                     }
                     break;

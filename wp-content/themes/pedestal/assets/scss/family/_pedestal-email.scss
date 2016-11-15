@@ -72,8 +72,6 @@
 @import '../objects/rules';
 @import '../objects/icon-text';
 @import '../objects/media';
-@import '../objects/cap';
-@import '../objects/blox';
 @import '../objects/list-bare';
 
 
@@ -85,10 +83,11 @@
 // ==========================================================================
 
 
+@import '../components/blox';
+
 @import '../components/panels';
 @import '../components/stream';
 @import '../components/header';
-@import '../components/title-bar';
 @import '../components/content';
 @import '../components/newsletter';
 @import '../components/figure';

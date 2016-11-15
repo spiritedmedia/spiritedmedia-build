@@ -1,6 +1,12 @@
 {% spaceless %}
 {% import "macros/macros.twig" as macros %}
 
+{% if email_styles %}
+<style type="text/css">
+{{ email_styles }}
+</style>
+{% endif %}
+
 <div class="email-body no-js">
 
 {% include 'partials/emails/header.twig' %}

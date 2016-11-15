@@ -4,12 +4,11 @@
 
 <div class="email-constrain content-wrapper">
 
-    <div id="entity-container" class="email-breaking-news  c-panel  has-title-bar  has-cap">
+    <div id="entity-container" class="email-breaking-news  c-panel  has-story-bar  has-cap">
 
         <div class="email-breaking-news__header">
-            {{ macros.title_bar( _context, {
-                'location': 'header',
-                'require_fallback' : true,
+            {{ macros.blox( _context, {
+                'format': 'header',
                 'title': 'BREAKING NEWS'
             } ) }}
         </div>
@@ -24,9 +23,11 @@
         </div>
 
         <div class="email-breaking-news__footer">
-            <p class="cap">
-                <a class="cap__btn" href="{{ item.get_the_permalink }}">Full Story On {{ site.name }}</a>
-            </p>
+            {{ macros.blox( context, {
+                'format': 'cap',
+                'title': "Full Story On " ~ site.name,
+                'url': item.get_the_permalink
+            } ) }}
         </div>
 
     </div>

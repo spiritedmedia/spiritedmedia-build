@@ -4,10 +4,10 @@
 
 <main role="main" class="{{ main_classes }}">
 
-    <section class="c-content  c-panel  has-title-bar  {{ item.css_classes }}"
+    <section class="c-content  c-panel  has-story-bar  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
-        {{ macros.title_bar( _context, { 'location': 'header' } ) }}
+        {{ macros.blox( _context, { format: 'header' }, 'story-bar' ) }}
 
         <div class="c-panel__inner">
 

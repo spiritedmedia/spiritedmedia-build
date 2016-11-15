@@ -3,6 +3,8 @@
 // ==========================================================================
 
 
+// Order matters
+@import 'blox.config';
 @import 'panels.config';
 
 @import '404.config';
@@ -28,6 +30,5 @@
 @import 'statement.config';
 @import 'stream.config';
 @import 'tables.config';
-@import 'title-bar.config';
 @import 'user-card.config';
 @import 'whos-next.config';

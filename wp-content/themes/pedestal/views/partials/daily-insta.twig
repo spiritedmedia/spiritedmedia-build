@@ -5,20 +5,26 @@
 {% set el__header = 'header' %}
 {% set el__body = 'figure' %}
 {% set el__text = 'figcaption' %}
+{% set el__text__caption = 'h1' %}
+{% set el__author = 'h2' %}
+
 {% if is_email %}
     {% set el__base = 'div' %}
     {% set el__header = 'div' %}
     {% set el__body = 'div' %}
     {% set el__text = 'div' %}
+    {% set el__text__caption = 'h4' %}
+    {% set el__author = 'h5' %}
 {% endif %}
 
 <{{ el__base }} class="c-daily-insta  c-panel">
     <{{ el__header }} class="c-daily-insta__header">
-        {{ macros.title_bar( _context, {
-            'location': 'header',
+        {{ macros.blox( _context, {
+            'format': 'cap',
             'title': 'Instagram of the Day',
             'extra_classes': 'c-daily-insta__title',
-            'type': 'lighter'
+            'background': 'lighter',
+            'case': 'ignore'
         } ) }}
     </{{ el__header }}>
     <{{ el__body }} class="c-daily-insta__body  c-figure--img  c-figure">
@@ -33,10 +39,12 @@
         </div>
         {{ ped_slot( 'component', 'daily_insta' ) }}
         <{{ el__text }} class="c-daily-insta__text  c-figure__text  c-panel__inner">
-            <h1 class="c-daily-insta__text__caption  c-figure__text__caption">{{ item.get_embed_caption }}</h1>
-            <h2 class="c-daily-insta__author">
+            <{{ el__text__caption }} class="c-daily-insta__text__caption  c-figure__text__caption">
+                {{ item.get_embed_caption }}
+            </{{ el__text__caption }}>
+            <{{ el__author }} class="c-daily-insta__author">
                 <a href="{{ item.get_embed_url }}" target="_blank">@{{ item.get_embed_author_name }}</a>
-            </h2>
+            </{{ el__author }}>
         </{{ el__text }}>
     </{{ el__body }}>
 </{{ el__base }}>

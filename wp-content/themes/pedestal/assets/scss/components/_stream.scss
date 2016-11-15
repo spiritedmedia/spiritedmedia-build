@@ -92,9 +92,9 @@ $c: '.c-stream';
       margin-bottom: c-stream-property-get( item-spacing );
     }
 
-    &.has-title-bar {
+    &.has-story-bar {
       &:first-child {
-        margin-top: halve( map-get-strict( $c-title-bar-settings, 'm-t' ) );
+        margin-top: halve( map-get-strict( $story-bar-settings, 'm-t' ) );
       }
     }
 

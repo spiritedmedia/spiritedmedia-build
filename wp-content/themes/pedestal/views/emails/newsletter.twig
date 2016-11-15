@@ -6,9 +6,12 @@
 
     <div id="entity-container" class="c-content  c-newsletter  c-panel  has-cap">
 
-        <p class="cap">
-            <a class="cta cap__btn" href="{{ item.get_the_permalink }}">Email not displaying correctly? <strong>View it in your browser</strong>.</a>
-        </p>
+        {{ macros.blox( context, {
+            'format': 'cap',
+            'title': 'Email not displaying correctly? <strong>View it in your browser</strong>',
+            'url': item.get_the_permalink,
+            'size': 'sm'
+        } ) }}
 
         {{ ped_slot( 'lead' ) }}
 
@@ -34,9 +37,11 @@
             {% endif %}
         </div>
 
-        <p class="cap">
-            <a class="cta cap__btn" href="{{ item.get_the_permalink }}">View Newsletter on {{ site.name }}</a>
-        </p>
+        {{ macros.blox( context, {
+            'format': 'cap',
+            'title': 'View Newsletter on ' ~ site.name,
+            'url': item.get_the_permalink
+        } ) }}
 
     </div>
 

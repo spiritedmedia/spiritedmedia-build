@@ -10,10 +10,11 @@
   /*header*/&__header {}
 
   &__title {
+    $blox: '.c-blox';
     @extend %u-heading--minor;
     text-align: center;
 
-    .c-title-bar__text__title {
+    #{$blox}--story-bar #{$blox}__text__title {
       @include h-size( 4 );
     }
   }
@@ -35,8 +36,10 @@
     background-color: $truth-serum;
     padding: $half-spacing-unit;
 
+    // Override .c-panel__inner
+    min-height: 0;
+
     &__caption {
-      font-size: $h5-font-size;
       margin-top: 0;
     }
   }
@@ -44,16 +47,23 @@
   &__date,
   &__author {
     margin: 0;
+    font-weight: 600;
+  }
+
+  &__text__caption,
+  &__author {
+    @if $email {
+      font-size: $paragraph-font-size;
+    } @else {
+      font-size: $h5-font-size;
+    }
   }
 
   &__date {
     @extend %u-heading--minor;
-    font-weight: 500;
+
   }
 
-  &__author {
-    font-size: $h5-font-size;
-    font-weight: 700;
-  }
+  &__author {}
 
 }

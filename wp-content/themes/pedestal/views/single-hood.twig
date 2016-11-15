@@ -6,10 +6,10 @@
 
 <main role="main" class="{{ main_classes }}">
 
-    <section class="c-content  c-panel  has-title-bar  {{ item.css_classes }}"
+    <section class="c-content  c-panel  has-story-bar  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
-        {{ macros.title_bar( _context, {
+        {{ macros.story_bar( _context, {
             'location': 'header',
             'subtitle': __( 'By the Numbers', 'pedestal' )
         } ) }}

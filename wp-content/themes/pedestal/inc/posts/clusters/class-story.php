@@ -72,7 +72,7 @@ class Story extends Cluster {
      *
      * @return boolean
      */
-    public function has_title_bar_icon() {
+    public function has_story_bar_icon() {
         return (bool) $this->get_icon_id();
     }
 
@@ -84,11 +84,11 @@ class Story extends Cluster {
     public function get_story_branding() {
         $styles = [];
         if ( $this->has_story_branding() ) {
-            $styles['background_color']   = $this->get_title_bar_background_color();
-            $styles['foreground_color']   = $this->get_title_bar_foreground_color();
+            $styles['background_color']   = $this->get_story_bar_background_color();
+            $styles['foreground_color']   = $this->get_story_bar_foreground_color();
 
-            $styles['panel_border_color'] = $this->get_title_bar_background_color();
-            $styles['pinned_color']       = $this->get_title_bar_foreground_color();
+            $styles['panel_border_color'] = $this->get_story_bar_background_color();
+            $styles['pinned_color']       = $this->get_story_bar_foreground_color();
 
             $icon = $this->get_icon_id();
             if ( ! empty( $icon ) ) {
@@ -109,7 +109,7 @@ class Story extends Cluster {
      *
      * @return string|bool
      */
-    public function get_title_bar_background_color() {
+    public function get_story_bar_background_color() {
         if ( $background_color = $this->get_fm_field( 'story_branding', 'background_color' ) ) {
             return $background_color;
         } else {
@@ -122,7 +122,7 @@ class Story extends Cluster {
      *
      * @return string|bool
      */
-    public function get_title_bar_foreground_color() {
+    public function get_story_bar_foreground_color() {
         if ( $foreground_color = $this->get_fm_field( 'story_branding', 'foreground_color' ) ) {
             return $foreground_color;
         } else {
