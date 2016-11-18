@@ -1,8 +1,7 @@
-Build [#1635](https://circleci.com/gh/spiritedmedia/spiritedmedia/1635) by montchr at 2016-11-15 08:05 PM UTC
+Build [#1644](https://circleci.com/gh/spiritedmedia/spiritedmedia/1644) by kingkool68 at 2016-11-18 04:04 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.5](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.5)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.6](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.6)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.4...v4.7.5)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.5...v4.7.6)
 
- - [#1712](https://github.com/spiritedmedia/spiritedmedia/pull/1712): Newsletter typography tweaks
- - [#1723](https://github.com/spiritedmedia/spiritedmedia/pull/1723): Send Transactional Emails Through Amazon SES
+ - [#1728](https://github.com/spiritedmedia/spiritedmedia/pull/1728): Add ComScore Tracking Pixel Script

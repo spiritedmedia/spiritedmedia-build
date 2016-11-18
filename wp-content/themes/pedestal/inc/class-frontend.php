@@ -46,6 +46,7 @@ class Frontend {
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts' ] );
         add_action( 'wp_head', [ $this, 'action_wp_head_meta_tags' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'action_wp_enqueue_scripts' ] );
+        add_action( 'wp_head', [ $this, 'action_add_comscore_tracking_pixel' ] );
 
         // RelayMedia's AMP version requries these
         add_action( 'wp_head', [ $this, 'action_wp_head_amp_link' ] );
@@ -714,5 +715,12 @@ class Frontend {
         }
 
         return $title;
+    }
+
+    public function action_add_comscore_tracking_pixel() {
+        if ( ! defined( 'PEDESTAL_COMSCORE_ID' ) || ! PEDESTAL_COMSCORE_ID ) {
+            return;
+        }
+        Timber::render( 'partials/analytics/comscore.twig', [ 'comscore_id' => PEDESTAL_COMSCORE_ID ] );
     }
 }
