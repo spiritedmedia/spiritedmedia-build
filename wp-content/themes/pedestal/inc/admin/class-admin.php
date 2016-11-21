@@ -48,7 +48,6 @@ class Admin {
 
         $this->setup_actions();
         $this->setup_filters();
-        $this->setup_bulk_actions();
 
     }
 
@@ -275,27 +274,6 @@ class Admin {
 	        return $buttons;
         });
 
-    }
-
-    /**
-     * Setup bulk actions for the post list screen
-     */
-    private function setup_bulk_actions() {
-        $bulk_actions = new Bulk_Action( [ 'post_type' => 'pedestal_hood' ] );
-        $bulk_actions->register_bulk_action( [
-            'menu_text' => 'Send EveryBlock Updates',
-            'admin_notice' => 'EveryBlock updates sent.',
-            'callback' => function( $post_ids ) {
-                $hoods = [];
-                foreach ( $post_ids as $post_id ) {
-                    $hood = Neighborhood::get_by_post_id( $post_id );
-                    if ( $hood->get_items_since_last_everyblock_email_notification() ) {
-                        Pedestal()->subscriptions->send_email_to_users_following_everyblock( $hood );
-                    }
-                }
-            },
-        ] );
-        $bulk_actions->init();
     }
 
     /**

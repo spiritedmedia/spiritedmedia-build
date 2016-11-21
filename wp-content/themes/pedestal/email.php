@@ -17,13 +17,6 @@ add_filter( 'timber_context', function( $context ) use ( $debug_styles ) {
     $context['is_email'] = true;
     $context['email_styles'] = $debug_styles;
 
-    $context['everyblock'] = $context['everyblock']['labels'] = [];
-    $context['everyblock']['labels']['section']       = esc_html( 'Section', 'pedestal' );
-    $context['everyblock']['labels']['location']      = esc_html( 'Location', 'pedestal' );
-    $context['everyblock']['labels']['date']          = esc_html( 'Date', 'pedestal' );
-    $context['everyblock']['labels']['dispatch_date'] = esc_html( 'Dispatch Date', 'pedestal' );
-    $context['everyblock']['labels']['dispatch_time'] = esc_html( 'Dispatch Time', 'pedestal' );
-
     $context['grouped'] = true;
 
     return $context;

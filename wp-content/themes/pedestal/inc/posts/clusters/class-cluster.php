@@ -111,43 +111,6 @@ abstract class Cluster extends Post {
     }
 
     /**
-     * Get the "powered by" provider URL for this cluster
-     *
-     * @return string
-     */
-    public function get_powered_by_url() {
-        $power = $this->get_field( 'powered-by' );
-        switch ( $power ) {
-            case 'everyblock':
-                return 'http://philly.everyblock.com/';
-                break;
-        }
-    }
-
-    /**
-     * Get the "powered by" provider name for this cluster
-     *
-     * @return string
-     */
-    public function get_powered_by_name() {
-        $power = $this->get_field( 'powered-by' );
-        switch ( $power ) {
-            case 'everyblock':
-                return 'EveryBlock';
-                break;
-        }
-    }
-
-    /**
-     * Get the "powered by" provider value for this cluster
-     *
-     * @return string
-     */
-    public function get_powered_by() {
-        return $this->get_field( 'powered-by' );
-    }
-
-    /**
      * Get the number of users following this cluster
      *
      * @return int

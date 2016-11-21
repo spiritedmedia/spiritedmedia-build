@@ -336,25 +336,6 @@ class Subscriptions {
                     ] );
                     break;
 
-                case 'follow-update-everyblock':
-                    $hoods = new \WP_Query( [
-                        'post_type'      => 'pedestal_hood',
-                        'posts_per_page' => 1,
-                    ] );
-                    if ( empty( $hoods->posts ) ) {
-                        echo 'No published neighborhoods to test with.';
-                        break;
-                    }
-                    $hood = new Neighborhood( $hoods->posts[0] );
-                    echo $this->get_email_template( 'follow-update-everyblock', [
-                        'item'       => $hood,
-                        'eb_items'   => $hood->get_items_since_last_everyblock_email_notification(),
-                        'email_type' => $hood->get_email_type(),
-                        'shareable'  => true,
-                        'email_date' => date( 'F d, Y' ),
-                    ] );
-                    break;
-
                 case 'follow-update-hood':
                     $hoods = new \WP_Query( [
                         'post_type'      => 'pedestal_hood',
@@ -669,24 +650,6 @@ class Subscriptions {
             return;
         }
 
-        if ( ! empty( $_POST['pedestal-everyblock-notify-subscribers'] ) ) {
-            $hood = Neighborhood::get_by_post_id( (int) $post_id );
-            $this->send_email_to_users_following_everyblock( $hood );
-        } elseif ( ! empty( $_POST['pedestal-everyblock-send-test-email'] ) ) {
-            $email_addresses = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
-            $hood = Neighborhood::get_by_post_id( (int) $post_id );
-            $subject = sprintf( '[TEST] %s Update: %s', PEDESTAL_BLOG_NAME, $hood->get_title() );
-            $body = $this->get_email_template( 'follow-update-everyblock', [
-                'item'                      => $hood,
-                'eb_items'                  => $hood->get_items_since_last_everyblock_email_notification(),
-                'email_type'                => $hood->get_email_type(),
-                'mandrill_unsubscribe_link' => true,
-                'shareable'                 => true,
-                'email_date'                => date( 'F d, Y' ),
-            ] );
-            mandrill_wp_mail( implode( ',', $email_addresses ), $subject, $body );
-        }
-
         if ( ! empty( $_POST['pedestal-cluster-notify-subscribers'] ) ) {
             $cluster = Cluster::get_by_post_id( (int) $post_id );
             $this->send_email_to_users_following_cluster( $cluster );
@@ -900,55 +863,6 @@ class Subscriptions {
 
         self::$errors->add( 'email_already_subscribed', sprintf( 'The email address %s is already subscribed to the newsletter and breaking news emails!', $email_address ) );
         return self::$errors;
-    }
-
-    /**
-     * Send an email notification to the users following an EveryBlock neighborhood
-     *
-     * @param Neighborhood
-     */
-    public function send_email_to_users_following_everyblock( $hood ) {
-
-        $users = $hood->get_following_users();
-        $merge_vars = $email_addresses = [];
-        foreach ( $users as $user ) {
-            $email_addresses[] = $user->user_email;
-            $merge_vars[] = (object) [
-                'rcpt'    => $user->user_email,
-                'vars'    => [
-                    (object) [
-                        'name'     => 'MANDRILL_UNSUBSCRIBE_LINK',
-                        'content'  => $this->get_user_cluster_unsubscribe_link( $user->ID, $hood->get_id() ),
-                    ],
-                ],
-            ];
-        }
-        $merge_vars_func = function( $args ) use ( $merge_vars ) {
-            $args['merge_vars'] = $merge_vars;
-            return $args;
-        };
-        add_filter( 'mandrill_wp_mail_pre_message_args', $merge_vars_func );
-        $subject = sprintf( '%s Update: %s', PEDESTAL_BLOG_NAME, $hood->get_title() );
-        $body = $this->get_email_template( 'follow-update-everyblock', [
-            'item'                      => $hood,
-            'eb_items'                  => $hood->get_items_since_last_everyblock_email_notification(),
-            'email_type'                => $hood->get_email_type(),
-            'mandrill_unsubscribe_link' => true,
-            'shareable'                 => true,
-            'email_date'                => date( 'F d, Y' ),
-        ] );
-        $response = mandrill_wp_mail( implode( ',', $email_addresses ), $subject, $body );
-        remove_filter( 'mandrill_wp_mail_pre_message_args', $merge_vars_func );
-
-        if ( 200 === $response ) {
-            $hood->set_last_everyblock_email_notification_date( time() );
-        } else {
-            add_filter( 'redirect_post_location', function( $location, $post_id ) use ( $response ) {
-                remove_filter( 'redirect_post_location', __FILTER__, '99' );
-                return add_query_arg( 'mandrill_resp', $response, $location );
-            }, '99');
-        }
-
     }
 
     /**

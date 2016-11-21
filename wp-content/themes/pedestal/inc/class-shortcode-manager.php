@@ -372,6 +372,7 @@ class Shortcode_Manager {
     public function filter_img_shortcode_output_img_tag( $html, $attrs ) {
         $attachment = $attrs['attachment'];
         $size = $attrs['size'];
+        $src = $attrs['src'];
 
         $img_classes = 'c-figure__content';
         $img_atts = [
@@ -390,7 +391,7 @@ class Shortcode_Manager {
 
             return $obj->get_html( $size, $img_atts );
         } elseif ( ! empty( $src ) ) {
-            $img_atts['src'] = $attrs['src'];
+            $img_atts['src'] = $src;
             $img_atts['alt'] = $attrs['alt'];
             return Attachment::get_img_html( $img_atts );
         } else {

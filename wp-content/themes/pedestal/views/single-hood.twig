@@ -26,11 +26,6 @@
                 </div>
                 {% endif %}
 
-
-                <div class="c-content__sponsor">
-                    {% include 'partials/powered-by.twig' %}
-                </div>
-
                 <div class="c-content__meta">
                     {% include 'partials/meta-info/meta-info-hood.twig' %}
                 </div>
@@ -45,35 +40,7 @@
 
             <section class="c-content__entities  c-stream  c-stream--inset  js-stream">
                 <div class="c-stream__items  js-stream-items">
-                    {% if item.get_everyblock %}
-                    {% for item in item.get_everyblock %}
-
-                        {% if loop.index == 8 %}
-                            <div class="c-stream__item  js-stream-item">
-                                {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
-                            </div>
-                        {% endif %}
-
-                        {% if loop.index == 16 %}
-                            <div class="c-stream__item  js-stream-item">
-                            {% include 'partials/adverts/dfp-stream-16.twig' ignore missing %}
-                            </div>
-                        {% endif %}
-
-                        {% include 'partials/hood/everyblock/item.twig' %}
-
-                        {% if loop.length < 8 and loop.last %}
-                            <div class="c-stream__item  js-stream-item">
-                                {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
-                            </div>
-                        {% endif %}
-
-                    {% endfor %}
-                    {% else %}
-
-                        {{ item.get_everyblock_error }}
-
-                    {% endif %}
+                    <!-- Nothing here...  -->
                 </div>
             </section>
 

@@ -142,22 +142,8 @@ class CLI_Clusters extends \WP_CLI_Command {
 
                     case 'locality':
                         $this->_set_locality_type( $post_id, $item['type'] );
-
                         if ( 'states' === $item['type'] ) {
                             add_post_meta( $post_id, 'state_details_abbr', strtoupper( $item_slug ) );
-                        }
-
-                        // Add EveryBlock slug(s) to meta key `everyblock-slug`
-                        if ( 'neighborhoods' === $item['type'] && isset( $item['everyblock_slug'] ) ) {
-                            $eb_slugs = $item['everyblock_slug'];
-                            if ( is_array( $eb_slugs ) ) {
-                                $eb_slugs_str = implode( ', ', $eb_slugs );
-                            } elseif ( is_string( $eb_slugs ) ) {
-                                $eb_slugs_str = $eb_slugs;
-                            }
-                            add_post_meta( $post_id, 'everyblock-slug', $eb_slugs );
-                            add_post_meta( $post_id, 'everyblock-updated', 0 );
-                            add_post_meta( $post_id, 'powered-by', 'everyblock' );
                         }
                         break;
 
