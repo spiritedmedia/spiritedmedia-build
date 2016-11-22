@@ -1315,7 +1315,6 @@ abstract class Post {
      * @return mixed
      */
     protected function get_fm_field() {
-
         $fields = func_get_args();
         $parent = array_shift( $fields );
 
@@ -1327,8 +1326,12 @@ abstract class Post {
                 return false;
             }
         }
-        return $meta;
 
+        if ( is_string( $meta ) ) {
+            $meta = trim( $meta );
+        }
+
+        return $meta;
     }
 
     /**

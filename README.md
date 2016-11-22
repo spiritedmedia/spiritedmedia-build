@@ -1,8 +1,7 @@
-Build [#1650](https://circleci.com/gh/spiritedmedia/spiritedmedia/1650) by montchr at 2016-11-21 09:40 PM UTC
+Build [#1654](https://circleci.com/gh/spiritedmedia/spiritedmedia/1654) by montchr at 2016-11-22 05:24 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.7](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.7)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.8](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.8)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.6...v4.7.7)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.7.7...v4.7.8)
 
- - [#1732](https://github.com/spiritedmedia/spiritedmedia/pull/1732): HOTFIX: Define $src for image shortcode src attribute
- - [#1729](https://github.com/spiritedmedia/spiritedmedia/pull/1729): Remove EveryBlock Code
+ - [#1735](https://github.com/spiritedmedia/spiritedmedia/pull/1735): Trim trailing whitespace from post meta fields
