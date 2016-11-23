@@ -156,8 +156,6 @@ class Factcheck extends Entity {
             return $this->get_meter_html();
         } elseif ( $this->has_speaker_image() ) {
             return $this->get_statement_speaker_image_html();
-        } elseif ( $this->has_featured_image() ) {
-            return $this->get_featured_image_html( 'thumbnail' );
         }
         return '';
     }
