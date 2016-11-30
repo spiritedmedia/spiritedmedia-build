@@ -1,0 +1,6 @@
+<h3 class="u-heading--minor">Who's Next Archives</h3>
+
+{% include 'widgets/item-list.twig' with {
+    'items': item.get_archive_items,
+    'current_item': item,
+} only %}

@@ -37,5 +37,16 @@ googletag.cmd.push(function() {
   googletag.pubads().enableSingleRequest();
   googletag.pubads().collapseEmptyDivs(true);
 
+  // Add 'ADVERTISEMENT' disclaimer text after all DFP units
+  googletag.pubads().addEventListener('slotRenderEnded', function(e) {
+    var id, div, html;
+    if (false === e.isEmpty) {
+      id = e.slot.m.m;
+      div = document.getElementById(id);
+      html = '<div class="dfp-disclaimer">ADVERTISEMENT</div>';
+      div.insertAdjacentHTML('beforeend', html);
+    }
+  });
+
   googletag.enableServices();
 });

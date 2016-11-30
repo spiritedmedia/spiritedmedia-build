@@ -16,7 +16,7 @@ use \Pedestal\Posts\Post;
 
 use Pedestal\Posts\Slots\Slot_Item;
 
-use \Pedestal\Objects\User;
+use Pedestal\Objects\{Stream, User};
 
 class CLI extends \WP_CLI_Command {
 
@@ -27,7 +27,7 @@ class CLI extends \WP_CLI_Command {
         $slot_item_count_migrated = 0;
         $slot_item_count_drafted = 0;
 
-        $slot_items = Post::get_posts( [
+        $slot_items = Stream::get( [
             'post_type'      => 'pedestal_slot_item',
             'posts_per_page' => 500,
             // We don't want to process the really old format

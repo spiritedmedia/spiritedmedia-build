@@ -14,8 +14,8 @@
 
   &__logo {
     /*a*/&__img {
-      background-image: url( $pedestal-abspath + '/assets/images/partners/knight-logo.png' );
-      background-image: url( $pedestal-abspath + '/assets/images/partners/knight-logo.svg' );
+      background-image: url( $site-theme-abspath + '/assets/images/whos-next-partner.png' );
+      background-image: url( $site-theme-abspath + '/assets/images/whos-next-partner.svg' );
     }
   }
 

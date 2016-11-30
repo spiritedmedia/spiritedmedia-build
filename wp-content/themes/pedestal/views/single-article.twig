@@ -42,6 +42,8 @@
             {% endif %}
 
             <footer class="c-content__footer  [ o-rule--closure  o-rule ]">
+                {% include 'partials/cluster-list.twig' %}
+
                 {% if 'feat_contributor' == item.get_single_author.get_primary_role %}
                 <div class="c-content__author-info">
                     {{ macros.user_card( _context, item.get_single_author ) }}

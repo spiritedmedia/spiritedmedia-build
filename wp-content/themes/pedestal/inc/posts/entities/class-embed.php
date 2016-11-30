@@ -2,7 +2,8 @@
 
 namespace Pedestal\Posts\Entities;
 
-use \Pedestal\Utils\Utils;
+use Pedestal\Objects\Stream;
+use Pedestal\Utils\Utils;
 
 class Embed extends Entity {
 
@@ -737,7 +738,7 @@ class Embed extends Entity {
                 ],
             ],
         ];
-        $posts = static::get_posts( $args );
+        $posts = Stream::get( $args );
         if ( empty( $posts ) ) {
             return false;
         }

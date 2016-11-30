@@ -6,9 +6,11 @@ use \Pedestal\Utils\Utils;
 
 use Pedestal\Registrations\Post_Types\Types;
 
-use \Pedestal\Objects\User;
-
-use \Pedestal\Objects\Notifications;
+use Pedestal\Objects\{
+    Notifications,
+    Stream,
+    User
+};
 
 use \Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
 
@@ -135,40 +137,13 @@ abstract class Post {
             'update_post_term_cache' => false,
         ];
         $args = wp_parse_args( $args, $defaults );
-        $posts = self::get_posts( $args );
+        $posts = Stream::get( $args );
         if ( ! is_array( $posts ) || ! isset( $posts[0] ) ) {
             return false;
         }
         if ( 1 == $args['numberposts'] ) {
             return $posts[0];
         }
-        return $posts;
-    }
-
-    /**
-     * Get an array of posts using our objects from a query or array of posts
-     *
-     * @param  WP_Query|array $query
-     * @return array
-     */
-    public static function get_posts( $query ) {
-        $posts = [];
-
-        if ( is_object( $query ) && isset( $query->posts ) ) {
-            $wp_posts = $query->posts;
-        } elseif ( is_array( $query ) && reset( $query ) instanceof \WP_Post ) {
-            $wp_posts = $query;
-        } else {
-            $wp_posts = new \WP_Query( $query );
-            $wp_posts = $wp_posts->posts;
-        }
-
-        if ( ! empty( $wp_posts ) ) {
-            foreach ( $wp_posts as $post ) {
-                $posts[] = self::get_by_post_id( $post->ID );
-            }
-        }
-
         return $posts;
     }
 

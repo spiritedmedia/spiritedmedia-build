@@ -14,6 +14,9 @@ if ( is_a( $item, '\\Pedestal\\Posts\\Post' ) ) {
 
     if ( $item->is_cluster() ) {
         $templates[] = 'single-cluster.twig';
+    }
+
+    if ( $item->is_story() ) {
         $context['cluster'] = $item;
         $context['follow_text'] = 'follow this';
     }

@@ -43,6 +43,12 @@
 
             </section>
 
+        {% if item.has_clusters %}
+            <footer class="c-content__footer  [ o-rule--closure  o-rule ]">
+                {% include 'partials/cluster-list.twig' %}
+            </footer>
+        {% endif %}
+
             {% include 'partials/modals/entity-share-modal.twig' %}
 
         </div>

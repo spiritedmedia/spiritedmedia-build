@@ -24,6 +24,8 @@ use \Pedestal\Posts\Clusters\Person;
 
 use Pedestal\Posts\Slots\Slots;
 
+use Pedestal\Objects\Stream;
+
 /**
  * Encapsulates customizations for the WordPress admin
  */
@@ -917,15 +919,13 @@ class Admin {
      * Handle the display of the Scheduled Entities dashboard widget
      */
     public function handle_dashboard_widget_scheduled_entities() {
-        $args = [
+        $future_posts = Stream::get( [
             'post_type'      => Types::get_entity_post_types(),
             'posts_per_page' => 15,
             'post_status'    => 'future',
             'orderby'        => 'date',
             'order'          => 'ASC',
-        ];
-        $future_posts = new \WP_Query( $args );
-        $future_posts = Post::get_posts( $future_posts );
+        ] );
         $context = array_merge( Timber::get_context(), [ 'items' => $future_posts ] );
         Timber::render( 'partials/admin/dash-widget-scheduled-entities.twig', $context );
     }

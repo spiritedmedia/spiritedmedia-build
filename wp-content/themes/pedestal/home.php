@@ -2,12 +2,12 @@
 
 use Timber\Timber;
 
-use \Pedestal\Posts\Post;
+use Pedestal\Objects\Stream;
 
 $context = Timber::get_context();
 
 $posts = Timber::get_posts( false, 'WP_Post' );
-$items = Post::get_posts( $posts );
+$items = Stream::get( $posts );
 $context['items'] = $items;
 
 Timber::render( 'home.twig', $context );

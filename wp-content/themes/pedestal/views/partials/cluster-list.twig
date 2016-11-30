@@ -1,0 +1,31 @@
+{% set cluster_topics = item.get_clusters_with_links('topic') %}
+{% set cluster_people = item.get_clusters_with_links('person') %}
+{% set cluster_orgs = item.get_clusters_with_links('org') %}
+{% set cluster_places_localities = item.get_clusters_with_links([ 'place', 'locality' ]) %}
+{% set heading_classes = 'c-cluster-list__heading  u-heading--minor' %}
+
+{% if item.has_clusters %}
+
+<div class="c-cluster-list">
+    {% if cluster_topics %}
+        <h3 class="{{ heading_classes }}">Topics</h3>
+        <p class="c-cluster-list__clusters">{{ cluster_topics }}</p>
+    {% endif %}
+
+    {% if cluster_people %}
+        <h3 class="{{ heading_classes }}">People</h3>
+        <p class="c-cluster-list__clusters">{{ cluster_people }}</p>
+    {% endif %}
+
+    {% if cluster_orgs %}
+        <h3 class="{{ heading_classes }}">Organizations</h3>
+        <p class="c-cluster-list__clusters">{{ cluster_orgs }}</p>
+    {% endif %}
+
+    {% if cluster_places_localities %}
+        <h3 class="{{ heading_classes }}">Places</h3>
+        <p class="c-cluster-list__clusters">{{ cluster_places_localities }}</p>
+    {% endif %}
+</div>
+
+{% endif %}

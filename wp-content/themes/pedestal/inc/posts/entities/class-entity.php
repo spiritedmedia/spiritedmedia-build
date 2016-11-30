@@ -109,45 +109,104 @@ abstract class Entity extends Post {
     /**
      * Get a comma-separated list of this entity's non-story Clusters
      *
-     * @return string HTML
+     * @param string|array $type Optional cluster type(s) to narrow list
+     * @return string|false HTML
      */
-    public function get_clusters_with_links() {
-        $clusters = [];
-        if ( ! empty( $this->get_clusters() ) ) {
-            foreach ( $this->get_clusters() as $cluster ) {
-                $clusters[] = '<a href="' . esc_url( $cluster->get_permalink() ) . '">' . esc_html( $cluster->get_title() ) . '</a>';
-            }
+    public function get_clusters_with_links( $types = '' ) {
+        $clusters_with_links = [];
+        $cluster_args = [ 'flatten' => true ];
+
+        if ( ! empty( $types ) && ( is_string( $types ) || is_array( $types ) ) ) {
+            $cluster_args['types'] = $types;
         }
-        return implode( ', ', $clusters );
+
+        $clusters = $this->get_clusters( $cluster_args );
+        if ( ! empty( $clusters ) ) {
+            foreach ( $clusters as $cluster ) {
+                $clusters_with_links[] = '<a href="' . esc_url( $cluster->get_permalink() ) . '">' . esc_html( $cluster->get_title() ) . '</a>';
+            }
+            return implode( ', ', $clusters_with_links );
+        }
+        return false;
+    }
+
+    /**
+     * Check whether the entity has any non-story clusters
+     *
+     * @return boolean
+     */
+    public function has_clusters() {
+        return (bool) $this->get_clusters( [ 'count_only' => true ] );
     }
 
     /**
      * Get the non-story clusters associated with an entity
      *
+     * @param array $args Args for getting clusters
      * @return array Array of Clusters
      */
-    public function get_clusters() {
-        if ( isset( $this->clusters ) ) {
-            return $this->clusters;
-        }
+    public function get_clusters( array $args = [] ) {
+        $args = wp_parse_args( $args, [
+            'types'      => Types::get_cluster_post_types_sans_story(),
+            'flatten'    => false,
+            'paginate'   => false,
+            'count_only' => false,
+        ] );
+        $types = $args['types'];
+        $count_only = $args['count_only'];
 
-        $args = [
-            'post_type'       => Types::get_cluster_post_types_sans_story(),
+        // Allow passing both full post type names and short post type names
+        if ( is_string( $types ) ) {
+            $types = [ $types ];
+        }
+        $types = array_map( [ '\Pedestal\Utils\Utils', 'remove_name_prefix' ], $types );
+        $types = array_map( function( $type ) {
+            return 'pedestal_' . $type;
+        }, $types );
+
+        $query_args = [
+            'post_type'       => $types,
             'post_status'     => 'publish',
-            'posts_per_page'  => -1,
+            'posts_per_page'  => 99,
+            'no_found_rows'   => true,
             'connected_type'  => Types::get_connection_types_entities_to_clusters(),
             'connected_items' => $this->post,
         ];
 
-        $stream = new Stream( $args );
-        $stream = $stream->get_stream();
-        if ( ! empty( $stream ) ) {
-            $this->clusters = $stream;
-        } else {
-            $this->clusters = false;
+        if ( $args['paginate'] || $count_only ) {
+            $query_args['no_found_rows'] = false;
         }
 
-        return $this->clusters;
+        if ( $count_only ) {
+            $query_args['update_post_meta_cache'] = false;
+            $query_args['update_post_term_cache'] = false;
+            $query_args['fields'] = 'ids';
+        }
+
+        $count = 0;
+        $stream = new Stream( $query_args );
+        if ( $stream->has_posts() ) {
+            $clusters = [];
+
+            if ( $args['flatten'] ) {
+                return $stream->get_stream();
+            }
+
+            if ( $count_only ) {
+                return count( $stream->get_posts() );
+            }
+
+            foreach ( $stream->get_stream() as $cluster ) {
+                $cluster_type = $cluster->get_type();
+                if ( ! isset( $clusters[ $cluster_type ] ) ) {
+                    $clusters[ $cluster_type ] = [];
+                }
+                $clusters[ $cluster_type ][] = $cluster;
+            }
+
+            return $clusters;
+        }
+        return false;
     }
 
     /**

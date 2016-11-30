@@ -2,13 +2,13 @@
 
 use Timber\Timber;
 
-use \Pedestal\Posts\Post;
+use Pedestal\Objects\Stream;
 
 global $wp_query;
 
 $context = Timber::get_context();
 $posts = Timber::get_posts( false, 'WP_Post' );
-$items = Post::get_posts( $posts );
+$items = Stream::get( $posts );
 
 $context['items'] = $items;
 $context['found_results'] = $wp_query->found_posts;

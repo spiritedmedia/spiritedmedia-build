@@ -51,7 +51,11 @@
             </aside>
             {% endif %}
 
-            <footer class="c-content__footer  [ o-rule--closure  o-rule ]"></footer>
+            {% block content__footer %}
+            <footer class="c-content__footer  [ o-rule--closure  o-rule ]">
+                {% include 'partials/cluster-list.twig' %}
+            </footer>
+            {% endblock %}
 
             {% include 'partials/modals/entity-share-modal.twig' %}
 

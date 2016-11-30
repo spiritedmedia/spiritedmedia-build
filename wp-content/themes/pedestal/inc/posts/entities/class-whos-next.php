@@ -8,6 +8,8 @@ use \Pedestal\Posts\Attachment;
 
 use \Pedestal\Posts\Clusters\Story;
 
+use Pedestal\Objects\Stream;
+
 class Whos_Next extends Entity {
 
     use \Pedestal\Posts\EditorialContent;
@@ -107,7 +109,7 @@ class Whos_Next extends Entity {
      * @return array Posts
      */
     public function get_archive_items() {
-        $whosnext_posts = self::get_posts( [
+        $whosnext_posts = Stream::get( [
             'posts_per_page' => 50,
             'post_type' => self::$post_type,
         ] );
@@ -130,7 +132,7 @@ class Whos_Next extends Entity {
      * @return obj|bool Story if successful, else false
      */
     public static function get_whosnext_story() {
-        $whosnext_story = self::get_posts( [
+        $whosnext_story = Stream::get( [
             'posts_per_page' => 1,
             'post_type'      => 'pedestal_story',
             'name'           => 'whos-next',

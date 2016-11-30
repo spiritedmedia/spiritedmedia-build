@@ -185,8 +185,8 @@ class Types {
                 echo esc_html( $obj->get_venue_name() );
                 break;
             case 'pedestal_entity_cluster_connections':
-                if ( ! empty( $obj->get_clusters_with_links() ) ) {
-                    echo $obj->get_clusters_with_links();
+                if ( ! empty( $clusters_with_links = $obj->get_clusters_with_links() ) ) {
+                    echo $clusters_with_links;
                 } else {
                     echo '&mdash;';
                 }
