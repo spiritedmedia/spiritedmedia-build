@@ -316,9 +316,9 @@ class Cluster_Types extends Types {
                 $this->connection_types[] = 'stories_to_' . $sanitized_labels['name'];
             }
 
-            // Connect non-Topic and non-Story clusters to Topics
-            if ( 'pedestal_topic' != $post_type && 'pedestal_story' != $post_type ) {
-                p2p_register_connection_type( [
+            // Connect all non-Story clusters to Topics (including Topics)
+            if ( 'pedestal_story' != $post_type ) {
+                $args_topics_to = [
                     'name'           => 'topics_to_' . $sanitized_labels['name'],
                     'from'           => 'pedestal_topic',
                     'to'             => $post_type,
@@ -330,7 +330,11 @@ class Cluster_Types extends Types {
                         'from' => $labels['name'],
                         'to'   => __( 'Topics', 'pedestal' ),
                     ],
-                ] );
+                ];
+                if ( 'pedestal_topic' === $post_type ) {
+                    $args_topics_to['reciprocal'] = true;
+                }
+                p2p_register_connection_type( $args_topics_to );
                 $this->connection_types[] = 'topics_to_' . $sanitized_labels['name'];
             }
 
@@ -628,6 +632,7 @@ class Cluster_Types extends Types {
             'instagram' => new \Fieldmanager_Textfield( esc_html__( 'Instagram Username', 'pedestal' ), [
                 'name' => 'instagram',
             ] ),
+            'linkedin' => new \Fieldmanager_Link( esc_html__( 'LinkedIn URL', 'pedestal' ) ),
         ];
         $social = new \Fieldmanager_Group( false, [
             'name'           => 'person_social',

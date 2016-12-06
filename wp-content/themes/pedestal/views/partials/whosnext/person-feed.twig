@@ -26,4 +26,11 @@
         @{{ person.get_instagram_handle }}
     </a>
     {% endif %}
+
+    {% if person.get_linkedin_url %}
+    <strong>LinkedIn:</strong>
+    <a href="{{ person.get_linkedin_url }}" title="{{ person.get_the_title }} on LinkedIn">
+        {{ person.get_the_title }} on LinkedIn
+    </a>
+    {% endif %}
 </p>

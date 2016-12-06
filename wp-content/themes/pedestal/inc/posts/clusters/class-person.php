@@ -170,6 +170,15 @@ class Person extends Cluster {
     }
 
     /**
+     * Get the Person's LinkedIn URL
+     *
+     * @return string
+     */
+    public function get_linkedin_url() {
+        return $this->get_person_social_field( 'linkedin' );
+    }
+
+    /**
      * Get the Person's short name
      *
      * Short name is a combination of the `first_name` and `last_name` fields.

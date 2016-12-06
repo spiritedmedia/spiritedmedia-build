@@ -28,6 +28,12 @@
 
                     <h2 class="c-content__title">{{ item.get_the_title }}</h2>
 
+                    {% if item.get_excerpt %}
+                        <div class="c-content__excerpt">
+                            {{ item.get_the_excerpt }}
+                        </div>
+                    {% endif %}
+
                     {% block content__meta %}
                         <div class="c-content__meta">
                             {% include 'partials/meta-info/meta-info-entity.twig' %}

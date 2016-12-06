@@ -2,9 +2,9 @@
 
 namespace Pedestal\Objects;
 
-use \Pedestal\Utils\Utils;
-
-use \Pedestal\Posts\Post;
+use Pedestal\Utils\Utils;
+use Pedestal\Posts\Post;
+use Pedestal\Registrations\Post_Types\Types;
 
 class Parsely {
 
@@ -120,8 +120,19 @@ class Parsely {
                 }
                 $headline = $this->str_sanitize( $post->get_title() );
                 $schema = ( 'page' == $post->get_type() ) ? 'WebPage' : 'NewsArticle';
-                if ( $post->is_entity() && $post->get_story() ) {
-                    $keywords[] = 'story :: ' . $post->get_story()->get_title();
+                if ( $post->is_entity() ) {
+                    $clusters = $post->get_clusters( [
+                        'types'   => Types::get_cluster_post_types(),
+                        'flatten' => true,
+                    ] );
+                    foreach ( $clusters as $cluster ) {
+                        $type = $cluster->get_type_name();
+                        if ( 'Locality' === $type ) {
+                            $type = $cluster->get_locality_type_name();
+                        }
+                        $type = strtolower( $type );
+                        $keywords[] = $type . ' :: ' . $cluster->get_title();
+                    }
                 }
                 $data = array_merge( $base_data, [
                     '@type'          => $schema,
