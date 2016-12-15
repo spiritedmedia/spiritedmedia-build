@@ -111,7 +111,7 @@ class ImageHelper {
 	 * @return boolean true if it's an animated gif, false if not
 	 */
 	public static function is_animated_gif( $file ) {
-		if ( strpos(strtolower($file), '.gif') == -1 ) {
+		if ( strpos(strtolower($file), '.gif') === false ) {
 			//doesn't have .gif, bail
 			return false;
 		}
@@ -185,7 +185,7 @@ class ImageHelper {
 	 */
 	protected static function add_constants() {
 		if ( !defined('WP_CONTENT_SUBDIR') ) {
-			$wp_content_path = str_replace(site_url(), '', WP_CONTENT_URL);
+			$wp_content_path = str_replace(get_home_url(), '', WP_CONTENT_URL);
 			define('WP_CONTENT_SUBDIR', $wp_content_path);
 		}
 	}
@@ -197,14 +197,14 @@ class ImageHelper {
 	 */
 	static function add_filters() {
 		add_filter('upload_dir', function( $arr ) {
-			$arr['relative'] = str_replace(site_url(), '', $arr['baseurl']);
+			$arr['relative'] = str_replace(get_home_url(), '', $arr['baseurl']);
 			return $arr;
 		} );
 	}
 
 	//-- end of public methods --//
 
-	
+
 	/**
 	 * Checks if attachment is an image before deleting generated files
 	 *
@@ -219,8 +219,8 @@ class ImageHelper {
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Deletes the auto-generated files for resize and letterboxing created by Timber
 	 * @param string  $local_file   ex: /var/www/wp-content/uploads/2015/my-pic.jpg
@@ -312,7 +312,7 @@ class ImageHelper {
 	public static function sideload_image( $file ) {
 		$loc = self::get_sideloaded_file_loc($file);
 		if ( file_exists($loc) ) {
-			return URLHelper::preslashit(URLHelper::get_rel_path($loc));
+			return URLHelper::file_system_to_url($loc);
 		}
 		// Download file to temp location
 		if ( !function_exists('download_url') ) {
@@ -354,8 +354,8 @@ class ImageHelper {
 		);
 		$upload_dir = wp_upload_dir();
 		$tmp = $url;
-		if ( 0 === strpos($tmp, ABSPATH) ) {
-// we've been given a dir, not an url
+		if ( 0 === strpos($tmp, ABSPATH) || 0 === strpos($tmp, '/srv/www/') ) {
+			// we've been given a dir, not an url
 			$result['absolute'] = true;
 			if ( 0 === strpos($tmp, $upload_dir['basedir']) ) {
 				$result['base'] = self::BASE_UPLOADS; // upload based
@@ -484,10 +484,8 @@ class ImageHelper {
 			$au['subdir'],
 			$au['basename']
 		);
-		
 		$new_url = apply_filters('timber/image/new_url', $new_url);
 		$destination_path = apply_filters('timber/image/new_path', $destination_path);
-		
 		// if already exists...
 		if ( file_exists($destination_path) ) {
 			if ( $force || filemtime($source_path) > filemtime($destination_path) ) {

@@ -108,19 +108,19 @@
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/wordpress-fieldmanager.git",
-            "reference": "dafb5cabe2b81d5ec6f07bb8d7027feddaf239d8"
+            "reference": "90abe0a589e40bf6e6ab96bb993b877bace6eab4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/wordpress-fieldmanager/zipball/dafb5cabe2b81d5ec6f07bb8d7027feddaf239d8",
-            "reference": "dafb5cabe2b81d5ec6f07bb8d7027feddaf239d8",
+            "url": "https://api.github.com/repos/spiritedmedia/wordpress-fieldmanager/zipball/90abe0a589e40bf6e6ab96bb993b877bace6eab4",
+            "reference": "90abe0a589e40bf6e6ab96bb993b877bace6eab4",
             "shasum": ""
         },
         "require-dev": {
             "squizlabs/php_codesniffer": "2.3.4",
             "wp-coding-standards/wpcs": "0.8.0"
         },
-        "time": "2016-08-04 16:54:53",
+        "time": "2016-12-07 17:05:24",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -138,7 +138,7 @@
             }
         ],
         "support": {
-            "source": "https://github.com/spiritedmedia/wordpress-fieldmanager/tree/spiritedmedia-composer-package-type"
+            "source": "https://github.com/spiritedmedia/wordpress-fieldmanager/tree/post-datasource-display-type"
         }
     },
     {
@@ -256,6 +256,18 @@
         "support": {
             "source": "https://github.com/spiritedmedia/shortcake-bakery/tree/disable-fb-regex-validation"
         }
+    },
+    {
+        "name": "humanmade/aws-ses-wp-mail",
+        "version": "0.0.1",
+        "version_normalized": "0.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/humanmade/aws-ses-wp-mail",
+            "reference": "master"
+        },
+        "type": "wordpress-plugin",
+        "installation-source": "source"
     },
     {
         "name": "humanmade/mercator",
@@ -376,52 +388,6 @@
         }
     },
     {
-        "name": "spiritedmedia/everyblock-php-api",
-        "version": "v0.1.0",
-        "version_normalized": "0.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/spiritedmedia/everyblock-php-api.git",
-            "reference": "13d85cc81d7dd9ef168faa53b5c6705c21bef309"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/everyblock-php-api/zipball/13d85cc81d7dd9ef168faa53b5c6705c21bef309",
-            "reference": "13d85cc81d7dd9ef168faa53b5c6705c21bef309",
-            "shasum": ""
-        },
-        "require": {
-            "ext-curl": "*",
-            "php": ">=5.4.0"
-        },
-        "time": "2015-05-14 13:12:23",
-        "type": "library",
-        "installation-source": "dist",
-        "license": [
-            "MIT License"
-        ],
-        "authors": [
-            {
-                "name": "Spirited Media Inc.",
-                "email": "product@billypenn.com"
-            },
-            {
-                "name": "Chris Montgomery",
-                "email": "cmontgomery@billypenn.com"
-            }
-        ],
-        "description": "A simple PHP wrapper for the EveryBlock API.",
-        "homepage": "https://github.com/spiritedmedia/everyblock-php-api",
-        "keywords": [
-            "api",
-            "everyblock"
-        ],
-        "support": {
-            "source": "https://github.com/spiritedmedia/everyblock-php-api/tree/v0.1.0",
-            "issues": "https://github.com/spiritedmedia/everyblock-php-api/issues"
-        }
-    },
-    {
         "name": "spiritedmedia/tablepress-responsive-tables",
         "version": "dev-spiritedmedia",
         "version_normalized": "dev-spiritedmedia",
@@ -527,27 +493,27 @@
     },
     {
         "name": "symfony/css-selector",
-        "version": "v3.1.6",
-        "version_normalized": "3.1.6.0",
+        "version": "v3.2.1",
+        "version_normalized": "3.2.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/css-selector.git",
-            "reference": "ca809c64072e0fe61c1c7fb3c76cdc32265042ac"
+            "reference": "e1241f275814827c411d922ba8e64cf2a00b2994"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/css-selector/zipball/ca809c64072e0fe61c1c7fb3c76cdc32265042ac",
-            "reference": "ca809c64072e0fe61c1c7fb3c76cdc32265042ac",
+            "url": "https://api.github.com/repos/symfony/css-selector/zipball/e1241f275814827c411d922ba8e64cf2a00b2994",
+            "reference": "e1241f275814827c411d922ba8e64cf2a00b2994",
             "shasum": ""
         },
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2016-09-06 11:02:40",
+        "time": "2016-11-03 08:11:03",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "3.1-dev"
+                "dev-master": "3.2-dev"
             }
         },
         "installation-source": "dist",
@@ -737,17 +703,17 @@
     },
     {
         "name": "twig/twig",
-        "version": "v1.27.0",
-        "version_normalized": "1.27.0.0",
+        "version": "v1.29.0",
+        "version_normalized": "1.29.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twigphp/Twig.git",
-            "reference": "3c6c0033fd3b5679c6e1cb60f4f9766c2b424d97"
+            "reference": "74f723e542368ca2080b252740be5f1113ebb898"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig/zipball/3c6c0033fd3b5679c6e1cb60f4f9766c2b424d97",
-            "reference": "3c6c0033fd3b5679c6e1cb60f4f9766c2b424d97",
+            "url": "https://api.github.com/repos/twigphp/Twig/zipball/74f723e542368ca2080b252740be5f1113ebb898",
+            "reference": "74f723e542368ca2080b252740be5f1113ebb898",
             "shasum": ""
         },
         "require": {
@@ -755,13 +721,13 @@
         },
         "require-dev": {
             "symfony/debug": "~2.7",
-            "symfony/phpunit-bridge": "~2.7"
+            "symfony/phpunit-bridge": "~3.2@dev"
         },
-        "time": "2016-10-25 19:17:17",
+        "time": "2016-12-13 17:28:18",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.27-dev"
+                "dev-master": "1.29-dev"
             }
         },
         "installation-source": "dist",
@@ -856,17 +822,17 @@
     },
     {
         "name": "timber/timber",
-        "version": "1.1.8",
-        "version_normalized": "1.1.8.0",
+        "version": "1.1.12",
+        "version_normalized": "1.1.12.0",
         "source": {
             "type": "git",
             "url": "https://github.com/timber/timber.git",
-            "reference": "aa03c9aaf9055990abf578050770c7f5f6db8d13"
+            "reference": "8efee9e234cbf2284042df98c006358bbd8a7554"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/timber/timber/zipball/aa03c9aaf9055990abf578050770c7f5f6db8d13",
-            "reference": "aa03c9aaf9055990abf578050770c7f5f6db8d13",
+            "url": "https://api.github.com/repos/timber/timber/zipball/8efee9e234cbf2284042df98c006358bbd8a7554",
+            "reference": "8efee9e234cbf2284042df98c006358bbd8a7554",
             "shasum": ""
         },
         "require": {
@@ -884,7 +850,7 @@
             "wpackagist-plugin/advanced-custom-fields": "4.*",
             "wpackagist-plugin/co-authors-plus": "3.*"
         },
-        "time": "2016-10-25 14:41:41",
+        "time": "2016-12-11 20:35:26",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1232,27 +1198,5 @@
         "type": "wordpress-plugin",
         "installation-source": "dist",
         "homepage": "https://wordpress.org/plugins/wp-redis/"
-    },
-    {
-        "name": "wpackagist-plugin/wp-ses",
-        "version": "0.4.8",
-        "version_normalized": "0.4.8.0",
-        "source": {
-            "type": "svn",
-            "url": "https://plugins.svn.wordpress.org/wp-ses/",
-            "reference": "trunk"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/wp-ses.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "composer/installers": "~1.0"
-        },
-        "type": "wordpress-plugin",
-        "installation-source": "dist",
-        "homepage": "https://wordpress.org/plugins/wp-ses/"
     }
 ]

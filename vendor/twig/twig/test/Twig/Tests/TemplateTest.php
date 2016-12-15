@@ -130,11 +130,16 @@ class Twig_Tests_TemplateTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider getGetAttributeWithTemplateAsObject
+     * @group legacy
      */
     public function testGetAttributeWithTemplateAsObject($useExt)
     {
-        $template = new Twig_TemplateTest(new Twig_Environment($this->getMockBuilder('Twig_LoaderInterface')->getMock()), $useExt);
-        $template1 = new Twig_TemplateTest(new Twig_Environment($this->getMockBuilder('Twig_LoaderInterface')->getMock()), false);
+        // to be removed in 2.0
+        $twig = new Twig_Environment($this->getMockBuilder('Twig_TemplateTestLoaderInterface')->getMock());
+        //$twig = new Twig_Environment($this->getMockBuilder('Twig_LoaderInterface', 'Twig_SourceContextLoaderInterface')->getMock());
+
+        $template = new Twig_TemplateTest($twig, $useExt, 'index.twig');
+        $template1 = new Twig_TemplateTest($twig, false, 'index1.twig');
 
         $this->assertInstanceof('Twig_Markup', $template->getAttribute($template1, 'string'));
         $this->assertEquals('some_string', $template->getAttribute($template1, 'string'));
@@ -165,6 +170,83 @@ class Twig_Tests_TemplateTest extends PHPUnit_Framework_TestCase
         }
 
         return $bools;
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Calling "getString" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0.
+     * @expectedDeprecation Calling "getString" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0.
+     * @expectedDeprecation Calling "getTrue" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0.
+     * @expectedDeprecation Calling "getTrue" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0.
+     * @expectedDeprecation Calling "getZero" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0.
+     * @expectedDeprecation Calling "getZero" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0.
+     * @expectedDeprecation Calling "getEmpty" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0.
+     * @expectedDeprecation Calling "getEmpty" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0.
+     * @expectedDeprecation Calling "renderBlock" on template "index.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0. Use block("name") instead).
+     * @expectedDeprecation Calling "displayBlock" on template "index.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0. Use block("name") instead).
+     * @expectedDeprecation Calling "hasBlock" on template "index.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0. Use "block("name") is defined" instead).
+     * @expectedDeprecation Calling "render" on template "index.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0. Use include("index.twig") instead).
+     * @expectedDeprecation Calling "display" on template "index.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0. Use include("index.twig") instead).
+     * @expectedDeprecation Calling "renderBlock" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0. Use block("name", template) instead).
+     * @expectedDeprecation Calling "displayBlock" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0. Use block("name", template) instead).
+     * @expectedDeprecation Calling "hasBlock" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0. Use "block("name", template) is defined" instead).
+     * @expectedDeprecation Calling "render" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0. Use include("index1.twig") instead).
+     * @expectedDeprecation Calling "display" on template "index1.twig" from template "index.twig" is deprecated since version 1.28 and won't be supported anymore in 2.0. Use include("index1.twig") instead).
+     */
+    public function testGetAttributeWithTemplateAsObjectForDeprecations()
+    {
+        // to be removed in 2.0
+        $twig = new Twig_Environment($this->getMockBuilder('Twig_TemplateTestLoaderInterface')->getMock());
+        //$twig = new Twig_Environment($this->getMockBuilder('Twig_LoaderInterface', 'Twig_SourceContextLoaderInterface')->getMock());
+
+        $template = new Twig_TemplateTest($twig, false, 'index.twig');
+        $template1 = new Twig_TemplateTest($twig, false, 'index1.twig');
+
+        $this->assertInstanceof('Twig_Markup', $template->getAttribute($template1, 'string'));
+        $this->assertEquals('some_string', $template->getAttribute($template1, 'string'));
+
+        $this->assertInstanceof('Twig_Markup', $template->getAttribute($template1, 'true'));
+        $this->assertEquals('1', $template->getAttribute($template1, 'true'));
+
+        $this->assertInstanceof('Twig_Markup', $template->getAttribute($template1, 'zero'));
+        $this->assertEquals('0', $template->getAttribute($template1, 'zero'));
+
+        $this->assertNotInstanceof('Twig_Markup', $template->getAttribute($template1, 'empty'));
+        $this->assertSame('', $template->getAttribute($template1, 'empty'));
+
+        $blocks = array('name' => array($template1, 'block_name'));
+
+        // trigger some deprecation notice messages to check them with @expectedDeprecation
+        $template->getAttribute($template, 'renderBlock', array('name', array(), $blocks));
+        $template->getAttribute($template, 'displayBlock', array('name', array(), $blocks));
+        $template->getAttribute($template, 'hasBlock', array('name', array()));
+        $template->getAttribute($template, 'render', array(array()));
+        $template->getAttribute($template, 'display', array(array()));
+
+        $template->getAttribute($template1, 'renderBlock', array('name', array(), $blocks));
+        $template->getAttribute($template1, 'displayBlock', array('name', array(), $blocks));
+        $template->getAttribute($template1, 'hasBlock', array('name', array()));
+        $template->getAttribute($template1, 'render', array(array()));
+        $template->getAttribute($template1, 'display', array(array()));
+
+        $this->assertFalse($template->getAttribute($template1, 'env', array(), Twig_Template::ANY_CALL, true));
+        $this->assertFalse($template->getAttribute($template1, 'environment', array(), Twig_Template::ANY_CALL, true));
+        $this->assertFalse($template->getAttribute($template1, 'getEnvironment', array(), Twig_Template::METHOD_CALL, true));
+        $this->assertFalse($template->getAttribute($template1, 'displayWithErrorHandling', array(), Twig_Template::METHOD_CALL, true));
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Silent display of undefined block "unknown" in template "index.twig" is deprecated since version 1.29 and will throw an exception in 2.0.
+     * @expectedDeprecation Silent display of undefined block "unknown" in template "index.twig" is deprecated since version 1.29 and will throw an exception in 2.0.
+     */
+    public function testRenderBlockWithUndefinedBlock()
+    {
+        $twig = new Twig_Environment($this->getMockBuilder('Twig_TemplateTestLoaderInterface')->getMock());
+
+        $template = new Twig_TemplateTest($twig, false, 'index.twig');
+        $template->renderBlock('unknown', array());
+        $template->displayBlock('unknown', array());
     }
 
     /**
@@ -279,6 +361,7 @@ class Twig_Tests_TemplateTest extends PHPUnit_Framework_TestCase
             'null' => null,
             '1' => 1,
             'bar' => true,
+            'baz' => 'baz',
             '09' => '09',
             '+4' => '+4',
         );
@@ -307,6 +390,7 @@ class Twig_Tests_TemplateTest extends PHPUnit_Framework_TestCase
             array(true,  1,         1.0),
             array(true,  null,      'null'),
             array(true,  true,      'bar'),
+            array(true,  'baz',     'baz'),
             array(true,  '09',      '09'),
             array(true,  '+4',      '+4'),
         );
@@ -382,14 +466,13 @@ class Twig_Tests_TemplateTest extends PHPUnit_Framework_TestCase
             array(false, null, $methodAndPropObject, 'c', array(), $anyType),
             array(false, null, $methodAndPropObject, 'c', array(), $methodType),
             array(false, null, $methodAndPropObject, 'c', array(), $arrayType),
-
         ));
 
         // tests when input is not an array or object
         $tests = array_merge($tests, array(
-            array(false, null, 42, 'a', array(), $anyType, false, 'Impossible to access an attribute ("a") on a integer variable ("42").'),
-            array(false, null, 'string', 'a', array(), $anyType, false, 'Impossible to access an attribute ("a") on a string variable ("string").'),
-            array(false, null, array(), 'a', array(), $anyType, false, 'Key "a" does not exist as the array is empty.'),
+            array(false, null, 42, 'a', array(), $anyType, false, 'Impossible to access an attribute ("a") on a integer variable ("42") in "index.twig".'),
+            array(false, null, 'string', 'a', array(), $anyType, false, 'Impossible to access an attribute ("a") on a string variable ("string") in "index.twig".'),
+            array(false, null, array(), 'a', array(), $anyType, false, 'Key "a" does not exist as the array is empty in "index.twig".'),
         ));
 
         // add twig_template_get_attributes tests
@@ -409,12 +492,14 @@ class Twig_Tests_TemplateTest extends PHPUnit_Framework_TestCase
 class Twig_TemplateTest extends Twig_Template
 {
     protected $useExtGetAttribute = false;
+    private $name;
 
-    public function __construct(Twig_Environment $env, $useExtGetAttribute = false)
+    public function __construct(Twig_Environment $env, $useExtGetAttribute = false, $name = 'index.twig')
     {
         parent::__construct($env);
         $this->useExtGetAttribute = $useExtGetAttribute;
         self::$cache = array();
+        $this->name = $name;
     }
 
     public function getZero()
@@ -439,6 +524,7 @@ class Twig_TemplateTest extends Twig_Template
 
     public function getTemplateName()
     {
+        return $this->name;
     }
 
     public function getDebugInfo()
@@ -446,13 +532,9 @@ class Twig_TemplateTest extends Twig_Template
         return array();
     }
 
-    public function getSource()
-    {
-        return '';
-    }
-
     protected function doGetParent(array $context)
     {
+        return false;
     }
 
     protected function doDisplay(array $context, array $blocks = array())
@@ -467,6 +549,10 @@ class Twig_TemplateTest extends Twig_Template
             return parent::getAttribute($object, $item, $arguments, $type, $isDefinedTest, $ignoreStrictCheck);
         }
     }
+
+    public function block_name($context, array $blocks = array())
+    {
+    }
 }
 
 class Twig_TemplateArrayAccessObject implements ArrayAccess
@@ -479,6 +565,7 @@ class Twig_TemplateArrayAccessObject implements ArrayAccess
         'null' => null,
         '1' => 1,
         'bar' => true,
+        'baz' => 'baz',
         '09' => '09',
         '+4' => '+4',
     );
@@ -511,6 +598,7 @@ class Twig_TemplateMagicPropertyObject
         'null' => null,
         '1' => 1,
         'bar' => true,
+        'baz' => 'baz',
         '09' => '09',
         '+4' => '+4',
     );
@@ -542,6 +630,7 @@ class Twig_TemplatePropertyObject
     public $zero = 0;
     public $null = null;
     public $bar = true;
+    public $baz = 'baz';
 
     protected $protected = 'protected';
 }
@@ -618,6 +707,16 @@ class Twig_TemplateMethodObject
         return true;
     }
 
+    public function isBaz()
+    {
+        return 'should never be returned';
+    }
+
+    public function getBaz()
+    {
+        return 'baz';
+    }
+
     protected function getProtected()
     {
         return 'protected';
@@ -632,18 +731,21 @@ class Twig_TemplateMethodObject
 class Twig_TemplateMethodAndPropObject
 {
     private $a = 'a_prop';
+
     public function getA()
     {
         return 'a';
     }
 
     public $b = 'b_prop';
+
     public function getB()
     {
         return 'b';
     }
 
     private $c = 'c_prop';
+
     private function getC()
     {
         return 'c';
@@ -686,4 +788,9 @@ class CExtDisablingNodeVisitor implements Twig_NodeVisitorInterface
     {
         return 0;
     }
+}
+
+// to be removed in 2.0
+interface Twig_TemplateTestLoaderInterface extends Twig_LoaderInterface, Twig_SourceContextLoaderInterface
+{
 }

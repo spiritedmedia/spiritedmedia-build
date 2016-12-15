@@ -849,7 +849,10 @@ class Post extends Core implements CoreInterface {
 		if ( is_array($post_type) ) {
 			$post_type = implode('&post_type[]=', $post_type);
 		}
-		$query = 'post_parent='.$this->ID.'&post_type[]='.$post_type.'&numberposts=-1&orderby=menu_order title&order=ASC&post_status=publish';
+		$query = 'post_parent='.$this->ID.'&post_type[]='.$post_type.'&numberposts=-1&orderby=menu_order title&order=ASC&post_status[]=publish';
+		if ( $this->post_status == 'publish' ) {
+			$query .= '&post_status[]=inherit';
+		}
 		$children = get_children($query);
 		foreach ( $children as &$child ) {
 			$child = new $childPostClass($child->ID);
@@ -1459,8 +1462,8 @@ class Post extends Core implements CoreInterface {
 	 * @param bool $merge Should the resulting array be one big one (true)? Or should it be an array of sub-arrays for each taxonomy (false)?
 	 * @return array
 	 */
-	public function get_terms( $tax = '', $merge = true ) {
-		return $this->terms($tax, $merge);
+	public function get_terms( $tax = '', $merge = true, $TermClass = '' ) {
+		return $this->terms($tax, $merge, $TermClass);
 	}
 
 	/**

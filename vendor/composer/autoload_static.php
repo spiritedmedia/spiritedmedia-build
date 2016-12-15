@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb7b459df71a942326c42f79cff38116a
+class ComposerStaticInitfa37ec3706f8ca71813714ef438a8e67
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -547,6 +547,7 @@ class ComposerStaticInitb7b459df71a942326c42f79cff38116a
         'Timber\\Integrations' => __DIR__ . '/..' . '/timber/timber/lib/Integrations.php',
         'Timber\\Integrations\\ACF' => __DIR__ . '/..' . '/timber/timber/lib/Integrations/ACF.php',
         'Timber\\Integrations\\CoAuthorsPlus' => __DIR__ . '/..' . '/timber/timber/lib/Integrations/CoAuthorsPlus.php',
+        'Timber\\Integrations\\CoAuthorsPlusUser' => __DIR__ . '/..' . '/timber/timber/lib/Integrations/CoAuthorsPlusUser.php',
         'Timber\\Integrations\\Command' => __DIR__ . '/..' . '/timber/timber/lib/Integrations/Command.php',
         'Timber\\Integrations\\Timber_WP_CLI_Command' => __DIR__ . '/..' . '/timber/timber/lib/Integrations/Timber_WP_CLI_Command.php',
         'Timber\\Loader' => __DIR__ . '/..' . '/timber/timber/lib/Loader.php',
@@ -705,6 +706,7 @@ class ComposerStaticInitb7b459df71a942326c42f79cff38116a
         'Twig_Node_SetTemp' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/SetTemp.php',
         'Twig_Node_Spaceless' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Spaceless.php',
         'Twig_Node_Text' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Text.php',
+        'Twig_Node_With' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/With.php',
         'Twig_Parser' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Parser.php',
         'Twig_ParserInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/ParserInterface.php',
         'Twig_Profiler_Dumper_Blackfire' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Profiler/Dumper/Blackfire.php',
@@ -730,6 +732,7 @@ class ComposerStaticInitb7b459df71a942326c42f79cff38116a
         'Twig_SourceContextLoaderInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/SourceContextLoaderInterface.php',
         'Twig_Template' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Template.php',
         'Twig_TemplateInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TemplateInterface.php',
+        'Twig_TemplateWrapper' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TemplateWrapper.php',
         'Twig_Test' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Test.php',
         'Twig_TestCallableInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TestCallableInterface.php',
         'Twig_TestInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TestInterface.php',
@@ -760,6 +763,7 @@ class ComposerStaticInitb7b459df71a942326c42f79cff38116a
         'Twig_TokenParser_Set' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenParser/Set.php',
         'Twig_TokenParser_Spaceless' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenParser/Spaceless.php',
         'Twig_TokenParser_Use' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenParser/Use.php',
+        'Twig_TokenParser_With' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenParser/With.php',
         'Twig_TokenStream' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenStream.php',
         'Twig_Util_DeprecationCollector' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/DeprecationCollector.php',
         'Twig_Util_TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/TemplateDirIterator.php',
@@ -793,11 +797,11 @@ class ComposerStaticInitb7b459df71a942326c42f79cff38116a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb7b459df71a942326c42f79cff38116a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb7b459df71a942326c42f79cff38116a::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitb7b459df71a942326c42f79cff38116a::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitb7b459df71a942326c42f79cff38116a::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitb7b459df71a942326c42f79cff38116a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitfa37ec3706f8ca71813714ef438a8e67::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitfa37ec3706f8ca71813714ef438a8e67::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitfa37ec3706f8ca71813714ef438a8e67::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitfa37ec3706f8ca71813714ef438a8e67::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitfa37ec3706f8ca71813714ef438a8e67::$classMap;
 
         }, null, ClassLoader::class);
     }

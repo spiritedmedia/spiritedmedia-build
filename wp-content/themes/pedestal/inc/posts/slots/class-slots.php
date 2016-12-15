@@ -104,7 +104,7 @@ class Slots {
     private function setup_filters() {
 
         // Set up the `ped_slot()` Twig function
-        add_filter( 'get_twig', function( $twig ) {
+        add_filter( 'timber/twig', function( $twig ) {
             $twig->addFunction( new \Twig_SimpleFunction( PEDESTAL_PREFIX . 'slot',
                 [ $this, 'handle_twig_func_slot' ],
                 [ 'needs_context' => true ]

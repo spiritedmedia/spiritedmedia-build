@@ -350,6 +350,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 add_filter( 'template_directory_uri', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
                 add_filter( 'stylesheet_directory_uri', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
             }
+
+            // Filter Twig as Timber loads it
+            add_filter( 'timber/loader/twig', [ $this, 'filter_timber_loader' ] );
         }
 
         /**
@@ -527,6 +530,14 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 return str_replace( get_site_url(), $this->cdn_url, $url );
             }
             return $url;
+        }
+
+        /**
+         * Filter Timber's Twig loader
+         */
+        public function filter_timber_loader( $loader ) {
+            $loader->addGlobal( 'macros', $loader->loadTemplate( 'macros/macros.twig' ) );
+            return $loader;
         }
 
         /**

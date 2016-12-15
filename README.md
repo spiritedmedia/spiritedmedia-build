@@ -1,10 +1,10 @@
-Build [#1722](https://circleci.com/gh/spiritedmedia/spiritedmedia/1722) by montchr at 2016-12-06 04:52 PM UTC
+Build [#1794](https://circleci.com/gh/spiritedmedia/spiritedmedia/1794) by kingkool68 at 2016-12-15 02:27 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v4.8.1](https://github.com/spiritedmedia/spiritedmedia/compare/v4.8.1)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v4.8.2](https://github.com/spiritedmedia/spiritedmedia/compare/v4.8.2)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.8.0...v4.8.1)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.8.1...v4.8.2)
 
- - [#1747](https://github.com/spiritedmedia/spiritedmedia/pull/1747): Add LinkedIn field to Person + Who‘s Next
- - [#1754](https://github.com/spiritedmedia/spiritedmedia/pull/1754): Add clusters as Parsely tags / JSON-LD keywords
- - [#1758](https://github.com/spiritedmedia/spiritedmedia/pull/1758): Display excerpt on all single entities
- - [#1759](https://github.com/spiritedmedia/spiritedmedia/pull/1759): Allow connecting Topics to Topics
+ - [#1764](https://github.com/spiritedmedia/spiritedmedia/pull/1764): WP CLI Command to Migrate Existing Email Contacts to ActiveCampaign
+ - [#1761](https://github.com/spiritedmedia/spiritedmedia/pull/1761): Add ActiveCampaign analytics script to the footer of the site.
+ - [#1766](https://github.com/spiritedmedia/spiritedmedia/pull/1766): Remove WP-SES plugin, add Humanmade's AWS SES Mail plugin
+ - [#1757](https://github.com/spiritedmedia/spiritedmedia/pull/1757): Autoload Twig macros

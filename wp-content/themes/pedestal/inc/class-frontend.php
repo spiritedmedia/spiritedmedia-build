@@ -60,7 +60,7 @@ class Frontend {
 
         add_filter( 'wp_title', [ $this, 'filter_wp_title' ] );
 
-        add_filter( 'get_twig', [ $this, 'filter_get_twig' ] );
+        add_filter( 'timber/twig', [ $this, 'filter_timber_twig' ] );
 
         add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
 
@@ -364,7 +364,7 @@ class Frontend {
     /**
      * Set up the Twig environment
      */
-    public function filter_get_twig( $twig ) {
+    public function filter_timber_twig( $twig ) {
         $twig->addFilter( 'addslashes', new \Twig_SimpleFilter( 'addslashes', 'addslashes' ) );
         return $twig;
     }

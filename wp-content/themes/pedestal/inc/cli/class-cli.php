@@ -16,7 +16,7 @@ use \Pedestal\Posts\Post;
 
 use Pedestal\Posts\Slots\Slot_Item;
 
-use Pedestal\Objects\{Stream, User};
+use Pedestal\Objects\{Stream, User, ActiveCampaign};
 
 class CLI extends \WP_CLI_Command {
 
@@ -579,6 +579,148 @@ class CLI extends \WP_CLI_Command {
             }
         }
         WP_CLI::success( 'All done!' );
+    }
+
+    /**
+     * Migrate email subscribers and the lists they belong to to ActiveCamapign
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal migrate-subscribers-to-activecampaign
+     *     wp pedestal migrate-subscribers-to-activecampaign --url=http://billypenn.dev
+     *
+     * @subcommand migrate-subscribers-to-activecampaign
+     */
+    public function migrate_subscribers_to_activecampaign( $args, $assoc_args ) {
+        // If Pedestal isn't the current theme then bail
+        if ( 'pedestal' !== wp_get_theme()->get_template() ) {
+            WP_CLI::error( 'Pedestal is not the current theme template!' );
+        }
+        // Keep track of timings
+        $time_start = microtime( true );
+        $activecampaign = new ActiveCampaign;
+
+        // A cache of List nNames => List IDs
+        $list_lookup = [];
+        $args = [
+            'number' => 9999,
+            'fields' => 'all_with_meta',
+        ];
+        $user_query = new \WP_User_Query( $args );
+        if ( ! empty( $user_query->results ) ) {
+            $total_subscribers = count( $user_query->results );
+            $loop_count = 1; // Track iterations
+
+            WP_CLI::line( 'Migrating ' . number_format( $total_subscribers ) . ' subscribers' );
+
+            foreach ( $user_query->results as $user ) {
+                // Get basic details
+                $email = $user->get( 'user_email' );
+                $first_name = $user->get( 'first_name' );
+                $last_name = $user->get( 'last_name' );
+
+                // We have some date data that we can transfer to ActiveCampaign
+                $date = intval( $user->get( 'subscribed_daily_newsletter' ) );
+                if ( ! $date ) {
+                    $date = strtotime( $user->get( 'user_registered' ) );
+                }
+                $date_format = 'Y-m-d H:i:s';
+                $date = get_date_from_gmt( date( 'Y-m-d H:i:s', $date ), $date_format );
+
+                $fields = [
+                    'email' => $email,
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'tags' => '',
+                ];
+                $tags = [ 'Import:Mandrill' ];
+
+                // Get all of the subscriptions associated with a User
+                $subscriptions = [];
+                $subscription_terms = wp_get_object_terms( $user->ID, 'pedestal_subscriptions' );
+                foreach ( $subscription_terms as $term ) {
+                    $subscriptions[] = $term->name . ' - ' . PEDESTAL_BLOG_NAME;
+                }
+                // Use the Pedestal User Class for a convenient method
+                $ped_user = new User( $user->ID );
+                $clusters = $ped_user->get_following_clusters();
+                foreach ( $clusters as $cluster ) {
+                    $cluster_type = $cluster->get_type_name();
+                    if ( $cluster_type ) {
+                        $cluster_type = ' - ' . $cluster_type;
+                    }
+                    $subscriptions[] = $cluster->get_title() . ' - ' . PEDESTAL_BLOG_NAME . $cluster_type;
+                }
+
+                if ( empty( $subscriptions ) ) {
+                    WP_CLI::line( 'No Subscribers: ' . $email );
+                    // If the subscriber has no subscriptions then add them to the Daily Newsletter list at least
+                    $subscriptions[] = 'Daily Newsletter' . ' - ' . PEDESTAL_BLOG_NAME;
+                    $tags[] = 'Import:Mandrill:No Subscriptions';
+                }
+
+                foreach ( $subscriptions as $list_name ) {
+                    $list_id = false;
+
+                    // Is the List ID cached?
+                    if ( ! isset( $list_lookup[ $list_name ] ) ) {
+                        // Nope! We need to fetch it from ActiveCampaign
+                        $list = $activecampaign->get_list( $list_name );
+                        if ( isset( $list->id ) ) {
+                            $list_id = $list->id;
+                        } else {
+                            // Looks like the List doesn't exist, lets add it
+                            $list_args = [
+                                'name' => $list_name,
+                                'sender_url' => $cluster->get_permalink(),
+                            ];
+                            $list = $activecampaign->add_list( $list_args );
+                            if ( isset( $list->id ) ) {
+                                $list_id = $list->id;
+                            }
+                        }
+                        // Cache the List ID so we don't need to do this work again
+                        $list_lookup[ $list_name ] = $list_id;
+                    } else {
+                        // We have a hit from our cache
+                        $list_id = $list_lookup[ $list_name ];
+                    }
+
+                    // If we still have problems then output a warning and skip
+                    if ( ! $list_id ) {
+                        $warning = 'Bad List: ' . $list_name;
+                        $warning = WP_CLI::colorize( '%Y' . $warning . '%n' ); // Yellow text
+                        WP_CLI::line( $warning );
+                        continue;
+                    }
+
+                    // Add list details to our group of $fields
+                    $p_key = 'p[' . $list_id . ']';
+                    $fields[ $p_key ] = $list_id;
+                    $s_key = 'sdate[' . $list_id . ']';
+                    $fields[ $s_key ] = $date;
+                }
+                // Stringify the tags
+                $fields['tags'] = implode( ',', $tags );
+
+                // Add the contact to ActiveCampaign
+                $resp = $activecampaign->add_contact( $fields );
+                $loop_count++;
+
+                // Display some progress so we know its working
+                if ( 0 === $loop_count % 75 ) {
+                    $percentage_complete = number_format( ( $loop_count / $total_subscribers ) * 100, 2 );
+                    $current_time = ( microtime( true ) - $time_start ) / 60;
+                    $current_time = number_format( $current_time, 1 );
+                    WP_CLI::line( 'Progress: ' . $percentage_complete . '%, ' . number_format( $loop_count ) . ' imported (' . $current_time . ' minutes)' );
+                }
+            }
+        }
+
+        // All done. How long did it take?
+        $time_end = microtime( true );
+        $total_time = round( $time_end - $time_start, 1 );
+        WP_CLI::line( 'Finished in ' . $total_time . ' seconds' );
     }
 }
 
