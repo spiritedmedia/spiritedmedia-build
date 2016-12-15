@@ -112,6 +112,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => '',
                 'PEDESTAL_EMAIL_FROM_NAME'        => get_bloginfo( 'name' ),
                 'PEDESTAL_EMAIL_PLACEHOLDER'      => '',
+                // Copy the list_id from ActiveCampaign for each newsletter that isn't associated with a post
+                'PEDESTAL_DAILY_NEWSLETTER_ID'    => '',
+                'PEDESTAL_BREAKING_NEWSLETTER_ID' => '',
 
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'        => '',
@@ -576,9 +579,11 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             ];
 
             $context['site']->emails = [
-                'contact'     => PEDESTAL_EMAIL_CONTACT,
-                'news'        => PEDESTAL_EMAIL_NEWS,
-                'placeholder' => PEDESTAL_EMAIL_PLACEHOLDER,
+                'contact'                => PEDESTAL_EMAIL_CONTACT,
+                'news'                   => PEDESTAL_EMAIL_NEWS,
+                'placeholder'            => PEDESTAL_EMAIL_PLACEHOLDER,
+                'daily_newsletter_id'    => PEDESTAL_DAILY_NEWSLETTER_ID,
+                'breaking_newsletter_id' => PEDESTAL_BREAKING_NEWSLETTER_ID,
             ];
 
             $context['site']->live_urls = [

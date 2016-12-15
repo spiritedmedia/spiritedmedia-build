@@ -78,6 +78,9 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => 'billypennnews',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => 'gmail.com',
                 'PEDESTAL_EMAIL_PLACEHOLDER'      => 'the.incline@example.org',
+                // Copy the list_id from ActiveCampaign for each newsletter that isn't associated with a post
+                'PEDESTAL_DAILY_NEWSLETTER_ID'    => 365,
+                'PEDESTAL_BREAKING_NEWSLETTER_ID' => 380,
 
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#pgh-botcountry',

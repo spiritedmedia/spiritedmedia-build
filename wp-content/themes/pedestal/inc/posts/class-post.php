@@ -1721,36 +1721,21 @@ trait Emailable {
     }
 
     /**
-     * Get the number of emails sent / API requests for this email
-     *
-     * @return int
-     */
-    public function get_sent_num() {
-        if ( $sent_num = $this->get_meta( 'sent_num' ) ) {
-            return $sent_num;
-        }
-    }
-
-    /**
      * Set the sent email flag
      *
      * @param string $email_type
      */
-    public function set_sent_flag( $email_type ) {
+    public function set_sent_flag( $email_type = 'unknown' ) {
         $this->set_meta( 'sent_email', $email_type );
     }
 
     /**
      * Set the time this email was sent
      */
-    public function set_sent_date( $time ) {
+    public function set_sent_date( $time = 'false' ) {
+        if ( ! $time ) {
+            $time = time();
+        }
         $this->set_meta( 'sent_date', $time );
-    }
-
-    /**
-     * Set the number of emails sent / API requests for this email
-     */
-    public function set_sent_num( $sends ) {
-        $this->set_meta( 'sent_num', (int) $sends );
     }
 }

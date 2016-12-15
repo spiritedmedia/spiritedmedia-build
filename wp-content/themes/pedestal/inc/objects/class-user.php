@@ -385,6 +385,45 @@ class User extends Author {
     }
 
     /**
+     * Get the clusters the user is following
+     *
+     * @param  array      $cluster_types An array of cluster post types to
+     *     get. Defaults to all.
+     * @return array|bool                 Returns array of clusters the user
+     *     is following. Returns false if $cluster_types is not an array
+     */
+    public function get_following_clusters( $cluster_types = [] ) {
+
+        if ( empty( $cluster_types ) ) {
+            $cluster_types = Types::get_cluster_post_types();
+        } elseif ( ! is_array( $cluster_types ) ) {
+            return false;
+        }
+
+        $connected_types = [];
+
+        foreach ( $cluster_types as $cluster_type ) {
+            $connected_types[] = Types::get_user_connection_type( $cluster_type );
+        }
+
+        $args = [
+            'post_type'         => $cluster_types,
+            'post_status'       => 'publish',
+            'posts_per_page'    => 100,
+            'connected_type'    => $connected_types,
+            'connected_items'   => $this->user,
+        ];
+
+        $query = new \WP_Query( $args );
+        $clusters = [];
+        foreach ( $query->posts as $post ) {
+            $cluster_class = Types::get_post_type_class( $post->post_type );
+            $clusters[] = new $cluster_class( $post );
+        }
+        return $clusters;
+    }
+
+    /**
      * Get the user's registration date
      *
      * @return string
@@ -449,144 +488,6 @@ class User extends Author {
         ];
         $args = wp_parse_args( $args, $defaults );
         return new Stream( $args );
-    }
-
-    /**
-     * Get the clusters the user is following
-     *
-     * @param  array      $cluster_types An array of cluster post types to
-     *     get. Defaults to all.
-     * @return array|bool                 Returns array of clusters the user
-     *     is following. Returns false if $cluster_types is not an array
-     */
-    public function get_following_clusters( $cluster_types = [] ) {
-
-        if ( empty( $cluster_types ) ) {
-            $cluster_types = Types::get_cluster_post_types();
-        } elseif ( ! is_array( $cluster_types ) ) {
-            return false;
-        }
-
-        $connected_types = [];
-
-        foreach ( $cluster_types as $cluster_type ) {
-            $connected_types[] = Types::get_user_connection_type( $cluster_type );
-        }
-
-        $args = [
-            'post_type'         => $cluster_types,
-            'post_status'       => 'publish',
-            'posts_per_page'    => 100,
-            'connected_type'    => $connected_types,
-            'connected_items'   => $this->user,
-        ];
-
-        $query = new \WP_Query( $args );
-        $clusters = [];
-        foreach ( $query->posts as $post ) {
-            $cluster_class = Types::get_post_type_class( $post->post_type );
-            $clusters[] = new $cluster_class( $post );
-        }
-        return $clusters;
-    }
-
-    /**
-     * Whether or not this user is following an cluster
-     *
-     * @param  obj  $cluster The cluster object to check
-     * @return bool
-     */
-    public function is_following_cluster( $cluster ) {
-
-        $cluster_type = Types::get_post_type( $cluster );
-        $cluster_class = Types::get_post_type_class( $cluster_type );
-        $connected_type = $cluster->get_cluster_user_connection_type( $cluster_type );
-
-        $args = [
-            'post_type'         => $cluster_type,
-            'post_status'       => 'publish',
-            'post__in'          => [ $cluster->get_id() ],
-            'posts_per_page'    => 1,
-            'connected_type'    => $connected_type,
-            'connected_items'   => $this->user,
-        ];
-
-        $query = new \WP_Query( $args );
-        if ( ! empty( $query->posts ) ) {
-            $following = new $cluster_class( $query->posts[0] );
-        } else {
-            $following = false;
-        }
-        return $following;
-    }
-
-    /**
-     * Create a connection between user and cluster they want to follow
-     *
-     * @param Cluster
-     * @return bool
-     */
-    public function follow_cluster( $cluster ) {
-        $type = $cluster->get_cluster_user_connection_type();
-        return p2p_type( $type )->connect( $cluster->get_id(), $this->get_id() );
-    }
-
-    /**
-     * Remove the connection between user and cluster they want to unfollow
-     *
-     * @param Cluster
-     * @return bool
-     */
-    public function unfollow_cluster( $cluster ) {
-        $type = $cluster->get_cluster_user_connection_type();
-        return p2p_type( $type )->disconnect( $cluster->get_id(), $this->get_id() );
-    }
-
-    /**
-     * Check whether a user is subscribed to the daily newsletter and breaking news
-     *
-     * @return bool
-     */
-    public function is_subscribed_daily_newsletter() {
-        $terms = wp_get_object_terms( $this->get_id(), 'pedestal_subscriptions', [ 'fields' => 'slugs' ] );
-        return in_array( 'daily-newsletter', $terms );
-    }
-
-    /**
-     * Subscribe the user to the daily newsletter and breaking news
-     */
-    public function subscribe_daily_newsletter() {
-        wp_set_object_terms( $this->get_id(), [ 'daily-newsletter' ], 'pedestal_subscriptions', true );
-        $this->set_subscribe_daily_newsletter_date( time() );
-    }
-
-    /**
-     * Unsubscribe the user from the daily newsletter and breaking news
-     */
-    public function unsubscribe_daily_newsletter() {
-        wp_set_object_terms( $this->get_id(), [], 'pedestal_subscriptions' );
-        $this->unset_subscribe_daily_newsletter_date();
-    }
-
-    /**
-     * Set the time the user subscribed to the Daily Newsletter and Breaking News emails
-     *
-     * @param int $time Timestamp
-     */
-    public function set_subscribe_daily_newsletter_date( $time ) {
-        return $this->set_meta( 'subscribed_daily_newsletter', $time );
-    }
-
-    /**
-     * Unset the time the user subscribed to the Daily Newsletter and Breaking News emails
-     *
-     * Rather than delete the meta field entirely, we set the time to `0` in
-     * order to report on user unsubscriptions.
-     *
-     * @return boolean
-     */
-    public function unset_subscribe_daily_newsletter_date() {
-        return $this->set_meta( 'subscribed_daily_newsletter', 0 );
     }
 
     /**

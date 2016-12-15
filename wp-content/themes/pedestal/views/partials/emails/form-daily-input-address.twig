@@ -2,3 +2,5 @@
     Get once-daily headlines and occasional breaking news in your inbox.
     <input type="email" name="email_address" placeholder="{{ site.emails.placeholder }}" required />
 </label>
+<input type="hidden" name="list-ids[]" value="{{ site.emails.daily_newsletter_id }}">
+<input type="hidden" name="list-ids[]" value="{{ site.emails.breaking_newsletter_id }}">

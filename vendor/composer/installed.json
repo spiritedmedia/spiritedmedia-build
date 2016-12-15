@@ -1013,7 +1013,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/bwp-google-xml-sitemaps.1.4.1.zip",
-            "reference": null,
+            "reference": "tags/1.4.1",
             "shasum": null
         },
         "require": {
@@ -1035,7 +1035,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/co-authors-plus.3.2.1.zip",
-            "reference": null,
+            "reference": "tags/3.2.1",
             "shasum": null
         },
         "require": {
@@ -1057,7 +1057,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.8.zip",
-            "reference": null,
+            "reference": "tags/1.9.8",
             "shasum": null
         },
         "require": {
@@ -1079,7 +1079,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/posts-to-posts.1.6.5.zip",
-            "reference": null,
+            "reference": "tags/1.6.5",
             "shasum": null
         },
         "require": {
@@ -1101,7 +1101,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/redirection.2.4.5.zip",
-            "reference": null,
+            "reference": "tags/2.4.5",
             "shasum": null
         },
         "require": {
@@ -1123,7 +1123,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/shortcode-ui.0.6.2.zip",
-            "reference": null,
+            "reference": "tags/0.6.2",
             "shasum": null
         },
         "require": {
@@ -1145,7 +1145,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/tablepress.1.7.zip",
-            "reference": null,
+            "reference": "tags/1.7",
             "shasum": null
         },
         "require": {
@@ -1167,7 +1167,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/user-switching.1.0.9.zip",
-            "reference": null,
+            "reference": "tags/1.0.9",
             "shasum": null
         },
         "require": {
@@ -1189,7 +1189,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/wp-redis.0.5.0.zip",
-            "reference": null,
+            "reference": "tags/0.5.0",
             "shasum": null
         },
         "require": {

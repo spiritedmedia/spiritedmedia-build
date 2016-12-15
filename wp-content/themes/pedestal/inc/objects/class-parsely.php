@@ -127,9 +127,6 @@ class Parsely {
                     ] );
                     foreach ( $clusters as $cluster ) {
                         $type = $cluster->get_type_name();
-                        if ( 'Locality' === $type ) {
-                            $type = $cluster->get_locality_type_name();
-                        }
                         $type = strtolower( $type );
                         $keywords[] = $type . ' :: ' . $cluster->get_title();
                     }

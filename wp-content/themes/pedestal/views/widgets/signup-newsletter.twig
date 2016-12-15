@@ -1,4 +1,4 @@
-<form class="signup-newsletter-widget" action="{{ site.url }}/api/subscription/signup-daily-newsletter/" method="POST">
+<form class="signup-newsletter-widget" action="{{ site.url }}/subscribe-to-email-list/" method="POST">
 
     <div class="form-fields">
         <fieldset>
@@ -6,7 +6,7 @@
             {% include 'partials/emails/form-daily-input-address.twig' %}
             {% include 'partials/emails/form-honeypot.twig' %}
         </fieldset>
-        <button class="form-submit button--rounded button right js-form-submit" type="submit" name="subscribe">
+        <button class="form-submit button--rounded button right js-form-submit" type="submit">
             {% include 'partials/emails/form-submit-signup-inner.twig' %}
         </button>
         <div class="clear-right"></div>

@@ -81,6 +81,9 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => 'billypennnews',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => 'gmail.com',
                 'PEDESTAL_EMAIL_PLACEHOLDER'      => 'william.penn@example.org',
+                // Copy the list_id from ActiveCampaign for each newsletter that isn't associated with a post
+                'PEDESTAL_DAILY_NEWSLETTER_ID'    => 320,
+                'PEDESTAL_BREAKING_NEWSLETTER_ID' => 381,
 
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#phl-botcountry',

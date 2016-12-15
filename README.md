@@ -1,10 +1,9 @@
-Build [#1794](https://circleci.com/gh/spiritedmedia/spiritedmedia/1794) by kingkool68 at 2016-12-15 02:27 AM UTC
+Build [#1799](https://circleci.com/gh/spiritedmedia/spiritedmedia/1799) by kingkool68 at 2016-12-15 05:28 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v4.8.2](https://github.com/spiritedmedia/spiritedmedia/compare/v4.8.2)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.0](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.0)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.8.1...v4.8.2)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v4.8.2...v5.0.0)
 
- - [#1764](https://github.com/spiritedmedia/spiritedmedia/pull/1764): WP CLI Command to Migrate Existing Email Contacts to ActiveCampaign
- - [#1761](https://github.com/spiritedmedia/spiritedmedia/pull/1761): Add ActiveCampaign analytics script to the footer of the site.
- - [#1766](https://github.com/spiritedmedia/spiritedmedia/pull/1766): Remove WP-SES plugin, add Humanmade's AWS SES Mail plugin
- - [#1757](https://github.com/spiritedmedia/spiritedmedia/pull/1757): Autoload Twig macros
+ - [#1737](https://github.com/spiritedmedia/spiritedmedia/pull/1737): Signup Confirmation Flow for ActiveCampaign
+ - [#1772](https://github.com/spiritedmedia/spiritedmedia/pull/1772): Rename a Cluster's ActiveCampaign list name when its title changes
+ - [#1771](https://github.com/spiritedmedia/spiritedmedia/pull/1771): Use ActiveCampaign mailing address and unsubscribe link variables in email footer

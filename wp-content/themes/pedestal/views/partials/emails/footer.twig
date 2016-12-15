@@ -2,28 +2,29 @@
 
     <div id="email-footer">
 
-        {% if shareable %}
+    {% if shareable %}
         {% include 'partials/emails/share.twig' %}
-        {% endif %}
+    {% endif %}
 
         <p>&copy; {{ now|date('Y') }} by Spirited Media. All rights reserved.</p>
 
-        {% if email_type %}
+    {% if email_type %}
         <p>You are receiving this because you signed up for <a href="{{ site.url }}">{{ site.name }}</a> {{ email_type }}.</p>
-        {% endif %}
+    {% endif %}
 
         <p>Our mailing address is:<br>
-        {% include 'partials/footer/mailing-address.twig' %}</p>
+
+    {% if 'ac' == email_provider %}
+        <p>%SENDER-INFO-SINGLELINE%</p>
+    {% else %}
+        <p>{% include 'partials/footer/mailing-address.twig' %}</p>
+    {% endif %}
 
         <p>If you have any questions, email <a href="mailto:{{ site.emails.contact }}">{{ site.emails.contact }}</a>.</p>
 
-        {% if unsubscribe_link %}
-        <p><a href="{{ unsubscribe_link }}">One-click Unsubscribe</a></p>
-        {% endif %}
-
-        {% if mandrill_unsubscribe_link %}
-        <p><a href="*|MANDRILL_UNSUBSCRIBE_LINK|*">One-click Unsubscribe</a></p>
-        {% endif %}
+    {% if 'ac' == email_provider %}
+        <p><a href="%UNSUBSCRIBELINK%">Unsubscribe</a></p>
+    {% endif %}
 
     </div>
 

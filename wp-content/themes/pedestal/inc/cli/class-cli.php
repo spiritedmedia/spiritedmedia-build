@@ -259,41 +259,6 @@ class CLI extends \WP_CLI_Command {
     }
 
     /**
-     * Subscribe users to daily newsletter and breaking news
-     *
-     * @subcommmand subscribe-users
-     */
-    public function subscribe_users() {
-
-        $subscribed_count = 0;
-        foreach ( get_users() as $user ) {
-
-            if ( ! in_array( 'subscriber', $user->roles ) ) {
-                WP_CLI::line( "Skipped - User isn't a subscriber" );
-                continue;
-            }
-
-            $user = new \Pedestal\Objects\User( $user );
-            if ( $user->is_subscribed_daily_newsletter() ) {
-                WP_CLI::line( 'Skipped - User is already subscribed' );
-                continue;
-            }
-
-            if ( wp_get_object_terms( $user->get_id(), 'pedestal_subscriptions' ) ) {
-                WP_CLI::line( 'Skipped - User is already following a story' );
-                continue;
-            }
-
-            $user->subscribe_daily_newsletter();
-            WP_CLI::line( 'Subscribed user to daily newsletter and breaking news' );
-            $subscribed_count++;
-
-        }
-        WP_CLI::success( "Subscribed {$subscribed_count} users to the newsletter" );
-
-    }
-
-    /**
      * Create some default terms
      *
      * ## EXAMPLES

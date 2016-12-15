@@ -505,7 +505,7 @@ class Cluster_Types extends Types {
     public function filter_p2p_item_title( $title, $post, $ctype ) {
         if ( 'pedestal_locality' === get_post_type( $post ) ) {
             $locality = Locality::get_by_post_id( $post->ID );
-            $title .= ' (' . $locality->get_locality_type_name() . ')';
+            $title .= ' (' . $locality->get_type_name() . ')';
         }
         return $title;
     }

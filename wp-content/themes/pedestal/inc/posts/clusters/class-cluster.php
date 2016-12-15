@@ -4,6 +4,8 @@ namespace Pedestal\Posts\Clusters;
 
 use Pedestal\Registrations\Post_Types\Types;
 
+use Pedestal\Subscriptions;
+
 use Pedestal\Posts\Post;
 
 use Pedestal\Posts\Attachment;
@@ -112,17 +114,19 @@ abstract class Cluster extends Post {
 
     /**
      * Get the number of users following this cluster
-     *
+     * @param boolean $force  Whether to make a request to ActiveCampaign to get the List ID
      * @return int
      */
-    public function get_following_users_count() {
-        $args = [
-            'connected_type'      => $this->get_cluster_user_connection_type(),
-            'connected_items'     => $this->post,
-            'count_total'         => true,
-        ];
-        $user_query = new \WP_User_Query( $args );
-        return $user_query->get_total();
+    public function get_following_users_count( $force = false ) {
+        $list_id = $this->get_meta( 'activecampaign-list-id', true );
+        if ( ! $list_id && $force ) {
+            $list_id = Subscriptions::get_list_ids_from_cluster( $this->get_id() );
+        }
+
+        if ( $list_id ) {
+            return Subscriptions::get_subscriber_count( $list_id );
+        }
+        return '-';
     }
 
     /**
@@ -196,7 +200,10 @@ abstract class Cluster extends Post {
     /**
      * Set the time of the last email notification
      */
-    public function set_last_email_notification_date( $time ) {
+    public function set_last_email_notification_date( $time = false ) {
+        if ( ! $time ) {
+            $time = time();
+        }
         $this->set_meta( 'last_email_notification_date', $time );
     }
 
@@ -214,6 +221,15 @@ abstract class Cluster extends Post {
             ];
         }
         return $this->get_entities( $args );
+    }
+
+    /**
+     * Get the ActiveCampaign list name for this Cluster
+     *
+     * @return string
+     */
+    public function get_activecampaign_list_name() {
+        return $this->get_title() . ' - ' . PEDESTAL_BLOG_NAME . ' - ' . $this->get_type_name();
     }
 
     /**

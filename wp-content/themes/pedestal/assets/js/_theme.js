@@ -46,6 +46,9 @@
         var $submitBtn = el.find('.js-form-submit');
         var $spinner = $submitBtn.find('.js-spinner');
         var buttonWidth = $submitBtn.width();
+        var actionURL = el.attr('action');
+        var actionUrlSeparator = actionURL.indexOf('?') >= 0 ? '&' : '?';
+        actionURL += actionUrlSeparator + $.param({'ajax-request': 1});
 
         $submitBtn.width(buttonWidth);
         $submitBtn.css('padding-left', 0);
@@ -53,7 +56,7 @@
         el.find('.alert').remove();
         el.addClass('is-loading');
 
-        $.post(el.attr('action'), el.serialize(), function(response) {
+        $.post(actionURL, el.serialize(), function(response) {
           if (typeof confirmId !== 'undefined') {
             $('#' + confirmId).foundation('reveal', 'open');
           } else if (el.find('.success-message').length) {

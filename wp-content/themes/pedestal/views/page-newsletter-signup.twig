@@ -3,29 +3,25 @@
 
 {% block content %}
 <main role="main" class="{{ main_classes }}">
-    <div id="subscribe-to-newsletter-page" class="columns small-12 medium-8 medium-offset-2 large-6 large-offset-3">
-        <div class="inner-wrapper">
+    <div id="subscribe-to-newsletter-page" class="subscription-confirmation-page">
+        <form action="{{ site.url }}/subscribe-to-email-list/" method="POST">
 
-            <form action="{{ site.url }}/api/subscription/signup-daily-newsletter/" method="POST">
+            <div class="form-fields">
+                <fieldset>
+                    {% include 'partials/emails/form-daily-legend.twig' %}
+                    {% include 'partials/emails/form-daily-input-address.twig' %}
+                    {% include 'partials/emails/form-honeypot.twig' %}
+                </fieldset>
+                <button type="submit" name="subscribe" class="form-submit button--rounded button large expand js-form-submit">
+                    {% include 'partials/emails/form-submit-signup-inner.twig' %}
+                </button>
+            </div>
 
-                <div class="form-fields">
-                    <fieldset>
-                        {% include 'partials/emails/form-daily-legend.twig' %}
-                        {% include 'partials/emails/form-daily-input-address.twig' %}
-                        {% include 'partials/emails/form-honeypot.twig' %}
-                    </fieldset>
-                    <button type="submit" name="subscribe" class="form-submit button--rounded button large expand js-form-submit">
-                        {% include 'partials/emails/form-submit-signup-inner.twig' %}
-                    </button>
-                </div>
-
-                <div class="success-message">
-                    {% include 'partials/emails/form-daily-subscribed.twig' %}
-                    {% include 'partials/emails/form-button-explore.twig' %}
-                </div>
-            </form>
-
-        </div>
+            <div class="success-message">
+                {% include 'partials/emails/form-daily-subscribed.twig' %}
+                {% include 'partials/emails/form-button-explore.twig' %}
+            </div>
+        </form>
     </div>
 </main>
 {% endblock %}

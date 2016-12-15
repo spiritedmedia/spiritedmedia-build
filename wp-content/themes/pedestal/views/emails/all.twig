@@ -1,0 +1,26 @@
+{% extends "base-email.twig" %}
+
+{% block content %}
+
+<div class="email-constrain content-wrapper">
+
+    <div id="entity-container" class="email-all  c-panel  has-story-bar  has-cap">
+
+        <div class="email-all__header">
+            {{ macros.blox( _context, {
+                'format': 'header',
+                'title': 'All Email Templates'
+            } ) }}
+        </div>
+
+		<ol class="c-panel__inner">
+		{% for item in items %}
+			<li><a href="{{item}}/">{{item}}</a></li>
+		{% endfor %}
+		</ol>
+
+    </div>
+
+</div>
+
+{% endblock %}

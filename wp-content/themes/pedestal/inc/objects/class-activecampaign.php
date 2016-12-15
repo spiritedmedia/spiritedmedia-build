@@ -18,12 +18,30 @@ namespace Pedestal\Objects;
 class ActiveCampaign {
 
     /**
+     * Default sender info
+     *
+     * @var array
+     */
+    protected $sender_info = [];
+
+    /**
      * Check that we have the proper API credentials set up
      */
     public function __construct() {
         if ( ! defined( 'ACTIVECAMPAIGN_URL' ) || ! defined( 'ACTIVECAMPAIGN_API_KEY' ) ) {
             wp_die( 'ActiveCampaign API credentials are missing. See <a href="https://spiritedmedia.activehosted.com/admin/main.php?action=settings#tab_api">https://spiritedmedia.activehosted.com/admin/main.php?action=settings#tab_api</a>' );
         }
+
+        $this->sender_info = [
+            'sender_name'     => PEDESTAL_BLOG_NAME,
+            'sender_addr1'    => PEDESTAL_BUILDING_NAME,
+            'sender_addr2'    => PEDESTAL_STREET_ADDRESS,
+            'sender_city'     => PEDESTAL_CITY_NAME,
+            'sender_zip'      => PEDESTAL_ZIPCODE,
+            'sender_country'  => 'United States',
+            'sender_url'      => get_site_url(),
+            'sender_reminder' => '',
+        ];
     }
 
     /**
@@ -350,6 +368,10 @@ class ActiveCampaign {
             'full'          => 0,
         ];
         $args = wp_parse_args( $args, $default_args );
+        if ( is_array( $args['ids'] ) ) {
+            $ids = array_map( 'trim', $args['ids'] );
+            $args['ids'] = implode( ',', $ids );
+        }
         $args['api_action'] = 'list_list';
         $response = $this->get_request( $args );
         $payload = $response['body'];
@@ -421,12 +443,42 @@ class ActiveCampaign {
             ];
             $lists = $this->get_lists( $args );
             if ( ! is_object( $lists ) || ! isset( $lists->{'0'} ) ) {
-                return $lists->{'0'};
+                return false;
             }
-            return false;
+            return $lists->{'0'};
         }
 
         return $this->get_list_by_name( $id );
+    }
+
+    /**
+     * Edit an existing list
+     *
+     * @see http://www.activecampaign.com/api/example.php?call=list_edit
+     * @param  int|string $id        Numeric list ID
+     * @param  array      $body_args Options to edit
+     * @return object An object from the API response
+     */
+    public function edit_list( $id, $body_args = [] ) {
+        if ( ! is_numeric( $id ) ) {
+            return false;
+        }
+        $default_body_args = [
+            'id'                    => $id,
+            'name'                  => '',
+            'subscription_notify'   => '',
+            'unsubscription_notify' => '',
+            'to_name'               => 'Recipient',
+            'carboncopy'            => '',
+        ];
+        $default_body_args += $this->sender_info;
+        $body_args = wp_parse_args( $body_args, $default_body_args );
+        $query_args = [
+            'api_action' => 'list_edit',
+        ];
+        $response = $this->post_request( $query_args, $body_args );
+        $payload = $response['body'];
+        return $payload;
     }
 
     /**
@@ -445,15 +497,8 @@ class ActiveCampaign {
             'private'               => '1',
             'carboncopy'            => '',
             'stringid'              => '',
-            'sender_name'           => PEDESTAL_BLOG_NAME,
-            'sender_addr1'          => PEDESTAL_BUILDING_NAME,
-            'sender_addr2'          => PEDESTAL_STREET_ADDRESS,
-            'sender_city'           => PEDESTAL_CITY_NAME,
-            'sender_zip'            => PEDESTAL_ZIPCODE,
-            'sender_country'        => 'United States',
-            'sender_url'            => get_site_url(),
-            'sender_reminder'       => '',
         ];
+        $default_body_args += $this->sender_info;
         $body_args = wp_parse_args( $body_args, $default_body_args );
         if ( $body_args['name'] && ! $body_args['stringid'] ) {
             $body_args['stringid'] = sanitize_title( $body_args['name'] );
@@ -539,68 +584,6 @@ class ActiveCampaign {
         $response = $this->get_request( $args );
         $payload = $response['body'];
         return $payload;
-    }
-
-    /**
-     * Send a campaign as a test to one or more email addresses
-     * Makes a temporary list, adds the contact(s) to the list, sends the campaign, deletes the list
-     * @param  array $args Options for the test campaign
-     * @return null|false
-     */
-    public function send_test_campaign( $args = [] ) {
-        $default_args = [
-            'html'    => '',
-            'subject' => '',
-            'email'   => '',
-        ];
-        $args = wp_parse_args( $args, $default_args );
-        // We need HTML, a subject, and atleast one email address in order to send the test campaign
-        if ( ! $args['html'] || ! $args['subject'] || ! $args['email'] ) {
-            return false;
-        }
-
-        $list_name = 'Test ' . current_time( 'mysql' );
-        $args['list'] = $list_name;
-
-        // Create temporary list
-        $list_args = [
-            'name' => $list_name,
-            'sender_reminder' => 'For Testing',
-        ];
-        $list_resp = $this->add_list( $list_args );
-        if ( ! is_object( $list_resp ) || ! isset( $list_resp->id ) ) {
-            return false;
-        }
-        $list_id = $list_resp->id;
-
-        // Add contacts to list
-        $contacts = array_map( 'trim', explode( ',', $args['email'] ) );
-        foreach ( $contacts as $email ) {
-        	$this->subscribe_contact( $email, $list_id );
-        }
-
-        // Send the test campaign
-        $campaign_args = [
-            'list'    => $list_id,
-            'html'    => $args['html'],
-            'subject' => $args['subject'],
-        ];
-        $resp = $this->send_campaign( $campaign_args );
-
-        // Clean up our temporary campaign, message, and list
-
-        // If we clean up too early then the test emails won't send
-        sleep( 10 );
-
-        if ( is_object( $resp ) ) {
-            if ( isset( $resp->id ) ) {
-                $this->delete_campaign( $resp->id );
-            }
-            if ( isset( $resp->messageid ) ) {
-                $this->delete_message( $resp->messageid );
-            }
-        }
-        $this->delete_list( $list_id );
     }
 
     /**

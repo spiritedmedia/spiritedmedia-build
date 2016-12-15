@@ -124,7 +124,7 @@ class Locality extends Place {
      * Set the name of the email type based on the Locality Type
      */
     private function set_email_type() {
-        $name = $this->get_locality_type_name();
+        $name = $this->get_type_name();
         if ( ! empty( $name ) ) {
             $this->email_type = $name . ' updates';
         }
@@ -144,7 +144,7 @@ class Locality extends Place {
      *
      * @return string|bool
      */
-    public function get_locality_type_name() {
+    public function get_type_name() {
         return $this->get_locality_type_term_property( 'name' );
     }
 

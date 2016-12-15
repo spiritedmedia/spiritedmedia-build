@@ -17,18 +17,18 @@ use \Pedestal\Posts\Clusters\Cluster;
 use \Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
 use \Pedestal\Posts\Clusters\Story;
 
-use \Pedestal\Objects\User;
 use \Pedestal\Objects\Notifications;
 
 use \Pedestal\Objects\ActiveCampaign;
 
 class Subscriptions {
 
-    private static $errors;
-
     private static $default_notify_channel = PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL;
 
     private static $instance;
+
+    // The meta key where we store associated list IDs for a given post
+    private static $list_id_meta_key = 'activecampaign-list-id';
 
     public static function get_instance() {
 
@@ -44,440 +44,98 @@ class Subscriptions {
      * Set up subscription actions
      */
     private function setup_actions() {
-
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'template_redirect', [ $this, 'action_template_redirect' ] );
-
-        add_action( 'admin_init', function() {
-
-            $terms = get_terms( 'pedestal_subscriptions', [ 'hide_empty' => false, 'fields' => 'id=>slug' ] );
-            if ( ! in_array( 'daily-newsletter', $terms ) ) {
-                wp_insert_term( 'Daily Newsletter', 'pedestal_subscriptions', [ 'slug' => 'daily-newsletter' ] );
-            }
-        });
-
-        add_action( 'pre_user_query', [ $this, 'action_pre_user_query' ] );
-
         add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ] );
-        add_action( 'save_post', [ $this, 'action_save_post_late' ], 100 );
-
+        add_action( 'post_updated', [ $this, 'action_post_updated_activecampaign_list' ], 10, 3 );
+        add_action( 'save_post', [ $this, 'action_save_post_send_email' ], 100 );
     }
 
     /**
      * Set up subscription filters
      */
     private function setup_filters() {
-
         add_filter( 'query_vars', function( $query_vars ) {
-            $query_vars[] = 'pedestal-api';
-            $query_vars[] = 'pedestal-unsubscribe';
-            $query_vars[] = 'subscription-action';
             $query_vars[] = 'pedestal-test-email';
-            $query_vars[] = 'email-type';
-            $query_vars[] = 'user-id';
-            $query_vars[] = 'cluster-id';
-            $query_vars[] = 'unsubscribe-hash';
+            $query_vars[] = 'pedestal-subscribe-to-email-list';
+            $query_vars[] = 'pedestal-confirm-subscription';
             return $query_vars;
         });
-
-        add_filter( 'manage_users_columns', function( $columns ) {
-            $columns['pedestal_subscriptions'] = esc_html__( 'Subscriptions', 'pedestal' );
-            $columns['register_date'] = esc_html__( 'Registered', 'pedestal' );
-            return $columns;
-        } );
-
-        // Make users sortable by registered date
-        add_filter( 'manage_users_sortable_columns', function( $columns ) {
-            return wp_parse_args( [
-                'register_date' => 'registered',
-            ], $columns );
-        } );
-
-        // Calculate order if users sorted by date
-        add_filter( 'request', function( $vars ) {
-            if ( isset( $vars['orderby'] ) && 'register_date' == $vars['orderby'] ) {
-                $vars = array_merge( $vars, [
-                        'meta_key' => 'register_date',
-                        'orderby'  => 'meta_value',
-                ] );
-            }
-            return $vars;
-        } );
-
-        add_filter( 'manage_users_custom_column', function( $out, $column_name, $user_id ) {
-            $user = new User( $user_id );
-            switch ( $column_name ) {
-                case 'pedestal_subscriptions':
-                    $subscriptions = [];
-                    if ( $user->is_subscribed_daily_newsletter() ) {
-                        $query_args = [
-                            'subscription'  => 'daily-newsletter',
-                        ];
-                        $url = add_query_arg( $query_args, admin_url( 'users.php' ) );
-                        $subscriptions[] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Daily Newsletter', 'pedestal' ) . '</a>';
-                    }
-                    foreach ( $user->get_following_clusters() as $cluster ) {
-                        $query_args = [
-                            'subscription'  => 'cluster',
-                            'cluster_id'   => $cluster->get_id(),
-                        ];
-                        $url = add_query_arg( $query_args, admin_url( 'users.php' ) );
-                        $subscriptions[] = '<a href="' . esc_url( $url ) . '">' . esc_html( $cluster->get_the_title() ) . '</a>';
-                    }
-                    $out = implode( ', ', $subscriptions );
-                    break;
-                case 'register_date':
-                    $out = '<span>' . $user->get_registered_date() . '</span>';
-                    break;
-            }
-            return $out;
-        }, 10, 3 );
-
-        add_filter( 'manage_edit-pedestal_subscriptions_columns', function() {
-            return [
-                'pedestal_subscription_name'     => esc_html__( 'Name', 'pedestal' ),
-                'pedestal_subscription_count'    => esc_html__( 'Subscriber Count', 'pedestal' ),
-            ];
-        } );
-
-        add_filter( 'manage_pedestal_subscriptions_custom_column', function( $out, $column_name, $tag_id ) {
-            $term = get_term_by( 'id', $tag_id, 'pedestal_subscriptions' );
-            switch ( $column_name ) {
-                case 'pedestal_subscription_name':
-                    $out = esc_html( $term->name );
-                    break;
-                case 'pedestal_subscription_count':
-                    $query_args = [
-                        'subscription'       => 'daily-newsletter',
-                    ];
-                    $out = '<a href="' . esc_url( add_query_arg( $query_args, admin_url( 'users.php' ) ) ) . '">' . (int) $term->count . '</a>';
-                    break;
-            }
-            return $out;
-        }, 10, 3 );
-
     }
 
     /**
      * Register rewrite rules
      */
     public function action_init_register_rewrites() {
-
-        add_rewrite_rule( 'api/subscription/([^/]+)/?$', 'index.php?pedestal-api=subscription&subscription-action=$matches[1]', 'top' );
-        add_rewrite_rule( 'unsubscribe/daily-newsletter/([\d]+)/([^/]+)/?$', 'index.php?pedestal-unsubscribe=daily-newsletter&user-id=$matches[1]&unsubscribe-hash=$matches[2]', 'top' );
-        add_rewrite_rule( 'unsubscribe/cluster/([\d]+)/([\d]+)/([^/]+)/?$', 'index.php?pedestal-unsubscribe=cluster&user-id=$matches[1]&cluster-id=$matches[2]&unsubscribe-hash=$matches[3]', 'top' );
-        add_rewrite_rule( 'test-email/([^/]+)/?$', 'index.php?pedestal-test-email=1&email-type=$matches[1]', 'top' );
-
+        add_rewrite_rule( 'subscribe-to-email-list/?$', 'index.php?pedestal-subscribe-to-email-list=1', 'top' );
+        add_rewrite_rule( 'confirm-subscription/([^/]+)/?$', 'index.php?pedestal-confirm-subscription=$matches[1]', 'top' );
+        add_rewrite_rule( 'test-email/?$', 'index.php?pedestal-test-email=all', 'top' );
+        add_rewrite_rule( 'test-email/([^/]+)/?$', 'index.php?pedestal-test-email=$matches[1]', 'top' );
     }
 
     /**
-     * Modify user queries
-     */
-    public function action_pre_user_query( $wp_user_query ) {
-        global $pagenow, $wpdb;
-
-        $subscription_filter = false;
-        if ( 'users.php' == $pagenow && ! empty( $_GET['subscription'] ) && empty( $wp_user_query->query_vars['include'] ) ) {
-
-            if ( 'daily-newsletter' == $_GET['subscription'] ) {
-                $subscription_filter = 'daily-newsletter';
-            } elseif ( 'cluster' == $_GET['subscription'] && ! empty( $_GET['cluster_id'] ) ) {
-                $wp_user_query->query_from .= " INNER JOIN {$wpdb->p2p}";
-                $wp_user_query->query_where .= $wpdb->prepare( " AND {$wpdb->p2p}.p2p_from=%d AND {$wpdb->p2p}.p2p_to={$wpdb->users}.ID", (int) $_GET['story_id'] );
-            }
-        }
-
-        if ( ! empty( $wp_user_query->query_vars['pedestal_subscriptions'] ) ) {
-            $subscription_filter = $wp_user_query->query_vars['pedestal_subscriptions'];
-        }
-
-        if ( $subscription_filter ) {
-            $tax_query = new \WP_Tax_Query( [
-                [
-                    'taxonomy'       => 'pedestal_subscriptions',
-                    'terms'          => [
-                        $subscription_filter,
-                    ],
-                    'field'          => 'slug',
-                ],
-            ] );
-            $clauses = $tax_query->get_sql( $wpdb->users, 'ID' );
-            $wp_user_query->query_from .= $clauses['join'];
-            $wp_user_query->query_where .= $clauses['where'];
-        }
-
-    }
-
-    /**
-     * Handle API requests
+     * Handle various requests
      */
     public function action_template_redirect() {
-
-        if ( 'subscription' == get_query_var( 'pedestal-api' ) ) {
-
-            nocache_headers();
-
-            switch ( get_query_var( 'subscription-action' ) ) {
-                case 'follow-cluster':
-                    $this->handle_subscription_action_follow_cluster();
-                    break;
-
-                case 'signup-daily-newsletter':
-                    $this->handle_subscription_action_signup_daily_newsletter();
-                    break;
-
-                default:
-                    status_header( 404 );
-                    echo 'Invalid subscription action.';
+        if ( '1' == get_query_var( 'pedestal-subscribe-to-email-list' ) ) {
+            $this->handle_subscribe_to_email_list();
+            if ( isset( $_REQUEST['ajax-request'] ) && 1 == $_REQUEST['ajax-request'] ) {
+                // It's an AJAX request so returning a blank page is more performant here.
+                exit;
             }
-            exit;
-
-        } elseif ( get_query_var( 'pedestal-unsubscribe' ) ) {
-
-            nocache_headers();
-
-            $user_id = get_query_var( 'user-id' );
-            $unsubscribe_hash = get_query_var( 'unsubscribe-hash' );
-            switch ( get_query_var( 'pedestal-unsubscribe' ) ) {
-                case 'daily-newsletter':
-
-                    if ( $unsubscribe_hash !== $this->generate_secure_hash( 'unsubscribe-' . $user_id . '-daily-newsletter' ) ) {
-                        break;
-                    }
-
-                    $user = get_user_by( 'id', (int) $user_id );
-                    if ( ! $user ) {
-                        break;
-                    }
-
-                    $user = new User( $user );
-                    if ( $user->is_subscribed_daily_newsletter() ) {
-                        $user->unsubscribe_daily_newsletter();
-                        $subject = __( 'You have unsubscribed from ' . PEDESTAL_BLOG_NAME . ' Daily and breaking news updates', 'pedestal' );
-                        $body = $this->get_email_template( 'unsubscribe-daily-confirmation', [
-                            'email_type' => 'Daily',
-                            'shareable'  => false,
-                        ] );
-                        mandrill_wp_mail( $user->get_email(), $subject, $body );
-                    }
-
-                    wp_safe_redirect( home_url( 'unsubscribe-confirmation/' ) );
-                    exit;
-
-                case 'cluster':
-
-                    $cluster_id = get_query_var( 'cluster-id' );
-                    if ( $unsubscribe_hash !== $this->generate_secure_hash( 'unsubscribe-' . $user_id . '-cluster-' . $cluster_id ) ) {
-                        break;
-                    }
-
-                    $user = get_user_by( 'id', (int) $user_id );
-                    if ( ! $user ) {
-                        break;
-                    }
-
-                    $cluster = Post::get_by_post_id( (int) $cluster_id );
-                    if ( ! $cluster ) {
-                        break;
-                    }
-
-                    $user = new User( $user );
-                    if ( $user->is_following_cluster( $cluster ) ) {
-                        $user->unfollow_cluster( $cluster );
-                        $subject = sprintf( __( 'You have unsubscribed from "%s"', 'pedestal' ), $cluster->get_title() );
-                        $body = $this->get_email_template( 'unfollow-confirmation', [
-                            'item' => $cluster,
-                            'email_type' => $cluster->get_email_type(),
-                            'shareable' => false,
-                        ] );
-                        mandrill_wp_mail( $user->get_email(), $subject, $body );
-                    }
-
-                    wp_safe_redirect( home_url( 'unfollow-confirmation/' ) );
-                    exit;
-
-                default:
-                    break;
-
-            }
-
-            wp_die( esc_html__( sprintf(
-                'Invalid unsubscribe link. Please contact support at <a href="mailto:%s">%s</a>.',
-                PEDESTAL_EMAIL_CONTACT,
-                PEDESTAL_EMAIL_CONTACT
-            ), 'pedestal' ) );
-
-        } elseif ( get_query_var( 'pedestal-test-email' ) && current_user_can( 'manage_options' ) ) {
-
-            switch ( get_query_var( 'email-type' ) ) {
-                case 'subscribe-daily-confirmation';
-                case 'unsubscribe-daily-confirmation';
-                    echo $this->get_email_template( get_query_var( 'email-type' ), [
-                        'email_type' => 'Daily',
-                        'shareable' => false,
-                    ] );
-                    break;
-
-                case 'follow-update-story':
-                    $stories = new \WP_Query( [
-                        'post_type'      => 'pedestal_story',
-                        'posts_per_page' => 1,
-                    ] );
-                    if ( empty( $stories->posts ) ) {
-                        echo 'No published stories to test with.';
-                        break;
-                    }
-                    $story = new Story( $stories->posts[0] );
-                    echo $this->get_email_template( 'follow-update', [
-                        'item' => $story,
-                        'entities' => $story->get_entities_since_last_email_notification(),
-                        'email_type' => $story->get_email_type(),
-                        'shareable' => true,
-                    ] );
-                    break;
-
-                case 'follow-update-hood':
-                    $hoods = new \WP_Query( [
-                        'post_type'      => 'pedestal_hood',
-                        'posts_per_page' => 1,
-                    ] );
-                    if ( empty( $hoods->posts ) ) {
-                        echo 'No published neighborhoods to test with.';
-                        break;
-                    }
-                    $hood = new Neighborhood( $hoods->posts[0] );
-                    echo $this->get_email_template( 'follow-update', [
-                        'item' => $hood,
-                        'entities' => $hood->get_entities_since_last_email_notification(),
-                        'email_type' => $hood->get_email_type(),
-                        'shareable' => true,
-                    ] );
-                    break;
-
-                case 'follow-confirmation':
-                    $clusters = new \WP_Query( [
-                        'post_type'      => Types::get_cluster_post_types(),
-                        'posts_per_page' => 1,
-                    ] );
-                    if ( empty( $clusters->posts ) ) {
-                        echo 'No published clusters to test with.';
-                        break;
-                    }
-                    $cluster = $clusters->posts[0];
-                    $cluster_class = Types::get_post_type_class( get_post_type( $cluster ) );
-                    $cluster = new $cluster_class( $cluster );
-                    echo $this->get_email_template( 'follow-confirmation', [
-                        'item' => $cluster,
-                        'email_type' => $cluster->get_email_type(),
-                        'shareable' => false,
-                    ] );
-
-                    break;
-
-                case 'unfollow-confirmation':
-                    $clusters = new \WP_Query( [
-                        'post_type'      => Types::get_cluster_post_types(),
-                        'posts_per_page' => 1,
-                    ] );
-                    if ( empty( $clusters->posts ) ) {
-                        echo 'No published clusters to test with.';
-                        break;
-                    }
-                    $cluster = $clusters->posts[0];
-                    $cluster_class = Types::get_post_type_class( get_post_type( $cluster ) );
-                    $cluster = new $cluster_class( $cluster );
-                    echo $this->get_email_template( 'unfollow-confirmation', [
-                        'item' => $cluster,
-                        'email_type' => $cluster->get_email_type(),
-                        'shareable' => false,
-                    ] );
-                    break;
-
-                case 'newsletter':
-                    $newsletters = new \WP_Query( [
-                        'post_type'      => 'pedestal_newsletter',
-                        'posts_per_page' => 1,
-                    ] );
-                    if ( empty( $newsletters->posts ) ) {
-                        echo 'No published newsletters to test with.';
-                        break;
-                    }
-                    $newsletter = new Newsletter( $newsletters->posts[0] );
-                    echo $this->get_email_template( 'newsletter', [
-                        'item' => $newsletter,
-                        'email_type' => 'Daily',
-                        'shareable' => true,
-                    ] );
-                    break;
-
-                case 'breaking-news':
-                    $breaking_news = new \WP_Query( [
-                        'post_type'      => Types::get_emailable_post_types(),
-                        'meta_query'     => [
-                            [
-                                'key'   => 'sent_email',
-                                'value' => 'breaking-news',
-                            ],
-                        ],
-                        'posts_per_page' => 1,
-                    ] );
-                    if ( empty( $breaking_news->posts ) ) {
-                        echo 'No breaking news emails to test with.';
-                        break;
-                    }
-                    $post = Post::get_by_post_id( $breaking_news->posts[0]->ID );
-                    echo $this->get_email_template( 'breaking-news', [
-                        'item' => $post,
-                        'email_type' => 'Breaking News',
-                        'shareable' => true,
-                    ] );
-                    break;
-
-                default:
-                    echo '<img src="http://i.imgur.com/lnKvhQ7.jpg" alt="Invalid email type" title="dingus!"><br>';
-                    break;
-            }
+            locate_template( [ 'generic-confirm-email.php' ], true );
             exit;
         }
 
+        if ( get_query_var( 'pedestal-confirm-subscription' ) ) {
+            locate_template( [ 'confirm-subscription.php' ], true );
+            exit;
+        }
+
+        if ( get_query_var( 'pedestal-test-email' ) && current_user_can( 'manage_options' ) ) {
+            $this->handle_test_email_request();
+            exit;
+        }
     }
 
     /**
      * Add subscription-related meta boxes
      */
-    public function action_add_meta_boxes() {
-        foreach ( Types::get_emailable_post_types() as $post_type ) {
-            $callback = '';
-            $callback_args = [];
-            $email_type = '';
-
-            if ( post_type_supports( $post_type, 'breaking' ) ) {
-                $email_type = 'Breaking News';
-                $callback = 'handle_notify_primary_list_subscribers_meta_box';
-            } elseif ( 'pedestal_newsletter' === $post_type ) {
-                $email_type = 'Newsletter';
-                $callback = 'handle_notify_primary_list_subscribers_meta_box';
-            } elseif ( Types::is_cluster( $post_type ) ) {
-                $email_type = Types::get_post_type_labels( $post_type )['singular_name'];
-                $callback = 'handle_notify_cluster_subscribers_meta_box';
-            }
-
-            if ( empty( $email_type ) || ! method_exists( $this, $callback ) ) {
-                return;
-            }
-
-            $email_template = sanitize_title( $email_type );
-            $callback_args = [
-                'email_type' => $email_type,
-                'template'   => $email_template,
-            ];
-
-            add_meta_box( 'pedestal-' . $email_template . '-notify-subscribers',
-                esc_html__( 'Notify ' . $email_type . ' Subscribers', 'pedestal' ),
-                [ $this, $callback ],
-                $post_type, 'side', 'default', $callback_args
-            );
+    public function action_add_meta_boxes( $post_type ) {
+        if ( ! in_array( $post_type, Types::get_emailable_post_types() ) ) {
+            return;
         }
+
+        $callback = '';
+        $callback_args = [];
+        $email_type = '';
+
+        if ( post_type_supports( $post_type, 'breaking' ) ) {
+            $email_type = 'Breaking News';
+            $callback = 'handle_notify_primary_list_subscribers_meta_box';
+        } elseif ( 'pedestal_newsletter' === $post_type ) {
+            $email_type = 'Newsletter';
+            $callback = 'handle_notify_primary_list_subscribers_meta_box';
+        } elseif ( Types::is_cluster( $post_type ) ) {
+            $email_type = Types::get_post_type_labels( $post_type )['singular_name'];
+            $callback = 'handle_notify_cluster_subscribers_meta_box';
+        }
+
+        if ( empty( $email_type ) || ! method_exists( $this, $callback ) ) {
+            return;
+        }
+
+        $email_template = sanitize_title( $email_type );
+        $callback_args = [
+            'email_type' => $email_type,
+            'template'   => $email_template,
+        ];
+
+        add_meta_box( 'pedestal-' . $email_template . '-notify-subscribers',
+            esc_html__( 'Notify ' . $email_type . ' Subscribers', 'pedestal' ),
+            [ $this, $callback ],
+            $post_type, 'side', 'default', $callback_args
+        );
     }
 
     /**
@@ -490,65 +148,58 @@ class Subscriptions {
         $post_id = $post->ID;
         $cluster = Cluster::get_by_post_id( (int) $post_id );
         $type = $cluster->get_type();
+        $entities = $cluster->get_entities_since_last_email_notification();
+        $entity_count = count( $entities );
 
-        if ( $last_sent = $cluster->get_last_email_notification_date() ) {
-            $last_sent = get_date_from_gmt( date( 'Y-m-d H:i:s', $last_sent ) );
-            $last_sent = sprintf( esc_html__( 'It was last sent: %s.', 'pedestal' ), $last_sent );
-        } else {
-            $last_sent = esc_html__( 'It has never been sent.', 'pedestal' );
+        $last_sent = '';
+        $last_sent_human_diff = 'N/A';
+        if ( $last_sent_date = $cluster->get_last_email_notification_date() ) {
+            $last_sent = get_date_from_gmt( date( 'Y-m-d H:i:s', $last_sent_date ), 'm/d/Y g:i a' );
+            $last_sent_human_diff = human_time_diff( $last_sent_date ) . ' ago';
         }
 
-        $attributes = [];
-
-        if ( $entities = $cluster->get_entities_since_last_email_notification() ) :
-
-            ob_start();
-            ?>
-
-<p><?php esc_html_e( 'Are you ready to send an email notification to those following this ' . $type . '?', 'pedestal' ); ?></p>
-
-<p><?php esc_html_e( 'These entities will be included:', 'pedestal' ); ?>
-    <ol>
-    <?php foreach ( $entities as $entity ) : ?>
-        <li><a href="<?php echo $entity->get_the_permalink(); ?>"><?php echo $entity->get_the_title(); ?></a></li>
-    <?php endforeach; ?>
-    </ol>
-</p>
-
-            <?php
-            echo ob_get_clean();
-
-        else :
-
+        $attributes = [
+            'style' => 'display: block; width: 100%;',
+        ];
+        $test_button = '';
+        if ( empty( $entities ) ) {
             $attributes['disabled'] = 'disabled';
+        } else {
+            $test_button = get_submit_button(
+                esc_html__( 'Send Test Email', 'pedestal' ),
+                'secondary',
+                'pedestal-cluster-send-test-email',
+                false,
+                $attributes
+            );
+        }
 
-            ob_start();
-            ?>
+        $send_button = '';
+        $follower_label = 'Followers';
+        $cluster_count = $cluster->get_following_users_count( $force = true );
+        if ( 0 == $cluster_count ) {
+            $attributes['disabled'] = 'disabled';
+        }
+        if ( 1 == $cluster_count ) {
+            $follower_label = 'Follower';
+        }
+        $send_button = get_submit_button(
+            sprintf( esc_html__( 'Send Email To %d %s', 'pedestal' ), $cluster_count, $follower_label ),
+            'primary',
+            'pedestal-cluster-notify-subscribers',
+            true,
+            $attributes
+        );
 
-<p><?php esc_html_e( 'There have been no entities published since the last email notification.', 'pedestal' ); ?></p>
-
-            <?php
-            echo ob_get_clean();
-
-        endif;
-
-        ob_start();
-        ?>
-
-<p><?php echo esc_html( $last_sent ); ?></p>
-
-<?php if ( empty( $attributes['disabled'] ) ) : ?>
-    <input type="text" name="test-email-addresses" placeholder="<?php esc_attr_e( 'Separate addresses by commas' ); ?>" style="width:100%" />
-    <?php submit_button( esc_html__( 'Send Test Email', 'pedestal' ), 'secondary', 'pedestal-cluster-send-test-email' ); ?>
-<?php endif; ?>
-
-<hr />
-
-<?php submit_button( sprintf( esc_html__( 'Send Email To %d Followers', 'pedestal' ), $cluster->get_following_users_count() ), 'primary', 'pedestal-cluster-notify-subscribers', true, $attributes ); ?>
-
-        <?php
-        echo ob_get_clean();
-
+        $context = [
+            'entities' => $entities,
+            'entity_count' => number_format( $entity_count ),
+            'last_sent' => $last_sent,
+            'last_sent_human_diff' => $last_sent_human_diff,
+            'test_button' => $test_button,
+            'send_button' => $send_button,
+        ];
+        Timber::render( 'partials/admin/metabox-send-email-cluster.twig', $context );
     }
 
     /**
@@ -559,7 +210,6 @@ class Subscriptions {
     public function handle_notify_primary_list_subscribers_meta_box( $post, $metabox ) {
         $post = Post::get_by_post_id( (int) $post->ID );
         $sent_date = $post->get_sent_date();
-        $sent_num = $post->get_sent_num();
         $status = $post->get_status();
         $args = $metabox['args'];
 
@@ -568,10 +218,15 @@ class Subscriptions {
             return;
         }
 
+        $subscriber_count = $this->get_daily_newsletter_subscriber_count();
+        if ( 'breaking-news' === $args['template'] ) {
+            $subscriber_count = $this->get_breaking_news_subscriber_count();
+        }
+
         $send_button_text = esc_html__( sprintf(
             'Send %s To %d Subscribers',
             $args['email_type'],
-            $this->get_daily_newsletter_subscriber_count()
+            $subscriber_count
         ), 'pedestal' );
 
         $context = [
@@ -587,22 +242,21 @@ class Subscriptions {
             ),
         ];
 
-        if ( $sent_date && $sent_num ) {
+        if ( $sent_date ) {
 
             $sent_date = get_date_from_gmt( date( 'Y-m-d H:i:s', $sent_date ), PEDESTAL_DATETIME_FORMAT );
-            $sent_confirm = sprintf( 'The %s email was sent on %s in %d API requests.',
+            $sent_confirm = sprintf( 'The %s email was sent on %s.',
                 strtolower( $args['email_type'] ),
-                $sent_date,
-                $sent_num
+                $sent_date
             );
             $context['message'] = esc_html__( $sent_confirm, 'pedestal' );
 
-        } elseif ( 'publish' === $status && ! $sent_date && ! $sent_num ) {
+        } elseif ( 'publish' === $status && ! $sent_date ) {
 
             $context['message'] = esc_html__( sprintf(
-                'Are you ready to send this %s email to %d subscribers on the primary email list?',
+                'Are you ready to send this %s email to %d subscribers?',
                 strtolower( $args['email_type'] ),
-                Pedestal()->subscriptions->get_daily_newsletter_subscriber_count()
+                $subscriber_count
             ), 'pedestal' );
 
             if ( 'breaking-news' === $args['template'] ) {
@@ -611,7 +265,7 @@ class Subscriptions {
         } elseif ( 'publish' !== $status ) {
 
             $context['message'] = esc_html__( sprintf(
-                'The %s must be published in order to send it to subscribers on the primary email list.',
+                'The %s must be published in order to send it to subscribers.',
                 strtolower( Types::get_post_type_name( Types::get_post_type( $post ), false ) )
             ), 'pedestal' );
 
@@ -643,172 +297,429 @@ class Subscriptions {
     }
 
     /**
+     * Rename a Cluster's ActiveCampaign list name if its title changes
+     */
+    public function action_post_updated_activecampaign_list( $post_id, $post_after, $post_before ) {
+        if ( ! Types::is_cluster( $post_after->post_type ) ) {
+            return;
+        }
+
+        if ( $post_after->post_title === $post_before->post_title ) {
+            return;
+        }
+
+        $post_after = Cluster::get_by_post_id( $post_id );
+        $list_id = self::get_list_ids_from_cluster( $post_id );
+        $new_name = $post_after->get_activecampaign_list_name();
+
+        $activecampaign = new ActiveCampaign;
+        $response = $activecampaign->edit_list( $list_id, [
+            'name' => $new_name,
+        ] );
+    }
+
+    /**
      * Handle requests to send email notifications
      */
-    public function action_save_post_late( $post_id ) {
+    public function action_save_post_send_email( $post_id ) {
         if ( ! in_array( get_post_type( $post_id ), Types::get_emailable_post_types() ) ) {
             return;
         }
 
-        if ( ! empty( $_POST['pedestal-cluster-notify-subscribers'] ) ) {
+        $is_test_email = false;
+
+        // Clusters
+        if ( ! empty( $_POST['pedestal-cluster-notify-subscribers'] ) || ! empty( $_POST['pedestal-cluster-send-test-email'] ) ) {
             $cluster = Cluster::get_by_post_id( (int) $post_id );
-            $this->send_email_to_users_following_cluster( $cluster );
-        } elseif ( ! empty( $_POST['pedestal-cluster-send-test-email'] ) ) {
-            $email_addresses = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
-            $cluster = Cluster::get_by_post_id( (int) $post_id );
-            $subject = sprintf( '[TEST] %s Update: %s', PEDESTAL_BLOG_NAME, $cluster->get_title() );
-            $body = $this->get_email_template( 'follow-update', [
-                'item'                      => $cluster,
-                'entities'                  => $cluster->get_entities_since_last_email_notification(),
-                'email_type'                => $cluster->get_email_type(),
-                'mandrill_unsubscribe_link' => true,
-                'shareable'                 => true,
-            ] );
-            mandrill_wp_mail( implode( ',', $email_addresses ), $subject, $body );
-        }
+            $args = [];
+            if ( ! empty( $_POST['pedestal-cluster-send-test-email'] ) ) {
+                $is_test_email = true;
+                $args['test_email_addresses'] = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
+            }
+            $result = $this->send_email_to_users_following_cluster( $cluster, $args );
 
-        if ( ! empty( $_POST['pedestal-newsletter-notify-subscribers'] ) ) {
-            $newsletter = Newsletter::get_by_post_id( (int) $post_id );
-            $this->send_primary_list_email( $newsletter );
-        } elseif ( ! empty( $_POST['pedestal-newsletter-send-test-email'] ) ) {
-            $email_addresses = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
-            $newsletter = Newsletter::get_by_post_id( (int) $post_id );
-            $subject = sprintf( '[TEST] %s Daily: %s', PEDESTAL_BLOG_NAME, $newsletter->get_title() );
-            $body = $this->get_email_template( 'newsletter', [
-                'item'                      => $newsletter,
-                'email_type'                => 'Daily',
-                'mandrill_unsubscribe_link' => true,
-                'shareable'                 => true,
-            ] );
-            mandrill_wp_mail( implode( ',', $email_addresses ), $subject, $body );
-            $args = [
-                'html' => $body,
-                'subject' => $subject,
-                'name' => $subject,
-                // 'email' => implode( ',', $email_addresses ),
-                'email' => 'product@spiritedmedia.com', // For now just send test emails to me through ActiveCampaign
-            ];
-            $activecampaign = new ActiveCampaign;
-            $activecampaign->send_test_campaign( $args );
-        }
-
-        if ( ! empty( $_POST['pedestal-breaking-news-notify-subscribers'] )
-            && ! empty( $_POST['confirm-send-email'] )
-            && 'SEND BREAKING NEWS' === strtoupper( $_POST['confirm-send-email'] ) ) {
-            $post = Post::get_by_post_id( (int) $post_id );
-            $this->send_primary_list_email( $post );
-        } elseif ( ! empty( $_POST['pedestal-breaking-news-send-test-email'] ) ) {
-            $email_addresses = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
-            $post = Post::get_by_post_id( (int) $post_id );
-            $subject = sprintf( '[TEST] BREAKING NEWS: %s', $post->get_title() );
-            $body = $this->get_email_template( 'breaking-news', [
-                'item'                      => $post,
-                'email_type'                => 'Breaking News',
-                'mandrill_unsubscribe_link' => true,
-                'shareable'                 => true,
-            ] );
-            mandrill_wp_mail( implode( ',', $email_addresses ), $subject, $body );
-            $args = [
-                'html' => $body,
-                'subject' => $subject,
-                'name' => $subject,
-                // 'email' => implode( ',', $email_addresses ),
-                'email' => 'product@spiritedmedia.com', // For now just send test emails to me through ActiveCampaign
-            ];
-            $activecampaign = new ActiveCampaign;
-            $activecampaign->send_test_campaign( $args );
-        }
-
-    }
-
-    /**
-     * Handle a request to follow an cluster
-     */
-    protected function handle_subscription_action_follow_cluster() {
-
-        if ( empty( $_POST['email_address'] ) || empty( $_POST['cluster_id'] ) ) {
-            status_header( 400 );
-            exit;
-        }
-
-        $this->handle_honeypot_check();
-
-        $email_address = sanitize_email( $_POST['email_address'] );
-        if ( ! is_email( $email_address ) ) {
-            status_header( 400 );
-            echo 'Invalid email address.';
-            exit;
-        }
-
-        $cluster = Cluster::get_by_post_id( (int) $_POST['cluster_id'] );
-        if ( ! Types::is_cluster( $cluster ) ) {
-            status_header( 400 );
-            echo printf( 'Invalid Cluster ID, please email %s with this error message.', PEDESTAL_EMAIL_CONTACT );
-            exit;
-        }
-
-        if ( 'publish' !== $cluster->get_status() ) {
-            status_header( 400 );
-            echo printf( 'Cluster unavailable, please email %s with this error message.', PEDESTAL_EMAIL_CONTACT );
-            exit;
-        }
-
-        $user = User::get_or_create_user( $email_address );
-        if ( is_wp_error( $user ) ) {
-            status_header( 400 );
-            echo $user->get_error_message();
-            exit;
-        }
-
-        if ( ! $user->is_site_member() ) {
-            $add_to_site = $user->add_to_site( 'subscriber' );
-            if ( is_wp_error( $add_to_site ) ) {
-                return;
+            if ( $result && ! $is_test_email ) {
+                // Set the last sent email date
+                $cluster->set_last_email_notification_date();
             }
         }
 
-        if ( ! $user->is_following_cluster( $cluster ) ) {
-            $user->follow_cluster( $cluster );
-            $subject = sprintf( 'You are now following "%s"', $cluster->get_title() );
-            $body = $this->get_email_template( 'follow-confirmation', [
-                'item'             => $cluster,
-                'email_type'       => $cluster->get_email_type(),
-                'unsubscribe_link' => $this->get_user_cluster_unsubscribe_link( $user->get_id(), $cluster->get_id() ),
-            ] );
-            mandrill_wp_mail( $user->get_email(), $subject, $body );
+        // Newsletters
+        if ( ! empty( $_POST['pedestal-newsletter-notify-subscribers'] ) || ! empty( $_POST['pedestal-newsletter-send-test-email'] ) ) {
+            $newsletter = Newsletter::get_by_post_id( (int) $post_id );
+            $args = [];
+            if ( ! empty( $_POST['pedestal-newsletter-send-test-email'] ) ) {
+                $is_test_email = true;
+                $args['test_email_addresses'] = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
+            }
+            $result = $this->send_email_to_newsletter_followers( $newsletter, $args );
+            if ( $result && ! $is_test_email ) {
+                // Set the last sent email date
+                $newsletter->set_sent_flag( 'newsletter' );
+                $newsletter->set_sent_date( time() );
+            }
         }
 
-        status_header( 200 );
-        exit;
-
+        // Breaking News
+        $breaking_news_confirm = ( ! empty( $_POST['confirm-send-email'] ) && 'SEND BREAKING NEWS' === strtoupper( $_POST['confirm-send-email'] ) );
+        if ( ( ! empty( $_POST['pedestal-breaking-news-notify-subscribers'] )
+                && $breaking_news_confirm
+             ) || ! empty( $_POST['pedestal-breaking-news-send-test-email'] )
+        ) {
+            $post = Post::get_by_post_id( (int) $post_id );
+            $args = [];
+            if ( ! empty( $_POST['pedestal-breaking-news-send-test-email'] ) ) {
+                $is_test_email = true;
+                $args['test_email_addresses'] = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
+            }
+            $result = $this->send_email_to_breaking_news_followers( $post, $args );
+            if ( $result && ! $is_test_email ) {
+                // Set the last sent email date
+                $post->set_sent_flag( 'breaking-news' );
+                $post->set_sent_date( time() );
+            }
+        }
     }
 
     /**
-     * Handle a request to sign up for the daily newsletter and breaking news
+     * Send an email campaign to those following a given cluster
+     * @param  Cluster $cluster  The cluster we are notifing followers about
+     * @param  Array $args       Options
+     * @return Boolean           Did the camapign send successfully?
      */
-    private function handle_subscription_action_signup_daily_newsletter() {
-
-        if ( empty( $_POST['email_address'] ) || ! is_email( $_POST['email_address'] ) ) {
-            status_header( 400 );
-            echo 'Invalid email address.';
-            exit;
+    private function send_email_to_users_following_cluster( $cluster, $args = [] ) {
+        if ( ! Types::is_cluster( $cluster ) ) {
+            return false;
         }
+        $cluster_id = $cluster->get_id();
+        $list_id = self::get_list_ids_from_cluster( $cluster_id );
+        $body = $this->get_email_template( 'follow-update', 'ac', [
+            'item'       => $cluster,
+            'entities'   => $cluster->get_entities_since_last_email_notification(),
+            'email_type' => $cluster->get_email_type(),
+            'shareable'  => true,
+        ] );
 
-        $this->handle_honeypot_check();
-
-        $newsletter_subscribe = $this->subscribe_daily_newsletter( $_POST['email_address'] );
-
-        if ( is_wp_error( $newsletter_subscribe ) ) {
-            status_header( 400 );
-            echo $newsletter_subscribe->get_error_message();
-            exit;
-        }
-
-        status_header( 200 );
-        exit;
-
+        $subject = sprintf( '%s Update: %s', PEDESTAL_BLOG_NAME, $cluster->get_title() );
+        $sending_args = [
+            'html'       => $body,
+            'subject'    => $subject,
+            'list'       => $list_id,
+            'email_type' => 'Follow Update',
+        ];
+        $sending_args = wp_parse_args( $sending_args, $args );
+        return $this->send_email( $sending_args );
     }
 
+    /**
+     * Send an email campaign to newsletter subscribers
+     * @param  Newsletter $newsletter  The newsletter we are notifing subscribers about
+     * @param  Array $args             Options
+     * @return Boolean                 Did the camapign send successfully?
+     */
+    private function send_email_to_newsletter_followers( $newsletter, $args ) {
+        $body = $this->get_email_template( 'newsletter', 'ac', [
+            'item'       => $newsletter,
+            'email_type' => 'Daily',
+            'shareable'  => true,
+        ] );
+
+        $subject = sprintf( '%s Daily: %s', PEDESTAL_BLOG_NAME, $newsletter->get_title() );
+        $sending_args = [
+            'html'       => $body,
+            'subject'    => $subject,
+            'list'       => PEDESTAL_DAILY_NEWSLETTER_ID,
+            'email_type' => 'Daily Newsletter',
+        ];
+        $sending_args = wp_parse_args( $sending_args, $args );
+        return $this->send_email( $sending_args );
+    }
+
+    /**
+     * Send an email campaign to breaking news subscribers
+     * @param  Post $post   The entity we are notifing subscribers about
+     * @param  Array $args  Options
+     * @return Boolean      Did the camapign send successfully?
+     */
+    private function send_email_to_breaking_news_followers( $post, $args ) {
+        $body = $this->get_email_template( 'breaking-news', 'ac', [
+            'item'       => $post,
+            'email_type' => 'Breaking News',
+            'shareable'  => true,
+        ] );
+
+        $subject = sprintf( 'BREAKING NEWS: %s', $post->get_title() );
+        $sending_args = [
+            'html'       => $body,
+            'subject'    => $subject,
+            'name'       => $subject,
+            'list'       => PEDESTAL_BREAKING_NEWSLETTER_ID,
+            'email_type' => 'Breaking News',
+        ];
+        $sending_args = wp_parse_args( $sending_args, $args );
+        return $this->send_email( $sending_args );
+    }
+
+    /**
+     * Handle sending the email campaign
+     * @param  Array $args  Details about the campaign
+     * @return Boolean      Did the camapign send successfully?
+     */
+    private function send_email( $args = [] ) {
+        $default_args = [
+            'html'                  => false,     // The HTML body of the email
+            'subject'               => false,     // The subject line of the email
+            'name'                  => false,     // Name to describe the campaign in ActiveCampaign
+            'list'                  => false,     // List ID or List Name to send the email to via ActiveCampaign
+            'test_email_addresses'  => [],        // List of test email addresses to send the email to
+            'email_type'            => 'Unknown', // What type of email campaign is being sent? Newsletter, Breaking News, Folow Update etc.
+        ];
+        $args = wp_parse_args( $args, $default_args );
+        // Sanity check
+        if ( ! $args['html'] || ! $args['subject'] || ! $args['list'] ) {
+            // Missing one or more key component for sending out an email, aren't we now?
+            return false;
+        }
+        if ( ! $args['name'] ) {
+            $args['name'] = $args['subject'];
+        }
+        $test_emails = $args['test_email_addresses'];
+        if ( is_string( $test_emails ) ) {
+            $test_emails = array_map( 'trim', explode( ',', $test_emails ) );
+        }
+        if ( ! empty( $test_emails ) ) {
+            $args['subject'] = '[TEST] ' . $args['subject'];
+            // Ensure product@spiritedmedia.com gets sent the test emails for every send
+            $test_emails[] = 'product@spiritedmedia.com';
+            $to = implode( ',', $test_emails );
+            add_filter( 'wp_mail_content_type', function() { return 'text/html'; } );
+            $args['test_email_addresses'] = $test_emails;
+            $resp = wp_mail( $to, $args['subject'], $args['html'] );
+            do_action( 'pedestal_sent_test_email_campaign', $args );
+            return true;
+        }
+
+        $activecampaign = new ActiveCampaign;
+        $resp = $activecampaign->send_campaign( $args );
+        if ( isset( $resp->result_code ) && 1 !== $resp->result_code ) {
+            error_log( 'ActiveCampaign Response Error: ' . $resp->result_message );
+            return false;
+        }
+        do_action( 'pedestal_sent_email_campaign', $args );
+        return true;
+    }
+
+    /**
+     * Handles subscribing an email address to an ActiveCampaign list
+     */
+    private function handle_subscribe_to_email_list() {
+        // Perform honeypot check to weed out bots
+        $this->handle_honeypot_check();
+
+        // Do we have all the bits of info we need?
+        if ( empty( $_REQUEST['email_address'] )
+            || ( empty( $_POST['list-ids'] ) && empty( $_POST['cluster-id'] ) )
+        ) {
+            status_header( 400 );
+            echo 'Missing information.';
+            exit;
+        }
+
+        $activecampaign = new ActiveCampaign;
+        // Get the list id
+        $cluster_id = '';
+        if ( ! empty( $_POST['cluster-id'] ) ) {
+            $cluster_id = $_POST['cluster-id'];
+            $list_ids = self::get_list_ids_from_cluster( $cluster_id );
+        }
+        if ( ! empty( $_POST['list-ids'] ) ) {
+            $list_ids = $_POST['list-ids'];
+        }
+        if ( ! is_array( $list_ids ) ) {
+            $list_ids = [ $list_ids ];
+        }
+        $list_ids = array_map( 'intval', $list_ids );
+        $args = [
+            'ids' => $list_ids,
+        ];
+
+        // Get details of the list from ActiveCampaign
+        $raw_lists = $activecampaign->get_lists( $args );
+        $raw_lists_check = (array) $raw_lists;
+        // Check if $raw_lists is an empty object
+        if ( empty( $raw_lists_check ) && ! empty( $cluster_id ) ) {
+            error_log( 'Clearing post meta value' );
+            self::delete_list_id_from_meta( $cluster_id );
+            $list_ids = self::get_list_ids_from_cluster( $cluster_id );
+            $args['ids'] = $list_ids;
+            $raw_lists = $activecampaign->get_lists( $args );
+        }
+
+        // Do some name formatting
+        $list_names = [];
+        $list_ids = [];
+        foreach ( $raw_lists as $raw_list ) {
+            $list_names[] = $this->scrub_list_name( $raw_list->name );
+            $list_ids[] = intval( $raw_list->id );
+        }
+        switch ( count( $list_names ) ) {
+            case 1:
+                $list_names = $list_names[0];
+                break;
+            case 2:
+                $list_names = implode( ' and ', $list_names );
+                break;
+            default:
+                $index = count( $list_names ) - 1;
+                $list_names[ $index ] = 'and ' . $list_names[ $index ];
+                $list_names = implode( ', ', $list_names );
+                break;
+
+        }
+        $email = sanitize_email( $_REQUEST['email_address'] );
+        // Create a nonce that we will store in a transient until the subscriber confirms their email address
+        // Note: We add $list_names to the mix so we don't have a collision if the same email is used to subscribe to multiple email lists
+        $nonce = wp_create_nonce( $email . $list_names );
+        $confirm_link = $this->get_confirm_link( $email, $nonce, $list_ids );
+        $subject = sprintf( 'You have subscribed to %s’s “%s” emails', PEDESTAL_BLOG_NAME, $list_names );
+        $body = $this->get_email_template( 'subscribe-confirmation', 'ses', [
+            'email_address' => $email,
+            'confirm_link' => esc_url( $confirm_link ),
+            'list_names' => $list_names,
+            'blog_name' => PEDESTAL_BLOG_NAME,
+        ] );
+
+        $confirmation_data = [
+            'email' => $email,
+            'list_ids' => $list_ids,
+            'datetime' => date( 'Y-m-d H:i:s' ),
+        ];
+        $transient_key = 'pending_email_confirmation_' . $nonce;
+        set_transient( $transient_key, $confirmation_data, 12 * HOUR_IN_SECONDS );
+        add_filter( 'wp_mail_content_type', function() { return 'text/html'; } );
+        return wp_mail( $email, $subject, $body );
+    }
+
+    /**
+     * Generate a link to send to a subscriber to confirm their email address
+     * @param  string $email    Subscriber's email address
+     * @param  string $nonce    A token to associate with the email address for confrimation
+     * @param  array $list_ids  One or more list ids to include in the link
+     * @return string           The confrimation link
+     */
+    private function get_confirm_link( $email = '', $nonce = '', $list_ids = [] ) {
+        $list_ids_token = implode( ',', $list_ids );
+        if ( ! $nonce ) {
+            $nonce = wp_create_nonce( $email . $list_ids_token );
+        }
+        $confirm_link = get_site_url() . '/confirm-subscription/' . $nonce . '/?list_ids=' . $list_ids_token;
+        return $confirm_link;
+    }
+
+    /**
+     * Get list IDs from a given cluster
+     * @param  integer $cluster_id                   Post ID of the Cluster
+     * @param  boolean $create_list_if_doesnt_exist  Whether to create a list if it doesn't exist
+     * @return False|integer                         List id or False if no list id found
+     */
+    public static function get_list_ids_from_cluster( $cluster_id = 0, $create_list_if_doesnt_exist = true ) {
+        $cluster_id = intval( $cluster_id );
+        if ( ! $cluster_id ) {
+            return false;
+        }
+
+        $list_id = self::get_list_id_from_meta( $cluster_id );
+        if ( $list_id ) {
+            return intval( $list_id );
+        }
+
+        // Looks like we'll need to fetch the List ID from ActiveCampaign
+        $activecampaign = new ActiveCampaign;
+        $cluster = Post::get_by_post_id( $cluster_id );
+        if ( ! Types::is_cluster( $cluster ) ) {
+            return false;
+        }
+
+        $list_name = $cluster->get_activecampaign_list_name();
+
+        // Check if list already exists
+        $resp = $activecampaign->get_list( $list_name );
+        // List not found, let's add a new list
+        if ( ! $resp && $create_list_if_doesnt_exist ) {
+            $args = [
+                'name' => $list_name,
+            ];
+            $resp = $activecampaign->add_list( $args );
+        }
+        $list_id = intval( $resp->id );
+        $cluster->add_meta( self::$list_id_meta_key, $list_id );
+        // Clear any subscriber count transients that might be set
+        delete_transient( 'activecampaign_subscriber_count_' . $list_id );
+        return $list_id;
+    }
+
+    /**
+     * Get a Cluster object from a given ActiveCampaign List ID
+     * @param  array $list_ids  One or more ActiveCampaign List IDs
+     * @return array            Array of Cluster objects
+     */
+    public static function get_clusters_from_list_ids( $list_ids = [] ) {
+        $output = [];
+        if ( is_string( $list_ids ) ) {
+            $list_ids = [ $list_ids ];
+        }
+        $list_ids = array_map( 'intval', $list_ids );
+        $args = [
+        	'post_type' => 'any',
+        	'meta_key' => self::$list_id_meta_key,
+        	'meta_value' => $list_ids,
+        	'fields' => 'ids',
+        	'no_found_rows' => true,
+        ];
+        $meta_query = new \WP_Query( $args );
+        $post_ids = $meta_query->posts;
+        if ( empty( $post_ids ) ) {
+            return $output;
+        }
+        foreach ( $post_ids as $post_id ) {
+            $cluster = Cluster::get_by_post_id( $post_id );
+            if ( Types::is_cluster( $cluster ) ) {
+                $output[] = $cluster;
+            }
+        }
+        return $output;
+    }
+
+    /**
+     * Get an ActiveCampaign List ID stored as post_meta
+     * @param  integer $post_id  Post ID to check
+     * @return string            List ID
+     */
+    public static function get_list_id_from_meta( $post_id = 0 ) {
+        $post_id = absint( $post_id );
+        if ( ! $post_id ) {
+            return false;
+        }
+        return get_post_meta( $post_id, self::$list_id_meta_key, true );
+    }
+
+    /**
+     * Delete the ActiveCampaign List ID stored as post_meta
+     * @param  integer $post_id  Post ID to check
+     * @return boolean           False for failure. True for success.
+     */
+    public static function delete_list_id_from_meta( $post_id = 0 ) {
+        $post_id = absint( $post_id );
+        if ( ! $post_id ) {
+            return false;
+        }
+        return delete_post_meta( $post_id, self::$list_id_meta_key );
+    }
+
+    /**
+     * Verify a $_POST request isn't from a dumb bot
+     * @return Boolean  True if the request passes the check
+     */
     private function handle_honeypot_check() {
         if ( isset( $_POST['pedestal-current-year-check'] ) && isset( $_POST['pedestal-blank-field-check'] ) ) {
             if ( empty( $_POST['pedestal-blank-field-check'] ) && date( 'Y' ) == $_POST['pedestal-current-year-check'] ) {
@@ -822,284 +733,79 @@ class Subscriptions {
     }
 
     /**
-     * Subscribe an email address to the newsletter and send confirmation
-     *
-     * @param  string $email_address Email
-     * @return bool|WP_Error Returns true if subscribed, false if not.
+     * Remove '- <blog name>' from list name which we do to make them unique within ActiveCampaign
+     * @param  string $haystack  String to scrub
+     * @return string            Scrubbed list name
      */
-    public function subscribe_daily_newsletter( $email_address ) {
-        self::$errors = new \WP_Error;
-
-        if ( ! is_email( $email_address ) ) {
-            self::$errors->add( 'invalid_email_address', sprintf( '%s is not a valid email address!', $email_address ) );
-            return self::$errors;
-        }
-
-        $email_address = sanitize_email( $email_address );
-        $user = User::get_or_create_user( $email_address );
-
-        if ( is_wp_error( $user ) ) {
-            return $user;
-        }
-
-        if ( ! $user->is_site_member() ) {
-            $add_to_site = $user->add_to_site( 'subscriber' );
-            if ( is_wp_error( $add_to_site ) ) {
-                return;
-            }
-        }
-
-        if ( ! $user->is_subscribed_daily_newsletter() ) {
-            $user->subscribe_daily_newsletter();
-            $subject = sprintf( 'You have subscribed to %s Daily and breaking news emails', PEDESTAL_BLOG_NAME );
-            $body = $this->get_email_template( 'subscribe-daily-confirmation', [
-                'email_type'       => 'Daily',
-                'unsubscribe_link' => $this->get_user_daily_newsletter_unsubscribe_link( $user->get_id() ),
-            ] );
-
-            mandrill_wp_mail( $user->get_email(), $subject, $body );
-            return true;
-        }
-
-        self::$errors->add( 'email_already_subscribed', sprintf( 'The email address %s is already subscribed to the newsletter and breaking news emails!', $email_address ) );
-        return self::$errors;
+    private function scrub_list_name( $haystack = '' ) {
+        $needle = '- ' . PEDESTAL_BLOG_NAME;
+        $parts = explode( $needle, $haystack );
+        return trim( $parts[0] );
     }
 
     /**
-     * Send an email notification to the users following an cluster
-     *
-     * @param Cluster
-     */
-    private function send_email_to_users_following_cluster( $cluster ) {
-
-        $users = $cluster->get_following_users();
-        $merge_vars = $email_addresses = [];
-        $cluster_id = $cluster->get_id();
-        foreach ( $users as $user ) {
-            $email_addresses[] = $user->user_email;
-            $merge_vars[] = (object) [
-                'rcpt'    => $user->user_email,
-                'vars'    => [
-                    (object) [
-                        'name'     => 'MANDRILL_UNSUBSCRIBE_LINK',
-                        'content'  => $this->get_user_cluster_unsubscribe_link( $user->ID, $cluster->get_id() ),
-                    ],
-                ],
-            ];
-        }
-        $merge_vars_func = function( $args ) use ( $merge_vars ) {
-            $args['merge_vars'] = $merge_vars;
-            return $args;
-        };
-
-        add_filter( 'mandrill_wp_mail_pre_message_args', $merge_vars_func );
-        $subject = sprintf( '%s Update: %s', PEDESTAL_BLOG_NAME, $cluster->get_title() );
-        $body = $this->get_email_template( 'follow-update', [
-            'item'                      => $cluster,
-            'entities'                  => $cluster->get_entities_since_last_email_notification(),
-            'email_type'                => $cluster->get_email_type(),
-            'mandrill_unsubscribe_link' => true,
-            'shareable'                 => true,
-        ] );
-        $response = mandrill_wp_mail( implode( ',', $email_addresses ), $subject, $body );
-        remove_filter( 'mandrill_wp_mail_pre_message_args', $merge_vars_func );
-
-        // Set the last sent email date regardless of Mandrill's response code -
-        // if the email really has not sent, then this will need to be reset
-        $cluster->set_last_email_notification_date( time() );
-
-        if ( 200 === $response ) {
-            $this->notify_on_subscription_action( [
-                'type'        => 'cluster',
-                'action'      => 'send',
-                'post_id' => $cluster_id,
-            ] );
-        } else {
-            add_filter( 'redirect_post_location', function( $location ) use ( $response ) {
-                remove_filter( 'redirect_post_location', __FILTER__, '99' );
-                return add_query_arg( 'mandrill_resp', $response, $location );
-            }, '99');
-            $msg = "*Bad response from Mandrill API upon sending follow update for cluster {$cluster_id}. Email was still most likely sent. Check API logs to be sure.*";
-            $notifier = new Notifications;
-            $notifier->send( $msg, [ 'channel' => self::$default_notify_channel ] );
-        }
-    }
-
-    /**
-     * Send an email notification to users subscribed to the primary list
-     *
-     * The email type depends on the post type of the supplied post.
-     */
-    private function send_primary_list_email( $post, $limit = 555 ) {
-        $offset = 0;
-        $num_emails = 1;
-        $recipients = [];
-        $users = get_users( [ 'pedestal_subscriptions' => 'daily-newsletter' ] );
-        $num_recipients = count( $users );
-
-        while ( $num_recipients > 0 ) {
-            $merge_vars = $email_addresses = [];
-            $recipients = get_users( [
-                'pedestal_subscriptions' => 'daily-newsletter',
-                'offset'                 => $offset,
-                'number'                 => $limit,
-            ] );
-            $num_recipients = count( $recipients );
-
-            if ( empty( $num_recipients ) ) {
-                continue;
-            }
-
-            foreach ( $recipients as $recipient ) {
-                $email = $recipient->user_email;
-                $email_addresses[] = $email;
-                $merge_vars[] = (object) [
-                    'rcpt'    => $email,
-                    'vars'    => [
-                        (object) [
-                            'name'     => 'MANDRILL_UNSUBSCRIBE_LINK',
-                            'content'  => $this->get_user_daily_newsletter_unsubscribe_link( $recipient->ID ),
-                        ],
-                    ],
-                ];
-            }
-
-            $merge_vars_func = function( $args ) use ( $merge_vars ) {
-                $args['merge_vars'] = $merge_vars;
-                return $args;
-            };
-
-            add_filter( 'mandrill_wp_mail_pre_message_args', $merge_vars_func );
-
-            if ( post_type_supports( Types::get_post_type( $post ), 'breaking' ) ) {
-                $email_type = 'Breaking News';
-                $subject_email_type = strtoupper( $email_type );
-                $template = 'breaking-news';
-            } elseif ( 'newsletter' === $post->get_type() ) {
-                $email_type = 'Daily';
-                $subject_email_type = PEDESTAL_BLOG_NAME . ' ' . $email_type;
-                $template = 'newsletter';
-            } else {
-                return;
-            }
-
-            $subject = sprintf( '%s: %s', $subject_email_type, $post->get_title() );
-            $body = $this->get_email_template( $template, [
-                'item'                      => $post,
-                'email_type'                => $email_type,
-                'mandrill_unsubscribe_link' => true,
-                'shareable'                 => true,
-            ] );
-
-            $response = mandrill_wp_mail( implode( ',', $email_addresses ), $subject, $body );
-
-            remove_filter( 'mandrill_wp_mail_pre_message_args', $merge_vars_func );
-
-            if ( 200 === $response ) {
-                $post->set_sent_flag( $template );
-                $post->set_sent_date( time() );
-                $post->set_sent_num( $num_emails );
-            } else {
-                add_filter( 'redirect_post_location', function( $location, $post_id ) use ( $response ) {
-                    remove_filter( 'redirect_post_location', __FILTER__, '99' );
-                    return add_query_arg( 'mandrill_resp', $response, $location );
-                }, '99');
-            }
-
-            $offset += $limit;
-            $num_emails++;
-        }
-
-        $subject = sprintf( '%s: %s', $subject_email_type, $post->get_title() );
-        $body = $this->get_email_template( $template, [
-            'item'                      => $post,
-            'email_type'                => $email_type,
-            'mandrill_unsubscribe_link' => false,
-            'shareable'                 => true,
-        ] );
-        $args = [
-            'html' => $body,
-            'subject' => $subject,
-            'name' => $subject,
-            'list' => 'Spirited Media Testers',
-        ];
-        $activecampaign = new ActiveCampaign;
-        $activecampaign->send_campaign( $args );
-
-        $notification_args = [
-            'type'       => $template,
-            'action'     => 'send',
-            'num_emails' => $num_emails,
-        ];
-        if ( 'breaking-news' === $template ) {
-            $notification_args['post_id'] = $post->get_id();
-        }
-        $this->notify_on_subscription_action( $notification_args );
-    }
-
-    /**
-     * Get the number of users subscribed to the daily newsletter and breaking news
+     * Get the number of users subscribed to the Daily Newsletter list
      *
      * @return int
      */
     public function get_daily_newsletter_subscriber_count() {
-        $key = 'daily_newsletter_subscriber_count';
-        if ( $subscriber_count = get_transient( $key ) ) {
-            // Our work here is done. Take the rest of the day off.
+        return $this->get_subscriber_count( PEDESTAL_DAILY_NEWSLETTER_ID );
+    }
+
+    /**
+     * Get the number of users subscribed to the Breaking News list
+     *
+     * @return int
+     */
+    public function get_breaking_news_subscriber_count() {
+        return $this->get_subscriber_count( PEDESTAL_BREAKING_NEWSLETTER_ID );
+    }
+
+    /**
+     * Get the subscriber count for a given ActiveCampaign List ID
+     * @param  integer $list_id  The ActiveCampaign List ID
+     * @param  boolean $force    If True, bypasses any caching to force refresh the number
+     * @return integer           The number of subscribers for the list
+     */
+    public static function get_subscriber_count( $list_id = 0, $force = false ) {
+        $key = 'activecampaign_subscriber_count_' . $list_id;
+
+        // Prevent the transients from all expiring at once by fuzzing the expiration time
+        $fuzz = rand( 0, 10 ) * 0.1;
+        $expiration = ( 1 + $fuzz ) * HOUR_IN_SECONDS;
+
+        $subscriber_count = get_transient( $key );
+        // The transient returns false if not found but it is also possible the transient has a value of ''
+        if ( false !== $subscriber_count && ! $force ) {
+            if ( empty( $subscriber_count ) ) {
+                $subscriber_count = 0;
+            }
             return $subscriber_count;
         }
 
-        $args = [
-            'pedestal_subscriptions' => 'daily-newsletter',
-            'count_total'            => true,
-        ];
-        $user_query = new \WP_User_Query( $args );
-        $subscriber_count = $user_query->get_total();
-        set_transient( $key, $subscriber_count, 12 * HOUR_IN_SECONDS );
-        return $subscriber_count;
-    }
-
-    /**
-     * Get the unsubscribe link for a user to unsubscribe from the daily newsletter and breaking news
-     *
-     * @param int $user_id
-     * @return string
-     */
-    private function get_user_daily_newsletter_unsubscribe_link( $user_id ) {
-        return home_url( sprintf( 'unsubscribe/daily-newsletter/%d/%s', $user_id, $this->generate_secure_hash( 'unsubscribe-' . $user_id . '-daily-newsletter' ) ) );
-    }
-
-    /**
-     * Get the unsubscribe link for a user to unsubscribe from an cluster
-     *
-     * @param int $user_id
-     * @param int $cluster_id
-     * @return string
-     */
-    private function get_user_cluster_unsubscribe_link( $user_id, $cluster_id ) {
-        return home_url( sprintf( 'unsubscribe/cluster/%d/%d/%s', $user_id, $cluster_id, $this->generate_secure_hash( 'unsubscribe-' . $user_id . '-cluster-' . $cluster_id ) ) );
-    }
-
-    /**
-     * Generate a secure hash to represent the action
-     *
-     * @param string
-     * @return string
-     */
-    private function generate_secure_hash( $action ) {
-        return hash( 'sha256', constant( 'AUTH_KEY' ) . constant( 'SECURE_AUTH_KEY' ) . $action );
+        // No transient found! Let's ask ActiveCampaign
+        $activecampaign = new ActiveCampaign;
+        $list = $activecampaign->get_list( $list_id );
+        if ( ! $list || ! isset( $list->subscriber_count ) ) {
+            // We have a problem so return -1
+            set_transient( $key, -1, $expiration );
+            return -1;
+        }
+        set_transient( $key, $list->subscriber_count, $expiration );
+        return $list->subscriber_count;
     }
 
     /**
      * Get a rendered email template
      *
      * @param string $template_name
+     * @param string $email_provider Name of the email provider, either 'ac' or 'ses'
      * @param array $vars
      * @return string
      */
-    private function get_email_template( $template_name, $vars = [] ) {
-
+    private function get_email_template( string $template_name, string $email_provider, $vars = [] ) {
         $vars['template_name'] = $template_name;
+        $vars['email_provider'] = $email_provider;
         $full_path = get_template_directory() . '/email.php';
         if ( ! file_exists( $full_path ) ) {
             return '';
@@ -1108,7 +814,6 @@ class Subscriptions {
         ob_start();
         include $full_path;
         return ob_get_clean();
-
     }
 
     /**
@@ -1125,117 +830,99 @@ class Subscriptions {
             'channel' => PEDESTAL_SLACK_CHANNEL_NEWSLETTER,
         ] );
 
-        $msg = sprintf( 'There are currently %d email addresses subscribed to the Daily Newsletter and Breaking News emails.', $count );
+        $msg = sprintf( 'There are currently %d email addresses subscribed to the Daily Newsletter.', $count );
         $notifier = new Notifications;
         $notifier->send( $msg, $notification_args );
     }
 
     /**
-     * Handle subscription action notifications
-     *
-     * @param  array  $args Email action settings
+     * Render test email templates when /test-email/ is requested
      */
-    private function notify_on_subscription_action( $args = [] ) {
-        $args = wp_parse_args( $args, [
-            'user_id' => 0,
-            'type'    => '',
-            'action'  => '',
-            'post_id' => 0,
-        ] );
-
-        // Define allowed subscription types and actions
-        $types = [ 'newsletter', 'cluster', 'breaking-news' ];
-        $actions = [ 'subscribe', 'unsubscribe', 'send' ];
-        $types_needing_post_id = [ 'cluster', 'breaking-news' ];
-
-        // Subscription type and action are always required
-        if ( ! in_array( $args['type'], $types )
-            || ! in_array( $args['action'], $actions )
-        ) {
-            return;
-        }
-
-        // User ID is required for all non-sending subscription type
-        if ( 'send' !== $args['action'] && empty( $args['user_id'] ) ) {
-            return;
-        }
-
-        // If subscription type needs a post ID and the ID is missing, then return
-        if ( in_array( $args['type'], $types_needing_post_id ) && empty( $args['post_id'] ) ) {
-            return;
-        }
-
-        switch ( $args['type'] ) {
-            case 'breaking-news':
-            case 'cluster':
-                $post = Post::get_by_post_id( $args['post_id'] );
-                $title = $post->get_type() . ' “' . $post->get_title() . '”';
+    public function handle_test_email_request() {
+        switch ( get_query_var( 'pedestal-test-email' ) ) {
+            case 'all':
+                $templates = [
+                    'newsletter',
+                    'breaking-news',
+                    'follow-update-story',
+                    'subscribe-confirmation',
+                ];
+                echo $this->get_email_template( get_query_var( 'pedestal-test-email' ), 'ac', [
+                    'items' => $templates,
+                    'shareable' => false,
+                ] );
                 break;
+
             case 'newsletter':
-                $title = 'Daily Newsletter';
+                $newsletters = new \WP_Query( [
+                    'post_type'      => 'pedestal_newsletter',
+                    'posts_per_page' => 1,
+                ] );
+                if ( empty( $newsletters->posts ) ) {
+                    echo 'No published newsletters to test with.';
+                    break;
+                }
+                $newsletter = new Newsletter( $newsletters->posts[0] );
+                echo $this->get_email_template( 'newsletter', 'ac', [
+                    'item' => $newsletter,
+                    'email_type' => 'Daily',
+                    'shareable' => true,
+                ] );
                 break;
+
+            case 'breaking-news':
+                $breaking_news = new \WP_Query( [
+                    'post_type'      => Types::get_emailable_post_types(),
+                    'meta_query'     => [
+                        [
+                            'key'   => 'sent_email',
+                            'value' => 'breaking-news',
+                        ],
+                    ],
+                    'posts_per_page' => 1,
+                ] );
+                if ( empty( $breaking_news->posts ) ) {
+                    echo 'No breaking news emails to test with.';
+                    break;
+                }
+                $post = Post::get_by_post_id( $breaking_news->posts[0]->ID );
+                echo $this->get_email_template( 'breaking-news', 'ac', [
+                    'item' => $post,
+                    'email_type' => 'Breaking News',
+                    'shareable' => true,
+                ] );
+                break;
+
+            case 'subscribe-confirmation':
+                echo $this->get_email_template( get_query_var( 'pedestal-test-email' ), 'ses', [
+                    'email_address' => 'foo@example.com',
+                    'confirm_link' => 'http://example.com/confirm-subscription/abc123/?list_ids=255',
+                    'list_names' => 'Daily Newsletter and Breaking News',
+                    'blog_name' => PEDESTAL_BLOG_NAME,
+                ] );
+                break;
+
+            case 'follow-update-story':
+                $stories = new \WP_Query( [
+                    'post_type'      => 'pedestal_story',
+                    'posts_per_page' => 1,
+                ] );
+                if ( empty( $stories->posts ) ) {
+                    echo 'No published stories to test with.';
+                    break;
+                }
+                $story = new Story( $stories->posts[0] );
+                echo $this->get_email_template( 'follow-update', 'ac', [
+                    'item' => $story,
+                    'entities' => $story->get_entities_since_last_email_notification(),
+                    'email_type' => $story->get_email_type(),
+                    'shareable' => true,
+                ] );
+                break;
+
             default:
-                $title = $args['type'];
+                echo '<img src="http://i.imgur.com/lnKvhQ7.jpg" alt="Invalid email type" title="dingus!"><br>';
                 break;
-        }
-
-        if ( 'breaking-news' === $args['type'] ) {
-            $title = 'Breaking News email for ' . $title;
-        }
-
-        switch ( $args['action'] ) {
-            case 'subscribe':
-                $action = 'subscribed to';
-                break;
-            case 'unsubscribe':
-                $action = 'unsubscribed from';
-                break;
-            case 'send':
-                $action = 'sent';
-                break;
-            default:
-                return;
-                break;
-        }
-
-        if ( 'send' === $args['action'] ) {
-            switch ( $args['type'] ) {
-                case 'cluster':
-                    $msg_str = 'Follow update for %s with ID %d %s';
-                    $msg = sprintf( $msg_str,
-                        $title,
-                        $args['post_id'],
-                        $action
-                    );
-                    break;
-                case 'breaking-news':
-                case 'newsletter':
-                    $msg = sprintf( '%s %s',
-                        $title,
-                        $action
-                    );
-                    if ( ! empty( $args['num_emails'] ) ) {
-                        $msg .= sprintf( ' in %d API requests', $args['num_emails'] );
-                    }
-                    break;
-                default:
-                    return;
-                    break;
-            }
-        } else {
-            $user = new User( $args['user_id'] );
-            $msg = sprintf( 'User %d with email address %s %s %s',
-                $args['user_id'],
-                $user->get_email(),
-                $action,
-                $title
-            );
-        }
-
-        $notification_args = [ 'channel' => self::$default_notify_channel ];
-        if ( ! empty( $msg ) ) {
-            $notifier = new Notifications;
-            $notifier->send( $msg, $notification_args );
         }
     }
 }

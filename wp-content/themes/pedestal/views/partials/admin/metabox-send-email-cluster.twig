@@ -1,0 +1,31 @@
+<p>Last Sent: <time title="{{ last_sent }}" style="cursor: help; border-bottom: 1px dotted; #ccc">{{ last_sent_human_diff }}</time></p>
+
+{% if entities %}
+    {% if entity_count == 1 %}
+        <p>This entity will be included:</p>
+    {% else %}
+        <p>These {{ entity_count }} entities will be included:</p>
+    {% endif %}
+    <ol style="overflow: auto; max-height: 200px; padding-left: 20px; margin-left: 0;">
+        {% for entity in entities %}
+            <li><a href="{{ entity.get_the_permalink }}">{{ entity.get_the_title }}</a></li>
+        {% endfor %}
+    </ol>
+{% endif %}
+
+{% if not entities %}
+    <p>There have been no entities published since the last email notification.</p>
+{% endif %}
+
+{% if test_button %}
+    <p class="submit">
+        <input type="text" name="test-email-addresses" placeholder="Separate addresses by commas" style="width:100%">
+        {{ test_button }}
+    </p>
+{% endif %}
+
+
+{% if send_button %}
+    <hr>
+    {{ send_button }}
+{% endif %}

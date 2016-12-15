@@ -1,0 +1,46 @@
+{% set sidebar = false %}
+{% extends "base.twig" %}
+
+{% block content %}
+<main role="main" class="{{ main_classes }}">
+    <div id="subscribe-to-newsletter-page" class="subscription-confirmation-page">
+
+        <h3>The confirmation link appears to be bad. Please sign up again.</h3>
+
+        {% import "macros/macros.twig" as macros %}
+        {% if provided_list_ids %}
+        <form action="{{ site.url }}/subscribe-to-email-list/" method="POST">
+
+            <div class="form-fields">
+                <fieldset>
+                    {% if is_newsletter %}
+                        {% include 'partials/emails/form-daily-legend.twig' %}
+                        {% include 'partials/emails/form-daily-input-address.twig' %}
+                    {% endif %}
+
+                    {% if is_cluster %}
+                        <legend>Follow {{ subscription_title }}</legend>
+                        {% include 'partials/emails/form-follow-cluster-input-address.twig' %}
+                        {% for list_id in list_ids %}
+                            <input type="hidden" name="list-ids[]" value="{{ list_id|e('html_attr') }}">
+                        {% endfor %}
+
+                    {% endif %}
+
+                    {% include 'partials/emails/form-honeypot.twig' %}
+                </fieldset>
+                <button class="form-submit button--rounded button large expand js-form-submit" type="submit">
+                    {% include 'partials/emails/form-submit-signup-inner.twig' %}
+                </button>
+                <p><a href="mailto:{{ site.emails.contact }}?subject={{ help_text|url_encode }}">Having trouble? Email {{ site.emails.contact }}</a></p>
+            </div>
+
+            <div class="success-message">
+                {% include 'partials/emails/form-daily-subscribed.twig' %}
+            </div>
+
+        </form>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

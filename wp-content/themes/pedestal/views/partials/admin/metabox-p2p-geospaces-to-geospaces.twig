@@ -5,19 +5,13 @@
             <tr>
                 <td>
                     {% if item.get_connection_rel_label %}
-                        {% if 'locality' == item.get_type %}
-                            The {{ item.get_locality_type_name|lower }} <em>&ldquo;<a href="{{ item.get_edit_link }}" target="_blank">{{ item.get_title }}</a>&rdquo;</em>
-                            is <strong>{{ item.get_connection_rel_label }}</strong>
-                            this {{ geospace.get_locality_type_name|lower }}
-                            <em>&ldquo;{{ geospace.get_title }}&rdquo;</em>
-                        {% else %}
-                            The {{ item.get_type_name }} <em>&ldquo;<a href="{{ item.get_edit_link }}" target="_blank">{{ item.get_title }}</a>&rdquo;</em>
-                            is <strong>{{ item.get_connection_rel_label }}</strong>
-                            this {{ item.get_type_name }} <em>&ldquo;{{ geospace.get_title }}&rdquo;</em>
-                        {% endif %}
+                        The {{ item.get_type_name }} <em>&ldquo;<a href="{{ item.get_edit_link }}" target="_blank">{{ item.get_title }}</a>&rdquo;</em>
+                        is <strong>{{ item.get_connection_rel_label }}</strong>
+                        this {{ geospace.get_type_name }}
+                        <em>&ldquo;{{ geospace.get_title }}&rdquo;</em>
                     {% else %}
                         The {{ item.get_type_name }} <em>&ldquo;<a href="{{ item.get_edit_link }}" target="_blank">{{ item.get_title }}</a>&rdquo;</em>
-                        is connected to this {{ item.get_type_name }}
+                        is connected to this {{ geospace.get_type_name }}
                         <em>&ldquo;{{ geospace.get_title }}&rdquo;</em>,
                         but the relationship between the two is undefined!
                         <strong>Please set the relationship in the Relation column on the connected

@@ -1,0 +1,12 @@
+{% set sidebar = false %}
+{% extends "base.twig" %}
+
+{% block content %}
+<main role="main" class="{{ main_classes }}">
+    <div id="subscribe-to-newsletter-page" class="subscription-confirmation-page">
+        <form>
+            {% include 'partials/emails/form-daily-subscribed.twig' %}
+        </form>
+    </div>
+</main>
+{% endblock %}
