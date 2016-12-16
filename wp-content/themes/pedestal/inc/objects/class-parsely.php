@@ -125,10 +125,12 @@ class Parsely {
                         'types'   => Types::get_cluster_post_types(),
                         'flatten' => true,
                     ] );
-                    foreach ( $clusters as $cluster ) {
-                        $type = $cluster->get_type_name();
-                        $type = strtolower( $type );
-                        $keywords[] = $type . ' :: ' . $cluster->get_title();
+                    if ( ! empty( $clusters ) ) {
+                        foreach ( $clusters as $cluster ) {
+                            $type = $cluster->get_type_name();
+                            $type = strtolower( $type );
+                            $keywords[] = $type . ' :: ' . $cluster->get_title();
+                        }
                     }
                 }
                 $data = array_merge( $base_data, [
