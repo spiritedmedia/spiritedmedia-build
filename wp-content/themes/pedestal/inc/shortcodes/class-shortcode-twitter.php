@@ -18,14 +18,24 @@ class Twitter extends Shortcode {
                     'description'  => esc_html__( 'URL to a tweet', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Image/Video Visibility', 'pedestal' ),
-                    'attr'         => 'media_visibility',
+                    'label'        => esc_html__( 'Display Media?', 'pedestal' ),
+                    'attr'         => 'display_media',
                     'type'         => 'select',
                     'options'      => [
                         'true'  => esc_html__( 'True', 'pedestal' ),
                         'false' => esc_html__( 'False', 'pedestal' ),
                     ],
                     'description'  => esc_html__( 'Should the tweet display its image or video if available?', 'pedestal' ),
+                ],
+                [
+                    'label'        => esc_html__( 'Exclude Parent Tweet?', 'pedestal' ),
+                    'attr'         => 'exclude_parent',
+                    'type'         => 'select',
+                    'options'      => [
+                        'false' => esc_html__( 'False', 'pedestal' ),
+                        'true'  => esc_html__( 'True', 'pedestal' ),
+                    ],
+                    'description'  => esc_html__( 'Should the parent tweet be excluded from display?', 'pedestal' ),
                 ],
             ],
         ];
@@ -65,13 +75,19 @@ class Twitter extends Shortcode {
             return '';
         }
 
-        $media_visibility = '';
-        if ( isset( $attrs['media_visibility'] ) && 'false' === $attrs['media_visibility'] ) {
-            $media_visibility = 'data-cards="hidden"';
+        $display_media = '';
+        if ( isset( $attrs['display_media'] ) && 'false' === $attrs['display_media'] ) {
+            $display_media = 'data-cards="hidden"';
         }
 
-        return sprintf( '<blockquote class="twitter-tweet" %s><a href="%s">%s</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>',
-            $media_visibility,
+        $exclude_parent = '';
+        if ( isset( $attrs['exclude_parent'] ) && 'true' === $attrs['exclude_parent'] ) {
+            $exclude_parent = 'data-conversation="none"';
+        }
+
+        return sprintf( '<blockquote class="twitter-tweet" %s %s><a href="%s">%s</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>',
+            $display_media,
+            $exclude_parent,
             esc_url( $url ),
             sprintf( esc_html__( 'Tweet from @%s', 'shortcake-bakery' ), $username )
         );

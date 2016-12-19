@@ -222,9 +222,9 @@ class Embed extends Entity {
         $args = [];
         $args['url'] = $this->get_embed_url();
         $args['caption'] = $this->get_embed_caption();
-        $args['media_visibility'] = 'true';
+        $args['display_media']       = 'true';
         if ( ! is_singular( self::$post_type ) ) {
-            $args['media_visibility'] = 'false';
+            $args['display_media']   = 'false';
         }
 
         $html = self::do_embed( $args );
@@ -254,11 +254,16 @@ class Embed extends Entity {
 
         switch ( $embed_type ) {
             case 'twitter':
-                $media_visibility = 'true';
-                if ( isset( $args['media_visibility'] ) ) {
-                    $media_visibility = $args['media_visibility'];
+                $twitter_settings = [
+                    'display_media'  => 'true',
+                    'exclude_parent' => 'false',
+                ];
+                foreach ( $twitter_settings as $key => $value ) {
+                    if ( isset( $args[ $key ] ) && is_string( $args[ $key ] ) ) {
+                        $value = $args[ $key ];
+                    }
+                    $shortcode .= sprintf( '%s="%s" ', $key, $value );
                 }
-                $shortcode .= sprintf( 'media_visibility="%s" ', $media_visibility );
                 break;
         }
 
