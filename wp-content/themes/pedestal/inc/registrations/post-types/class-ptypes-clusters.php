@@ -89,6 +89,7 @@ class Cluster_Types extends Types {
         add_filter( 'p2p_candidate_title', [ $this, 'filter_p2p_item_title' ], 10, 3 );
         add_filter( 'p2p_connected_title', [ $this, 'filter_p2p_item_title' ], 10, 3 );
         add_filter( 'post_type_link', [ $this, 'filter_post_type_link' ], 10, 2 );
+        add_filter( 'fm_presave_alter_values', [ $this, 'filter_fm_presave_alter_values_validate_social_urls' ], 10, 2 );
 
         // Fix canonical urls for pagination
         // https://core.trac.wordpress.org/ticket/15551
@@ -511,6 +512,70 @@ class Cluster_Types extends Types {
     }
 
     /**
+     * Make sure the Twitter URL field is in the proper format before being saved
+     * @param  array $values The values of a given field
+     * @param  Object $obj   The class representing the type of field
+     * @return array         Modified $values
+     */
+    public function filter_fm_presave_alter_values_validate_social_urls( $values, $obj ) {
+        if ( 'Fieldmanager_Link' !== get_class( $obj ) && 'Fieldmanager_TextField' !== get_class( $obj ) ) {
+            return $values;
+        }
+        $whitelisted_labels = [
+            'Twitter URL',
+            'Instagram URL',
+            'LinkedIn URL',
+        ];
+        if ( ! isset( $obj->label ) || ! in_array( $obj->label, $whitelisted_labels ) ) {
+            return $values;
+        }
+
+        if ( ! is_array( $values ) || empty( $values[0] ) ) {
+            return $values;
+        }
+        $value = $values[0];
+
+        // Strip @ symbols like @username
+        $value = trim( $value, '@' );
+
+        // Make sure the URL is https
+        $value = str_ireplace( 'http:', 'https:', $value );
+
+        // Remove any query parameters from the URL
+        $parts = explode( '?', $value );
+        $value = $parts[0];
+
+        switch ( $obj->label ) {
+            case 'Twitter URL':
+                // Make sure $value is a Twitter.com URL
+                if ( false === stripos( $value, 'https://twitter.com/' ) ) {
+                    $value = 'https://twitter.com/' . $value;
+                }
+                $value = untrailingslashit( $value );
+                break;
+
+            case 'Instagram URL':
+                // Make sure $value is a Instagram.com URL
+                if ( false === stripos( $value, 'https://www.instagram.com/' ) ) {
+                    $value = 'https://www.instagram.com/' . $value;
+                }
+                $value = trailingslashit( $value );
+                break;
+
+            case 'LinkedIn URL':
+                // Make sure $value is a LinkedIn.com URL
+                if ( false === stripos( $value, 'https://www.linkedin.com/' ) ) {
+                    $value = 'https://www.linkedin.com/' . $value;
+                }
+                break;
+        }
+
+        // Replace our sanitized $value
+        $values[0] = $value;
+        return $values;
+    }
+
+    /**
      * Register fields for stories
      */
     private function register_story_fields() {
@@ -626,13 +691,26 @@ class Cluster_Types extends Types {
 
         // Social media fields
         $social_children = [
-            'twitter' => new \Fieldmanager_Link( esc_html__( 'Twitter', 'pedestal' ), [
+            'twitter' => new \Fieldmanager_Link( esc_html__( 'Twitter URL', 'pedestal' ), [
                 'name' => 'twitter',
+                'attributes' => [
+                    'placeholder' => 'https://twitter.com/someone',
+                    'size' => 50,
+                ],
             ] ),
-            'instagram' => new \Fieldmanager_Textfield( esc_html__( 'Instagram Username', 'pedestal' ), [
+            'instagram' => new \Fieldmanager_Link( esc_html__( 'Instagram URL', 'pedestal' ), [
                 'name' => 'instagram',
+                'attributes' => [
+                    'placeholder' => 'https://www.instagram.com/someone/',
+                    'size' => 50,
+                ],
             ] ),
-            'linkedin' => new \Fieldmanager_Link( esc_html__( 'LinkedIn URL', 'pedestal' ) ),
+            'linkedin' => new \Fieldmanager_Link( esc_html__( 'LinkedIn URL', 'pedestal' ), [
+                'attributes' => [
+                    'placeholder' => 'https://www.linkedin.com/in/someone',
+                    'size' => 50,
+                ],
+            ] ),
         ];
         $social = new \Fieldmanager_Group( false, [
             'name'           => 'person_social',

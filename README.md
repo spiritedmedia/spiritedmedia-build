@@ -1,7 +1,7 @@
-Build [#1811](https://circleci.com/gh/spiritedmedia/spiritedmedia/1811) by montchr at 2016-12-19 06:37 PM UTC
+Build [#1823](https://circleci.com/gh/spiritedmedia/spiritedmedia/1823) by kingkool68 at 2016-12-21 01:34 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.2](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.2)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.3](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.3)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.1...v5.0.2)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.2...v5.0.3)
 
- - [#1745](https://github.com/spiritedmedia/spiritedmedia/pull/1745): Add option to exclude Twitter parent tweet in embed shortcode
+ - [#1774](https://github.com/spiritedmedia/spiritedmedia/pull/1774): 1504 Clarify that a Persons Twitter Field Should Be a URL

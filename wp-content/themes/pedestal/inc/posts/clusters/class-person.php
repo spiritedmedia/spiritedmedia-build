@@ -154,7 +154,14 @@ class Person extends Cluster {
      * @return string
      */
     public function get_instagram_handle() {
-        return $this->get_person_social_field( 'instagram' );
+        $url = $this->get_instagram_url();
+        if ( ! $url ) {
+            return;
+        }
+        $handle = str_ireplace( 'https://www.instagram.com/', '', $url );
+        // Strip whatspace characters and / from both ends of the string
+        $handle = trim( $handle, " \t\n\r\0\x0B\/" );
+        return $handle;
     }
 
     /**
@@ -162,11 +169,7 @@ class Person extends Cluster {
      * @return string URL
      */
     public function get_instagram_url() {
-        $handle = $this->get_instagram_handle();
-        if ( ! $handle ) {
-            return;
-        }
-        return 'https://www.instagram.com/' . $handle . '/';
+        return $this->get_person_social_field( 'instagram' );
     }
 
     /**
