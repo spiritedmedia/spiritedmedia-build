@@ -143,23 +143,23 @@
     },
     {
         "name": "deliciousbrains/wp-amazon-web-services",
-        "version": "0.3.7",
-        "version_normalized": "0.3.7.0",
+        "version": "1.0.1",
+        "version_normalized": "1.0.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/deliciousbrains/wp-amazon-web-services.git",
-            "reference": "87953d61ce15f635eadfcf23b1f9dd864fa1f152"
+            "reference": "f33c2ae7619d312a270f5975c346481f69ee699b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/deliciousbrains/wp-amazon-web-services/zipball/87953d61ce15f635eadfcf23b1f9dd864fa1f152",
-            "reference": "87953d61ce15f635eadfcf23b1f9dd864fa1f152",
+            "url": "https://api.github.com/repos/deliciousbrains/wp-amazon-web-services/zipball/f33c2ae7619d312a270f5975c346481f69ee699b",
+            "reference": "f33c2ae7619d312a270f5975c346481f69ee699b",
             "shasum": ""
         },
         "require": {
             "composer/installers": "~1.0.6"
         },
-        "time": "2016-09-01 14:10:28",
+        "time": "2016-12-13 11:55:23",
         "type": "wordpress-plugin",
         "installation-source": "dist",
         "license": [
@@ -174,7 +174,7 @@
             "plugin"
         ],
         "support": {
-            "source": "https://github.com/deliciousbrains/wp-amazon-web-services/tree/0.3.7",
+            "source": "https://github.com/deliciousbrains/wp-amazon-web-services/tree/1.0.1",
             "issues": "https://github.com/deliciousbrains/wp-amazon-web-services/issues"
         }
     },
@@ -365,15 +365,15 @@
         "source": {
             "type": "git",
             "url": "git@github.com:spiritedmedia/amazon-s3-and-cloudfront-pro.git",
-            "reference": "19e0a24b67d1b853a5bdd3b9a416e3f45ac41143"
+            "reference": "3c46b3f762cdea368fdb4ea35c7548880a8682c6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/amazon-s3-and-cloudfront-pro/zipball/19e0a24b67d1b853a5bdd3b9a416e3f45ac41143",
-            "reference": "19e0a24b67d1b853a5bdd3b9a416e3f45ac41143",
+            "url": "https://api.github.com/repos/spiritedmedia/amazon-s3-and-cloudfront-pro/zipball/3c46b3f762cdea368fdb4ea35c7548880a8682c6",
+            "reference": "3c46b3f762cdea368fdb4ea35c7548880a8682c6",
             "shasum": ""
         },
-        "time": "2016-09-01 21:47:23",
+        "time": "2016-12-20 23:21:39",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "authors": [
@@ -1013,7 +1013,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/bwp-google-xml-sitemaps.1.4.1.zip",
-            "reference": "tags/1.4.1",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1035,7 +1035,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/co-authors-plus.3.2.1.zip",
-            "reference": "tags/3.2.1",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1057,7 +1057,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.8.zip",
-            "reference": "tags/1.9.8",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1079,7 +1079,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/posts-to-posts.1.6.5.zip",
-            "reference": "tags/1.6.5",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1091,17 +1091,17 @@
     },
     {
         "name": "wpackagist-plugin/redirection",
-        "version": "2.4.5",
-        "version_normalized": "2.4.5.0",
+        "version": "2.5",
+        "version_normalized": "2.5.0.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/redirection/",
-            "reference": "tags/2.4.5"
+            "reference": "tags/2.5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/redirection.2.4.5.zip",
-            "reference": "tags/2.4.5",
+            "url": "https://downloads.wordpress.org/plugin/redirection.2.5.zip",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1123,7 +1123,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/shortcode-ui.0.6.2.zip",
-            "reference": "tags/0.6.2",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1145,7 +1145,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/tablepress.1.7.zip",
-            "reference": "tags/1.7",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1167,7 +1167,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/user-switching.1.0.9.zip",
-            "reference": "tags/1.0.9",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1179,17 +1179,17 @@
     },
     {
         "name": "wpackagist-plugin/wp-redis",
-        "version": "0.5.0",
-        "version_normalized": "0.5.0.0",
+        "version": "0.6.0",
+        "version_normalized": "0.6.0.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/wp-redis/",
-            "reference": "tags/0.5.0"
+            "reference": "tags/0.6.0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/wp-redis.0.5.0.zip",
-            "reference": "tags/0.5.0",
+            "url": "https://downloads.wordpress.org/plugin/wp-redis.0.6.0.zip",
+            "reference": null,
             "shasum": null
         },
         "require": {
