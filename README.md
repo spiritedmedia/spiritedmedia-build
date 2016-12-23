@@ -1,7 +1,7 @@
-Build [#1828](https://circleci.com/gh/spiritedmedia/spiritedmedia/1828) by kingkool68 at 2016-12-22 05:38 AM UTC
+Build [#1833](https://circleci.com/gh/spiritedmedia/spiritedmedia/1833) by kingkool68 at 2016-12-23 06:35 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.4](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.4)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.5](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.5)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.3...v5.0.4)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.4...v5.0.5)
 
- - [#1777](https://github.com/spiritedmedia/spiritedmedia/pull/1777): Update Plugins 2016-12-20
+ - [#1782](https://github.com/spiritedmedia/spiritedmedia/pull/1782): Add a TinyMCE button to go straight to the Insert Post Element screen
