@@ -1,7 +1,7 @@
-Build [#1833](https://circleci.com/gh/spiritedmedia/spiritedmedia/1833) by kingkool68 at 2016-12-23 06:35 PM UTC
+Build [#1842](https://circleci.com/gh/spiritedmedia/spiritedmedia/1842) by kingkool68 at 2016-12-29 04:53 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.5](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.5)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.6](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.6)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.4...v5.0.5)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.5...v5.0.6)
 
- - [#1782](https://github.com/spiritedmedia/spiritedmedia/pull/1782): Add a TinyMCE button to go straight to the Insert Post Element screen
+ - [#1784](https://github.com/spiritedmedia/spiritedmedia/pull/1784): Use https Version of Nativo JavaScript File and Other Frontend Script Tweaks

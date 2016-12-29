@@ -315,7 +315,7 @@ class Frontend {
         wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/assets/dist/js/modernizr.js', [], '2.8.3', false );
         wp_enqueue_script( 'fastclick', get_template_directory_uri() . '/assets/dist/js/fastclick.js', [], '1.0', true );
 
-        wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic|PT+Serif', [] );
+        wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic|PT+Serif', [], null );
 
         // Core site assets
         $theme_name = wp_get_theme()->get_stylesheet();
@@ -326,16 +326,16 @@ class Frontend {
         $dfp_site_config_handle = $theme_name . '-dfp-config';
         wp_enqueue_script( $dfp_site_config_handle, get_stylesheet_directory_uri() . '/assets/dist/js/dfp-config.js', [], PEDESTAL_VERSION );
         wp_enqueue_script( 'dfp-load', get_template_directory_uri() . '/assets/dist/js/dfp-load.js', [ $dfp_site_config_handle ], PEDESTAL_VERSION );
-        wp_enqueue_script( 'nativo', '//a.postrelease.com/serve/load.js?async=true' );
+        wp_enqueue_script( 'nativo', 'https://s.ntv.io/serve/load.js', [], null, $in_footer = true );
         if ( defined( 'PEDESTAL_BOXTERCO_SCRIPT' ) ) {
-            wp_enqueue_script( 'boxter-funnl', PEDESTAL_BOXTERCO_SCRIPT, [], null );
+            wp_enqueue_script( 'boxter-funnl', PEDESTAL_BOXTERCO_SCRIPT, [], null, $in_footer = true );
         }
 
         wp_register_script( 'pedestal-footnotes', get_template_directory_uri() . '/assets/dist/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, true );
 
         // Functionality-specific assets
-        wp_register_script( 'soundcite', '//cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js' );
-        wp_register_style( 'soundcite', '//cdn.knightlab.com/libs/soundcite/latest/css/player.css' );
+        wp_register_script( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js', [], null, $in_footer = true );
+        wp_register_style( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/css/player.css', [], null );
 
         if ( is_single() && is_a( $post, 'WP_Post' ) ) {
             $post_obj = Post::get_by_post_id( $post->ID );
