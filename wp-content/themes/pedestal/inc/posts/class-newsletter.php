@@ -95,6 +95,10 @@ class Newsletter extends Post {
                     $item['post_title'] = $post->get_the_title();
                 }
 
+                if ( empty( $item['url'] ) ) {
+                    $item['url'] = $post->get_the_permalink();
+                }
+
                 $item['title'] = $item['post_title'];
                 unset( $item['post_title'] );
 

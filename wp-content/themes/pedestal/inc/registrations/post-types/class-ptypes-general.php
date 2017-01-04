@@ -142,9 +142,17 @@ class General_Types extends Types {
                     ] ),
 
                 ] ),
-                'post_title'     => new \Fieldmanager_Textfield( esc_html__( 'Title', 'pedestal' ), [
+                'post_title'     => new \Fieldmanager_Textfield( esc_html__( 'Title (Optional)', 'pedestal' ), [
                     'name'        => 'post_title',
                     'description' => esc_html__( 'Customize the display title. Defaults to the Entity\'s original title. Not used for Events.', 'pedestal' ),
+                    'display_if'  => [
+                        'src'   => 'type',
+                        'value' => 'post',
+                    ],
+                ] ),
+                'url' => new \Fieldmanager_Link( esc_html__( 'Title Link (Optional)', 'pedestal' ), [
+                    'name' => 'url',
+                    'description' => esc_html__( 'Customize the URL the item title links to. Defaults to the Entity\'s original permalink. Not used for Events.', 'pedestal' ),
                     'display_if'  => [
                         'src'   => 'type',
                         'value' => 'post',

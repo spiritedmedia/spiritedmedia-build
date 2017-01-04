@@ -127,8 +127,17 @@
     },
 
     reorderExcerptBox: function() {
-      $('#postexcerpt').insertAfter('#titlediv');
-      $('#postexcerpt').css('margin-top', 20);
+      var $excerpt = $('#postexcerpt');
+      // Hide the metabox description claiming that the excerpt is optional.
+      $excerpt.find('p').hide();
+      // Move and restyle the excerpt metabox
+      $excerpt.insertAfter('#titlediv').css('margin-top', 20);
+      // Set-up a one-time focus event to remove the editor-focus event added
+      // by wp-admin/js/post.js
+      // We want to be able to tab from the title field to the excerpt
+      $('#title').one('focus', function() {
+        $(this).off('.editor-focus');
+      });
     },
 
     /**

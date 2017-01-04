@@ -10,7 +10,10 @@
     <div class="entity__inner  c-stream__item__inner">
 
         <div class="c-stream__item__body">
-            {% include 'partials/stream/item-title.twig' with { 'title': newsletter_item.title } %}
+            {% include 'partials/stream/item-title.twig' with {
+                'title': newsletter_item.title,
+                'url': newsletter_item.url
+            } %}
 
             <div class="entity-excerpt s-post-content js-entity-excerpt">
                 {{ newsletter_item.description }}

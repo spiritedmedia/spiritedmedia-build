@@ -113,9 +113,7 @@ add_filter( 'pre_option_bwp_gxs_extensions', function( $value ) {
 add_filter( 'site_url', function( $url = '' ) {
     $backtrace = wp_debug_backtrace_summary();
     if ( stripos( $backtrace, 'rtCamp\WP\Nginx\Helper' ) ) {
-        error_log( '----' );
         $url = str_replace( 'https://', 'http://', $url );
-        error_log( 'Boo!' );
     }
     return $url;
 });
