@@ -109,11 +109,28 @@ add_filter( 'pre_option_bwp_gxs_extensions', function( $value ) {
  * Change the site_url to http:// from https:// when being applied from the nginx helper
  * plugin. This is necessary for the cache purging to work due to other system issues.
  * @var string
+ * @see https://github.com/rtCamp/nginx-helper/issues/132
  */
-add_filter( 'site_url', function( $url = '' ) {
+function sm_switch_to_http_for_cache_purging( $url = '' ) {
     $backtrace = wp_debug_backtrace_summary();
     if ( stripos( $backtrace, 'rtCamp\WP\Nginx\Helper' ) ) {
         $url = str_replace( 'https://', 'http://', $url );
     }
     return $url;
-});
+}
+
+$filters = [
+    'site_url',
+    'home_url',
+    'post_link',
+    'term_link',
+    'day_link',
+    'month_link',
+    'year_link',
+    'post_type_archive_link',
+    'author_link',
+    'attachment_link',
+];
+foreach ( $filters as $filter ) {
+    add_filter( $filter, 'sm_switch_to_http_for_cache_purging' );
+}
