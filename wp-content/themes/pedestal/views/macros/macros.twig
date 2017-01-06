@@ -307,7 +307,7 @@
 
         {% set name = user.get_display_name %}
         {% set email = user.get_public_email %}
-        {% set url = user.get_permalink %}
+        {% set author_url = user.get_permalink %}
         {% set user_title = user.get_title %}
 
         {% set img_size = options.img_size %}
@@ -372,7 +372,7 @@
         <section class="[ c-user-card  c-user-card--{{ type }} ]  {{ block_classes }}" itemscope itemtype="http://schema.org/Person">
 
             {% if img %}
-            <a href="{{ url }}" class="{{ img_classes }}">
+            <a href="{{ author_url }}" class="{{ img_classes }}">
                 {{ img }}
             </a>
             {% endif %}
@@ -380,7 +380,7 @@
             <div class="c-user-card__inner {{ inner_classes }}">
 
                 <h1 class="c-user-card__name {{ name_classes }}">
-                    <a href="{{ url }}" itemprop="url">
+                    <a href="{{ author_url }}" itemprop="author_url">
                         <span itemprop="name">{{ name }}</span>
                     </a>
                 </h1>

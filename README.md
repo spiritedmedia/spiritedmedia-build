@@ -1,8 +1,7 @@
-Build [#1877](https://circleci.com/gh/spiritedmedia/spiritedmedia/1877) by kingkool68 at 2017-01-05 01:27 AM UTC
+Build [#1885](https://circleci.com/gh/spiritedmedia/spiritedmedia/1885) by montchr at 2017-01-06 07:04 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.9](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.9)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.10](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.10)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.8...v5.0.9)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.9...v5.0.10)
 
- - [#1793](https://github.com/spiritedmedia/spiritedmedia/pull/1793): Search page with no results returns a full stream
- - [#1791](https://github.com/spiritedmedia/spiritedmedia/pull/1791): Filter More URLs During Cache Purging
+ - [#1795](https://github.com/spiritedmedia/spiritedmedia/pull/1795): Hotfix: Fix Twig variable collision between user card and its entities
