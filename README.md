@@ -1,7 +1,7 @@
-Build [#1885](https://circleci.com/gh/spiritedmedia/spiritedmedia/1885) by montchr at 2017-01-06 07:04 PM UTC
+Build [#1895](https://circleci.com/gh/spiritedmedia/spiritedmedia/1895) by kingkool68 at 2017-01-09 02:11 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.10](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.10)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.11](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.11)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.9...v5.0.10)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.0.10...v5.0.11)
 
- - [#1795](https://github.com/spiritedmedia/spiritedmedia/pull/1795): Hotfix: Fix Twig variable collision between user card and its entities
+ - [#1797](https://github.com/spiritedmedia/spiritedmedia/pull/1797): Ordered Lists With Nested Children Get Renumbered

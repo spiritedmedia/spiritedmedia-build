@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitcab98ade4299e62ab9aa8e0d5bf23fd4
+class ComposerStaticInit6eda6c85a771977a700073816718c8b4
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -797,11 +797,11 @@ class ComposerStaticInitcab98ade4299e62ab9aa8e0d5bf23fd4
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitcab98ade4299e62ab9aa8e0d5bf23fd4::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitcab98ade4299e62ab9aa8e0d5bf23fd4::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitcab98ade4299e62ab9aa8e0d5bf23fd4::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitcab98ade4299e62ab9aa8e0d5bf23fd4::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitcab98ade4299e62ab9aa8e0d5bf23fd4::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6eda6c85a771977a700073816718c8b4::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6eda6c85a771977a700073816718c8b4::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit6eda6c85a771977a700073816718c8b4::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit6eda6c85a771977a700073816718c8b4::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit6eda6c85a771977a700073816718c8b4::$classMap;
 
         }, null, ClassLoader::class);
     }

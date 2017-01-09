@@ -193,7 +193,7 @@
   ol {
     counter-reset: ordered-list;
 
-    li {
+    > li {
       counter-increment: ordered-list;
 
       &::before {
