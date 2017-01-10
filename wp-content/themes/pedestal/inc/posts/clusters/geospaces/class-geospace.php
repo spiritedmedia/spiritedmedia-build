@@ -124,7 +124,7 @@ abstract class Geospace extends Cluster {
         $sanitized_labels = Cluster_Types::get_sanitized_post_type_labels( $post_type );
         $connection_type = $sanitized_labels['name'] . '_to_' . $sanitized_labels['name'];
         return new \Pedestal\Objects\Stream( [
-            'post_type'           => $post_type,
+            'post_type'           => static::$post_type,
             'posts_per_page'      => -1,
             'connected_type'      => $connection_type,
             'connected_items'     => $this->get_id(),
