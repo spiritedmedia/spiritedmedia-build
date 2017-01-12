@@ -35,31 +35,6 @@ class Locality extends Place {
     }
 
     /**
-     * Get the proper Locality object based on its post ID
-     *
-     * @param int $post_id
-     */
-    public static function get_by_post_id( $post_id ) {
-        global $wp;
-
-        if ( ! $post_id ) {
-            return false;
-        }
-
-        // Have we already gotten this post object?
-        if ( isset( $wp->pedestal_locality_cache[ $post_id ] ) && ! empty( $wp->pedestal_locality_cache[ $post_id ] ) ) {
-            return $wp->pedestal_locality_cache[ $post_id ];
-        }
-
-        $post = get_post( $post_id );
-        if ( ! $post ) {
-            // Cache it!
-            $wp->pedestal_locality_cache[ $post_id ] = false;
-            return false;
-        }
-    }
-
-    /**
      * Get a Locality instance from a WP_Post object
      *
      * Returns the result of Post::get_instance() if the `$post` argument is
