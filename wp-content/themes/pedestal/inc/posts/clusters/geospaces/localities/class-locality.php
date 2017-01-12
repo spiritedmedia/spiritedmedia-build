@@ -57,32 +57,39 @@ class Locality extends Place {
             $wp->pedestal_locality_cache[ $post_id ] = false;
             return false;
         }
+    }
 
+    /**
+     * Get a Locality instance from a WP_Post object
+     *
+     * Returns the result of Post::get_instance() if the `$post` argument is
+     * not a Locality.
+     *
+     * @param  WP_Post $post WP_Post object
+     * @return mixed
+     * - `Locality` family class if successful
+     * - Post::get_instance()
+     */
+    public static function get_instance( $post ) {
         // If the requested post is a Locality, then instantiate it using the
         // Locality Type class as described below. If not, then use the parent's
-        // `get_by_post_id()` method.
-        if ( get_post_type( $post ) === self::$post_type  ) {
-
-            // If there is an existing class matching the Locality Type's
-            // expected class name, then instantiate it. If not, then
-            // instantiate the Locality class.
-            //
-            // Although a Locality Type class will be in the same namespace,
-            // `class_exists()` requires the full namespace specified
-            $class_name = self::get_class_name( $post_id );
-            $class = '\\' . __NAMESPACE__ . '\\' . $class_name;
-            if ( ! class_exists( $class ) || empty( $class_name ) ) {
-                $class = static::class;
-            }
-            // Cache it!
-            $wp->pedestal_locality_cache[ $post_id ] = new $class( $post );
-            return $wp->pedestal_locality_cache[ $post_id ];
-
-        } else {
-            // Cache it!
-            $wp->pedestal_locality_cache[ $post_id ] = parent::get_by_post_id( $post_id );
-            return $wp->pedestal_locality_cache[ $post_id ];
+        // `get_instance()` method.
+        if ( ! get_post_type( $post ) === self::$post_type ) {
+            return parent::get_instance( $post );
         }
+
+        // If there is an existing class matching the Locality Type's
+        // expected class name, then instantiate it. If not, then
+        // instantiate the Locality class.
+        //
+        // Although a Locality Type class will be in the same namespace,
+        // `class_exists()` requires the full namespace specified
+        $class_name = self::get_class_name( $post->ID );
+        $class = '\\' . __NAMESPACE__ . '\\' . $class_name;
+        if ( empty( $class_name ) || ! class_exists( $class ) ) {
+            $class = static::class;
+        }
+        return new $class( $post );
     }
 
     /**

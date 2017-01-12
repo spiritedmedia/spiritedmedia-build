@@ -2,6 +2,7 @@
 
 namespace Pedestal\Posts\Clusters;
 
+use DateTime;
 use \Pedestal\Utils\Utils;
 
 use Pedestal\Posts\Entities\Embed;
@@ -128,7 +129,13 @@ class Person extends Cluster {
      * @return string
      */
     public function get_age() {
-        return $this->get_person_details_field( 'age' );
+        $age = $this->get_person_details_field( 'age' );
+        if ( ! empty( $dob = $this->get_person_details_field( 'dob' ) ) ) {
+            $dob = new DateTime( date( 'Y-m-d', $dob ) );
+            $today = new DateTime( 'today' );
+            $age = $dob->diff( $today )->y;
+        }
+        return $age;
     }
 
     /**

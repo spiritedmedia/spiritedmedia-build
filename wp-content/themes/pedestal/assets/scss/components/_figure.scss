@@ -20,6 +20,8 @@
 
 
   /*figcaption*/.c-figure__text {
+    line-height: 1.2;
+
     &__caption,
     &__credit {
       font-style: italic;
@@ -32,7 +34,7 @@
       .s-post-content & {
         color: c-figure-property-get( caption-color );
         padding-right: c-figure-property-get( caption-p-r );
-        display: inline-block;
+        display: inline;
         font-weight: normal;
         font-size: c-figure-property-get( f-z );
       }

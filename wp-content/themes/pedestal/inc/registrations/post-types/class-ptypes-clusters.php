@@ -679,8 +679,14 @@ class Cluster_Types extends Types {
                 'name' => 'url',
                 'required' => false,
             ] ),
-            'age' => new \Fieldmanager_Textfield( esc_html__( 'Age', 'pedestal' ), [
-                'name' => 'age',
+            'dob' => new \Fieldmanager_Datepicker( esc_html__( 'Birthdate', 'pedestal' ), [
+                'js_opts' => [
+                    'changeMonth' => true,
+                    'changeYear'  => true,
+                    // Last 100 years
+                    // https://api.jqueryui.com/datepicker/#option-yearRange
+                    'yearRange'   => '-100:+0',
+                ],
             ] ),
         ];
         $details = new \Fieldmanager_Group( false, [

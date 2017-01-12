@@ -2,6 +2,7 @@
 
 namespace Pedestal\Posts;
 
+use WP_Post;
 use \Pedestal\Utils\Utils;
 
 use Pedestal\Registrations\Post_Types\Types;
@@ -90,33 +91,9 @@ abstract class Post {
             return false;
         }
 
-        // If requested post type is a Locality, then use the Locality post getter
-        if ( 'pedestal_locality' === get_post_type( $post ) ) {
-            // Cache it!
-            $wp->pedestal_post_cache[ $post_id ] = Locality::get_by_post_id( $post_id );
-            return $wp->pedestal_post_cache[ $post_id ];
-        }
-
-        if ( in_array( get_post_type( $post ), Types::get_pedestal_post_types() ) ) {
-            $class = Types::get_post_type_class( get_post_type( $post ) );
-            if ( ! class_exists( $class ) ) {
-                $errors->add( 'post_class_nonexistant', "The requested post class {$class} does not exist." );
-                trigger_error( $errors->get_error_message(), E_USER_ERROR );
-
-                // Cache it!
-                $wp->pedestal_post_cache[ $post_id ] = false;
-                return false;
-            }
-
-            // Cache it!
-            $wp->pedestal_post_cache[ $post_id ] = new $class( $post );
-            return $wp->pedestal_post_cache[ $post_id ];
-        } else {
-            // Cache it!
-            $wp->pedestal_post_cache[ $post_id ] = $post;
-            return $post;
-        }
-
+        // Cache it!
+        $wp->pedestal_post_cache[ $post_id ] = static::get_instance( $post );
+        return $wp->pedestal_post_cache[ $post_id ];
     }
 
     /**
@@ -145,6 +122,39 @@ abstract class Post {
             return $posts[0];
         }
         return $posts;
+    }
+
+    /**
+     * Get a Post family instance from a WP_Post object
+     *
+     * @param  WP_Post $post WP_Post object
+     * @return object|false
+     * - `Post`-extending class if successful
+     * - `WP_Post` if not one of our post types
+     * - false if failure
+     */
+    public static function get_instance( $post ) {
+        if ( ! $post instanceof \WP_Post ) {
+            return false;
+        }
+
+        // If requested post type is a Locality, then use the Locality instance getter
+        if ( 'pedestal_locality' === get_post_type( $post ) ) {
+            return Locality::get_instance( $post );
+        }
+
+        if ( ! in_array( get_post_type( $post ), Types::get_pedestal_post_types() ) ) {
+            return $post;
+        }
+
+        $class = Types::get_post_type_class( get_post_type( $post ) );
+        if ( ! class_exists( $class ) ) {
+            $errors->add( 'post_class_nonexistant', "The requested post class {$class} does not exist." );
+            trigger_error( $errors->get_error_message(), E_USER_ERROR );
+            return false;
+        }
+
+        return new $class( $post );
     }
 
     /**

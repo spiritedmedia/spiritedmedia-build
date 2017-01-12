@@ -64,7 +64,7 @@ class Stream {
                 if ( ! $post instanceof \WP_Post ) {
                     continue;
                 }
-                $posts[] = Post::get_by_post_id( $post->ID );
+                $posts[] = Post::get_instance( $post );
             }
         }
         return $posts;
