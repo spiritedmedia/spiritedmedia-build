@@ -11,7 +11,7 @@ use \Pedestal\Utils\Utils;
 use \Pedestal\Objects\User;
 
 /**
- * Encapsulates customizations for the WordPress admin
+ * WP Admin tools for bulk subscribing users to the Daily Newsletter
  */
 class Bulk_Subscribe {
 

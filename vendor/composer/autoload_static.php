@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2ed8b342b6bf2c89a334cecb37c0865e
+class ComposerStaticInit2722cec70b45b421012705ba4c4f524d
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -304,6 +304,7 @@ class ComposerStaticInit2ed8b342b6bf2c89a334cecb37c0865e
         'Pedestal\\Admin\\Admin' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-admin.php',
         'Pedestal\\Admin\\Bulk_Action' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-bulk-actions.php',
         'Pedestal\\Admin\\Bulk_Subscribe' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-bulk-subscribe.php',
+        'Pedestal\\Admin\\Cluster_Tools' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-cluster-tools.php',
         'Pedestal\\Adverts' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-adverts.php',
         'Pedestal\\Billy_Penn' => __DIR__ . '/../..' . '/wp-content/themes/billy-penn/functions.php',
         'Pedestal\\CLI\\CLI' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/cli/class-cli.php',
@@ -533,6 +534,7 @@ class ComposerStaticInit2ed8b342b6bf2c89a334cecb37c0865e
         'Timber\\Cache\\TimberKeyGeneratorInterface' => __DIR__ . '/..' . '/timber/timber/lib/Cache/TimberKeyGeneratorInterface.php',
         'Timber\\Cache\\WPObjectCacheAdapter' => __DIR__ . '/..' . '/timber/timber/lib/Cache/WPObjectCacheAdapter.php',
         'Timber\\Comment' => __DIR__ . '/..' . '/timber/timber/lib/Comment.php',
+        'Timber\\CommentThread' => __DIR__ . '/..' . '/timber/timber/lib/CommentThread.php',
         'Timber\\Core' => __DIR__ . '/..' . '/timber/timber/lib/Core.php',
         'Timber\\CoreInterface' => __DIR__ . '/..' . '/timber/timber/lib/CoreInterface.php',
         'Timber\\FunctionWrapper' => __DIR__ . '/..' . '/timber/timber/lib/FunctionWrapper.php',
@@ -599,6 +601,7 @@ class ComposerStaticInit2ed8b342b6bf2c89a334cecb37c0865e
         'Twig_Extension_Sandbox' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Extension/Sandbox.php',
         'Twig_Extension_Staging' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Extension/Staging.php',
         'Twig_Extension_StringLoader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Extension/StringLoader.php',
+        'Twig_FactoryRuntimeLoader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FactoryRuntimeLoader.php',
         'Twig_FileExtensionEscapingStrategy' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FileExtensionEscapingStrategy.php',
         'Twig_Filter' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Filter.php',
         'Twig_FilterCallableInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FilterCallableInterface.php',
@@ -797,11 +800,11 @@ class ComposerStaticInit2ed8b342b6bf2c89a334cecb37c0865e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2ed8b342b6bf2c89a334cecb37c0865e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2ed8b342b6bf2c89a334cecb37c0865e::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit2ed8b342b6bf2c89a334cecb37c0865e::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit2ed8b342b6bf2c89a334cecb37c0865e::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit2ed8b342b6bf2c89a334cecb37c0865e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit2722cec70b45b421012705ba4c4f524d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit2722cec70b45b421012705ba4c4f524d::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit2722cec70b45b421012705ba4c4f524d::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit2722cec70b45b421012705ba4c4f524d::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit2722cec70b45b421012705ba4c4f524d::$classMap;
 
         }, null, ClassLoader::class);
     }

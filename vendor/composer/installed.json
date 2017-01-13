@@ -25,7 +25,7 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2016-04-13 19:46:30",
+        "time": "2016-04-13T19:46:30+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "Composer\\Installers\\Plugin",
@@ -108,19 +108,19 @@
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/wordpress-fieldmanager.git",
-            "reference": "90abe0a589e40bf6e6ab96bb993b877bace6eab4"
+            "reference": "3603463f6a463a3192430e9a4ff03ec07ca09f34"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/wordpress-fieldmanager/zipball/90abe0a589e40bf6e6ab96bb993b877bace6eab4",
-            "reference": "90abe0a589e40bf6e6ab96bb993b877bace6eab4",
+            "url": "https://api.github.com/repos/spiritedmedia/wordpress-fieldmanager/zipball/3603463f6a463a3192430e9a4ff03ec07ca09f34",
+            "reference": "3603463f6a463a3192430e9a4ff03ec07ca09f34",
             "shasum": ""
         },
         "require-dev": {
-            "squizlabs/php_codesniffer": "2.3.4",
-            "wp-coding-standards/wpcs": "0.8.0"
+            "squizlabs/php_codesniffer": "2.*",
+            "wp-coding-standards/wpcs": "dev-master"
         },
-        "time": "2016-12-07 17:05:24",
+        "time": "2017-01-04T16:04:50+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -138,7 +138,7 @@
             }
         ],
         "support": {
-            "source": "https://github.com/spiritedmedia/wordpress-fieldmanager/tree/post-datasource-display-type"
+            "source": "https://github.com/spiritedmedia/wordpress-fieldmanager/tree/spiritedmedia"
         }
     },
     {
@@ -159,7 +159,7 @@
         "require": {
             "composer/installers": "~1.0.6"
         },
-        "time": "2016-12-13 11:55:23",
+        "time": "2016-12-13T11:55:23+00:00",
         "type": "wordpress-plugin",
         "installation-source": "dist",
         "license": [
@@ -196,7 +196,7 @@
         "require-dev": {
             "wp-coding-standards/wpcs": "dev-develop"
         },
-        "time": "2016-08-04 16:38:41",
+        "time": "2016-08-04T16:38:41+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -236,7 +236,7 @@
             "squizlabs/php_codesniffer": "2.3.4",
             "wp-coding-standards/wpcs": "dev-master"
         },
-        "time": "2016-10-03 22:00:37",
+        "time": "2016-10-03T22:00:37+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -287,7 +287,7 @@
         "require": {
             "composer/installers": "~1.0"
         },
-        "time": "2016-01-11 04:12:47",
+        "time": "2016-01-11T04:12:47+00:00",
         "type": "wordpress-muplugin",
         "installation-source": "source",
         "license": [
@@ -331,7 +331,7 @@
         "require-dev": {
             "satooshi/php-coveralls": "~1.0"
         },
-        "time": "2016-06-09 03:04:41",
+        "time": "2016-06-09T03:04:41+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -373,7 +373,7 @@
             "reference": "3c46b3f762cdea368fdb4ea35c7548880a8682c6",
             "shasum": ""
         },
-        "time": "2016-12-20 23:21:39",
+        "time": "2016-12-20T23:21:39+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "authors": [
@@ -402,7 +402,7 @@
             "reference": "ec4974198b31a38ca9d8d3aa5d9c051f248843b4",
             "shasum": ""
         },
-        "time": "2016-08-04 17:10:12",
+        "time": "2016-08-04T17:10:12+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "authors": [
@@ -431,7 +431,7 @@
             "reference": "95b23ac342fce16bf5eb8d939ac5a361b94b104b",
             "shasum": ""
         },
-        "time": "2015-10-25 20:19:41",
+        "time": "2015-10-25T20:19:41+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -477,7 +477,7 @@
         "require": {
             "scribu/scb-framework": "dev-master"
         },
-        "time": "2016-08-04 20:04:00",
+        "time": "2016-08-04T20:04:00+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "authors": [
@@ -509,7 +509,7 @@
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2016-11-03 08:11:03",
+        "time": "2016-11-03T08:11:03+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -568,7 +568,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.8|5.1.*"
         },
-        "time": "2016-09-20 12:50:39",
+        "time": "2016-09-20T12:50:39+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -613,7 +613,7 @@
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2014-04-16 09:44:40",
+        "time": "2014-04-16T09:44:40+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -673,7 +673,7 @@
             "satooshi/php-coveralls": "dev-master",
             "wp-cli/wp-cli": "*"
         },
-        "time": "2016-07-06 12:53:24",
+        "time": "2016-07-06T12:53:24+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -703,17 +703,17 @@
     },
     {
         "name": "twig/twig",
-        "version": "v1.29.0",
-        "version_normalized": "1.29.0.0",
+        "version": "v1.30.0",
+        "version_normalized": "1.30.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twigphp/Twig.git",
-            "reference": "74f723e542368ca2080b252740be5f1113ebb898"
+            "reference": "c6ff71094fde15d12398eaba029434b013dc5e59"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig/zipball/74f723e542368ca2080b252740be5f1113ebb898",
-            "reference": "74f723e542368ca2080b252740be5f1113ebb898",
+            "url": "https://api.github.com/repos/twigphp/Twig/zipball/c6ff71094fde15d12398eaba029434b013dc5e59",
+            "reference": "c6ff71094fde15d12398eaba029434b013dc5e59",
             "shasum": ""
         },
         "require": {
@@ -723,11 +723,11 @@
             "symfony/debug": "~2.7",
             "symfony/phpunit-bridge": "~3.2@dev"
         },
-        "time": "2016-12-13 17:28:18",
+        "time": "2016-12-23T11:06:22+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.29-dev"
+                "dev-master": "1.30-dev"
             }
         },
         "installation-source": "dist",
@@ -766,17 +766,17 @@
     },
     {
         "name": "asm89/twig-cache-extension",
-        "version": "1.3.0",
-        "version_normalized": "1.3.0.0",
+        "version": "1.3.1",
+        "version_normalized": "1.3.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/asm89/twig-cache-extension.git",
-            "reference": "37cfee1f06fe8372cbe714d2d9224db276790936"
+            "reference": "8e5bf490b7bf569e165027bc558e0e166f99b933"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/asm89/twig-cache-extension/zipball/37cfee1f06fe8372cbe714d2d9224db276790936",
-            "reference": "37cfee1f06fe8372cbe714d2d9224db276790936",
+            "url": "https://api.github.com/repos/asm89/twig-cache-extension/zipball/8e5bf490b7bf569e165027bc558e0e166f99b933",
+            "reference": "8e5bf490b7bf569e165027bc558e0e166f99b933",
             "shasum": ""
         },
         "require": {
@@ -789,7 +789,7 @@
         "suggest": {
             "psr/cache-implementation": "To make use of PSR-6 cache implementation via PsrCacheAdapter."
         },
-        "time": "2016-06-14 09:16:57",
+        "time": "2016-10-28T10:14:55+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -822,17 +822,17 @@
     },
     {
         "name": "timber/timber",
-        "version": "1.1.12",
-        "version_normalized": "1.1.12.0",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/timber/timber.git",
-            "reference": "8efee9e234cbf2284042df98c006358bbd8a7554"
+            "reference": "b15ebfbf4bd19a2bd1a437601a6806630c3ce8c7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/timber/timber/zipball/8efee9e234cbf2284042df98c006358bbd8a7554",
-            "reference": "8efee9e234cbf2284042df98c006358bbd8a7554",
+            "url": "https://api.github.com/repos/timber/timber/zipball/b15ebfbf4bd19a2bd1a437601a6806630c3ce8c7",
+            "reference": "b15ebfbf4bd19a2bd1a437601a6806630c3ce8c7",
             "shasum": ""
         },
         "require": {
@@ -850,7 +850,7 @@
             "wpackagist-plugin/advanced-custom-fields": "4.*",
             "wpackagist-plugin/co-authors-plus": "3.*"
         },
-        "time": "2016-12-11 20:35:26",
+        "time": "2016-12-30T03:17:17+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -907,7 +907,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2016-07-13 23:29:13",
+        "time": "2016-07-13T23:29:13+00:00",
         "bin": [
             "scripts/phpcs",
             "scripts/phpcbf"
@@ -981,7 +981,7 @@
         "require": {
             "squizlabs/php_codesniffer": "^2.6"
         },
-        "time": "2016-08-29 20:04:47",
+        "time": "2016-08-29T20:04:47+00:00",
         "type": "library",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -1047,16 +1047,16 @@
     },
     {
         "name": "wpackagist-plugin/nginx-helper",
-        "version": "1.9.8",
-        "version_normalized": "1.9.8.0",
+        "version": "1.9.9",
+        "version_normalized": "1.9.9.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/nginx-helper/",
-            "reference": "tags/1.9.8"
+            "reference": "tags/1.9.9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.8.zip",
+            "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.9.zip",
             "reference": null,
             "shasum": null
         },

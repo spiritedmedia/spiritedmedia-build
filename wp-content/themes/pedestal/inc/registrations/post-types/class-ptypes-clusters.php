@@ -4,7 +4,7 @@ namespace Pedestal\Registrations\Post_Types;
 
 use Timber\Timber;
 
-use Pedestal\Utils;
+use Pedestal\Utils\Utils;
 
 use \Pedestal\Registrations\Taxonomies\Taxonomies;
 
@@ -46,6 +46,16 @@ class Cluster_Types extends Types {
      * @var array
      */
     protected $connection_types = [];
+
+    /**
+     * Geospaces connection types
+     *
+     * Each of these connection types should include connection metadata about
+     * the geospatial relationship between the two Geospace Clusters.
+     *
+     * @var array
+     */
+    protected $connection_types_geospaces = [];
 
     /**
      * Entity-to-Cluster connection types
@@ -262,11 +272,19 @@ class Cluster_Types extends Types {
         foreach ( $this->post_types as $post_type => $settings ) :
 
             $labels = self::get_post_type_labels( $post_type );
-            $sanitized_labels = self::get_sanitized_post_type_labels( $post_type );
+            $sanitized_name = self::get_post_type_name( $post_type, true, true );
+            $geo_fields = [
+                'rel' => [
+                    'title'   => 'Relation',
+                    'type'    => 'select',
+                    'values'  => $this->geospatial_rels,
+                    'default' => 'contained_in',
+                ],
+            ];
 
             // Connect all clusters to entities
-            $connection_entities_to = 'entities_to_' . $sanitized_labels['name'];
-            p2p_register_connection_type( [
+            $connection_entities_to = 'entities_to_' . $sanitized_name;
+            $this->connection_types[ $connection_entities_to ] = [
                 'name'           => $connection_entities_to,
                 'from'           => self::get_entity_post_types(),
                 'to'             => $post_type,
@@ -284,25 +302,25 @@ class Cluster_Types extends Types {
                     'not_found'     => __( 'No entities found.', 'pedestal' ),
                     'create'        => __( 'Create Connections', 'pedestal' ),
                 ],
-            ] );
-            $this->connection_types[] = $connection_entities_to;
-            $this->connection_types_entities[] = $connection_entities_to;
+            ];
+            $this->connection_types_entities[ $connection_entities_to ] = $this->connection_types[ $connection_entities_to ];
 
             // Connect all clusters to users
-            p2p_register_connection_type( [
-                'name'           => $sanitized_labels['name'] . '_to_users',
+            $connection_to_users = $sanitized_name . '_to_users';
+            $this->connection_types[ $connection_to_users ] = [
+                'name'           => $connection_to_users,
                 'from'           => $post_type,
                 'to'             => 'user',
                 'admin_box'      => [
                     'show' => false,
                 ],
-            ]);
-            $this->connection_types[] = $sanitized_labels['name'] . '_to_users';
+            ];
 
             // Connect non-story clusters to Stories
             if ( 'pedestal_story' != $post_type ) {
-                p2p_register_connection_type( [
-                    'name'           => 'stories_to_' . $sanitized_labels['name'],
+                $connection_stories_to = 'stories_to_' . $sanitized_name;
+                $this->connection_types[ $connection_stories_to ] = [
+                    'name'           => $connection_stories_to,
                     'from'           => 'pedestal_story',
                     'to'             => $post_type,
                     'sortable'       => 'from',
@@ -313,14 +331,14 @@ class Cluster_Types extends Types {
                         'from' => $labels['name'],
                         'to'   => __( 'Stories', 'pedestal' ),
                     ],
-                ] );
-                $this->connection_types[] = 'stories_to_' . $sanitized_labels['name'];
+                ];
             }
 
             // Connect all non-Story clusters to Topics (including Topics)
             if ( 'pedestal_story' != $post_type ) {
-                $args_topics_to = [
-                    'name'           => 'topics_to_' . $sanitized_labels['name'],
+                $connection_topics_to = 'topics_to_' . $sanitized_name;
+                $this->connection_types[ $connection_topics_to ] = [
+                    'name'           => 'topics_to_' . $sanitized_name,
                     'from'           => 'pedestal_topic',
                     'to'             => $post_type,
                     'sortable'       => 'from',
@@ -333,16 +351,16 @@ class Cluster_Types extends Types {
                     ],
                 ];
                 if ( 'pedestal_topic' === $post_type ) {
-                    $args_topics_to['reciprocal'] = true;
+                    $this->connection_types[ $connection_topics_to ]['reciprocal'] = true;
                 }
-                p2p_register_connection_type( $args_topics_to );
-                $this->connection_types[] = 'topics_to_' . $sanitized_labels['name'];
             }
 
             if ( in_array( $post_type, self::get_geospace_post_types() ) ) {
                 // Connect geospaces to themselves, with metadata
-                p2p_register_connection_type( [
-                    'name'           => $sanitized_labels['name'] . '_to_' . $sanitized_labels['name'],
+                $connection_geo_to_geo = $sanitized_name . '_to_' . $sanitized_name;
+                $this->connection_types_geospaces[] = $connection_geo_to_geo;
+                $this->connection_types[ $connection_geo_to_geo ] = [
+                    'name'           => $connection_geo_to_geo,
                     'from'           => $post_type,
                     'to'             => $post_type,
                     'admin_box'      => [
@@ -352,22 +370,14 @@ class Cluster_Types extends Types {
                     'title'          => [
                         'from'          => __( sprintf( 'Connected %s: Active', $labels['name'] ), 'pedestal' ),
                     ],
-                    'fields'         => [
-                        'rel' => [
-                            'title'   => 'Relation',
-                            'type'    => 'select',
-                            'values'  => $this->geospatial_rels,
-                            'default' => 'contained_in',
-                        ],
-                    ],
-                ] );
-                $this->connection_types[] = $sanitized_labels['name'] . '_to_' . $sanitized_labels['name'];
+                    'fields'         => $geo_fields,
+                ];
             }
 
         endforeach;
 
         // Connect People to Organizations
-        p2p_register_connection_type( [
+        $this->connection_types['people_to_organizations'] = [
             'name'           => 'people_to_organizations',
             'from'           => 'pedestal_person',
             'to'             => 'pedestal_org',
@@ -379,11 +389,10 @@ class Cluster_Types extends Types {
                 'from' => __( 'Organizations', 'pedestal' ),
                 'to'   => __( 'People', 'pedestal' ),
             ],
-        ] );
-        $this->connection_types[] = 'people_to_organizations';
+        ];
 
         // Connect Organizations to Places
-        p2p_register_connection_type( [
+        $this->connection_types['organizations_to_places'] = [
             'name'           => 'organizations_to_places',
             'from'           => 'pedestal_org',
             'to'             => 'pedestal_place',
@@ -395,11 +404,11 @@ class Cluster_Types extends Types {
                 'from' => __( 'Places', 'pedestal' ),
                 'to'   => __( 'Organizations', 'pedestal' ),
             ],
-        ] );
-        $this->connection_types[] = 'organizations_to_places';
+        ];
 
         // Connect Localities to Places with metadata
-        p2p_register_connection_type( [
+        $this->connection_types_geospaces[] = 'places_to_localities';
+        $this->connection_types['places_to_localities'] = [
             'name'           => 'places_to_localities',
             'from'           => 'pedestal_place',
             'to'             => 'pedestal_locality',
@@ -411,16 +420,13 @@ class Cluster_Types extends Types {
                 'from' => __( 'Localities', 'pedestal' ),
                 'to'   => __( 'Places', 'pedestal' ),
             ],
-            'fields'         => [
-                'rel' => [
-                    'title'   => 'Relation',
-                    'type'    => 'select',
-                    'values'  => $this->geospatial_rels,
-                    'default' => 'contained_in',
-                ],
-            ],
-        ] );
-        $this->connection_types[] = 'places_to_localities';
+            'fields'         => $geo_fields,
+        ];
+
+        // And now register them all...
+        foreach ( $this->connection_types as $key => $value ) {
+            p2p_register_connection_type( $value );
+        }
 
     }
 
@@ -457,11 +463,11 @@ class Cluster_Types extends Types {
      */
     public function action_add_meta_boxes() {
         foreach ( self::get_geospace_post_types() as $post_type ) {
-            $labels = self::get_post_type_labels( $post_type );
-            $sanitized_labels = self::get_sanitized_post_type_labels( $post_type );
-            $connection_type = $sanitized_labels['name'] . '_to_' . $sanitized_labels['name'];
+            $name = self::get_post_type_name( $post_type );
+            $sanitized_name = Utils::sanitize_name( $name );
+            $connection_type = $sanitized_name . '_to_' . $sanitized_name;
             $metabox_id = "pedestal-metabox-p2p-connections-{$connection_type}";
-            $metabox_label = sprintf( 'Connected %s: Passive', $labels['name'] );
+            $metabox_label = sprintf( 'Connected %s: Passive', $name );
             add_meta_box(
                 $metabox_id,
                 $metabox_label,
@@ -901,10 +907,10 @@ class Cluster_Types extends Types {
         ] );
 
         foreach ( self::get_cluster_post_types( false ) as $post_type ) {
-            $labels = self::get_post_type_labels( $post_type );
-            $sanitized_labels = self::get_sanitized_post_type_labels( $post_type );
-            $child = new \Fieldmanager_Group( esc_html__( $labels['name'], 'pedestal' ), [
-                'name' => $sanitized_labels['name'],
+            $name = self::get_post_type_name( $post_type );
+            $sanitized_name = Utils::sanitize_name( $name );
+            $child = new \Fieldmanager_Group( esc_html__( $name, 'pedestal' ), [
+                'name' => $sanitized_name,
             ] );
 
             // Add clusters to entity box

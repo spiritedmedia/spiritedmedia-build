@@ -169,7 +169,7 @@ abstract class Entity extends Post {
             'post_status'     => 'publish',
             'posts_per_page'  => 99,
             'no_found_rows'   => true,
-            'connected_type'  => Types::get_connection_types_entities_to_clusters(),
+            'connected_type'  => Types::get_cluster_connection_types_from_entities(),
             'connected_items' => $this->post,
         ];
 

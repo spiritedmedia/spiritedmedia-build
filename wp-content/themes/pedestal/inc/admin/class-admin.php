@@ -142,6 +142,19 @@ class Admin {
 
         add_filter( 'fm_element_markup_start', [ $this, 'filter_fm_element_markup_start' ], 10, 2 );
 
+        // Filter the post titles in FM Post Datasource results
+        add_filter( 'fm_datasource_post_title', function( $title, $post ) {
+            if ( isset( $post->post_type ) ) {
+                $type = Types::get_post_type_name( $post->post_type, $plurals = false );
+                if ( 'pedestal_locality' === $post->post_type ) {
+                    $locality = Post::get_by_post_id( $post->ID );
+                    $type = $locality->get_locality_type_name();
+                }
+                $title .= ' (' . $type . ')';
+            }
+            return $title;
+        }, 10, 2 );
+
         add_filter( 'attachment_fields_to_edit', function( $fields, $post ) {
 
             $metadata = wp_get_attachment_metadata( $post->ID );

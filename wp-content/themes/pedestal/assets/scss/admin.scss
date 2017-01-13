@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Admin
  *
- * Version: 5.0.14
+ * Version: 5.1.0
  *
  * Copyright ( c ) 2016 Spirited Media
  */
@@ -26,6 +26,15 @@
 .fm-enabled-wrapper .fm-option {
     display: inline-block;
     margin-right: 15px;
+}
+
+// Fix the weird intentional negative margins for tabbed groups
+.fm-tabbed-vertical {
+  margin: 0 !important;
+}
+
+.fm-page-form-wrapper {
+  margin-top: 1rem;
 }
 
 // Improve distinction between repeating FM fields
@@ -60,6 +69,17 @@ body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right .tablenav,
 
 body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right {
     width: 100%
+}
+
+body.tools_page_pedestal_cluster_tools {
+  #wpbody-content > p {
+    margin: 0;
+  }
+
+  // Prevent the footer from overlapping Cluster Tools log messages
+  #wpfooter {
+    position: static;
+  }
 }
 
 // Slug field width in post editor

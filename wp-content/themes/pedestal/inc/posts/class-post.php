@@ -1460,12 +1460,12 @@ abstract class Post {
     /**
      * Get the Post's post type name label
      *
-     * @param  boolean $plural Whether to return the plural name or singular.
-     *     Default is plural.
+     * @param  boolean $plural   Whether to return the plural name or singular.
+     * @param  boolean $sanitize Whether to return a sanitized name
      * @return string          The label name of the post type
      */
-    public function get_post_type_name( $plural = true ) {
-        return Types::get_post_type_name( static::$post_type, $plural );
+    public function get_post_type_name( $plural = true, $sanitize = false ) {
+        return Types::get_post_type_name( static::$post_type, $plural, $sanitize );
     }
 
     /**

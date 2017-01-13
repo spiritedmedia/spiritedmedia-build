@@ -391,11 +391,40 @@ class Types {
     /**
      * Get the Entities-to-Clusters connection types
      *
+     * @param bool $proto Include the connection setup data in the return array?
      * @return array
      */
-    public static function get_connection_types_entities_to_clusters() {
+    public static function get_cluster_connection_types_from_entities( $proto = false ) {
         $clusters = self::$groups['clusters'];
-        return $clusters->connection_types_entities;
+        $types = $clusters->connection_types_entities;
+        if ( $proto ) {
+            return $types;
+        }
+        return array_keys( $types );
+    }
+
+    /**
+     * Get the Geospace connection type names
+     *
+     * @return array
+     */
+    public static function get_geospace_connection_types() {
+        return self::$groups['clusters']->connection_types_geospaces;
+    }
+
+    /**
+     * Get an array of all cluster connection types
+     *
+     * @param bool $proto Include the connection setup data in the return array?
+     * @return array
+     */
+    public static function get_cluster_connection_types( $proto = false ) {
+        $clusters = self::$groups['clusters'];
+        $types = $clusters->connection_types;
+        if ( $proto ) {
+            return $types;
+        }
+        return array_keys( $types );
     }
 
     /**
@@ -439,14 +468,12 @@ class Types {
             return false;
         }
 
-        $sanitized_labels = self::get_sanitized_post_type_labels( $post_type );
-        $plural = $sanitized_labels['name'];
-
+        $sanitized_name = self::get_post_type_name( $post_type, true, true );
         switch ( $rel ) {
             case 'user':
-                return $plural . '_to_users';
+                return $sanitized_name . '_to_users';
             case 'entity':
-                return 'entities_to_' . $plural;
+                return 'entities_to_' . $sanitized_name;
         }
 
         return false;
@@ -482,18 +509,21 @@ class Types {
     /**
      * Get a post type's label name
      *
-     * @param  string $post_type The post type
-     * @param  bool   $plural    Whether to return the plural name or singular.
-     *     Default is plural.
+     * @param  string  $post_type The post type
+     * @param  boolean $plural    Whether to return the plural name or singular.
+     * @param  boolean $sanitize  Whether to return a sanitized name
      * @return string            The label name of the post type
      */
-    public static function get_post_type_name( $post_type, $plural = true ) {
+    public static function get_post_type_name( $post_type, $plural = true, $sanitize = false ) {
         $labels = self::get_post_type_labels( $post_type );
+        $name = $labels['singular_name'];
         if ( $plural ) {
-            return $labels['name'];
-        } else {
-            return $labels['singular_name'];
+            $name = $labels['name'];
         }
+        if ( $sanitize ) {
+            $name = Utils::sanitize_name( $name );
+        }
+        return $name;
     }
 
     /**
@@ -507,21 +537,6 @@ class Types {
     public static function get_post_type_labels( $post_type ) {
         $obj = get_post_type_object( $post_type );
         return (array) $obj->labels;
-    }
-
-    /**
-     * Get a post type's sanitized singular and plural labels
-     *
-     * Only works for our custom post types.
-     *
-     * @param  string $post_type Name of the post type
-     * @return array             Sanitized singualr and plural labels
-     */
-    public static function get_sanitized_post_type_labels( $post_type ) {
-        $sanitized_labels = array_map( function( $value ) {
-            return Utils::sanitize_name( $value );
-        }, self::get_post_type_labels( $post_type ) );
-        return $sanitized_labels;
     }
 
     /**

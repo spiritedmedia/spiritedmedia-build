@@ -49,6 +49,25 @@ abstract class Cluster extends Post {
      * @return array
      */
     public function get_entities( $args = [] ) {
+        $args = wp_parse_args( $args, [
+            'post_type'      => Types::get_entity_post_types(),
+            'connected_type' => $this->get_cluster_entity_connection_type(),
+        ] );
+        $stream = $this->get_stream( $args );
+        return $stream->get_stream();
+    }
+
+    /**
+     * Get all connected posts
+     *
+     * @param  array $args
+     * @return array Stream
+     */
+    public function get_connected( $args = [] ) {
+        $args = wp_parse_args( $args, [
+            'connected_type' => Types::get_cluster_connection_types(),
+            'posts_per_page' => 500,
+        ] );
         $stream = $this->get_stream( $args );
         return $stream->get_stream();
     }
@@ -89,10 +108,9 @@ abstract class Cluster extends Post {
      */
     public function get_stream( $args = [] ) {
         $defaults = [
-            'post_type'      => Types::get_entity_post_types(),
+            'post_type'      => Types::get_post_types(),
             'post_status'    => 'publish',
             'posts_per_page' => 20,
-            'connected_type' => $this->get_cluster_entity_connection_type(),
         ];
         $args = wp_parse_args( $args, $defaults );
 
