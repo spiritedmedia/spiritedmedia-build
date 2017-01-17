@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2722cec70b45b421012705ba4c4f524d
+class ComposerStaticInit12deb767c1740377dadf0ab0f29757b3
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -315,6 +315,7 @@ class ComposerStaticInit2722cec70b45b421012705ba4c4f524d
         'Pedestal\\Objects\\ActiveCampaign' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-activecampaign.php',
         'Pedestal\\Objects\\Author' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-author.php',
         'Pedestal\\Objects\\Figure' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-figure.php',
+        'Pedestal\\Objects\\Newsletter_Lists' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-newsletter-lists.php',
         'Pedestal\\Objects\\Notifications' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-notifications.php',
         'Pedestal\\Objects\\Parsely' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-parsely.php',
         'Pedestal\\Objects\\Source' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-source.php',
@@ -624,6 +625,7 @@ class ComposerStaticInit2722cec70b45b421012705ba4c4f524d
         'Twig_Loader_String' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Loader/String.php',
         'Twig_Markup' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Markup.php',
         'Twig_Node' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node.php',
+        'Twig_NodeCaptureInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/NodeCaptureInterface.php',
         'Twig_NodeInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/NodeInterface.php',
         'Twig_NodeOutputInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/NodeOutputInterface.php',
         'Twig_NodeTraverser' => __DIR__ . '/..' . '/twig/twig/lib/Twig/NodeTraverser.php',
@@ -800,11 +802,11 @@ class ComposerStaticInit2722cec70b45b421012705ba4c4f524d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2722cec70b45b421012705ba4c4f524d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2722cec70b45b421012705ba4c4f524d::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit2722cec70b45b421012705ba4c4f524d::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit2722cec70b45b421012705ba4c4f524d::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit2722cec70b45b421012705ba4c4f524d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit12deb767c1740377dadf0ab0f29757b3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit12deb767c1740377dadf0ab0f29757b3::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit12deb767c1740377dadf0ab0f29757b3::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit12deb767c1740377dadf0ab0f29757b3::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit12deb767c1740377dadf0ab0f29757b3::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -117,6 +117,7 @@ abstract class Cluster extends Post {
         $paged = get_query_var( 'paged' );
         $args['paged'] = $paged ? $paged : 1;
         $args['connected_items'] = $this->post;
+        $args['connected_type'] = Types::get_cluster_connection_types();
 
         return new Stream( $args );
     }

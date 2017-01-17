@@ -10,9 +10,11 @@ use joshtronic\LoremIpsum;
 
 use Pedestal\Utils\Utils;
 
-use \Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Registrations\Post_Types\Types;
 
-use \Pedestal\Posts\Post;
+use Pedestal\Posts\Post;
+
+use Pedestal\Objects\Newsletter_Lists;
 
 use Pedestal\Posts\Slots\Slot_Item;
 
@@ -686,6 +688,32 @@ class CLI extends \WP_CLI_Command {
         $time_end = microtime( true );
         $total_time = round( $time_end - $time_start, 1 );
         WP_CLI::line( 'Finished in ' . $total_time . ' seconds' );
+    }
+
+    /**
+     * Syncs newsletter IDs with ActiveCampaign
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal sync-newsletter-ids
+     *     wp pedestal sync-newsletter-ids --url=http://billypenn.dev
+     *
+     * @see /bin/wp-multisite-sync-newsletter-ids.sh
+     *
+     * @subcommand sync-newsletter-ids
+     */
+    public function sync_newsletter_ids( $args, $assoc_args ) {
+        $newsletter_lists = Newsletter_Lists::get_instance();
+        $newsletter_lists->delete_options();
+        $lists = $newsletter_lists->get_all_newsletters();
+        if ( ! $lists || ! is_array( $lists ) ) {
+            WP_CLI::error( '$lists is bad! Oh No!' );
+            return;
+        }
+        foreach ( $lists as $id => $name ) {
+            WP_CLI::line( '  - ' . $name . ': ' . $id );
+        }
+        WP_CLI::success( 'Done!' );
     }
 }
 

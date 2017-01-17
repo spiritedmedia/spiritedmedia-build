@@ -2,17 +2,19 @@
 
 namespace Pedestal;
 
-use \Pedestal\Utils\Utils;
+use Pedestal\Utils\Utils;
 
-use \Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Registrations\Post_Types\Types;
 
-use \Pedestal\Posts\Post;
+use Pedestal\Objects\Newsletter_Lists;
 
-use \Pedestal\Objects\Stream;
+use Pedestal\Posts\Post;
 
-use \Pedestal\Objects\User;
+use Pedestal\Objects\Stream;
 
-use \Pedestal\Posts\Entities\Embed;
+use Pedestal\Objects\User;
+
+use Pedestal\Posts\Entities\Embed;
 
 if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
@@ -112,9 +114,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => '',
                 'PEDESTAL_EMAIL_FROM_NAME'        => get_bloginfo( 'name' ),
                 'PEDESTAL_EMAIL_PLACEHOLDER'      => '',
-                // Copy the list_id from ActiveCampaign for each newsletter that isn't associated with a post
-                'PEDESTAL_DAILY_NEWSLETTER_ID'    => '',
-                'PEDESTAL_BREAKING_NEWSLETTER_ID' => '',
 
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'        => '',
@@ -222,6 +221,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->post_types        = Registrations\Post_Types\Types::get_instance();
             $this->user_management   = User_Management::get_instance();
             $this->subscriptions     = Subscriptions::get_instance();
+            $this->newsletter_lists  = Newsletter_Lists::get_instance();
             $this->shortcode_manager = Shortcode_Manager::get_instance();
             $this->adverts           = Adverts::get_instance();
             $this->slots             = Posts\Slots\Slots::get_instance();
@@ -583,8 +583,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'contact'                => PEDESTAL_EMAIL_CONTACT,
                 'news'                   => PEDESTAL_EMAIL_NEWS,
                 'placeholder'            => PEDESTAL_EMAIL_PLACEHOLDER,
-                'daily_newsletter_id'    => PEDESTAL_DAILY_NEWSLETTER_ID,
-                'breaking_newsletter_id' => PEDESTAL_BREAKING_NEWSLETTER_ID,
+                'daily_newsletter_id'    => $this->newsletter_lists->get_newsletter_list_id( 'Daily Newsletter' ),
+                'breaking_newsletter_id' => $this->newsletter_lists->get_newsletter_list_id( 'Breaking News' ),
             ];
 
             $context['site']->live_urls = [

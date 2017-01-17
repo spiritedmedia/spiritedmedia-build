@@ -6,20 +6,21 @@ use function Pedestal\Pedestal;
 
 use Timber\Timber;
 
-use \Pedestal\Utils\Utils;
+use Pedestal\Utils\Utils;
 
-use \Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Registrations\Post_Types\Types;
 
-use \Pedestal\Posts\Post;
-use \Pedestal\Posts\Newsletter;
+use Pedestal\Objects\Newsletter_Lists;
+use Pedestal\Posts\Post;
+use Pedestal\Posts\Newsletter;
 
-use \Pedestal\Posts\Clusters\Cluster;
-use \Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
-use \Pedestal\Posts\Clusters\Story;
+use Pedestal\Posts\Clusters\Cluster;
+use Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
+use Pedestal\Posts\Clusters\Story;
 
-use \Pedestal\Objects\Notifications;
+use Pedestal\Objects\Notifications;
 
-use \Pedestal\Objects\ActiveCampaign;
+use Pedestal\Objects\ActiveCampaign;
 
 class Subscriptions {
 
@@ -425,10 +426,12 @@ class Subscriptions {
         ] );
 
         $subject = sprintf( '%s Daily: %s', PEDESTAL_BLOG_NAME, $newsletter->get_title() );
+        $newsletter_lists = Newsletter_Lists::get_instance();
+        $daily_newsletter_id = $newsletter_lists->get_newsletter_list_id( 'Daily Newsletter' );
         $sending_args = [
             'html'       => $body,
             'subject'    => $subject,
-            'list'       => PEDESTAL_DAILY_NEWSLETTER_ID,
+            'list'       => $daily_newsletter_id,
             'email_type' => 'Daily Newsletter',
         ];
         $sending_args = wp_parse_args( $sending_args, $args );
@@ -447,13 +450,14 @@ class Subscriptions {
             'email_type' => 'Breaking News',
             'shareable'  => true,
         ] );
-
         $subject = sprintf( 'BREAKING NEWS: %s', $post->get_title() );
+        $newsletter_lists = Newsletter_Lists::get_instance();
+        $breaking_newsletter_id = $newsletter_lists->get_newsletter_list_id( 'Breaking News' );
         $sending_args = [
             'html'       => $body,
             'subject'    => $subject,
             'name'       => $subject,
-            'list'       => PEDESTAL_BREAKING_NEWSLETTER_ID,
+            'list'       => $breaking_newsletter_id,
             'email_type' => 'Breaking News',
         ];
         $sending_args = wp_parse_args( $sending_args, $args );
@@ -749,7 +753,9 @@ class Subscriptions {
      * @return int
      */
     public function get_daily_newsletter_subscriber_count() {
-        return $this->get_subscriber_count( PEDESTAL_DAILY_NEWSLETTER_ID );
+        $newsletter_lists = Newsletter_Lists::get_instance();
+        $list_id = $newsletter_lists->get_newsletter_list_id( 'Daily Newsletter' );
+        return $this->get_subscriber_count( $list_id );
     }
 
     /**
@@ -758,7 +764,9 @@ class Subscriptions {
      * @return int
      */
     public function get_breaking_news_subscriber_count() {
-        return $this->get_subscriber_count( PEDESTAL_BREAKING_NEWSLETTER_ID );
+        $newsletter_lists = Newsletter_Lists::get_instance();
+        $list_id = $newsletter_lists->get_newsletter_list_id( 'Breaking News' );
+        return $this->get_subscriber_count( $list_id );
     }
 
     /**
