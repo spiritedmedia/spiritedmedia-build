@@ -1,0 +1,16 @@
+<input type="text" name="test-email-addresses" placeholder="Separate addresses by commas" style="width:100%" />
+<p>{{ btn_send_test }}</p>
+
+{% if message %}
+    <hr />
+    {{ message }}
+{% endif %}
+
+{% if btn_send %}
+    <hr />
+
+    <p>Type <code>SEND BREAKING NEWS</code> below to send a Breaking News email blast!</p>
+    <input type="text" name="confirm-send-email" style="width:100%" />
+
+    {{ btn_send }}
+{% endif %}

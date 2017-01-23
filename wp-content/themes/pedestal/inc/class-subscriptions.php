@@ -47,9 +47,32 @@ class Subscriptions {
     private function setup_actions() {
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'template_redirect', [ $this, 'action_template_redirect' ] );
-        add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ] );
+        add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ], 10, 2 );
         add_action( 'post_updated', [ $this, 'action_post_updated_activecampaign_list' ], 10, 3 );
         add_action( 'save_post', [ $this, 'action_save_post_send_email' ], 100 );
+        add_action( 'admin_footer', function() {
+            $post = get_post();
+            if ( 'pedestal_newsletter' !== $post->post_type ) {
+                return;
+            }
+            if ( 'publish' === $post->post_status ) {
+                return;
+            }
+            ?>
+            <script>
+                jQuery(document).ready(function($) {
+                    var $publish = $('#publish');
+                    var buttonValue = $publish.val();
+                    if ( buttonValue !== 'Send' && buttonValue !== 'Send Newsletter' ) {
+                        return;
+                    }
+                    $publish.on('click', function(e) {
+                        return confirm('Are you sure you want to send the newsletter?');
+                    });
+                });
+            </script>
+            <?php
+        }, 10, 1 );
     }
 
     /**
@@ -102,7 +125,7 @@ class Subscriptions {
     /**
      * Add subscription-related meta boxes
      */
-    public function action_add_meta_boxes( $post_type ) {
+    public function action_add_meta_boxes( $post_type, $post ) {
         if ( ! in_array( $post_type, Types::get_emailable_post_types() ) ) {
             return;
         }
@@ -112,8 +135,12 @@ class Subscriptions {
         $email_type = '';
 
         if ( post_type_supports( $post_type, 'breaking' ) ) {
+            // Don't show the Breaking News meta box if the post isn't published
+            if ( 'publish' !== $post->post_status ) {
+                return;
+            }
             $email_type = 'Breaking News';
-            $callback = 'handle_notify_primary_list_subscribers_meta_box';
+            $callback = 'handle_notify_breaking_news_subscribers_meta_box';
         } elseif ( 'pedestal_newsletter' === $post_type ) {
             $email_type = 'Newsletter';
             $callback = 'handle_notify_primary_list_subscribers_meta_box';
@@ -204,7 +231,7 @@ class Subscriptions {
     }
 
     /**
-     * Handle the meta box to trigger a newsletter or breaking news email send to subscribers
+     * Handle the meta box to trigger a newsletter email send to subscribers
      *
      * @param  object $post WP_Post
      */
@@ -219,17 +246,6 @@ class Subscriptions {
             return;
         }
 
-        $subscriber_count = $this->get_daily_newsletter_subscriber_count();
-        if ( 'breaking-news' === $args['template'] ) {
-            $subscriber_count = $this->get_breaking_news_subscriber_count();
-        }
-
-        $send_button_text = esc_html__( sprintf(
-            'Send %s To %d Subscribers',
-            $args['email_type'],
-            $subscriber_count
-        ), 'pedestal' );
-
         $context = [
             'item'            => $post,
             'template'        => $args['template'],
@@ -239,7 +255,8 @@ class Subscriptions {
             'btn_send_test'   => get_submit_button(
                 esc_html__( 'Send Test Email', 'pedestal' ),
                 'secondary',
-                'pedestal-' . $args['template'] . '-send-test-email'
+                'pedestal-' . $args['template'] . '-send-test-email',
+                $wrap = false
             ),
         ];
 
@@ -252,49 +269,66 @@ class Subscriptions {
             );
             $context['message'] = esc_html__( $sent_confirm, 'pedestal' );
 
-        } elseif ( 'publish' === $status && ! $sent_date ) {
-
-            $context['message'] = esc_html__( sprintf(
-                'Are you ready to send this %s email to %d subscribers?',
-                strtolower( $args['email_type'] ),
-                $subscriber_count
-            ), 'pedestal' );
-
-            if ( 'breaking-news' === $args['template'] ) {
-                $context['confirm_message'] = 'Type <code>SEND BREAKING NEWS</code> below to send a Breaking News email blast!';
-            }
-        } elseif ( 'publish' !== $status ) {
-
-            $context['message'] = esc_html__( sprintf(
-                'The %s must be published in order to send it to subscribers.',
-                strtolower( Types::get_post_type_name( Types::get_post_type( $post ), false ) )
-            ), 'pedestal' );
-
-        } else {
-            $malformed = sprintf( '%s metadata is malformed. Please contact #product.', $args['email_type'] );
-            $context['message'] = esc_html__( $malformed, 'pedestal' );
         }
 
-        if ( empty( $context['message'] ) ) {
+        Timber::render( 'partials/admin/metabox-send-email-primary.twig', $context );
+    }
+
+    /**
+     * Handle the meta box to trigger a breaking news email send to subscribers
+     *
+     * @param  object $post WP_Post
+     */
+    public function handle_notify_breaking_news_subscribers_meta_box( $post, $metabox ) {
+        $post = Post::get_by_post_id( (int) $post->ID );
+        $sent_date = $post->get_sent_date();
+        $status = $post->get_status();
+        $args = $metabox['args'];
+
+        if ( empty( $args['email_type'] ) || empty( $args['template'] ) ) {
             echo 'Something went wrong. Please contact #product.';
             return;
         }
 
-        $btn_attributes = [];
-        if ( 'publish' !== $status || $sent_date ) {
-            $context['disabled'] = true;
-            $btn_attributes['disabled'] = '';
+        $send_button_text = esc_html__( sprintf(
+            'Send %s To %d Subscribers',
+            $args['email_type'],
+            $this->get_breaking_news_subscriber_count()
+        ), 'pedestal' );
+
+        $context = [
+            'item'            => $post,
+            'template'        => $args['template'],
+            'message'         => '',
+            'confirm_message' => '',
+            'btn_send'        => get_submit_button(
+                $send_button_text,
+                'primary',
+                'pedestal-' . $args['template'] . '-notify-subscribers',
+                $wrap = true
+            ),
+            'btn_send_test'   => get_submit_button(
+                esc_html__( 'Send Test Email', 'pedestal' ),
+                'secondary',
+                'pedestal-' . $args['template'] . '-send-test-email',
+                $wrap = false
+            ),
+        ];
+
+        if ( $sent_date ) {
+
+            $sent_date = get_date_from_gmt( date( 'Y-m-d H:i:s', $sent_date ), PEDESTAL_DATETIME_FORMAT );
+            $sent_confirm = sprintf( 'The %s email was sent on %s.',
+                strtolower( $args['email_type'] ),
+                $sent_date
+            );
+            $context['message'] = wpautop( esc_html( $sent_confirm ) );
+            // Breaking News was already sent, don't show the Send button
+            $context['btn_send'] = '';
+
         }
 
-        $context['btn_send'] = get_submit_button(
-            $send_button_text,
-            'primary',
-            'pedestal-' . $args['template'] . '-notify-subscribers',
-            true,
-            $btn_attributes
-        );
-
-        Timber::render( 'partials/admin/metabox-send-email-primary.twig', $context );
+        Timber::render( 'partials/admin/metabox-send-email-breaking-news.twig', $context );
     }
 
     /**
@@ -323,7 +357,8 @@ class Subscriptions {
      * Handle requests to send email notifications
      */
     public function action_save_post_send_email( $post_id ) {
-        if ( ! in_array( get_post_type( $post_id ), Types::get_emailable_post_types() ) ) {
+        $post_type = get_post_type( $post_id );
+        if ( ! in_array( $post_type, Types::get_emailable_post_types() ) ) {
             return;
         }
 
@@ -346,12 +381,22 @@ class Subscriptions {
         }
 
         // Newsletters
-        if ( ! empty( $_POST['pedestal-newsletter-notify-subscribers'] ) || ! empty( $_POST['pedestal-newsletter-send-test-email'] ) ) {
+        if ( 'pedestal_newsletter' === $post_type ) {
             $newsletter = Newsletter::get_by_post_id( (int) $post_id );
             $args = [];
             if ( ! empty( $_POST['pedestal-newsletter-send-test-email'] ) ) {
                 $is_test_email = true;
                 $args['test_email_addresses'] = array_map( 'trim', explode( ',', $_POST['test-email-addresses'] ) );
+            }
+
+            // If the newsletter isn't being published, then bail...
+            if ( 'publish' !== $newsletter->get_status() && ! $is_test_email ) {
+                return;
+            }
+
+            // If the newsletter was already sent then bail...
+            if ( $newsletter->get_sent_date() && ! $is_test_email ) {
+                return;
             }
             $result = $this->send_email_to_newsletter_followers( $newsletter, $args );
             if ( $result && ! $is_test_email ) {
@@ -506,7 +551,6 @@ class Subscriptions {
         $activecampaign = new ActiveCampaign;
         $resp = $activecampaign->send_campaign( $args );
         if ( isset( $resp->result_code ) && 1 !== $resp->result_code ) {
-            error_log( 'ActiveCampaign Response Error: ' . $resp->result_message );
             return false;
         }
         do_action( 'pedestal_sent_email_campaign', $args );
@@ -552,7 +596,6 @@ class Subscriptions {
         $raw_lists_check = (array) $raw_lists;
         // Check if $raw_lists is an empty object
         if ( empty( $raw_lists_check ) && ! empty( $cluster_id ) ) {
-            error_log( 'Clearing post meta value' );
             self::delete_list_id_from_meta( $cluster_id );
             $list_ids = self::get_list_ids_from_cluster( $cluster_id );
             $args['ids'] = $list_ids;

@@ -132,7 +132,6 @@ class Admin {
                 [ $this, 'handle_dashboard_widget_scheduled_entities' ]
             );
         });
-
     }
 
     /**
@@ -299,6 +298,33 @@ class Admin {
 	        return $buttons;
         });
 
+        add_filter( 'gettext', function( $translation, $text ) {
+            if ( 'Publish' !== $text ) {
+                return $translation;
+            }
+
+            // We need to account for the var postL10n JavaScript variable translation
+            // as well and `get_post_type()` returns null during that context.
+            $post_type = get_post_type();
+            if ( ! $post_type && isset( $_GET['post'] ) ) {
+                $post_type = get_post_type( $_GET['post'] );
+            }
+            if ( ! $post_type && isset( $_GET['post_type'] ) ) {
+                $post_type = $_GET['post_type'];
+            }
+            if ( 'pedestal_newsletter' !== $post_type ) {
+                return $translation;
+            }
+
+            $new_text = 'Send Newsletter';
+            // If the trash is disabled we need to use a shorter label
+            // 'Move to Trash' changes to 'Delete Permanently' and there is less space
+            if ( ! EMPTY_TRASH_DAYS ) {
+                $new_text = 'Send';
+            }
+
+            return $new_text;
+        }, 10, 2 );
     }
 
     /**

@@ -1,15 +1,7 @@
-<p>{{ message }}</p>
+<input type="text" name="test-email-addresses" placeholder="Separate addresses by commas" style="width:100%" />
+<p>{{ btn_send_test }}</p>
 
-{% if not disabled %}
-    <input type="text" name="test-email-addresses" placeholder="Separate addresses by commas" style="width:100%" />
-    {{ btn_send_test }}
+{% if message %}
+    <hr />
+    <p>{{ message }}</p>
 {% endif %}
-
-<hr />
-
-{% if not disabled and 'breaking-news' == template and confirm_message %}
-    <p>{{ confirm_message }}</p>
-    <input type="text" name="confirm-send-email" style="width:100%" />
-{% endif %}
-
-{{ btn_send }}
