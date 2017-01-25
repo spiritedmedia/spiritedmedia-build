@@ -52,19 +52,19 @@ The 50/72 character rule is especially important in making commit messages reada
 	- [ ] Another specific thing
 	- [ ] Yet another thing
 	```
-	
+
 * Be descriptive in your issue description. Feel free to rewrite / modify as needed.
 * Poorly-defined issues, or ideas more broadly, shouldn't be filed as Github issues. These should be discussed with the product team at [product@billypenn.com](product@billypenn.com) or on Slack in `#product`.
 
 ## Pull Requests
 
-Code is developed on feature branches. These will be based off `master`, beginning with the issue number the branch correspond to, then discriptively named following the number.
+Code is developed on feature branches. These will be based off `master`, beginning with the issue number the branch correspond to, then descriptively named following the number.
 
 ![](http://cl.ly/image/1P1c1J0f2G3o/Image%202015-06-17%20at%2011%3A15%3A07.png)
 
 Pull requests are where we discuss the development in progress, and determine whether a given feature branch is ready for merging to master.
 
-In general, issues are for discussing the problem at hand or a desired feature, while pull requests are for dicussing a possible solution or potential implementation of the new feature. 
+In general, issues are for discussing the problem at hand or a desired feature, while pull requests are for dicussing a possible solution or potential implementation of the new feature.
 
 Please create your pull request against the `master` branch as soon as you start work on a branch. When creating a pull request, please use a clear title and reference the issue in the pull request description:
 
@@ -76,11 +76,11 @@ This makes it easy to see the history of pull requests for an issue:
 
 Issues should exist for pull requests as much as possible. This is why we begin new feature branches with an issue number. Issues are how we track a feature question from creation to closing.
 
-If you are a Collaborator, please allow a core development team member to merge your pull request.
+Please allow a core development team member to merge your pull request.
 
 ### TODOs and Pre-/Post-Deploy Requirements
 
-Pull requests that involve multiple moving parts may benefit from a TODO checklist kept up to date on the opening comment.
+Pull requests that involve multiple moving parts may benefit from a TODO checklist kept up to date on the opening comment. Your call.
 
 ![](http://cl.montchr.io/2w0f3R010S1W/Image%202016-04-01%20at%2013.45.47.png)
 
@@ -92,40 +92,27 @@ Some PRs are more involved than others, requiring extra steps to be taken on the
 
 ## Labels
 
-* **Scopes** — labels beginning with `scope:` — represent different components of the product. Each issue should have one or more scope labels assigned. Scope names (the part after the word "scope") should be concise, as they'll be used in commit messages (see above).
-* **Tasks** — labels beginning with `task:` — define what type of work is involved, and who should be paying attention. For example, if an issue only requires developer attention, then it should be labelled `task:development`, but if both designers and developers should pay attention, then add both the `task:development` and the `task:design` labels.
-* **Requests** — labels beginning with `request:` — these issues were specifically requested by the specified department, e.g. `request:sales` or `request:editorial`
-* **Needs Clarification** — labels beginning with `clarify:` — these issues require more information before the product team can take action — they need clarification from the specified department e.g. `clarify:sales` or `clarify:editorial`
-* Numbered labels represent state of completion for Huboard:
-    * Every upcoming task/issue not in the active milestone should be in the backlog state.
-    * Issues in the “Shipped” state should be closed by the product manager or acting issue tracker jockey on a regular basis.
+- **Scopes** — `scope:` — represent different components of the product. Each issue should have one or more scope labels assigned. Scope names (the part after the word "scope") should be concise, as they'll be used in commit messages (see above).
+- **Tasks** — `task:` — define what type of work is involved, and who should be paying attention. For example, if an issue only requires developer attention, then it should be labelled `task:development`, but if both designers and developers should pay attention, then add both the `task:development` and the `task:design` labels.
+- **Types** — `type:` — bugs, enhancements, questions, or refactoring?
+- **Requests** — `request:` — these issues were specifically requested by the specified department, e.g. `request:sales` or `request:editorial`
+- **Priorities** — `priority:` indicate the importance of a particular issue -- but not necessarily its urgency
+- **Sites** — `site:` — an issue only related to a specific site/theme
+- **Needs Clarification** — `clarify:` — these issues require more information before the product team can take action — they need clarification from the specified department e.g. `clarify:sales` or `clarify:editorial`
+- **Vendor** — `vendor:` — issues dealing with third-party plugins or services we use
 
 ## Coding Standards
 
-### EditorConfig
-
 Basic coding standards are enforced by [EditorConfig](http://editorconfig.org/). You will need to install the EditorConfig plugin for your text editor. EditorConfig will read the `.editorconfig` file in the project root.
 
-- Indent PHP with 4 spaces
-- Indent frontend assets with 2 spaces (`*.js, *.scss`)
-- PHP only: Spaces between parentheses, e.g. `foo( $bar )` or `if ( $foo == 'bar' )`
-- Use LF (Unix) line endings
-- UTF-8 character encoding
-- Trailing whitespace will be trimmed upon save
-- A newline character will be inserted at the end of every file upon save
+PHP, SCSS, and JS files are linted upon running `grunt` or `grunt build`. So try to run these before deploying changes or else CircleCI will fail.
 
-### PHP CodeSniffer + SCSSLint + JSHint
-
-PHP, SCSS, and JS files are sniffed upon running `grunt` or `grunt build`. So try to run these before committing changes.
-
-PHP CodeSniffer uses a slightly-modified version of the WordPress Coding Standards. Basically it's the same except we indent with spaces.
+PHP CodeSniffer uses a slightly-modified version of the WordPress Coding Standards.
 
 ## Non-Feature Branches
 
 The `master` branch is the main branch on GitHub, and it's the branch we'll be merging our feature branch PRs into.
 
-**Do not commit directly to master.** Instead, your work should happen on feature branches, which will be merged into `master`. 
+**Do not commit directly to master.** Instead, your work should happen on feature branches, which will be merged into `master`.
 
 Sometimes, if a severe bug is discovered and needs immediate fixing, then we use hotfix branches which can be merged to master without having to worry about managing an issue. Hotfix branches begin with `hotfix-`.
-
-**The `master` branch deploys automatically to http://dev.billypenn.com/ by way of DeployBot.**

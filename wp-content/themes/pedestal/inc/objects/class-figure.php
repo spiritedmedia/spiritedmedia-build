@@ -75,6 +75,7 @@ class Figure {
         $id_str = sprintf( 'id="figure_%s" ', $id );
         $classes = $atts['classes'];
         $style = $atts['style'];
+        $youtube_id = false;
 
         // Only use `aria-labelledby` if caption is present
         if ( ! empty( $atts['caption'] ) ) {
@@ -122,6 +123,16 @@ class Figure {
                     $atts['element_wrap'] = null;
                     $this->content = str_replace( 'class="', 'class="column-width ', $this->content );
                 }
+
+                // Is it a YouTube embed?
+                $youtube_id = false;
+                // @codingStandardsIgnoreStart
+                if ( 'iframe' === $node->nodeName && stristr( $node->getAttribute( 'src' ), 'youtube.com' ) ) {
+                    // @codingStandardsIgnoreEnd
+                    $youtube_url = $node->getAttribute( 'src' );
+                    $parts = explode( '/embed/', $youtube_url );
+                    $youtube_id = untrailingslashit( $parts[1] );
+                }
             }
 
             if ( $width && $height && $is_responsive ) {
@@ -152,6 +163,29 @@ class Figure {
             'wrap'        => $atts['element_wrap'],
             'style'       => $style,
         ];
+
+        // Override YouTube embed content so we can lazy load videos
+        if ( $youtube_id && ! is_feed( 'fias' ) ) {
+            $thumbnail_sizes = [
+                '120' => 'default.jpg',
+                '320' => 'mqdefault.jpg',
+                '480' => 'hqdefault.jpg',
+                '640' => 'sddefault.jpg',
+                '1280' => 'maxresdefault.jpg',
+            ];
+            $src_sets = [];
+            foreach ( $thumbnail_sizes as $width => $suffix ) {
+                $src_sets[] = 'https://img.youtube.com/vi/' . $youtube_id . '/' . $suffix . ' ' . $width . 'w';
+            }
+            $srcset_attr = implode( ', ', $src_sets );
+
+            $youtube_url = add_query_arg( 'v', $youtube_id, 'https://www.youtube.com/watch' );
+            $context['content'] = '<a href="' . esc_url( $youtube_url ) . '" class="c-yt-placeholder__link js-yt-placeholder-link" data-youtube-id="' . esc_attr( $youtube_id ) . '" target="_blank">';
+            $context['content'] .= '<img src="https://img.youtube.com/vi/' . $youtube_id . '/sddefault.jpg" srcset="' . esc_attr( $srcset_attr ) . '" class="c-yt-placeholder__image">';
+            $context['content'] .= '<span class="c-yt-placeholder__play-button fa fa-play">';
+            $context['content'] .= '</span></a>';
+            $context['classes'] .= ' c-figure--youtube c-yt-placeholder js-yt-placeholder';
+        }
 
         if ( ! empty( $atts['attachment'] ) ) {
             $obj = new Attachment( $atts['attachment'] );

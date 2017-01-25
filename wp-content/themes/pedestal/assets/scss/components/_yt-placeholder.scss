@@ -1,0 +1,53 @@
+// ==========================================================================
+// Pedestal // Components // YOUTUBE PLACEHOLDER
+// ==========================================================================
+
+
+$c: '.c-yt-placeholder';
+
+
+#{$c} {
+  background-color: $black;
+
+  &__link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: $z-index-1;
+  }
+
+  &__image {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+    // Override `.s-post-content img`
+    .s-post-content & {
+      height: 100%;
+    }
+  }
+
+  &__play-button {
+    top: 50%;
+    left: 50%;
+    transform: translate3d( -50%, -50%, 0 );
+    font-size: unitize( 36px );
+    color: $white;
+    position: absolute;
+    background-color: $black;
+    background-color: transparentize($black, 0.5);
+    padding: unitize( 14px ) unitize( 34px );
+    border-radius: 15px;
+    transition: background-color 250ms linear;
+    z-index: $z-index-2;
+  }
+
+  :hover,
+  :focus {
+    #{$c}__play-button {
+      background-color: $primary-color;
+    }
+  }
+}
