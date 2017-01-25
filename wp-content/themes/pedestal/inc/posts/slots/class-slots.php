@@ -493,8 +493,7 @@ class Slots {
 
         $slot_data = self::get_slot_data( $slot_data_return_type, $placement_options );
         if ( Types::is_post( $slot_data ) ) {
-            $template = '';
-            $additional_classes = '';
+            $template = $item_type = $additional_classes = '';
             if ( $slot_data instanceof Slot_Item ) {
                 $item_type = $slot_data->get_slot_item_type_slug();
                 $template = 'partials/slots/' . $item_type . '.twig';
@@ -505,7 +504,7 @@ class Slots {
                 $template = 'partials/slots/' . str_replace( '_', '-', $slot_position ) . '.twig';
             }
 
-            if ( ! $template ) {
+            if ( ! $template || ! $item_type ) {
                 return '';
             }
 

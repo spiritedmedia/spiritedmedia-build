@@ -9,23 +9,12 @@
         <div class="e404-main large-6 large-push-6 columns">
 
             <figure class="e404-quote">
-                <blockquote class="e404-quote__body e404-large-text">{{ quote.body }}</blockquote>
+                <blockquote class="e404-quote__body e404-text--primary">{{ quote.body }}</blockquote>
                 <figcaption class="e404-quote__caption">&mdash;{{ quote.author }}</figcaption>
             </figure>
 
-            <div class="e404-message">
-                <small class="e404-message__hook e404-large-text">{{ message.hook }}</small>
-                <h2 class="e404-message__content e404-large-text">{{ message.content }}</h2>
-            </div>
-
-            <div class="e404-nav">
-                <p>
-                    Go to
-                    {% for link_title, link_url in links %}
-                        <a href="{{ link_url }}">{{ link_title }}</a>{% if not loop.last %} | {% endif %}
-                    {% endfor %}
-                </p>
-            </div>
+            {% include 'partials/404-message.twig' %}
+            {% include 'partials/404-nav.twig' %}
 
         </div>
 
@@ -42,7 +31,6 @@
             </figure>
 
         </div>
-
     </article>
 
 </main>

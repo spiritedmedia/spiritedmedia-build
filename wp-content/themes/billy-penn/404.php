@@ -12,16 +12,9 @@ $context['message'] = [];
 $context['message']['hook'] = esc_html__( 'Don’t waste yours.', 'pedestal' );
 $context['message']['content'] = esc_html__( 'This page doesn’t exist.', 'pedestal' );
 
-$context['links'] = [
-    'Search' => '/?s=',
-    'Home'   => '/',
-];
-
 $context['young_penn'] = [];
 $context['young_penn']['src'] = get_template_directory_uri() . '/assets/images/young-penn.png';
 $context['young_penn']['description'] = esc_html__( 'Painting: Oil on canvas portrait of Billy Penn at age 22 in 1666.', 'pedestal' );
 $context['young_penn']['source'] = esc_html__( 'Source: Library of Congress, American Memory project, Historical Society of Pennsylvania', 'pedestal' );
-
-$context['sidebar'] = false;
 
 Timber::render( '404.twig', $context );

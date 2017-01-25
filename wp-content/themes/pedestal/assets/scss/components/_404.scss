@@ -6,7 +6,6 @@
 // @TODO
 // scss-lint:disable SelectorFormat
 
-
 /*body*/.error404 {
 
   .c-content {
@@ -20,11 +19,18 @@
 
 }
 
-.e404-large-text {
-  color: $page-404-text-color;
-  font-size: $page-404-lg-text-size;
-  line-height: $page-404-lg-text-line-height;
-  font-weight: 400;
+.e404-text {
+  &--primary {
+    color: $page-404-text-color;
+    font-size: $page-404-primary-text-size;
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  &--secondary {
+    font-size: $h3-font-size;
+    margin-bottom: 0;
+  }
 }
 
 
@@ -37,7 +43,7 @@
 
 
 /*figure*/.e404-quote {
-  margin: 0 0 ( $page-404-lg-text-size * $page-404-lg-text-line-height );
+  margin: 0 0 ( $page-404-primary-text-size * $page-404-primary-text-line-height );
 }
 
   /*blockquote*/.e404-quote__body {
@@ -67,38 +73,3 @@
   }
 
 }
-
-/*figure*/.e404-young-penn {
-  position: relative;
-}
-
-  /*img*/.e404-young-penn__img {}
-
-  /*figcaption*/.e404-young-penn__caption {
-
-    // @TODO
-    // scss-lint:disable SelectorFormat
-
-    margin-top: 2rem;
-
-    @media #{$large-up} {
-      position: absolute;
-      bottom: 3rem;
-      right: -34rem;
-    }
-
-    .description,
-    .source {
-      font-weight: bold;
-      font-style: italic;
-
-      @media #{$large-up} {
-        font-size: 0.9rem;
-      }
-    }
-
-    .description {}
-
-    .source {}
-
-  }

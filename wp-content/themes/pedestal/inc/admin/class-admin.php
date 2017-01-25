@@ -795,10 +795,12 @@ class Admin {
             ],
         ] );
         $meta_group->children['seo'] = $seo_group;
-        $meta_group->add_meta_box( esc_html__( 'Distribution', 'pedestal' ), Types::get_post_types(), 'advanced', 'low' );
 
-        $meta_group->add_meta_box( esc_html__( 'Distribution', 'pedestal' ), Types::get_post_types() );
-
+        $distributable_post_types = get_post_types( [
+            'public'   => true,
+            '_builtin' => false,
+        ] );
+        $meta_group->add_meta_box( esc_html__( 'Distribution', 'pedestal' ), $distributable_post_types, 'advanced', 'low' );
     }
 
     /**

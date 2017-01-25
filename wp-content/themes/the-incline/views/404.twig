@@ -1,0 +1,26 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+<figure class="e404-tunnel-monster">
+    <img src="{{ tunnel_monster.src }}" class="e404-tunnel-monster__img" title="{{ tunnel_monster.description }}" alt="{{ tunnel_monster.description }}" />
+</figure>
+
+<main role="main" class="{{ main_classes }}">
+
+    <article id="page" class="row">
+
+        <div class="e404-art medium-5 columns">
+          &nbsp;
+        </div>
+
+        <div class="e404-main medium-7 columns">
+          {% include 'partials/404-message.twig' %}
+          {% include 'partials/404-nav.twig' %}
+        </div>
+
+    </article>
+
+</main>
+
+{% endblock %}

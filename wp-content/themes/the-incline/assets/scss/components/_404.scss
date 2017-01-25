@@ -1,0 +1,43 @@
+// ==========================================================================
+// The Incline // Components // 404 PAGE
+// ==========================================================================
+
+// @TODO
+// scss-lint:disable SelectorFormat
+
+/*body*/.error404 {
+  background-image: url('#{$site-theme-abspath}/assets/images/tunnel-background.jpg');
+  background-size: auto;
+  background-position: top center;
+  background-repeat: no-repeat;
+
+  .content-wrapper {
+    margin-top: 0;
+  }
+}
+
+/*main*/.e404-main {
+  margin-top: 0;
+}
+
+/*figure*/.e404-tunnel-monster {
+  margin-top: -13px;
+  margin-left: 0;
+  margin-bottom: 0;
+  margin-right: 0;
+  text-align: center;
+
+  @media #{$medium-up} {
+    margin-top: -20px;
+    margin-left: 20px;
+    text-align: left;
+  }
+}
+
+.e404-tunnel-monster__img {
+  width: 300px;
+
+  @media #{$medium-up} {
+    width: 450px;
+  }
+}

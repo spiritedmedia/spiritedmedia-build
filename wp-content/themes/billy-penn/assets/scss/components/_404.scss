@@ -1,0 +1,43 @@
+// ==========================================================================
+// Billy Penn // Components // 404 PAGE
+// ==========================================================================
+
+
+// @TODO
+// scss-lint:disable SelectorFormat
+
+
+/*figure*/.e404-young-penn {
+  position: relative;
+}
+
+  /*img*/.e404-young-penn__img {}
+
+  /*figcaption*/.e404-young-penn__caption {
+
+    // @TODO
+    // scss-lint:disable SelectorFormat
+
+    margin-top: 2rem;
+
+    @media #{$large-up} {
+      position: absolute;
+      bottom: 3rem;
+      right: -34rem;
+    }
+
+    .description,
+    .source {
+      font-weight: bold;
+      font-style: italic;
+
+      @media #{$large-up} {
+        font-size: 0.9rem;
+      }
+    }
+
+    .description {}
+
+    .source {}
+
+  }

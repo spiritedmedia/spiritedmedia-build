@@ -468,6 +468,13 @@ class Frontend {
             $context['sidebar'] = false;
         }
 
+        if ( is_404() ) {
+            $context['e404_links'] = [
+               'Search' => get_site_url() . '/?s=',
+               'Home'   => get_site_url(),
+            ];
+        }
+
         // Load some WP conditional functions as Timber context variables
         $conditionals = [
             'is_home',
