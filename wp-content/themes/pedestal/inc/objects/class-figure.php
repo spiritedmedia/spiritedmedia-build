@@ -164,6 +164,10 @@ class Figure {
             'style'       => $style,
         ];
 
+        // If the <img> is already wrapped in a <a> then don't double link it
+        if ( '<' === $content[0] && 'a' === strtolower( $content[1] ) ) {
+            $context['url'] = null;
+        }
         // Override YouTube embed content so we can lazy load videos
         if ( $youtube_id && ! is_feed( 'fias' ) ) {
             $thumbnail_sizes = [

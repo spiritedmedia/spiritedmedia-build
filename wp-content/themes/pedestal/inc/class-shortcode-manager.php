@@ -93,6 +93,15 @@ class Shortcode_Manager {
         add_filter( 'img_shortcode_send_to_editor_attrs', [ $this, 'filter_img_shortcode_send_to_editor_attrs' ], 10, 4 );
         add_filter( 'img_shortcode_ui_args', [ $this, 'filter_img_shortcode_ui_args' ], 10, 1 );
         add_filter( 'img_shortcode_output_after_captionify', [ $this, 'filter_img_shortcode_output_after_captionify' ], 10, 2 );
+        add_filter( 'shortcode_atts_img', function( $atts, $thing ) {
+            // Instant Articles can't have links wrapped around <img>. It prevents
+            // image captions from rendering.
+            if ( is_feed( 'fias' ) ) {
+                $atts['linkto'] = null;
+                $atts['url'] = null;
+            }
+            return $atts;
+        }, 10 , 2 );
     }
 
     /**
