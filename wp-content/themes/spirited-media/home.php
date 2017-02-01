@@ -241,7 +241,7 @@ get_header(); ?>
 
             <div class="home-contact--contact-details">
                 <p><strong>Media Inquiries:</strong> <a href="mailto:<?php echo antispambot( 'contact@billypenn.com' ); ?>"><?php echo antispambot( 'contact@billypenn.com' ); ?></a></p>
-                <p><?php echo svg_icon( 'map-marker' ); ?> Spirited Media<br>P.O. Box 755<br>Great Falls, VA 22066</p>
+                <p><?php echo svg_icon( 'map-marker' ); ?> Spirited Media<br>P.O. Box 577<br>Great Falls, VA 22066</p>
                 <p><?php echo svg_icon( 'phone' ); ?> <a href="tel:2158218477">(215) 821-8477</a></p>
                 <p><?php echo svg_icon( 'envelope' ); ?> <a href="mailto:<?php echo antispambot( 'contact@spiritedmedia.com' ); ?>"><?php echo antispambot( 'contact@spiritedmedia.com' ); ?></a></p>
             </div>

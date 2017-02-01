@@ -34,14 +34,19 @@ class ActiveCampaign {
 
         $this->sender_info = [
             'sender_name'     => PEDESTAL_BLOG_NAME,
-            'sender_addr1'    => PEDESTAL_BUILDING_NAME,
-            'sender_addr2'    => PEDESTAL_STREET_ADDRESS,
+            'sender_addr1'    => PEDESTAL_STREET_ADDRESS,
+            'sender_addr2'    => '',
             'sender_city'     => PEDESTAL_CITY_NAME,
             'sender_zip'      => PEDESTAL_ZIPCODE,
             'sender_country'  => 'United States',
             'sender_url'      => get_site_url(),
             'sender_reminder' => '',
         ];
+
+        if ( ! empty( PEDESTAL_BUILDING_NAME ) ) {
+            $this->sender_info['sender_addr1'] = PEDESTAL_BUILDING_NAME;
+            $this->sender_info['sender_addr2'] = PEDESTAL_STREET_ADDRESS;
+        }
     }
 
     /**

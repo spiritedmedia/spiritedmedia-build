@@ -110,6 +110,7 @@ class General_Types extends Types {
             'extra_elements' => 0,
             'add_more_label' => esc_html__( 'Add Item', 'pedestal' ),
             'collapsible'    => true,
+            'collapsed'      => true,
             'label_macro'    => [
                 '%s',
                 'type',
