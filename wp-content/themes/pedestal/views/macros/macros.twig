@@ -225,7 +225,7 @@
             {% endif %}
 
             <{{ title_element }} class="{{ el }}__text  {{ el }}__item">
-                <a href="{{ url }}" class="{{ el }}__text__link  {{ js }}-link" {{ inline_foreground_color }}>
+                <a href="{{ url }}" class="{{ el }}__text__link  {{ js }}-link" {{ inline_foreground_color }} data-ga-category="Story Bar" data-ga-label="{{title}}">
                     <span class="{{ el }}__text__title  {{ el }}__text__item  {{ js }}-title">{{ title }}</span>
                     {% if options.subtitle %}
                     <span class="{{ el }}__text__subtitle  {{ el }}__text__item  {{ js }}-subtitle">{{ options.subtitle }}</span>
@@ -353,7 +353,7 @@
             {% if twitter_handle %}
                 {% set twitter_html %}
                     {% spaceless %}
-                    <a href="{{ twitter_url }}" class="o-icon-text">
+                    <a href="{{ twitter_url }}" class="o-icon-text" data-ga-category="User" data-ga-label="Twitter|@{{ twitter_handle }}|{{ name }}">
                         <i class="o-icon-text__icon fa fa-twitter"></i>
                         <span class="c-user-card__twitter__handle">@{{ twitter_handle }}</span>
                     </a>
@@ -363,7 +363,7 @@
         {% endif %}
 
         {% set email_html %}
-            <a href="mailto:{{ email }}" class="o-icon-text">
+            <a href="mailto:{{ email }}" class="o-icon-text" data-ga-category="User" data-ga-label="Email|{{ email }}|{{ name }}">
                 <i class="o-icon-text__icon fa fa-envelope"></i>
                 <span itemprop="email">{{ email }}</span>
             </a>
@@ -372,7 +372,7 @@
         <section class="[ c-user-card  c-user-card--{{ type }} ]  {{ block_classes }}" itemscope itemtype="http://schema.org/Person">
 
             {% if img %}
-            <a href="{{ author_url }}" class="{{ img_classes }}">
+            <a href="{{ author_url }}" class="{{ img_classes }}" data-ga-category="User" data-ga-label="Image|Author URL|{{ name }}">
                 {{ img }}
             </a>
             {% endif %}
@@ -380,7 +380,7 @@
             <div class="c-user-card__inner {{ inner_classes }}">
 
                 <h1 class="c-user-card__name {{ name_classes }}">
-                    <a href="{{ author_url }}" itemprop="author_url">
+                    <a href="{{ author_url }}" itemprop="author_url" data-ga-category="User" data-ga-label="Name|Author URL|{{ name }}">
                         <span itemprop="name">{{ name }}</span>
                     </a>
                 </h1>
@@ -510,27 +510,27 @@
 
         <div class="c-pagination__inner">
 
-            <a href="{{ url_prev }}" class="c-pagination__dir--prev  c-pagination__dir  c-pagination__item {{ url_prev_disabled }}  js-pagination-item">
+            <a href="{{ url_prev }}" class="c-pagination__dir--prev  c-pagination__dir  c-pagination__item {{ url_prev_disabled }}  js-pagination-item" data-ga-category="Pagination" data-ga-label="Previous">
                 <i class="c-pagination__dir__icon  fa  fa-angle-left"></i>
             </a>
 
             {% for num, url in data.page_numbers.smaller %}
-                <a href="{{ url }}" class="c-pagination__num  c-pagination__num--smaller  c-pagination__item  js-pagination-item">
+                <a href="{{ url }}" class="c-pagination__num  c-pagination__num--smaller  c-pagination__item  js-pagination-item" data-ga-category="Pagination" data-ga-label="Number|{{ num|replace({ 'p_': '' }) }}">
                     {{ num|replace({ 'p_': '' }) }}
                 </a>
             {% endfor %}
 
-            <a href="#" class="c-pagination__num  c-pagination__num--current  c-pagination__item  is-disabled  js-is-disabled  js-pagination-item">
+            <a href="#" class="c-pagination__num  c-pagination__num--current  c-pagination__item  is-disabled  js-is-disabled  js-pagination-item" data-ga-category="Pagination" data-ga-label="Number|Current|{{ data.page_numbers.current }}">
                 {{ data.page_numbers.current }}
             </a>
 
             {% for num, url in data.page_numbers.larger %}
-                <a href="{{ url }}" class="c-pagination__num  c-pagination__num--larger  c-pagination__item  js-pagination-item">
+                <a href="{{ url }}" class="c-pagination__num  c-pagination__num--larger  c-pagination__item  js-pagination-item" data-ga-category="Pagination" data-ga-label="Number|{{ num|replace({ 'p_': '' }) }}">
                     {{ num|replace({ 'p_': '' }) }}
                 </a>
             {% endfor %}
 
-            <a href="{{ url_next }}" class="c-pagination__dir--next  c-pagination__dir  c-pagination__item  {{ url_next_disabled }}  js-pagination-item">
+            <a href="{{ url_next }}" class="c-pagination__dir--next  c-pagination__dir  c-pagination__item  {{ url_next_disabled }}  js-pagination-item" data-ga-category="Pagination" data-ga-label="Next">
                 <i class="c-pagination__dir__icon  fa  fa-angle-right"></i>
             </a>
 

@@ -73,7 +73,7 @@
                         {% include [
                             'partials/stream/pedalized/' ~ item.get_type ~ '.twig',
                             'partials/stream/pedalized/entity.twig'
-                        ] %}
+                        ] with { 'gaCategory': 'Stream' } %}
 
                     {% endif %}
 

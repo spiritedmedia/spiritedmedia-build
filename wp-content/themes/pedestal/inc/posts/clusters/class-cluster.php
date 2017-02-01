@@ -16,6 +16,8 @@ abstract class Cluster extends Post {
 
     protected $email_type = 'cluster updates';
 
+    private $cached_stream = [];
+
     /**
      * Get CSS classes
      *
@@ -118,8 +120,12 @@ abstract class Cluster extends Post {
         $args['paged'] = $paged ? $paged : 1;
         $args['connected_items'] = $this->post;
         $args['connected_type'] = Types::get_cluster_connection_types();
-
-        return new Stream( $args );
+        $args_hash = md5( serialize( $args ) );
+        if ( ! empty( $this->cached_stream[ $args_hash ] ) ) {
+            return $this->cached_stream[ $args_hash ];
+        }
+        $this->cached_stream[ $args_hash ] = new Stream( $args );
+        return $this->cached_stream[ $args_hash ];
     }
 
     /**

@@ -15,22 +15,31 @@
 
     {% if person.get_twitter_handle %}
     <strong>Twitter:</strong>
-    <a href="{{ person.get_twitter_profile_url }}" title="@{{ person.get_twitter_handle }} on twitter">
-        @{{ person.get_twitter_handle }}
+    <a href="{{ person.get_twitter_profile_url }}"
+        title="@{{ person.get_twitter_handle }} on twitter"
+        data-ga-category="Person"
+        data-ga-label="Twitter|@{{ person.get_twitter_handle }}|{{ person.get_the_title }}">
+            @{{ person.get_twitter_handle }}
     </a>
     {% endif %}
 
     {% if person.get_instagram_handle %}
     <strong>Instagram:</strong>
-    <a href="{{ person.get_instagram_url }}" title="@{{ person.get_instagram_handle }} on Instagram">
-        @{{ person.get_instagram_handle }}
+    <a href="{{ person.get_instagram_url }}"
+        title="@{{ person.get_instagram_handle }} on Instagram"
+        data-ga-category="Person"
+        data-ga-label="Instagram|@{{ person.get_instagram_handle }}|{{ person.get_the_title }}">
+            @{{ person.get_instagram_handle }}
     </a>
     {% endif %}
 
     {% if person.get_linkedin_url %}
     <strong>LinkedIn:</strong>
-    <a href="{{ person.get_linkedin_url }}" title="{{ person.get_the_title }} on LinkedIn">
-        {{ person.get_the_title }} on LinkedIn
+    <a href="{{ person.get_linkedin_url }}"
+        title="{{ person.get_the_title }} on LinkedIn"
+        data-ga-category="Person"
+        data-ga-label="LinkedIn|{{ person.get_the_title }}">
+            {{ person.get_the_title }} on LinkedIn
     </a>
     {% endif %}
 </p>

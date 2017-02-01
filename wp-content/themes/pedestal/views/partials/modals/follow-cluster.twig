@@ -1,6 +1,9 @@
 <div id="follow-cluster" class="reveal-modal dark-reveal-modal small" data-reveal>
     <a class="close-reveal-modal">&#215;</a>
-    <form method="POST" action="{{ site.url }}/subscribe-to-email-list/" data-confirm-id="follow-cluster-confirm">
+    <form method="POST" action="{{ site.url }}/subscribe-to-email-list/"
+        data-confirm-id="follow-cluster-confirm"
+        data-ga-category="Submitted Form"
+        data-ga-label="Follow Cluster|{{ cluster.get_type_name }}|{{ cluster.get_the_title }}">
         <h3>Follow this {{ cluster.get_type_name|lower }}</h3>
         <div class="row">
             <label>

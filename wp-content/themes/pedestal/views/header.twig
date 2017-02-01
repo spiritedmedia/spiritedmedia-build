@@ -7,7 +7,7 @@
 
         <div class="columns small-9 medium-6">
             <h1 class="site-header-logo">
-                <a href="{{ site.url }}" rel="home"><span class="hidden-for-small-up">Home</span></a>
+                <a href="{{ site.url }}" rel="home" data-ga-category="Site Logo|Header" data-ga-label=""><span class="hidden-for-small-up">Home</span></a>
             </h1>
         </div>
 
@@ -25,7 +25,7 @@
 <aside id="promoted-story">
     <div class="row">
         <strong>{{ spotlight.label }}</strong>
-        <a href="{{ spotlight.content.get_the_permalink }}">{{ spotlight.content.get_the_title }}</a>
+        <a href="{{ spotlight.content.get_the_permalink }}" data-ga-category="Spotlight|{{ spotlight.label }}" data-ga-label="{{spotlight.content.get_the_title}}">{{ spotlight.content.get_the_title }}</a>
     </div>
 </aside>
 {% endif %}

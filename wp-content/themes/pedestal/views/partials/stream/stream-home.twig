@@ -31,7 +31,7 @@
             {% include [
                 'partials/stream/isolated/' ~ item.get_type ~ '.twig',
                 'partials/stream/isolated/entity.twig'
-            ] %}
+            ] with {'gaCategory': 'Stream'} %}
 
         {% endfor %}
 

@@ -65,8 +65,6 @@
             el.find('.form-fields').hide();
             el.find('.success-message').show();
           }
-
-          ga('send', 'event', 'newsletter', 'subscribe');
         }).fail(function(response) {
           var alert = $('<div data-alert class="alert-box alert"></div>');
           el.removeClass('is-loading');
@@ -151,76 +149,48 @@
      * https://developers.google.com/analytics/devguides/collection/analyticsjs/events
      */
     analyticsEventTracking: function() {
-
-      var el, position, $storyBarTitle, sourceName, postType, isExternal,
-        isOriginal, storyTitle, btnHTML, shareDest;
-      var entityLink = '.js-stream-items .js-entity-permalink';
-      var storyLink = '.js-stream-item .js-story-bar .js-blox-link';
-      $shareButtons    = $('.js-share-modal-btn');
-
-      // Entities in stream
-      $('body.home').on('click', entityLink, function(obj) {
-        $el        = $(this);
-        $entity    = $el.closest('.entity');
-        entityHTML = $entity[0];
-        sourceName = entityHTML.getAttribute('data-source-name');
-        postType   = entityHTML.getAttribute('data-post-type');
-        isOriginal = entityHTML.hasAttribute('data-editorial-content');
-        isExternal = entityHTML.hasAttribute('data-source-external');
-        i          = $entity.index();
-
-        if (!sourceName) {
-          sourceName = postType;
+        var debugging = false;
+        if ($('body').is('.js-debug-ga')) {
+          debugging = true;
         }
-
-        if (isOriginal) {
-          sourceName = 'Original content';
+        if (typeof ga === 'undefined' && !debugging) {
+          return;
         }
+        $('body')
+          .on('click', 'a[data-ga-category]', function(e) {
+            var $this = $(this);
+            var eventCategory = $this.data('ga-category');
+            var eventAction = e.currentTarget.href;
+            var eventLabel = $this.data('ga-label');
+            if (debugging) {
+              console.group('Google Analytics Event Data');
+              console.log('Category: ', eventCategory);
+              console.log('Action: ', eventAction);
+              console.log('Label: ', eventLabel);
+              console.groupEnd();
+              e.preventDefault();
+              return;
+            }
+            ga('send', 'event', eventCategory, eventAction, eventLabel);
+          })
+          .on('submit', 'form[data-ga-category]', function(e) {
+              var $this = $(this);
+              var eventCategory = $this.data('ga-category');
+              var eventAction = $this.attr('action');
+              var eventLabel = $this.data('ga-label');
+              if (debugging) {
+                console.group('Google Analytics Event Data');
+                console.log('Category: ', eventCategory);
+                console.log('Action: ', eventAction);
+                console.log('Label: ', eventLabel);
+                console.groupEnd();
+                e.preventDefault();
+                return;
+              }
+              ga('send', 'event', eventCategory, eventAction, eventLabel);
+            });
 
-        ga('send', {
-          'hitType': 'event',
-          'eventCategory': postType + '_entity_in_home_stream',
-          'eventAction': 'click',
-          'eventLabel': sourceName,
-          'eventValue': i,
-          'nonInteraction': isExternal
-        });
-      });
-
-      // Story banners in stream
-      $('body.home').on('click', storyLink, function(obj) {
-        $el        = $(this);
-        $entity    = $el.closest('.entity');
-        entityHTML = $entity[0];
-        i          = $entity.index();
-
-        $storyBarTitle  = $entity.find('.js-story-bar .js-blox-title');
-        storyTitle = ($storyBarTitle.text()) ? $storyBarTitle.text() : null;
-
-        ga('send', {
-          'hitType': 'event',
-          'eventCategory': 'story_banner_in_stream',
-          'eventAction': 'click',
-          'eventLabel': storyTitle,
-          'eventValue': i
-        });
-      });
-
-      // Share buttons in modal
-      $shareButtons.on('click', function(obj) {
-        $el       = $(this);
-        btnHTML   = $el[0];
-        shareDest = btnHTML.getAttribute('data-share-dest');
-
-        ga('send', {
-          'hitType': 'event',
-          'eventCategory': 'share_button_in_modal',
-          'eventAction': 'click',
-          'eventLabel': shareDest
-        });
-      });
-
-    }, // end analyticsEventTracking()
+      }, // end analyticsEventTracking()
 
     honeyPotHelper: function() {
       var fullYear = new Date().getFullYear();

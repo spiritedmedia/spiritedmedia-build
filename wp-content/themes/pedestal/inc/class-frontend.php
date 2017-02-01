@@ -91,6 +91,10 @@ class Frontend {
                 $body_classes[] = 'is-search-open';
             }
 
+            if ( is_user_logged_in() && isset( $_GET['debug-ga'] ) ) {
+                $body_classes[] = 'js-debug-ga';
+            }
+
             return $body_classes;
         });
 
@@ -108,7 +112,15 @@ class Frontend {
 
         add_filter( 'the_content', [ $this, 'filter_the_content_prepare_footnotes' ] );
         add_filter( 'the_footnotes', [ $this, 'filter_the_footnotes_render' ], 10, 2 );
-
+        add_filter( 'nav_menu_link_attributes', function( $attrs = [], $item, $args = [], $depth ) {
+            $ga_cat = 'Menu';
+            if ( isset( $args->menu->name ) ) {
+                $ga_cat .= ' - ' . $args->menu->name;
+            }
+            $attrs['data-ga-category'] = $ga_cat;
+            $attrs['data-ga-label'] = $item->title;
+            return $attrs;
+        }, 10, 4 );
     }
 
     /**
@@ -576,7 +588,15 @@ class Frontend {
 
             $n = $start;
             foreach ( $matches[0] as $index => $target ) {
-                $content = str_replace( $target, "<sup class=\"footnote\"><a href=\"#footnote-$post_id-$n\" id=\"fnref-$post_id-$n\" class=\"js-footnote-link\">$n</a></sup>", $content );
+                $context = [
+                    'token' => $post_id . '-' . $n,
+                    'num'   => $n,
+                ];
+                $replacement  = '';
+                ob_start();
+                $replacement = Timber::render( 'partials/footnotes/footnote-link.twig', $context );
+                ob_get_clean();
+                $content = str_replace( $target, $replacement, $content );
                 $n++;
             }
 
@@ -606,11 +626,11 @@ class Frontend {
         ) {
             $context = [
                 'post_id' => $post_id,
-                'count'   => $post->get_footnotes_generated_start(),
+                'num'     => $post->get_footnotes_generated_start(),
                 'items'   => $post->get_footnotes_generated_notes(),
             ];
             ob_start();
-            $footnotes .= Timber::render( 'partials/footnotes-generated.twig', $context );
+            $footnotes .= Timber::render( 'partials/footnotes/footnotes-list.twig', $context );
             ob_get_clean();
         }
         wp_enqueue_script( 'pedestal-footnotes' );

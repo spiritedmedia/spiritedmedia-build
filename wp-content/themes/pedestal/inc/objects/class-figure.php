@@ -184,7 +184,7 @@ class Figure {
             $srcset_attr = implode( ', ', $src_sets );
 
             $youtube_url = add_query_arg( 'v', $youtube_id, 'https://www.youtube.com/watch' );
-            $context['content'] = '<a href="' . esc_url( $youtube_url ) . '" class="c-yt-placeholder__link js-yt-placeholder-link" data-youtube-id="' . esc_attr( $youtube_id ) . '" target="_blank">';
+            $context['content'] = '<a href="' . esc_url( $youtube_url ) . '" class="c-yt-placeholder__link js-yt-placeholder-link" data-youtube-id="' . esc_attr( $youtube_id ) . '" target="_blank" data-ga-category="Embed|Video" data-ga-label="Load YouTube Video">';
             $context['content'] .= '<img src="https://img.youtube.com/vi/' . $youtube_id . '/sddefault.jpg" srcset="' . esc_attr( $srcset_attr ) . '" class="c-yt-placeholder__image">';
             $context['content'] .= '<span class="c-yt-placeholder__play-button fa fa-play">';
             $context['content'] .= '</span></a>';

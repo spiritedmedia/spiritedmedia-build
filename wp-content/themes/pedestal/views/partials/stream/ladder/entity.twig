@@ -3,12 +3,12 @@
 
         {% if is_email and 'breaking-news' == template_name and item.has_featured_image %}
         <div class="c-stream__item__img">
-            {% include 'partials/stream/item-img.twig' %}
+            {% include 'partials/stream/item-img.twig' with {'gaCategory': 'Stream'} %}
         </div>
         {% endif %}
 
         <div class="c-stream__item__body">
-            {% include 'partials/stream/item-title.twig' %}
+            {% include 'partials/stream/item-title.twig' with {'gaCategory': 'Stream'} %}
 
             {% if is_email and 'breaking-news' == template_name and item.get_excerpt %}
             <div class="entity-excerpt js-entity-excerpt">

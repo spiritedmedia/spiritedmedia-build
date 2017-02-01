@@ -443,7 +443,12 @@ abstract class Post {
         $authors = $this->get_authors();
         $authors_names_with_links = [];
         foreach ( $authors as $author ) {
-            $authors_names_with_links[] = '<a href="' . esc_url( $author->get_permalink() ) . '">' . esc_html( $author->get_display_name() ) . '</a>';
+            $authors_names_with_links[] = sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Name|%s">%s</a>',
+                esc_url( $author->get_permalink() ),
+                esc_attr( $author->get_display_name() ),
+                esc_html( $author->get_display_name() )
+            );
+
         }
 
         return Utils::get_byline_list( $authors_names_with_links, [ 'truncate' => $truncate ] );
@@ -514,13 +519,13 @@ abstract class Post {
 
         $authors = $this->get_authors();
         if ( 1 == count( $authors ) ) {
-            $avatar = $this->get_single_author()->get_avatar( $size );
-            $html = '<a href="' . $this->get_single_author()->get_permalink() . '">';
-            $html .= $avatar;
-            $html .= '</a>';
-            return $html;
+            return sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Image|%s">%s</a>',
+                esc_url( $this->get_single_author()->get_permalink() ),
+                esc_attr( $this->get_single_author()->get_display_name() ),
+                $this->get_single_author()->get_avatar( $size )
+            );
         } elseif ( 1 < count( $authors ) ) {
-            $html = '<a href="' . home_url( '/about' ) . '">';
+            $html  = '<a href="' . esc_url( home_url( '/about/' ) ) . '" data-ga-category="Author" data-ga-label="Image|Placeholder">';
             $html .= '<i class="icon icon-logo"></i>';
             $html .= '</a>';
             return $html;

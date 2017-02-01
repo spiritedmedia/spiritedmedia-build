@@ -2,7 +2,7 @@
     <p>
         Go to
         {% for link_title, link_url in e404_links %}
-            <a href="{{ link_url }}">{{ link_title }}</a>{% if not loop.last %} | {% endif %}
+            <a href="{{ link_url }}" data-ga-category="404" data-ga-label="Nav|{{ link_title }}">{{ link_title }}</a>{% if not loop.last %} | {% endif %}
         {% endfor %}
     </p>
 </div>

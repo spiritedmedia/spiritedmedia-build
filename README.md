@@ -1,8 +1,7 @@
-Build [#2030](https://circleci.com/gh/spiritedmedia/spiritedmedia/2030) by montchr at 2017-02-01 03:08 PM UTC
+Build [#2039](https://circleci.com/gh/spiritedmedia/spiritedmedia/2039) by kingkool68 at 2017-02-01 08:54 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.1.6](https://github.com/spiritedmedia/spiritedmedia/compare/v5.1.6)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.2.0](https://github.com/spiritedmedia/spiritedmedia/compare/v5.2.0)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.1.5...v5.1.6)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.1.6...v5.2.0)
 
- - [#1835](https://github.com/spiritedmedia/spiritedmedia/pull/1835): Change Billy Penn and Spirited Media addresses
- - [#1834](https://github.com/spiritedmedia/spiritedmedia/pull/1834): Collapse Newsletter field groups by default
+ - [#1836](https://github.com/spiritedmedia/spiritedmedia/pull/1836): Setup Detailed Widespread Google Analytics Event Tracking

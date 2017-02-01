@@ -6,7 +6,7 @@
     {% endif %}
 
         {% if url %}
-        <a href="{{ url }}" target="_blank" class="c-figure__link">
+        <a href="{{ url }}" target="_blank" class="c-figure__link" data-ga-category="Figure" data-ga-label="Link|{{ type }}">
         {% endif %}
 
             {{ content }}
@@ -30,7 +30,7 @@
         <cite class="c-figure__text__credit">
 
             {% if credit_link %}
-            <a href="{{ credit_link }}" target="_blank">
+            <a href="{{ credit_link }}" target="_blank" data-ga-category="Figure" data-ga-label="Credit|{{ type }}">
             {% endif %}
 
             {{ credit }}

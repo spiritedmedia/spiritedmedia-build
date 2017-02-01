@@ -12,7 +12,7 @@
 
         {% if item.has_featured_image %}
         <div class="c-stream__item__img  o-media__img">
-            {% include 'partials/stream/item-img.twig' %}
+            {% include 'partials/stream/item-img.twig' with { 'gaCategory': gaCategory, 'gaLabel': item.get_the_title } %}
         </div>
         {% endif %}
 

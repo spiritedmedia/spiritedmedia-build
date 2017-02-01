@@ -7,7 +7,11 @@
 {% endif %}
 
 <h3 class="c-stream__item__title">
-    <a href="{{ url }}" class="c-stream__item__link  js-entity-permalink" {{ link_atts }}>{{ title }}</a>
+    <a href="{{ url }}" class="c-stream__item__link  js-entity-permalink" {{ link_atts }}
+        data-ga-category="{{ gaCategory }}"
+        data-ga-label="Title|{{ title }}|Type: {{ item.get_type_name|capitalize }}">
+            {{ title }}
+    </a>
 </h3>
 
 {% endspaceless %}

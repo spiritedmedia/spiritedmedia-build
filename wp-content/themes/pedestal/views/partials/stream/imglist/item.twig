@@ -3,7 +3,14 @@
     <div class="c-stream__item__inner  o-media">
 
         <div class="c-stream__item__img  o-media__img">
-            <a href="{{ item.get_the_permalink }}">
+
+            {% if item.has_featured_image %}
+                {% set gaLabel = 'Thumbnail' %}
+            {% else %}
+                {% set gaLabel = 'Placeholder' %}
+            {% endif %}
+
+            <a href="{{ item.get_the_permalink }}" data-ga-category="{{ gaCategory }}" data-ga-label="Image|{{ gaLabel }}|{{ item.get_the_title }}">
                 {% if item.has_featured_image %}
                 {{ item.get_featured_image_html( 'thumbnail' ) }}
                 {% else %}
@@ -13,7 +20,7 @@
         </div>
 
         <div class="c-stream__item__body  o-media__body">
-            {% include 'partials/stream/item-title.twig' %}
+            {% include 'partials/stream/item-title.twig' with { 'gaCategory': gaCategory } %}
         </div>
 
     </div>

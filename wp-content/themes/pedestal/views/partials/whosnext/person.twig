@@ -22,7 +22,9 @@
         <a href="{{ person.get_twitter_profile_url }}"
             title="@{{ person.get_twitter_handle }} on twitter"
             class="c-whos-next-item__person__text"
-            target="_blank">
+            target="_blank"
+            data-ga-category="Person|Who's Next"
+            data-ga-label="Twitter|@{{ person.get_twitter_handle }}|{{ person.get_the_title }}">
 
             @{{ person.get_twitter_handle }}
 
@@ -38,7 +40,9 @@
         <a href="{{ person.get_instagram_url }}"
             title="@{{ person.get_instagram_handle }} on Instagram"
             class="c-whos-next-item__person__text"
-            target="_blank">
+            target="_blank"
+            data-ga-category="Person|Who's Next"
+            data-ga-label="Instagram|@{{ person.get_instagram_handle }}|{{ person.get_the_title }}">
 
             @{{ person.get_instagram_handle }}
 
@@ -54,7 +58,9 @@
         <a href="{{ person.get_linkedin_url }}"
             title="{{ person.get_the_title }} on LinkedIn"
             class="c-whos-next-item__person__text"
-            target="_blank">
+            target="_blank"
+            data-ga-category="Person|Who's Next"
+            data-ga-label="LinkedIn|{{ person.get_the_title }}">
             LinkedIn
         </a>
 

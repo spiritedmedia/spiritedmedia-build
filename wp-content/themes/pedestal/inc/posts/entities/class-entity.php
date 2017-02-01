@@ -123,7 +123,12 @@ abstract class Entity extends Post {
         $clusters = $this->get_clusters( $cluster_args );
         if ( ! empty( $clusters ) ) {
             foreach ( $clusters as $cluster ) {
-                $clusters_with_links[] = '<a href="' . esc_url( $cluster->get_permalink() ) . '">' . esc_html( $cluster->get_title() ) . '</a>';
+                $ga_label = $cluster->get_type_name() . '|' . $cluster->get_title();
+                $clusters_with_links[] = sprintf( '<a href="%s" data-ga-category="Cluster Link" data-ga-label="%s">%s</a>',
+                    esc_url( $cluster->get_permalink() ),
+                    esc_attr( $ga_label ),
+                    esc_html( $cluster->get_title() )
+                );
             }
             return implode( ', ', $clusters_with_links );
         }

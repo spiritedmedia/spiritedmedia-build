@@ -39,6 +39,7 @@ if ( 1 == count( $clusters ) ) {
 }
 $help_text = 'Help! I\'m trying to subscribe to ';
 $context['list_ids'] = $provided_list_ids;
+$context['list_id_str'] = implode( ',', $provided_list_ids );
 $context['is_newsletter'] = false;
 $context['is_cluster'] = false;
 switch ( $subscription_type ) {

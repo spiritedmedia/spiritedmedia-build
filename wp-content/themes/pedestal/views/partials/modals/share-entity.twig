@@ -1,26 +1,44 @@
 <div id="share-article" class="[ reveal-modal  dark-reveal-modal ]  small  js-share-modal" data-reveal>
-    <a class="close-reveal-modal">&#215;</a>
+    <a class="close-reveal-modal" href="#close-share-modal" data-ga-category="Button" data-ga-label="Share Modal|Close|{{item.get_the_title}}">&#215;</a>
     <ul class="side-nav">
         <li>
-            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn" target="_blank" href="{{ item.get_facebook_share_link }}" data-share-dest="facebook">
+            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn"
+                target="_blank"
+                href="{{ item.get_facebook_share_link }}"
+                data-share-dest="facebook" data-ga-category="Button"
+                data-ga-label="Share Modal|Facebook|{{item.get_the_title}}">
                 <i class="button--iconic__icon fa fa-facebook"></i>
                 <span class="button--iconic__text">facebook</span>
             </a>
         </li>
         <li>
-            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn" target="_blank" href="{{ item.get_twitter_share_link }}" data-share-dest="twitter">
+            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn"
+                target="_blank"
+                href="{{ item.get_twitter_share_link }}"
+                data-share-dest="twitter"
+                data-ga-category="Button"
+                data-ga-label="Share Modal|Twitter|{{item.get_the_title}}">
                 <i class="button--iconic__icon fa fa-twitter"></i>
                 <span class="button--iconic__text">twitter</span>
             </a>
         </li>
         <li>
-            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn" target="_blank" href="{{ item.get_linkedin_share_link }}" data-share-dest="linkedin">
+            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn"
+                target="_blank"
+                href="{{ item.get_linkedin_share_link }}"
+                data-share-dest="linkedin"
+                data-ga-category="Button"
+                data-ga-label="Share Modal|LinkedIn|{{item.get_the_title}}">
                 <i class="button--iconic__icon fa fa-linkedin"></i>
                 <span class="button--iconic__text">linkedin</span>
             </a>
         </li>
         <li>
-            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn" target="_blank" href="{{ item.get_mailto_share_string }}" data-share-dest="email">
+            <a class="[ button--iconic  button--rounded  button--dark  button  large  expand ]  js-share-modal-btn"
+                target="_blank" href="{{ item.get_mailto_share_string }}"
+                data-share-dest="email"
+                data-ga-category="Button"
+                data-ga-label="Share Modal|Email|{{item.get_the_title}}">
                 <i class="button--iconic__icon fa fa-envelope"></i>
                 <span class="button--iconic__text">email</span>
             </a>

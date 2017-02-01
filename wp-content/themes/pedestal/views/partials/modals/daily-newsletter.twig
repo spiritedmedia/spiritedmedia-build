@@ -1,6 +1,9 @@
 <div id="subscribe-to-newsletter" class="reveal-modal dark-reveal-modal small" data-reveal>
     <a class="close-reveal-modal">&#215;</a>
-    <form action="{{ site.url }}/subscribe-to-email-list/" method="POST" data-confirm-id="confirm-subscribe-to-newsletter">
+    <form action="{{ site.url }}/subscribe-to-email-list/" method="POST"
+        data-confirm-id="confirm-subscribe-to-newsletter"
+        data-ga-category="Submitted Form"
+        data-ga-label="Newsletter Signup Modal">
         <div class="form-fields">
             <fieldset>
                 {% include 'partials/emails/form-daily-legend.twig' %}

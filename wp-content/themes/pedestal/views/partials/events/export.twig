@@ -3,19 +3,19 @@
         {% spaceless %}
 
         <div class="c-event__export__item">
-            <a href="{{ item.get_google_calendar_link() }}" class="[ o-icon-text  o-icon-text--responsive ]  c-event__export__link">
+            <a href="{{ item.get_google_calendar_link() }}" class="[ o-icon-text  o-icon-text--responsive ]  c-event__export__link" data-ga-category="Event Export" data-ga-label="Google|{{ item.get_the_title }}">
                 <i class="o-icon-text__icon  c-event__export__icon  [ fa  fa-calendar ]"></i>
                 <span class="o-icon-text__text  c-event__export__text">Google</span>
             </a>
         </div>
         <div class="c-event__export__item">
-            <a href="{{ item.get_ics_link() }}" class="[ o-icon-text  o-icon-text--responsive ]  c-event__export__link">
+            <a href="{{ item.get_ics_link() }}" class="[ o-icon-text  o-icon-text--responsive ]  c-event__export__link" data-ga-category="Event Export" data-ga-label="iCal|{{ item.get_the_title }}">
                 <i class="o-icon-text__icon  c-event__export__icon  [ fa  fa-calendar ]"></i>
                 <span class="o-icon-text__text  c-event__export__text">iCal</span>
             </a>
         </div>
         <div class="c-event__export__item">
-            <a href="{{ item.get_ics_link() }}" class="[ o-icon-text  o-icon-text--responsive ]  c-event__export__link">
+            <a href="{{ item.get_ics_link() }}" class="[ o-icon-text  o-icon-text--responsive ]  c-event__export__link" data-ga-category="Event Export" data-ga-label="Outlook|{{ item.get_the_title }}">
                 <i class="o-icon-text__icon  c-event__export__icon  [ fa fa-calendar ]"></i>
                 <span class="o-icon-text__text  c-event__export__text">Outlook</span>
             </a>

@@ -134,14 +134,14 @@ class Event extends Entity {
         $text = $this->get_fm_field( 'event_link', 'text' );
         if ( $url && $text ) {
             $out = '<p class="c-details-table__link">';
-            $out .= '<a href="' . $url . '" class="c-details-table__link__btn" target="_blank">';
+            $out .= '<a href="' . esc_url( $url ) . '" class="c-details-table__link__btn" target="_blank"';
+            $out .= 'data-ga-category="Event" data-ga-label="Details|' . esc_attr( $text ) . '">';
             $out .= $text;
             $out .= '</a>';
             $out .= '</p>';
             return $out;
-        } else {
-            return '';
         }
+        return '';
     }
 
     public function get_google_calendar_link() {

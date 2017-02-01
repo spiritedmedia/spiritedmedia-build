@@ -13,21 +13,21 @@
                 <div class="columns medium-4">
                     <ul class="no-bullet">
                         {% for title, link in menu | slice(0, 2) %}
-                        <li><a href="{{ link }}">{{ title }}</a></li>
+                        <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
                 <div class="columns medium-4">
                     <ul class="no-bullet">
                         {% for title, link in menu | slice(2, 2) %}
-                        <li><a href="{{ link }}">{{ title }}</a></li>
+                        <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
                 <div class="columns medium-4">
                     <ul class="last no-bullet">
                         {% for title, link in menu | slice(4, 2) %}
-                        <li><a href="{{ link }}">{{ title }}</a></li>
+                        <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -50,12 +50,12 @@
         <ul class="off-canvas-menu__list off-canvas-list">
 
         {% for title, link in menu_off_canvas | slice(0, 1) %}
-            <li class="off-canvas-menu__item"><a href="{{ link }}">{{ title }}</a></li>
+            <li class="off-canvas-menu__item"><a href="{{ link }}" data-ga-category="Menu - Main Navigation" data-ga-label="{{ title }}">{{ title }}</a></li>
         {% endfor %}
 
         {% for title, link in menu_off_canvas | slice(1, 2) %}
             <li class="off-canvas-menu__follow off-canvas-menu__item">
-                <a href="{{ link }}" class="disabled">{{ title }}</a>
+                <a href="{{ link }}" class="disabled" data-ga-category="Menu - Main Navigation" data-ga-label="Disabled|{{ title }}">{{ title }}</a>
                 <ul class="off-canvas-menu__follow__icons iconset inline-list">
                     {% include 'partials/social-icons.twig' with {'location': 'off_canvas'} %}
                 </ul>
@@ -63,14 +63,14 @@
         {% endfor %}
 
         {% for title, link in menu %}
-            <li class="off-canvas-menu__item"><a href="{{ link }}">{{ title }}</a></li>
+            <li class="off-canvas-menu__item"><a href="{{ link }}" data-ga-category="Menu - Main Navigation" data-ga-label="{{ title }}">{{ title }}</a></li>
         {% endfor %}
 
         </ul>
 
     </div>
 
-    <a class="exit-off-canvas"></a>
+    <a class="exit-off-canvas" href="#close" data-ga-category="Menu - Main Navigation" data-ga-label="Close"></a>
 
 </nav>
 

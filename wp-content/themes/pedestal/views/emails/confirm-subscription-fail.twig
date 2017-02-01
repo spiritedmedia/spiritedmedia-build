@@ -9,7 +9,7 @@
 
         {% import "macros/macros.twig" as macros %}
         {% if provided_list_ids %}
-        <form action="{{ site.url }}/subscribe-to-email-list/" method="POST">
+        <form action="{{ site.url }}/subscribe-to-email-list/" method="POST" data-ga-category="Submitted Form" data-ga-label="Confirm Subscription Fail|List IDs:{{ list_id_str }}">
 
             <div class="form-fields">
                 <fieldset>
