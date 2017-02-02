@@ -1183,7 +1183,7 @@ abstract class Post {
         if ( strlen( $excerpt ) ) {
             $excerpt = '%0A%0A&ldquo;' . rawurlencode( $excerpt ) . '&rdquo;';
         }
-        $body = 'Yo, %0A%0AYou should see this link on BillyPenn.com: ' . $link . $excerpt;
+        $body = 'Yo, %0A%0AYou should see this link: ' . $link . $excerpt;
         $subject = rawurlencode( $this->get_title() );
         return "mailto:?subject=$subject&body=$body";
     }
