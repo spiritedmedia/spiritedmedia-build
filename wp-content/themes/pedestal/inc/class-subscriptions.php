@@ -52,10 +52,10 @@ class Subscriptions {
         add_action( 'save_post', [ $this, 'action_save_post_send_email' ], 100 );
         add_action( 'admin_footer', function() {
             $post = get_post();
-            if ( 'pedestal_newsletter' !== $post->post_type ) {
+            if ( ! $post instanceof \WP_Post ) {
                 return;
             }
-            if ( 'publish' === $post->post_status ) {
+            if ( 'pedestal_newsletter' !== $post->post_type ||  'publish' === $post->post_status ) {
                 return;
             }
             ?>
@@ -397,6 +397,10 @@ class Subscriptions {
             // If the newsletter was already sent then bail...
             if ( $newsletter->get_sent_date() && ! $is_test_email ) {
                 return;
+            }
+
+            if ( $newsletter->get_meta( 'newsletter_is_test' ) ) {
+                $args['status'] = 0;
             }
             $result = $this->send_email_to_newsletter_followers( $newsletter, $args );
             if ( $result && ! $is_test_email ) {

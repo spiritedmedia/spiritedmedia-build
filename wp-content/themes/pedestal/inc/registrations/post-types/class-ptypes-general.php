@@ -185,6 +185,11 @@ class General_Types extends Types {
             ],
         ] );
         $items->add_meta_box( esc_html__( 'Newsletter Items', 'pedestal' ), [ 'pedestal_newsletter' ], 'normal', 'high' );
+
+        $options = new \Fieldmanager_Checkbox( esc_html__( 'This newsletter is part of a test', 'pedestal' ), [
+            'name' => 'newsletter_is_test',
+        ] );
+        $options->add_meta_box( esc_html__( 'Newsletter Options', 'pedestal' ), [ 'pedestal_newsletter' ], 'side', 'low' );
     }
 
     /**

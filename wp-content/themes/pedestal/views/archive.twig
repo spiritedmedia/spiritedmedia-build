@@ -20,6 +20,12 @@
 
         </div>
 
+        {% if pagination %}
+        <footer class="c-stream__footer {{ last_page_classes }}">
+            {{ macros.pagination( pagination, { 'show_text': false } ) }}
+        </footer>
+        {% endif %}
+
     </article>
 
 </main>
