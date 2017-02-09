@@ -22,7 +22,7 @@ if ( is_a( $item, '\\Pedestal\\Posts\\Post' ) ) {
     }
 
     if ( $item->is_entity() && $item->has_story() ) {
-        $context['cluster'] = $item->get_story();
+        $context['cluster'] = $item->get_primary_story();
         $context['follow_text'] = 'follow story';
     }
 }

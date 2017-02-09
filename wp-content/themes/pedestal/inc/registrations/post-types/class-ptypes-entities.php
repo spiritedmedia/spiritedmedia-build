@@ -262,8 +262,8 @@ class Entity_Types extends Types {
 
         // Who's Next posts must always be connected to the Who's Next story
         $whos_next_story_id = $post::get_whosnext_story()->get_id();
-        $wrong_story_id = ( ! empty( $post->get_story() ) && $post->get_story()->get_id() !== $whos_next_story_id );
-        if ( empty( $post->get_story() ) || $wrong_story_id ) {
+        $wrong_story_id = ( ! empty( $post->get_primary_story() ) && $post->get_primary_story()->get_id() !== $whos_next_story_id );
+        if ( empty( $post->get_primary_story() ) || $wrong_story_id ) {
             p2p_type( 'entities_to_stories' )->connect( $post_id, $whos_next_story_id );
         }
 

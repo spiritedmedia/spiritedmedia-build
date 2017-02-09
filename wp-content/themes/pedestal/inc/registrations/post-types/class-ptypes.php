@@ -193,7 +193,7 @@ class Types {
                 break;
             case 'pedestal_entity_story_connections':
                 if ( ! empty( $obj->has_story() ) ) {
-                    echo $obj->get_story_with_link();
+                    echo $obj->get_clusters_with_links( 'story' );
                 } else {
                     echo '&mdash;';
                 }
@@ -238,8 +238,8 @@ class Types {
             // Entity columns
             if ( self::is_entity( get_current_screen()->post_type ) ) {
                 if ( 'coauthors' === $key ) {
-                    $new_columns['pedestal_entity_story_connections'] = esc_html__( 'Story', 'pedestal' );
-                    $new_columns['pedestal_entity_cluster_connections'] = esc_html__( 'Connected Clusters', 'pedestal' );
+                    $new_columns['pedestal_entity_story_connections'] = esc_html__( 'Stories', 'pedestal' );
+                    $new_columns['pedestal_entity_cluster_connections'] = esc_html__( 'Clusters', 'pedestal' );
                 }
             }
 

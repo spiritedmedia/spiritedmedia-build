@@ -40,42 +40,6 @@ class User extends Author {
     }
 
     /**
-     * Get or create a user given their email address
-     *
-     * Note that this method will not check to see if the user is added to the
-     * current site. If the user doesn't exist and needs to be created, then it
-     * will be created as a member of the current site, but if the user does
-     * exist in the network, it may not necessarily be a member of the
-     * current site.
-     *
-     * @param  string $email_address Email address for the user
-     * @param  array  $user_data     User data
-     * @return User
-     */
-    public static function get_or_create_user( $email_address, $user_data = [] ) {
-        if ( get_user_by( 'email', $email_address ) ) {
-            $user = get_user_by( 'email', $email_address );
-        } else {
-
-            $user_data_defaults = [
-                'user_login' => md5( PEDESTAL_USER_HASH_PHRASE . $email_address ),
-                'role'       => 'subscriber',
-                'user_pass'  => wp_generate_password(),
-            ];
-            $user_data = wp_parse_args( $user_data, $user_data_defaults );
-            $user_data['user_email'] = $email_address;
-
-            $user_id = wp_insert_user( $user_data );
-            if ( is_wp_error( $user_id ) ) {
-                return $user_id;
-            }
-            $user = get_user_by( 'id', $user_id );
-
-        }
-        return new User( $user );
-    }
-
-    /**
      * Is the User a member of the current or specified site?
      *
      * @param  int  $site_id Site ID. Defaults to current site ID.
@@ -382,45 +346,6 @@ class User extends Author {
         $name = sanitize_title( $name );
         $url = $base . '/' . $name;
         return home_url( $url );
-    }
-
-    /**
-     * Get the clusters the user is following
-     *
-     * @param  array      $cluster_types An array of cluster post types to
-     *     get. Defaults to all.
-     * @return array|bool                 Returns array of clusters the user
-     *     is following. Returns false if $cluster_types is not an array
-     */
-    public function get_following_clusters( $cluster_types = [] ) {
-
-        if ( empty( $cluster_types ) ) {
-            $cluster_types = Types::get_cluster_post_types();
-        } elseif ( ! is_array( $cluster_types ) ) {
-            return false;
-        }
-
-        $connected_types = [];
-
-        foreach ( $cluster_types as $cluster_type ) {
-            $connected_types[] = Types::get_user_connection_type( $cluster_type );
-        }
-
-        $args = [
-            'post_type'         => $cluster_types,
-            'post_status'       => 'publish',
-            'posts_per_page'    => 100,
-            'connected_type'    => $connected_types,
-            'connected_items'   => $this->user,
-        ];
-
-        $query = new \WP_Query( $args );
-        $clusters = [];
-        foreach ( $query->posts as $post ) {
-            $cluster_class = Types::get_post_type_class( $post->post_type );
-            $clusters[] = new $cluster_class( $post );
-        }
-        return $clusters;
     }
 
     /**

@@ -2,7 +2,7 @@
          {{ macros.get_pinned_styles( _context, 'border' ) }}
          {{ item.get_the_data_atts }}>
 
-    {% if item.get_story %}
+    {% if item.has_story %}
         {{ macros.blox( _context, {}, 'story-bar' ) }}
     {% elseif item.is_pinned %}
         {% include 'partials/stream/panel-pin.twig' %}

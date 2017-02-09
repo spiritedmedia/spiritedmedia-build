@@ -16,9 +16,27 @@ use Pedestal\Posts\Clusters\Story;
 
 abstract class Entity extends Post {
 
-    protected $story;
+    /**
+     * Primary Story
+     *
+     * Multiple Stories may be connected to an Entity, but only one will be
+     * featured as its "primary" Story, which is displayed in the frontend as a
+     * "story bar" attached to the entity.
+     *
+     * @var Story
+     */
+    protected $primary_story;
 
-    protected $clusters;
+    /**
+     * Query vars for connected Story ordering
+     *
+     * @var array
+     */
+    private $story_connection_order_vars = [
+        'connected_order_num' => true,
+        'connected_orderby'   => '_order_from',
+        'connected_order'     => 'asc',
+    ];
 
     /**
      * Get CSS classes
@@ -44,91 +62,113 @@ abstract class Entity extends Post {
         ];
 
         if ( $this->has_story() ) {
-            $new_atts['in-story'] = $this->get_story()->get_id();
+            $new_atts['primary-story'] = $this->get_primary_story()->get_id();
         }
 
         $this->data_attributes = array_merge( $atts, $new_atts );
     }
 
     /**
+     * Is the Entity connected to more than one Story?
+     *
+     * @return boolean
+     */
+    public function has_multiple_stories() {
+        $stories = $this->get_clusters( [
+            'types'      => 'story',
+            'count'      => 2,
+            'count_only' => true,
+        ] );
+        if ( 1 < $stories ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Whether or not this entity has a story
      *
-     * @return bool
+     * @return boolean
      */
     public function has_story() {
-        return (bool) $this->get_story();
+        return (bool) $this->get_clusters( [
+            'types'      => 'story',
+            'count'      => 1,
+            'count_only' => true,
+        ] );
     }
 
     /**
-     * Get the Entity's Story title wrapped in a link
+     * Get the Primary Story associated with an Entity
      *
-     * @return string HTML
-     */
-    public function get_story_with_link() {
-        $story = $this->get_story();
-        if ( ! empty( $story ) ) {
-            return '<a href="' . esc_url( $story->get_permalink() ) . '">' . esc_html( $story->get_title() ) . '</a>';
-        }
-    }
-
-    /**
-     * Get the story associated with an entity
+     * The Primary Story is the first Story connected to an Entity as ordered
+     * from the Story connection metabox.
      *
-     * @param array
      * @return Story|false
      */
-    public function get_story() {
-
-        if ( isset( $this->story ) ) {
-            return $this->story;
+    public function get_primary_story() {
+        if ( isset( $this->primary_story ) ) {
+            return $this->primary_story;
         }
 
         $args = [
-            'post_type'         => [ 'pedestal_story' ],
-            'post_status'       => 'publish',
-            'posts_per_page'    => 1,
-            'connected_type'    => 'entities_to_stories',
-            'connected_items'   => $this->post,
-
-            // for performance
-            'no_found_rows' => true,
-            'update_post_meta_cache' => false,
-            'update_post_term_cache' => false,
-        ];
-
-        $query = new \WP_Query( $args );
-        if ( ! empty( $query->posts ) ) {
-            $this->story = new Story( $query->posts[0] );
+            'flatten'             => true,
+            'types'               => 'story',
+            'count'               => 1,
+        ] + $this->story_connection_order_vars;
+        $stories = $this->get_clusters( $args );
+        if ( ! empty( $stories ) ) {
+            $this->primary_story = $stories[0];
         } else {
-            $this->story = false;
+            $this->primary_story = false;
         }
 
-        return $this->story;
+        return $this->primary_story;
     }
 
     /**
      * Get a comma-separated list of this entity's non-story Clusters
      *
-     * @param string|array $type Optional cluster type(s) to narrow list
+     * @param string|array $types Optional cluster type(s) to narrow list
+     * @param array        $args  Additional args to set up the query -- note
+     *     that the post type(s) set in $type will override anything set here
      * @return string|false HTML
      */
-    public function get_clusters_with_links( $types = '' ) {
+    public function get_clusters_with_links( $types = '', array $args = [] ) {
         $clusters_with_links = [];
-        $cluster_args = [ 'flatten' => true ];
 
-        if ( ! empty( $types ) && ( is_string( $types ) || is_array( $types ) ) ) {
-            $cluster_args['types'] = $types;
+        $args = wp_parse_args( $args, [
+            'flatten'        => true,
+            'accent_primary' => false,
+        ] );
+
+        if ( 'story' === $types ) {
+            $story_args = $this->story_connection_order_vars;
+            if ( is_admin() ) {
+                $story_args['accent_primary'] = true;
+            }
+            $args = $story_args + $args;
         }
 
-        $clusters = $this->get_clusters( $cluster_args );
+        if ( ! empty( $types ) && ( is_string( $types ) || is_array( $types ) ) ) {
+            $args['types'] = $types;
+        }
+
+        $clusters = $this->get_clusters( $args );
         if ( ! empty( $clusters ) ) {
+            $count = 0;
             foreach ( $clusters as $cluster ) {
+                $html = '<a href="%s" data-ga-category="Cluster Link" data-ga-label="%s">%s</a>';
                 $ga_label = $cluster->get_type_name() . '|' . $cluster->get_title();
-                $clusters_with_links[] = sprintf( '<a href="%s" data-ga-category="Cluster Link" data-ga-label="%s">%s</a>',
+                if ( $args['accent_primary'] && 0 === $count ) {
+                    $html = '<strong>' . $html . '</strong>';
+                }
+                $clusters_with_links[] = sprintf( $html,
                     esc_url( $cluster->get_permalink() ),
                     esc_attr( $ga_label ),
                     esc_html( $cluster->get_title() )
                 );
+                $count++;
             }
             return implode( ', ', $clusters_with_links );
         }
@@ -141,7 +181,10 @@ abstract class Entity extends Post {
      * @return boolean
      */
     public function has_clusters() {
-        return (bool) $this->get_clusters( [ 'count_only' => true ] );
+        return (bool) $this->get_clusters( [
+            'count'      => 1,
+            'count_only' => true,
+        ] );
     }
 
     /**
@@ -155,9 +198,11 @@ abstract class Entity extends Post {
             'types'      => Types::get_cluster_post_types_sans_story(),
             'flatten'    => false,
             'paginate'   => false,
+            'count'      => 99,
             'count_only' => false,
         ] );
         $types = $args['types'];
+        $count = $args['count'];
         $count_only = $args['count_only'];
 
         // Allow passing both full post type names and short post type names
@@ -172,11 +217,11 @@ abstract class Entity extends Post {
         $query_args = [
             'post_type'       => $types,
             'post_status'     => 'publish',
-            'posts_per_page'  => 99,
+            'posts_per_page'  => $count,
             'no_found_rows'   => true,
             'connected_type'  => Types::get_cluster_connection_types_from_entities(),
             'connected_items' => $this->post,
-        ];
+        ] + $args;
 
         if ( $args['paginate'] || $count_only ) {
             $query_args['no_found_rows'] = false;

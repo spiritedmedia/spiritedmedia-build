@@ -16,12 +16,12 @@
 
 {% macro get_pinned_styles( context, element ) %}
 {% spaceless %}
-    {% set story = context.item.get_story %}
+    {% set story = context.item.get_primary_story %}
     {% if context.item.is_pinned and story.has_story_branding and not context.is_search %}
         {% if 'border' == element %}
-            style="border: 3px solid {{ story.get_story_bar_background_color }};"
+            style="border: 3px solid {{ story.get_primary_story_bar_background_color }};"
         {% elseif 'pin' == element %}
-            style="color: {{ story.get_story_bar_foreground_color }};"
+            style="color: {{ story.get_primary_story_bar_foreground_color }};"
         {% endif %}
     {% endif %}
 {% endspaceless %}
@@ -133,16 +133,16 @@
         {% endif %}
 
         {# Content #}
-        {% if item.is_entity and item.has_story and item.get_story.get_title %}
-            {% set default_title = item.get_story.get_the_title %}
-            {% set story_branding = item.get_story.get_story_branding %}
-            {% set default_url = item.get_story.get_permalink %}
+        {% if item.is_entity and item.has_story and item.get_primary_story.get_title %}
+            {% set default_title = item.get_primary_story.get_the_title %}
+            {% set story_branding = item.get_primary_story.get_primary_story_branding %}
+            {% set default_url = item.get_primary_story.get_permalink %}
             {% if not context.grouped %}
                 {% set offset = true %}
                 {% set extra_classes = 'u-tt-upper' ~ extra_classes %}
             {% endif %}
         {% elseif not item.is_entity %}
-            {% set story_branding = item.get_story_branding %}
+            {% set story_branding = item.get_primary_story_branding %}
             {% set default_title = item.get_the_title %}
             {% set default_url = item.get_permalink %}
             {% if item.schema %}

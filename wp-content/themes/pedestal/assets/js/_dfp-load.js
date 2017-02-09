@@ -41,7 +41,8 @@ googletag.cmd.push(function() {
   googletag.pubads().addEventListener('slotRenderEnded', function(e) {
     var id, div, html;
     if (false === e.isEmpty) {
-      id = e.slot.m.m;
+      // e.slot.B should be like /104495818/BP_Header_300x50_M
+      id = 'google_ads_iframe_' + e.slot.B + '_0__container__';
       div = document.getElementById(id);
       html = '<div class="dfp-disclaimer">ADVERTISEMENT</div>';
       div.insertAdjacentHTML('beforeend', html);

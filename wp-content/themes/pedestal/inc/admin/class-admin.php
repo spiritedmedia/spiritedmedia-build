@@ -377,15 +377,6 @@ class Admin {
     public function action_admin_menu_late() {
         global $menu;
 
-        // Register subscriptions taxonomy menu
-        $tax_subscriptions = get_taxonomy( 'pedestal_subscriptions' );
-        add_users_page(
-            esc_attr( $tax_subscriptions->labels->menu_name ),
-            esc_attr( $tax_subscriptions->labels->menu_name ),
-            $tax_subscriptions->cap->manage_terms,
-            'edit-tags.php?taxonomy=' . $tax_subscriptions->name
-        );
-
         // Hide menus we don't use
         unset( $menu[5] ); // posts
         unset( $menu[25] ); // comments
@@ -926,7 +917,7 @@ class Admin {
      */
     public function update_story_branding( $story_id ) {
         $story = Story::get_by_post_id( $story_id );
-        if ( $styles = $story->get_story_branding() ) {
+        if ( $styles = $story->get_primary_story_branding() ) {
             $attachment_id = $story->get_icon_id();
             $fallback_url = str_replace( '.svg', '.png', wp_get_attachment_url( $attachment_id ) );
 

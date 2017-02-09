@@ -233,7 +233,6 @@ return array(
     'PSR2_Sniffs_Namespaces_UseDeclarationSniff' => $vendorDir . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Namespaces/UseDeclarationSniff.php',
     'Pedestal\\Admin\\Admin' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-admin.php',
     'Pedestal\\Admin\\Bulk_Action' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-bulk-actions.php',
-    'Pedestal\\Admin\\Bulk_Subscribe' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-bulk-subscribe.php',
     'Pedestal\\Admin\\Cluster_Tools' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-cluster-tools.php',
     'Pedestal\\Adverts' => $baseDir . '/wp-content/themes/pedestal/inc/class-adverts.php',
     'Pedestal\\Billy_Penn' => $baseDir . '/wp-content/themes/billy-penn/functions.php',

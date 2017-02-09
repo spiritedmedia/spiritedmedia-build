@@ -305,17 +305,6 @@ class Cluster_Types extends Types {
             ];
             $this->connection_types_entities[ $connection_entities_to ] = $this->connection_types[ $connection_entities_to ];
 
-            // Connect all clusters to users
-            $connection_to_users = $sanitized_name . '_to_users';
-            $this->connection_types[ $connection_to_users ] = [
-                'name'           => $connection_to_users,
-                'from'           => $post_type,
-                'to'             => 'user',
-                'admin_box'      => [
-                    'show' => false,
-                ],
-            ];
-
             // Connect non-story clusters to Stories
             if ( 'pedestal_story' != $post_type ) {
                 $connection_stories_to = 'stories_to_' . $sanitized_name;

@@ -165,67 +165,6 @@ class Taxonomies {
             ],
         ] );
 
-        register_taxonomy( 'pedestal_subscriptions', 'user', [
-            'hierarchical'      => false,
-            'public'            => false,
-            'show_in_nav_menus' => true,
-            'show_ui'           => true,
-            'show_admin_column' => true,
-            'query_var'         => true,
-            'rewrite'           => true,
-            'update_count_callback' => function( $terms ) {
-                global $wpdb;
-
-                foreach ( $terms as $term_taxonomy_id ) {
-
-                    $callback = function( $wp_user_query ) use ( $term_taxonomy_id ) {
-                        global $wpdb;
-                        $tax_query = new \WP_Tax_Query( [
-                            [
-                                'taxonomy'       => 'pedestal_subscriptions',
-                                'terms'          => [ (int) $term_taxonomy_id ],
-                                'field'          => 'term_taxonomy_id',
-                            ],
-                        ] );
-                        $clauses = $tax_query->get_sql( $wpdb->users, 'ID' );
-                        $wp_user_query->query_from .= $clauses['join'];
-                        $wp_user_query->query_where .= $clauses['where'];
-
-                    };
-                    add_action( 'pre_user_query', $callback );
-                    $users = new \WP_User_Query( [ 'count_total' => true ] );
-                    $user_count = $users->get_total();
-                    remove_action( 'pre_user_query', $callback );
-
-                    $wpdb->update( $wpdb->term_taxonomy, [ 'count' => $user_count ], [ 'term_taxonomy_id' => $term_taxonomy_id ] );
-
-                }
-            },
-            'capabilities'      => [
-                'manage_terms'  => 'list_users',
-                'edit_terms'    => 'list_users',
-                'delete_terms'  => 'do_not_allow',
-                'assign_terms'  => 'list_users',
-            ],
-            'labels'            => [
-                'name'                       => __( 'Subscriptions', 'pedestal' ),
-                'singular_name'              => _x( 'Subscriptions', 'taxonomy general name', 'pedestal' ),
-                'search_items'               => __( 'Search Subscriptions', 'pedestal' ),
-                'popular_items'              => __( 'Popular Subscriptions', 'pedestal' ),
-                'all_items'                  => __( 'All Subscriptions', 'pedestal' ),
-                'parent_item'                => __( 'Parent Subscriptions', 'pedestal' ),
-                'parent_item_colon'          => __( 'Parent Subscriptions:', 'pedestal' ),
-                'edit_item'                  => __( 'Edit Subscriptions', 'pedestal' ),
-                'update_item'                => __( 'Update Subscriptions', 'pedestal' ),
-                'add_new_item'               => __( 'New Subscriptions', 'pedestal' ),
-                'new_item_name'              => __( 'New Subscriptions', 'pedestal' ),
-                'separate_items_with_commas' => __( 'Subscriptions separated by comma', 'pedestal' ),
-                'add_or_remove_items'        => __( 'Add or remove Subscriptions', 'pedestal' ),
-                'choose_from_most_used'      => __( 'Choose from the most used Subscriptions', 'pedestal' ),
-                'menu_name'                  => __( 'Subscriptions', 'pedestal' ),
-            ],
-        ] );
-
     }
 
     /**
