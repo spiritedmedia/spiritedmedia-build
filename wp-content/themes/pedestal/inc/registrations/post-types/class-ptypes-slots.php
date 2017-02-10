@@ -134,6 +134,11 @@ class Slot_Types extends Types {
 
         $label_desc = 'The text to display alongside the image. Defaults to "Sponsored By" if unset.';
 
+        $media_desc = 'If you have sold the Standard sponsorship size, the
+        image\'s dimensions should be a maximum of 150x111 pixels. If you have
+        sold a Premium sponsorship, the image\'s dimensions should be exactly
+        666x111 pixels (or anything larger maintaining a 6:1 ratio).';
+
         $slot_placement_defaults_desc = 'Set the default placement settings for
         this Slot Item. Additional placements can be created in the Additional
         Placement Rules box below. Each of these additional rules may override
@@ -193,6 +198,7 @@ class Slot_Types extends Types {
                             'default_value' => esc_html__( 'Sponsored By', 'pedestal' ),
                         ] ),
                         'upload' => new \Fieldmanager_Media( esc_html__( 'Upload Image', 'pedestal' ), [
+                            'description'        => esc_html__( $media_desc, 'pedestal' ),
                             'button_label'       => esc_html__( 'Select an image', 'pedestal' ),
                             'modal_button_label' => esc_html__( 'Select image', 'pedestal' ),
                             'modal_title'        => esc_html__( 'Choose image', 'pedestal' ),

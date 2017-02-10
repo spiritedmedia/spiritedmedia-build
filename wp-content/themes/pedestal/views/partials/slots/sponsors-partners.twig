@@ -1,15 +1,14 @@
 {% spaceless %}
 {% set sponsor = slots.active %}
 
-
-<div class="c-slot__item  o-icon-text  o-icon-text--rev  o-icon-text--responsive">
-    <p class="c-slot--sponsors-partners__label  o-icon-text__text">
+<div class="c-slot__item">
+    <p class="c-slot__label">
         {{ sponsor.get_sponsorship_label }}
     </p>
 
-    <p class="c-slot--sponsors-partners__logo  o-icon-text__icon">
-        <a href="{{ sponsor.get_sponsorship_url }}" class="inner  js-slot-sponsors-partners-url">
-            <img class="js-slot-sponsors-partners-logo" src="{{ sponsor.get_sponsorship_img_url }}" alt="{{ sponsor.get_the_title }}" />
+    <p class="c-slot__img">
+        <a href="{{ sponsor.get_sponsorship_url }}" class="inner">
+            <img src="{{ sponsor.get_sponsorship_img_url }}" alt="{{ sponsor.get_the_title }}" />
         </a>
     </p>
 </div>

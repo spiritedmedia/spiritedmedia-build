@@ -457,7 +457,8 @@ class Slots {
             return '';
         }
 
-        $default_options = [];
+        $default_options = $data_atts = [];
+
         $slot_data_return_type = 'slot_item';
         if ( 'newsletter_promoted_event' === $slot_position ) {
             $slot_data_return_type = 'event';
@@ -475,12 +476,16 @@ class Slots {
         }
         $placement_options = array_merge( $placement_options, $default_options );
 
-        $data_atts = [];
         if ( ! empty( $placement_type ) ) {
             $placement_options['type'] = $placement_type;
             if ( 'component' === $slot_position ) {
                 $data_atts['component-type'] = $placement_type;
             }
+        }
+
+        if ( false !== strpos( $slot_position, 'lead' ) ) {
+            $data_atts['supports-premium'] = '';
+            $context['slots']['supports_premium'] = true;
         }
 
         // Set slot position name according to the scope
@@ -519,8 +524,7 @@ class Slots {
             $data_atts_str = Utils::array_to_data_atts_str( $data_atts, 'slot' );
 
             $item_type_class = str_replace( '_', '-', $item_type );
-            $html = sprintf( '<div class="c-slot--%s  c-slot  js-slot-%s %s" %s>',
-                $item_type_class,
+            $html = sprintf( '<div class="c-slot--%s  c-slot %s" %s>',
                 $item_type_class,
                 $additional_classes,
                 $data_atts_str
