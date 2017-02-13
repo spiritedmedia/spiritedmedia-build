@@ -44,6 +44,9 @@
 # Unit Tests
 # !/tests/
 
+# Style Guide
+!/styleguide/
+
 # Deployment
 !appspec.yml
 # !circle.yml

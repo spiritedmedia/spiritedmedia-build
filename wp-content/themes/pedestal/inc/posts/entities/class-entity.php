@@ -112,9 +112,9 @@ abstract class Entity extends Post {
         }
 
         $args = [
-            'flatten'             => true,
-            'types'               => 'story',
-            'count'               => 1,
+            'flatten' => true,
+            'types'   => 'story',
+            'count'   => 1,
         ] + $this->story_connection_order_vars;
         $stories = $this->get_clusters( $args );
         if ( ! empty( $stories ) ) {
@@ -200,6 +200,7 @@ abstract class Entity extends Post {
             'paginate'   => false,
             'count'      => 99,
             'count_only' => false,
+            'paged'      => 1,
         ] );
         $types = $args['types'];
         $count = $args['count'];
