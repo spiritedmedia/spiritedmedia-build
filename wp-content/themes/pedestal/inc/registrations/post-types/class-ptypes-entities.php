@@ -72,6 +72,8 @@ class Entity_Types extends Types {
                 'show_ui'           => true,
                 'has_archive'       => true,
                 'query_var'         => true,
+                'map_meta_cap'      => true,
+                'capability_type'   => [ 'entity', 'entities' ],
             ];
 
             switch ( $post_type ) {
@@ -94,6 +96,7 @@ class Entity_Types extends Types {
                     $args['rewrite'] = [
                         'slug' => 'articles',
                     ];
+                    $args['capability_type'] = 'article';
                     $this->editorial_post_types[] = $post_type;
                     break;
 
@@ -165,6 +168,7 @@ class Entity_Types extends Types {
                     $args['rewrite'] = [
                         'slug' => 'events',
                     ];
+                    $args['capability_type'] = 'event';
                     break;
 
                 case 'pedestal_whosnext':
@@ -306,7 +310,10 @@ class Entity_Types extends Types {
                 ],
             ],
         ] );
-        $exclude->add_meta_box( 'Exclude from Home Stream', Types::get_entity_post_types(), 'side', 'low' );
+
+        if ( current_user_can( 'publish_events' ) ) {
+            $exclude->add_meta_box( 'Exclude from Home Stream', Types::get_entity_post_types(), 'side', 'low' );
+        }
 
     }
 

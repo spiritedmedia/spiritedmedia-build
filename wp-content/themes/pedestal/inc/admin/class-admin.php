@@ -140,6 +140,14 @@ class Admin {
     private function setup_filters() {
 
         add_filter( 'fm_element_markup_start', [ $this, 'filter_fm_element_markup_start' ], 10, 2 );
+        add_filter( 'wp_insert_post_data', [ $this, 'filter_wp_insert_post_data' ], 10, 2 );
+        add_filter( 'gettext', [ $this, 'filter_gettext_publish_button' ], 10, 2 );
+        add_filter( 'tiny_mce_before_init', [ $this, 'filter_tiny_mce_before_init' ] );
+
+        if ( current_user_can( 'manage_uploads' ) ) {
+            add_filter( 'attachment_fields_to_edit', [ $this, 'filter_attachment_fields_to_edit' ], 10, 2 );
+            add_filter( 'attachment_fields_to_save', [ $this, 'filter_attachment_fields_to_save' ], 10, 2 );
+        }
 
         // Filter the post titles in FM Post Datasource results
         add_filter( 'fm_datasource_post_title', function( $title, $post ) {
@@ -153,52 +161,6 @@ class Admin {
             }
             return $title;
         }, 10, 2 );
-
-        add_filter( 'attachment_fields_to_edit', function( $fields, $post ) {
-
-            $metadata = wp_get_attachment_metadata( $post->ID );
-            if ( ! empty( $metadata['image_meta'] ) ) {
-                // @TODO clean up ternaries
-                $credit = ( empty( $metadata['image_meta']['credit'] ) )
-                    ? ''
-                    : $metadata['image_meta']['credit'];
-                $credit_link = ( empty( $metadata['image_meta']['credit_link'] ) )
-                    ? ''
-                    : $metadata['image_meta']['credit_link'];
-
-                $fields['pedestal_credit'] = [
-                    'label'              => esc_html__( 'Credit', 'pedestal' ),
-                    'input'              => 'text',
-                    'value'              => $credit,
-                ];
-                $fields['pedestal_credit_link'] = [
-                    'label'              => esc_html__( 'Credit Link', 'pedestal' ),
-                    'input'              => 'url',
-                    'value'              => $credit_link,
-                ];
-            }
-
-            return $fields;
-        }, 10, 2 );
-
-        add_filter( 'attachment_fields_to_save', function( $data, $attachment ) {
-
-            $metadata = wp_get_attachment_metadata( $data['ID'] );
-            if ( ! empty( $metadata['image_meta'] ) ) {
-                if ( isset( $attachment['pedestal_credit'] ) ) {
-                    $metadata['image_meta']['credit'] = sanitize_text_field( $attachment['pedestal_credit'] );
-                }
-                if ( isset( $attachment['pedestal_credit_link'] ) ) {
-                    $metadata['image_meta']['credit_link'] = esc_url( $attachment['pedestal_credit_link'] );
-                }
-                wp_update_attachment_metadata( $data['ID'], $metadata );
-            }
-
-            return $data;
-
-        }, 10, 2 );
-
-        add_filter( 'wp_insert_post_data', [ $this, 'filter_wp_insert_post_data' ], 10, 2 );
 
         // Highlight the proper parent menu item for submenu items that have been moved around
         add_filter( 'parent_file', function( $parent_file ) {
@@ -247,26 +209,6 @@ class Admin {
                  </style>';
         });
 
-        // Setup TinyMCE
-        add_filter( 'tiny_mce_before_init', function( $arr ) {
-            $post_id = get_queried_object_id();
-            if ( 'pedestal_newsletter' !== get_post_type( $post_id ) ) {
-                // Limit suggested formats
-                $arr['block_formats'] = 'Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3';
-            }
-
-            // Set-up custom CSS classes to add to the Formats dropwdown
-            $style_formats = [
-                [
-                    'title' => 'Site Color',
-                    'selector' => '*', // Add this class to every element
-                    'classes' => 'u-text-color-primary',
-                ],
-            ];
-            $arr['style_formats'] = json_encode( $style_formats );
-            return $arr;
-        } );
-
         // Disable TinyMCE if the post content contains a SoundCite shortcode
         add_filter( 'user_can_richedit', function( $can ) {
             global $post;
@@ -276,11 +218,13 @@ class Admin {
             return $can;
         } );
 
+        // Load custom TinyMCE buttons`
         add_filter( 'mce_buttons', function( $buttons ) {
             array_push( $buttons, 'insertPostElement' );
             return $buttons;
         });
 
+        // Load additional TinyMCE plugins
         add_filter( 'mce_external_plugins', function( $plugins ) {
             $plugin_array['Pedestal'] = get_template_directory_uri() . '/assets/js/custom-tinymce-buttons.js';
             return $plugin_array;
@@ -297,34 +241,6 @@ class Admin {
             }
 	        return $buttons;
         });
-
-        add_filter( 'gettext', function( $translation, $text ) {
-            if ( 'Publish' !== $text ) {
-                return $translation;
-            }
-
-            // We need to account for the var postL10n JavaScript variable translation
-            // as well and `get_post_type()` returns null during that context.
-            $post_type = get_post_type();
-            if ( ! $post_type && isset( $_GET['post'] ) ) {
-                $post_type = get_post_type( $_GET['post'] );
-            }
-            if ( ! $post_type && isset( $_GET['post_type'] ) ) {
-                $post_type = $_GET['post_type'];
-            }
-            if ( 'pedestal_newsletter' !== $post_type ) {
-                return $translation;
-            }
-
-            $new_text = 'Send Newsletter';
-            // If the trash is disabled we need to use a shorter label
-            // 'Move to Trash' changes to 'Delete Permanently' and there is less space
-            if ( ! EMPTY_TRASH_DAYS ) {
-                $new_text = 'Send';
-            }
-
-            return $new_text;
-        }, 10, 2 );
     }
 
     /**
@@ -382,16 +298,7 @@ class Admin {
         unset( $menu[25] ); // comments
 
         // Add some new menus
-        add_menu_page( 'Slots', 'Slots', 'manage_options', 'slots', '', 'dashicons-businessman', 21 );
-
-        // Move Slot Item Type taxonomy menu to Slots menu
-        $tax_slot_item_types = get_taxonomy( 'pedestal_slot_item_type' );
-        add_submenu_page( 'slots',
-            esc_attr( $tax_slot_item_types->labels->menu_name ),
-            esc_attr( $tax_slot_item_types->labels->menu_name ),
-            $tax_slot_item_types->cap->manage_terms,
-            'edit-tags.php?taxonomy=' . $tax_slot_item_types->name
-        );
+        add_menu_page( 'Slots', 'Slots', 'edit_slots', 'slots', '', 'dashicons-businessman', 21 );
 
         // Remove some meta boxes
         remove_meta_box( 'pedestal_locality_typediv', 'pedestal_locality', 'side' );
@@ -410,12 +317,13 @@ class Admin {
      * Scripts and styles for the admin
      */
     public function action_admin_enqueue_scripts() {
-
         wp_enqueue_style( 'pedestal-admin', get_template_directory_uri() . '/assets/dist/css/admin.css', [], PEDESTAL_VERSION );
         wp_enqueue_script( 'pedestal-admin', get_template_directory_uri() . '/assets/dist/js/admin.js', [], PEDESTAL_VERSION );
-
     }
 
+    /**
+     * Add fields to the User profile
+     */
     public function action_user_fields() {
         global $wpdb;
 
@@ -474,7 +382,7 @@ class Admin {
     /**
      * Display admin notice if the post excerpt is missing
      */
-    function action_admin_notice_excerpt_required() {
+    public function action_admin_notice_excerpt_required() {
         $message = 'Excerpt is required to publish an article.';
         self::handle_admin_notice_error( 'excerpt_required', $message );
     }
@@ -482,7 +390,7 @@ class Admin {
     /**
      * Display admin notice if the Locality Type is not set
      */
-    function action_admin_notice_locality_type_required() {
+    public function action_admin_notice_locality_type_required() {
         $message = 'Please set the Locality Type in the field below!';
         self::handle_admin_notice_error( 'locality_type_required', $message );
     }
@@ -507,9 +415,154 @@ class Admin {
     /**
      * Display admin notice if any required Slot Item Placement defaults are missing
      */
-    function action_admin_notice_slot_item_defaults_missing() {
+    public function action_admin_notice_slot_item_defaults_missing() {
         $message = 'You are missing required default values in the Slot Placement Defaults!';
         self::handle_admin_notice_error( 'slot_item_defaults_missing', $message );
+    }
+
+    /**
+     * Filter markup to include placeholders specific to this post
+     */
+    public function filter_fm_element_markup_start( $out, $fm ) {
+
+        $screen = get_current_screen();
+        if ( 'post' !== $screen->base ) {
+            return $out;
+        }
+
+        $post = \Pedestal\Posts\Post::get_by_post_id( get_the_ID() );
+        if ( ! $post ) {
+            return $out;
+        }
+
+        $fm_tree = $fm->get_form_tree();
+        array_pop( $fm_tree );
+        $parent = array_pop( $fm_tree );
+
+        if ( $parent ) {
+
+            if ( 'facebook' === $parent->name ) {
+                $placeholders = [
+                    'title'        => $post->get_default_facebook_open_graph_tag( 'title' ),
+                    'description'  => $post->get_default_facebook_open_graph_tag( 'description' ),
+                ];
+            } elseif ( 'twitter' === $parent->name ) {
+                $placeholders = [
+                    'title'        => $post->get_default_twitter_card_tag( 'title' ),
+                    'description'  => $post->get_default_twitter_card_tag( 'description' ),
+                ];
+            } elseif ( 'seo' === $parent->name ) {
+                $placeholders = [
+                    'title'        => $post->get_default_seo_title(),
+                    'description'  => $post->get_default_seo_description(),
+                ];
+            }
+
+            if ( isset( $placeholders[ $fm->name ] ) ) {
+                $fm->attributes['placeholder'] = $placeholders[ $fm->name ];
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * Set up TinyMCE
+     */
+    public function filter_tiny_mce_before_init( $arr ) {
+        $post_id = get_queried_object_id();
+        if ( 'pedestal_newsletter' !== get_post_type( $post_id ) ) {
+            // Limit suggested formats
+            $arr['block_formats'] = 'Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3';
+        }
+
+        // Set-up custom CSS classes to add to the Formats dropwdown
+        $style_formats = [
+            [
+                'title' => 'Site Color',
+                'selector' => '*', // Add this class to every element
+                'classes' => 'u-text-color-primary',
+            ],
+        ];
+        $arr['style_formats'] = json_encode( $style_formats );
+        return $arr;
+    }
+
+    /**
+     * Filter attachment fields available to edit
+     */
+    public function filter_attachment_fields_to_edit( $fields, $post ) {
+        $metadata = wp_get_attachment_metadata( $post->ID );
+        if ( ! empty( $metadata['image_meta'] ) ) {
+            // @TODO clean up ternaries
+            $credit = ( empty( $metadata['image_meta']['credit'] ) )
+                ? ''
+                : $metadata['image_meta']['credit'];
+            $credit_link = ( empty( $metadata['image_meta']['credit_link'] ) )
+                ? ''
+                : $metadata['image_meta']['credit_link'];
+
+            $fields['pedestal_credit'] = [
+                'label'              => esc_html__( 'Credit', 'pedestal' ),
+                'input'              => 'text',
+                'value'              => $credit,
+            ];
+            $fields['pedestal_credit_link'] = [
+                'label'              => esc_html__( 'Credit Link', 'pedestal' ),
+                'input'              => 'url',
+                'value'              => $credit_link,
+            ];
+        }
+
+        return $fields;
+    }
+
+    /**
+     * Filter attachment fields as they are saved
+     */
+    public function filter_attachment_fields_to_save( $data, $attachment ) {
+        $metadata = wp_get_attachment_metadata( $data['ID'] );
+        if ( ! empty( $metadata['image_meta'] ) ) {
+            if ( isset( $attachment['pedestal_credit'] ) ) {
+                $metadata['image_meta']['credit'] = sanitize_text_field( $attachment['pedestal_credit'] );
+            }
+            if ( isset( $attachment['pedestal_credit_link'] ) ) {
+                $metadata['image_meta']['credit_link'] = esc_url( $attachment['pedestal_credit_link'] );
+            }
+            wp_update_attachment_metadata( $data['ID'], $metadata );
+        }
+        return $data;
+    }
+
+    /**
+     * Filter the text of the post Publish button
+     */
+    public function filter_gettext_publish_button( $translation, $text ) {
+        if ( 'Publish' !== $text ) {
+            return $translation;
+        }
+
+        // We need to account for the var postL10n JavaScript variable translation
+        // as well and `get_post_type()` returns null during that context.
+        $post_type = get_post_type();
+        if ( ! $post_type && isset( $_GET['post'] ) ) {
+            $post_type = get_post_type( $_GET['post'] );
+        }
+        if ( ! $post_type && isset( $_GET['post_type'] ) ) {
+            $post_type = $_GET['post_type'];
+        }
+        if ( 'pedestal_newsletter' !== $post_type ) {
+            return $translation;
+        }
+
+        $new_text = 'Send Newsletter';
+        // If the trash is disabled we need to use a shorter label
+        // 'Move to Trash' changes to 'Delete Permanently' and there is less space
+        if ( ! EMPTY_TRASH_DAYS ) {
+            $new_text = 'Send';
+        }
+
+        return $new_text;
     }
 
     /**
@@ -620,7 +673,7 @@ class Admin {
                 ] ),
             ],
         ] );
-        $fm_spotlight->add_submenu_page( 'themes.php', esc_html__( 'Spotlight Settings', 'pedestal' ), esc_html__( 'Spotlight', 'pedestal' ), 'edit_others_posts' );
+        $fm_spotlight->add_submenu_page( 'themes.php', esc_html__( 'Spotlight Settings', 'pedestal' ), esc_html__( 'Spotlight', 'pedestal' ), 'manage_spotlight' );
 
     }
 
@@ -653,7 +706,7 @@ class Admin {
                 ] ),
             ],
         ] );
-        $fm_pinned->add_submenu_page( 'themes.php', esc_html__( 'Pinned Entity Settings', 'pedestal' ), esc_html__( 'Pinned', 'pedestal' ), 'edit_others_posts' );
+        $fm_pinned->add_submenu_page( 'themes.php', esc_html__( 'Pinned Entity Settings', 'pedestal' ), esc_html__( 'Pinned', 'pedestal' ), 'manage_pinned' );
 
     }
 
@@ -675,7 +728,7 @@ class Admin {
                 ] ),
             ],
         ] );
-        $fm_spotlight->add_submenu_page( 'options-general.php', esc_html__( 'Maintenance Mode', 'pedestal' ), esc_html__( 'Maintenance Mode', 'pedestal' ), 'manage_options' );
+        $fm_spotlight->add_submenu_page( 'options-general.php', esc_html__( 'Maintenance Mode', 'pedestal' ), esc_html__( 'Maintenance Mode', 'pedestal' ), 'manage_network' );
     }
 
     /**
@@ -791,53 +844,10 @@ class Admin {
             'public'   => true,
             '_builtin' => false,
         ] );
-        $meta_group->add_meta_box( esc_html__( 'Distribution', 'pedestal' ), $distributable_post_types, 'advanced', 'low' );
-    }
 
-    /**
-     * Filter markup to include placeholders specific to this post
-     */
-    public function filter_fm_element_markup_start( $out, $fm ) {
-
-        $screen = get_current_screen();
-        if ( 'post' !== $screen->base ) {
-            return $out;
+        if ( current_user_can( 'manage_distribution' ) ) {
+            $meta_group->add_meta_box( esc_html__( 'Distribution', 'pedestal' ), $distributable_post_types, 'advanced', 'low' );
         }
-
-        $post = \Pedestal\Posts\Post::get_by_post_id( get_the_ID() );
-        if ( ! $post ) {
-            return $out;
-        }
-
-        $fm_tree = $fm->get_form_tree();
-        array_pop( $fm_tree );
-        $parent = array_pop( $fm_tree );
-
-        if ( $parent ) {
-
-            if ( 'facebook' === $parent->name ) {
-                $placeholders = [
-                    'title'        => $post->get_default_facebook_open_graph_tag( 'title' ),
-                    'description'  => $post->get_default_facebook_open_graph_tag( 'description' ),
-                ];
-            } elseif ( 'twitter' === $parent->name ) {
-                $placeholders = [
-                    'title'        => $post->get_default_twitter_card_tag( 'title' ),
-                    'description'  => $post->get_default_twitter_card_tag( 'description' ),
-                ];
-            } elseif ( 'seo' === $parent->name ) {
-                $placeholders = [
-                    'title'        => $post->get_default_seo_title(),
-                    'description'  => $post->get_default_seo_description(),
-                ];
-            }
-
-            if ( isset( $placeholders[ $fm->name ] ) ) {
-                $fm->attributes['placeholder'] = $placeholders[ $fm->name ];
-            }
-        }
-
-        return $out;
     }
 
     /**

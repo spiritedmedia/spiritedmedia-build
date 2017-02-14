@@ -2,7 +2,9 @@
 
 namespace Pedestal;
 
-use \Pedestal\Objects\User;
+use Pedestal\Utils\Utils;
+use Pedestal\Objects\User;
+use Pedestal\Registrations\Post_Types\Types;
 
 class User_Management {
 
@@ -21,6 +23,31 @@ class User_Management {
      * @var array
      */
     private static $producer_roles = [];
+
+    /**
+     * New roles and their labels
+     *
+     * @var array
+     */
+    private static $roles_labels = [
+        'reporter'           => 'Reporter',
+        'reporter_assoc'     => 'Associate Reporter',
+        'sales_manager'      => 'Sales Manager',
+        'sales_assoc'        => 'Sales Associate',
+        'feat_contributor'   => 'Featured Contributor',
+        'reporter_freelance' => 'Freelance Reporter',
+    ];
+
+    /**
+     * WP default roles to rename
+     *
+     * @var array
+     */
+    public static $rename_roles = [
+        'editor'      => 'reporter',
+        'contributor' => 'reporter_assoc',
+        'author'      => 'reporter_assoc',
+    ];
 
     /**
      * Sanitized URL bases for producer roles
@@ -73,33 +100,10 @@ class User_Management {
      */
     private function setup_actions() {
 
-        /**
-         * Set up custom roles and capabilities
-         */
-        add_action( 'init', function() {
-            // Clone the Featured Contributor role from Contributor
-            $this->duplicate_role( 'contributor', 'feat_contributor', 'Featured Contributor', [] );
-
-            // Allow contributors and feat. contributors to upload media
-            $this->merge_role_caps( 'contributor', [
-                'upload_files' => true,
-            ] );
-            $this->merge_role_caps( 'feat_contributor', [
-                'upload_files' => true,
-            ] );
-
-            // Give the editor role the ability to add users
-            $this->merge_role_caps( 'editor', [
-                'delete_users' => true,
-                'create_users' => true,
-                'edit_users' => true,
-                'list_users' => true,
-                'promote_users' => true,
-                'add_users' => true,
-            ] );
-        } );
-
+        // Set up custom roles and capabilities
         add_action( 'init', [ $this, 'action_author_permalink_role' ] );
+        add_action( 'init', [ $this, 'action_init_edit_builtin_caps' ] );
+        add_action( 'load-users.php', [ $this, 'action_load_users_setup_roles' ] );
         add_action( 'pre_get_posts', [ $this, 'action_author_permalink_name' ] );
         add_action( 'profile_update', [ $this, 'update_option_producers' ] );
 
@@ -149,6 +153,166 @@ class User_Management {
             return $url;
         });
 
+    }
+
+    /**
+     * Edit capabilities for builtin post types
+     */
+    public function action_init_edit_builtin_caps() {
+        global $wp_post_types;
+        $wp_post_types['attachment']->cap = (object) [
+            'read'                   => 'read',
+            'create_posts'           => 'upload_files',
+            'edit_post'              => 'edit_attachment',
+            'read_post'              => 'read_attachment',
+            'delete_post'            => 'delete_attachment',
+            'edit_posts'             => 'manage_uploads',
+            'edit_others_posts'      => 'manage_uploads',
+            'publish_posts'          => 'manage_uploads',
+            'read_private_posts'     => 'manage_uploads',
+            'delete_posts'           => 'manage_uploads',
+            'delete_private_posts'   => 'manage_uploads',
+            'delete_published_posts' => 'manage_uploads',
+            'delete_others_posts'    => 'manage_uploads',
+            'edit_private_posts'     => 'manage_uploads',
+            'edit_published_posts'   => 'manage_uploads',
+        ];
+    }
+
+    /**
+     * Set up custom roles and capabilities
+     */
+    public function action_load_users_setup_roles() {
+        $tablepress_caps = [
+            'tablepress_edit_tables'           => true,
+            'tablepress_delete_tables'         => true,
+            'tablepress_list_tables'           => true,
+            'tablepress_add_tables'            => true,
+            'tablepress_copy_tables'           => true,
+            'tablepress_import_tables'         => true,
+            'tablepress_export_tables'         => true,
+            'tablepress_access_options_screen' => true,
+            'tablepress_access_about_screen'   => true,
+        ];
+
+        // "Rename" some roles
+        foreach ( static::$rename_roles as $old_role => $new_role ) {
+            $get_users_args = [
+                'fields' => [ 'ID' ],
+                'role' => $old_role,
+            ];
+            if ( ! get_role( $new_role ) ) {
+                $this->duplicate_role( $old_role, $new_role, self::$roles_labels[ $new_role ], [] );
+            }
+            // Remove the old role if there are no users with that role assigned
+            //
+            // @TODO This user query should probably be cached or even stored in
+            // database as an option, because once the role is deleted it should
+            // never come back...
+            if ( get_role( $old_role ) && empty( get_users( $get_users_args ) ) ) {
+                remove_role( $old_role );
+            }
+        }
+
+        // Sales Manager
+        $caps_sales_manager =
+            [ 'manage_uploads' => true ] +
+            Types::get_post_type_capabilities( 'pedestal_slot_item' ) +
+            Types::get_post_type_capabilities( 'pedestal_event' );
+        $this->add_role( 'sales_manager', self::$roles_labels['sales_manager'], $caps_sales_manager );
+
+        // Sales Associate
+        $this->add_role( 'sales_assoc', self::$roles_labels['sales_assoc'], [
+            'publish_slots'        => true,
+            'edit_slots'           => true,
+            'edit_published_slots' => true,
+            'edit_events'          => true,
+        ] );
+
+        // Freelance Reporter
+        $this->add_role( 'reporter_freelance', self::$roles_labels['reporter_freelance'], [
+            'edit_articles' => true,
+        ] );
+
+        // Featured Contributor
+        $this->duplicate_role( 'reporter_freelance', 'feat_contributor', self::$roles_labels['feat_contributor'], [] );
+
+        // Administrators and Reporters
+        $caps_admin_reporters = [
+            'send_emails'         => '',
+            'manage_spotlight'    => '',
+            'manage_pinned'       => '',
+            'manage_terms'        => '',
+            'manage_distribution' => '',
+            'manage_uploads'      => '',
+        ];
+        $ptypes_admin_reporters = array_merge(
+            [ 'pedestal_newsletter' ],
+            Types::get_entity_post_types(),
+            Types::get_cluster_post_types()
+        );
+        foreach ( $ptypes_admin_reporters as $post_type ) {
+            $caps = Types::get_post_type_capabilities( $post_type );
+            if ( empty( $caps ) ) { continue; }
+            $caps_admin_reporters += $caps;
+        }
+        $caps_admin_reporters = array_map( '__return_true', $caps_admin_reporters );
+        $caps_admin = $caps_admin_reporters + $caps_sales_manager;
+        $caps_admin += [
+            'create_users'   => true,
+            'merge_clusters' => true,
+        ];
+        $caps_admin = array_map( '__return_true', $caps_admin );
+        $this->merge_role_caps( 'administrator', $caps_admin );
+        $this->merge_role_caps( 'reporter', $caps_admin_reporters );
+
+        // Associate Reporter
+        $caps_reporter_assoc = [
+            'edit_entities' => true,
+            'edit_articles' => true,
+            'edit_events'   => true,
+            'edit_clusters' => true,
+        ] + $tablepress_caps;
+        $this->merge_role_caps( 'reporter_assoc', $caps_reporter_assoc );
+
+        // Common capabilities
+        foreach ( static::get_roles() as $role_name => $role_label ) {
+            $basic_caps = [
+                'read'                             => true,
+                'manage_options'                   => false,
+                'switch_themes'                    => false,
+                'customize'                        => false,
+                'delete_site'                      => false,
+                'activate_plugins'                 => false,
+                'import'                           => false,
+                'export'                           => false,
+                'unfiltered_upload'                => false,
+                'manage_categories'                => false,
+                'tablepress_access_options_screen' => false,
+                'tablepress_access_about_screen'   => false,
+            ];
+            if ( 'subscriber' !== $role_name ) {
+                $basic_caps['upload_files'] = true;
+            }
+            $this->merge_role_caps( $role_name, $basic_caps );
+
+            // Only Admins can manage users and manage Pages
+            if ( 'administrator' !== $role_name ) {
+                $non_admin_caps = [
+                    'create_users',
+                    'edit_users',
+                    'delete_users',
+                    'list_users',
+                    'promote_users',
+                    'add_users',
+                    'remove_users',
+                ];
+                foreach ( Types::get_post_type_capabilities( 'page' ) as $key => $value ) {
+                    $non_admin_caps[] = $key;
+                }
+                $this->remove_role_caps( $role_name, $non_admin_caps );
+            }
+        }
     }
 
     /**
@@ -344,9 +508,9 @@ class User_Management {
     }
 
     /**
-     * Get all of the role slugs
+     * Get all of the role slugs and their labels
      *
-     * @return array
+     * @return array [ 'slug' => 'label' ]
      */
     public static function get_roles() {
         global $wp_roles;

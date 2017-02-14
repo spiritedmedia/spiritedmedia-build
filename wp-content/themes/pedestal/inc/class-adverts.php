@@ -53,7 +53,7 @@ class Adverts {
      */
     public function filter_timber_context( $context ) {
         $context['adverts'] = [];
-        if ( get_query_var( 'pedestal-test-adverts' ) && current_user_can( 'manage_options' ) ) {
+        if ( get_query_var( 'pedestal-test-adverts' ) && current_user_can( 'edit_slots' ) ) {
             switch ( get_query_var( 'pedestal-test-adverts' ) ) {
                 case 'premium':
                     $context['adverts']['test_premium'] = true;

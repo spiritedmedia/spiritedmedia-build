@@ -150,6 +150,8 @@ class Cluster_Types extends Types {
                 'show_ui'           => true,
                 'has_archive'       => true,
                 'query_var'         => true,
+                'map_meta_cap'      => true,
+                'capability_type'   => 'cluster',
             ];
 
             switch ( $post_type ) {
@@ -874,6 +876,9 @@ class Cluster_Types extends Types {
      * JavaScript.
      */
     private function register_cluster_connection_fields() {
+        if ( ! current_user_can( 'edit_clusters' ) ) {
+            return;
+        }
 
         // Standard cluster groups
         $group_entities_to_clusters = new \Fieldmanager_Group( '', [

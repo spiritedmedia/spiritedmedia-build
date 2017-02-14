@@ -68,6 +68,8 @@ class Slot_Types extends Types {
                 'show_ui'           => true,
                 'has_archive'       => true,
                 'query_var'         => true,
+                'map_meta_cap'      => true,
+                'capability_type'   => 'slot',
             ];
 
             switch ( $post_type ) {

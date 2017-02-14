@@ -90,20 +90,16 @@ class Taxonomies {
 
             $args = [
                 'hierarchical'      => true,
-                'public'            => true,
-                'show_in_nav_menus' => true,
-                'show_ui'           => true,
-                'show_admin_column' => true,
                 'query_var'         => true,
                 'rewrite'           => [
                     'slug'       => strtolower( $tax_settings['name'] ) . '/types',
                     'with_front' => false,
                 ],
                 'capabilities'      => [
-                    'manage_terms'  => 'edit_posts',
-                    'edit_terms'    => 'edit_posts',
-                    'delete_terms'  => 'edit_posts',
-                    'assign_terms'  => 'edit_posts',
+                    'manage_terms'  => 'manage_terms',
+                    'edit_terms'    => 'manage_terms',
+                    'delete_terms'  => 'manage_terms',
+                    'assign_terms'  => 'manage_terms',
                 ],
                 'labels'            => [
                     'name'                       => __( $plural, 'pedestal' ),
@@ -141,10 +137,10 @@ class Taxonomies {
             'query_var'         => true,
             'rewrite'           => true,
             'capabilities'      => [
-                'manage_terms'  => 'edit_posts',
-                'edit_terms'    => 'edit_posts',
-                'delete_terms'  => 'edit_posts',
-                'assign_terms'  => 'edit_posts',
+                'manage_terms'  => 'manage_terms',
+                'edit_terms'    => 'edit_entities',
+                'delete_terms'  => 'manage_terms',
+                'assign_terms'  => 'edit_entities',
             ],
             'labels'            => [
                 'name'                       => __( 'Sources', 'pedestal' ),

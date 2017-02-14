@@ -58,7 +58,7 @@ class Cluster_Tools {
             add_management_page(
                 esc_html__( self::$page_title, 'pedestal' ),
                 esc_html__( self::$page_title, 'pedestal' ),
-                'manage_options',
+                'merge_clusters',
                 'pedestal_cluster_tools',
                 [ $this, 'render_cluster_tools_page' ]
             );

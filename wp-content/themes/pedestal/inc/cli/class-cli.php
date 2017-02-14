@@ -12,6 +12,8 @@ use Pedestal\Utils\Utils;
 
 use Pedestal\Registrations\Post_Types\Types;
 
+use Pedestal\User_Management;
+
 use Pedestal\Posts\Post;
 
 use Pedestal\Objects\Newsletter_Lists;
@@ -652,7 +654,27 @@ class CLI extends \WP_CLI_Command {
         // All done. How long did it take?
         $time_end = microtime( true );
         $total_time = round( $time_end - $time_start, 1 );
-        WP_CLI::success( 'Finished in ' . $total_time . ' seconds' );
+        WP_CLI::line( 'Finished in ' . $total_time . ' seconds' );
+    }
+
+    /**
+     * Migrate users to new roles
+     *
+     * @subcommand migrate-roles
+     */
+    public function migrate_roles() {
+        foreach ( User_Management::$rename_roles as $old_role => $new_role ) {
+            $count_users = 0;
+            WP_CLI::line( "Changing `{$old_role}` to `{$new_role}`..." );
+            $users = get_users( [ 'role' => $old_role ] );
+            foreach ( $users as $user ) {
+                $display_name = $user->display_name;
+                $user->set_role( $new_role );
+                $count_users++;
+                WP_CLI::line( "Changed [$user->ID] {$user->display_name}'s' role from `{$old_role}` to `{$new_role}`." );
+            }
+            WP_CLI::success( "Changed role for {$count_users} `{$old_role}`s to `{$new_role}`s!" );
+        }
     }
 }
 

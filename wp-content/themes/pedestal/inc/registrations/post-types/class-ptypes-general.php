@@ -45,11 +45,14 @@ class General_Types extends Types {
                 'show_ui'           => true,
                 'has_archive'       => true,
                 'query_var'         => true,
+                'map_meta_cap'      => true,
             ];
 
             switch ( $post_type ) {
 
                 case 'pedestal_newsletter':
+                    $cap_manage = 'send_emails';
+
                     $singular = esc_html__( 'Newsletter', 'pedestal' );
                     $plural = esc_html__( 'Newsletters', 'pedestal' );
                     $class = 'Posts\\Newsletter';
@@ -58,6 +61,23 @@ class General_Types extends Types {
                     $args['supports'] = [
                         'title',
                         'slots',
+                    ];
+                    $args['capabilities'] = [
+                        'read'                   => 'read',
+                        'edit_post'              => 'edit_newsletter',
+                        'read_post'              => 'read_newsletter',
+                        'delete_post'            => 'delete_newsletter',
+                        'create_posts'           => $cap_manage,
+                        'publish_posts'          => $cap_manage,
+                        'edit_posts'             => $cap_manage,
+                        'delete_posts'           => $cap_manage,
+                        'edit_others_posts'      => $cap_manage,
+                        'delete_others_posts'    => $cap_manage,
+                        'edit_published_posts'   => $cap_manage,
+                        'delete_published_posts' => $cap_manage,
+                        'read_private_posts'     => $cap_manage,
+                        'edit_private_posts'     => $cap_manage,
+                        'delete_private_posts'   => $cap_manage,
                     ];
                     $args['rewrite'] = [
                         'slug' => 'newsletters',
@@ -186,10 +206,12 @@ class General_Types extends Types {
         ] );
         $items->add_meta_box( esc_html__( 'Newsletter Items', 'pedestal' ), [ 'pedestal_newsletter' ], 'normal', 'high' );
 
-        $options = new \Fieldmanager_Checkbox( esc_html__( 'This newsletter is part of a test', 'pedestal' ), [
-            'name' => 'newsletter_is_test',
-        ] );
-        $options->add_meta_box( esc_html__( 'Newsletter Options', 'pedestal' ), [ 'pedestal_newsletter' ], 'side', 'low' );
+        if ( current_user_can( 'send_emails' ) ) {
+            $options = new \Fieldmanager_Checkbox( esc_html__( 'This newsletter is part of a test', 'pedestal' ), [
+                'name' => 'newsletter_is_test',
+            ] );
+            $options->add_meta_box( esc_html__( 'Newsletter Options', 'pedestal' ), [ 'pedestal_newsletter' ], 'side', 'low' );
+        }
     }
 
     /**

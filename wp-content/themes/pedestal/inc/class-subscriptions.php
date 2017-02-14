@@ -126,7 +126,7 @@ class Subscriptions {
      * Add subscription-related meta boxes
      */
     public function action_add_meta_boxes( $post_type, $post ) {
-        if ( ! in_array( $post_type, Types::get_emailable_post_types() ) ) {
+        if ( ! current_user_can( 'send_emails' ) || ! in_array( $post_type, Types::get_emailable_post_types() ) ) {
             return;
         }
 
@@ -240,6 +240,10 @@ class Subscriptions {
         $sent_date = $post->get_sent_date();
         $status = $post->get_status();
         $args = $metabox['args'];
+
+        if ( ! current_user_can( 'send_emails' ) ) {
+            return;
+        }
 
         if ( empty( $args['email_type'] ) || empty( $args['template'] ) ) {
             echo 'Something went wrong. Please contact #product.';

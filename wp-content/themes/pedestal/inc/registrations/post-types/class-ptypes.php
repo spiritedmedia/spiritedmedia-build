@@ -507,6 +507,35 @@ class Types {
     }
 
     /**
+     * Get a post type's capabilities
+     *
+     * @link https://codex.wordpress.org/Function_Reference/get_post_type_capabilities
+     *
+     * @param  string $post_type  Post type slug
+     * @param  array  $exclusions Exclude any caps?
+     * @return array Post type capabilities map
+     */
+    public static function get_post_type_capabilities( string $post_type, $exclusions = [] ) {
+        if ( empty( $obj = get_post_type_object( $post_type ) ) || empty( $obj->cap ) ) {
+            return false;
+        }
+        $caps = (array) $obj->cap;
+        if ( empty( $exclusions ) ) {
+            $exclusions = [
+                'read',
+                'read_post',
+                'edit_post',
+                'delete_post',
+            ];
+        }
+        foreach ( $exclusions as $exclusion ) {
+            unset( $caps[ $exclusion ] );
+        }
+        $caps = array_flip( $caps );
+        return $caps;
+    }
+
+    /**
      * Get a post type's label name
      *
      * @param  string  $post_type The post type
