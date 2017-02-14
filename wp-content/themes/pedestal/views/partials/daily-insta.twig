@@ -2,25 +2,25 @@
 {% set el__base = 'article' %}
 {% set el__header = 'header' %}
 {% set el__body = 'figure' %}
-{% set el__text = 'figcaption' %}
-{% set el__text__caption = 'h1' %}
+{% set el__caption = 'figcaption' %}
+{% set el__caption__text = 'h1' %}
 {% set el__author = 'h2' %}
 
 {% if is_email %}
     {% set el__base = 'div' %}
     {% set el__header = 'div' %}
     {% set el__body = 'div' %}
-    {% set el__text = 'div' %}
-    {% set el__text__caption = 'h4' %}
+    {% set el__caption = 'div' %}
+    {% set el__caption__text = 'h4' %}
     {% set el__author = 'h5' %}
 {% endif %}
 
-<{{ el__base }} class="c-daily-insta  c-panel">
+<{{ el__base }} class="{{ classes }} c-daily-insta  c-panel">
     <{{ el__header }} class="c-daily-insta__header">
         {{ macros.blox( _context, {
             'format': 'cap',
             'title': 'Instagram of the Day',
-            'extra_classes': 'c-daily-insta__title',
+            'blox_classes': 'c-daily-insta__title',
             'background': 'lighter',
             'case': 'ignore'
         } ) }}
@@ -36,14 +36,14 @@
             {% endif %}
         </div>
         {{ ped_slot( 'component', 'daily_insta' ) }}
-        <{{ el__text }} class="c-daily-insta__text  c-figure__text  c-panel__inner">
-            <{{ el__text__caption }} class="c-daily-insta__text__caption  c-figure__text__caption">
+        <{{ el__caption }} class="c-daily-insta__caption  c-figure__text  c-panel__inner">
+            <{{ el__caption__text }} class="c-daily-insta__caption__text  c-daily-insta__body__text  c-figure__text__caption">
                 {{ item.get_embed_caption }}
-            </{{ el__text__caption }}>
-            <{{ el__author }} class="c-daily-insta__author">
+            </{{ el__caption__text }}>
+            <{{ el__author }} class="c-daily-insta__author  c-daily-insta__body__text">
                 <a href="{{ item.get_embed_url }}" target="_blank">@{{ item.get_embed_author_name }}</a>
             </{{ el__author }}>
-        </{{ el__text }}>
+        </{{ el__caption }}>
     </{{ el__body }}>
 </{{ el__base }}>
 {% endspaceless %}

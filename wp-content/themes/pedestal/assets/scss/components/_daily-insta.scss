@@ -3,24 +3,26 @@
 // ==========================================================================
 
 
-.c-daily-insta {
+$c: '.c-daily-insta';
+
+
+#{$c} {
   margin-bottom: ( $base-spacing-unit * 2 );
   display: table;
 
   /*header*/&__header {}
 
-  &__title {
-    $blox: '.c-blox';
-    @extend %u-heading--minor;
-    text-align: center;
-
-    #{$blox}--story-bar #{$blox}__text__title {
-      @include h-size( 4 );
-    }
-  }
+  &__title {}
 
   /*figure*/&__body {
     margin: 0;
+
+    &__text {
+      font-size: $paragraph-font-size;
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+    }
   }
 
   &__img {
@@ -32,14 +34,14 @@
     }
   }
 
-  /*figcaption*/&__text {
+  /*figcaption*/&__caption {
     background-color: $truth-serum;
     padding: $half-spacing-unit;
 
     // Override .c-panel__inner
     min-height: 0;
 
-    &__caption {
+    &__text {
       margin-top: 0;
     }
   }
@@ -50,20 +52,31 @@
     font-weight: 600;
   }
 
-  &__text__caption,
-  &__author {
-    @if $email {
-      font-size: $paragraph-font-size;
-    } @else {
-      font-size: $h5-font-size;
-    }
-  }
-
   &__date {
     @extend %u-heading--minor;
-
   }
 
   &__author {}
 
+
+  //
+  // Context: Newsletter
+  //
+  &--newsletter {
+    #{$c}__body__text {
+      @if not $email {
+        font-size: $h5-font-size;
+      }
+    }
+  }
+
+
+  //
+  // Context: Widget
+  //
+  &--widget {
+    #{$c}__body__text {
+      font-size: $small-font-size;
+    }
+  }
 }

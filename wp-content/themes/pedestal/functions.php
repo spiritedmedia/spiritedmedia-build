@@ -462,6 +462,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             register_widget( '\Pedestal\Widgets\Signup_Newsletter_Widget' );
             register_widget( '\Pedestal\Widgets\In_This_Story_Widget' );
             register_widget( '\Pedestal\Widgets\Recent_Content_Widget' );
+            register_widget( '\Pedestal\Widgets\Daily_Insta_Widget' );
 
             // Our DFP widgets
             register_widget( '\Pedestal\Widgets\DFP\Rail_Right_Widget' );

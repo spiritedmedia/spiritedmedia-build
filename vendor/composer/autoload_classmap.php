@@ -299,6 +299,7 @@ return array(
     'Pedestal\\Utils\\Image_Ratio' => $baseDir . '/wp-content/themes/pedestal/inc/utils/class-image-ratio.php',
     'Pedestal\\Utils\\Utils' => $baseDir . '/wp-content/themes/pedestal/inc/utils/class-utils.php',
     'Pedestal\\Widgets\\DFP\\Rail_Right_Widget' => $baseDir . '/wp-content/themes/pedestal/inc/widgets/class-dfp-rail-right-widget.php',
+    'Pedestal\\Widgets\\Daily_Insta_Widget' => $baseDir . '/wp-content/themes/pedestal/inc/widgets/class-daily-insta-widget.php',
     'Pedestal\\Widgets\\In_This_Story_Widget' => $baseDir . '/wp-content/themes/pedestal/inc/widgets/class-in-this-story-widget.php',
     'Pedestal\\Widgets\\Recent_Content_Widget' => $baseDir . '/wp-content/themes/pedestal/inc/widgets/class-recent-content-widget.php',
     'Pedestal\\Widgets\\Signup_Newsletter_Widget' => $baseDir . '/wp-content/themes/pedestal/inc/widgets/class-signup-newsletter-widget.php',

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd1f491edf4b548cfe4a0bc6f91999eb4
+class ComposerStaticInitd90b6d6b90a0ac529a2915dedbc889b9
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -369,6 +369,7 @@ class ComposerStaticInitd1f491edf4b548cfe4a0bc6f91999eb4
         'Pedestal\\Utils\\Image_Ratio' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/utils/class-image-ratio.php',
         'Pedestal\\Utils\\Utils' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/utils/class-utils.php',
         'Pedestal\\Widgets\\DFP\\Rail_Right_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-dfp-rail-right-widget.php',
+        'Pedestal\\Widgets\\Daily_Insta_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-daily-insta-widget.php',
         'Pedestal\\Widgets\\In_This_Story_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-in-this-story-widget.php',
         'Pedestal\\Widgets\\Recent_Content_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-recent-content-widget.php',
         'Pedestal\\Widgets\\Signup_Newsletter_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-signup-newsletter-widget.php',
@@ -801,11 +802,11 @@ class ComposerStaticInitd1f491edf4b548cfe4a0bc6f91999eb4
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd1f491edf4b548cfe4a0bc6f91999eb4::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd1f491edf4b548cfe4a0bc6f91999eb4::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitd1f491edf4b548cfe4a0bc6f91999eb4::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitd1f491edf4b548cfe4a0bc6f91999eb4::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitd1f491edf4b548cfe4a0bc6f91999eb4::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd90b6d6b90a0ac529a2915dedbc889b9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd90b6d6b90a0ac529a2915dedbc889b9::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitd90b6d6b90a0ac529a2915dedbc889b9::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitd90b6d6b90a0ac529a2915dedbc889b9::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitd90b6d6b90a0ac529a2915dedbc889b9::$classMap;
 
         }, null, ClassLoader::class);
     }

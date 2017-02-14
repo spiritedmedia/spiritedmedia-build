@@ -49,7 +49,10 @@ class Newsletter extends Post {
      * @return HTML Rendered template
      */
     public function get_instagram_of_the_day() {
-        return Embed::get_instagram_of_the_day( $this->get_post_date( 'Y-m-d' ) );
+        return Embed::get_instagram_of_the_day( [
+            'date'    => $this->get_post_date( 'Y-m-d' ),
+            'context' => 'newsletter',
+        ] );
     }
 
     /**

@@ -1,7 +1,7 @@
-Build [#2126](https://circleci.com/gh/spiritedmedia/spiritedmedia/2126) by montchr at 2017-02-14 12:02 AM UTC
+Build [#2137](https://circleci.com/gh/spiritedmedia/spiritedmedia/2137) by montchr at 2017-02-14 08:27 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.0](https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.0)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.1](https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.1)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.2.6...v5.3.0)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.0...v5.3.1)
 
- - [#1831](https://github.com/spiritedmedia/spiritedmedia/pull/1831): Introduce custom user roles and capabilities
+ - [#1859](https://github.com/spiritedmedia/spiritedmedia/pull/1859): Introduce Instagram of the Day widget

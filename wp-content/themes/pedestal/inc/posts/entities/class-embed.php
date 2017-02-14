@@ -713,17 +713,43 @@ class Embed extends Entity {
     /**
      * Get the Instagram of the Day for a given date
      *
-     * @param  string $date Optional date string. Defaults to current date.
+     * @param  array  $options Rendering and query options
      * @return HTML Rendered template
      */
-    public static function get_instagram_of_the_day( string $date = '' ) {
+    public static function get_instagram_of_the_day( $options = [] ) {
         $date_format = 'Y-m-d';
 
-        if ( $date ) {
-            $date = date( $date_format, strtotime( $date ) );
-        } else {
-            $date = current_time( $date_format );
+        $options = wp_parse_args( $options, [
+            'date'              => current_time( $date_format ),
+            'fallback_previous' => false,
+            'context'           => '',
+        ] );
+        $date = strtotime( $options['date'] );
+
+        $date_query_args = [
+            'key' => 'daily_insta_date',
+            'value' => $date,
+        ];
+
+        if ( $options['fallback_previous'] ) {
+            $date_query_args = [
+                'relation' => 'OR',
+                $date_query_args,
+                [
+                    'key' => 'daily_insta_date',
+                    'value' => $date - DAY_IN_SECONDS,
+                ],
+            ];
         }
+
+        $meta_query = [
+            'relation' => 'AND',
+            [
+                'key' => 'embed_type',
+                'value' => 'instagram',
+            ],
+            $date_query_args,
+        ];
 
         $args = [
             'post_type'              => static::$post_type,
@@ -731,17 +757,8 @@ class Embed extends Entity {
             'posts_per_page'         => 1,
             'no_found_rows'          => true,
             'update_post_term_cache' => false,
-            'meta_query'     => [
-                'relation' => 'AND',
-                [
-                    'key' => 'daily_insta_date',
-                    'value' => strtotime( $date ),
-                ],
-                [
-                    'key' => 'embed_type',
-                    'value' => 'instagram',
-                ],
-            ],
+            'meta_query'             => $meta_query,
+            'orderby'                => 'meta_value_num date',
         ];
         $posts = Stream::get( $args );
         if ( empty( $posts ) ) {
@@ -755,6 +772,11 @@ class Embed extends Entity {
 
         $context = \Timber\Timber::get_context();
         $context['item'] = $daily_insta;
+
+        $context['classes'] = '';
+        if ( $options['context'] ) {
+            $context['classes'] = 'c-daily-insta--' . $options['context'];
+        }
 
         ob_start();
         \Timber\Timber::render( 'partials/daily-insta.twig', $context );
