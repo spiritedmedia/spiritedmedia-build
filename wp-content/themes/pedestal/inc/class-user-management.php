@@ -293,6 +293,7 @@ class User_Management {
             ];
             if ( 'subscriber' !== $role_name ) {
                 $basic_caps['upload_files'] = true;
+                $basic_caps['edit_posts'] = true;
             }
             $this->merge_role_caps( $role_name, $basic_caps );
 
