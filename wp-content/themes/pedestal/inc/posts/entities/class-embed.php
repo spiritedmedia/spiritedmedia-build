@@ -759,6 +759,7 @@ class Embed extends Entity {
             'update_post_term_cache' => false,
             'meta_query'             => $meta_query,
             'orderby'                => 'meta_value_num date',
+            'paged'                  => 1,
         ];
         $posts = Stream::get( $args );
         if ( empty( $posts ) ) {

@@ -241,6 +241,17 @@ class Admin {
             }
 	        return $buttons;
         });
+
+        add_filter( 'wp_kses_allowed_html', function( $allowed_tags, $context ) {
+            if ( isset( $allowed_tags['span'] ) ) {
+                unset( $allowed_tags['span'] );
+            }
+            foreach ( $allowed_tags as $tag => $attrs ) {
+                $allowed_tags[ $tag ]['style'] = false;
+                $allowed_tags[ $tag ]['dir'] = false;
+            }
+            return $allowed_tags;
+        }, 10, 2 );
     }
 
     /**

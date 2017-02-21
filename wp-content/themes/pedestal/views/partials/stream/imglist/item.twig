@@ -2,6 +2,7 @@
     <a id="{{ item.get_name }}"></a>
     <div class="c-stream__item__inner  o-media">
 
+        {% if show_thumbs %}
         <div class="c-stream__item__img  o-media__img">
 
             {% if item.has_featured_image %}
@@ -18,6 +19,7 @@
                 {% endif %}
             </a>
         </div>
+        {% endif %}
 
         <div class="c-stream__item__body  o-media__body">
             {% include 'partials/stream/item-title.twig' with { 'gaCategory': gaCategory } %}
