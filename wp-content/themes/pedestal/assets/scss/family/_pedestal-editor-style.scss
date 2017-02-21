@@ -105,6 +105,7 @@
 @import '../components/meta-info';
 @import '../components/avatar';
 @import '../components/slots';
+@import '../components/yt-placeholder';
 
 
 
@@ -126,10 +127,6 @@ body#tinymce {
 
   .entity {
     border: 0;
-  }
-
-  img {
-    max-width: 25%;
   }
 
   .c-figure {
