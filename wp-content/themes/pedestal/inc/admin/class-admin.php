@@ -159,6 +159,9 @@ class Admin {
                 }
                 $title .= ' (' . $type . ')';
             }
+            if ( isset( $post->post_status ) && 'future' == $post->post_status ) {
+                $title = '— Scheduled: ' . $title . ' — ' . date( 'M, d Y g:ia', strtotime( $post->post_date ) );
+            }
             return $title;
         }, 10, 2 );
 

@@ -133,7 +133,7 @@ class General_Types extends Types {
             'collapsed'      => true,
             'label_macro'    => [
                 '%s',
-                'type',
+                'post',
             ],
             'children'       => [
                 'type' => new \Fieldmanager_Select( esc_html__( 'Type', 'pedestal' ), [
@@ -158,7 +158,8 @@ class General_Types extends Types {
                     'datasource'          => new \Fieldmanager_Datasource_Post( [
                         'query_args' => [
                             'post_type'      => Types::get_entity_post_types(),
-                            'posts_per_page' => 1000,
+                            'posts_per_page' => 200,
+                            'post_status'    => [ 'publish', 'future' ],
                         ],
                     ] ),
 
