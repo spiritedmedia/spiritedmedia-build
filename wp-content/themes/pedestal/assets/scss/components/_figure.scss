@@ -6,7 +6,14 @@
 /*figure*/.c-figure {
   margin-left: 0;
   margin-right: 0;
+
+  &,
+  &__content-wrap {
+    position: relative;
+  }
 }
+
+  .c-figure__content-wrap {}
 
     .c-figure__link {
       display: block;
@@ -97,10 +104,6 @@
  */
 
 .c-figure--responsive-iframe {
-  position: relative;
-  height: 0;
-  overflow: hidden;
-
   // scss-lint:disable SelectorFormat
   iframe {
     position: absolute;
@@ -110,7 +113,6 @@
     height: 100%;
     z-index: 1;
   }
-  // scss-lint:enable SelectorFormat
 }
 
 

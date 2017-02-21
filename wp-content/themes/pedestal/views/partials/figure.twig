@@ -1,8 +1,12 @@
 {% spaceless %}
-<figure {{ id }} class="c-figure  c-figure--{{ type }}  wp-caption  {{ align }}  {{ classes }}" {{ fias_presentation }} {{ style }}>
+<figure {{ id }} class="c-figure  c-figure--{{ type }}  wp-caption  {{ align }}  {{ classes }}" {{ fias_presentation }}>
 
-    {% if wrap %}
-    <{{ wrap }} class="column-width">
+    {% if style %}
+    <div {{ style }} class="{{ wrap_classes }} c-figure__content-wrap">
+    {% endif %}
+
+    {% if element_wrap %}
+    <{{ element_wrap }} class="column-width">
     {% endif %}
 
         {% if url %}
@@ -15,8 +19,12 @@
         </a>
         {% endif %}
 
-    {% if wrap %}
-    </{{ wrap }}>
+    {% if element_wrap %}
+    </{{ element_wrap }}>
+    {% endif %}
+
+    {% if style %}
+    </div>
     {% endif %}
 
     {% if caption or credit %}

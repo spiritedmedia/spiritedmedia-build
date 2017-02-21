@@ -1,7 +1,7 @@
-Build [#2187](https://circleci.com/gh/spiritedmedia/spiritedmedia/2187) by kingkool68 at 2017-02-21 06:32 PM UTC
+Build [#2190](https://circleci.com/gh/spiritedmedia/spiritedmedia/2190) by montchr at 2017-02-21 07:05 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.4](https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.4)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.5](https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.5)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.3...v5.3.4)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.3.4...v5.3.5)
 
- - [#1881](https://github.com/spiritedmedia/spiritedmedia/pull/1881): Allow Scheduled Posts to be Added to a Newsletter
+ - [#1876](https://github.com/spiritedmedia/spiritedmedia/pull/1876): Fix YouTube embed caption hidden under player

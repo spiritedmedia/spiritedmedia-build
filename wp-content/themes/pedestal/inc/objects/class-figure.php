@@ -29,6 +29,7 @@ class Figure {
     private $default_atts = [
         'attachment'   => 0,
         'classes'      => '',
+        'wrap_classes' => '',
         'align'        => '',
         'url'          => '',
         'capid'        => '',
@@ -74,6 +75,7 @@ class Figure {
         $capid = 'id="figcaption_' . $id . '" ';
         $id_str = sprintf( 'id="figure_%s" ', $id );
         $classes = $atts['classes'];
+        $wrap_classes = $atts['wrap_classes'];
         $style = $atts['style'];
         $youtube_id = false;
 
@@ -150,18 +152,19 @@ class Figure {
         }
 
         $context = [
-            'type'        => $type,
-            'id'          => $id_str,
-            'capid'       => $capid,
-            'align'       => esc_attr( $atts['align'] ),
-            'classes'     => $classes,
-            'url'         => $atts['url'],
-            'content'     => $this->content,
-            'caption'     => $atts['caption'],
-            'credit'      => $atts['credit'],
-            'credit_link' => $atts['credit_link'],
-            'wrap'        => $atts['element_wrap'],
-            'style'       => $style,
+            'type'         => $type,
+            'id'           => $id_str,
+            'capid'        => $capid,
+            'align'        => esc_attr( $atts['align'] ),
+            'classes'      => $classes,
+            'wrap_classes' => $wrap_classes,
+            'url'          => $atts['url'],
+            'content'      => $this->content,
+            'caption'      => $atts['caption'],
+            'credit'       => $atts['credit'],
+            'credit_link'  => $atts['credit_link'],
+            'element_wrap' => $atts['element_wrap'],
+            'style'        => $style,
         ];
 
         // If the <img> is already wrapped in a <a> then don't double link it
@@ -188,7 +191,8 @@ class Figure {
             $context['content'] .= '<img src="https://img.youtube.com/vi/' . $youtube_id . '/sddefault.jpg" srcset="' . esc_attr( $srcset_attr ) . '" class="c-yt-placeholder__image">';
             $context['content'] .= '<span class="c-yt-placeholder__play-button fa fa-play">';
             $context['content'] .= '</span></a>';
-            $context['classes'] .= ' c-figure--youtube c-yt-placeholder js-yt-placeholder';
+            $context['classes'] .= ' c-figure--youtube';
+            $context['wrap_classes'] .= 'c-yt-placeholder js-yt-placeholder';
         }
 
         if ( ! empty( $atts['attachment'] ) ) {
