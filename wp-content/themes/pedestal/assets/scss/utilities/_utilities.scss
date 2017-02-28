@@ -6,6 +6,23 @@
 // scss-lint:disable ImportantRule
 
 
+.u-cf {
+  @include clearfix;
+}
+
+.u-clear-both {
+  clear: both;
+}
+
+.u-clear-left {
+  clear: left;
+}
+
+.u-clear-right {
+  clear: right;
+}
+
+
 //
 // Typography
 // ==========================================================================
@@ -34,11 +51,40 @@
 }
 
 
+.u-heading--minor,
+%u-heading--minor,
+.u-heading--light {
+  text-transform: uppercase;
+  font-size: $heading-minor-f-z;
+}
+
+.u-heading--minor,
+%u-heading--minor {
+  font-weight: 700;
+}
+
+.u-heading--light {
+  font-weight: 400;
+  color: $dimmed-text-color;
+}
+
+
 // Text transform
 .u-tt-upper   { text-transform: uppercase; }
 .u-tt-lower   { text-transform: lowercase; }
 .u-tt-capital { text-transform: capitalize; }
 .u-tt-none    { text-transform: none; }
+
+
+// Wrap long text strings
+// https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+.u-wrap-text {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+  hyphens: auto;
+}
 
 
 

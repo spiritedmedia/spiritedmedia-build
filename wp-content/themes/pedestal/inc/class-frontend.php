@@ -69,7 +69,7 @@ class Frontend {
         add_filter( 'get_search_form', function( $output ) {
             $output = str_replace(
                 [ 'class="search-submit"', '</form>' ],
-                [ 'class="search-submit button--rounded button right"', '<div class="clear-right"></div></form>' ],
+                [ 'class="search-submit button--rounded button right"', '<div class="u-clear-right"></div></form>' ],
                 $output
             );
             return $output;

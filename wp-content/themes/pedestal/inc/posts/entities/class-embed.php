@@ -2,7 +2,10 @@
 
 namespace Pedestal\Posts\Entities;
 
-use Pedestal\Objects\Stream;
+use Pedestal\Objects\{
+    Stream,
+    YouTube
+};
 use Pedestal\Utils\Utils;
 
 class Embed extends Entity {
@@ -320,7 +323,7 @@ class Embed extends Entity {
         if ( empty( $url ) ) {
             $url = $this->get_embed_url();
         }
-        $oembed_data = $this->get_oembed_data( $url );
+        $oembed_data = static::get_oembed_data( $url );
         if ( is_object( $oembed_data ) && property_exists( $oembed_data, $property ) ) {
             $this->set_meta( 'embed_' . $property, $oembed_data->$property );
         }
@@ -329,15 +332,10 @@ class Embed extends Entity {
     /**
      * Get the oEmbed data for a URL
      *
-     * @param  string $url Optional URL to get the oEmbed data for. Defaults
-     *     to the instantiated Embed's URL.
+     * @param  string $url URL to get the oEmbed data for.
      * @return object|false Object of oEmbed data if successful, false if not
      */
-    protected function get_oembed_data( string $url = '' ) {
-        if ( empty( $url ) ) {
-            $url = $this->get_embed_url();
-        }
-
+    public static function get_oembed_data( string $url ) {
         $cache_key = 'oembed_' . $url;
 
         if ( $data = wp_cache_get( $cache_key ) ) {
@@ -345,7 +343,7 @@ class Embed extends Entity {
         }
 
         $wp_oembed = new \WP_oEmbed;
-        $data = $wp_oembed->fetch( $this->get_oembed_provider_url( $url ), $url );
+        $data = $wp_oembed->fetch( static::get_oembed_provider_url( $url ), $url );
         wp_cache_set( $cache_key, $data );
         return $data;
     }
@@ -353,14 +351,10 @@ class Embed extends Entity {
     /**
      * Get the oEmbed provider URL for a given URL
      *
-     * @param  string $url Optional URL to get the provider URL for. Defaults
-     *     to the instantiated Embed's URL.
+     * @param  string $url URL to get the provider URL for.
      * @return string|false Provider URL if successful, false if not
      */
-    protected function get_oembed_provider_url( string $url = '' ) {
-        if ( empty( $url ) ) {
-            $url = $this->get_embed_url();
-        }
+    public static function get_oembed_provider_url( string $url ) {
         $wp_oembed = new \WP_oEmbed;
         return $wp_oembed->get_provider( $url );
     }
@@ -489,12 +483,12 @@ class Embed extends Entity {
 
         switch ( $this->get_embed_type() ) {
             case 'youtube':
-                $id = static::get_youtube_id_from_url( $url );
+                $id = YouTube::get_video_id_from_url( $url );
                 if ( ! $id ) {
                     break;
                 }
 
-                $youtube_url = sprintf( 'http://www.youtube.com/watch?v=%s', $id );
+                $youtube_url = YouTube::get_url_from_id( $id );
                 $request_url = 'http://www.youtube.com/oembed?format=json&maxheight=9999&maxwidth=9999&url=' . urlencode( $youtube_url );
                 $response = wp_remote_get( $request_url );
                 if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
@@ -618,74 +612,7 @@ class Embed extends Entity {
      * @return string
      */
     protected function get_youtube_id() {
-        return self::get_youtube_id_from_url( $this->get_embed_url() );
-    }
-
-    /**
-     * Get a YouTube ID from a URL
-     *
-     * @param  string $url YouTube URL
-     * @return string      YouTube ID
-     */
-    public static function get_youtube_id_from_url( $url ) {
-        $data = self::get_youtube_data_from_url( $url );
-        if ( ! empty( $data['id'] ) ) {
-            return $data['id'];
-        }
-        return '';
-    }
-
-    /**
-     * Get a YouTube playlist ID from a URL
-     *
-     * @param  string $url YouTube URL
-     * @return string      YouTube playlist ID
-     */
-    public static function get_youtube_list_id_from_url( $url ) {
-        $data = self::get_youtube_data_from_url( $url );
-        if ( ! empty( $data['list'] ) ) {
-            return $data['list'];
-        }
-        return '';
-    }
-
-    /**
-     * Get YouTube data from URL
-     *
-     * @param  string $url YouTube URL
-     * @return array
-     */
-    public static function get_youtube_data_from_url( $url ) {
-
-        $query = [];
-        $host = parse_url( $url, PHP_URL_HOST );
-        $query_str = str_replace( '&amp;', '&', Utils::parse_url( $url, PHP_URL_QUERY ) );
-        parse_str( $query_str, $query_args );
-
-        if ( 'youtu.be' == $host ) {
-            $pattern = self::get_embed_type_url_pattern( 'youtube' );
-            preg_match( $pattern, $url, $matches );
-            if ( ! empty( $matches[1] ) ) {
-                $query['id'] = $matches[1];
-            } else {
-                return '';
-            }
-        } elseif ( 'www.youtube.com' == $host ) {
-            if ( ! empty( $query_args['v'] ) ) {
-                $query['id'] = $query_args['v'];
-            } else {
-                return '';
-            }
-        } else {
-            return '';
-        }
-
-        if ( ! empty( $query_args['list'] ) ) {
-            $query['list'] = $query_args['list'];
-        }
-
-        return $query;
-
+        return YouTube::get_video_id_from_url( $this->get_embed_url() );
     }
 
     /**

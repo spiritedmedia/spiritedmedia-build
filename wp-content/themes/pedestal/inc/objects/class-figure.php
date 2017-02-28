@@ -4,9 +4,10 @@ namespace Pedestal\Objects;
 
 use Timber\Timber;
 
-use \Pedestal\Utils\Utils;
-
-use \Pedestal\Posts\Attachment;
+use Pedestal\Utils\Utils;
+use Pedestal\Objects\YouTube;
+use Pedestal\Posts\Attachment;
+use Pedestal\Posts\Entities\Embed;
 
 /**
  * Figure
@@ -27,17 +28,19 @@ class Figure {
     ];
 
     private $default_atts = [
-        'attachment'   => 0,
-        'classes'      => '',
-        'wrap_classes' => '',
-        'align'        => '',
-        'url'          => '',
-        'capid'        => '',
-        'caption'      => '',
-        'credit'       => '',
-        'credit_link'  => '',
-        'element_wrap' => '',
-        'style'        => '',
+        'attachment'         => 0,
+        'classes'            => '',
+        'figcaption_classes' => '',
+        'wrap_classes'       => '',
+        'align'              => '',
+        'url'                => '',
+        'capid'              => '',
+        'caption'            => '',
+        'caption_html'       => '',
+        'credit'             => '',
+        'credit_link'        => '',
+        'element_wrap'       => '',
+        'style'              => '',
     ];
 
     public function __construct( $type, $content, $atts = [] ) {
@@ -152,19 +155,21 @@ class Figure {
         }
 
         $context = [
-            'type'         => $type,
-            'id'           => $id_str,
-            'capid'        => $capid,
-            'align'        => esc_attr( $atts['align'] ),
-            'classes'      => $classes,
-            'wrap_classes' => $wrap_classes,
-            'url'          => $atts['url'],
-            'content'      => $this->content,
-            'caption'      => $atts['caption'],
-            'credit'       => $atts['credit'],
-            'credit_link'  => $atts['credit_link'],
-            'element_wrap' => $atts['element_wrap'],
-            'style'        => $style,
+            'type'               => $type,
+            'id'                 => $id_str,
+            'capid'              => $capid,
+            'align'              => esc_attr( $atts['align'] ),
+            'classes'            => $classes,
+            'figcaption_classes' => $atts['figcaption_classes'],
+            'wrap_classes'       => $wrap_classes,
+            'url'                => $atts['url'],
+            'content'            => $this->content,
+            'caption'            => $atts['caption'],
+            'caption_html'       => $atts['caption_html'],
+            'credit'             => $atts['credit'],
+            'credit_link'        => $atts['credit_link'],
+            'element_wrap'       => $atts['element_wrap'],
+            'style'              => $style,
         ];
 
         // If the <img> is already wrapped in a <a> then don't double link it
@@ -186,7 +191,7 @@ class Figure {
             }
             $srcset_attr = implode( ', ', $src_sets );
 
-            $youtube_url = add_query_arg( 'v', $youtube_id, 'https://www.youtube.com/watch' );
+            $youtube_url = YouTube::get_url_from_id( $youtube_id );
             $context['content'] = '<a href="' . esc_url( $youtube_url ) . '" class="c-yt-placeholder__link js-yt-placeholder-link" data-youtube-id="' . esc_attr( $youtube_id ) . '" target="_blank" data-ga-category="Embed|Video" data-ga-label="Load YouTube Video">';
             $context['content'] .= '<img src="https://img.youtube.com/vi/' . $youtube_id . '/sddefault.jpg" srcset="' . esc_attr( $srcset_attr ) . '" class="c-yt-placeholder__image">';
             $context['content'] .= '<span class="c-yt-placeholder__play-button fa fa-play">';

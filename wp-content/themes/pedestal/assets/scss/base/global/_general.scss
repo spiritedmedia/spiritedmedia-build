@@ -49,22 +49,6 @@ body.full-width {
   }
 }
 
-.clear-both {
-  clear: both;
-}
-
-.clear-left {
-  clear: left;
-}
-
-.clear-right {
-  clear: right;
-}
-
-.u-cf {
-  @include clearfix;
-}
-
 // scss-lint:disable QualifyingElement
 a.disabled {
   cursor: default;
@@ -73,22 +57,6 @@ a.disabled {
 
 .noscroll {
   overflow: hidden;
-}
-
-
-
-
-
-//
-// Typography
-// ==========================================================================
-
-
-.u-heading--minor,
-%u-heading--minor {
-  text-transform: uppercase;
-  font-size: $heading-minor-f-z;
-  font-weight: 700;
 }
 
 

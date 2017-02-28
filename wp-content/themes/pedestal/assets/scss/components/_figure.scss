@@ -31,7 +31,9 @@
 
     &__caption,
     &__credit {
-      font-style: italic;
+      .s-post-content & {
+        font-style: italic;
+      }
     }
   }
 

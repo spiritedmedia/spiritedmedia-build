@@ -71,6 +71,7 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_INSTAGRAM_USERNAME'     => 'theinclinepgh',
                 'PEDESTAL_FACEBOOK_PAGE'          => 'https://www.facebook.com/theinclinepgh/',
                 'PEDESTAL_FACEBOOK_PAGE_ID'       => '1558758474422919',
+                'PEDESTAL_YOUTUBE_CHANNEL_ID'     => 'UC_5rdSt3WedEe2dp9nx9cIw',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => 'contact@theincline.com',

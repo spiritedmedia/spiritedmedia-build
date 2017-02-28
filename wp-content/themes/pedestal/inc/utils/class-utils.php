@@ -342,6 +342,24 @@ class Utils {
     }
 
     /**
+     * Truncate a string to a sentence closest to the specified length
+     *
+     * @link http://stackoverflow.com/a/10254414
+     *
+     * @param  string  $str String to truncate
+     * @param  integer $len Length to aim for
+     * @return string       Truncated string
+     */
+    public static function str_limit_sentence( string $str, int $len = 150 ) {
+        $str_len = strlen( $str );
+        if ( $str_len > $len ) {
+            $trim_len = strrpos( $str, '. ', $len - $str_len ) + 1;
+            $str = substr( $str, 0, $trim_len );
+        }
+        return $str;
+    }
+
+    /**
      * Convert an associative array to an HTML data attributes string
      *
      * @param  array  $data_atts HTML data attribute keys and values
@@ -410,5 +428,66 @@ class Utils {
         }
 
         return $merged;
+    }
+
+    /**
+     * Standardizes the response from remote API requests
+     *
+     * @param  array|WP_Error $response  Response from wp_remote_*
+     * @param  string $expected_format   Expected format of the response body (xml, json, or serialize)
+     * @return array                     Details from the response
+     */
+    public static function handle_api_request_response( $response = [], string $expected_format = 'json' ) {
+        if ( is_wp_error( $response ) ) {
+            return [
+                'code'    => 0,
+                'body'    => $response->get_error_message(),
+                'success' => false,
+            ];
+        }
+
+        if (
+               ! isset( $response['response'] )
+            || ! isset( $response['response']['code'] )
+            || ! isset( $response['body'] )
+        ) {
+            return [
+                'code'    => 0,
+                'body'    => 'No response code or response body set',
+                'success' => false,
+            ];
+        }
+        $response_code = $response['response']['code'];
+        $response_body = $response['body'];
+        $success = false;
+        if ( 200 == $response_code ) {
+            $success = true;
+        }
+
+        switch ( strtolower( $expected_format ) ) {
+            case 'json':
+                $response_body = json_decode( $response_body );
+                break;
+            case 'serialize':
+                $response_body = unserialize( $response_body );
+                break;
+        }
+        if ( ! is_object( $response_body ) ) {
+            return [
+                'code'    => 0,
+                'body'    => 'Response body is not an object',
+                'success' => false,
+            ];
+        }
+
+        if ( $success ) {
+            $result = [
+                'code'    => $response_code,
+                'body'    => $response_body,
+                'success' => $success,
+            ];
+            return $result;
+        }
+        return $response;
     }
 }

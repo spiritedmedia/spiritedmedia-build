@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit458542406ae6673b8beaba28668effbe
+class ComposerStaticInit4ec7d4e12c31507ee7c220085a34aa90
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -320,6 +320,7 @@ class ComposerStaticInit458542406ae6673b8beaba28668effbe
         'Pedestal\\Objects\\Source' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-source.php',
         'Pedestal\\Objects\\Stream' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-stream.php',
         'Pedestal\\Objects\\User' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-user.php',
+        'Pedestal\\Objects\\YouTube' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-youtube.php',
         'Pedestal\\Pedestal' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/functions.php',
         'Pedestal\\Posts\\Attachment' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/class-attachment.php',
         'Pedestal\\Posts\\Clusters\\Cluster' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/clusters/class-cluster.php',
@@ -372,6 +373,7 @@ class ComposerStaticInit458542406ae6673b8beaba28668effbe
         'Pedestal\\Widgets\\Daily_Insta_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-daily-insta-widget.php',
         'Pedestal\\Widgets\\In_This_Story_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-in-this-story-widget.php',
         'Pedestal\\Widgets\\Recent_Content_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-recent-content-widget.php',
+        'Pedestal\\Widgets\\Recent_Video_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-recent-video-widget.php',
         'Pedestal\\Widgets\\Signup_Newsletter_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-signup-newsletter-widget.php',
         'Routes' => __DIR__ . '/..' . '/upstatement/routes/Routes.php',
         'Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Arrays/ArrayBracketSpacingSniff.php',
@@ -802,11 +804,11 @@ class ComposerStaticInit458542406ae6673b8beaba28668effbe
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit458542406ae6673b8beaba28668effbe::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit458542406ae6673b8beaba28668effbe::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit458542406ae6673b8beaba28668effbe::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit458542406ae6673b8beaba28668effbe::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit458542406ae6673b8beaba28668effbe::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4ec7d4e12c31507ee7c220085a34aa90::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4ec7d4e12c31507ee7c220085a34aa90::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit4ec7d4e12c31507ee7c220085a34aa90::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit4ec7d4e12c31507ee7c220085a34aa90::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit4ec7d4e12c31507ee7c220085a34aa90::$classMap;
 
         }, null, ClassLoader::class);
     }

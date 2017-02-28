@@ -1,0 +1,27 @@
+<div class="c-video-widget__meta">
+    <time class="c-video-widget__date  c-video-widget__meta__item  u-heading--light" datetime="{{ datetime }}">
+        {{ date }}
+    </time>
+
+    {% if author %}
+    <span class="c-video-widget__meta__sep c-video-widget__meta__item">&sdot;</span>
+    <h2 class="c-video-widget__author  c-video-widget__meta__item  u-heading--light">
+        {{ author }}
+    </h2>
+    {% endif %}
+</div>
+
+<h1 class="c-video-widget__title">
+    <a href="{{ url }}" target="_blank"
+        class="c-video-widget__link"
+        data-ga-category="Widget|Video"
+        data-ga-label="Title|{{ title }}">
+        {{ title }}
+   </a>
+</h1>
+
+{% if description %}
+<p class="c-video-widget__description  u-wrap-text">
+    {{ description }}
+</p>
+{% endif %}

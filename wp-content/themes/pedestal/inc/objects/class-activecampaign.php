@@ -2,6 +2,8 @@
 
 namespace Pedestal\Objects;
 
+use Pedestal\Utils\Utils;
+
 /**
  * A way to interact with ActiveCampaign
  *
@@ -64,7 +66,7 @@ class ActiveCampaign {
         $url = ACTIVECAMPAIGN_URL . $endpoint;
         $request_url = add_query_arg( $args, $url );
         $response = wp_remote_get( $request_url, [] );
-        return $this->handle_request_response( $response, $args['api_output'] );
+        return Utils::handle_api_request_response( $response, $args['api_output'] );
     }
 
     /**
@@ -90,67 +92,7 @@ class ActiveCampaign {
             'body'    => $body_args,
         ];
         $response = wp_remote_post( $request_url, $args );
-        return $this->handle_request_response( $response, $query_args['api_output'] );
-    }
-
-    /**
-     * Standardizes the response from remote requests to ActiveCampaign's API
-     * @param  array|WP_Error $response  Response from wp_remote_*
-     * @param  string $expected_format   Expected format of the response body (xml, json, or serialize)
-     * @return array                     Details from the response
-     */
-    private function handle_request_response( $response = [], $expected_format = 'json' ) {
-        if ( is_wp_error( $response ) ) {
-            return [
-                'code'    => 0,
-                'body'    => $response->get_error_message(),
-                'success' => false,
-            ];
-        }
-
-        if (
-               ! isset( $response['response'] )
-            || ! isset( $response['response']['code'] )
-            || ! isset( $response['body'] )
-        ) {
-            return [
-                'code'    => 0,
-                'body'    => 'No response code or response body set',
-                'success' => false,
-            ];
-        }
-        $response_code = $response['response']['code'];
-        $response_body = $response['body'];
-        $success = false;
-        if ( 200 == $response_code ) {
-            $success = true;
-        }
-        switch ( strtolower( $expected_format ) ) {
-            case 'json':
-                $response_body = json_decode( $response_body );
-                break;
-            case 'serialize':
-                $response_body = unserialize( $response_body );
-                break;
-        }
-        if ( ! is_object( $response_body ) ) {
-            // Everything returned by ActiveCampaign's API happens to be an object
-            return [
-                'code'    => 0,
-                'body'    => 'Response body is not an object',
-                'success' => false,
-            ];
-
-        }
-        if ( $success ) {
-            $result = [
-                'code'    => $response_code,
-                'body'    => $response_body,
-                'success' => $success,
-            ];
-            return $result;
-        }
-        return $response;
+        return Utils::handle_api_request_response( $response, $query_args['api_output'] );
     }
 
     /**

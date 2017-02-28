@@ -27,27 +27,31 @@
     </div>
     {% endif %}
 
-    {% if caption or credit %}
-    <figcaption {{ capid }} class="c-figure__text  wp-caption-text">
+    {% if caption_html or caption or credit %}
+    <figcaption {{ capid }} class="c-figure__text  wp-caption-text {{ figcaption_classes }}">
 
-        {% if caption %}
-        <h1 class="c-figure__text__caption">{{ caption }}</h1>
-        {% endif %}
-
-        {% if credit %}
-        <cite class="c-figure__text__credit">
-
-            {% if credit_link %}
-            <a href="{{ credit_link }}" target="_blank" data-ga-category="Figure" data-ga-label="Credit|{{ type }}">
+        {% if caption_html %}
+            {{ caption_html }}
+        {% else %}
+            {% if caption %}
+            <h1 class="c-figure__text__caption">{{ caption }}</h1>
             {% endif %}
 
-            {{ credit }}
+            {% if credit %}
+            <cite class="c-figure__text__credit">
 
-            {% if credit_link %}
-            </a>
+                {% if credit_link %}
+                <a href="{{ credit_link }}" target="_blank" data-ga-category="Figure" data-ga-label="Credit|{{ type }}">
+                {% endif %}
+
+                {{ credit }}
+
+                {% if credit_link %}
+                </a>
+                {% endif %}
+
+            </cite>
             {% endif %}
-
-        </cite>
         {% endif %}
 
     </figcaption>

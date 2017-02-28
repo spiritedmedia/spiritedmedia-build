@@ -122,6 +122,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_INSTAGRAM_USERNAME'      => '',
                 'PEDESTAL_FACEBOOK_PAGE'           => '',
                 'PEDESTAL_FACEBOOK_PAGE_ID'        => '',
+                'PEDESTAL_YOUTUBE_CHANNEL_ID'      => '',
 
                 // Users
                 'PEDESTAL_USER_TITLE_MAX_LENGTH' => 72,
@@ -462,6 +463,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             register_widget( '\Pedestal\Widgets\Signup_Newsletter_Widget' );
             register_widget( '\Pedestal\Widgets\In_This_Story_Widget' );
             register_widget( '\Pedestal\Widgets\Recent_Content_Widget' );
+            register_widget( '\Pedestal\Widgets\Recent_Video_Widget' );
             register_widget( '\Pedestal\Widgets\Daily_Insta_Widget' );
 
             // Our DFP widgets

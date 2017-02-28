@@ -163,8 +163,8 @@
 @mixin anchorage(
                $selector: 'a',
                $unhovered: $anchor-font-color,
-               $unhovered-decoration: $anchor-text-decoration,
                $hovered: $anchor-font-color-hover,
+               $unhovered-decoration: $anchor-text-decoration,
                $hovered-decoration: $anchor-text-decoration-hover
                ) {
 

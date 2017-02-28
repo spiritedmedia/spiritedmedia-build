@@ -3,11 +3,12 @@
 namespace Pedestal;
 
 use Timber\Timber;
-
-use \Pedestal\Objects\User;
-
-use \Pedestal\Posts\Attachment;
-use \Pedestal\Posts\Entities\Embed;
+use Pedestal\Objects\{
+    User,
+    YouTube
+};
+use Pedestal\Posts\Attachment;
+use Pedestal\Posts\Entities\Embed;
 
 class Shortcode_Manager {
 
@@ -331,19 +332,7 @@ class Shortcode_Manager {
                 if ( empty( $attrs['url'] ) ) {
                     return '';
                 }
-
-                $embed_id = Embed::get_youtube_id_from_url( $attrs['url'] );
-                $list_id = Embed::get_youtube_list_id_from_url( $attrs['url'] );
-
-                if ( empty( $embed_id ) ) {
-                    return '';
-                }
-
-                // ID is always the second part to the path
-                $embed_url = 'https://youtube.com/embed/' . $embed_id;
-                if ( ! empty( $list_id ) ) {
-                    $embed_url = add_query_arg( 'list', $list_id, $embed_url );
-                }
+                $embed_url = YouTube::get_embeddable_url( $attrs['url'] );
                 $embed_url = apply_filters( 'shortcake_bakery_youtube_embed_url', $embed_url, $attrs );
                 $output = sprintf( '<iframe class="%s shortcake-bakery-responsive" width="640" height="360" src="%s" frameborder="0"></iframe>', $default_classes, $embed_url );
                 break;

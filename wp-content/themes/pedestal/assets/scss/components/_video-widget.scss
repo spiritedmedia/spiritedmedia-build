@@ -1,0 +1,50 @@
+// ==========================================================================
+// Pedestal // Components // VIDEO WIDGET
+// ==========================================================================
+
+
+/*figure*/.c-video-widget {
+
+
+  /*figcaption*/&__caption {
+    margin-top: $base-spacing-unit;
+  }
+
+
+  &__meta {
+    color: $dimmed-text-color;
+
+    &__item {
+      display: inline-block;
+      margin: 0;
+    }
+
+    &__sep {
+      padding: 0 0.15em;
+    }
+  }
+
+
+  &__date {}
+
+
+  &__author {}
+
+
+  &__title {
+    font-size: $h4-font-size;
+    font-weight: 400;
+    margin-bottom: 0;
+  }
+
+
+  &__link {
+    @include anchorage('&', $body-font-color, $primary-color);
+  }
+
+
+  &__description {
+    color: $dimmed-text-color;
+    margin-top: 0.5em;
+  }
+}
