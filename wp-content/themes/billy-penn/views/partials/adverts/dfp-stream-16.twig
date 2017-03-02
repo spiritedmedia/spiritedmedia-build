@@ -1,19 +1,8 @@
 <div class="dfp-stream-16-wrapper c-stream__item  js-stream-item">
-
-    <div class="dfp-stream-16--smaller dfp-stream-16 dfp js-dfp-stream-16-smaller">
-        {{ macros.dfp_unit( 'BP__300x250_2' ) }}
-    </div>
-
-    <div class="dfp-stream-16--larger dfp-stream-16 dfp js-dfp-stream-16-larger">
-        {{ macros.dfp_unit( 'BP_640x150_2' ) }}
-    </div>
+    {{ macros.dfp_unit( 'BP__300x250_2', '300x250' ) }}
+    {{ macros.dfp_unit( 'BP_640x150_2', '640x150' ) }}
 
     {% if adverts.test_all or adverts.test_premium %}
-
-    <div class="dfp-stream-16-premium--larger dfp-stream-16 dfp dfp-stream-16-premium-larger">
-        {{ macros.dfp_unit( 'BP_650x400_2' ) }}
-    </div>
-
+        {{ macros.dfp_unit( 'BP_650x400_2', '650x400' ) }}
     {% endif %}
-
 </div>

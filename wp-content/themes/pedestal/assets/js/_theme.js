@@ -1,3 +1,5 @@
+/* global FastClick ga */
+
 (function($) {
 
   var Pedestal = {
@@ -45,7 +47,6 @@
         var el        = $(this);
         var confirmId = el.data('confirm-id');
         var $submitBtn = el.find('.js-form-submit');
-        var $spinner = $submitBtn.find('.js-spinner');
         var buttonWidth = $submitBtn.width();
         var actionURL = el.attr('action');
         var actionUrlSeparator = actionURL.indexOf('?') >= 0 ? '&' : '?';
@@ -57,7 +58,7 @@
         el.find('.alert').remove();
         el.addClass('is-loading');
 
-        $.post(actionURL, el.serialize(), function(response) {
+        $.post(actionURL, el.serialize(), function() {
           if (typeof confirmId !== 'undefined') {
             $('#' + confirmId).foundation('reveal', 'open');
           } else if (el.find('.success-message').length) {
@@ -149,48 +150,52 @@
      * https://developers.google.com/analytics/devguides/collection/analyticsjs/events
      */
     analyticsEventTracking: function() {
-        var debugging = false;
-        if ($('body').is('.js-debug-ga')) {
-          debugging = true;
-        }
-        if (typeof ga === 'undefined' && !debugging) {
-          return;
-        }
-        $('body')
-          .on('click', 'a[data-ga-category]', function(e) {
-            var $this = $(this);
-            var eventCategory = $this.data('ga-category');
-            var eventAction = e.currentTarget.href;
-            var eventLabel = $this.data('ga-label');
-            if (debugging) {
-              console.group('Google Analytics Event Data');
-              console.log('Category: ', eventCategory);
-              console.log('Action: ', eventAction);
-              console.log('Label: ', eventLabel);
-              console.groupEnd();
-              e.preventDefault();
-              return;
-            }
-            ga('send', 'event', eventCategory, eventAction, eventLabel);
-          })
-          .on('submit', 'form[data-ga-category]', function(e) {
-              var $this = $(this);
-              var eventCategory = $this.data('ga-category');
-              var eventAction = $this.attr('action');
-              var eventLabel = $this.data('ga-label');
-              if (debugging) {
-                console.group('Google Analytics Event Data');
-                console.log('Category: ', eventCategory);
-                console.log('Action: ', eventAction);
-                console.log('Label: ', eventLabel);
-                console.groupEnd();
-                e.preventDefault();
-                return;
-              }
-              ga('send', 'event', eventCategory, eventAction, eventLabel);
-            });
+      var debugging = false;
+      if ($('body').is('.js-debug-ga')) {
+        debugging = true;
+      }
+      if (typeof ga === 'undefined' && !debugging) {
+        return;
+      }
+      $('body')
+        .on('click', 'a[data-ga-category]', function(e) {
+          var $this = $(this);
+          var eventCategory = $this.data('ga-category');
+          var eventAction = e.currentTarget.href;
+          var eventLabel = $this.data('ga-label');
+          if (debugging) {
+            /* eslint-disable no-console */
+            console.group('Google Analytics Event Data');
+            console.log('Category: ', eventCategory);
+            console.log('Action: ', eventAction);
+            console.log('Label: ', eventLabel);
+            console.groupEnd();
+            /* eslint-enable no-console */
+            e.preventDefault();
+            return;
+          }
+          ga('send', 'event', eventCategory, eventAction, eventLabel);
+        })
+        .on('submit', 'form[data-ga-category]', function(e) {
+          var $this = $(this);
+          var eventCategory = $this.data('ga-category');
+          var eventAction = $this.attr('action');
+          var eventLabel = $this.data('ga-label');
+          if (debugging) {
+            /* eslint-disable no-console */
+            console.group('Google Analytics Event Data');
+            console.log('Category: ', eventCategory);
+            console.log('Action: ', eventAction);
+            console.log('Label: ', eventLabel);
+            console.groupEnd();
+            /* eslint-enable no-console */
+            e.preventDefault();
+            return;
+          }
+          ga('send', 'event', eventCategory, eventAction, eventLabel);
+        });
 
-      }, // end analyticsEventTracking()
+    }, // end analyticsEventTracking()
 
     honeyPotHelper: function() {
       var fullYear = new Date().getFullYear();
@@ -199,12 +204,12 @@
 
     lazyLoad: function() {
       $('.content-wrapper').on('click', '.js-yt-placeholder-link', function(e) {
-        $this = $(this);
+        var $this = $(this);
         var youTubeID = $this.data('youtube-id');
         if (!youTubeID) {
           return;
         }
-        $parent = $this.parents('.js-yt-placeholder');
+        var $parent = $this.parents('.js-yt-placeholder');
         var iframeURL = 'https://www.youtube.com/embed/';
         iframeURL += youTubeID + '?showinfo=0&autoplay=1';
         var youTubeIframe = '<iframe ';

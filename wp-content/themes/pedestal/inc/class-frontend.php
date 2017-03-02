@@ -340,9 +340,7 @@ class Frontend {
         wp_enqueue_script( 'pedestal-scripts', get_template_directory_uri() . '/assets/dist/js/pedestal.js', [ 'jquery', 'modernizr', 'fastclick' ], PEDESTAL_VERSION, true );
 
         // Advertising
-        $dfp_site_config_handle = $theme_name . '-dfp-config';
-        wp_enqueue_script( $dfp_site_config_handle, get_stylesheet_directory_uri() . '/assets/dist/js/dfp-config.js', [], PEDESTAL_VERSION );
-        wp_enqueue_script( 'dfp-load', get_template_directory_uri() . '/assets/dist/js/dfp-load.js', [ $dfp_site_config_handle ], PEDESTAL_VERSION );
+        wp_enqueue_script( 'dfp-load', get_template_directory_uri() . '/assets/dist/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
         wp_enqueue_script( 'nativo', 'https://s.ntv.io/serve/load.js', [], null, $in_footer = true );
         if ( defined( 'PEDESTAL_BOXTERCO_SCRIPT' ) ) {
             wp_enqueue_script( 'boxter-funnl', PEDESTAL_BOXTERCO_SCRIPT, [], null, $in_footer = true );

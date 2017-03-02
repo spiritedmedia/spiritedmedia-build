@@ -111,9 +111,6 @@
 
 
 .dfp {
-  [id^="div-gpt-ad"] {
-    margin: 0 auto;
-  }
 
   iframe {
     display: block;
@@ -128,27 +125,18 @@
   margin-bottom: 0;
 }
 
-.dfp-rail-right {}
+@media #{$small-only} {
+  .dfp-stream-08-wrapper .dfp,
+  .dfp-stream-16-wrapper .dfp {
+    margin-left: $dfp-mobile-ad-offset;
+    margin-right: $dfp-mobile-ad-offset;
 
-.dfp-stream-08-wrapper {}
-
-.dfp-stream-08 {}
-
-  .dfp-stream-08--larger {}
-
-.dfp-stream-08--smaller,
-.dfp-stream-08-premium--smaller,
-.dfp-stream-16--smaller,
-.dfp-stream-16-premium--smaller {
-  margin-left: $dfp-mobile-ad-offset;
-  margin-right: $dfp-mobile-ad-offset;
-
-  .c-panel & {
-    margin-left: $dfp-mobile-ad-offset--panelled;
-    margin-right: $dfp-mobile-ad-offset--panelled;
+    .c-panel & {
+      margin-left: $dfp-mobile-ad-offset--panelled;
+      margin-right: $dfp-mobile-ad-offset--panelled;
+    }
   }
 }
-
 
 .rail {
   .widget_pedestal_dfp_rail_right {

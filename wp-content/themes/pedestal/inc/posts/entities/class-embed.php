@@ -7,6 +7,7 @@ use Pedestal\Objects\{
     YouTube
 };
 use Pedestal\Utils\Utils;
+use Pedestal\Posts\Clusters\Story;
 
 class Embed extends Entity {
 
@@ -706,9 +707,25 @@ class Embed extends Entity {
             $context['classes'] = 'c-daily-insta--' . $options['context'];
         }
 
+        $daily_insta_story = static::get_daily_insta_story();
+        if ( $daily_insta_story && $daily_insta_story instanceof Story ) {
+            $context['story_url'] = $daily_insta_story->get_permalink();
+        }
+
         ob_start();
         \Timber\Timber::render( 'partials/daily-insta.twig', $context );
         $html = ob_get_clean();
         return $html;
+    }
+
+    /**
+     * Get the Instagram of the Day Story object
+     *
+     * @return Story|false
+     */
+    public static function get_daily_insta_story() {
+        return static::get_by_post_name( 'instagram-of-the-day', [
+            'post_type' => 'pedestal_story',
+        ] );
     }
 }

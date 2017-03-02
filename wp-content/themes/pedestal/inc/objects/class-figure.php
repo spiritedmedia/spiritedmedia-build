@@ -178,22 +178,20 @@ class Figure {
         }
         // Override YouTube embed content so we can lazy load videos
         if ( $youtube_id && ! is_feed( 'fias' ) ) {
-            $thumbnail_sizes = [
-                '120' => 'default.jpg',
-                '320' => 'mqdefault.jpg',
-                '480' => 'hqdefault.jpg',
-                '640' => 'sddefault.jpg',
-                '1280' => 'maxresdefault.jpg',
-            ];
             $src_sets = [];
-            foreach ( $thumbnail_sizes as $width => $suffix ) {
-                $src_sets[] = 'https://img.youtube.com/vi/' . $youtube_id . '/' . $suffix . ' ' . $width . 'w';
+            $youtube = new YouTube;
+            $youtube_url = $youtube::get_url_from_id( $youtube_id );
+            $thumbnails = $youtube->get_video_thumbnails( $youtube_url );
+            if ( empty( $thumbnails ) || empty( $thumbnails['src'] ) || empty( $thumbnails['srcset'] ) ) {
+                return;
+            }
+            foreach ( $thumbnails['srcset'] as $width => $url ) {
+                $src_sets[] = $url . ' ' . $width . 'w';
             }
             $srcset_attr = implode( ', ', $src_sets );
 
-            $youtube_url = YouTube::get_url_from_id( $youtube_id );
             $context['content'] = '<a href="' . esc_url( $youtube_url ) . '" class="c-yt-placeholder__link js-yt-placeholder-link" data-youtube-id="' . esc_attr( $youtube_id ) . '" target="_blank" data-ga-category="Embed|Video" data-ga-label="Load YouTube Video">';
-            $context['content'] .= '<img src="https://img.youtube.com/vi/' . $youtube_id . '/sddefault.jpg" srcset="' . esc_attr( $srcset_attr ) . '" class="c-yt-placeholder__image">';
+            $context['content'] .= '<img src="' . esc_url( $thumbnails['src'] ) . '" srcset="' . esc_attr( $srcset_attr ) . '" class="c-yt-placeholder__image">';
             $context['content'] .= '<span class="c-yt-placeholder__play-button fa fa-play">';
             $context['content'] .= '</span></a>';
             $context['classes'] .= ' c-figure--youtube';

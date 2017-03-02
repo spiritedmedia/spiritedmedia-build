@@ -1,10 +1,11 @@
+/* global ga */
+
 jQuery(document).ready(function($) {
 
   var $body = $('body');
   var doingSearch = false;
   var $main = $('.js-main');
   var $form = $('.js-search-form');
-  var $pagination = $('.js-pagination');
   var $stream = $('.js-stream');
   var $spinner = $('.js-spinner');
 
@@ -20,7 +21,7 @@ jQuery(document).ready(function($) {
     // Set the tab index to 1 so the search form has a natural
     // tab order even though it's at the end of the markup
     var targetID = $(this).attr('for');
-    $target = $('#' + targetID);
+    var $target = $('#' + targetID);
     $target.attr('tabindex', 1).select();
   });
 
@@ -178,7 +179,7 @@ jQuery(document).ready(function($) {
   });
 
   $('.js-search-tools').on('change', '.js-search-filters-radio', function() {
-    $this = $(this);
+    var $this = $(this);
     if ($this.is('selected')) {
       return;
     }

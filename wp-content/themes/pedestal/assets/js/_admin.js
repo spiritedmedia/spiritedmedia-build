@@ -1,3 +1,5 @@
+/* global fm */
+
 (function($) {
 
   var PedestalAdmin = {
@@ -74,11 +76,8 @@
     manageConnectionsMetaboxes: function(connection, generalType) {
       var toType;
       var toClusters = connection.to;
-      var newClusterURLBase = this.siteURL + '/wp-admin/post-new.php?' +
-          'post_type=';
       for (var i = toClusters.length - 1; i >= 0; i--) {
         toType = toClusters[i];
-        var clusterPostType = this.clusterMap[toType];
         var specificType = connection.from + '_to_' + toType;
         var $box = $('[data-p2p_type=' + specificType + '].p2p-box');
         var connectionTabPanelSelector = '#fm-pedestal_' + generalType +
@@ -94,8 +93,8 @@
     },
 
     bindColorPickers: function() {
-      $backgroundColor = $('[name="story_branding[background_color]"]');
-      $foregroundColor = $('[name="story_branding[foreground_color]"]');
+      var $backgroundColor = $('[name="story_branding[background_color]"]');
+      var $foregroundColor = $('[name="story_branding[foreground_color]"]');
 
       $backgroundColor.spectrum({
         preferredFormat: 'hex',

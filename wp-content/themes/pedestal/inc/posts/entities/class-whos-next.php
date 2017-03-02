@@ -132,18 +132,8 @@ class Whos_Next extends Entity {
      * @return obj|bool Story if successful, else false
      */
     public static function get_whosnext_story() {
-        $whosnext_story = Stream::get( [
-            'posts_per_page' => 1,
-            'post_type'      => 'pedestal_story',
-            'name'           => 'whos-next',
+        return static::get_by_post_name( 'whos-next', [
+            'post_type' => 'pedestal_story',
         ] );
-        if ( empty( $whosnext_story ) ) {
-            return false;
-        }
-        $whosnext_story = $whosnext_story[0];
-        if ( ! $whosnext_story instanceof Story ) {
-            return false;
-        }
-        return $whosnext_story;
     }
 }

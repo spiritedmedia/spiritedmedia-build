@@ -11,27 +11,47 @@ googletag.cmd = googletag.cmd || [];
   node.parentNode.insertBefore(gads, node);
 })();
 
-/**
- * Define all of our slots in one go
- * @param  {array} meta Slot meta to define slots
- * @return {array}      Array of DFP slot objects
- */
-var globalSlots = function(meta) {
-  var slots = [];
-  for (var i = meta.length - 1; i >= 0; i--) {
-    var slotMeta = meta[i];
-    var path = '/104495818/' + slotMeta.name;
-    var id = 'div-gpt-ad-' + slotMeta.name + '-0';
-    slots.push(googletag
-      .defineSlot(path, slotMeta.size, id)
-      .addService(googletag.pubads())
-    );
-  }
-  return slots;
-};
-
+// We dynamically define ad slots on the page based on the ad markup present
 googletag.cmd.push(function() {
-  globalSlots(PedestalChildSlotsConfig);
+  // The ad slots we will tell Google Tag about
+  var slots = [];
+  (function($) {
+    // For each ad markup on the page we will get the slot name and accepted
+    // sizes for the slot before defining the ad position
+    $('.js-dfp').each(function(elIndex, el) {
+      var $el = $(el);
+      var rawSize = $el.data('dfp-sizes');
+      var slotName = $el.data('dfp-name');
+      if (!rawSize || !slotName) {
+        var msg = 'Pedestal DFP: Slot missing required parameters';
+        console.warn(msg, el);
+        return;
+      }
+      var sizes = [];
+      $.each(rawSize.split(','), function(sizeIndex, item) {
+        item = $.trim(item);
+        if (!item) {
+          return;
+        }
+        var dimensions = item.split('x');
+        if (dimensions.length !== 2) {
+          var msg = 'Pedestal DFP: Bad dimensions!';
+          console.warn(msg, item, el);
+          return;
+        }
+        for (var i = 0; i < dimensions.length; i++) {
+          dimensions[i] = parseInt(dimensions[i]);
+        }
+        sizes.push(dimensions);
+      });
+      var path = '/104495818/' + slotName;
+      var id = 'div-gpt-ad-' + slotName + '-0';
+      slots.push(googletag
+        .defineSlot(path, sizes, id)
+        .addService(googletag.pubads())
+      );
+    });
+  }(jQuery));
 
   // Additional options
   googletag.pubads().enableSingleRequest();
@@ -48,6 +68,5 @@ googletag.cmd.push(function() {
       div.insertAdjacentHTML('beforeend', html);
     }
   });
-
   googletag.enableServices();
 });

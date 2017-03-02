@@ -63,6 +63,54 @@ class YouTube {
     }
 
     /**
+     * Get an array of src and srcset data for video thumbnails
+     *
+     * The `src` key contains the URL to the highest-resolution thumbnail
+     * available @ 640px width or less.
+     *
+     * The `srcset` key contains an array of widths => URLs.
+     *
+     * @link https://developers.google.com/youtube/v3/docs/thumbnails
+     *
+     * @param  string $url YouTube video URL
+     * @return array|false
+     */
+    public function get_video_thumbnails( string $url ) {
+        $thumbnails = [
+            'src'    => '',
+            'srcset' => [],
+        ];
+        $response_data = $this->get_single_video_data( $url );
+        if ( empty( $response_data ) || empty( $response_data->snippet ) ) {
+            return false;
+        }
+        $snippet = $response_data->snippet;
+        if ( empty( $snippet->thumbnails ) ) {
+            return false;
+        }
+        $response_thumbnails = $snippet->thumbnails;
+
+        // Set up srcset attributes for all thumbnail sizes
+        foreach ( $response_thumbnails as $data ) {
+            if ( empty( $data->url ) || empty( $data->width ) ) {
+                continue;
+            }
+            $thumbnails['srcset'][ (string) $data->width ] = $data->url;
+        }
+
+        // Set up the src attribute with the largest thumbnail that makes
+        // sense on the site -- no embed will be wider than 640px
+        foreach ( array_reverse( $thumbnails['srcset'] ) as $width => $url ) {
+            if ( empty( $thumbnails['src'] ) && (int) 640 >= $width ) {
+                $thumbnails['src'] = $url;
+                break;
+            }
+        }
+
+        return $thumbnails;
+    }
+
+    /**
      * Get data for a single video using cache if available
      *
      * @param  string $url  YouTube video URL
@@ -201,7 +249,7 @@ class YouTube {
         parse_str( $query_str, $query_args );
 
         if ( 'youtu.be' == $host ) {
-            $pattern = self::get_embed_type_url_pattern( 'youtube' );
+            $pattern = Embed::get_embed_type_url_pattern( 'youtube' );
             preg_match( $pattern, $url, $matches );
             if ( ! empty( $matches[1] ) ) {
                 $query['id'] = $matches[1];

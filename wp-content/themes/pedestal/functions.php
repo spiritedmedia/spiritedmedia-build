@@ -413,10 +413,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'stream'      => esc_html__( 'Stream', 'pedestal' ),
                 'story'       => esc_html__( 'Story', 'pedestal' ),
                 'entity'      => esc_html__( 'Entity', 'pedestal' ),
-                'hood'        => esc_html__( 'Neighborhood', 'pedestal' ),
             ];
             foreach ( $sidebars as $id => $sidebar ) {
-
                 $args = [
                     'name'          => $sidebar,
                     'id'            => "sidebar-$id",
@@ -427,15 +425,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                     'before_title'  => '<h3 class="widget-title">',
                     'after_title'   => "</h3>\n",
                 ];
-
-                switch ( $id ) {
-                    case 'hood':
-                        $args['description'] = 'Widgets for single Neighborhoods and the Neighborhoods archive.';
-                        break;
-                }
-
                 register_sidebar( $args );
-
             }
 
         }
