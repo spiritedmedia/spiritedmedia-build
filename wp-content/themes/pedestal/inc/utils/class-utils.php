@@ -4,6 +4,27 @@ namespace Pedestal\Utils;
 
 class Utils {
 
+    /**
+     * Map of common third party service domains and the name of the service
+     *
+     * @var array
+     */
+    private static $service_domain_map = [
+        'twitter.com'     => 'twitter',
+        'instagram.com'   => 'instagram',
+        'instagr.am'      => 'instagram',
+        'youtube.com'     => 'youtube',
+        'youtu.be'        => 'youtube',
+        'vine.co'         => 'vine',
+        'facebook.com'    => 'facebook',
+        'scribd.com'      => 'scribd',
+        'flickr.com'      => 'flickr',
+        'giphy.com'       => 'giphy',
+        'infogr.am'       => 'infogram',
+        'soundcloud.com'  => 'soundcloud',
+        'linkedin.com'    => 'linkedin',
+    ];
+
     private static $instance;
 
     public static function get_instance() {
@@ -489,5 +510,33 @@ class Utils {
             return $result;
         }
         return $response;
+    }
+
+    /**
+     * Get the name of a social media or embed service from a URL
+     *
+     * Not limited to services that provide embeddable content; also includes
+     * other commonly referenced sites.
+     *
+     * @param string $url URL
+     * @return string|false
+     */
+    public static function get_service_name_from_url( string $url = '' ) {
+        if ( ! $url ) {
+            return false;
+        }
+
+        // Make sure the protocol is specified, which is required for parse_url()
+        $url = esc_url_raw( $url );
+
+        $url_domain = parse_url( $url, PHP_URL_HOST );
+        $url_domain = str_replace( 'www.', '', $url_domain );
+        $services = static::$service_domain_map;
+
+        if ( ! isset( $services[ $url_domain ] ) ) {
+            return false;
+        }
+
+        return $services[ $url_domain ];
     }
 }

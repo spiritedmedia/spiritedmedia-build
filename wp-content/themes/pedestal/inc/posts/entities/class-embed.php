@@ -21,11 +21,11 @@ class Embed extends Entity {
     protected static $post_type = 'pedestal_embed';
 
     /**
-     * Providers we support, with labels
+     * Services whose embeds we support, with labels
      *
      * @var array
      */
-    protected static $supported_providers = [
+    protected static $embeddable_services = [
         'youtube'    => 'YouTube',
         'twitter'    => 'Twitter',
         'instagram'  => 'Instagram',
@@ -64,12 +64,12 @@ class Embed extends Entity {
     }
 
     /**
-     * Get the providers we support
+     * Get the embeddable services
      *
      * @return array
      */
-    public static function get_providers() {
-        return self::$supported_providers;
+    public static function get_embeddable_services() {
+        return self::$embeddable_services;
     }
 
     /**
@@ -249,7 +249,7 @@ class Embed extends Entity {
         $html = '';
         $url = $args['url'];
 
-        $embed_type = self::get_embed_type_from_url( $url );
+        $embed_type = static::get_embed_type_from_url( $url );
         if ( ! $embed_type ) {
             return '';
         }
@@ -389,7 +389,7 @@ class Embed extends Entity {
      */
     public function get_source() {
         if ( $embed_type = $this->get_embed_type() ) {
-            $sources = self::get_providers();
+            $sources = self::get_embeddable_services();
             return $sources[ $embed_type ];
         } else {
             return '';
@@ -419,48 +419,6 @@ class Embed extends Entity {
             $embed_type = $this->get_embed_type();
         }
         $this->set_meta( 'embed_type', $embed_type );
-    }
-
-    /**
-     * Get an embed type string from a URL
-     *
-     * @param string $url URL
-     * @return string|false
-     */
-    public static function get_embed_type_from_url( string $url = '' ) {
-
-        if ( ! $url ) {
-            return false;
-        }
-
-        $domain = parse_url( $url, PHP_URL_HOST );
-
-        $base_types = [
-            'twitter.com'     => 'twitter',
-            'instagram.com'   => 'instagram',
-            'instagr.am'      => 'instagram',
-            'youtube.com'     => 'youtube',
-            'youtu.be'        => 'youtube',
-            'vine.co'         => 'vine',
-            'facebook.com'    => 'facebook',
-            'scribd.com'      => 'scribd',
-            'flickr.com'      => 'flickr',
-            'giphy.com'       => 'giphy',
-            'infogr.am'       => 'infogram',
-            'soundcloud.com'  => 'soundcloud',
-        ];
-        $types = $base_types;
-        foreach ( $base_types as $k => $type ) {
-            $prefixed_domain = 'www.' . $k;
-            $types[ $prefixed_domain ] = $type;
-        }
-
-        if ( isset( $types[ $domain ] ) ) {
-            return $types[ $domain ];
-        } else {
-            return false;
-        }
-
     }
 
     /**
@@ -614,6 +572,48 @@ class Embed extends Entity {
      */
     protected function get_youtube_id() {
         return YouTube::get_video_id_from_url( $this->get_embed_url() );
+    }
+
+    /**
+     * Get a valid embed type from a URL
+     *
+     * An embed type is a service that is embeddable as defined in
+     * static::$embeddable_services
+     *
+     * @see Utils::get_service_name_from_url()
+     *
+     * @param  string       $url URL
+     * @return string|false      Embed type / service name
+     */
+    public static function get_embed_type_from_url( string $url = '' ) {
+        if ( ! $url ) {
+            return false;
+        }
+
+        $service_name = Utils::get_service_name_from_url( $url );
+        if ( ! static::is_embeddable_service( $service_name ) ) {
+            return false;
+        }
+
+        return $service_name;
+    }
+
+    /**
+     * Is the supplied service's URL embeddable?
+     *
+     * Embeddable services are defined in static::$embeddable_services
+     *
+     * @see Utils::get_service_name_from_url()
+     *
+     * @param  string  $service_name Provider name as returned by
+     *     Utils::get_service_name_from_url()
+     * @return boolean
+     */
+    public static function is_embeddable_service( string $service_name ) {
+        if ( array_key_exists( $service_name, static::get_embeddable_services() ) ) {
+            return true;
+        }
+        return false;
     }
 
     /**

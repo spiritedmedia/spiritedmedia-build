@@ -617,7 +617,7 @@ class Admin {
         switch ( $data['post_type'] ) {
             case 'pedestal_embed':
                 $url = $postarr['embed_url'];
-                if ( empty( $url ) || empty( Embed::get_embed_type_from_url( $url ) ) ) {
+                if ( empty( $url ) || ! Embed::get_embed_type_from_url( $url ) ) {
                     $redirect_arg = 'unembeddable_url';
                 }
                 break;

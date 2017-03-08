@@ -334,9 +334,9 @@ class Entity_Types extends Types {
      */
     private function register_embed_fields() {
 
-        $providers = array_values( Embed::get_providers() );
-        $providers = Utils::get_byline_list( $providers, [ 'pretext' => '' ] );
-        $description = sprintf( 'Only %s URLs are supported at this time. Other URLs will not save and your post will be blocked from publishing.', $providers );
+        $services = array_values( Embed::get_embeddable_services() );
+        $services = Utils::get_byline_list( $services, [ 'pretext' => '' ] );
+        $description = sprintf( 'Only %s URLs are supported at this time. Other URLs will not save and your post will be blocked from publishing.', $services );
         $fm = new \Fieldmanager_Textfield( [
             'name'     => 'embed_url',
             'label'    => false,
@@ -346,7 +346,7 @@ class Entity_Types extends Types {
                     return '';
                 }
 
-                if ( Embed::get_embed_type_from_url( $url ) ) {
+                if ( Utils::get_service_name_from_url( $url ) ) {
                     return esc_url_raw( $url );
                 } else {
                     return '';

@@ -632,7 +632,7 @@ class Shortcode_Manager {
         }
 
         $embed_type = $embed->get_embed_type();
-        if ( ! array_key_exists( $embed_type, Embed::get_providers() ) ) {
+        if ( ! Embed::is_embeddable_service( $embed_type ) ) {
             return '';
         }
 

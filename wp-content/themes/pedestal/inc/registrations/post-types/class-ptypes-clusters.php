@@ -544,25 +544,22 @@ class Cluster_Types extends Types {
 
         switch ( $obj->label ) {
             case 'Twitter URL':
-                // Make sure $value is a Twitter.com URL
-                if ( false === stripos( $value, 'https://twitter.com/' ) ) {
+                if ( 'twitter' != Utils::get_service_name_from_url( $value ) ) {
                     $value = 'https://twitter.com/' . $value;
                 }
                 $value = untrailingslashit( $value );
                 break;
 
             case 'Instagram URL':
-                // Make sure $value is a Instagram.com URL
-                if ( false === stripos( $value, 'https://www.instagram.com/' ) ) {
+                if ( 'instagram' != Utils::get_service_name_from_url( $value ) ) {
                     $value = 'https://www.instagram.com/' . $value;
                 }
                 $value = trailingslashit( $value );
                 break;
 
             case 'LinkedIn URL':
-                // Make sure $value is a LinkedIn.com URL
-                if ( false === stripos( $value, 'https://www.linkedin.com/' ) ) {
-                    $value = 'https://www.linkedin.com/' . $value;
+                if ( 'linkedin' != Utils::get_service_name_from_url( $value ) ) {
+                    $value = 'https://www.linkedin.com/in/' . $value;
                 }
                 break;
         }
