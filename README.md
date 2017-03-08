@@ -1,7 +1,7 @@
-Build [#2301](https://circleci.com/gh/spiritedmedia/spiritedmedia/2301) by montchr at 2017-03-08 07:28 PM UTC
+Build [#2306](https://circleci.com/gh/spiritedmedia/spiritedmedia/2306) by montchr at 2017-03-08 08:23 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.4](https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.4)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.5](https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.5)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.3...v5.4.4)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.4...v5.4.5)
 
- - [#1901](https://github.com/spiritedmedia/spiritedmedia/pull/1901): Improve validation of Person social media fields
+ - [#1907](https://github.com/spiritedmedia/spiritedmedia/pull/1907): Only display published Instagram of the Day posts in component

@@ -681,7 +681,7 @@ class Embed extends Entity {
 
         $args = [
             'post_type'              => static::$post_type,
-            'post_status'            => [ 'publish', 'future' ],
+            'post_status'            => 'publish',
             'posts_per_page'         => 1,
             'no_found_rows'          => true,
             'update_post_term_cache' => false,
@@ -689,6 +689,9 @@ class Embed extends Entity {
             'orderby'                => 'meta_value_num date',
             'paged'                  => 1,
         ];
+        if ( 'newsletter' == $options['context'] ) {
+            $args['post_status'] = [ 'publish', 'future' ];
+        }
         $posts = Stream::get( $args );
         if ( empty( $posts ) ) {
             return false;
