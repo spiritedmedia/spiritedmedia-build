@@ -56,7 +56,9 @@ $c: '.c-daily-insta';
     @extend %u-heading--minor;
   }
 
-  &__author {}
+  &__author {
+    display: block;
+  }
 
 
   //
