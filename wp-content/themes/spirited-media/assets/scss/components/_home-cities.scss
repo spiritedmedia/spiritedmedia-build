@@ -22,9 +22,13 @@
 }
 
 .home-cities--philadelphia {
-  background-image: url('#{$image-directory}/home/philadelphia-cityskape.jpg');
+  background-image: url('#{$image-directory}/home/philadelphia-cityscape.jpg');
 }
 
 .home-cities--pittsburgh {
-  background-image: url('#{$image-directory}/home/pittsburgh-cityskape.jpg');
+  background-image: url('#{$image-directory}/home/pittsburgh-cityscape.jpg');
+}
+
+.home-cities--denver {
+  background-image: url('#{$image-directory}/home/denver-cityscape.jpg');
 }

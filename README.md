@@ -1,7 +1,7 @@
-Build [#2306](https://circleci.com/gh/spiritedmedia/spiritedmedia/2306) by montchr at 2017-03-08 08:23 PM UTC
+Build [#2324](https://circleci.com/gh/spiritedmedia/spiritedmedia/2324) by kingkool68 at 2017-03-09 03:20 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.5](https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.5)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.6](https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.6)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.4...v5.4.5)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.4.5...v5.4.6)
 
- - [#1907](https://github.com/spiritedmedia/spiritedmedia/pull/1907): Only display published Instagram of the Day posts in component
+ - [#1912](https://github.com/spiritedmedia/spiritedmedia/pull/1912): Add Denverite to SpiritedMedia.com

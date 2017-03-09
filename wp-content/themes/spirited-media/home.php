@@ -25,6 +25,12 @@ function sent_home_contact_form() {
 
 $press_links = [
     [
+        'title' => 'With a cross-country merger, Spirited Media aims to build a nationwide digital local news chain',
+        'publication' => 'Nieman Journalism Lab',
+        'date' => 'March 8, 2017',
+        'url' => 'http://www.niemanlab.org/2017/03/newsonomics-with-a-cross-country-merger-spirited-media-aims-to-build-a-nationwide-digital-local-news-chain/',
+    ],
+    [
         'title' => 'Billy Penn taking its formula to Pittsburgh with help from Gannett investment',
         'publication' => 'CNN Money',
         'date' => 'May 9, 2016',
@@ -118,11 +124,11 @@ get_header(); ?>
 
     <section class="section home-about">
         <h2 class="home-about--heading">About Spirited Media</h2>
-        <p>Spirited Media is a company committed to finding a new editorial and business model for local journalism, and currently manages <a href="http://billypenn.com">Billy Penn</a> in Philadelphia and the soon-to-launch <a href="http://theincline.com">The Incline</a> in Pittsburgh.</p>
+        <p>Spirited Media is a company committed to finding a new editorial and business model for local journalism, and currently manages <a href="https://billypenn.com">Billy Penn</a> in Philadelphia, <a href="https://theincline.com">The Incline</a> in Pittsburgh, and <a href="https://www.denverite.com/">Denverite</a> in Denver.</p>
 
         <p>Our sites are produced and designed for mobile, and are aimed at the under-40 audience. We are all local all the time, and deliver the news in a curated stream that values readers’ time and their user experience. We are heavily focused on circulating our work via social platforms, and believe that crafting a lively, unique voice for each city we cover is crucial.</p>
 
-        <p>We are focused on bringing our local audience together both online and offline, as we hold approximately 4-5 events per month and derive most of our revenue from events. We also believe that while all cities have real problems, the voices of those trying to solve those problems often go unheard, and we try and cover many of those efforts.</p>
+        <p>We are focused on bringing our local audiences together both online and offline, as we hold approximately four to five events per month and derive most of our revenue from events. We also believe that while all cities have real problems, the voices of those trying to solve those problems often go unheard, and we try and cover many of those efforts.</p>
 
         <div class="home-about--columns">
             <div class="home-about--column about-statement">
@@ -135,7 +141,7 @@ get_header(); ?>
             </div>
             <div class="home-about--column about-statement">
                 <h3 class="about-statement--heading">Company History</h3>
-                <p class="about-statement--blurb">Spirited Media was founded by Jim Brady in 2014, and launched Billy Penn in October of that year. Thanks to a significant investment by Gannett in early 2016, we expanded the Billy Penn staff and announced plans to extend into new cities, the first being The Incline in Pittsburgh, scheduled to launch in September 2016. Billy Penn also serves as PolitiFact’s Pennsylvania state partner.</p>
+                <p class="about-statement--blurb">Spirited Media was founded by Jim Brady in 2014, and launched Billy Penn in October of that year. Thanks to a significant investment by Gannett in early 2016, we expanded the Billy Penn staff and announced plans to extend into new cities, the first being The Incline in Pittsburgh, which launched in September 2016. Billy Penn and The Incline are PolitiFact’s Pennsylvania state partner newsrooms. Spirited Media merged with Avoriaz and began operating Denverite in Denver in March 2017.</p>
             </div>
         </div>
     </section>
@@ -147,8 +153,9 @@ get_header(); ?>
 
     <section class="section home-cities" id="cities">
         <h2 class="home-cities--heading">Our Cities</h2>
-        <a href="http://billypenn.com" class="home-cities--city home-cities--philadelphia">Philadelphia</a>
-        <a href="http://theincline.com" class="home-cities--city home-cities--pittsburgh">Pittsburgh</a>
+        <a href="https://billypenn.com" class="home-cities--city home-cities--philadelphia">Philadelphia</a>
+        <a href="https://theincline.com" class="home-cities--city home-cities--pittsburgh">Pittsburgh</a>
+        <a href="https://www.denverite.com/" class="home-cities--city home-cities--denver">Denver</a>
     </section>
 
     <section class="home-strengths">
@@ -156,7 +163,7 @@ get_header(); ?>
             <div class="home-strength">
                 <?php echo svg_icon( 'gear' ); ?>
                 <h3 class="home-strength--heading">Easily Scannable</h3>
-                <p class="home-strength--blurb">Build to respect your time by delivering news to you in a simple stream format uncluttered by intrusive advertisements.</p>
+                <p class="home-strength--blurb">Built to respect your time by delivering news to you in a simple stream format uncluttered by intrusive advertisements.</p>
             </div>
             <div class="home-strength">
                 <?php echo svg_icon( 'star-outline' ); ?>
@@ -183,7 +190,7 @@ get_header(); ?>
         <ul class="home-board-members">
             <li class="home-board-members--item">
                 <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/home/jim-brady-headshot.jpg" class="home-board-members--image">
-                <a href="http://billypenn.com/about/jim-brady/" class="home-board-members--name">Jim Brady</a>
+                <a href="https://billypenn.com/about/jim-brady/" class="home-board-members--name">Jim Brady</a>
                 Founder &amp; CEO, Spirited Media
             </li>
             <li class="home-board-members--item">
