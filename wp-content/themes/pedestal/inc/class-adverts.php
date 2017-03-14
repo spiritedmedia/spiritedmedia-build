@@ -31,8 +31,16 @@ class Adverts {
      */
     private function setup_filters() {
         add_filter( 'query_vars', function( $query_vars ) {
-            $query_vars[] = 'pedestal-test-adverts';
+            $query_vars[] = 'pedestal-ad-tester';
             return $query_vars;
+        });
+        add_filter( 'template_include', function( $template_path ) {
+            if ( 1 == get_query_var( 'pedestal-ad-tester' ) ) {
+                if ( $new_template_path = locate_template( [ 'ad-tester.php' ] ) ) {
+                    $template_path = $new_template_path;
+                }
+            }
+            return $template_path;
         });
     }
 
@@ -40,12 +48,7 @@ class Adverts {
      * Register rewrite rules
      */
     public function action_init_register_rewrites() {
-        // Currently test advert rewrites are only prepared for home and story
-        // streams. Other clusters are excluded.
-        add_rewrite_rule( 'pedestal-test-adverts/([^/]+)/?$', 'index.php?pedestal-test-adverts=$matches[1]', 'top' );
-        add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/]+)/page/?([0-9]{1,})/pedestal-test-adverts/([^/]+)/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&paged=$matches[5]&post_type=pedestal_story&pedestal-test-adverts=$matches[6]', 'top' );
-        add_rewrite_rule( '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/]+)(/[0-9]+)?/pedestal-test-adverts/([^/]+)/?$', 'index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&name=$matches[4]&page=$matches[5]&post_type=pedestal_story&pedestal-test-adverts=$matches[6]', 'top' );
-        add_rewrite_endpoint( 'pedestal-test-adverts', EP_PERMALINK );
+        add_rewrite_rule( '^ad-tester/?$', 'index.php?pedestal-ad-tester=1', 'top' );
     }
 
     /**

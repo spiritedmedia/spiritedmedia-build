@@ -1,0 +1,19 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+	{% if ad_name and ad_sizes %}
+		{{ macros.dfp_unit( ad_name, ad_sizes ) }}
+	{% endif %}
+
+	<form method="get">
+		<label>Ad unit name</label>
+		<input type="text" name="ad-name" value="{{ ad_name }}" required>
+
+		<label>Ad unit size(s) <em>Separate multiple sizes with a comma</em></label>
+		<input type="text" name="ad-sizes" value="{{ ad_sizes }}" required>
+
+		<input type="submit" value="Test Ad Unit">
+	</form>
+
+{% endblock %}

@@ -345,6 +345,9 @@ class Frontend {
         if ( defined( 'PEDESTAL_BOXTERCO_SCRIPT' ) ) {
             wp_enqueue_script( 'boxter-funnl', PEDESTAL_BOXTERCO_SCRIPT, [], null, $in_footer = true );
         }
+        if ( isset( $_GET['show-ad-units'] ) ) {
+            wp_enqueue_script( 'dfp-placeholders', get_template_directory_uri() . '/assets/dist/js/dfp-placeholders.js', [ 'jquery' ], PEDESTAL_VERSION );
+        }
 
         wp_register_script( 'pedestal-footnotes', get_template_directory_uri() . '/assets/dist/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, true );
 
