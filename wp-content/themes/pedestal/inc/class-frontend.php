@@ -126,6 +126,16 @@ class Frontend {
             add_filter( 'script_loader_src', [ $this, 'filter_cache_busting_file_src' ], 10 );
             add_filter( 'style_loader_src', [ $this, 'filter_cache_busting_file_src' ], 10 );
         }
+
+        // 3rd party hosted JavaScript should have async set so they don't block
+        // our JavaScript from functioning if 3rd party scripts fail to load.
+        add_filter( 'script_loader_tag', function( $script_tag = '', $handle = '' ) {
+            $whitelisted_handles = [ 'boxter-funnl', 'nativo', 'soundcite' ];
+            if ( ! in_array( $handle, $whitelisted_handles ) ) {
+                return $script_tag;
+            }
+            return str_replace( ' src', ' async="async" src', $script_tag );
+        }, 10, 2 );
     }
 
     /**
