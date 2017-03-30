@@ -8,7 +8,7 @@ styleguide_header();
         }
     </style>
     <div class="content-wrapper row">
-		<main class="main columns large-8 js-main" role="main">
+		<main class="c-main columns large-8 js-main" role="main">
             <p>Generic, no classes or styling</p>
             <hr>
 
@@ -17,9 +17,6 @@ styleguide_header();
 
             <p><code>.o-rule--slim</code> A slightly less obtrusive rule</p>
             <hr class="o-rule o-rule--slim">
-
-            <p><code>.o-rule--pedal</code> A slender piano pedal-like rule, commonly used for groups of entities <strong>Note:</strong> needs to be applied to an element with <code>position: relative;</code></p>
-            <hr style="position: relative;" class="o-rule o-rule--pedal"></hr>
 
             <p><code>.o-rule--closure</code> A rule with a logo centered in the middle</p>
             <hr class="o-rule o-rule--closure">

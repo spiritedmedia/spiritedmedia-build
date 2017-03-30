@@ -1,0 +1,20 @@
+{% set stream_item_element = if_email('div', 'article')  %}
+
+<{{ stream_item_element }} class="{{ macros.get_stream_item_classes( 'standard', _context ) }}"
+         {{ item.get_the_data_atts }}>
+
+    {% if is_home and item.is_pinned %}
+    {% include 'partials/stream/pin-mark.twig' %}
+    {% endif %}
+
+    <div class="c-event  c-overview  c-stream__item__inner">
+        <div class="c-stream__item__body">
+            <div class="c-event__title">
+                {% include 'partials/item-title.twig' %}
+            </div>
+            {% include 'partials/events/details.twig' %}
+            {% include 'partials/events/export.twig' %}
+        </div>
+    </div>
+
+</{{ stream_item_element }}>

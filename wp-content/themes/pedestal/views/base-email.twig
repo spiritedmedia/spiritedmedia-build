@@ -1,8 +1,13 @@
 {% spaceless %}
+
 {% if email_styles %}
-<style type="text/css">
-{{ email_styles }}
-</style>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+    {{ email_styles }}
+    </style>
+</head>
+<body>
 {% endif %}
 
 <div class="email-body no-js">
@@ -15,5 +20,9 @@
 {% include 'partials/emails/footer.twig' %}
 
 </div>
+
+{% if email_styles %}
+</body>
+{% endif %}
 
 {% endspaceless %}

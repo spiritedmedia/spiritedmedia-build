@@ -12,7 +12,7 @@
   .icon-logo {
     @include iconize(
       $path: $site-theme-logo-abspath + '/logo_icon',
-      $size: c-avatar-property-get( 'size-sm' )
+      $size: $avatar-size-sm
     );
 
     .email-body & {
@@ -102,7 +102,7 @@ table.iconset--email {
 
     th.cta {
       text-transform: uppercase;
-      color: $grey-light;
+      color: $grey-80;
 
       h2 {
         margin: 0;

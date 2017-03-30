@@ -1,9 +1,8 @@
 <article class="{{ macros.get_stream_item_classes( 'imglist' ) }}">
-    <a id="{{ item.get_name }}"></a>
     <div class="c-stream__item__inner  o-media">
 
         {% if show_thumbs %}
-        <div class="c-stream__item__img  o-media__img">
+        <div class="c-stream__item__img  o-media__img  js-stream-item-img">
 
             {% if item.has_featured_image %}
                 {% set gaLabel = 'Thumbnail' %}
@@ -22,7 +21,10 @@
         {% endif %}
 
         <div class="c-stream__item__body  o-media__body">
-            {% include 'partials/stream/item-title.twig' with { 'gaCategory': gaCategory } %}
+            {% include 'partials/item-title.twig' with {
+                'overview': 'false',
+                'gaCategory': gaCategory
+            } %}
         </div>
 
     </div>

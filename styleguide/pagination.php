@@ -3,8 +3,8 @@ include 'include.php';
 styleguide_header();
 ?>
     <div class="content-wrapper row">
-		<main class="main columns large-8 js-main" role="main">
-			<section class="c-stream c-stream--isolated js-stream">
+		<main class="c-main columns large-8 js-main" role="main">
+			<section class="c-stream c-stream--standard js-stream">
 
 				<p>Starting Pagination</p>
 				<footer class="c-stream__footer">

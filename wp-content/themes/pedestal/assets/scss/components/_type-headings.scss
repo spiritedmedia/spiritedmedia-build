@@ -1,0 +1,48 @@
+// ==========================================================================
+// Pedestal // Components // TYPOGRAPHY: HEADINGS
+// ==========================================================================
+
+
+.c-heading {}
+
+.c-heading__title {}
+
+/*a*/.c-heading__link {}
+
+
+.c-heading--minor,
+%c-heading--minor,
+.c-heading--light,
+.c-heading--overline {
+  &,
+  .c-heading__title {
+    text-transform: uppercase;
+    font-size: $heading-minor-f-z;
+    line-height: 1.2;
+  }
+}
+
+.c-heading--minor,
+%c-heading--minor,
+.c-heading--overline {
+  font-weight: 700;
+}
+
+.c-heading--light {
+  font-weight: 400;
+  color: $dimmed-text-color;
+}
+
+.c-heading--overline {
+  @include h-size( 5 );
+}
+
+.c-heading--archive {
+  @include h-size( 3 );
+  color: $header-font-color;
+  font-weight: 300;
+
+  .c-heading__title {
+    font-weight: 600;
+  }
+}

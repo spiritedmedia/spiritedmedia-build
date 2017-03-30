@@ -38,30 +38,6 @@
 
 
 
-  /// A slender piano pedal-like rule, commonly used for groups of entities
-  ///
-  /// Extends `.o-rule`
-  &--pedal {
-    &::before {
-      position: absolute;
-      background-color: $primary-color;
-      width: $o-rule--pedal-w;
-      height: $o-rule-height;
-      top: $o-rule--pedal-position;
-      content: '';
-    }
-
-    &.entity--promo {
-      &::before {
-        background-color: $hello-yellow;
-      }
-    }
-  }
-
-
-
-
-
   /// A rule with a logo centered in the middle
   &--closure {
     margin-top: $o-rule--closure-m-t;

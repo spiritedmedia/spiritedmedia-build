@@ -61,6 +61,7 @@ $small-font-size          : unitize( $base-font-size * 0.8 ) !default;
 
 $header-font-weight       : 600 !default;
 $header-line-height       : 1.2 !default;
+$header-top-margin        : 0 !default;
 
 $paragraph-margin-bottom  : unitize( 20 ) !default; // !default
 $list-side-margin         : halve( $base-font-size ) !default;
@@ -68,8 +69,6 @@ $list-ordered-side-margin : $list-side-margin !default;
 $list-margin-bottom       : $paragraph-margin-bottom !default; // !default
 
 $site-header-pd-v         : $base-spacing-unit !default;
-
-$main-m-t                 : $base-spacing-unit !default;
 
 $heading-minor-f-z        : $base-font-size;
 
@@ -82,69 +81,55 @@ $heading-minor-f-z        : $base-font-size;
 // ==========================================================================
 
 
-/**
- * Greyscale
- */
+$black                   : #000000;
+$white                   : #ffffff;
 
-$black                     : #000000;
-$white                     : #ffffff;
+$grey-95                 : #f2f2f2; // only used as rule color and in search
+$grey-90                 : #e6e6e6; // only used as top bar background
+$grey-80                 : #cccccc; //
+$grey-70                 : #b3b3b3; //
+$grey-62                 : #9f9f9f; //
+$grey-46                 : #767676; // minimum darkness for text
+$grey-40                 : #666666; // only used as link hover color
+$grey-25                 : #3f3f3f; //
 
-$grey-95                   : lighten( $black, 95% ); // #f2f2f2
-$grey-90                   : lighten( $black, 90% );
-$grey-80                   : lighten( $black, 80% );
-$grey-70                   : lighten( $black, 70% ); // #b3b3b3
-$grey-60                   : lighten( $black, 60% );
-$grey-50                   : lighten( $black, 50% );
-$grey-40                   : lighten( $black, 40% );
-$grey-30                   : lighten( $black, 30% );
-$grey-20                   : lighten( $black, 20% );
-$grey-10                   : lighten( $black, 10% );
-
-$grey-lightest             : $grey-95;
-$grey-lighter              : $grey-90;
-$grey-light                : $grey-80;
-$grey-lightish             : $grey-70;
-$grey-mid                  : $grey-50;
-$grey-dark                 : $grey-30;
-$grey-darker               : $grey-20;
-$grey-darkest              : $grey-10;
-
-
-$sea-foam-green            : #e5f2f6;
-$prussian-blue             : #122b3a;
-$dark-prussian-blue        : #122027;
-$purple-phase              : #bf7dbb;
-$blood-orange              : #db7053;
-$hello-yellow              : #fff558; // Hand-picked by Nativo
-$absinthe                  : #c1a540;
-$latte                     : #e6e6de;
-$twitter-blue              : #4fa8e0;
-$mustard-gas               : #b26536;
-$truth-serum               : #efeeec;
-$spiritedmedia-brand       : #333333;
+$sea-foam-green          : #e5f2f6;
+$prussian-blue           : #122b3a;
+$dark-prussian-blue      : #122027;
+$purple-phase            : #bf7dbb;
+$blood-orange            : #db7053;
+$hello-yellow            : #fff558; // Hand-picked by Nativo
+$absinthe                : #c1a540;
+$latte                   : #e6e6de;
+$twitter-blue            : #4fa8e0;
+$mustard-gas             : #b26536;
+$truth-serum             : #efeeec;
+$spiritedmedia-brand     : #333333;
 
 
 // We need to set these two commonly-used defaults which should be overridden in
 // the child themes
-$primary-color             : $spiritedmedia-brand !default;
-$secondary-color           : lighten( $spiritedmedia-brand, 10% ) !default;
+$primary-color           : $spiritedmedia-brand !default;
+$secondary-color         : lighten( $spiritedmedia-brand, 10% ) !default;
 
-$body-bg                   : $white !default;
-$c-panel-bg                : $white !default;
-$anchor-font-color-hover   : $black !default;
-$border-std-color          : $grey-lighter !default;
+$body-bg                 : $white !default;
+$body-font-color         : $grey-25;
+$c-panel-bg              : $white !default;
+$anchor-font-color-hover : $black !default;
+$border-std-color        : $grey-90 !default;
+$header-font-color       : $body-font-color !default;
 
 // WCAG 2.0 guidelines require a text contrast ratio of at least 4.5:1 (#767676)
 // for AA and 7:1 for AAA (#595959).
 // https://www.w3.org/TR/WCAG20/#visual-audio-contrast
-$dimmed-text-color         : #767676 !default;
+$dimmed-text-color       : $grey-46 !default;
 
 // User role colors
-$user-staff-color          : $primary-color !default;
-$user-contributor-color    : $mustard-gas !default;
+$user-staff-color        : $primary-color !default;
+$user-contributor-color  : $mustard-gas !default;
 
 
-$loading-default-opacity: 0.25;
+$loading-default-opacity : 0.25;
 
 
 
@@ -168,13 +153,14 @@ $fa-icons-used: (
   'envelope'
 );
 
-$icon-diameter         : ( $base-spacing-unit * 2.5 ) !default;
-$icon-diameter--med    : ( $base-spacing-unit * 2 ) !default;
-$icon-diameter--sm     : ( $base-spacing-unit * 1.5 ) !default;
-$icon-diameter--xs     : ( $base-spacing-unit * 1.25 ) !default;
-$icon-spacing          : ( $base-spacing-unit / 2 ) !default;
+$icon-diameter         : unitize( 40px );
+$icon-diameter--med    : unitize( 32px );
+$icon-diameter--sm     : unitize( 28px );
+$icon-diameter--xs     : unitize( 20px );
+$icon-spacing          : $base-spacing-unit / 2;
 
-$email-icon-diameter   : $icon-diameter--xs !default;
+$email-icon-diameter   : $icon-diameter--xs;
+$avatar-size-sm        : $icon-diameter--sm;
 
 $iconset-email-cta-p-t : ( $base-spacing-unit / 2 ) !default;
 $iconset-email-cta-p-b : $base-spacing-unit !default;
@@ -205,7 +191,6 @@ $z-index-4              : 9999;
 $z-index-5              : 99999;
 
 $z-action-bar           : $z-index-4;
-$z-blox-story-bar       : $z-index-3;
 $z-c-meta-bar           : $z-index-2;
 $z-entity-body          : $z-index-2;
 $z-stream-item-img      : $z-index-1;
@@ -234,6 +219,8 @@ $z-reveal-modal         : $z-index-5;
 $row-width         : rem-calc( 1060 );
 $column-gutter     : rem-calc( 30 ); // !default
 
+$content-wrapper-m-t          : $base-spacing-unit !default;
+$content-wrapper-m-b          : ( $base-spacing-unit * 4 ) !default;
 
 
 
@@ -257,14 +244,19 @@ $xxlarge-range         : 120.063em; /* 1921px */
 
 
 //
-// Main Content
+// Main Element
 // ==========================================================================
 
 
-$content-wrapper-m-t          : $base-spacing-unit !default;
-$content-wrapper-m-b          : ( $base-spacing-unit * 4 ) !default;
+$main-margin-top           : $base-spacing-unit;
+$main-margin-bottom        : $base-spacing-unit * 2;
+$main-header-margin-bottom : $base-spacing-unit * 2;
+$main-title-margin-bottom  : ( $base-spacing-unit * 4 ) !default;
+$main-subtitle-font-weight : 400 !default;
+$main-subtitle-margin-top  : ( $base-spacing-unit * 1.2 ) !default;
 
-$main-m-b                     : ( $base-spacing-unit * 2 ) !default;
+$main-rail-item-pd         : $half-spacing-unit !default;
+$main-rail-f-z             : $small-font-size !default;
 
 
 
@@ -275,6 +267,9 @@ $main-m-b                     : ( $base-spacing-unit * 2 ) !default;
 // ==========================================================================
 
 
+// Overviews
+$overview-thumbnail-img-size     : unitize( 150px );
+
 // Border dividers
 $border-divider-spacing          : ( $base-spacing-unit * 1.5 ) !default;
 $border-divider-spacing--inline  : halve( $base-spacing-unit ) !default;
@@ -282,12 +277,12 @@ $border-divider-color            : $border-std-color !default;
 
 // Text color mixin
 $mixin-text-color-light          : $white;
-$mixin-text-color-dark           : $grey-darker;
+$mixin-text-color-dark           : $grey-25;
 
 // Spinkit loading indicator
 $spinkit-spinner-margin          : 16px auto;
 $spinkit-size                    : 32px;
-$spinkit-spinner-color           : $grey-light;
+$spinkit-spinner-color           : $grey-80;
 
 // Horizontal explosion
 $hoz-explode-side                : unitize( 600rem );

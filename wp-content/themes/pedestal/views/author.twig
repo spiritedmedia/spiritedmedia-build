@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<main role="main" class="{{ main_classes }}">
+<main role="main" class="c-main--profile  {{ main_classes }}">
 
-    <article class="c-profile  [ c-content--profile  c-content ]">
+    <article class="c-profile  c-main__content">
 
         {{ macros.user_card( _context, user, {
             'format': 'extended',

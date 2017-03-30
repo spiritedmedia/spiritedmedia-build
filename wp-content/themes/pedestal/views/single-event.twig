@@ -4,54 +4,49 @@
 
 <main role="main" class="{{ main_classes }}">
 
-    <article class="c-content  c-panel  {{ macros.has_story_bar( _context ) }}  {{ item.css_classes }}"
+    <article class="c-main__content  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
-        {{ macros.blox( _context, {}, 'story-bar' ) }}
+        <header class="c-main__header  c-overview">
 
-        <div class="c-panel__inner">
+            {% if item.has_featured_image %}
+            {% include 'partials/overview/lead-image.twig' %}
+            {% endif %}
 
-            <header class="c-content__header">
-
-                {% if item.has_featured_image() %}
-                <div class="c-content__lead-img">
-                    {% include 'partials/lead-image.twig' %}
-                </div>
-                {% endif %}
-
+            <div class="c-overview__sponsorship">
                 {{ ped_slot( 'single_lead' ) }}
+            </div>
 
-                <h2 class="c-content__title">{{ item.get_the_title }}</h2>
+            {% include 'partials/overview/overline.twig' %}
+            {% include 'partials/item-title.twig' %}
 
-            </header>
+        </header>
 
-            <section class="c-event  c-content__body">
+        <section class="c-event  c-main__body">
 
-                <div class="c-content__data">
-                    {% include 'partials/events/details.twig' %}
-                    {% include 'partials/events/export.twig' %}
-                </div>
+            <div class="c-main__data">
+                {% include 'partials/events/details.twig' %}
+                {% include 'partials/events/export.twig' %}
+            </div>
 
-                {% include 'partials/entity-share.twig' %}
+            {% include 'partials/entity-share.twig' %}
 
-                {% if item.get_more %}
-                <h3 class="c-content__heading">{{ heading.details }}</h3>
-                <div class="s-post-content">
-                    {{ item.get_more }}
-                </div>
-                {% endif %}
+            {% if item.get_more %}
+            <h3 class="c-main__heading">{{ heading.details }}</h3>
+            <div class="s-post-content">
+                {{ item.get_more }}
+            </div>
+            {% endif %}
 
-            </section>
+        </section>
 
         {% if item.has_clusters %}
-            <footer class="c-content__footer  [ o-rule--closure  o-rule ]">
+            <footer class="c-main__footer  [ o-rule--closure  o-rule ]">
                 {% include 'partials/cluster-list.twig' %}
             </footer>
         {% endif %}
 
-            {% include 'partials/modals/entity-share-modal.twig' %}
-
-        </div>
+        {% include 'partials/modals/entity-share-modal.twig' %}
 
     </article>
 

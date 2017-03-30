@@ -1,13 +1,8 @@
 {% extends item.get_single_base_template %}
 
 
-{% block story_bar %}
-    {{ macros.blox( _context, {}, 'story-bar' ) }}
-{% endblock %}
-
-
 {% block content__header %}
-    <div class="c-content__hero  c-hero">
+    <div class="c-main__hero  c-hero">
         <div class="c-hero__inner">
             {% include 'partials/factchecks/statement.twig' %}
         </div>

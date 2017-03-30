@@ -105,6 +105,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_ZIPCODE'             => '',
                 'PEDESTAL_BUILDING_NAME'       => '',
                 'PEDESTAL_STREET_ADDRESS'      => '',
+                'PEDESTAL_DATE_FORMAT'         => 'M d Y',
+                'PEDESTAL_TIME_FORMAT'         => 'g:i a',
                 'PEDESTAL_DATETIME_FORMAT'     => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
                 'PEDESTAL_GOOGLE_ANALYTICS_ID' => '',
                 'PEDESTAL_BOXTERCO_SCRIPT'     => '',
@@ -212,7 +214,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             require_once ABSPATH . WPINC . '/class-oembed.php';
 
             // Components
-            require_once dirname( __FILE__ ) . '/lib/jetpack-photon.php';
             require_once dirname( __FILE__ ) . '/lib/mandrill-wp-mail.php';
             // require_once dirname( __FILE__ ) . '/lib/codebird/codebird.php';
             // require_once dirname( __FILE__ ) . '/lib/codebird/class-wp-codebird.php';
@@ -313,6 +314,20 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 return $original_var;
             });
 
+            add_filter( 'pre_option_date_format', function( $date_format ) {
+                if ( PEDESTAL_DATE_FORMAT ) {
+                    $date_format = PEDESTAL_DATE_FORMAT;
+                }
+                return $date_format;
+            } );
+
+            add_filter( 'pre_option_time_format', function( $time_format ) {
+                if ( PEDESTAL_TIME_FORMAT ) {
+                    $time_format = PEDESTAL_TIME_FORMAT;
+                }
+                return $time_format;
+            } );
+
             add_filter( 'pre_option_show_avatars', '__return_true' );
             add_filter( 'pre_option_blog_public', '__return_true' );
             add_filter( 'pre_option_timezone_string', function() {
@@ -370,6 +385,18 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             // Filter Twig as Timber loads it
             add_filter( 'timber/loader/twig', [ $this, 'filter_timber_loader' ] );
+
+            // Add some generic Twig funtions and filters
+            add_filter( 'timber/twig', function( $twig ) {
+                // Function to check if doing email and alternate strings
+                $twig->addFunction( new \Twig_SimpleFunction( 'if_email', function( $email_str, $standard_str ) {
+                    if ( $this->is_email() ) {
+                        return $email_str;
+                    }
+                    return $standard_str;
+                } ) );
+                return $twig;
+            }, 99 );
         }
 
         /**
@@ -411,8 +438,25 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             // Images
             add_image_size( 'medium-square', 300, 300, true );
-            add_image_size( 'stream-preview', 9999, 590, false );
-            add_image_size( 'lead-image', 1000, 9999, false );
+
+            // Image sizes for responsive content images
+            add_image_size( '2048-wide', 2048 );
+            add_image_size( '1024-wide', 1024 );
+            add_image_size( '800-wide', 800 );
+            add_image_size( '640-wide', 640 );
+            add_image_size( '480-wide', 480 );
+            add_image_size( '400-wide', 400 );
+            add_image_size( '320-wide', 320 );
+
+            // 16x9 for the lead image
+            add_image_size( '2048-16x9', 2048, 1152, true );
+            add_image_size( '1024-16x9', 1024, 576, true ); // The size of the lead image
+            add_image_size( '800-16x9', 800, 450, true );
+            add_image_size( '640-16x9', 640, 360, true );
+            add_image_size( '480-16x9', 480, 270, true );
+            add_image_size( '400-16x9', 400, 225, true );
+            add_image_size( '320-16x9', 320, 180, true );
+
             add_image_size( 'twitter-card', 120, 120, true );
             add_image_size( 'facebook-open-graph', 1200, 630, true );
 
@@ -686,7 +730,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             if ( empty( $post ) ) {
                 $stream = new Stream( [
                     'posts_per_page' => 1,
-                    'post_type'      => Types::get_editorial_post_types(),
+                    'post_type'      => Types::get_original_post_types(),
                 ] );
                 if ( empty( $stream->get_stream() ) ) {
                     return;

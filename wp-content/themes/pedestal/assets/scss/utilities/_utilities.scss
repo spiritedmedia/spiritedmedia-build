@@ -51,24 +51,6 @@
 }
 
 
-.u-heading--minor,
-%u-heading--minor,
-.u-heading--light {
-  text-transform: uppercase;
-  font-size: $heading-minor-f-z;
-}
-
-.u-heading--minor,
-%u-heading--minor {
-  font-weight: 700;
-}
-
-.u-heading--light {
-  font-weight: 400;
-  color: $dimmed-text-color;
-}
-
-
 // Text transform
 .u-tt-upper   { text-transform: uppercase; }
 .u-tt-lower   { text-transform: lowercase; }

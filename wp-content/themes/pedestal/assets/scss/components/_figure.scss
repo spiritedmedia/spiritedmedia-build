@@ -4,8 +4,7 @@
 
 
 /*figure*/.c-figure {
-  margin-left: 0;
-  margin-right: 0;
+  margin-bottom: $base-spacing-unit;
 
   &,
   &__content-wrap {
@@ -22,7 +21,7 @@
       .c-figure__content {
         display: block;
         height: auto;
-        padding-bottom: c-figure-property-get( img-p-b );
+        padding-bottom: $base-spacing-unit / 4;
       }
 
 
@@ -31,30 +30,32 @@
 
     &__caption,
     &__credit {
+      text-transform: uppercase;
+      display: inline;
+
+      // Override `.s-post-content` heading sizes
+      &,
       .s-post-content & {
-        font-style: italic;
+        font-size: $small-font-size;
+      }
+    }
+
+    &__caption {
+      font-weight: 400;
+      padding-right: $base-spacing-unit / 4;
+    }
+
+    &__credit {
+      // scss-lint:disable SelectorFormat
+      color: $dimmed-text-color;
+      font-weight: 300;
+      font-style: normal;
+
+      a {
+        @include link-light;
       }
     }
   }
-
-    .c-figure__text__caption {
-      // Make sure we override `.s-post-content` specifically
-      &,
-      .s-post-content & {
-        color: c-figure-property-get( caption-color );
-        padding-right: c-figure-property-get( caption-p-r );
-        display: inline;
-        font-weight: normal;
-        font-size: c-figure-property-get( f-z );
-      }
-    }
-
-
-    /*cite*/.c-figure__text__credit {
-      text-transform: uppercase;
-      color: c-figure-property-get( credit-color );
-      font-size: c-figure-property-get( f-z );
-    }
 
 
 
@@ -68,6 +69,14 @@
   // Image figures must display as table so caption matches the width of non-
   // full-width images
   display: table;
+
+  // scss-lint:disable SelectorFormat
+  img:not(.ntv-video-play-button) {
+    display: block;
+    // For IE compatability
+    width: 100%;
+  }
+  // scss-lint:enable SelectorFormat
 
   .c-figure__text {
     display: table-caption;

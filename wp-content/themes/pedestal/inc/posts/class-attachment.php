@@ -24,21 +24,18 @@ class Attachment extends Post {
         $img_data = $this->get_src( $size, $args );
         if ( $img_data ) {
             return $img_data[0];
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
-     * Get the standard WP $src array, but potentially resized
+     * Get the standard WP $src array
      *
      * @param string $size
-     * @param array $args
      * @return array|false
      */
-    private function get_src( $size, $args ) {
-        $src = wp_get_attachment_image_src( $this->get_id(), $size );
-        return $this->maybe_resize_image_src( $src, $args );
+    private function get_src( $size ) {
+        return wp_get_attachment_image_src( $this->get_id(), $size );
     }
 
     /**
@@ -81,7 +78,7 @@ class Attachment extends Post {
      * @return string
      */
     public function get_html( $size = 'full', $args = [] ) {
-
+        $size = $this->maybe_tweak_image_size( $size );
         $image = $this->get_src( $size, $args );
         if ( ! $image ) {
             return '';
@@ -108,7 +105,7 @@ class Attachment extends Post {
         $default_attr = [
             'src'    => $src,
             'sizes'  => wp_get_attachment_image_sizes( $id, $size ),
-            'srcset' => wp_get_attachment_image_srcset( $id ),
+            'srcset' => wp_get_attachment_image_srcset( $id, $size ),
             'class'  => $default_classes,
             'alt'    => $alt_text,
         ];
@@ -189,9 +186,8 @@ class Attachment extends Post {
         $metadata = $this->get_metadata();
         if ( ! empty( $metadata['image_meta'][ $field ] ) ) {
             return $metadata['image_meta'][ $field ];
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**
@@ -221,5 +217,89 @@ class Attachment extends Post {
             }
         }
         return sprintf( 'data-mode="%s"', $mode );
+    }
+
+    /**
+     * Gracefully fall back to the appropriate image size name if the attachment
+     * doesn't have the image size being requested. This helps srcset work better while
+     * maintaining desired aspect ratios
+     *
+     * @param  string $size Name of image size
+     * @return string       The modified image size
+     */
+    public function maybe_tweak_image_size( $size = '' ) {
+        global $_wp_additional_image_sizes;
+
+        // No $size, so bail
+        if ( ! $size ) {
+            return '';
+        }
+
+        // The requested $size isn't one of our custom sizes so bail
+        if ( empty( $_wp_additional_image_sizes[ $size ] ) ) {
+            return $size;
+        }
+
+        $meta = $this->get_metadata();
+        // If we don't have image meta data for a particular size
+        // then fill it in with dummy values to prevent a PHP warning
+        if ( empty( $meta['sizes'][ $size ] ) ) {
+            $meta['sizes'][ $size ] = [
+                'width' => 0,
+                'height' => 0,
+                'crop' => false,
+            ];
+        }
+        $size_meta = $meta['sizes'][ $size ];
+        $current_width = $size_meta['width'];
+        $size_attributes = $_wp_additional_image_sizes[ $size ];
+        $desired_width = $size_attributes['width'];
+        $desired_aspect_ratio = round( $size_attributes['width'] / $size_attributes['height'], 4 );
+        $maintain_aspect_ratio = $size_attributes['crop'];
+
+        // If we have a match there is nothing left to do...
+        if ( $current_width == $desired_width ) {
+            return $size;
+        }
+
+        // Keep track of widths as we cycle through the custom image sizes
+        $biggest_width = 0;
+        foreach ( $_wp_additional_image_sizes as $size_name => $size_props ) {
+            // If we don't have meta data for the current image size then skip to the next size
+            if ( empty( $meta['sizes'][ $size_name ] ) ) {
+                continue;
+            }
+            $meta_props = $meta['sizes'][ $size_name ];
+
+            if ( $maintain_aspect_ratio ) {
+                // Can't divide by zero so move on...
+                if ( $size_props['height'] <= 0 || $meta_props['height'] <= 0 ) {
+                    continue;
+                }
+
+                // Check if the current size aspect ratio matches the
+                // desired aspect ratio
+                $size_aspect_ratio = round( $size_props['width'] / $size_props['height'], 4 );
+                if ( $size_aspect_ratio != $desired_aspect_ratio ) {
+                    continue;
+                }
+
+                // Check if the image meta data aspect ratio matches the
+                // desired aspect ratio
+                $meta_aspect_ratio = round( $meta_props['width'] / $meta_props['height'], 4 );
+                if ( $meta_aspect_ratio != $size_aspect_ratio ) {
+                    continue;
+                }
+            }
+
+            // If the meta data width is bigger than our $biggest_width then
+            // we have a new image size to use
+            if ( $meta_props['width'] > $biggest_width ) {
+                $biggest_width = $meta_props['width'];
+                $size = $size_name;
+            }
+        }
+
+        return $size;
     }
 }

@@ -1,37 +1,28 @@
 {% spaceless %}
-{% set el__base = 'article' %}
-{% set el__header = 'header' %}
-{% set el__body = 'figure' %}
-{% set el__caption = 'figcaption' %}
-{% set el__caption__text = 'h1' %}
-{% set el__author = 'h2' %}
-
-{% if is_email %}
-    {% set el__base = 'div' %}
-    {% set el__header = 'div' %}
-    {% set el__body = 'div' %}
-    {% set el__caption = 'div' %}
-    {% set el__caption__text = 'h4' %}
-    {% set el__author = 'h5' %}
-{% endif %}
+{% set el__base = if_email('div', 'article')  %}
+{% set el__header = if_email('div', 'header')  %}
+{% set el__title = if_email('h4', 'h1')  %}
+{% set el__body = if_email('div', 'figure') %}
+{% set el__caption = if_email('div', 'figcaption')  %}
+{% set el__caption__text = if_email('h4', 'h1')  %}
+{% set el__author = if_email('h5', 'h2')  %}
 
 <{{ el__base }} class="{{ classes }} c-daily-insta  c-panel">
     <{{ el__header }} class="c-daily-insta__header">
-        {{ macros.blox( _context, {
-            'format': 'cap',
-            'title': 'Instagram of the Day',
-            'blox_classes': 'c-daily-insta__title',
-            'background': 'lighter',
-            'case': 'ignore',
-            'url': story_url
-        } ) }}
+        <{{ el__title }} class="c-daily-insta__title">
+            <a href="https://billypenn.com/stories/instagram-of-the-day/" class="c-daily-insta__title__link"
+                data-ga-category="Story Bar"
+                data-ga-label="Instagram of the Day">
+                Instagram of the Day
+            </a>
+        </{{ el__title }}>
     </{{ el__header }}>
     <{{ el__body }} class="c-daily-insta__body  c-figure--img  c-figure">
         <div class="c-daily-insta__img  c-figure__content">
             {% if not is_email %}
             <a href="{{ item.get_embed_url }}" target="_blank">
             {% endif %}
-                {{ item.get_featured_image_html( 'lead-image' ) }}
+                {{ item.get_featured_image_html( '1024-16x9' ) }}
             {% if not is_email %}
             </a>
             {% endif %}

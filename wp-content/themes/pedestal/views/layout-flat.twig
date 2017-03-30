@@ -4,40 +4,37 @@
 
 {% block content %}
 
-<main role="main" class="main columns">
+<main role="main" class="c-main columns">
 
-    <article class="c-content  {{ macros.has_story_bar( _context ) }}  {{ item.css_classes }}  {{ item.css_classes_content }}"
+    <article class="c-main__content  {{ item.css_classes }}  {{ item.css_classes_content }}"
         {{ item.get_the_data_atts }} >
 
-        <div class="c-content__main large-8 columns">
+        <div class="c-main__content__inner large-8 columns">
 
-            {% block story_bar %}
-            {% endblock %}
-
-            <header class="c-content__header">
+            <header class="c-main__header  c-overview">
 
                 {% block content__header %}
 
                     {% block content__lead_img %}
-                    {% if item.has_featured_image() %}
-                    <div class="c-content__lead-img">
-                        {% include 'partials/lead-image.twig' %}
-                    </div>
+                    {% if item.has_featured_image %}
+                    {% include 'partials/overview/lead-image.twig' %}
                     {% endif %}
                     {% endblock %}
 
-                    <h2 class="c-content__title">{{ item.get_the_title }}</h2>
+                    {% block story_bar %}
+                    {% include 'partials/overview/overline.twig' %}
+                    {% endblock %}
+
+                    {% include 'partials/item-title.twig' %}
 
                     {% if item.get_excerpt %}
-                        <div class="c-content__excerpt">
+                        <div class="c-overview__description">
                             {{ item.get_the_excerpt }}
                         </div>
                     {% endif %}
 
                     {% block content__meta %}
-                        <div class="c-content__meta">
-                            {% include 'partials/meta-info/meta-info-entity.twig' %}
-                        </div>
+                    {% include 'partials/meta-info/meta-info-entity.twig' %}
                     {% endblock %}
 
                     {% include 'partials/entity-share.twig' %}
@@ -46,19 +43,19 @@
 
             </header>
 
-            <section class="c-content__body">
+            <section class="c-main__body">
                 {% block content__body %}
                 {% endblock %}
             </section>
 
             {% if item.get_the_footnotes %}
-            <aside class="c-content__footnotes  js-content-footnotes">
+            <aside class="c-main__footnotes  js-content-footnotes">
                 {{ item.get_the_footnotes }}
             </aside>
             {% endif %}
 
             {% block content__footer %}
-            <footer class="c-content__footer  [ o-rule--closure  o-rule ]">
+            <footer class="c-main__footer  [ o-rule--closure  o-rule ]">
                 {% include 'partials/cluster-list.twig' %}
             </footer>
             {% endblock %}
@@ -67,7 +64,7 @@
 
         </div>
 
-        <aside class="l-flat__rail  c-content__rail  rail  columns  large-4">
+        <aside class="l-flat__rail  c-main__content__rail  rail  columns  large-4">
             <ul class="sidebar">
                 {% block content__rail %}
                     {% include 'sidebar-' ~ item.get_type ~ '.twig' ignore missing %}

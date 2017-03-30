@@ -1,0 +1,57 @@
+// ==========================================================================
+// Pedestal // Components // ENTITY SHARE
+// ==========================================================================
+
+
+// scss-lint:disable SelectorDepth NestingDepth SelectorFormat
+
+
+.c-entity-share {
+  background-color: $white;
+  text-align: center;
+  margin-top: $base-spacing-unit;
+  margin-bottom: $base-spacing-unit * 2;
+
+  &.fixed {
+    margin-top: 0;
+    width: 100%;
+    border-bottom: 2px solid $primary-color;
+
+    @if $email == false {
+      z-index: $z-action-bar;
+    }
+
+    .top-bar {
+      background-color: $grey-90;
+
+      .columns {
+        margin-top: ( $base-spacing-unit / 4 );
+        margin-bottom: ( $base-spacing-unit / 4 );
+
+        @media #{$medium-up} {
+          margin-top: ( $base-spacing-unit / 2 );
+          margin-bottom: ( $base-spacing-unit / 2 );
+        }
+      }
+
+      .button {
+        width: 85%;
+      }
+
+    }
+  }
+
+  .top-bar {
+    display: block;
+    background-color: $white;
+    height: auto;
+    text-align: center;
+
+    .button {
+      height: auto;
+
+      // Overrides Foundation or something
+      position: static;
+    }
+  }
+}

@@ -16,7 +16,7 @@
   overflow: hidden;
 
   /*h3*/.widget-title {
-    @extend %u-heading--minor;
+    @extend %c-heading--minor;
     margin-top: $widget-title-m-t;
 
     &:first-child {
@@ -26,6 +26,9 @@
 
   /*li*/.widget {
     @include border-divider;
+
+    // All widgets need this even if they don't have a border divider
+    margin-bottom: $border-divider-spacing;
 
     list-style-type: none;
     padding: $widget-p;

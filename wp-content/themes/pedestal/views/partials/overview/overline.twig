@@ -1,0 +1,33 @@
+{% set overline_title_element = overline_title_element|default( 'h2' ) %}
+
+{% set overline_link = link %}
+{% set overline_title = title %}
+{% if item.is_entity and item.has_story and item.get_primary_story.get_title %}
+    {% set overline_link = link|default( item.get_primary_story.get_permalink ) %}
+    {% set overline_title = title|default( item.get_primary_story.get_title ) %}
+{% elseif item.is_story %}
+    {% set overline_link = link|default( item.get_permalink ) %}
+    {% set overline_title = title|default( item.get_the_title ) %}
+{% endif %}
+
+{% if overline_title %}
+
+{# @TODO Note that the heading is nested within this div because eventually
+we'll need to add SVG icon support back to the overline #}
+<div class="{{ class }}  c-overview__overline  c-heading--overline">
+    <{{ overline_title_element }} class="c-heading__title">
+
+        {% if overline_link %}
+        <a href="{{ overline_link }}" class="c-heading__link">
+        {% endif %}
+
+            {{ overline_title }}
+
+        {% if overline_link %}
+        </a>
+        {% endif %}
+
+    </{{ overline_title_element }}>
+</div>
+
+{% endif %}

@@ -2,32 +2,36 @@
 
 {% block content %}
 
-<div class="email-constrain content-wrapper">
+<div class="email-row content-wrapper">
 
-    <div id="entity-container" class="email-breaking-news  c-panel  has-story-bar  has-cap">
+    <div id="entity-container" class="email-breaking-news  c-main--email  c-main">
 
-        <div class="email-breaking-news__header">
-            {{ macros.blox( _context, {
-                'format': 'header',
-                'title': 'BREAKING NEWS'
-            } ) }}
+        <div class="email-breaking-news__header  c-main__header">
+            <h1 class="c-main__title">BREAKING NEWS</h1>
         </div>
 
-        <div class="email-breaking-news__entity  c-stream  c-stream--ladder">
-            <div class="c-stream__items">
-                {% include [
-                    'partials/stream/ladder/' ~ item.get_type ~ '.twig',
-                    'partials/stream/ladder/entity.twig'
-                ] %}
+        <div class="email-breaking-news__entity  c-main__content  c-overview">
+
+            <div class="c-overview">
+                {% if is_email and 'breaking-news' == template_name and item.has_featured_image %}
+                {% include 'partials/stream/item-img.twig' %}
+                {% endif %}
+
+                {% include 'partials/item-title.twig' %}
+
+                {% if item.get_excerpt %}
+                <div class="c-overview__description">
+                    {{ item.get_the_excerpt }}
+                </div>
+                {% endif %}
+
+                {% include 'partials/meta-info/meta-info-email.twig' %}
             </div>
+
         </div>
 
-        <div class="email-breaking-news__footer">
-            {{ macros.blox( context, {
-                'format': 'cap',
-                'title': "Full Story On " ~ site.name,
-                'url': item.get_the_permalink
-            } ) }}
+        <div class="email-breaking-news__footer  c-main__footer">
+            <p><a href="{{ item.get_the_permalink }}">Full Story on {{ site.name }}</a></p>
         </div>
 
     </div>

@@ -57,6 +57,7 @@
 
 @import '../base/global/mixins';
 @import '../base/global/general';
+@import '../base/global/main';
 @import '../base/email/general';
 
 
@@ -82,19 +83,17 @@
 // ==========================================================================
 
 
-@import '../components/blox';
-
 @import '../components/panels';
+@import '../components/type-headings';
 @import '../components/stream';
+@import '../components/overview';
 @import '../components/header';
-@import '../components/content';
 @import '../components/newsletter';
 @import '../components/figure';
 @import '../components/tables';
 @import '../components/icons';
 @import '../components/story';
 @import '../components/event';
-@import '../components/entity';
 @import '../components/meta-info';
 @import '../components/avatar';
 @import '../components/shortcodes';

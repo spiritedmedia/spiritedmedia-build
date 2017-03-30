@@ -1,1 +1,14 @@
-<a href="{{ item.get_the_permalink }}" data-ga-category="{{ gaCategory }}" data-ga-label="Image|{{ item.get_the_title }}">{{ item.get_featured_image_html( 'stream-preview' ) }}</a>
+{% set size = 'medium-square' %}
+
+{% if item.is_original %}
+{% set size = '1024-16x9' %}
+{% endif %}
+
+{{ item.get_featured_image_figure_html( size, {
+    'classes': 'c-stream__item__img  c-overview__img  js-stream-item-img  ' ~ classes,
+    'gaCategory': gaCategory,
+    'gaLabel': 'Image|' ~ item.get_the_title,
+    'caption': '',
+    'credit': '',
+    'credit_link': ''
+} ) }}

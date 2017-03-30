@@ -1,10 +1,37 @@
 {% spaceless %}
+{% set stream = stream|default( false ) %}
+
 {% set title = title|default( item.get_the_title ) %}
+{% set url = url|default( item.get_the_permalink ) %}
+
+{# No strict checking possible here so evaluate strings #}
+{% set overview = overview|default( 'true' ) %}
+
+{% set item_title_element = item_title_element|default( if_email('h4', 'h1')  ) %}
 
 {% if item.get_type == 'link' %}
 {% set link_atts = 'target="_blank"' %}
 {% endif %}
 
-<h3><a href="{{ item.get_permalink }}" class="js-entity-permalink" {{ link_atts }}>{{ title }}</a></h3>
+{% if overview == 'true' %}
+{% set item_title_classes = 'c-overview__title' ~ item_title_classes %}
+{% set link_classes = 'c-overview__link' ~ link_classes %}
+{% endif %}
+
+{% if stream %}
+    {% set item_title_classes = 'c-stream__item__title  ' ~ item_title_classes %}
+    {% set link_classes = 'c-stream__item__link  ' ~ link_classes %}
+    {% if is_cluster %}
+        {% set item_title_element = 'h4' %}
+    {% endif %}
+{% endif %}
+
+<{{ item_title_element }} class="{{ item_title_classes }}">
+    <a href="{{ url }}" class="{{ link_classes }}" {{ link_atts }}
+        data-ga-category="{{ gaCategory }}"
+        data-ga-label="Title|{{ title }}|Type: {{ item.get_type_name|capitalize }}">
+            {{ title }}
+    </a>
+</{{ item_title_element }}>
 
 {% endspaceless %}

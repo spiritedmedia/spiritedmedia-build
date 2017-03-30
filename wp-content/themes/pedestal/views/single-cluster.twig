@@ -4,101 +4,103 @@
 
 <main role="main" class="{{ main_classes }}">
 
-    <section class="c-content  c-panel  has-story-bar  {{ item.css_classes }}"
+    <section class="c-main__content  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
-        {{ macros.blox( _context, { format: 'header' }, 'story-bar' ) }}
+        <header class="c-main__header  c-overview">
 
-        <div class="c-panel__inner">
+            {% if not item.is_story %}
+            <h1 class="c-overview__title  c-heading--archive">
+                <span class="c-heading__prefix">Posts tagged with</span>
+                <span class="c-heading__title">{{ item.get_the_title }}</span>
+            </h1>
+            {% endif %}
 
-            <header class="c-content__header">
+            {% if not item.is_stream_first_page %}
+                <div class="c-main__paged">
+                    {{ macros.pagination( item.get_pagination, { 'show_nav': false } ) }}
+                </div>
+            {% else %}
+
+                {% if item.is_story %}
+                {% include 'partials/overview/overline.twig' %}
+                {% endif %}
+
+                {% if item.get_headline %}
+                {% include 'partials/item-title.twig' with {'title': item.get_the_headline} %}
+                {% endif %}
+
+                {% include 'partials/meta-info/meta-info-cluster.twig' %}
+
+                {% if item.has_featured_image %}
+                {% include 'partials/overview/lead-image.twig' %}
+                {% endif %}
 
                 {% include 'partials/entity-share.twig' %}
 
-                {% if not item.is_stream_first_page %}
-                    <div class="c-content__paged">
-                        {{ macros.pagination( item.get_pagination, { 'show_nav': false } ) }}
-                    </div>
-                {% else %}
-
-                    {% if item.has_featured_image() %}
-                    <div class="c-content__lead-img">
-                        {% include 'partials/lead-image.twig' %}
-                    </div>
-                    {% endif %}
-
-                    {% if item.get_headline() %}
-                        <h2 class="c-content__title--headline  c-content__title">{{ item.get_the_headline }}</h2>
-                    {% endif %}
-
-                    <div class="c-content__meta">
-                        {% include 'partials/meta-info/meta-info-story.twig' %}
-                    </div>
-
-                    {% if item.get_content() %}
-                    <div class="c-content__lead s-post-content">
-                        {{ item.get_the_content }}
-                    </div>
-                    {% endif %}
-
+                {% if item.get_content %}
+                <div class="c-overview__lead-text  s-post-content">
+                    {{ item.get_the_content }}
+                </div>
                 {% endif %}
 
-            </header>
+            {% endif %}
 
-            <section class="c-content__entities  c-stream  c-stream--pedalized  js-stream">
+        </header>
 
-                <div class="c-stream__items  js-stream-items">
+        <section class="c-main__entities  c-stream  c-stream--standard  js-stream">
+            {% set stream = true %}
 
-                {% for item in item.get_entities %}
-                    {% if not ( 'whosnext' == item.get_type and 'nomination' == item.get_whosnext_type ) %}
+            <div class="c-stream__items  js-stream-items">
 
-                        {% set counter = ( counter | default(0) ) + 1 %}
+            {% for item in item.get_entities %}
+                {% if not ( 'whosnext' == item.get_type and 'nomination' == item.get_whosnext_type ) %}
 
-                        {% if counter == 4 %}
-                            {{ macros.nativo( 'cluster-stream-04' ) }}
-                        {% endif %}
+                    {% set counter = ( counter | default(0) ) + 1 %}
 
-                        {% if counter == 8 %}
-                            {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
-                        {% endif %}
-
-                        {% if counter == 12 %}
-                            {{ macros.nativo( 'cluster-stream-12' ) }}
-                        {% endif %}
-
-                        {% if counter == 16 %}
-                            {% include 'partials/adverts/dfp-stream-16.twig' ignore missing %}
-                        {% endif %}
-
-                        {% include [
-                            'partials/stream/pedalized/' ~ item.get_type ~ '.twig',
-                            'partials/stream/pedalized/entity.twig'
-                        ] with { 'gaCategory': 'Stream' } %}
-
+                    {% if counter == 4 %}
+                        {{ macros.nativo( 'cluster-stream-04' ) }}
                     {% endif %}
 
-                    {% if loop.length < 8 and loop.last %}
+                    {% if counter == 8 %}
                         {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
                     {% endif %}
 
-                {% endfor %}
-
-                </div>
-
-                {% if item.get_pagination or item.is_stream_last_page %}
-                    {% if item.is_stream_last_page %}
-                        {% set last_page_classes = 'o-rule--closure  o-rule' %}
+                    {% if counter == 12 %}
+                        {{ macros.nativo( 'cluster-stream-12' ) }}
                     {% endif %}
-                    <footer class="c-stream__footer {{ last_page_classes }}">
-                        {{ macros.pagination( item.get_pagination ) }}
-                    </footer>
+
+                    {% if counter == 16 %}
+                        {% include 'partials/adverts/dfp-stream-16.twig' ignore missing %}
+                    {% endif %}
+
+                    {% include [
+                        'partials/stream/standard/' ~ item.get_type ~ '.twig',
+                        'partials/stream/standard/entity.twig'
+                    ] with { 'gaCategory': 'Stream' } %}
+
                 {% endif %}
 
-            </section>
+                {% if loop.length < 8 and loop.last %}
+                    {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
+                {% endif %}
 
-            {% include 'partials/modals/entity-share-modal.twig' %}
+            {% endfor %}
 
-        </div>
+            </div>
+
+            {% if item.get_pagination or item.is_stream_last_page %}
+                {% if item.is_stream_last_page %}
+                    {% set last_page_classes = 'o-rule--closure  o-rule' %}
+                {% endif %}
+                <footer class="c-stream__footer {{ last_page_classes }}">
+                    {{ macros.pagination( item.get_pagination ) }}
+                </footer>
+            {% endif %}
+
+        </section>
+
+        {% include 'partials/modals/entity-share-modal.twig' %}
 
     </section>
 

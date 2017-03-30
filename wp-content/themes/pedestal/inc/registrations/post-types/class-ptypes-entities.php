@@ -2,17 +2,14 @@
 
 namespace Pedestal\Registrations\Post_Types;
 
-use \Pedestal\Utils\Utils;
-
-use \Pedestal\Posts\Entities\Whos_Next;
-
-use \Pedestal\Posts\Entities\Embed;
-
-use \Pedestal\Posts\Clusters\Person;
+use Pedestal\Utils\Utils;
+use Pedestal\Posts\Entities\Embed;
+use Pedestal\Posts\Entities\Originals\Whos_Next;
+use Pedestal\Posts\Clusters\Person;
 
 class Entity_Types extends Types {
 
-    protected $editorial_post_types = [];
+    protected $original_post_types = [];
 
     private static $politifact_ratings = [
         'pants'        => 'Pants on Fire!',
@@ -81,7 +78,7 @@ class Entity_Types extends Types {
                 case 'pedestal_article':
                     $singular = esc_html__( 'Article', 'pedestal' );
                     $plural = esc_html__( 'Articles', 'pedestal' );
-                    $class = 'Posts\\Entities\\Article';
+                    $class = 'Posts\\Entities\\Originals\\Article';
                     $args['menu_position'] = 7;
                     $args['menu_icon'] = 'dashicons-welcome-write-blog';
                     $args['supports'] = [
@@ -97,7 +94,7 @@ class Entity_Types extends Types {
                         'slug' => 'articles',
                     ];
                     $args['capability_type'] = 'article';
-                    $this->editorial_post_types[] = $post_type;
+                    $this->original_post_types[] = $post_type;
                     break;
 
                 case 'pedestal_link':
@@ -136,7 +133,7 @@ class Entity_Types extends Types {
                 case 'pedestal_factcheck':
                     $singular = esc_html__( 'Factcheck', 'pedestal' );
                     $plural = esc_html__( 'Factchecks', 'pedestal' );
-                    $class = 'Posts\\Entities\\Factcheck';
+                    $class = 'Posts\\Entities\\Originals\\Factcheck';
                     $args['menu_position'] = 10;
                     $args['menu_icon'] = 'dashicons-forms';
                     $args['supports'] = [
@@ -150,7 +147,7 @@ class Entity_Types extends Types {
                     $args['rewrite'] = [
                         'slug' => 'factchecks',
                     ];
-                    $this->editorial_post_types[] = $post_type;
+                    $this->original_post_types[] = $post_type;
                     break;
 
                 case 'pedestal_event':
@@ -174,7 +171,7 @@ class Entity_Types extends Types {
                 case 'pedestal_whosnext':
                     $singular = esc_html__( 'Who’s Next', 'pedestal' );
                     $plural = esc_html__( 'Who’s Next', 'pedestal' );
-                    $class = 'Posts\\Entities\\Whos_Next';
+                    $class = 'Posts\\Entities\\Originals\\Whos_Next';
                     $args['menu_position'] = 13;
                     $args['menu_icon'] = 'dashicons-universal-access-alt';
                     $args['supports'] = [
@@ -187,7 +184,7 @@ class Entity_Types extends Types {
                     $args['rewrite'] = [
                         'slug' => 'whos-next',
                     ];
-                    $this->editorial_post_types[] = $post_type;
+                    $this->original_post_types[] = $post_type;
                     break;
 
             }
@@ -326,7 +323,7 @@ class Entity_Types extends Types {
             'label'    => false,
             'description' => esc_html__( 'Add any additional footnotes here, such as corrections, contributors, other acknowledgements.', 'pedestal' ),
         ] );
-        $footnotes->add_meta_box( esc_html__( 'Footnotes', 'pedestal' ), Types::get_editorial_post_types(), 'normal', 'high' );
+        $footnotes->add_meta_box( esc_html__( 'Footnotes', 'pedestal' ), Types::get_original_post_types(), 'normal', 'high' );
     }
 
     /**

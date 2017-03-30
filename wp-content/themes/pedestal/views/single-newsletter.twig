@@ -4,42 +4,48 @@
 
 <main role="main" class="{{ main_classes }}">
 
-    <article class="c-newsletter  c-content  c-panel  has-story-bar  {{ item.css_classes }}"
+    <article class="c-newsletter  c-main__content  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
-        {{ macros.blox( _context, { title: 'Newsletter', offset: true }, 'story-bar' ) }}
 
-        <div class="c-panel__inner">
-
-            <header class="c-content__header">
+        <header class="c-overview  c-main__header">
+            <div class="c-overview__sponsorship">
                 {{ ped_slot( 'single_lead' ) }}
-                <h2 class="c-content__title">{{ item.get_the_title }}</h2>
-                <h3 class="c-content__subtitle">{{ item.get_newsletter_subtitle }}</h3>
-            </header>
+            </div>
 
-            {% if item.get_instagram_of_the_day %}
-            <section class="c-content__lead-img">
-                {{ item.get_instagram_of_the_day }}
-            </section>
-            {% endif %}
+            {% include 'partials/overview/overline.twig' with {
+                title: 'Newsletter'
+            } %}
 
-            {% if item.get_items %}
+            {% include 'partials/item-title.twig' %}
 
-            <section class="c-content__entities  c-stream  c-stream--simple  c-stream--pedalized  js-stream">
-                {% include 'partials/stream/stream-newsletter-items.twig' %}
-            </section>
+            <h2 class="c-overview__description">
+                {{ item.get_newsletter_subtitle }}
+            </h2>
+        </header>
 
-            {% else %}
+        {% if item.get_instagram_of_the_day %}
+        <section class="c-main__lead-img">
+            {{ item.get_instagram_of_the_day }}
+        </section>
+        {% endif %}
 
-            <section class="c-content__body  s-post-content">
-                {{ item.get_the_content }}
-            </section>
+        {% if item.get_items %}
 
-            {% endif %}
+        <section class="c-main__entities  c-stream  c-stream--simple  c-stream--standard  js-stream">
+            {% set stream = true %}
+            {% include 'partials/stream/stream-newsletter-items.twig' %}
+        </section>
 
-            <footer class="c-content__footer  [ o-rule--closure  o-rule ]"></footer>
+        {% else %}
 
-        </div>
+        <section class="c-main__body  s-post-content">
+            {{ item.get_the_content }}
+        </section>
+
+        {% endif %}
+
+        <footer class="c-main__footer  [ o-rule--closure  o-rule ]"></footer>
 
     </article>
 

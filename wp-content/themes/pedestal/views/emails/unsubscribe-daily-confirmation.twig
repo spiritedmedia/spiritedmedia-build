@@ -2,17 +2,13 @@
 
 {% block content %}
 
-<div class="email-constrain content-wrapper">
+<div class="email-row content-wrapper">
 
-    <div id="entity-container" class="email-subscription  c-panel  has-cap">
+    <div id="entity-container" class="email-subscription">
 
-        <div class="c-panel__inner">
+        <h3 class="h-email-subscription-confirmed">Unsubscribe Successful</h3>
 
-            <h3 class="h-email-subscription-confirmed">Unsubscribe Successful</h3>
-
-            <p class="email-subscription-confirmed-msg">You will no longer receive {{ site.name }} Daily or breaking news emails</p>
-
-        </div>
+        <p class="email-subscription-confirmed-msg">You will no longer receive {{ site.name }} Daily or breaking news emails</p>
 
         {{ macros.blox( context, {
             format: 'cap',

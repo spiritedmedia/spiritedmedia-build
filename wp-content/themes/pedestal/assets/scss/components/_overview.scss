@@ -1,0 +1,119 @@
+// ==========================================================================
+// Pedestal // Components // CONTENT OVERVIEW
+// ==========================================================================
+
+
+.c-overview {
+  .c-figure--embed {
+    margin-top: $base-spacing-unit;
+    margin-bottom: $base-spacing-unit;
+  }
+}
+
+
+.c-overview__overline,
+.c-overview__title,
+.c-overview__description {
+  // Because 16px is too much and 8px is too little...
+  margin-bottom: unitize( 12px );
+}
+
+.c-overview__overline {}
+
+
+.c-overview__sponsorship {}
+
+
+.c-overview__title {
+  @include h-size( 3 );
+  font-weight: 400;
+}
+
+
+.c-overview__link {
+  @include link-dark;
+}
+
+
+.c-overview__img {
+  margin-top: 0;
+  // In most cases this element will be a `figure`, but when it's an `a` element
+  // it still needs to display block
+  display: block;
+
+  .email-body & {
+    margin-bottom: $base-spacing-unit;
+  }
+
+  // scss-lint:disable SelectorFormat
+  .rail & {
+    width: auto;
+  }
+  // scss-lint:enable SelectorFormat
+} // __item__img
+
+
+.c-overview__description {
+  &,
+  > * {
+    @include h-size( 4 );
+    color: $body-font-color;
+    line-height: 1.3;
+    font-weight: 300;
+  }
+
+  > * {
+    margin-bottom: 0;
+  }
+}
+
+
+.c-overview__meta {
+  margin-top: $base-spacing-unit;
+  clear: both;
+}
+
+
+.c-overview__lead-text {
+  // scss-lint:disable SelectorFormat
+  p {
+    @include lead;
+    font-style: italic;
+  }
+}
+
+
+
+
+
+/// Overview with a thumbnail-sized image cropped to a square with CSS
+///
+/// Extends `.c-overview`
+///
+/// Depends on media object classes in markup
+.c-overview--thumbnail-crop {
+  .c-overview__img {
+    // scss-lint:disable SelectorFormat
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    position: relative;
+
+    .c-figure__content-wrap {
+      position: static;
+    }
+
+    img:not(.ntv-video-play-button) {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media #{$medium-up} {
+      margin-bottom: $base-spacing-unit / 2;
+      width: $overview-thumbnail-img-size;
+      padding-bottom: $overview-thumbnail-img-size;
+    }
+  }
+}

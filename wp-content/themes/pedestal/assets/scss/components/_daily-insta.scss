@@ -5,14 +5,31 @@
 
 $c: '.c-daily-insta';
 
+$daily-insta-header-padding-v: $base-spacing-unit / 2;
+
 
 #{$c} {
+  background-color: $truth-serum;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: ( $base-spacing-unit * 2 );
   display: table;
 
-  /*header*/&__header {}
+  /*header*/&__header {
+    padding-top: $daily-insta-header-padding-v;
+    padding-bottom: $daily-insta-header-padding-v;
+  }
 
-  &__title {}
+  &__title {
+    @include h-size( 5 );
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 0;
+
+    &__link {
+      @include link-dark;
+    }
+  }
 
   /*figure*/&__body {
     margin: 0;
@@ -37,6 +54,7 @@ $c: '.c-daily-insta';
   /*figcaption*/&__caption {
     background-color: $truth-serum;
     padding: $half-spacing-unit;
+    text-align: left;
 
     // Override .c-panel__inner
     min-height: 0;
@@ -52,9 +70,7 @@ $c: '.c-daily-insta';
     font-weight: 600;
   }
 
-  &__date {
-    @extend %u-heading--minor;
-  }
+  &__date {}
 
   &__author {
     display: block;

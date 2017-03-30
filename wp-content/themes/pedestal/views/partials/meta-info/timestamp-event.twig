@@ -1,5 +1,11 @@
-<ul class="c-meta-info__timestamp" data-meta-info-published="{{ item.get_post_date( 'c' ) }}">
-    <li class="c-meta-info__label  c-meta-info__timestamp__item">{{ __( 'Posted', 'pedestal' ) }}</li>
-    <li class="c-meta-info__date  c-meta-info__timestamp__item">{{ item.get_post_date( site.date_format ) }}</li>
-    <li class="c-meta-info__time  c-meta-info__timestamp__item">&nbsp;at {{ item.get_post_date( site.time_format ) }}</li>
+<ul class="c-meta-info__timestamp__inner" data-meta-info-published="{{ item.get_post_date( 'c' ) }}">
+    <li class="c-meta-info__label  c-meta-info__timestamp__item">
+      {{ __( 'Posted', 'pedestal' ) }}
+    </li>
+    <li class="c-meta-info__date  c-meta-info__timestamp__item">
+      {{ item.get_post_date( site.date_format ) }}
+    </li>
+    <li class="c-meta-info__time  c-meta-info__timestamp__item">
+      &nbsp; &middot; &nbsp; {{ item.get_post_date( site.time_format ) }}
+    </li>
 </ul>

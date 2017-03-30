@@ -6,6 +6,7 @@ use Timber\Timber;
 
 use Pedestal\Posts\Post;
 use Pedestal\Posts\Clusters\Story;
+use Pedestal\Registrations\Post_Types\Types;
 
 class In_This_Story_Widget extends \WP_Widget {
 
@@ -15,7 +16,7 @@ class In_This_Story_Widget extends \WP_Widget {
             'pedestal_in_this_story',
             esc_html__( 'In This Story', 'pedestal' ),
             [
-                'description' => esc_html__( 'Display relative links to story entities on a story page, or absolute links if an entity is a part of a story.', 'pedestal' ),
+                'description' => esc_html__( 'If the current entity is a part of a story, display links to other entities in that story.', 'pedestal' ),
             ]
         );
 
@@ -23,30 +24,19 @@ class In_This_Story_Widget extends \WP_Widget {
 
     public function widget( $args, $instance ) {
 
-        if ( ! is_singular() ) {
+        if ( ! is_singular() || is_singular( 'pedestal_story' ) ) {
             return;
         }
 
         $context = Timber::get_context();
         $permalink_filter = false;
-        if ( is_singular( 'pedestal_story' ) ) {
-            $obj = Story::get_by_post_id( get_queried_object_id() );
-            if ( ! $obj ) {
-                return;
-            }
-            $context['current_item'] = $obj;
-            $context['items'] = $obj->get_entities( [ 'posts_per_page' => 30 ] );
-            $permalink_filter = function( $post_link, $post ) {
-                return '#' . $post->post_name;
-            };
-        } else {
-            $obj = Post::get_by_post_id( get_queried_object_id() );
-            if ( ! $obj || ! is_subclass_of( $obj, 'Pedestal\Posts\Entities\Entity' ) || ! $obj->has_story() ) {
-                return;
-            }
-            $context['current_item'] = $obj;
-            $context['items'] = $obj->get_primary_story()->get_entities( [ 'posts_per_page' => 30 ] );
+
+        $obj = Post::get_by_post_id( get_queried_object_id() );
+        if ( ! Types::is_entity( $obj ) || ! $obj->has_story() ) {
+            return;
         }
+        $context['current_item'] = $obj;
+        $context['items'] = $obj->get_primary_story()->get_entities( [ 'posts_per_page' => 30 ] );
 
         $instance = [ 'title' => esc_html__( 'In This Story', 'pedestal' ) ];
 

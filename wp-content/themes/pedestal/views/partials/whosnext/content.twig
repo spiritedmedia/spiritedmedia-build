@@ -11,6 +11,8 @@
 
 {% if item.get_items %}
 <section class="c-whos-next__items  c-stream--ladder  c-stream">
+    {% set stream = true %}
+
     {% for item in item.get_items %}
 
         <section class="c-whos-next-item  c-stream__item" data-whos-next-people-count="{{ item.people|length }}">

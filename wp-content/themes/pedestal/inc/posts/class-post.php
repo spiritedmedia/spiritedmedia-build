@@ -8,6 +8,7 @@ use \Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
 
 use Pedestal\Objects\{
+    Figure,
     Notifications,
     Stream,
     User
@@ -19,6 +20,13 @@ use \Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
  * Base class to represent a WordPress Post
  */
 abstract class Post {
+
+    /**
+     * Is the post Original?
+     *
+     * @var boolean
+     */
+    protected static $original = false;
 
     /**
      * Single post view base template
@@ -220,15 +228,13 @@ abstract class Post {
      */
     protected function set_data_atts() {
         $author_role = '';
-        $author_count = count( $this->get_authors() );
         if ( $author = $this->get_single_author() ) {
             $public_role = $author->get_public_role();
             $author_role = $public_role['name'];
         }
         $this->data_attributes = [
             'post-type'    => $this->get_type(),
-            'author-count' => $author_count,
-            'author-role'  => $author_role,
+            'author-count' => $this->get_authors_count(),
         ];
     }
 
@@ -281,9 +287,11 @@ abstract class Post {
     }
 
     /**
-     * Get the name of the post (used in the permalink)
+     * Get the name AKA slug of the post (used in the permalink)
+     *
+     * @return string `post_name` field
      */
-    public function get_name() {
+    public function get_slug() {
         return $this->get_field( 'post_name' );
     }
 
@@ -455,7 +463,7 @@ abstract class Post {
     }
 
     /**
-     * Display < 3 authors with links, > 2 authors as '{{ site.name }} Staff'
+     * Display < 3 authors with links, > 2 authors as site name
      *
      * Wrapper for `get_the_authors()` with `$truncated` set to true.
      *
@@ -477,6 +485,15 @@ abstract class Post {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Get the number of authors for the post
+     *
+     * @return int
+     */
+    public function get_authors_count() {
+        return count( $this->get_authors() );
     }
 
     /**
@@ -794,6 +811,39 @@ abstract class Post {
     }
 
     /**
+     * Get the featured image in Figure format
+     *
+     * Includes caption and credit, if available.
+     *
+     * @return string|html
+     */
+    public function get_featured_image_figure_html( $size = '1024-16x9', $args = [] ) {
+        $defaults = [
+            'linkto'                 => $this->get_permalink(),
+            'omit_presentation_mode' => true,
+        ];
+
+        $attachment = $this->get_featured_image();
+        if ( $attachment instanceof Attachment ) {
+            $defaults = [
+                'attachment'             => $this->get_featured_image_id(),
+                'linkto'                 => $this->get_permalink(),
+                'caption'                => $attachment->get_caption(),
+                'credit'                 => $attachment->get_credit(),
+                'credit_link'            => $attachment->get_credit_link(),
+            ];
+        }
+
+        $size = $size ?: '1024-16x9';
+        if ( is_feed( 'fias' ) ) {
+            $size = 'max-4-3';
+        }
+        $content = $this->get_featured_image_html( $size );
+        $args = wp_parse_args( $args, $defaults );
+        return Attachment::get_img_caption_html( $content, $args );
+    }
+
+    /**
      * Get the HTML for the featured image
      *
      * @return string
@@ -819,31 +869,6 @@ abstract class Post {
         } else {
             return false;
         }
-    }
-
-    /**
-     * Get the lead image
-     *
-     * Includes caption and credit, if available.
-     *
-     * @return string|html
-     */
-    public function get_lead_image_html() {
-        $attachment = $this->get_featured_image();
-        $size = 'lead-image';
-        if ( is_feed( 'fias' ) ) {
-            $size = 'max-4-3';
-        }
-        $content = $this->get_featured_image_html( $size );
-        $atts = [
-            'attachment'             => $this->get_featured_image_id(),
-            'linkto'                 => '',
-            'caption'                => $attachment->get_caption(),
-            'credit'                 => $attachment->get_credit(),
-            'credit_link'            => $attachment->get_credit_link(),
-            'omit_presentation_mode' => true,
-        ];
-        return Attachment::get_img_caption_html( $content, $atts );
     }
 
     /**
@@ -1227,35 +1252,6 @@ abstract class Post {
     }
 
     /**
-     * Maybe resize image source if Jetpack is available
-     *
-     * @param array $src
-     * @param array $args
-     * @return array
-     */
-    protected function maybe_resize_image_src( $src, $args ) {
-
-        if ( ! $src || empty( $args['height'] ) || empty( $args['width'] ) || ! Utils::is_photon_available() ) {
-            return $src;
-        }
-
-        $width = (int) $args['width'];
-        $height = (int) $args['height'];
-
-        if ( 9999 == $height ) {
-            $transform_args = [ 'w' => $width ];
-        } elseif ( 9999 == $width ) {
-            $transform_args = [ 'h' => $height ];
-        } else {
-            $transform_args = [ 'resize' => $width . ',' . $height ];
-        }
-
-        $src = jetpack_photon_url( $src, $transform_args );
-
-        return $src;
-    }
-
-    /**
      * Get the version of Pedestal at the time of publishing
      *
      * @return string Pedestal SemVer string
@@ -1463,6 +1459,15 @@ abstract class Post {
     }
 
     /**
+     * Determine whether the post is original content
+     *
+     * @return boolean
+     */
+    public function is_original() {
+        return static::$original;
+    }
+
+    /**
      * Get the Post's post type name label
      *
      * @param  boolean $plural   Whether to return the plural name or singular.
@@ -1576,137 +1581,6 @@ abstract class Post {
             return true;
         }
         return false;
-    }
-}
-
-/**
- * Editorial Content
- */
-trait EditorialContent {
-
-    /**
-     * Generated footnotes for the post
-     *
-     * @var array
-     */
-    protected $footnotes_generated_notes = [];
-
-    /**
-     * Generated footnotes start number
-     *
-     * @var integer
-     */
-    protected $footnotes_generated_start = 1;
-
-    /**
-     * Setup data attributes
-     */
-    public function set_data_atts() {
-        parent::set_data_atts();
-        $atts = parent::get_data_atts();
-        $new_atts = [
-            'editorial-content' => '',
-        ];
-        $this->data_attributes = array_merge( $atts, $new_atts );
-    }
-
-    /**
-     * Get the name of the icon for this entity's source
-     *
-     * @return string
-     */
-    public function get_source_icon_name() {
-        return 'bp-logo-head';
-    }
-
-    /**
-     * Get the filtered footnotes for this post
-     *
-     * Includes the generated footnotes from the main post content.
-     *
-     * @return string
-     */
-    public function get_the_footnotes() {
-        $footnotes = apply_filters( 'the_content', $this->get_footnotes() );
-
-        /**
-         * Filter the output of the footnotes field
-         *
-         * @param string $footnotes Footnotes field content
-         * @param int    $post_id   Post ID
-         */
-        $footnotes = apply_filters( 'the_footnotes', $footnotes, $this->get_id() );
-        return $footnotes;
-    }
-
-    /**
-     * Get the footnotes for this post
-     *
-     * Does not include the generated footnotes from the main post content.
-     *
-     * @return string
-     */
-    public function get_footnotes() {
-        return $this->get_meta( 'footnotes' );
-    }
-
-    /**
-     * Get the start offset of the generated footnotes
-     *
-     * @return int Start offset number. Usually is 1.
-     */
-    public function get_footnotes_generated_start() {
-        return $this->footnotes_generated_start;
-    }
-
-    /**
-     * Get the generated footnotes array
-     *
-     * @return array Generated footnotes
-     */
-    public function get_footnotes_generated_notes() {
-        return $this->footnotes_generated_notes;
-    }
-
-    /**
-     * Set up the generated footnotes
-     *
-     * @param array $notes Notes
-     * @param int   $start Start offset
-     */
-    public function set_footnotes_generated( array $notes, int $start ) {
-        if ( empty( $notes ) ) {
-            return $notes;
-        }
-        $this->footnotes_generated_notes = $notes;
-        $this->footnotes_generated_start = $start;
-    }
-
-    /**
-     * Are ads in Instant Articles placed automatically?
-     *
-     * @return string true|false
-     */
-    public function fias_use_automatic_ad_placement() {
-        if ( empty( $this->fias_use_automatic_ad_placement ) ) {
-            return 'true';
-        }
-        return $this->fias_use_automatic_ad_placement;
-    }
-
-    /**
-     * Nasty hack to get a live canonical URL for FIAs
-     *
-     * Replaces the home URL with the live site URL constant.
-     *
-     * Allows us to test FIAs on a site with a different URL than the URL
-     * registered for the Facebook Page.
-     *
-     * @return string Live canonical URL
-     */
-    public function get_fias_canonical_url() {
-        $url = $this->get_permalink();
-        return str_replace( home_url( '/' ), $site_config['site_live_domain'], $url );
     }
 }
 

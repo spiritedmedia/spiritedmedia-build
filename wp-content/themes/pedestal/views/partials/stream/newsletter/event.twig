@@ -1,16 +1,10 @@
-{% set stream_item_classes = macros.get_stream_item_classes( 'pedalized' ) %}
-{% if is_email %}
-    {% set stream_item_classes = macros.get_stream_item_classes %}
-{% endif %}
+<{{ el__item }} class="{{ macros.get_stream_item_classes( 'standard', _context ) }}"
+    {{ item.get_the_data_atts }}>
 
-
-<{{ el__item }} class="{{ stream_item_classes }}  {{ item.css_classes }}"
-         {{ item.get_the_data_atts }}>
-    <a id="{{ item.get_name }}"></a>
-    <div class="c-event  entity__inner  c-stream__item__inner">
-        <div class="c-stream__item__body  entity__body">
+    <div class="c-event  c-overview  c-stream__item__inner">
+        <div class="c-stream__item__body">
             <div class="c-event__title">
-                {% include 'partials/stream/item-title.twig' %}
+                {% include 'partials/item-title.twig' with {'item_title_element': el__item_title} %}
             </div>
             <div class="c-event__sponsorship">
                 {{ ped_slot( 'newsletter_item' ) }}

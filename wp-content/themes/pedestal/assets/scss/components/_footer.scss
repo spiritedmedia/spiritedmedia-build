@@ -12,7 +12,7 @@
   margin-top: $base-spacing-unit;
   padding-top: $base-spacing-unit;
   background-color: $white;
-  border-top: 1px solid $grey-lighter;
+  border-top: 1px solid $border-std-color;
 }
 
   .site-footer-social {
@@ -48,7 +48,7 @@
       text-align: left;
 
       ul {
-        border-right: 1px solid $grey-lighter;
+        border-right: 1px solid $border-std-color;
         padding: halve( $base-spacing-unit ) 0;
         margin-bottom: $list-margin-bottom;
 
@@ -64,7 +64,7 @@
 
     .site-copyright {
       text-align: center;
-      color: $grey-lightish;
+      color: $grey-70;
       font-size: $small-font-size;
 
       @media #{$medium-up} {

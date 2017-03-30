@@ -2,23 +2,24 @@
 
 {% block content %}
 
-<main role="main" class="{{ main_classes }}">
+<main role="main" class="c-main--archive  {{ main_classes }}">
 
-    <article class="archive  [ c-content--archive  c-content ]  c-panel">
-        {{ macros.blox( _context, {
-            'format': 'header',
-            'title': archive_title
-        } ) }}
+    <article class="c-main__content">
+        <header class="c-overview  c-main__header">
+            <h1 class="c-overview__title  c-main__title">{{ archive_title }}</h1>
+        </header>
 
-        <div class="c-panel__inner">
+        <section class="c-main__entities  archive__nav  c-stream--{{ archive_stream_type }}  c-stream">
+            {% set stream = true %}
 
-            <section class="c-content__entities  archive__nav  c-stream--imglist  c-stream">
             {% for item in items %}
-                {% include 'partials/stream/imglist/item.twig' %}
+                {% include [
+                    'partials/stream/' ~ archive_stream_type ~ '/' ~ item.get_type ~ '.twig',
+                    'partials/stream/' ~ archive_stream_type ~ '/entity.twig',
+                    'partials/stream/' ~ archive_stream_type ~ '/item.twig'
+                ] with {'gaCategory': 'Stream'} %}
             {% endfor %}
-            </section>
-
-        </div>
+        </section>
 
         {% if pagination %}
         <footer class="c-stream__footer {{ last_page_classes }}">

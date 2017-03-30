@@ -90,19 +90,6 @@ class Utils {
     }
 
     /**
-     * Determine whether Photon is available
-     *
-     * @return bool
-     */
-    public static function is_photon_available() {
-        if ( function_exists( 'jetpack_photon_url' ) ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Get the Unix timestamp for the New York timezone
      *
      * @param  integer $time Timestamp to offset with timezone. Defaults to current UTC time.
@@ -311,10 +298,10 @@ class Utils {
     public static function get_byline_list( $items, $args = [] ) {
         $out = '';
         $args = wp_parse_args( $args, [
-            'pretext'       => 'By',
+            'pretext'       => '',
             'posttext'      => 'and',
             'truncate'      => false,
-            'truncated_str' => sprintf( '%s Staff', get_bloginfo( 'name' ) ),
+            'truncated_str' => get_bloginfo( 'name' ),
         ] );
         $pretext = esc_html__( $args['pretext'] . ' %s', 'pedestal' );
         $posttext = esc_html__( ' ' . $args['posttext'] . ' ', 'pedestal' );

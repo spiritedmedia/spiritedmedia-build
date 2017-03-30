@@ -208,8 +208,11 @@ class Frontend {
                 }, 10, 2);
             }
         } elseif ( $query->is_archive() && ! $query->is_author() ) {
-            if ( $query->is_post_type_archive( Types::get_cluster_post_types() ) ) {
-                $query->set( 'posts_per_page', -1 );
+            if (
+                $query->is_post_type_archive( Types::get_cluster_post_types() )
+                || $query->is_tax()
+            ) {
+                $query->set( 'posts_per_page', 50 );
                 $query->set( 'orderby', 'title' );
                 $query->set( 'order', 'ASC' );
             }
@@ -281,7 +284,7 @@ class Frontend {
      * @link https://github.com/spiritedmedia/spiritedmedia/issues/1443
      */
     public function action_wp_head_amp_link() {
-        if ( ! is_singular( Types::get_editorial_post_types() ) ) {
+        if ( ! is_singular( Types::get_original_post_types() ) ) {
             return;
         }
 
@@ -302,7 +305,7 @@ class Frontend {
      * @link https://github.com/spiritedmedia/spiritedmedia/issues/1443
      */
     public function action_wp_footer_amp_beacon_pixel() {
-        if ( ! is_singular( Types::get_editorial_post_types() ) ) {
+        if ( ! is_singular( Types::get_original_post_types() ) ) {
             return;
         }
 
@@ -457,7 +460,7 @@ class Frontend {
 
                 switch ( $post_type ) :
                     case 'pedestal_story':
-                        $context['grouped'] = true;
+                        $context['is_story'] = true;
                         if ( is_active_sidebar( 'sidebar-story' ) ) {
                             $context['sidebar'] = Timber::get_widgets( 'sidebar-story' );
                         }
@@ -503,12 +506,23 @@ class Frontend {
             ];
         }
 
+        if ( is_archive() ) {
+            $context['archive_stream_type'] = 'standard';
+            // Display non-chronological archive items in list format
+            if ( is_post_type_archive( Types::get_cluster_post_types() ) || is_tax() ) {
+                $context['archive_stream_type'] = 'imglist';
+            }
+        }
+
         // Load some WP conditional functions as Timber context variables
         $conditionals = [
             'is_home',
             'is_single',
             'is_search',
             'is_feed',
+            'is_archive',
+            'is_tax',
+            'is_post_type_archive',
         ];
         foreach ( $conditionals as $func ) {
             $context[ $func ] = function_exists( $func ) ? $func() : null;
@@ -677,7 +691,7 @@ class Frontend {
             $tags['og:url']            = $obj->get_facebook_open_graph_tag( 'url' );
             $tags['article:publisher'] = PEDESTAL_FACEBOOK_PAGE;
 
-            if ( in_array( get_post_type( $obj->get_id() ), Types::get_editorial_post_types() ) ) {
+            if ( in_array( get_post_type( $obj->get_id() ), Types::get_original_post_types() ) ) {
                 $tags['article:author'] = $obj->get_facebook_open_graph_tag( 'author' );
             }
 

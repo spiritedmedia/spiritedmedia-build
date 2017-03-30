@@ -8,7 +8,7 @@ styleguide_header();
     }
     </style>
     <div class="content-wrapper row">
-		<main class="main columns large-8 js-main" role="main">
+		<main class="c-main columns large-8 js-main" role="main">
 			<p>We use the <a href="http://fontawesome.io/">Font Awesome</a> library for icons but will oneday switch to injecting SVGs inline. Below are a list of the icons we use thorughtout the sites:</p>
 			<?php
 				$icons = [

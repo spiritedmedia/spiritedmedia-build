@@ -13,13 +13,13 @@
 
 <main role="main" class="{{ main_classes }}">
 
-    <article class="c-content  {{ item.css_classes }}" {{ item.get_the_data_atts }} >
+    <article class="c-main__content  {{ item.css_classes }}" {{ item.get_the_data_atts }} >
 
-        <header class="c-content__header">
-            <h2 class="c-content__title--page  c-content__title">{{ item.get_the_title }}</h2>
+        <header class="c-main__header">
+            <h2 class="c-main__title--page  c-main__title">{{ item.get_the_title }}</h2>
         </header>
 
-        <section class="c-content__body  s-post-content">
+        <section class="c-main__body  s-post-content">
             {{ item.get_the_content }}
         </section>
 

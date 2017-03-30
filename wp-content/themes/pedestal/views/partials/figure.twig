@@ -1,16 +1,18 @@
 {% spaceless %}
-<figure {{ id }} class="c-figure  c-figure--{{ type }}  wp-caption  {{ align }}  {{ classes }}" {{ fias_presentation }}>
+{% set gaCategory = gaCategory|default('Figure') %}
+{% set gaLabel = gaLabel|default('Link' ~ type) %}
+{% set element_figure = if_email('div', 'figure')  %}
+{% set element_figure_caption = if_email('div', 'figcaption')  %}
+{% set element_figure_wrap = element_figure_wrap|default( 'div' )  %}
 
-    {% if style %}
-    <div {{ style }} class="{{ wrap_classes }} c-figure__content-wrap">
-    {% endif %}
+<{{ element_figure }} {{ id }} class="c-figure  c-figure--{{ type }}  wp-caption  {{ align }}  {{ classes }}" {{ fias_presentation }}>
 
-    {% if element_wrap %}
-    <{{ element_wrap }} class="column-width">
-    {% endif %}
+    <{{ element_figure_wrap }} {{ style }} class="{{ wrap_classes }} c-figure__content-wrap  column-width">
 
         {% if url %}
-        <a href="{{ url }}" target="_blank" class="c-figure__link" data-ga-category="Figure" data-ga-label="Link|{{ type }}">
+        <a href="{{ url }}" class="c-figure__link"
+            data-ga-category="{{ gaCategory }}"
+            data-ga-label="{{ gaLabel }}">
         {% endif %}
 
             {{ content }}
@@ -19,16 +21,10 @@
         </a>
         {% endif %}
 
-    {% if element_wrap %}
-    </{{ element_wrap }}>
-    {% endif %}
-
-    {% if style %}
-    </div>
-    {% endif %}
+    </{{ element_figure_wrap }}>
 
     {% if caption_html or caption or credit %}
-    <figcaption {{ capid }} class="c-figure__text  wp-caption-text {{ figcaption_classes }}">
+    <{{ element_figure_caption }} {{ capid }} class="c-figure__text  wp-caption-text {{ figcaption_classes }}">
 
         {% if caption_html %}
             {{ caption_html }}
@@ -54,8 +50,8 @@
             {% endif %}
         {% endif %}
 
-    </figcaption>
+    </{{ element_figure_caption }}>
     {% endif %}
 
-</figure>
+</{{ element_figure }}>
 {% endspaceless %}

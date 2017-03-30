@@ -749,13 +749,13 @@ class Types {
     }
 
     /**
-     * Get editorial post types
+     * Get original post types
      *
      * @param bool   $sort  Sort alphabetically or not?
      */
-    public static function get_editorial_post_types( $sort = true ) {
-        $general_types = self::$groups['general']->editorial_post_types;
-        $entity_types = self::$groups['entities']->editorial_post_types;
+    public static function get_original_post_types( $sort = true ) {
+        $general_types = self::$groups['general']->original_post_types;
+        $entity_types = self::$groups['entities']->original_post_types;
         $types = array_merge( $general_types, $entity_types );
         if ( $sort ) {
             sort( $types );

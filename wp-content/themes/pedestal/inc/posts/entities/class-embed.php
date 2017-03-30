@@ -184,37 +184,14 @@ class Embed extends Entity {
      * @return string
      */
     public function get_featured_image_html( $size = 'full', $args = [] ) {
-
         $html = '';
         switch ( $this->get_embed_type() ) {
             case 'youtube':
             case 'instagram':
-
-                $image_url = $this->get_featured_image_url();
-
-                if ( is_string( $size ) ) {
-                    $size_meta = Utils::get_image_sizes( $size );
-                    if ( ! $size_meta ) {
-                        break;
-                    }
-                    $width = $size_meta['width'];
-                    $height = $size_meta['height'];
-                } elseif ( is_array( $size ) ) {
-                    list( $width, $height ) = $size;
-                }
-
-                $html = sprintf(
-                    '<img class="size-%s" src="%s" />',
-                    esc_attr( $size ),
-                    $this->maybe_resize_image_src( $image_url, [ 'width' => $width, 'height' => $height ] )
-                );
-
+                $html = sprintf( '<img src="%s" />', esc_url( $this->get_featured_image_url() ) );
                 break;
-
         }
-
         return $html;
-
     }
 
     /**

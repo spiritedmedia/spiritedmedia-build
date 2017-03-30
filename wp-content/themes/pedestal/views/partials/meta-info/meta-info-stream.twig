@@ -1,0 +1,31 @@
+{% set meta_info_classes = meta_info_classes|default( 'c-overview__meta' ) %}
+
+<footer class="{{ meta_info_classes }}  c-meta-info--{{ item.get_type }}  c-meta-info--stream  c-meta-info">
+
+    <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item  hidden-for-medium-up">
+        {% include [
+            'partials/meta-info/icon-'  ~ item.get_type ~ '.twig',
+            'partials/meta-info/icon.twig'
+        ] %}
+    </div>
+
+    <div class="c-meta-info__stack  c-meta-info__item">
+        {% include 'partials/meta-info/stack.twig' with { mover: 'name' } %}
+    </div>
+
+    <div class="c-meta-info__source  c-meta-info__item  c-meta-info__mover">
+        <div class="c-meta-info__name c-meta-info__source__item">
+            {% include [
+                'partials/meta-info/source-name-'  ~ item.get_type ~ '.twig',
+                'partials/meta-info/source-name.twig'
+            ] %}
+        </div>
+        <div class="c-meta-info__icon  c-meta-info__source__item">
+            {% include [
+                'partials/meta-info/icon-'  ~ item.get_type ~ '.twig',
+                'partials/meta-info/icon.twig'
+            ] %}
+        </div>
+    </div>
+
+</footer>

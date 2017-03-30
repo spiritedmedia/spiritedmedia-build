@@ -22,7 +22,7 @@
 
 
   @if $email {
-    .c-content__subtitle {
+    .c-main__subtitle {
       margin-bottom: $base-spacing-unit * 2;
       font-size: $h5-font-size;
     }

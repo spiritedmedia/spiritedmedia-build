@@ -10,7 +10,7 @@ use \Pedestal\Objects\Stream;
 
 $context = Timber::get_context();
 $args = [
-    'post_type'      => Types::get_editorial_post_types(),
+    'post_type'      => Types::get_original_post_types(),
     'posts_per_page' => 10,
 ];
 if ( is_singular() ) {

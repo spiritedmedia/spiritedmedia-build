@@ -3,7 +3,7 @@ include 'include.php';
 styleguide_header();
 ?>
     <div class="content-wrapper row">
-		<main class="main columns large-8 js-main" role="main">
+		<main class="c-main columns large-8 js-main" role="main">
 			<p>These are utility classes found in <a href="https://github.com/spiritedmedia/spiritedmedia/blob/master/wp-content/themes/pedestal/assets/scss/utilities/_utilities.scss">https://github.com/spiritedmedia/spiritedmedia/blob/master/wp-content/themes/pedestal/assets/scss/utilities/_utilities.scss</a></p>
 
 			<p><code>.u-text-color-primary</code></p>

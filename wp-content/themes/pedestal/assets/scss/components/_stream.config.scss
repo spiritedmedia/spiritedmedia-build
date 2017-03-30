@@ -3,30 +3,12 @@
 // ==========================================================================
 
 
-$c-stream-settings: (
-  item-spacing         : ( $base-spacing-unit * 2.5 ),
-  item-img-thumbnail-w : $base-spacing-unit * 7,
-  inset-spacing        : ( $base-spacing-unit * 3 ),
-  even-spacing-sm      : ( $base-spacing-unit * 1.5 ),
-  even-spacing-lg      : double( $base-spacing-unit ),
-  header-paged-m-l     : quarter( $base-spacing-unit ),
-  imglist              : (
-    img-size-sm : ( $base-spacing-unit * 3 ),
-    img-size-lg : ( $base-spacing-unit * 5 ),
-    f-z-sm      : $h5-font-size,
-    f-z-lg      : $h3-font-size
-  )
-) !default;
+$stream-item-spacing           : $base-spacing-unit * 2.5;
+$stream-item-spacing--mq-md-up : $base-spacing-unit * 3;
+$stream-even-spacing-sm        : $base-spacing-unit * 1.5;
+$stream-even-spacing-lg        : $base-spacing-unit * 4;
 
+$stream-inset-spacing          : $base-spacing-unit * 3;
 
-
-
-
-//
-// Functions
-// ==========================================================================
-
-
-@function c-stream-property-get( $properties... ) {
-  @return map-fetch( $c-stream-settings, $properties... );
-}
+$stream-imglist-img-size-sm    : $base-spacing-unit * 3;
+$stream-imglist-img-size-lg    : $base-spacing-unit * 5;

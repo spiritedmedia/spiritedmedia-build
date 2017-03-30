@@ -409,7 +409,7 @@ class User extends Author {
     public function get_stream( $args = [] ) {
         $defaults = [
             'author_name' => $this->get_user_login(),
-            'post_type'   => Types::get_editorial_post_types(),
+            'post_type'   => Types::get_original_post_types(),
         ];
         $args = wp_parse_args( $args, $defaults );
         return new Stream( $args );

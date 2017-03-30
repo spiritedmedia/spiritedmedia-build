@@ -1,12 +1,13 @@
-<section class="c-stream  c-stream--isolated  js-stream">
+<section class="c-stream  c-stream--standard  js-stream">
+    {% set stream = true %}
 
     <div class="c-stream__items js-stream-items">
 
         {% if pinned.enabled and pinned.content and not is_search %}
             {% set item = pinned.content %}
             {% include [
-                'partials/stream/isolated/' ~ pinned.content.get_type ~ '.twig',
-                'partials/stream/isolated/entity.twig'
+                'partials/stream/standard/' ~ pinned.content.get_type ~ '.twig',
+                'partials/stream/standard/entity.twig'
             ] %}
         {% endif %}
 
@@ -29,8 +30,8 @@
             {% endif %}
 
             {% include [
-                'partials/stream/isolated/' ~ item.get_type ~ '.twig',
-                'partials/stream/isolated/entity.twig'
+                'partials/stream/standard/' ~ item.get_type ~ '.twig',
+                'partials/stream/standard/entity.twig'
             ] with {'gaCategory': 'Stream'} %}
 
         {% endfor %}

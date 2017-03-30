@@ -9,7 +9,7 @@
 
 .site-header {
   background: $white;
-  border-bottom: 1px solid $grey-lighter;
+  border-bottom: 1px solid $border-std-color;
   padding-top: $site-header-pd-v;
   padding-bottom: $site-header-pd-v;
 }
@@ -45,7 +45,7 @@
         &.last {
           width: ( $icon-diameter + halve( $icon-diameter ) );
           padding-right: halve( $icon-diameter );
-          border-right: 1px solid $grey-lightish;
+          border-right: 1px solid $grey-70;
         }
       }
 
@@ -57,7 +57,7 @@
           padding-left: 0;
         }
 
-        a { color: $grey-dark; }
+        a { color: $grey-25; }
 
         &.first {
           margin-left: halve( $icon-diameter );
@@ -80,7 +80,7 @@
 // scss-lint:disable IdSelector
 #promoted-story {
   background-color: $white;
-  border-bottom: 1px solid $grey-lighter;
+  border-bottom: 1px solid $border-std-color;
 
   .row {
     padding: halve( $base-spacing-unit ) $base-spacing-unit;

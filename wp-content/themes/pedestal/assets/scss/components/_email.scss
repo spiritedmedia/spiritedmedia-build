@@ -6,44 +6,10 @@
 // scss-lint:disable all
 
 
-.email-constrain {
+.email-row {
   max-width: $email-max-width;
   margin-left: auto;
   margin-right: auto;
-}
-
-.email-body {
-  background-color: $white;
-
-  #entity-container {
-    margin-left: $base-spacing-unit;
-    margin-right: $base-spacing-unit;
-    color: $grey-darker;
-  }
-
-  .c-blox {
-    margin: 0;
-  }
-
-  .entity {
-
-    /*img*/.size-full,
-    /*img*/.size-lead-image {
-      width: 100%;
-      height: auto;
-    }
-  }
-
-}
-
-.entity-meta--email {
-  .inline-list {
-    margin-left: -( $base-spacing-unit / 2 );
-
-    > li {
-      margin-left: ( $base-spacing-unit / 2 );
-    }
-  }
 }
 
 #email-header,
@@ -63,12 +29,12 @@
 #email-header {
   padding-top: 0;
 
-  .email-constrain > table,
+  .email-row > table,
   table.iconset--email {
     border: 0;
   }
 
-  .email-constrain,
+  .email-row,
   /*td*/#email-header-social {
     > table {
       margin: 0 auto;
@@ -125,22 +91,19 @@
 
 
 //
-// Stream
+// Body + Main
 // ==========================================================================
 
 
-.email-constrain {
-  .c-stream--ladder {
-    .c-stream__item__title {
-      margin-bottom: ( $base-spacing-unit / 2 );
-      font-size: $h6-font-size;
+.email-body {
+  background-color: $white;
 
-      @media #{$medium-up} {
-        font-size: $h5-font-size;
-      }
-    }
+  #entity-container {
+    margin-left: $base-spacing-unit;
+    margin-right: $base-spacing-unit;
+    color: $grey-25;
   }
-}
+} // .email-body
 
 
 
@@ -152,12 +115,19 @@
 
 
 #email-footer {
-  color: $grey-lightish;
   text-align: center;
   font-size: $email-footer-f-z;
   margin-left: $email-footer-m-h;
   margin-right: $email-footer-m-h;
   padding-bottom: $email-footer-p-b;
+
+  &, h1, h2, h3, h4, h5, h6 {
+    color: $grey-70;
+  }
+
+  .cta-heading {
+    @include h-size(4);
+  }
 
   table.iconset--email {
     margin-bottom: $base-spacing-unit;
@@ -226,13 +196,9 @@
 
 .email-breaking-news {
 
-  .c-stream__item__img {
-    width: 100%;
-    text-align: center;
-  }
-
-  .entity-excerpt {
-    font-style: italic;
+  .c-overview__meta {
+    border-bottom: 0;
+    padding-bottom: 0;
   }
 }
 

@@ -35,8 +35,8 @@ class Recent_Content_Widget extends \WP_Widget {
             case 'factchecks':
                 $post_types[] = 'pedestal_factcheck';
                 break;
-            case 'editorial':
-                $post_types = Types::get_editorial_post_types();
+            case 'original':
+                $post_types = Types::get_original_post_types();
                 break;
         }
 
@@ -92,7 +92,7 @@ class Recent_Content_Widget extends \WP_Widget {
             'stories'    => 'Stories',
             'articles'   => 'Articles',
             'factchecks' => 'Factchecks',
-            'editorial'  => 'Editorial Content',
+            'editorial'  => 'Original Content',
         ];
 
         // Escape field ids and names

@@ -3,399 +3,221 @@
 // ==========================================================================
 
 
-/**
- * 1. Set all `ul`s to minimal inline lists
- * 2. Prevent Foundation `ul` styles from resetting font size
- */
-
-/*ul*/.c-meta-info,
-/*ul*/.c-meta-info__source,
-/*ul*/.c-meta-info__timestamp,
-/*ul*/.c-meta-info__published,
-/*ul*/.c-meta-info__modified {
-  @include inline-list-min( false, $c-meta-info-line-height ); /* 1 */
-  font-size: $c-meta-info-f-z; /* 2 */
-}
-
-
-/*ul*/.c-meta-info {
-  @include anchorage( $unhovered: $c-meta-info-color );
-  margin-bottom: $c-meta-info-m-b;
+.c-meta-info {
+  // scss-lint:disable SelectorFormat
+  @include clearfix;
+  @include stdbd(bottom);
+  padding-bottom: $base-spacing-unit / 4;
   color: $c-meta-info-color;
+  font-size: $small-font-size;
+  text-transform: uppercase;
 
-  // Override fa icon color for email
-  .email-body & {
-    @each $icon-name in $fa-icons-used {
-      .fa-#{$icon-name} {
-        @include iconize(
-          $path: $icon-name,
-          $size: $c-meta-info-icon-size--email,
-          $fa-colorize: $c-meta-info-color,
-          $path-only: true,
-          $fallback: false,
-          $live-url: true,
-          $size-1x: true
-        );
-      }
-    }
+  @media #{$medium-up} {
+    font-size: $base-font-size;
   }
 
-}
+  a {
+    @include link-dark;
+  }
 
-
-  /*li*/.c-meta-info__item {
-    overflow: hidden;
-
-    &:not( .c-meta-info__label ) {
-      @if $email == false {
-        @media #{$medium-up} {
-          @include inline-divider( $spacing: $c-meta-info-spacing-h );
+  @if $email {
+    // Override fa icon color for email
+    .email-body & {
+      @each $icon-name in $fa-icons-used {
+        .fa-#{$icon-name} {
+          @include iconize(
+            $path: $icon-name,
+            $size: $c-meta-info-icon-size--email,
+            $fa-colorize: $c-meta-info-color,
+            $path-only: true,
+            $fallback: false,
+            $live-url: true,
+            $size-1x: true
+          );
         }
       }
     }
-
   }
 
+  // Meta info for Original Content
+  [data-original] & {
+    .c-meta-info__icon {
+      .icon {
+        @if $email {
+          width: $c-meta-info-icon-size;
+          height: $c-meta-info-icon-size;
+        }
+      }
+    }
+  } // end [data-original] &
+} // end .c-meta-info
 
-  .c-meta-info__item--stacked {
-    line-height: $c-meta-info-line-height;
+
+.c-meta-info__item {
+  @extend %c-meta-info-d-ib;
+  line-height: $c-meta-info-icon-size;
+}
+
+
+.c-meta-info__stack {
+  > * {
+    line-height: $c-meta-info-icon-size / 2;
   }
+}
 
+// Element within the stack that moves out of the stack in wider layouts
+.c-meta-info__stack__mover {
+  display: block;
 
-  /*ul*/.c-meta-info__source {}
-
-    /*li*/.c-meta-info__source__item {}
-
-
-  .c-meta-info__source__icon {
-    margin-right: ( $o-icon-text-spacing / 2 );
-
-    // @TODO
-    // scss-lint:disable SelectorFormat
-    .icon {
-      display: inline-block;
-      vertical-align: middle;
-      font-size: 0;
-
-      .entity--promo & {
-        color: $absinthe;
-      }
-
-      @if not $email {
-        font-size: $c-meta-info-icon-size;
-      } @else {
-        height: $c-meta-info-icon-size--email;
-        width: $c-meta-info-icon-size--email;
-      }
-
-      @media #{$medium-up} {
-        font-size: $c-meta-info-icon-size--screen-md-up;
-      }
-
-    } // end .icon
-    // scss-lint:enable SelectorFormat
-
-    .c-avatar {
-      &,
-      &__img {
-        width: $c-meta-info-icon-size;
-        height: $c-meta-info-icon-size;
-        background-size: $c-meta-info-avatar-bg-size;
-      }
-    }
-
-    [data-author-count="1"] & {
-      font-size: 0;
-    }
-
-  } // end .c-meta-info__source__icon
-
-  .c-meta-info__source__name {
+  @media #{$medium-up} {
     display: none;
-
-    @media #{$medium-up} {
-      display: inline-block;
-    }
-
-    .entity--promo & {
-      color: $absinthe;
-    }
-
-    .c-meta-info__item--stacked & {
-      display: inline-block;
-
-      @media #{$medium-up} {
-        display: none;
-      }
-
-    }
-
-  } // end .c-meta-info__source__name
-
-
-  /*li*/.c-meta-info__label {
-    margin-right: ( $c-meta-info-spacing-h / 2 );
   }
-
-  /*ul*/.c-meta-info__timestamp {}
-
-    /*li*/.c-meta-info__timestamp__item {}
-
-    /*li*/.c-meta-info__date {}
-
-    /*li*/.c-meta-info__time {}
+}
 
 
-// Nativo meta info
-/*ul*/.c-meta-info--promo {}
+// Element that has moved out of the stack in a wider layout
+.c-meta-info__mover {
+  display: none;
+
+  @media #{$medium-up} {
+    display: block;
+    text-align: right;
+    float: right;
+  }
+}
 
 
+.c-meta-info__source {}
+
+.c-meta-info__source__item {
+  @extend %c-meta-info-d-ib;
+}
 
 
-
-//
-// Bar
-// ==========================================================================
-
-
-/*ul*/.c-meta-info--bar {
-  @include stdbd( 'top' );
-
-  // Approximate the bottom radii of the panel
-  overflow: hidden;
-  border-radius: 0 0 $c-meta-bar-radius-bottom $c-meta-bar-radius-bottom;
-
-  color: $c-meta-info-color;
-  margin-bottom: 0;
-  background-color: $c-meta-bar-bg;
-  position: relative;
-  z-index: $z-c-meta-bar;
+.c-meta-info__icon {
+  // scss-lint:disable SelectorFormat
+  margin-right: $c-meta-info-icon-spacing;
 
 
-  /*ul*/.c-meta-info,
-  /*ul*/.c-meta-info__source,
-  /*ul*/.c-meta-info__timestamp {
-    &__item {
-      line-height: $c-meta-bar-line-height;
-    }
+  a {
+    color: $grey-62;
   }
 
 
-  .c-meta-info__source__icon {
-    @include stdbd('right');
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $c-meta-bar-icon-bg;
-    width: $c-meta-bar-icon-bg-size;
-    height: $c-meta-bar-icon-bg-size;
+  .icon {
+    @extend %c-meta-info-d-ib;
+    font-size: 0;
 
-    // @TODO
-    // scss-lint:disable SelectorFormat
-    .icon {
-      padding-top: halve( $c-meta-bar-icon-p-v );
-      padding-bottom: halve( $c-meta-bar-icon-p-v );
-      color: $white;
+    @if not $email {
+      font-size: $c-meta-info-icon-size;
+    } @else {
+      height: $c-meta-info-icon-size--email;
+      width: $c-meta-info-icon-size--email;
+    }
+  } // end .icon
+
+
+  .c-avatar {
+    &,
+    &__img {
+      width: $c-meta-info-icon-size;
+      height: $c-meta-info-icon-size;
     }
 
-    .c-avatar {
+    img {
       display: block;
     }
   }
+} // end .c-meta-info__icon
+
+.c-meta-info__icon--standalone {}
 
 
-  [data-editorial-content] & {
-    @if global-variable-exists( site-theme-name ) {
+.c-meta-info__name {}
 
-      .c-meta-info__source__icon {
-        $path: $site-theme-logo-abspath + '/logo_icon-white';
-        $size: $c-meta-info-icon-size;
 
-        background-color: $c-meta-bar-icon-bg--edcon;
+.c-meta-info__label {
+  font-weight: 700;
+}
 
-        // @TODO
-        // scss-lint:disable SelectorFormat
-        .icon {
-          @if $email {
-            @include iconize(
-              $path: $path,
-              $size: $size,
-              $live-url: true,
-              $size-1x: true
-            );
-          } @else {
-            @include iconize( $path, $size );
-          }
-        }
-      }
-    }
+
+.c-meta-info__timestamp {}
+
+
+
+
+
+.c-meta-info--always-stacked {
+  font-size: $small-font-size;
+
+  .c-meta-info__stack__mover {
+    display: block;
   }
 
-  // We need to accommodate for circular avatars here
-  [data-editorial-content][data-author-count="1"] & {
-    .c-meta-info__source__icon {
-      background-color: $c-panel-bg;
-      border-right: 0;
-      padding-top: quarter( $c-meta-bar-icon-p-v );
-      padding-bottom: quarter( $c-meta-bar-icon-p-v );
-      padding-left: halve( $c-panel-padding );
-    }
-  } // end [data-editorial-content][data-author-count="1"] &
-
-
-  &.c-meta-info--link {
-    // Adjust optical alignment for FontAwesome external link icon
-    .c-meta-info__source__icon {
-      // @TODO
-      // scss-lint:disable SelectorFormat
-      .icon::before {
-        position: relative;
-        left: 1px;
-        top: 3px;
-
-        @media #{$medium-up} {
-          top: 0;
-        }
-      }
-    }
-  }
-
-  @media #{$medium-up} {
-
-    .c-meta-info__source__icon {
-      height: $c-meta-bar-icon-bg-size--screen-md-up;
-      width: $c-meta-bar-icon-bg-size--screen-md-up;
-
-      // @TODO
-      // scss-lint:disable SelectorFormat
-      .icon {
-        font-size: $c-meta-info-icon-size--screen-md-up;
-      }
-
-      .c-avatar {
-        &,
-        &__img {
-          width: $c-meta-bar-avatar-height;
-          height: $c-meta-bar-avatar-height;
-          background-size: $c-meta-bar-avatar-bg-size;
-        }
-      }
-
-    }
-
-    [data-editorial-content] & {
-      .c-meta-info__source__icon {
-        // @TODO
-        // scss-lint:disable SelectorFormat
-        .icon {
-          @include iconize( null, $c-meta-info-icon-size--screen-md-up, true );
-        }
-      } // end .c-meta-info__source__icon
-    } // end [data-editorial-content] &
-
-  } // end medium-up
-} // end .c-meta-info--bar
-
-
-
-
-
-//
-// Entity
-// ==========================================================================
-
-
-/*ul*/.c-meta-info--entity {}
-
-
-// Meta info for Editorial Content
-[data-editorial-content] .c-meta-info {
-  .c-meta-info__source__icon {
-    // @TODO
-    // scss-lint:disable SelectorFormat
-    .icon {
-      @if not $email {
-        @media #{$medium-up} {
-          // Slight visual offset
-          margin-top: -1px;
-        }
-      } @else {
-        width: c-avatar-property-get( 'size-sm' );
-        height: c-avatar-property-get( 'size-sm' );
-      }
-    }
+  .c-meta-info__mover {
+    display: none;
   }
 }
 
 
-/*ul*/.c-meta-info--link {
 
-  .c-meta-info__source__icon {
-    // @TODO
-    // scss-lint:disable SelectorFormat
-    .icon::before {
-      position: relative;
-      left: 1px;
-      top: 1px;
+
+
+//
+// Stream
+// ==========================================================================
+
+
+.c-meta-info--stream {
+  .c-meta-info__icon {
+    @media #{$medium-up} {
+      margin-left: $c-meta-info-icon-spacing;
+      margin-right: 0;
     }
   }
-
-
-  .c-content__entities & {
-
-    .c-meta-info__source__icon {
-      display: none;
-
-      @media #{$medium-up} {
-        display: inline-block;
-      }
-
-      // @TODO
-      // scss-lint:disable SelectorFormat
-      .icon {
-        font-size: $c-meta-info-icon-size--screen-md-up;
-      }
-
-    }
-
-    .c-meta-info__item--stacked {
-      .c-meta-info__source__icon {
-        display: inline-block;
-
-        @media #{$medium-up} {
-          display: none;
-        }
-
-      }
-
-    } // end .c-meta-info__item--stacked
-
-  } // end .c-content__entities &
-
-} // end .c-meta-info--link
-
-
-/*ul*/.c-meta-info--embed {}
-
-
-/*ul*/.c-meta-info--event {}
+} // .c-meta-info--stream
 
 
 
 
 
 //
-// Cluster
+// Single Entity
 // ==========================================================================
 
 
-/*ul*/.c-meta-info--cluster {}
+.c-meta-info--entity {
+  @include stdbd(top);
+  padding-top: $c-meta-info-entity-border-spacing;
+  padding-bottom: $c-meta-info-entity-border-spacing;
+  margin-top: $base-spacing-unit;
 
 
-/*ul*/.c-meta-info--story {}
+  // If less than three authors, display normal medium layout
+  &.c-meta-info--authors-few {}
 
 
-/*ul*/.c-meta-info--hood {}
+  // If three or more authors, always display stacked layout
+  &.c-meta-info--authors-many {
+    @media #{$medium-up} {
+      font-size: $small-font-size;
+    }
+  }
+
+} // .c-meta-info--entity
+
+
+
+
+
+//
+// Single Clusters
+// ==========================================================================
+
+
+.c-meta-info--cluster {
+  margin-bottom: $base-spacing-unit;
+}
 
 
 
@@ -406,14 +228,4 @@
 // ==========================================================================
 
 
-/*ul*/.c-meta-info--email {
-  // @TODO
-  // scss-lint:disable SelectorFormat
-
-  li {
-    margin-left: 0;
-  }
-
-  &.c-meta-info--entity {}
-
-}
+.c-meta-info--email {}

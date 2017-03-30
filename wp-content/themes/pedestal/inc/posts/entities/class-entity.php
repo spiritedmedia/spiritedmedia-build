@@ -44,10 +44,11 @@ abstract class Entity extends Post {
      * @return array
      */
     public function get_css_classes() {
-        $classes = array_merge( [
-            'entity--' . $this->get_type(),
-            'entity',
-        ], parent::get_css_classes() );
+        $classes = [];
+        if ( $this->has_story() ) {
+            $classes[] = 'in-story';
+        }
+        $classes = array_merge( $classes, parent::get_css_classes() );
         return $classes;
     }
 
@@ -58,7 +59,8 @@ abstract class Entity extends Post {
         parent::set_data_atts();
         $atts = parent::get_data_atts();
         $new_atts = [
-            'entity' => '',
+            'entity'          => '',
+            'source-external' => '',
         ];
 
         if ( $this->has_story() ) {

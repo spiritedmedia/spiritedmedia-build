@@ -1,4 +1,4 @@
-/* global FastClick ga */
+/* global FastClick ga objectFitImages */
 
 (function($) {
 
@@ -9,6 +9,10 @@
       // Libraries
       $(document).foundation();
       new FastClick(document.body);
+
+      // CSS object-fit polyfill
+      // https://github.com/bfred-it/object-fit-images/
+      objectFitImages('.js-stream-item-img img', {watchMQ: true});
 
       this.bindEvents();
       this.responsiveIframes();

@@ -4,36 +4,16 @@
 
 
 // Meta info
-$c-meta-info-f-z                                : $small-font-size !default;
-$c-meta-info-m-b                                : $base-spacing-unit !default;
 $c-meta-info-spacing-h                          : halve( $base-spacing-unit ) !default;
-$c-meta-info-color                              : $dimmed-text-color !default;
-$c-meta-info-icon-size                          : ( $base-font-size * 2 ) !default; // 32px
-$c-meta-info-avatar-bg-size                     : ( $c-meta-info-icon-size - unitize( double( c-avatar-property-get( 'bd-w-sm' ) ) ) );
-$c-meta-info-height                             : ( $base-spacing-unit * 2 ) !default; // 32px
-$c-meta-info-line-height                        : halve( $c-meta-info-height ) !default; // 16px
+$c-meta-info-color                              : $body-font-color !default;
 
-// Meta bar
-$c-meta-bar-height                              : ( ( $c-meta-info-height * 1.5 ) - double( $border-offset ) ) !default; // 49px
-$c-meta-bar-line-height                         : halve( $c-meta-info-icon-size ); // ~12.5px
-$c-meta-bar-radius-bottom                       : 2px;
-$c-meta-bar-pd                                  : quarter( $base-spacing-unit ) !default;
-$c-meta-bar-bg                                  : $c-panel-bg !default;
-$c-meta-bar-icon-p-v                            : ( $c-meta-bar-height - $c-meta-info-icon-size );
-$c-meta-bar-icon-bg                             : $grey-light !default;
-$c-meta-bar-icon-bg-size                        : $c-meta-bar-height !default;
-$c-meta-bar-icon-bg--edcon                    : $primary-color !default;
-$c-meta-bar-icon-bg-size--edcon               : ( $c-meta-bar-icon-bg-size - $border-offset * 2 ) !default;
-// We must computer the actual avatar size for emails
-// $c-meta-bar-avatar-height                    : ( $c-meta-info-icon-size + unitize( double( c-avatar-property-get( 'bd-w-sm' ) ) ) ) !default; // 38px
-$c-meta-bar-avatar-bg-size                      : unitize( 20px );
-$c-meta-bar-avatar-height                       : $c-meta-bar-avatar-bg-size + unitize( double( c-avatar-property-get( 'bd-w-sm' ) ) );
+$c-meta-info-entity-border-spacing              : $base-spacing-unit / 2;
 
-// Medium up breakpoint vars
-$c-meta-info-icon-size--screen-md-up            : ( $c-meta-info-icon-size / 2 ) !default; // 16px
-$c-meta-bar-height--screen-md-up                : ( $c-meta-info-height - double( $border-offset ) ) !default; // 31px
-$c-meta-bar-icon-bg-size--screen-md-up          : $c-meta-bar-height--screen-md-up !default;
-$c-meta-bar-icon-bg-size--edcon--screen-md-up : ( $c-meta-bar-icon-bg-size--screen-md-up - $border-offset * 2 ) !default;
+$c-meta-info-icon-spacing                       : $o-icon-text-spacing / 2;
+$c-meta-info-icon-size                          : $icon-diameter--sm;
+$c-meta-info-icon-size--email                   : $icon-diameter--xs;
 
-// Email-only
-$c-meta-info-icon-size--email                   : $email-icon-diameter !default;
+%c-meta-info-d-ib {
+  display: inline-block;
+  vertical-align: middle;
+}

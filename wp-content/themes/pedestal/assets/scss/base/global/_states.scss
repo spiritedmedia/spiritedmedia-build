@@ -3,12 +3,6 @@
 // ==========================================================================
 
 
-.has-story-bar,
-%has-story-bar {
-  margin-top: map-get-strict( $story-bar-settings, 'm-t' );
-}
-
-
 /**
  * Indicates presence of an element attached to top or bottom.
  *

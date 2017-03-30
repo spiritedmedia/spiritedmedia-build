@@ -22,7 +22,7 @@ $c: '.c-slot';
 
 
   /*p*/&__label {
-    color: $grey-mid;
+    color: $dimmed-text-color;
     font-size: $small-font-size;
     font-weight: 300;
     letter-spacing: 0.05em;
@@ -107,16 +107,6 @@ $c: '.c-slot';
 }
 
 
-// * Lead Position -- Email Scope
-// * Daily Instagram Component Type
-[data-slot-position="email_lead"],
-[data-slot-component-type="daily_insta"] {
-  &.c-slot {
-    @include stdbd( 'bottom' );
-  }
-}
-
-
 // Lead Position -- Email Scope
 [data-slot-position="email_lead"] {
   &.c-slot {
@@ -124,7 +114,6 @@ $c: '.c-slot';
   }
 
   #{$c}__item {
-    padding-top: $c-slot-item-lead-pd;
     padding-bottom: $c-slot-item-lead-pd;
   }
 }
@@ -133,6 +122,7 @@ $c: '.c-slot';
 // Daily Instagram Component Type
 [data-slot-component-type="daily_insta"] {
   &.c-slot {
+    @include stdbd( 'bottom' );
     background-color: $truth-serum;
   }
 

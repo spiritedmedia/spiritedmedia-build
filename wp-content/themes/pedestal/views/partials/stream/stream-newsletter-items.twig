@@ -1,10 +1,6 @@
-{% set el__item = 'article' %}
-{% set el__heading = 'h2' %}
-{% if is_email %}
-    {% set el__item = 'div' %}
-    {% set el__heading = 'h4' %}
-{% endif %}
-
+{% set el__item = if_email('div', 'article') %}
+{% set el__heading = if_email('h4', 'h2')  %}
+{% set el__item_title = if_email('h4', 'h1')  %}
 
 <div class="c-stream__items  js-stream-items">
 

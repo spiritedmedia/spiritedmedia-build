@@ -1,62 +1,21 @@
-{% macro is_pinned( context, component = null ) %}
-{% spaceless %}
-    {% if context.item.is_pinned and not context.is_search %}
-        {% if component %}
-            c-{{ component }}--pinned
-        {% else %}
-            is-pinned
-        {% endif %}
-    {% endif %}
-{% endspaceless %}
-{% endmacro %}
-
-
-
-
-
-{% macro get_pinned_styles( context, element ) %}
-{% spaceless %}
-    {% set story = context.item.get_primary_story %}
-    {% if context.item.is_pinned and story.has_story_branding and not context.is_search %}
-        {% if 'border' == element %}
-            style="border: 3px solid {{ story.get_primary_story_bar_background_color }};"
-        {% elseif 'pin' == element %}
-            style="color: {{ story.get_primary_story_bar_foreground_color }};"
-        {% endif %}
-    {% endif %}
-{% endspaceless %}
-{% endmacro %}
-
-
-
-
-
-{% macro has_story_bar( context ) %}
-{% spaceless %}
-    {% if context.item.has_story() %}
-        {% if not context.grouped %}
-            has-story-bar
-        {% endif %}
-    {% endif %}
-{% endspaceless %}
-{% endmacro %}
-
-
-
-
-
-{% macro get_stream_item_classes( stream_name ) %}
+{% macro get_stream_item_classes( stream_type, context = null ) %}
     {% spaceless %}
+    {% import _self as macros %}
+    {% set item = context.item %}
+    {% set stream = true %}
     {% set classes = 'c-stream__item  js-stream-item' %}
 
-    {% if 'isolated' == stream_name %}
-        {% set classes = 'c-panel' ~ '  ' ~ classes %}
-    {% elseif 'ladder' == stream_name %}
-        {% set classes = 'c-panel__inner' ~ '  ' ~ classes %}
-    {% elseif 'pedalized' == stream_name %}
-        {% set classes = 'o-rule  o-rule--pedal' ~ '  ' ~ classes %}
+    {% if item.get_type %}
+    {% set classes = 'c-stream__item--' ~ item.get_type ~ '  ' ~ classes %}
     {% endif %}
 
+    {% if item.css_classes %}
+    {% set classes = item.css_classes ~ '  ' ~ classes %}
+    {% endif %}
+
+    {% if 'standard' == stream_type and item.is_pinned and not context.is_search %}
+        {% set classes = 'is-pinned  ' ~ classes %}
+    {% endif %}
     {{ classes }}
     {% endspaceless %}
 {% endmacro %}
@@ -66,177 +25,7 @@
 
 
 {% macro blox( context, options, type ) %}
-    {% set defaults = {
-        'format': '',
-        'blox_classes': '',
-        'type_classes': '',
-        'prefix': '',
-        'suffix': '',
-        'background': '',
-        'title_element': 'h4',
-        'title': '',
-        'subtitle': '',
-        'url': '',
-        'size': '',
-        'case': '',
-        'expand': false,
-        'offset': false
-    } %}
-    {% if options %}
-        {% set options = defaults|merge( options ) %}
-    {% else %}
-        {% set options = defaults %}
-    {% endif %}
-
-    {% set el = 'c-blox' %}
-    {% set js = 'js-blox' %}
-    {% set item = context.item %}
-    {% set el_classes = options.blox_classes %}
-    {% set title_element = options.title_element %}
-    {% set size = options.size %}
-    {% set case = options.case %}
-    {% set expand = options.expand %}
-    {% set offset = options.offset %}
-
-
-    {# Types #}
-    {% if type %}
-        {% set type_js_hook = 'js-' ~ type %}
-        {% set type_class = el ~ '--' ~ type %}
-        {% set type_classes = '%s  %s  %s'|format(
-            type_class, type_js_hook, options.type_classes
-        ) %}
-    {% else %}
-        {% set type_classes = '' %}
-    {% endif %}
-
-
-    {# Display Format #}
-    {% if options.format %}
-        {% set format = options.format %}
-        {% set el_classes = el ~ '--' ~ format ~ '  ' ~ el_classes %}
-        {% if 'header' == format %}
-            {% set title_element = 'h2' %}
-            {% set size = 'lg' %}
-            {% set expand = true %}
-        {% elseif 'cap' == format %}
-            {% set expand = true %}
-            {% set default_case = 'upper' %}
-        {% endif %}
-    {% endif %}
-
-
-    {# Type: Story Bar #}
-    {% if 'story-bar' == type %}
-        {% if 'header' != format %}
-            {% set default_case = 'upper' %}
-        {% endif %}
-
-        {# Content #}
-        {% if item.is_entity and item.has_story and item.get_primary_story.get_title %}
-            {% set default_title = item.get_primary_story.get_the_title %}
-            {% set story_branding = item.get_primary_story.get_primary_story_branding %}
-            {% set default_url = item.get_primary_story.get_permalink %}
-            {% if not context.grouped %}
-                {% set offset = true %}
-                {% set extra_classes = 'u-tt-upper' ~ extra_classes %}
-            {% endif %}
-        {% elseif not item.is_entity %}
-            {% set story_branding = item.get_primary_story_branding %}
-            {% set default_title = item.get_the_title %}
-            {% set default_url = item.get_permalink %}
-            {% if item.schema %}
-                {% set default_title = item.schema|replace( { '-': ' ' } )|capitalize %}
-            {% endif %}
-        {% endif %}
-
-        {# Story Branding #}
-        {% if item.is_story or item.has_story and story_branding %}
-            {% set extra_classes = el ~ '--customized' ~ '  ' ~ extra_classes %}
-            {% set inline_background_color = 'style="background-color: ' ~ story_branding['background_color'] ~ ';"' %}
-            {% set inline_foreground_color = 'style="color: ' ~ story_branding['foreground_color'] ~ ';"' %}
-            {% if story_branding['icon'] %}
-                {% set icon_url = story_branding['icon'] %}
-                {% if is_email %}
-                    {% set icon_url = story_branding['fallback_icon'] %}
-                {% endif %}
-                {% set prefix = '<img src="' ~ icon_url ~ '" alt="' ~ title ~ '">' %}
-            {% endif %}
-        {% endif %}
-
-        {# Pinned Items #}
-        {% if item.is_pinned and context.is_home %}
-        {% set suffix %}
-            <div class="{{ type_class }}__pin">
-                {% include 'partials/stream/panel-pin.twig' %}
-            </div>
-        {% endset %}
-        {% endif %}
-    {% endif %}
-
-    {% set title = options.title|default( default_title ) %}
-    {% set url = options.url|default( default_url ) %}
-    {% set case = case|default( default_case ) %}
-
-    {# Sizes #}
-    {% if size in ['sm', 'md', 'lg', 'xlg'] %}
-        {% set el_classes = el ~ '--' ~ size ~ '  ' ~ el_classes %}
-    {% endif %}
-
-
-    {# Background Colors #}
-    {% if 'promo' == options.background %}
-        {% set el_classes = el ~ '--promo' ~ '  ' ~ el_classes %}
-    {% elseif 'lighter' == options.background %}
-        {% set el_classes = el ~ '--lighter' ~ '  ' ~ el_classes %}
-    {% endif %}
-
-
-    {% if case and 'ignore' != case %}
-        {% set el_classes = 'u-tt-' ~ case ~ '  ' ~ el_classes %}
-    {% endif %}
-
-    {% if expand %}
-        {% set el_classes = el ~ '--expand' ~ '  ' ~ el_classes %}
-    {% endif %}
-
-    {% if offset %}
-        {% set el_classes = el ~ '--offset' ~ '  ' ~ el_classes %}
-    {% endif %}
-
-    {% if options.subtitle %}
-        {% set el_classes = el ~ '--has-subtitle' ~ '  ' ~ el_classes %}
-    {% endif %}
-
-    {% if title %}
-    <div class="{{ type_classes }}  {{ el_classes }}  {{ el }}">
-        <div class="{{ el }}__inner  u-cf" {{ inline_background_color }}>
-
-            {% if options.prefix %}
-            <div class="{{ el }}__prefix  {{ el }}__item">
-                {{ options.prefix }}
-            </div>
-            {% endif %}
-
-            {% if suffix %}
-            <div class="{{ el }}__suffix  {{ el }}__item">
-                {{ suffix }}
-            </div>
-            {% endif %}
-
-            <{{ title_element }} class="{{ el }}__text  {{ el }}__item">
-                <a href="{{ url }}" class="{{ el }}__text__link  {{ js }}-link" {{ inline_foreground_color }} data-ga-category="Story Bar" data-ga-label="{{title}}">
-                    <span class="{{ el }}__text__title  {{ el }}__text__item  {{ js }}-title">{{ title }}</span>
-                    {% if options.subtitle %}
-                    <span class="{{ el }}__text__subtitle  {{ el }}__text__item  {{ js }}-subtitle">{{ options.subtitle }}</span>
-                    {% endif %}
-                </a>
-            </{{ title_element }}>
-
-        </div>
-    </div>
-    {% endif %}
-
+    {{ options.title }}
 {% endmacro %}
 
 
@@ -295,8 +84,8 @@
 
     {% set block_classes = '' %}
     {% set inner_classes = '' %}
-    {% set name_classes = 'u-size-h4' %}
-    {% set title_classes = 'u-size-h5' %}
+    {% set user_name_classes = 'u-size-h4' %}
+    {% set user_title_classes = 'u-size-h5' %}
     {% set img_classes = '' %}
     {% set bio_element = 'p' %}
 
@@ -333,7 +122,7 @@
             {% endif %}
             {% set bio_class = 'c-user-card__bio--extended' %}
             {% set bio_element = 'div' %}
-            {% set name_classes = '' %}
+            {% set user_name_classes = '' %}
             {% set user_title_classes = 'u-size-h3' %}
         {% endif %}
 
@@ -379,7 +168,7 @@
 
             <div class="c-user-card__inner {{ inner_classes }}">
 
-                <h1 class="c-user-card__name {{ name_classes }}">
+                <h1 class="c-user-card__name  {{ user_name_classes }}">
                     <a href="{{ author_url }}" itemprop="author_url" data-ga-category="User" data-ga-label="Name|Author URL|{{ name }}">
                         <span itemprop="name">{{ name }}</span>
                     </a>
@@ -410,7 +199,9 @@
 
                 {% if options.posts and items %}
 
-                    <section class="c-user-card__entities  c-stream  c-stream--pedalized  js-stream">
+                    <section class="c-user-card__entities  c-stream  c-stream--standard  js-stream">
+                        {% set stream = true %}
+
                         <header class="c-stream__header">
                             <h1 class="c-stream__title  c-stream__header__item">Recent Articles</h1>
                             {% if pagination %}
@@ -424,8 +215,8 @@
                         <div class="c-stream__items  js-stream-items">
                             {% for item in items %}
                                 {% include [
-                                    'partials/stream/pedalized/' ~ item.get_type ~ '.twig',
-                                    'partials/stream/pedalized/entity.twig'
+                                    'partials/stream/standard/' ~ item.get_type ~ '.twig',
+                                    'partials/stream/standard/entity.twig'
                                 ] %}
                             {% endfor %}
                         </div>

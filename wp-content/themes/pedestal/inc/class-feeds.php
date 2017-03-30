@@ -90,8 +90,8 @@ class Feeds {
 
         $post_type = get_query_var( 'post_type' );
 
-        // Return if is an Instant Articles feed type but is not an Editorial Content feed
-        if ( $query->is_feed( 'fias' ) && in_array( $post_type, Types::get_editorial_post_types() ) ) {
+        // Return if is an Instant Articles feed type but is not an Original Content feed
+        if ( $query->is_feed( 'fias' ) && in_array( $post_type, Types::get_original_post_types() ) ) {
             return;
         }
 

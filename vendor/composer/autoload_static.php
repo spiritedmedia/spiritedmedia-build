@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit32e99756610a077f439b5b416b91f6d6
+class ComposerStaticInitcb6c64b85f2a7ecc8c71aeecf890a2a7
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -335,15 +335,15 @@ class ComposerStaticInit32e99756610a077f439b5b416b91f6d6
         'Pedestal\\Posts\\Clusters\\Person' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/clusters/class-person.php',
         'Pedestal\\Posts\\Clusters\\Story' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/clusters/class-story.php',
         'Pedestal\\Posts\\Clusters\\Topic' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/clusters/class-topic.php',
-        'Pedestal\\Posts\\EditorialContent' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/class-post.php',
         'Pedestal\\Posts\\Emailable' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/class-post.php',
-        'Pedestal\\Posts\\Entities\\Article' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/class-article.php',
         'Pedestal\\Posts\\Entities\\Embed' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/class-embed.php',
         'Pedestal\\Posts\\Entities\\Entity' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/class-entity.php',
         'Pedestal\\Posts\\Entities\\Event' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/class-event.php',
-        'Pedestal\\Posts\\Entities\\Factcheck' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/class-factcheck.php',
         'Pedestal\\Posts\\Entities\\Link' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/class-link.php',
-        'Pedestal\\Posts\\Entities\\Whos_Next' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/class-whos-next.php',
+        'Pedestal\\Posts\\Entities\\Originals\\Article' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/original-content/class-article.php',
+        'Pedestal\\Posts\\Entities\\Originals\\Factcheck' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/original-content/class-factcheck.php',
+        'Pedestal\\Posts\\Entities\\Originals\\Original' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/original-content/class-original.php',
+        'Pedestal\\Posts\\Entities\\Originals\\Whos_Next' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/entities/original-content/class-whos-next.php',
         'Pedestal\\Posts\\Newsletter' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/class-newsletter.php',
         'Pedestal\\Posts\\Page' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/class-page.php',
         'Pedestal\\Posts\\Post' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/class-post.php',
@@ -804,11 +804,11 @@ class ComposerStaticInit32e99756610a077f439b5b416b91f6d6
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit32e99756610a077f439b5b416b91f6d6::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit32e99756610a077f439b5b416b91f6d6::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit32e99756610a077f439b5b416b91f6d6::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit32e99756610a077f439b5b416b91f6d6::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit32e99756610a077f439b5b416b91f6d6::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitcb6c64b85f2a7ecc8c71aeecf890a2a7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitcb6c64b85f2a7ecc8c71aeecf890a2a7::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitcb6c64b85f2a7ecc8c71aeecf890a2a7::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitcb6c64b85f2a7ecc8c71aeecf890a2a7::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitcb6c64b85f2a7ecc8c71aeecf890a2a7::$classMap;
 
         }, null, ClassLoader::class);
     }

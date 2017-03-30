@@ -1,0 +1,36 @@
+{% set stream_item_element = if_email('div', 'article')  %}
+
+<{{ stream_item_element }} class="{{ macros.get_stream_item_classes( 'standard', _context ) }}"
+         {{ item.get_the_data_atts }}>
+
+    {% if is_home and item.is_pinned %}
+    {% include 'partials/stream/pin-mark.twig' %}
+    {% endif %}
+
+    <div class="c-stream__item__inner  c-overview--factcheck  c-overview  o-media  o-media--responsive">
+
+        {% if item.get_statement_img and not is_email %}
+        {% include 'partials/stream/factcheck-img.twig' %}
+        {% endif %}
+
+        {% if is_home and item.has_story %}
+        {% include 'partials/overview/overline.twig' with {
+            'class': 'c-stream__item__overline'
+        } %}
+        {% endif %}
+
+        <div class="c-stream__item__body  o-media__body">
+            {% include 'partials/item-title.twig' %}
+
+            {% if item.get_excerpt %}
+            <div class="c-overview__description  c-stream__item__description">
+                {{ item.get_the_excerpt }}
+            </div>
+            {% endif %}
+        </div>
+
+        {% include 'partials/meta-info/meta-info.twig' %}
+
+    </div>
+
+</{{ stream_item_element }}>

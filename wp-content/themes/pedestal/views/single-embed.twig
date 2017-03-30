@@ -4,46 +4,39 @@
 
 <main role="main" class="{{ main_classes }}">
 
-    <article class="c-content  c-panel  {{ macros.has_story_bar( _context ) }}  {{ item.css_classes }}"
+    <article class="c-main__content  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
-        {{ macros.blox( _context, {}, 'story-bar' ) }}
+        <header class="c-main__header  c-overview">
 
-        <div class="c-panel__inner">
-
-            <header class="c-content__header">
-
+            <div class="c-overview__sponsorship">
                 {{ ped_slot( 'single_lead' ) }}
+            </div>
 
-                <h2 class="c-content__title">{{ item.get_the_title }}</h2>
-
-                <div class="c-content__meta">
-                    {% include 'partials/meta-info/meta-info-entity.twig' %}
-                </div>
-
-                {% include 'partials/entity-share.twig' %}
+            {% include 'partials/overview/overline.twig' %}
+            {% include 'partials/item-title.twig' %}
+            {% include 'partials/meta-info/meta-info-entity.twig' %}
+            {% include 'partials/entity-share.twig' %}
 
             {% if item.get_excerpt %}
-                <div class="c-content__excerpt">
-                    {{ item.get_the_excerpt }}
-                </div>
+            <div class="c-overview__description">
+                {{ item.get_the_excerpt }}
+            </div>
             {% endif %}
 
-            </header>
+        </header>
 
-            <section class="c-content__body">
-                {{ item.get_embed_html() }}
-            </section>
+        <section class="c-main__body">
+            {{ item.get_embed_html() }}
+        </section>
 
         {% if item.has_clusters %}
-            <footer class="c-content__footer  [ o-rule--closure  o-rule ]">
+            <footer class="c-main__footer  [ o-rule--closure  o-rule ]">
                 {% include 'partials/cluster-list.twig' %}
             </footer>
         {% endif %}
 
-            {% include 'partials/modals/entity-share-modal.twig' %}
-
-        </div>
+        {% include 'partials/modals/entity-share-modal.twig' %}
 
     </article>
 

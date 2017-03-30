@@ -633,8 +633,8 @@ class Admin {
                 break;
         }
 
-        // Require excerpt for all editorial post types
-        if ( in_array( $data['post_type'], Types::get_editorial_post_types() )
+        // Require excerpt for all original content post types
+        if ( in_array( $data['post_type'], Types::get_original_post_types() )
             && empty( $data['post_excerpt'] ) ) {
             $redirect_arg = 'excerpt_required';
         }

@@ -28,19 +28,21 @@ class Figure {
     ];
 
     private $default_atts = [
-        'attachment'         => 0,
-        'classes'            => '',
-        'figcaption_classes' => '',
-        'wrap_classes'       => '',
-        'align'              => '',
-        'url'                => '',
-        'capid'              => '',
-        'caption'            => '',
-        'caption_html'       => '',
-        'credit'             => '',
-        'credit_link'        => '',
-        'element_wrap'       => '',
-        'style'              => '',
+        'attachment'          => 0,
+        'classes'             => '',
+        'figcaption_classes'  => '',
+        'wrap_classes'        => '',
+        'align'               => '',
+        'linkto'              => '',
+        'capid'               => '',
+        'caption'             => '',
+        'caption_html'        => '',
+        'credit'              => '',
+        'credit_link'         => '',
+        'element_figure_wrap' => '',
+        'style'               => '',
+        'gaCategory'          => '',
+        'gaLabel'             => '',
     ];
 
     public function __construct( $type, $content, $atts = [] ) {
@@ -125,7 +127,7 @@ class Figure {
                 // @codingStandardsIgnoreStart
                 if ( 'iframe' === $node->nodeName && is_feed( 'fias' ) ) {
                     // @codingStandardsIgnoreEnd
-                    $atts['element_wrap'] = null;
+                    $atts['element_figure_wrap'] = null;
                     $this->content = str_replace( 'class="', 'class="column-width ', $this->content );
                 }
 
@@ -155,21 +157,23 @@ class Figure {
         }
 
         $context = [
-            'type'               => $type,
-            'id'                 => $id_str,
-            'capid'              => $capid,
-            'align'              => esc_attr( $atts['align'] ),
-            'classes'            => $classes,
-            'figcaption_classes' => $atts['figcaption_classes'],
-            'wrap_classes'       => $wrap_classes,
-            'url'                => $atts['url'],
-            'content'            => $this->content,
-            'caption'            => $atts['caption'],
-            'caption_html'       => $atts['caption_html'],
-            'credit'             => $atts['credit'],
-            'credit_link'        => $atts['credit_link'],
-            'element_wrap'       => $atts['element_wrap'],
-            'style'              => $style,
+            'type'                => $type,
+            'id'                  => $id_str,
+            'capid'               => $capid,
+            'align'               => esc_attr( $atts['align'] ),
+            'classes'             => $classes,
+            'figcaption_classes'  => $atts['figcaption_classes'],
+            'wrap_classes'        => $wrap_classes,
+            'url'                 => $atts['linkto'],
+            'gaCategory'          => $atts['gaCategory'],
+            'gaLabel'             => $atts['gaLabel'],
+            'content'             => $this->content,
+            'caption'             => $atts['caption'],
+            'caption_html'        => $atts['caption_html'],
+            'credit'              => $atts['credit'],
+            'credit_link'         => $atts['credit_link'],
+            'element_figure_wrap' => $atts['element_figure_wrap'],
+            'style'               => $style,
         ];
 
         // If the <img> is already wrapped in a <a> then don't double link it

@@ -12,12 +12,3 @@ $include-html-panel-classes        : false !default;
 $c-panel-margin-bottom               : $base-spacing-unit !default;
 $c-panel-padding                     : $base-spacing-unit !default;
 $c-panel-header-adjust               : false !default;
-
-// Pinned Panels
-$c-panel-pin-color               : $primary-color !default;
-$c-panel-pinned-border-size      : unitize( 3px ) !default;
-$c-panel-pinned-border-color     : $primary-color !default;
-$c-panel-pinned-story-bar-offset : ( map-get-strict( $story-bar-settings, 'offset' ) - $c-panel-pinned-border-size ) !default;
-$c-panel-pin-text-size           : unitize( 0.7rem, $base-font-size ) !default;
-$c-panel-pin-color-story-bar   : $white !default;
-$c-panel-pin-offset-v            : -( unitize( 2px ) );

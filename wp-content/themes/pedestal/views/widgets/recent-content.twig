@@ -1,8 +1,11 @@
 <section class="c-stream--imglist  c-stream--sm  c-stream">
+{% set stream = true %}
+
 {% for item in items %}
-    {% include 'partials/stream/imglist/item.twig' with {
-        'gaCategory': 'Widget|Recent Content',
-        'show_thumbs': show_thumbs
-    } %}
+{% include 'partials/stream/imglist/item.twig' with {
+    'gaCategory': 'Widget|Recent Content',
+    'show_thumbs': show_thumbs
+} %}
 {% endfor %}
+
 </section>

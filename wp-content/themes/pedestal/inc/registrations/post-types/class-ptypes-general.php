@@ -11,7 +11,7 @@ class General_Types extends Types {
      */
     protected static $newsletter_item_types;
 
-    protected $editorial_post_types = [];
+    protected $original_post_types = [];
 
     protected $post_types = [
         'pedestal_newsletter',

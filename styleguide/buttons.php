@@ -3,7 +3,7 @@ include 'include.php';
 styleguide_header();
 ?>
     <div class="content-wrapper row">
-		<main class="main columns large-8 js-main" role="main">
+		<main class="c-main columns large-8 js-main" role="main">
 			<p><button>Unstyled Button</button></p>
 			<p><button class="button">Button</button></p>
 			<p><button class="button--rounded button">Rounded Button</button></p>

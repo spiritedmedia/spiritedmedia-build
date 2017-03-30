@@ -4,16 +4,12 @@
 
 
 // Order matters
-@import 'blox.config';
 @import 'panels.config';
+@import 'stream.config';
 
 @import '404.config';
 @import 'ads.config';
-@import 'avatar.config';
-@import 'content.config';
-@import 'entity.config';
 @import 'factcheck.config';
-@import 'figure.config';
 @import 'footnotes.config';
 @import 'header.config';
 @import 'hero.config';
@@ -27,7 +23,6 @@
 @import 'shortcodes.config';
 @import 'slots.config';
 @import 'statement.config';
-@import 'stream.config';
 @import 'tables.config';
 @import 'user-card.config';
 @import 'whos-next.config';

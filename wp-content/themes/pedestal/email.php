@@ -13,10 +13,8 @@ if ( defined( 'PEDESTAL_DEBUG_EMAIL_CSS' ) && true === PEDESTAL_DEBUG_EMAIL_CSS 
 }
 
 add_filter( 'timber_context', function( $context ) use ( $debug_styles ) {
+    $context['is_home'] = false;
     $context['email_styles'] = $debug_styles;
-
-    $context['grouped'] = true;
-
     return $context;
 } );
 

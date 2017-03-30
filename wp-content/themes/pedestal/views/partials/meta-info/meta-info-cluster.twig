@@ -1,0 +1,20 @@
+{% set meta_info_classes = meta_info_classes|default( 'c-overview__meta' ) %}
+
+<div class="{{ meta_info_classes }}  c-meta-info--{{ item.get_type }}  c-meta-info--cluster  c-meta-info">
+    <div class="c-meta-info__modified  c-meta-info__item--stacked">
+        <span class="c-meta-info__label">
+            {{ __( 'Last Updated', 'pedestal' ) }}&nbsp;
+        </span>
+        <span class="c-meta-info__timestamp--modified  c-meta-info__timestamp">
+            {% include 'partials/meta-info/timestamp-modified.twig' %}
+        </span>
+    </div>
+    <div class="c-meta-info__published  c-meta-info__item--stacked">
+        <span class="c-meta-info__label">
+            {{ __( 'Created', 'pedestal' ) }}&nbsp;
+        </span>
+        <span class="c-meta-info__timestamp--published  c-meta-info__timestamp">
+            {% include 'partials/meta-info/timestamp-published.twig' %}
+        </span>
+    </div>
+</div>

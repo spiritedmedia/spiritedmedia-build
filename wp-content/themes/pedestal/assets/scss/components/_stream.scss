@@ -22,7 +22,7 @@ $c: '.c-stream';
 
 
   &__header {
-    margin-top: c-stream-property-get( item-spacing );
+    margin-top: $stream-item-spacing;
 
     @media #{$small-only} {
       text-align: center;
@@ -43,14 +43,14 @@ $c: '.c-stream';
     font-weight: normal;
     text-transform: uppercase;
     font-style: italic;
-    color: $grey-mid;
+    color: $dimmed-text-color;
   }
 
 
   &__paged {
     #{$c}__header & {
       text-align: left;
-      margin-left: c-stream-property-get( header-paged-m-l );
+      margin-left: $base-spacing-unit / 4;
     }
   }
 
@@ -61,6 +61,7 @@ $c: '.c-stream';
   // A stream heading may appear alongside stream items as a way of separating items
   &__heading {
     text-transform: uppercase;
+    margin-bottom: $base-spacing-unit * 1.5;
 
     @if $email {
       font-size: $h5-font-size;
@@ -79,9 +80,10 @@ $c: '.c-stream';
   &__item {
     @include clearfix;
     position: relative;
+    margin-top: $stream-item-spacing;
 
-    @if not $email {
-      margin-top: c-stream-property-get( item-spacing );
+    @media #{$medium-up} {
+      margin-top: $stream-item-spacing--mq-md-up;
     }
 
     &:first-child {
@@ -89,12 +91,17 @@ $c: '.c-stream';
     }
 
     &:last-child {
-      margin-bottom: c-stream-property-get( item-spacing );
+      margin-bottom: $stream-item-spacing;
     }
 
-    &.has-story-bar {
-      &:first-child {
-        margin-top: halve( map-get-strict( $story-bar-settings, 'm-t' ) );
+    &__inner {
+      clear: both;
+    }
+
+
+    &__pin {
+      @media #{$medium-up} {
+        float: right;
       }
     }
 
@@ -103,43 +110,13 @@ $c: '.c-stream';
 
 
     &__title {
-      font-weight: 500;
+      font-weight: normal;
     }
 
 
-    &__link {
-      color: $grey-darker;
-    }
+    &__img {}
 
-
-    &__img {
-
-      @media #{$medium-up} {
-        width: c-stream-property-get( item-img-thumbnail-w );
-        height: auto;
-      }
-
-      .email-body & {
-        margin-bottom: $base-spacing-unit;
-      }
-
-      // scss-lint:disable SelectorFormat
-      .rail & {
-        width: auto;
-      }
-      // scss-lint:enable SelectorFormat
-    } // __item__img
   } // __item
-
-
-  .c-pagination {
-    .c-panel & {
-      position: relative;
-      margin-right: -( $c-panel-padding );
-      margin-left: -( $c-panel-padding );
-      bottom: -( $c-panel-padding );
-    }
-  }
 
 
 
@@ -150,86 +127,12 @@ $c: '.c-stream';
   // ==========================================================================
 
 
-  /// Stream with items in separate panels
-  ///
-  /// Extends `.c-stream`.
-  &--isolated {
-    // scss-lint:disable Indentation SelectorFormat
-
-    [data-post-type="article"],
-    [data-post-type="whosnext"] {
-
-      @media #{$medium-up} {
-
-        #{$c}__item {
-          // scss-lint:disable NestingDepth
-
-          &__body {
-            position: relative;
-            z-index: $z-entity-body;
-          }
-
-          &__img {
-            margin: 0;
-            overflow: hidden;
-            float: none;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0.15;
-            z-index: $z-stream-item-img;
-
-            img {
-              position: absolute;
-              bottom: -20%;
-              width: 100%;
-              height: auto;
-            }
-          } // end __item__img
-        } // end __item
-      } // end @media
-    } // end article / whosnext
-  } // end --isolated
-
-
-
-
-
   /// Stream with items separated by a pedal rule
   ///
   /// Extends `.c-stream`.
-  &--pedalized {
-
-    // Remove pedal rule from:
-    // 1. First stream item after stream header
-    // 2. First stream item after heading
-    #{$c}__header + #{$c}__items #{$c}__item:first-child, /* 1 */
-    #{$c}__heading + #{$c}__item /* 2 */ {
-      border-top: 0;
-
-      &::before {
-        width: 0;
-      }
-    }
-
-
-    #{$c}__item {
-      &__body {
-        padding-top: halve( $c-panel-padding );
-      }
-
-      &__img {
-        padding-top: $c-panel-padding;
-      }
-    }
-
-
-    .o-rule {
-      padding-top: 0;
-    }
-  } // end --pedalized
+  ///
+  /// @TODO do we even need this class at all?
+  &--standard {}
 
 
 
@@ -256,67 +159,35 @@ $c: '.c-stream';
 
 
 
-   /// Stream with even top and bottom spacing and increased horizontal padding
-   ///
-   /// Extends `.c-stream`.
-  &--inset {
-    #{$c}__item {
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-top: c-stream-property-get( even-spacing-sm );
-      padding-bottom: c-stream-property-get( even-spacing-sm );
-
-      @media #{$medium-up} {
-        padding-top: c-stream-property-get( even-spacing-lg );
-        padding-bottom: c-stream-property-get( even-spacing-lg );
-      }
-
-      &__inner {
-        @media #{$medium-up} {
-          margin-left: c-stream-property-get( inset-spacing );
-          margin-right: c-stream-property-get( inset-spacing );
-        }
-      }
-    } // end __item
-  } // end --inset
-
-
-
-
-
   /// Stream with small always-floated thumbnails and title only
   &--imglist {
 
     #{$c}__item {
+      margin-top: $base-spacing-unit * 2;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
       &__title {
-        font-size: c-stream-property-get( imglist, f-z-sm );
-
-        @media #{$medium-up} {
-          font-size: c-stream-property-get( imglist, f-z-lg );
-        }
+        @include h-size( 5 );
       }
-
-
-      &__link:not( .entity--promo ) {
-        @include anchorage( '&' );
-      }
-
 
       &__img {
-        width: c-stream-property-get( imglist, img-size-sm );
-        height: c-stream-property-get( imglist, img-size-sm );
+        width: $stream-imglist-img-size-sm;
+        height: $stream-imglist-img-size-sm;
 
         @media #{$medium-up} {
-          width: c-stream-property-get( imglist, img-size-lg );
-          height: c-stream-property-get( imglist, img-size-lg );
+          width: $stream-imglist-img-size-lg;
+          height: $stream-imglist-img-size-lg;
         }
 
         // scss-lint:disable NestingDepth
         &--placeholder {
-          @include img-placeholder( c-stream-property-get( imglist, img-size-sm ) );
+          @include img-placeholder( $stream-imglist-img-size-sm );
 
           @media #{$medium-up} {
-            @include img-placeholder( c-stream-property-get( imglist, img-size-lg ) );
+            @include img-placeholder( $stream-imglist-img-size-lg );
           }
         } // __item__img--placeholder
       } // __item__img
@@ -326,18 +197,18 @@ $c: '.c-stream';
     &.c-stream--sm {
       #{$c}__item {
         // scss-lint:disable NestingDepth
-        margin-top: halve( c-stream-property-get( item-spacing ) );
+        margin-top: $stream-item-spacing / 2;
 
         &__title {
           font-size: $paragraph-font-size;
         }
 
         &__img {
-          width: c-stream-property-get( imglist, img-size-sm );
-          height: c-stream-property-get( imglist, img-size-sm );
+          width: $stream-imglist-img-size-sm;
+          height: $stream-imglist-img-size-sm;
 
           &--placeholder {
-            @include img-placeholder( c-stream-property-get( imglist, img-size-sm ) );
+            @include img-placeholder( $stream-imglist-img-size-sm );
           } // __item__img--placeholder
         } // __item__img
       } // __item
@@ -350,25 +221,9 @@ $c: '.c-stream';
 
   /// Stream with minor headings as item titles
   &--simple {
-    #{$c}__item {
-      margin-bottom: $base-spacing-unit;
-
-      &__title {
-        @extend %u-heading--minor;
-      }
+    #{$c}__item__title {
+      @extend %c-heading--minor;
     }
-
-    @if $email {
-      #{$c}__heading {
-        margin-bottom: $half-spacing-unit;
-      }
-    }
-
-    // scss-lint:disable SelectorFormat
-    .entity-excerpt p {
-      margin-bottom: 0;
-    }
-    // scss-lint:enable SelectorFormat
   } // &--simple
 } // end stream
 
@@ -381,15 +236,21 @@ $c: '.c-stream';
 // ==========================================================================
 
 
-.entity--factcheck {
+.c-stream__item--factcheck {
   .c-stream__item__img {
-    max-width: c-stream-property-get( item-img-thumbnail-w );
+    max-width: $overview-thumbnail-img-size;
 
     @media #{$small-only} {
       margin-left: auto;
       margin-right: auto;
     }
   }
+}
+
+
+.c-stream__item--event {
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
 

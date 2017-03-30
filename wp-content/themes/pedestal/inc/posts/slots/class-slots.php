@@ -501,7 +501,7 @@ class Slots {
             } elseif ( 'newsletter_promoted_event' === $slot_position ) {
                 $context['item'] = $slot_data;
                 $item_type = $slot_data->get_type();
-                $additional_classes = 'c-stream__item js-stream-item o-rule o-rule--pedal';
+                $additional_classes = 'c-stream__item';
                 $template = 'partials/slots/' . str_replace( '_', '-', $slot_position ) . '.twig';
             }
 

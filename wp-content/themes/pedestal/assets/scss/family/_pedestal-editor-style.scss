@@ -55,8 +55,10 @@
 // High-Level
 // ==========================================================================
 
+
 @import '../base/global/mixins';
 @import '../base/global/general';
+@import '../base/global/main';
 
 
 
@@ -92,15 +94,12 @@
 // ==========================================================================
 
 
-@import '../components/blox';
-
-
-@import '../components/entity';
+@import '../components/type-headings';
+@import '../components/overview';
 @import '../components/figure';
 @import '../components/event';
 @import '../components/tables';
 @import '../components/icons';
-@import '../components/content';
 @import '../components/stream';
 @import '../components/meta-info';
 @import '../components/avatar';
@@ -142,7 +141,7 @@ body#tinymce {
   .o-rule.o-rule--pedal {
 
     &:first-of-type {
-      border-top: 4px solid $grey-lightest;
+      border-top: 4px solid $o-rule-color;
       margin-top: 1.2rem;
 
       &::before {

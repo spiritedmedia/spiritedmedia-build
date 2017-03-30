@@ -2,33 +2,29 @@
 
 {% block content %}
 
-<div class="email-constrain content-wrapper">
+<div class="email-row content-wrapper">
 
-    <div id="entity-container" class="email-follow-update  c-panel  has-story-bar  has-cap">
+    <div id="entity-container" class="email-follow-update  c-main--email  c-main">
 
-        <div class="email-follow-update__header">
-            {{ macros.blox( _context, {
-                'format': 'header'
-            }, 'story-bar' ) }}
+        <div class="email-follow-update__header  c-main__header">
+            {% include 'partials/overview/overline.twig' %}
         </div>
 
-        <div class="email-follow-update__entities  c-stream  c-stream--ladder">
+        <div class="email-follow-update__entities  c-stream  c-stream--standard">
+            {% set stream = true %}
+
             <div class="c-stream__items">
                 {% for item in entities %}
                     {% include [
-                        'partials/stream/ladder/' ~ item.get_type ~ '.twig',
-                        'partials/stream/ladder/entity.twig'
+                        'partials/stream/standard/' ~ item.get_type ~ '.twig',
+                        'partials/stream/standard/entity.twig'
                     ] %}
                 {% endfor %}
             </div>
         </div>
 
-        <div class="email-follow-update__footer">
-            {{ macros.blox( context, {
-                'format': 'cap',
-                'title': "Full Story On " ~ site.name,
-                'url': item.get_the_permalink
-            } ) }}
+        <div class="email-follow-update__footer  c-main__footer">
+            <p><a href="{{ item.get_the_permalink }}">Full Story on {{ site.name }}</a></p>
         </div>
 
     </div>

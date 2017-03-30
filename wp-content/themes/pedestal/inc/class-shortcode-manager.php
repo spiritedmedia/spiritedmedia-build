@@ -357,7 +357,7 @@ class Shortcode_Manager {
         $output = str_replace( 'src="//', 'src="https://', $output );
 
         if ( is_feed( 'fias' ) ) {
-            $figure_atts['element_wrap'] = 'iframe';
+            $figure_atts['element_figure_wrap'] = 'iframe';
         }
 
         $figure = new \Pedestal\Objects\Figure( $embed_type, $output, $figure_atts );

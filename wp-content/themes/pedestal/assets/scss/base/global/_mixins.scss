@@ -44,13 +44,9 @@
   $explode-width: $hoz-explode-side
 ) {
   #{$selector} {
-    $margin-top: -( $content-wrapper-m-t + $main-m-t );
+    $margin-top: -( $content-wrapper-m-t + $main-margin-top );
     $margin-hoz: -( $explode-width );
     margin: $margin-top $margin-hoz 0;
-
-    .has-story-bar & {
-      margin: 0 $margin-hoz;
-    }
 
     &__inner {
       padding: $inner-vertical-padding $explode-width;
@@ -255,6 +251,28 @@
 }
 
 
+/// Lighten/dim some links
+@mixin link-light {
+  color: $dimmed-text-color;
+
+  &:hover,
+  &:active {
+    color: $grey-25;
+  }
+}
+
+
+/// Darken some links arbitrarily
+@mixin link-dark {
+  color: $body-font-color;
+
+  &:hover,
+  &:active {
+    color: $grey-40;
+  }
+}
+
+
 
 
 
@@ -265,7 +283,7 @@
 
 @mixin iconset(
   $diameter: $icon-diameter,
-  $background-color: $grey-lightish,
+  $background-color: $grey-70,
   $text-color: $white,
   $spacing: $icon-spacing
   ) {
@@ -306,7 +324,7 @@
 
 
 @mixin iconset-coloring(
-  $background-color: $grey-lightish,
+  $background-color: $grey-70,
   $text-color: $white
   ) {
 

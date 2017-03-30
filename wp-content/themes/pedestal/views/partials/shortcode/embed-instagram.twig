@@ -1,3 +1,9 @@
 <div class="pedestal-shortcode  {{ item.css_classes }}">
-    <a href="{{ item.get_the_permalink }}" data-ga-category="Embed" data-ga-label="Shortcode|Instagram">{{ item.get_featured_image_html( 'lead-image' ) }}</a>
+    <a href="{{ item.get_the_permalink }}"
+        data-ga-category="Embed"
+        data-ga-label="Shortcode|Instagram">
+
+        {{ item.get_featured_image_html( '1024-16x9' ) }}
+
+    </a>
 </div>

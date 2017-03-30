@@ -1,40 +1,38 @@
 {% extends "base.twig" %}
 
-{% block metadata %}
-{{ parent() }}
-metadata.dimension1 = "page";
-{% endblock %}
-
 {% block content %}
 
-<main role="main" class="{{ main_classes }}">
+<main role="main" class="c-main--promotional-content  {{ main_classes }}">
 
-    <article class="[ c-content--promotional-content  c-content ]  c-panel  entity  promotional-content  has-story-bar">
+    <div class="c-main__content">
 
-        {{ macros.blox( _context, {
-            title: promo_story_title,
-            background: 'promo',
-            offset: true,
-        }, 'story-bar' ) }}
+        <div class="c-overview">
+            {% include 'partials/overview/overline.twig' with {
+                title: promo_story_title
+            } %}
 
-        <div class="c-panel__inner">
+            <h2 class="c-overview__title"><!-- @Title --></h2>
 
-            <h2 class="c-content__title"><!-- @Title --></h2>
-
-            <div class="c-content__meta">
-                <ul class="c-meta-info--promo c-meta-info--entity c-meta-info">
-                    <li class="c-meta-info__source"><!-- @Author --></li>
-                    <li class="c-meta-info__date"><!-- @Datetime --></li>
-                </ul>
+            <div class="c-overview__meta c-meta-info--advert c-meta-info">
+                <div class="c-meta-info__stack c-meta-info__item">
+                    <div class="c-meta-info__name c-meta-info__stack__item">
+                        <!-- @Author -->
+                    </div>
+                    <div class="c-meta-info__timestamp c-meta-info__stack__item c-meta-info__stack__mover">
+                        <span class="c-meta-info__timestamp__inner"><!-- @Datetime --></span>
+                    </div>
+                </div>
+                <div class="c-meta-info__timestamp c-meta-info__item c-meta-info__mover">
+                    <span class="c-meta-info__timestamp__inner"><!-- @Datetime --></span>
+                </div>
             </div>
-
-            <div class="c-content__body  s-post-content">
-                <!-- @Content -->
-            </div>
-
         </div>
 
-    </article>
+        <section class="c-main__body  s-post-content">
+            <!-- @Content -->
+        </section>
+
+    </div>
 
 </main>
 

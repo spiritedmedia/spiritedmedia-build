@@ -7,11 +7,11 @@
 
 
 //
-// Nativo
+// Nativo: Promotional Content Landing Page
 // ==========================================================================
 
 
-.c-content--promotional-content {
+.c-main--promotional-content {
 
   .ntvShare,
   .ntv_share {
@@ -68,37 +68,118 @@
       background-image: url( $pedestal-social-icons-abspath + '/png/circle_64x64_stumbleupon.png' );
     }
   } // end [class*=ntvShare]
-} // end .c-content--promotional-content
+} // end .c-main--promotional-content
 
 
-.entity--promo {
-
-  .nativo-home-stream-04 & {}
-
-  .nativo-home-stream-12 & {}
-
-  .nativo-cluster-stream-04 & {}
-
-  .nativo-cluster-stream-12 & {}
-
-  .nativo-content-below & {}
-
-  .rail & {}
 
 
-  .nativo-content-below &,
-  .rail & {
-    &,
-    .c-meta-info--bar {
-      background-color: rgba( $c-panel-bg, 0.55 );
-    }
+
+//
+// Nativo: Video Units
+// ==========================================================================
+
+
+.ntv-video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 
-
-  &.has-story-bar {
-    @extend %has-story-bar;
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
+}
 
+.ntv-video-frame {
+  clear: both;
+  margin-top: -8px;
+  padding: 0 10px;
+  max-height: 0;
+  overflow-y: hidden;
+  transition-duration: 1.2s;
+
+  .ntvExpanded & {
+    overflow-y: hidden;
+    max-height: 800px;
+    padding-top: 20px;
+  }
+}
+
+.ntv-video-sponsor {
+  height: auto;
+  float: left;
+}
+
+.ntv-video-sharebar {
+  float: right;
+}
+
+.ntv-video-expander {
+  clear: both;
+  height: 8px;
+}
+
+.ntv-video-open {
+  display: none;
+
+  .ntvExpandable & {
+    position: relative;
+    left: 0;
+    width: 100%;
+    margin-top: 8px;
+    display: block;
+  }
+}
+
+.ntv-icon-expander {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 8px solid $grey-80;
+  margin: 0 auto;
+  cursor: pointer;
+
+  .ntvExpanded & {
+    border-top: 0;
+    border-bottom: 8px solid $grey-80;
+  }
+}
+
+.ntv-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  background: $white;
+}
+
+.ntv-video-play-button {
+  background: transparent;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  margin-top: -20px;
+  margin-left: -20px;
 }
 
 

@@ -10,11 +10,7 @@ $section-header-p-t       : double( $base-spacing-unit ) !default;
 //     we can do this better :)
 $o-rule-height              : quarter( $base-spacing-unit ) !default;
 $o-rule-p-t                 : quarter( $base-spacing-unit ) !default;
-$o-rule-color               : $grey-lightest !default;
-
-$o-rule--pedal-w            : unitize( 50px ) !default;
-$o-rule--pedal-h            : $o-rule-height !default;
-$o-rule--pedal-position     : -( double( $o-rule-height ) ) !default;
+$o-rule-color               : $grey-95 !default;
 
 $o-rule--closure-h          : halve( $o-rule-height );
 $o-rule--closure-m-t        : ( $base-spacing-unit * 3 ) !default;

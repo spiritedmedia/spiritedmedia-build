@@ -1,11 +1,5 @@
 {% extends item.get_single_base_template %}
 
-
-{% block story_bar %}
-    {{ macros.blox( _context, {}, 'story-bar' ) }}
-{% endblock %}
-
-
 {% block content__body %}
     {% include 'partials/whosnext/content.twig' %}
 {% endblock %}

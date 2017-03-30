@@ -4,62 +4,54 @@
 
 <main role="main" class="{{ main_classes }}">
 
-    <article class="c-content  c-panel  {{ macros.has_story_bar( _context ) }}  {{ item.css_classes }}"
+    <article class="c-main__content  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
-        {{ macros.blox( _context, {}, 'story-bar' ) }}
+        <header class="c-main__header  c-overview">
 
-        <div class="c-panel__inner">
-
-            <header class="c-content__header">
-
-                {% if item.has_featured_image() %}
-                <div class="c-content__lead-img">
-                    {% include 'partials/lead-image.twig' %}
-                </div>
-                {% endif %}
-
-                {{ ped_slot( 'single_lead' ) }}
-
-                <h2 class="c-content__title">{{ item.get_the_title }}</h2>
-
-                {% if item.get_excerpt %}
-                    <div class="c-content__excerpt">
-                        {{ item.get_the_excerpt }}
-                    </div>
-                {% endif %}
-
-                <div class="c-content__meta">
-                    {% include 'partials/meta-info/meta-info-entity.twig' %}
-                </div>
-
-                {% include 'partials/entity-share.twig' %}
-
-            </header>
-
-            <section class="c-content__body  s-post-content">
-                {{ item.get_the_content }}
-            </section>
-
-            {% if item.get_the_footnotes %}
-            <aside class="c-content__footnotes  js-content-footnotes">
-                {{ item.get_the_footnotes }}
-            </aside>
+            {% if item.has_featured_image %}
+            {% include 'partials/overview/lead-image.twig' %}
             {% endif %}
 
-            <footer class="c-content__footer  [ o-rule--closure  o-rule ]">
-                {% include 'partials/cluster-list.twig' %}
+            <div class="c-overview__sponsorship">
+                {{ ped_slot( 'single_lead' ) }}
+            </div>
 
-                {% if 'feat_contributor' == item.get_single_author.get_primary_role %}
-                <div class="c-content__author-info">
-                    {{ macros.user_card( _context, item.get_single_author ) }}
+            {% include 'partials/overview/overline.twig' %}
+            {% include 'partials/item-title.twig' %}
+
+            {% if item.get_excerpt %}
+                <div class="c-overview__description">
+                    {{ item.get_the_excerpt }}
                 </div>
-                {% endif %}
-            </footer>
+            {% endif %}
 
-            {% include 'partials/modals/entity-share-modal.twig' %}
+            {% include 'partials/meta-info/meta-info-entity.twig' %}
+            {% include 'partials/entity-share.twig' %}
 
-        </div>
+        </header>
+
+        <section class="c-main__body  s-post-content">
+            {{ item.get_the_content }}
+        </section>
+
+        {% if item.get_the_footnotes %}
+        <aside class="c-main__footnotes  js-content-footnotes">
+            {{ item.get_the_footnotes }}
+        </aside>
+        {% endif %}
+
+        <footer class="c-main__footer  [ o-rule--closure  o-rule ]">
+            {% include 'partials/cluster-list.twig' %}
+
+            {% if 'feat_contributor' == item.get_single_author.get_primary_role %}
+            <div class="c-main__author-info">
+                {{ macros.user_card( _context, item.get_single_author ) }}
+            </div>
+            {% endif %}
+        </footer>
+
+        {% include 'partials/modals/entity-share-modal.twig' %}
 
     </article>
 

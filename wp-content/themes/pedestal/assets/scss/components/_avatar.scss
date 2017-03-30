@@ -15,8 +15,6 @@
 
     @if $email {
       @include box-sizing( border-box );
-    } @else {
-      border: c-avatar-property-get( 'bd-w-sm' ) solid c-avatar-property-get( 'bd-c', 'default' );
     }
   }
 
@@ -34,7 +32,7 @@
 
       @include iconize(
         $path: $path,
-        $size: c-avatar-property-get( size-sm ),
+        $size: $avatar-size-sm,
         $fallback: $fallback
       );
     }
@@ -47,8 +45,4 @@
 .c-avatar--staff {}
 
 
-.c-avatar--contributor {
-  .c-avatar__img {
-    border-color: c-avatar-property-get( 'bd-c', 'contributor' );
-  }
-}
+.c-avatar--contributor {}

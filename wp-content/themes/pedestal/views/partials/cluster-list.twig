@@ -3,7 +3,7 @@
 {% set cluster_people = item.get_clusters_with_links('person') %}
 {% set cluster_orgs = item.get_clusters_with_links('org') %}
 {% set cluster_places_localities = item.get_clusters_with_links([ 'place', 'locality' ]) %}
-{% set heading_classes = 'c-cluster-list__heading  u-heading--minor' %}
+{% set heading_classes = 'c-cluster-list__heading  c-heading--minor' %}
 
 {% if item.has_clusters %}
 
