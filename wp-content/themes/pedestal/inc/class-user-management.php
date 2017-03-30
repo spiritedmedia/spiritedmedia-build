@@ -159,6 +159,7 @@ class User_Management {
             if ( 'subscriber' == $user->get_primary_role() ) {
                 return $template;
             }
+            status_header( 200 );
             $wp_query->is_404 = false;
             return locate_template( [ 'author.php' ] );
         });
