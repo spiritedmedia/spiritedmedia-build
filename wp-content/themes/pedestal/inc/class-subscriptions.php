@@ -2,25 +2,19 @@
 
 namespace Pedestal;
 
-use function Pedestal\Pedestal;
-
 use Timber\Timber;
 
-use Pedestal\Utils\Utils;
-
-use Pedestal\Registrations\Post_Types\Types;
-
+use function Pedestal\Pedestal;
+use Pedestal\Objects\ActiveCampaign;
 use Pedestal\Objects\Newsletter_Lists;
+use Pedestal\Objects\Notifications;
 use Pedestal\Posts\Post;
 use Pedestal\Posts\Newsletter;
-
 use Pedestal\Posts\Clusters\Cluster;
-use Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
 use Pedestal\Posts\Clusters\Story;
-
-use Pedestal\Objects\Notifications;
-
-use Pedestal\Objects\ActiveCampaign;
+use Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
+use Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Utils\Utils;
 
 class Subscriptions {
 
@@ -871,7 +865,9 @@ class Subscriptions {
         }
 
         ob_start();
+        Pedestal()->set_property( 'is_email', true );
         include $full_path;
+        Pedestal()->set_property( 'is_email', false );
         return ob_get_clean();
     }
 

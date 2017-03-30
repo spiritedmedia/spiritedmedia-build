@@ -22,9 +22,5 @@
 // ==========================================================================
 
 
-// Enable SassyCast strict mode
-$sc-strict-mode: true;
-
-@import 'SassyCast/dist/SassyCast';
 @import 'SassyLists/dist/SassyLists';
 @import 'susy/sass/susy';

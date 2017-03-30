@@ -1,0 +1,20 @@
+<div class="wrap">
+	<h1>Newsletter List Settings</h1>
+	<form action="{{ form.action }}" method="post">
+		<table class="form-table">
+		{% for field in fields %}
+		<tr valign="top">
+			<th scope="row"><label for="{{ field.key }}">{{ field.label }}</label></th>
+			<td>
+				<input type="number" name="{{ field.name }}" value="{{ field.id }}" id="{{ field.key }}">
+			</td>
+		</tr>
+		{% endfor %}
+		</table>
+		{{ nonce_field }}
+		<p class="submit">
+			{{ primary_button }}
+			{{ secondary_button }}
+		</p>
+	</form>
+</div>

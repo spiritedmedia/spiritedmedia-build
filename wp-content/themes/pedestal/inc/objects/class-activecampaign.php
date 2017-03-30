@@ -3,6 +3,7 @@
 namespace Pedestal\Objects;
 
 use Pedestal\Utils\Utils;
+use Pedestal\Objects\Newsletter_Lists;
 
 /**
  * A way to interact with ActiveCampaign
@@ -97,8 +98,8 @@ class ActiveCampaign {
 
     /**
      * Add a contact to ActiveCampaign
-     * @param array $fields  Details of the contact to add
      * @see   http://www.activecampaign.com/api/example.php?call=contact_add
+     * @param array $fields  Details of the contact to add
      * @return object        Object representing the contact
      */
     public function add_contact( $fields = [] ) {
@@ -129,8 +130,8 @@ class ActiveCampaign {
 
     /**
      * Add multiple contacts in one call
-     * @param array $contacts   An array of contact details
      * @see   http://www.activecampaign.com/api/example.php?call=contact_add
+     * @param array $contacts   An array of contact details
      * @return array $contacts  An array of contact objects
      */
     public function add_contacts( $contacts = [] ) {
@@ -193,9 +194,9 @@ class ActiveCampaign {
 
     /**
      * Unsubscribe a contact from one or more lists
+     * @see    http://www.activecampaign.com/api/example.php?call=contact_edit
      * @param  string $email    Email address of the contact to subscribe
      * @param  array $list_ids  One or more list IDs
-     * @see    http://www.activecampaign.com/api/example.php?call=contact_edit
      * @return boolean          true or response payload
      */
     public function unsubscribe_contact( $email = '', $list_ids = [] ) {
@@ -304,8 +305,8 @@ class ActiveCampaign {
 
     /**
      * Get details about lists
-     * @param  array $args  Array of arguments
      * @see    http://www.activecampaign.com/api/example.php?call=list_list
+     * @param  array $args  Array of arguments
      * @return object       List details
      */
     public function get_lists( $args = [] ) {
@@ -430,8 +431,8 @@ class ActiveCampaign {
 
     /**
      * Create a new list
-     * @param array $body_args  Options for the new list
      * @see   http://www.activecampaign.com/api/example.php?call=list_add
+     * @param array $body_args  Options for the new list
      * @return object           An object from the API response
      */
     public function add_list( $body_args = [] ) {
@@ -460,8 +461,8 @@ class ActiveCampaign {
 
     /**
      * Delete a list
-     * @param  integer|string $list_id An identifer for the list to be deleted
      * @see    http://www.activecampaign.com/api/example.php?call=list_delete
+     * @param  integer|string $list_id An identifer for the list to be deleted
      * @return object                  Details about the API request
      */
     public function delete_list( $list_id = 0 ) {
@@ -479,8 +480,8 @@ class ActiveCampaign {
 
     /**
      * Add a message to ActiveCampaign
-     * @param array $body_args  Message options
      * @see   http://www.activecampaign.com/api/example.php?call=message_add
+     * @param array $body_args  Message options
      * @return object           Details about the API request
      */
     public function add_message( $body_args = [] ) {
@@ -510,8 +511,8 @@ class ActiveCampaign {
 
     /**
      * Delete one or more messages from ActiveCampaign
-     * @param  integer $message_id ID of the message to delete
      * @see    http://www.activecampaign.com/api/example.php?call=message_delete_list
+     * @param  integer $message_id ID of the message to delete
      * @return object              Details from the API request
      */
     public function delete_message( $message_id = 0 ) {
@@ -566,6 +567,8 @@ class ActiveCampaign {
             return false;
         }
         $message_id = $message_response->id;
+        $newsletter_list = new Newsletter_Lists;
+
         // See http://www.activecampaign.com/api/example.php?call=campaign_create
         $body_args = [
             'type'                   => 'single',
@@ -577,6 +580,7 @@ class ActiveCampaign {
             'textunsub'              => 1, // Text Unsubscribe link?
             'm[' . $message_id . ']' => 100,
             'p[' . $list->id . ']'   => $list->id, // Which list will we send the campaign to?
+            'addressid'              => $newsletter_list->get_address_id(),
         ];
 
         if ( isset( $args['send_date'] ) ) {
@@ -594,8 +598,8 @@ class ActiveCampaign {
 
     /**
      * Delete one or more campaigns from ActiveCampaign
-     * @param  integer $campaign_id ID or IDs of campaigns to delete
      * @see    http://www.activecampaign.com/api/example.php?call=campaign_delete
+     * @param  integer $campaign_id ID or IDs of campaigns to delete
      * @return object  Response from API request
      */
     public function delete_campaign( $campaign_id = 0 ) {
@@ -614,6 +618,33 @@ class ActiveCampaign {
         ];
         $response = $this->get_request( $args );
         $payload = $response['body'];
+        return $payload;
+    }
+
+    /**
+     * Get details about addresses
+     * @see    http://www.activecampaign.com/api/example.php?call=address_list
+     * @param  array $args  Array of arguments
+     * @return object       Address details
+     */
+    public function get_addresses( $args = [] ) {
+        // @TODO The API returns 20 addresses per page so at some point in the
+        // future we'll need to account for this if we store more than 20 addresses
+
+        $default_args = [
+            'sort'           => 'id',
+            'sort_direction' => 'ASC',
+            'page'           => '',
+        ];
+        $args = wp_parse_args( $args, $default_args );
+        $args['api_action'] = 'address_list';
+        $response = $this->get_request( $args );
+        $payload = $response['body'];
+
+        // Remove some extra properties we don't need
+        unset( $payload->result_code );
+        unset( $payload->result_message );
+        unset( $payload->result_output );
         return $payload;
     }
 }

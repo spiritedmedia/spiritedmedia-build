@@ -331,7 +331,7 @@
  * @param  {bool}   $resize-only: false               Set whether to rezize only
  * @param  {bool}   $path-only:   false               Set whether to change path without resizing
  * @param  {bool}   $fallback:    true                Set whether to use SVG
- * @param  {bool}   $fa-colorize: false               Set whether this icon is overriding a FontAwesome icon
+ * @param  {mixed}  $fa-colorize: false               Override FontAwesome icon with colored PNG
  * @param  {bool}   $live-url:    false               If set, base the image path off the live URL
  */
 @mixin iconize(

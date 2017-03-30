@@ -460,7 +460,7 @@ class CLI extends \WP_CLI_Command {
         // Wrap string array values in single quotes for compatability with Sass
         // https://github.com/Updater/node-sass-json-importer#importing-strings
         array_walk_recursive( $sassy_config, function( &$value, $key ) {
-            if ( is_string( $value ) ) {
+            if ( is_string( $value ) && 'brandColor' !== $key ) {
                 $value = "'" . $value . "'";
             }
         } );
@@ -675,6 +675,21 @@ class CLI extends \WP_CLI_Command {
             }
             WP_CLI::success( "Changed role for {$count_users} `{$old_role}`s to `{$new_role}`s!" );
         }
+    }
+
+    /**
+     * Migrate users to new roles
+     *
+     * @subcommand generate-user-slugs
+     */
+    public function generate_user_slugs() {
+        $users = get_users();
+        foreach ( $users as $user ) {
+            $display_name_slug = sanitize_title( $user->display_name );
+            update_user_meta( $user->ID, 'display_name_slug', $display_name_slug );
+            WP_CLI::line( $user->display_name . ' --> ' . $display_name_slug );
+        }
+        WP_CLI::success( 'Done!' );
     }
 }
 

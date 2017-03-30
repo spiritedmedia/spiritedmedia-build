@@ -4,6 +4,7 @@ namespace Pedestal\Objects;
 use function Pedestal\Pedestal;
 
 use Pedestal\Objects\ActiveCampaign;
+use Timber\Timber;
 
 class Newsletter_Lists {
 
@@ -15,6 +16,12 @@ class Newsletter_Lists {
         'Daily Newsletter',
         'Breaking News',
     ];
+
+    /**
+     * Name of the key to store the address ID
+     * @var string
+     */
+    private $address_option_key = 'newsletter-address-id';
 
     /**
      * Slug of the settings page
@@ -57,33 +64,34 @@ class Newsletter_Lists {
     public function render_settings_page() {
         $this->save_settings_page();
         $lists = $this->get_all_newsletters();
-        ?>
-        <div class="wrap">
-            <h1>Newsletter List Settings</h1>
-            <form action="<?php echo esc_attr( '?post_type=pedestal_newsletter&page=' . $this->admin_page_slug ) ?>" method="post">
-                <?php if ( $lists ) : ?>
-                <table class="form-table">
-                <?php foreach ( $lists as $id => $list ) :
-                    $key = 'field-' . sanitize_title( $list );
-                    $field_name = $this->sanitize_option_name( $list );
-                    ?>
-                    <tr valign="top">
-                        <th scope="row"><label for="<?php echo esc_attr( $key ); ?>"><?php echo $list; ?></label></th>
-                        <td>
-                            <input type="number" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo absint( $id ); ?>" id="<?php echo esc_attr( $key ); ?>">
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-                </table>
-            <?php endif; ?>
-            <?php wp_nonce_field( $action = $this->admin_page_slug ); ?>
-            <p class="submit">
-                <?php submit_button( 'Sync & Save', 'primary', 'sync-and-save', $wrap = false ); ?>
-                <?php submit_button( 'Save', 'secondary', 'save', $wrap = false ); ?>
-            </p>
-            </form>
-        </div>
-        <?php
+        $address_id = $this->get_address_id();
+
+        $context = [];
+        $context['form'] = [
+            'action' => '?post_type=pedestal_newsletter&page=' . esc_attr( $this->admin_page_slug ),
+        ];
+        $context['fields'] = [];
+        foreach ( $lists as $id => $list ) {
+            $key = 'field-' . sanitize_title( $list );
+            $name = $this->sanitize_newsletter_option_name( $list );
+            $context['fields'][] = [
+                'id' => absint( $id ),
+                'key' => esc_attr( $key ),
+                'name' => esc_attr( $name ),
+                'label' => $list,
+            ];
+        }
+        $context['fields'][] = [
+            'id' => absint( $address_id ),
+            'key' => 'field-address-id',
+            'name' => esc_attr( $this->address_option_key ),
+            'label' => 'Address ID',
+        ];
+        $context['nonce_field'] = wp_nonce_field( $action = $this->admin_page_slug, $name = '_wpnonce', $referer = true, $echo = false );
+        $context['primary_button'] = get_submit_button( 'Sync & Save', 'primary', 'sync-and-save', $wrap = false );
+        $context['secondary_button'] = get_submit_button( 'Save', 'secondary', 'save', $wrap = false );
+
+        Timber::render( 'partials/admin/newsletter-settings.twig', $context );
     }
 
     /**
@@ -105,11 +113,15 @@ class Newsletter_Lists {
             foreach ( $this->list_names as $name ) {
                 // Employ a whitelist of option names we will store
                 // Prevents someone from arbitrarily adding option data
-                $key = $this->sanitize_option_name( $name );
+                $key = $this->sanitize_newsletter_option_name( $name );
                 if ( empty( $_POST[ $key ] ) ) {
                     continue;
                 }
-                $this->save_option( $name, $_POST[ $key ] );
+                $this->save_newsletter_option( $name, $_POST[ $key ] );
+            }
+
+            if ( ! empty( $_POST[ $this->address_option_key ] ) ) {
+                $this->save_address_option( $_POST[ $this->address_option_key ] );
             }
         }
 
@@ -127,14 +139,14 @@ class Newsletter_Lists {
      * @return int     The ID
      */
     public function get_newsletter_list_id( $name = '' ) {
-        $key = $this->sanitize_option_name( $name );
+        $key = $this->sanitize_newsletter_option_name( $name );
         if ( $id = get_option( $key ) ) {
             return $id;
         }
 
         if ( $id = $this->fetch_list_id_from_api( $name ) ) {
             // If the ID was fetched then we should save it
-            $this->save_option( $name, $id );
+            $this->save_newsletter_option( $name, $id );
             return $id;
         }
 
@@ -170,13 +182,59 @@ class Newsletter_Lists {
     }
 
     /**
-     * Handle saving an option to the database
+     * Get the address ID from an option in the database
+     * or fall back to an API request
+     * @return Integer  ID of the address or 0 if not found
+     */
+    public function get_address_id() {
+        // Check if the ID was previously saved
+        if ( $id = get_option( $this->address_option_key ) ) {
+            return $id;
+        }
+
+        // Check the API for the address ID
+        if ( $id = $this->fetch_address_id_from_api() ) {
+            // If the ID was fetched then we should save it
+            $this->save_address_option( $id );
+            return $id;
+        }
+
+        // Exhausted all options, 0 tells ActiveCampaign to use the default address
+        return 0;
+    }
+
+    /**
+     * Fetch the addresses from the ActiveCampaign API
+     * Loop over each address and match based on zip code to find the ID
+     * @return integer|false The ActiveCampaign address ID
+     */
+    public function fetch_address_id_from_api() {
+        $activecampaign = new ActiveCampaign;
+        $addresses = $activecampaign->get_addresses();
+        foreach ( $addresses as $address ) {
+            if (
+                ! is_object( $address ) ||
+                ! isset( $address->zip ) ||
+                ! isset( $address->id )
+            ) {
+                continue;
+            }
+            // If the zip code matches then we're good!
+            if ( PEDESTAL_ZIPCODE == $address->zip ) {
+                return intval( $address->id );
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Handle saving a newsletter option to the database
      * @param  string  $newsletter_name         Unsanitized name of the Newsletter
      * @param  integer $activecampaign_list_id  List ID to store
      * @return boolean                          Success of failure of save
      */
-    public function save_option( $newsletter_name = '', $activecampaign_list_id = 0 ) {
-        $key = $this->sanitize_option_name( $newsletter_name );
+    public function save_newsletter_option( $newsletter_name = '', $activecampaign_list_id = 0 ) {
+        $key = $this->sanitize_newsletter_option_name( $newsletter_name );
         $list_id = absint( $activecampaign_list_id );
         if ( ! $list_id ) {
             return false;
@@ -186,11 +244,33 @@ class Newsletter_Lists {
     }
 
     /**
+     * Handle saving an address option to the database
+     * @param  integer $activecampaign_list_id  List ID to store
+     * @return boolean                          Success of failure of save
+     */
+    public function save_address_option( $activecampaign_address_id = 0 ) {
+        $address_id = absint( $activecampaign_address_id );
+        if ( ! $address_id ) {
+            return false;
+        }
+
+        return update_option( $this->address_option_key, $address_id );
+    }
+
+    /**
      * Deletes all Newsletter options
      */
     public function delete_options() {
+        // Start with the address option key...
+        $keys = [ $this->address_option_key ];
+
+        // Then add all of the options for each list names
         foreach ( $this->list_names as $name ) {
-            $key = $this->sanitize_option_name( $name );
+            $keys[] = $this->sanitize_newsletter_option_name( $name );
+        }
+
+        // Run over all of the keys and delete the option
+        foreach ( $keys as $key ) {
             delete_option( $key );
             // Since the option is autoloaded we need to delete the `alloptions`
             // cache to prevent race conditions with Redis object caches
@@ -204,7 +284,7 @@ class Newsletter_Lists {
      * @param  string $name  Name of the List
      * @return string        Sanitized option name
      */
-    public function sanitize_option_name( $name = '' ) {
+    public function sanitize_newsletter_option_name( $name = '' ) {
         $sanitized_named = sanitize_title( $name );
         if ( ! $sanitized_named ) {
             return false;

@@ -39,4 +39,4 @@ $site-theme-abspath       : '/' + sm-theme-setting-get( themePath );
 $site-theme-logo-abspath  : $site-theme-abspath + '/assets/images/logos';
 
 // Colors
-$site-theme-brand-color   : to-color( sm-theme-setting-get( brandColor ) );
+$site-theme-brand-color   : sm-theme-setting-get( brandColor );

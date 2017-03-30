@@ -11,13 +11,6 @@ class User_Management {
     private static $instance;
 
     /**
-     * Array of all producers
-     *
-     * @var array
-     */
-    private static $producers = [];
-
-    /**
      * Roles considered to be Producers
      *
      * @var array
@@ -87,12 +80,6 @@ class User_Management {
                 self::$producer_role_url_bases[] = $role;
             }
         }
-
-        if ( empty( get_option( PEDESTAL_PREFIX . 'users_producers' ) ) ) {
-            $this->update_option_producers();
-        }
-        self::$producers = get_option( PEDESTAL_PREFIX . 'users_producers' );
-
     }
 
     /**
@@ -104,8 +91,7 @@ class User_Management {
         add_action( 'init', [ $this, 'action_author_permalink_role' ] );
         add_action( 'init', [ $this, 'action_init_edit_builtin_caps' ] );
         add_action( 'load-users.php', [ $this, 'action_load_users_setup_roles' ] );
-        add_action( 'pre_get_posts', [ $this, 'action_author_permalink_name' ] );
-        add_action( 'profile_update', [ $this, 'update_option_producers' ] );
+        add_action( 'profile_update', [ $this, 'action_profile_update' ], 10, 1 );
 
     }
 
@@ -128,9 +114,6 @@ class User_Management {
             return $rules;
         }, 10, 1 );
 
-        // @TODO Doesn't work?
-        // add_filter( 'author_link', [ $this, 'filter_author_link' ], 10, 3 );
-
         // Allow admins of the site to manage users again without making them super admins
         add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
             global $pagenow;
@@ -151,6 +134,33 @@ class User_Management {
         add_filter( 'author_link', function( $url ) {
             $url = str_replace( '%author_role%', 'about', $url );
             return $url;
+        });
+
+        /**
+         * Override 404 template if the author has a display name slug
+         */
+        add_filter( 'template_include', function( $template = '' ) {
+            global $wp_query;
+            $display_name_slug = get_query_var( 'author_name' );
+            if ( ! $display_name_slug ) {
+                return $template;
+            }
+            $users = get_users( [
+                'meta_key' => 'display_name_slug',
+                'meta_value' => $display_name_slug,
+            ] );
+
+            if ( empty( $users[0] ) || ! is_array( $users ) ) {
+                return $template;
+            }
+            $user = $users[0];
+            $user = new User( $user );
+            $wp_query->set( 'author', $user->get_id() );
+            if ( 'subscriber' == $user->get_primary_role() ) {
+                return $template;
+            }
+            $wp_query->is_404 = false;
+            return locate_template( [ 'author.php' ] );
         });
 
     }
@@ -328,33 +338,6 @@ class User_Management {
     }
 
     /**
-     * Use author display name for all producers except Featured Contributors
-     *
-     * N.B. The profile is still accessible at either the canonical sanitized
-     * display name URL, or the username.
-     */
-    public function action_author_permalink_name() {
-        if ( ! is_author() ) {
-            return;
-        }
-
-        $display_name = get_query_var( 'author_name' );
-        $user_map = array_column( self::$producers, 'display_name', 'username' );
-        $username = array_search( $display_name, $user_map );
-
-        if ( $username ) {
-            $author = new User( $username );
-        } else {
-            return;
-        }
-
-        if ( 'feat_contributor' != $author->get_primary_role() ) {
-            set_query_var( 'author_name', $username );
-        }
-        set_query_var( 'author', $author->get_id() );
-    }
-
-    /**
      * Filter the link returned by `get_author_posts_url()`
      *
      * @TODO Y U NO WORK? Nothing is returned.
@@ -366,34 +349,16 @@ class User_Management {
     }
 
     /**
-     * Update the site's Producers option
+     * Create a slug based on the user's display name
+     * Store it in user meta to be used later
+     * @param  integer $user_id The ID of the user to update
      */
-    public function update_option_producers() {
-        $i = 1;
-        $producers = [];
-        $users = self::get_users( $this->get_producers_query() );
-
-        foreach ( $users as $user ) {
-            $role = self::get_role_url_base( $user->get_primary_role() );
-            $sanitized_username = sanitize_title( $user->get_user_login() );
-            $sanitized_display_name = sanitize_title( $user->get_display_name() );
-            $sanitized_role = sanitize_title( $role );
-
-            // Prevent duplicate display name based URLs by appending a counter
-            // to duplicates
-            if ( in_array( $sanitized_display_name, $producers ) ) {
-                $i++;
-                $sanitized_display_name .= "-$i";
-            }
-
-            $producers[ $sanitized_username ] = [
-                'username'     => $sanitized_username,
-                'display_name' => $sanitized_display_name,
-                'role'         => $sanitized_role,
-            ];
+    public function action_profile_update( $user_id = 0 ) {
+        if ( empty( $_POST['display_name'] ) ) {
+            return;
         }
-
-        update_option( PEDESTAL_PREFIX . 'users_producers', $producers );
+        $display_name_slug = sanitize_title( $_POST['display_name'] );
+        update_user_meta( $user_id, 'display_name_slug', $display_name_slug );
     }
 
     /**
@@ -447,35 +412,6 @@ class User_Management {
     }
 
     /**
-     * Query the users who are producers
-     *
-     * @return WP_User_Query
-     */
-    private function get_producers_query() {
-        global $wpdb;
-        $blog_id = get_current_blog_id();
-        $roles = self::$producer_roles;
-
-        $args = [
-            'meta_query' => [
-                'relation' => 'OR',
-            ],
-            'count_total' => false,
-        ];
-
-        foreach ( $roles as $role ) {
-            $args['meta_query'][] = [
-                'key' => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
-                'value' => $role,
-                'compare' => 'like',
-            ];
-        }
-
-        $query = new \WP_User_Query( $args );
-        return $query;
-    }
-
-    /**
      * Get a URL-safe name for a given role
      *
      * @param  string $role The name of the role
@@ -498,17 +434,6 @@ class User_Management {
     }
 
     /**
-     * Get a role's display name from its slug
-     *
-     * @param  string $slug
-     * @return string
-     */
-    public static function get_role_display_name( $slug ) {
-        global $wp_roles;
-        return $wp_roles->roles[ $slug ]['name'];
-    }
-
-    /**
      * Get all of the role slugs and their labels
      *
      * @return array [ 'slug' => 'label' ]
@@ -516,15 +441,6 @@ class User_Management {
     public static function get_roles() {
         global $wp_roles;
         return $wp_roles->role_names;
-    }
-
-    /**
-     * Get the producer roles
-     *
-     * @return array
-     */
-    private function get_producer_roles() {
-        return self::$producer_roles;
     }
 
     /**

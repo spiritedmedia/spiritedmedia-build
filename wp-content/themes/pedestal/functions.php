@@ -20,6 +20,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
     abstract class Pedestal {
 
+        private $is_email = false;
+
         /**
          * The root URL for the CDN i.e. https://a.spirited.media
          *
@@ -43,6 +45,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * Load the theme
          */
         protected function load() {
+
             $this->set_environment();
             $this->define_constants();
             $this->set_site_config();
@@ -160,6 +163,16 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $dev_auth_user = 'spirited';
             $dev_auth_pass = 'media';
             define( 'PEDESTAL_DEV_AUTH', $dev_auth_user . ':' . $dev_auth_pass );
+        }
+
+        /**
+         * Set a class property
+         *
+         * @param string $name  Property name
+         * @param mixed $value  Property value
+         */
+        public function set_property( string $name, $value ) {
+            $this->$name = $value;
         }
 
         /**
@@ -550,7 +563,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $site_config = Pedestal()->get_site_config();
             $theme_path = PEDESTAL_WP_THEMES_PATH . '/' . wp_get_theme()->get_stylesheet();
 
-            $context['is_email'] = false;
+            $context['is_email'] = Pedestal()->is_email();
 
             $context['date_format'] = get_option( 'date_format' );
             $context['time_format'] = get_option( 'time_format' );
@@ -778,6 +791,15 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 $proto = 'https://';
             }
             $this->cdn_url = $proto . $s3_options['cloudfront'];
+        }
+
+        /**
+         * Is the current request loaded through email.php?
+         *
+         * @return boolean
+         */
+        public function is_email() {
+            return $this->is_email;
         }
     }
 

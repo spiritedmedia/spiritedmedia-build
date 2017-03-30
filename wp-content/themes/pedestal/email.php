@@ -1,7 +1,6 @@
 <?php
 
 use Timber\Timber;
-
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 use Pedestal\Posts\Slots\Slots;
@@ -14,7 +13,6 @@ if ( defined( 'PEDESTAL_DEBUG_EMAIL_CSS' ) && true === PEDESTAL_DEBUG_EMAIL_CSS 
 }
 
 add_filter( 'timber_context', function( $context ) use ( $debug_styles ) {
-    $context['is_email'] = true;
     $context['email_styles'] = $debug_styles;
 
     $context['grouped'] = true;

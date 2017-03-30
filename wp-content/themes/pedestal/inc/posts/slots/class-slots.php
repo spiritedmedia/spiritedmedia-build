@@ -4,11 +4,10 @@ namespace Pedestal\Posts\Slots;
 
 use Timber\Timber;
 
+use function Pedestal\Pedestal;
 use Pedestal\Utils\Utils;
-
-use Pedestal\Registrations\Post_Types\Types;
-
 use Pedestal\Posts\Post;
+use Pedestal\Registrations\Post_Types\Types;
 
 class Slots {
 
@@ -453,7 +452,7 @@ class Slots {
         array $placement_options = []
     ) {
 
-        if ( empty( $slot_position ) || ! isset( $context['is_email'] ) || empty( $context['item'] ) ) {
+        if ( empty( $slot_position ) || empty( $context['item'] ) ) {
             return '';
         }
 
@@ -489,10 +488,7 @@ class Slots {
         }
 
         // Set slot position name according to the scope
-        $scope = 'site';
-        if ( ! empty( $context['is_email'] ) && $context['is_email'] ) {
-            $scope = 'email';
-        }
+        $scope = Pedestal()->is_email() ? 'email' : 'site';
         $scoped_slot_position = $scope . '_' . $slot_position;
         $placement_options['slot_position'] = $scoped_slot_position;
 

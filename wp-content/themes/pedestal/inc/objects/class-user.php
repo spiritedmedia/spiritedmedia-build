@@ -344,7 +344,7 @@ class User extends Author {
         }
 
         $name = sanitize_title( $name );
-        $url = $base . '/' . $name;
+        $url = $base . '/' . $name . '/';
         return home_url( $url );
     }
 
