@@ -35,6 +35,7 @@
 
 .c-heading--overline {
   @include h-size( 5 );
+  font-weight: 600;
 }
 
 .c-heading--archive {

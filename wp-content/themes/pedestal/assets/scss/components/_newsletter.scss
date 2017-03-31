@@ -16,11 +16,6 @@
   }
 
 
-  .c-stream__item__link {
-    @include anchorage( '&' );
-  }
-
-
   @if $email {
     .c-main__subtitle {
       margin-bottom: $base-spacing-unit * 2;

@@ -60,16 +60,8 @@ $c: '.c-stream';
 
   // A stream heading may appear alongside stream items as a way of separating items
   &__heading {
-    text-transform: uppercase;
-    margin-bottom: $base-spacing-unit * 1.5;
-
-    @if $email {
-      font-size: $h5-font-size;
-      margin-top: $base-spacing-unit;
-    } @else {
-      font-size: $h4-font-size;
-      margin-top: $base-spacing-unit * 2.5;
-    }
+    margin-top: $base-spacing-unit;
+    margin-bottom: 0;
 
     + #{$c}__item {
       margin-top: 0;
@@ -219,12 +211,46 @@ $c: '.c-stream';
 
 
 
-  /// Stream with minor headings as item titles
-  &--simple {
-    #{$c}__item__title {
-      @extend %c-heading--minor;
+  /// Newsletter stream
+  &--newsletter {
+
+    #{$c}__item {
+      @include stdbd(bottom);
+      padding-top: $base-spacing-unit;
+      padding-bottom: $base-spacing-unit;
+      margin-top: 0;
+
+      &:first-child {
+        padding-top: 0;
+      }
     }
-  } // &--simple
+
+    #{$c}__item--event {
+      #{$c}__item__title {
+        margin-bottom: 0;
+      }
+    }
+
+    #{$c}__item__title {
+      @include h-size(4);
+      margin-bottom: $base-spacing-unit;
+
+      @if $email {
+        @include h-size(3);
+        font-weight: 600;
+      }
+
+    }
+
+    #{$c}__item__description {
+      &,
+      > * {
+        @include h-size(5);
+        margin-bottom: 0;
+      }
+    }
+
+  } // &--newsletter
 } // end stream
 
 
@@ -252,14 +278,3 @@ $c: '.c-stream';
   border-bottom: 0;
   padding-bottom: 0;
 }
-
-
-
-
-
-//
-// Size Variations
-// ==========================================================================
-
-
-.c-stream--sm {}
