@@ -85,14 +85,14 @@ class Recent_Content_Widget extends \WP_Widget {
             'title_link'  => '',
             'number'      => 10,
             'show_thumbs' => true,
-            'type'        => 'editorial',
+            'type'        => 'original',
         ] );
 
         $types = [
             'stories'    => 'Stories',
             'articles'   => 'Articles',
             'factchecks' => 'Factchecks',
-            'editorial'  => 'Original Content',
+            'original'  => 'Original Content',
         ];
 
         // Escape field ids and names
