@@ -6,6 +6,9 @@
 
 {# No strict checking possible here so evaluate strings #}
 {% set overview = overview|default( 'true' ) %}
+{% if 'none' == url %}
+{% set url = false %}
+{% endif %}
 
 {% set item_title_element = item_title_element|default( if_email('h4', 'h1')  ) %}
 
@@ -27,11 +30,19 @@
 {% endif %}
 
 <{{ item_title_element }} class="{{ item_title_classes }}">
-    <a href="{{ url }}" class="{{ link_classes }}" {{ link_atts }}
-        data-ga-category="{{ gaCategory }}"
-        data-ga-label="Title|{{ title }}|Type: {{ item.get_type_name|capitalize }}">
+
+    {% if url %}
+        <a href="{{ url }}" class="{{ link_classes }}" {{ link_atts }}
+            data-ga-category="{{ gaCategory }}"
+            data-ga-label="Title|{{ title }}|Type: {{ item.get_type_name|capitalize }}">
+    {% endif %}
+
             {{ title }}
-    </a>
+
+    {% if url %}
+        </a>
+    {% endif %}
+
 </{{ item_title_element }}>
 
 {% endspaceless %}

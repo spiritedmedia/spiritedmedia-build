@@ -25,7 +25,7 @@
                     {% include 'partials/overview/overline.twig' %}
                     {% endblock %}
 
-                    {% include 'partials/item-title.twig' %}
+                    {% include 'partials/item-title.twig' with { url: 'none' } %}
 
                     {% if item.get_excerpt %}
                         <div class="c-overview__description">

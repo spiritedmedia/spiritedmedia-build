@@ -1,7 +1,7 @@
-Build [#2550](https://circleci.com/gh/spiritedmedia/spiritedmedia/2550) by kingkool68 at 2017-03-31 08:07 PM UTC
+Build [#2553](https://circleci.com/gh/spiritedmedia/spiritedmedia/2553) by montchr at 2017-04-03 01:50 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.3](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.3)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.4](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.4)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.2...v5.5.3)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.3...v5.5.4)
 
- - [#1947](https://github.com/spiritedmedia/spiritedmedia/pull/1947): HOTFIX: Recent Content Widget Doesn't Render When Set To Use "Original Content"
+ - [#1943](https://github.com/spiritedmedia/spiritedmedia/pull/1943): Hide Overview Title / Lead Image Links if on Single Post

@@ -27,7 +27,10 @@
                 {% endif %}
 
                 {% if item.get_headline %}
-                {% include 'partials/item-title.twig' with {'title': item.get_the_headline} %}
+                {% include 'partials/item-title.twig' with {
+                    title: item.get_the_headline,
+                    url: 'none'
+                } %}
                 {% endif %}
 
                 {% include 'partials/meta-info/meta-info-cluster.twig' %}
