@@ -199,6 +199,10 @@
   }
 }
 
+.dfp-hide-ad {
+  display: none;
+}
+
 .dfp-disclaimer {
   text-align: center;
   font-size: unitize( 11px );
@@ -217,6 +221,12 @@
       margin-right: $dfp-mobile-ad-offset--panelled;
     }
   }
+}
+
+.dfp-stream-08-wrapper,
+.dfp-stream-16-wrapper {
+  @include stdbd(bottom);
+  padding-bottom: $base-spacing-unit * 2.5;
 }
 
 .rail {

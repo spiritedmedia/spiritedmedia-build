@@ -22,6 +22,7 @@ class Rail_Right_Widget extends \WP_Widget {
 
         $context = Timber::get_context();
 
+        $args['before_widget'] = str_replace( 'class="widget ', 'class="widget js-dfp-container dfp-hide-ad ', $args['before_widget'] );
         echo $args['before_widget'];
 
         switch ( $instance['type'] ) {

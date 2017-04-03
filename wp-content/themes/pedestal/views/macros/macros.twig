@@ -3,7 +3,7 @@
     {% import _self as macros %}
     {% set item = context.item %}
     {% set stream = true %}
-    {% set classes = 'c-stream__item  js-stream-item' %}
+    {% set classes = 'c-stream__item' %}
 
     {% if item.get_type %}
     {% set classes = 'c-stream__item--' ~ item.get_type ~ '  ' ~ classes %}
@@ -212,7 +212,7 @@
                             <hr class="c-stream__header__rule  o-rule" />
                         </header>
 
-                        <div class="c-stream__items  js-stream-items">
+                        <div class="c-stream__items">
                             {% for item in items %}
                                 {% include [
                                     'partials/stream/standard/' ~ item.get_type ~ '.twig',

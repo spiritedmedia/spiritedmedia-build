@@ -66,6 +66,9 @@ googletag.cmd.push(function() {
       div = document.getElementById(id);
       html = '<div class="dfp-disclaimer">ADVERTISEMENT</div>';
       div.insertAdjacentHTML('beforeend', html);
+      // Stream ad slots are hidden by default and if an ad is loaded
+      // then unhide it
+      $(div).closest('.js-dfp-container').removeClass('dfp-hide-ad');
     }
   });
   googletag.enableServices();

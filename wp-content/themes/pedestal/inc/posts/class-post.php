@@ -267,14 +267,9 @@ abstract class Post {
      */
     public function get_title() {
         if ( $title = $this->get_field( 'post_title' ) ) {
-            if ( 'dev' == PEDESTAL_ENV ) {
-                return "[{$this->get_id()}] $title";
-            } else {
-                return $title;
-            }
-        } else {
-            return false;
+            return $title;
         }
+        return false;
     }
 
     /**

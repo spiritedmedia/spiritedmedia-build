@@ -54,7 +54,7 @@
         <section class="c-main__entities  c-stream  c-stream--standard  js-stream">
             {% set stream = true %}
 
-            <div class="c-stream__items  js-stream-items">
+            <div class="c-stream__items">
 
             {% for item in item.get_entities %}
                 {% if not ( 'whosnext' == item.get_type and 'nomination' == item.get_whosnext_type ) %}
