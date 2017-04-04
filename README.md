@@ -1,7 +1,7 @@
-Build [#2574](https://circleci.com/gh/spiritedmedia/spiritedmedia/2574) by kingkool68 at 2017-04-04 07:02 PM UTC
+Build [#2583](https://circleci.com/gh/spiritedmedia/spiritedmedia/2583) by kingkool68 at 2017-04-04 08:21 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.6](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.6)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.7](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.7)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.5...v5.5.6)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.6...v5.5.7)
 
- - [#1953](https://github.com/spiritedmedia/spiritedmedia/pull/1953): Text Updates to SpiritedMedia.com
+ - [#1958](https://github.com/spiritedmedia/spiritedmedia/pull/1958): Hiding DFP Ads by Default is Flaky, Reverting...
