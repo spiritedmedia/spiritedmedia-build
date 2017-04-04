@@ -126,36 +126,24 @@ get_header(); ?>
         <h2 class="home-about--heading">About Spirited Media</h2>
         <p>Spirited Media is a company committed to finding a new editorial and business model for local journalism, and currently manages <a href="https://billypenn.com">Billy Penn</a> in Philadelphia, <a href="https://theincline.com">The Incline</a> in Pittsburgh, and <a href="https://www.denverite.com/">Denverite</a> in Denver.</p>
 
-        <p>Our sites are produced and designed for mobile, and are aimed at the under-40 audience. We are all local all the time, and deliver the news in a curated stream that values readers’ time and their user experience. We are heavily focused on circulating our work via social platforms, and believe that crafting a lively, unique voice for each city we cover is crucial.</p>
+        <p>Our sites are produced and designed for mobile, and are aimed at an under-40 audience. We are all local all the time, and deliver the news via a stream that combines our original stories and curated links to other news of interest to local consumers. First and foremost, we value our readers’ time and their user experience. We circulate our work heavily via social platforms, and create a lively, unique voice for each city we cover.</p>
 
         <p>We are focused on bringing our local audiences together both online and offline, as we hold approximately four to five events per month and derive most of our revenue from events. We also believe that while all cities have real problems, the voices of those trying to solve those problems often go unheard, and we try and cover many of those efforts.</p>
 
         <div class="home-about--columns">
             <div class="home-about--column about-statement">
                 <h3 class="about-statement--heading">Mission Statement</h3>
-                <p class="about-statement--blurb">Spirited Media is committed to finding new editorial and business models to sustain local journalism for a new generation of news consumers.</p>
+                <p class="about-statement--blurb">Spirited Media is a new kind of local media company for a new generation of news consumers.</p>
             </div>
             <div class="home-about--column about-statement">
                 <h3 class="about-statement--heading">Team</h3>
-                <p class="about-statement--blurb">Spirited Media's team includes veterans of The Washington Post, Philadelphia Inquirer, WHYY, Bleacher Report, the Pittsburgh Post-Gazette, Digital First Media, Harrisburg Patriot News, Variety, America Online, the Hollywood Reporter and the Dallas Morning News.</p>
+                <p class="about-statement--blurb">Spirited Media's team includes veterans of The Washington Post, Philadelphia Inquirer, the Denver Post, WHYY, Bleacher Report, the Pittsburgh Post-Gazette, Digital First Media, Chalkbeat, Variety, America Online, the Hollywood Reporter and the Dallas Morning News.</p>
             </div>
             <div class="home-about--column about-statement">
                 <h3 class="about-statement--heading">Company History</h3>
-                <p class="about-statement--blurb">Spirited Media was founded by Jim Brady in 2014, and launched Billy Penn in October of that year. Thanks to a significant investment by Gannett in early 2016, we expanded the Billy Penn staff and announced plans to extend into new cities, the first being The Incline in Pittsburgh, which launched in September 2016. Billy Penn and The Incline are PolitiFact’s Pennsylvania state partner newsrooms. Spirited Media merged with Avoriaz and began operating Denverite in Denver in March 2017.</p>
+                <p class="about-statement--blurb">Spirited Media was founded by Jim and Joan Brady in 2014, and we launched our first site, Billy Penn, in October of that year. After a significant investment by Gannett in early 2016, we expanded the Billy Penn staff and launched in The Incline in Pittsburgh in September 2016. Spirited Media began operating Denverite in March 2017 after we merged with that site’s parent company, Avoriaz.</p>
             </div>
         </div>
-    </section>
-
-    <section class="section--full-width home-description">
-        <h2 class="home-description--heading">Spirited Media</h2>
-        <p class="home-description--tagline">Engaging local news.</p>
-    </section>
-
-    <section class="section home-cities" id="cities">
-        <h2 class="home-cities--heading">Our Cities</h2>
-        <a href="https://billypenn.com" class="home-cities--city home-cities--philadelphia">Philadelphia</a>
-        <a href="https://theincline.com" class="home-cities--city home-cities--pittsburgh">Pittsburgh</a>
-        <a href="https://www.denverite.com/" class="home-cities--city home-cities--denver">Denver</a>
     </section>
 
     <section class="home-strengths">
@@ -178,13 +166,6 @@ get_header(); ?>
         </div>
     </section>
 
-    <section class="section home-advertising-partners">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/advertising-partners.png">
-        <h2>Advertising Partners</h2>
-        <p>Spirited Media’s advertising partners include Comcast NBC Universal, the Philadelphia Eagles, the Knight Foundation, Beneficial Bank. PECO, SugarHouse Casino, the Philadelphia Foundation, VisitPhilly, the Shops at Liberty Place and many others.</p>
-        <a href="http://billypenn.com/advertising/" class="button home-advertising-partners--button">Advertise with Us</a>
-    </section>
-
     <section class="section home-our-board">
         <h2 class="home-our-board--heading">Our Board</h2>
         <ul class="home-board-members">
@@ -196,9 +177,28 @@ get_header(); ?>
             <li class="home-board-members--item">
                 <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/home/joanne-lipman-headshot.jpg" class="home-board-members--image">
                 <a href="http://www.gannett.com/who-we-are/leadership-team/Joanne-Lipman/" class="home-board-members--name">Joanne Lipman</a>
-                Chief Content Officer, Gannett
+                Chief Content Officer, USA Today Network and Editor-In-Chief, USA Today
+            </li>
+            <li class="home-board-members--item">
+                <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/home/gordon-crovitz-headshot.jpg" class="home-board-members--image">
+                <a href="https://en.wikipedia.org/wiki/L._Gordon_Crovitz" class="home-board-members--name">Gordon Crovitz</a>
+                partner in NextNews Ventures
             </li>
         </ul>
+    </section>
+
+    <section class="section home-cities" id="cities">
+        <h2 class="home-cities--heading">Our Cities</h2>
+        <a href="https://billypenn.com" class="home-cities--city home-cities--philadelphia">Philadelphia</a>
+        <a href="https://theincline.com" class="home-cities--city home-cities--pittsburgh">Pittsburgh</a>
+        <a href="https://www.denverite.com/" class="home-cities--city home-cities--denver">Denver</a>
+    </section>
+
+    <section class="section home-advertising-partners">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/advertising-partners.png">
+        <h2>Advertising Partners</h2>
+        <p>Spirited Media’s advertising partners include Comcast NBC Universal, the Philadelphia Eagles, the Knight Foundation, Beneficial Bank. PECO, SugarHouse Casino, the Philadelphia Foundation, VisitPhilly, the Shops at Liberty Place and many others.</p>
+        <a href="http://billypenn.com/advertising/" class="button home-advertising-partners--button">Advertise with Us</a>
     </section>
 
     <section class="section home-press-coverage" id="press">
