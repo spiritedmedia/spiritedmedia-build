@@ -1,16 +1,12 @@
 <?php
 
 use Timber\Timber;
+use Pedestal\Objects\Stream;
 
-use \Pedestal\Posts\Post;
+global $wp_query;
 
 $context = Timber::get_context();
-$posts = Timber::get_posts( false, 'WP_Post' );
-$items = [];
-foreach ( $posts as $post ) {
-    $items[] = Post::get_by_post_id( $post->ID );
-}
-$context['items'] = $items;
+$context['items'] = Stream::get( $wp_query->posts );
 
 header( 'Content-Type: ' . feed_content_type( 'rss-http' ) . '; charset=utf-8', true );
 

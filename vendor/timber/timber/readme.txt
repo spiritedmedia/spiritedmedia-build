@@ -2,8 +2,8 @@
 Contributors: jarednova, connorjburton, lggorman
 Tags: template engine, templates, twig
 Requires at least: 3.7
-Stable tag: 1.1.12
-Tested up to: 4.6
+Stable tag: 1.2.4
+Tested up to: 4.7.2
 PHP version: 5.3.0 or greater
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -40,6 +40,24 @@ Timber is great for any WordPress developer who cares about writing good, mainta
 
 
 == Changelog ==
+
+= 1.2.4 =
+* Fixed regression from S3 handling #1330 (@gchtr)
+
+= 1.2.3 =
+* Fixed a potential XSS security issue
+* Fixed handling of images stored on S3
+
+= 1.2.2 =
+* A bunch of fixes to how images in themes are handled #1317 #1293 (@jarednova)
+* Fixed filter for avatar images in comments #1310 (@xavivars)
+* Upgrades to PHPUnit and testing suite (@jarednova)
+
+= 1.2.1 =
+* Cleaned-up theme handling #1281 (thanks @xavivars)
+* Refactor of Pagination #1284 (thanks again @xavivars)
+* Fixed an error in Admin #1285 (thanks @alexanderanberg)
+* Fixed an issue with User->id #1283 (thanks @drumba)
 
 = 1.2.0 =
 * Fixed issues with WordPress 4.7

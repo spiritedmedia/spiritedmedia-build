@@ -1,13 +1,11 @@
 <?php
 
 use Timber\Timber;
-
 use Pedestal\Objects\Stream;
 
-$context = Timber::get_context();
+global $wp_query;
 
-$posts = Timber::get_posts( false, 'WP_Post' );
-$items = Stream::get( $posts );
-$context['items'] = $items;
+$context = Timber::get_context();
+$context['items'] = Stream::get( $wp_query->posts );
 
 Timber::render( 'home.twig', $context );

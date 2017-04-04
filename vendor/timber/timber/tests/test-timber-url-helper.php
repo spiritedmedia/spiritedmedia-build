@@ -56,6 +56,12 @@
             $this->assertEquals($link, $url);
         }
 
+        function testUnPreSlashIt() {
+            $str = '/wp-content/themes/undefeated/style.css';
+            $str = Timber\URLHelper::unpreslashit($str);
+            $this->assertEquals('wp-content/themes/undefeated/style.css', $str);
+        }
+
         function testPreSlashIt() {
             $before = 'thing/foo';
             $after = Timber\URLHelper::preslashit($before);
@@ -69,6 +75,8 @@
         }
 
         function testPathBase() {
+            $struc = '/%year%/%monthnum%/%postname%/';
+            $this->setPermalinkStructure( $struc );
         	$this->assertEquals('/', TimberURLHelper::get_path_base());
         }
 

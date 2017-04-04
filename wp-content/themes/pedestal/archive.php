@@ -1,14 +1,13 @@
 <?php
 
 use Timber\Timber;
-
 use Pedestal\Objects\Stream;
 
-$context = Timber::get_context();
-$posts = Timber::get_posts( false, 'WP_Post' );
-$items = Stream::get( $posts );
-$context['items'] = $items;
+global $wp_query;
 
+$context = Timber::get_context();
+$items = Stream::get( $wp_query->posts );
+$context['items'] = $items;
 $context['archive_title'] = Pedestal\Frontend::get_archive_title();
 
 if ( $items ) {

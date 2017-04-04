@@ -143,23 +143,23 @@
     },
     {
         "name": "deliciousbrains/wp-amazon-web-services",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
+        "version": "1.0.2",
+        "version_normalized": "1.0.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/deliciousbrains/wp-amazon-web-services.git",
-            "reference": "f33c2ae7619d312a270f5975c346481f69ee699b"
+            "reference": "0b64dc5ec5582378b948c48d02817dd2079f6562"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/deliciousbrains/wp-amazon-web-services/zipball/f33c2ae7619d312a270f5975c346481f69ee699b",
-            "reference": "f33c2ae7619d312a270f5975c346481f69ee699b",
+            "url": "https://api.github.com/repos/deliciousbrains/wp-amazon-web-services/zipball/0b64dc5ec5582378b948c48d02817dd2079f6562",
+            "reference": "0b64dc5ec5582378b948c48d02817dd2079f6562",
             "shasum": ""
         },
         "require": {
             "composer/installers": "~1.0.6"
         },
-        "time": "2016-12-13T11:55:23+00:00",
+        "time": "2017-03-13T13:15:50+00:00",
         "type": "wordpress-plugin",
         "installation-source": "dist",
         "license": [
@@ -174,7 +174,7 @@
             "plugin"
         ],
         "support": {
-            "source": "https://github.com/deliciousbrains/wp-amazon-web-services/tree/1.0.1",
+            "source": "https://github.com/deliciousbrains/wp-amazon-web-services/tree/1.0.2",
             "issues": "https://github.com/deliciousbrains/wp-amazon-web-services/issues"
         }
     },
@@ -466,18 +466,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/wp-pagenavi.git",
-            "reference": "4f13921d7f30a463dbff5674d678db827b935351"
+            "reference": "bf0130011815cc0c87ac9bd6143223c892ca2711"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/wp-pagenavi/zipball/4f13921d7f30a463dbff5674d678db827b935351",
-            "reference": "4f13921d7f30a463dbff5674d678db827b935351",
+            "url": "https://api.github.com/repos/spiritedmedia/wp-pagenavi/zipball/bf0130011815cc0c87ac9bd6143223c892ca2711",
+            "reference": "bf0130011815cc0c87ac9bd6143223c892ca2711",
             "shasum": ""
         },
         "require": {
             "scribu/scb-framework": "dev-master"
         },
-        "time": "2016-08-04T20:04:00+00:00",
+        "time": "2017-04-04T17:08:48+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "authors": [
@@ -493,23 +493,23 @@
     },
     {
         "name": "symfony/css-selector",
-        "version": "v3.2.2",
-        "version_normalized": "3.2.2.0",
+        "version": "v3.2.6",
+        "version_normalized": "3.2.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/css-selector.git",
-            "reference": "f0e628f04fc055c934b3211cfabdb1c59eefbfaa"
+            "reference": "a48f13dc83c168f1253a5d2a5a4fb46c36244c4c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/css-selector/zipball/f0e628f04fc055c934b3211cfabdb1c59eefbfaa",
-            "reference": "f0e628f04fc055c934b3211cfabdb1c59eefbfaa",
+            "url": "https://api.github.com/repos/symfony/css-selector/zipball/a48f13dc83c168f1253a5d2a5a4fb46c36244c4c",
+            "reference": "a48f13dc83c168f1253a5d2a5a4fb46c36244c4c",
             "shasum": ""
         },
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2017-01-02T20:32:22+00:00",
+        "time": "2017-02-21T09:12:04+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -703,31 +703,32 @@
     },
     {
         "name": "twig/twig",
-        "version": "v1.31.0",
-        "version_normalized": "1.31.0.0",
+        "version": "v1.33.0",
+        "version_normalized": "1.33.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twigphp/Twig.git",
-            "reference": "ddc9e3e20ee9c0b6908f401ac8353635b750eca7"
+            "reference": "05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig/zipball/ddc9e3e20ee9c0b6908f401ac8353635b750eca7",
-            "reference": "ddc9e3e20ee9c0b6908f401ac8353635b750eca7",
+            "url": "https://api.github.com/repos/twigphp/Twig/zipball/05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a",
+            "reference": "05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a",
             "shasum": ""
         },
         "require": {
             "php": ">=5.2.7"
         },
         "require-dev": {
+            "psr/container": "^1.0",
             "symfony/debug": "~2.7",
-            "symfony/phpunit-bridge": "~3.2"
+            "symfony/phpunit-bridge": "~3.3@dev"
         },
-        "time": "2017-01-11T19:36:15+00:00",
+        "time": "2017-03-22T15:40:09+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.31-dev"
+                "dev-master": "1.33-dev"
             }
         },
         "installation-source": "dist",
@@ -822,35 +823,35 @@
     },
     {
         "name": "timber/timber",
-        "version": "1.2.1",
-        "version_normalized": "1.2.1.0",
+        "version": "1.2.4",
+        "version_normalized": "1.2.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/timber/timber.git",
-            "reference": "c7f76559ea65299c231375f4c4a62e67cd86ff00"
+            "reference": "c3a30b077fde4b0017fcd6b9098b94d068ac95f8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/timber/timber/zipball/c7f76559ea65299c231375f4c4a62e67cd86ff00",
-            "reference": "c7f76559ea65299c231375f4c4a62e67cd86ff00",
+            "url": "https://api.github.com/repos/timber/timber/zipball/c3a30b077fde4b0017fcd6b9098b94d068ac95f8",
+            "reference": "c3a30b077fde4b0017fcd6b9098b94d068ac95f8",
             "shasum": ""
         },
         "require": {
             "asm89/twig-cache-extension": "~1.0",
             "composer/installers": "~1.0",
             "php": ">=5.3.0",
-            "twig/twig": "1.*",
+            "twig/twig": "^1.0",
             "upstatement/routes": "0.4"
         },
         "require-dev": {
             "jarednova/markdowndocs": "dev-master",
             "phpdocumentor/phpdocumentor": "2.*",
-            "phpunit/phpunit": "~4.0",
+            "phpunit/phpunit": "5.*",
             "satooshi/php-coveralls": "1.0.*",
             "wpackagist-plugin/advanced-custom-fields": "4.*",
             "wpackagist-plugin/co-authors-plus": "3.*"
         },
-        "time": "2017-01-10T17:02:07+00:00",
+        "time": "2017-02-22T19:54:49+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1025,16 +1026,16 @@
     },
     {
         "name": "wpackagist-plugin/co-authors-plus",
-        "version": "3.2.1",
-        "version_normalized": "3.2.1.0",
+        "version": "3.2.2",
+        "version_normalized": "3.2.2.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/co-authors-plus/",
-            "reference": "tags/3.2.1"
+            "reference": "tags/3.2.2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/co-authors-plus.3.2.1.zip",
+            "url": "https://downloads.wordpress.org/plugin/co-authors-plus.3.2.2.zip",
             "reference": null,
             "shasum": null
         },
@@ -1047,16 +1048,16 @@
     },
     {
         "name": "wpackagist-plugin/nginx-helper",
-        "version": "1.9.9",
-        "version_normalized": "1.9.9.0",
+        "version": "1.9.10",
+        "version_normalized": "1.9.10.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/nginx-helper/",
-            "reference": "tags/1.9.9"
+            "reference": "tags/1.9.10"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.9.zip",
+            "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.10.zip",
             "reference": null,
             "shasum": null
         },
@@ -1135,16 +1136,16 @@
     },
     {
         "name": "wpackagist-plugin/tablepress",
-        "version": "1.7",
-        "version_normalized": "1.7.0.0",
+        "version": "1.8",
+        "version_normalized": "1.8.0.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/tablepress/",
-            "reference": "tags/1.7"
+            "reference": "tags/1.8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/tablepress.1.7.zip",
+            "url": "https://downloads.wordpress.org/plugin/tablepress.1.8.zip",
             "reference": null,
             "shasum": null
         },
@@ -1179,16 +1180,16 @@
     },
     {
         "name": "wpackagist-plugin/wp-redis",
-        "version": "0.6.0",
-        "version_normalized": "0.6.0.0",
+        "version": "0.6.1",
+        "version_normalized": "0.6.1.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/wp-redis/",
-            "reference": "tags/0.6.0"
+            "reference": "tags/0.6.1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/wp-redis.0.6.0.zip",
+            "url": "https://downloads.wordpress.org/plugin/wp-redis.0.6.1.zip",
             "reference": null,
             "shasum": null
         },

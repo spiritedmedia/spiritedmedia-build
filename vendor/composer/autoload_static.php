@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit0e8040dba5f7db54e73a974e533957ba
+class ComposerStaticInitaaf3fc1e5231921a5be67152c9f5a0f5
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -585,6 +585,7 @@ class ComposerStaticInit0e8040dba5f7db54e73a974e533957ba
         'Twig_Cache_Null' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Cache/Null.php',
         'Twig_Compiler' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Compiler.php',
         'Twig_CompilerInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/CompilerInterface.php',
+        'Twig_ContainerRuntimeLoader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/ContainerRuntimeLoader.php',
         'Twig_Environment' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Environment.php',
         'Twig_Error' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Error.php',
         'Twig_Error_Loader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Error/Loader.php',
@@ -804,11 +805,11 @@ class ComposerStaticInit0e8040dba5f7db54e73a974e533957ba
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit0e8040dba5f7db54e73a974e533957ba::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit0e8040dba5f7db54e73a974e533957ba::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit0e8040dba5f7db54e73a974e533957ba::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit0e8040dba5f7db54e73a974e533957ba::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit0e8040dba5f7db54e73a974e533957ba::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitaaf3fc1e5231921a5be67152c9f5a0f5::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitaaf3fc1e5231921a5be67152c9f5a0f5::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitaaf3fc1e5231921a5be67152c9f5a0f5::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitaaf3fc1e5231921a5be67152c9f5a0f5::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitaaf3fc1e5231921a5be67152c9f5a0f5::$classMap;
 
         }, null, ClassLoader::class);
     }

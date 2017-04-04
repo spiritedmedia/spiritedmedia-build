@@ -29,7 +29,10 @@ function wp_pagenavi( $args = array() ) {
 
 	extract( $args, EXTR_SKIP );
 
-	$data = [];
+	$data = [
+        'is_first_page' => false,
+        'is_last_page'  => false,
+    ];
 
 	$options = wp_parse_args( $options, PageNavi_Core::$options->get() );
 
@@ -63,6 +66,12 @@ function wp_pagenavi( $args = array() ) {
 
 	if ( $start_page < 1 )
 		$start_page = 1;
+
+    if ( 1 === $paged ) {
+        $data['is_first_page'] = true;
+    } elseif ( $paged === $total_pages ) {
+        $data['is_last_page'] = true;
+    }
 
 	// Support for filters to change class names
 	$class_names = array(
@@ -323,4 +332,3 @@ class PageNavi_Core {
 		self::$options = $options;
 	}
 }
-
