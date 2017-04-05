@@ -255,6 +255,31 @@ class Admin {
             }
             return $allowed_tags;
         }, 10, 2 );
+
+        /* Save any credit meta data to its own post meta field */
+        add_filter( 'wp_generate_attachment_metadata', function( $metadata = [], $attachment_id = 0 ) {
+            $attachment = new Attachment( $attachment_id );
+            $old_credit = $attachment->get_credit();
+            if ( $old_credit ) {
+                return $metadata;
+            }
+            if ( empty( $metadata['image_meta'] ) ) {
+                return $metadata;
+            }
+            $img_meta = $metadata['image_meta'];
+            $credit = '';
+            if ( ! empty( $img_meta['copyright'] ) ) {
+                $credit = $img_meta['copyright'];
+            }
+            if ( ! empty( $img_meta['credit'] ) ) {
+                $credit = $img_meta['credit'];
+            }
+            if ( $credit ) {
+                $attachment->set_meta( 'credit', $credit );
+            }
+
+            return $metadata;
+        }, 10, 2 );
     }
 
     /**
@@ -506,27 +531,20 @@ class Admin {
      * Filter attachment fields available to edit
      */
     public function filter_attachment_fields_to_edit( $fields, $post ) {
-        $metadata = wp_get_attachment_metadata( $post->ID );
-        if ( ! empty( $metadata['image_meta'] ) ) {
-            // @TODO clean up ternaries
-            $credit = ( empty( $metadata['image_meta']['credit'] ) )
-                ? ''
-                : $metadata['image_meta']['credit'];
-            $credit_link = ( empty( $metadata['image_meta']['credit_link'] ) )
-                ? ''
-                : $metadata['image_meta']['credit_link'];
+        $attachment = new Attachment( $post );
+        $credit = $attachment->get_credit();
+        $credit_link = $attachment->get_credit_link();
 
-            $fields['pedestal_credit'] = [
-                'label'              => esc_html__( 'Credit', 'pedestal' ),
-                'input'              => 'text',
-                'value'              => $credit,
-            ];
-            $fields['pedestal_credit_link'] = [
-                'label'              => esc_html__( 'Credit Link', 'pedestal' ),
-                'input'              => 'url',
-                'value'              => $credit_link,
-            ];
-        }
+        $fields['pedestal_credit'] = [
+            'label'              => esc_html__( 'Credit', 'pedestal' ),
+            'input'              => 'text',
+            'value'              => $credit,
+        ];
+        $fields['pedestal_credit_link'] = [
+            'label'              => esc_html__( 'Credit Link', 'pedestal' ),
+            'input'              => 'url',
+            'value'              => $credit_link,
+        ];
 
         return $fields;
     }
@@ -534,18 +552,17 @@ class Admin {
     /**
      * Filter attachment fields as they are saved
      */
-    public function filter_attachment_fields_to_save( $data, $attachment ) {
-        $metadata = wp_get_attachment_metadata( $data['ID'] );
-        if ( ! empty( $metadata['image_meta'] ) ) {
-            if ( isset( $attachment['pedestal_credit'] ) ) {
-                $metadata['image_meta']['credit'] = sanitize_text_field( $attachment['pedestal_credit'] );
-            }
-            if ( isset( $attachment['pedestal_credit_link'] ) ) {
-                $metadata['image_meta']['credit_link'] = esc_url( $attachment['pedestal_credit_link'] );
-            }
-            wp_update_attachment_metadata( $data['ID'], $metadata );
+    public function filter_attachment_fields_to_save( $post, $attachment_data ) {
+        $post_id = $post['ID'];
+        if ( isset( $attachment_data['pedestal_credit'] ) ) {
+            $val = sanitize_text_field( $attachment_data['pedestal_credit'] );
+            update_post_meta( $post_id, 'credit', $val );
         }
-        return $data;
+        if ( isset( $attachment_data['pedestal_credit_link'] ) ) {
+            $val = esc_url( $attachment_data['pedestal_credit_link'] );
+            update_post_meta( $post_id, 'credit_link', $val );
+        }
+        return $post;
     }
 
     /**

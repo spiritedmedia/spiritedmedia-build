@@ -164,7 +164,7 @@ class Attachment extends Post {
      * @return string
      */
     public function get_credit_link() {
-        return $this->get_metadata_field( 'credit_link' );
+        return $this->get_meta( 'credit_link' );
     }
 
     /**
@@ -173,7 +173,7 @@ class Attachment extends Post {
      * @return string
      */
     public function get_credit() {
-        return $this->get_metadata_field( 'credit' );
+        return $this->get_meta( 'credit' );
     }
 
     /**

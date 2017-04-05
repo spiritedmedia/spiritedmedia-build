@@ -691,6 +691,110 @@ class CLI extends \WP_CLI_Command {
         }
         WP_CLI::success( 'Done!' );
     }
+
+    /**
+     * Restore old attachment meta data
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal restore-attachment-meta
+     *     wp pedestal restore-attachment-meta --url=http://billypenn.dev
+     *
+     * @subcommand restore-attachment-meta
+     */
+    public function restore_attachment_meta() {
+        global $wpdb;
+        $data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}attachment_meta;" ) );
+        $count = 0;
+        foreach ( $data as $obj ) {
+            $post_id = intval( $obj->post_id );
+            $old_meta = maybe_unserialize( $obj->meta_value );
+            if ( empty( $old_meta['image_meta'] ) ) {
+                continue;
+            }
+            $old_image_meta = $old_meta['image_meta'];
+            $old_credit = '';
+            if ( empty( $old_image_meta['credit'] ) ) {
+                continue;
+            }
+            $old_credit = $old_image_meta['credit'];
+            $old_credit_link = '';
+            if ( ! empty( $old_image_meta['credit_link'] ) ) {
+                $old_credit_link = $old_image_meta['credit_link'];
+            }
+
+            $new_meta = get_post_meta( $post_id, '_wp_attachment_metadata', true );
+            // WP_CLI::line( print_r( $new_meta, true ) );
+            if ( ! $new_meta ) {
+                continue;
+            }
+            $new_credit = '';
+            if ( ! empty( $new_meta['image_meta']['credit'] ) ) {
+                $new_credit = $new_meta['image_meta']['credit'];
+            }
+            $new_credit_link = '';
+            if ( ! empty( $new_meta['image_meta']['credit_link'] ) ) {
+                $new_credit_link = $new_meta['image_meta']['credit_link'];
+            }
+
+            if ( $new_credit != $old_credit ) {
+                $count++;
+                WP_CLI::line( $post_id . ' - ' . $old_credit );
+                $new_meta['image_meta']['credit'] = $old_credit;
+                $new_meta['image_meta']['credit_link'] = $old_credit_link;
+                update_post_meta( $post_id, '_wp_attachment_metadata', $new_meta );
+            }
+        }
+        WP_CLI::success( 'Restored ' . $count . ' credits!' );
+    }
+
+    /**
+     * Save Image Credit meta to its own post meta field
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal convert-credits
+     *     wp pedestal convert-credits --url=http://billypenn.dev
+     *
+     * @subcommand convert-credits
+     */
+    public function convert_credits() {
+        global $wpdb;
+        $credit_count = 0;
+        $credit_link_count = 0;
+        $data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->postmeta} WHERE `meta_key` = '_wp_attachment_metadata'" ) );
+        foreach ( $data as $obj ) {
+            $post_id = intval( $obj->post_id );
+            $old_meta = maybe_unserialize( $obj->meta_value );
+            if ( empty( $old_meta['image_meta'] ) ) {
+                continue;
+            }
+            $old_image_meta = $old_meta['image_meta'];
+            $old_credit = '';
+            if ( empty( $old_image_meta['credit'] ) ) {
+                continue;
+            }
+            $old_credit = $old_image_meta['credit'];
+            $old_credit_link = '';
+            if ( ! empty( $old_image_meta['credit_link'] ) ) {
+                $old_credit_link = $old_image_meta['credit_link'];
+            }
+
+            $credit = get_post_meta( $post_id, 'credit', true );
+            if ( ! $credit ) {
+                update_post_meta( $post_id, 'credit', $old_credit );
+                $credit_count++;
+            }
+            $credit_link = get_post_meta( $post_id, 'credit_link', true );
+            if ( ! $credit_link ) {
+                update_post_meta( $post_id, 'credit_link', $old_credit_link );
+                $credit_link_count++;
+            }
+        }
+
+        WP_CLI::success( 'Converted ' . $credit_count . ' credits' );
+        WP_CLI::success( 'Converted ' . $credit_link_count . ' credit links' );
+    }
 }
 
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );
