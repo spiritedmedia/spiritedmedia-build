@@ -61,7 +61,7 @@ class Attachment extends Post {
             'attachment'  => 0,
             'caption'     => '',
             'align'       => '',
-            'linkto'      => '',
+            'url'         => '',
             'href'        => '',
             'credit'      => '',
             'credit_link' => '',

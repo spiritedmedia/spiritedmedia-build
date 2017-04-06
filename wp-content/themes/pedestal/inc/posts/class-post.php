@@ -814,7 +814,7 @@ abstract class Post {
      */
     public function get_featured_image_figure_html( $size = '1024-16x9', $args = [] ) {
         $defaults = [
-            'linkto'                 => $this->get_permalink(),
+            'url'                    => $this->get_permalink(),
             'omit_presentation_mode' => true,
         ];
 
@@ -822,7 +822,7 @@ abstract class Post {
         if ( $attachment instanceof Attachment ) {
             $defaults = [
                 'attachment'             => $this->get_featured_image_id(),
-                'linkto'                 => $this->get_permalink(),
+                'url'                    => $this->get_permalink(),
                 'caption'                => $attachment->get_caption(),
                 'credit'                 => $attachment->get_credit(),
                 'credit_link'            => $attachment->get_credit_link(),
