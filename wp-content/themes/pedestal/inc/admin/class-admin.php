@@ -127,9 +127,9 @@ class Admin {
 
             // Add Scheduled Entities widget
             wp_add_dashboard_widget(
-                'pedestal_scheduled_entities',
-                'Scheduled Entities',
-                [ $this, 'handle_dashboard_widget_scheduled_entities' ]
+                'pedestal_scheduled_posts',
+                'Scheduled Posts',
+                [ $this, 'handle_dashboard_widget_scheduled_posts' ]
             );
         });
     }
@@ -999,17 +999,19 @@ class Admin {
     }
 
     /**
-     * Handle the display of the Scheduled Entities dashboard widget
+     * Handle the display of the Scheduled Posts dashboard widget
      */
-    public function handle_dashboard_widget_scheduled_entities() {
+    public function handle_dashboard_widget_scheduled_posts() {
+        $post_types = Types::get_entity_post_types();
+        $post_types[] = 'pedestal_newsletter';
         $future_posts = Stream::get( [
-            'post_type'      => Types::get_entity_post_types(),
+            'post_type'      => $post_types,
             'posts_per_page' => 15,
             'post_status'    => 'future',
             'orderby'        => 'date',
             'order'          => 'ASC',
         ] );
         $context = array_merge( Timber::get_context(), [ 'items' => $future_posts ] );
-        Timber::render( 'partials/admin/dash-widget-scheduled-entities.twig', $context );
+        Timber::render( 'partials/admin/dash-widget-scheduled-posts.twig', $context );
     }
 }
