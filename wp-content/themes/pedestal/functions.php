@@ -109,6 +109,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_TIME_FORMAT'         => 'g:i a',
                 'PEDESTAL_DATETIME_FORMAT'     => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
                 'PEDESTAL_GOOGLE_ANALYTICS_ID' => '',
+                'PEDESTAL_GOOGLE_OPTIMIZE_ID'  => '',
                 'PEDESTAL_BOXTERCO_SCRIPT'     => '',
                 'PEDESTAL_COMSCORE_ID'         => '',
 
@@ -650,6 +651,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $parsely = new \Pedestal\Objects\Parsely;
             $context['site']->analytics = [
                 'ga_id' => PEDESTAL_GOOGLE_ANALYTICS_ID,
+                'ga_optimize_id' => PEDESTAL_GOOGLE_OPTIMIZE_ID,
                 'parsely' => [
                     'site' => parse_url( home_url(), PHP_URL_HOST ),
                     'data' => $parsely->get_data(),

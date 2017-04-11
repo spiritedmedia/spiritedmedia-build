@@ -12,6 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="fb:pages" content="{{ site.social.facebook_page_id }}" />
         <link rel="pingback" href="{{site.pingback_url}}" />
+        {% include 'partials/analytics/analytics-ga.twig' %}
 
         {{function('wp_head')}}
 
