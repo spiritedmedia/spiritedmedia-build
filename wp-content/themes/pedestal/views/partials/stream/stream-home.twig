@@ -14,19 +14,19 @@
         {% for index, item in items %}
 
             {% if loop.index == 4 %}
-                {{ macros.nativo( 'home-stream-04' ) }}
+                {% include 'partials/adverts/ad-stream-04.twig' ignore missing %}
             {% endif %}
 
             {% if loop.index == 8 %}
-                {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
+                {% include 'partials/adverts/ad-stream-08.twig' ignore missing %}
             {% endif %}
 
             {% if loop.index == 12 %}
-                {{ macros.nativo( 'home-stream-12' ) }}
+                {% include 'partials/adverts/ad-stream-12.twig' ignore missing %}
             {% endif %}
 
             {% if loop.index == 16 %}
-                {% include 'partials/adverts/dfp-stream-16.twig' ignore missing %}
+                {% include 'partials/adverts/ad-stream-16.twig' ignore missing %}
             {% endif %}
 
             {% include [
