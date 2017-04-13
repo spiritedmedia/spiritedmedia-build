@@ -1,7 +1,7 @@
-Build [#2641](https://circleci.com/gh/spiritedmedia/spiritedmedia/2641) by kingkool68 at 2017-04-13 01:06 AM UTC
+Build [#2650](https://circleci.com/gh/spiritedmedia/spiritedmedia/2650) by kingkool68 at 2017-04-13 04:20 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.0](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.0)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.1](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.1)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.13...v5.6.0)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.0...v5.6.1)
 
- - [#1921](https://github.com/spiritedmedia/spiritedmedia/pull/1921): Featured Stories on Home Stream
+ - [#1977](https://github.com/spiritedmedia/spiritedmedia/pull/1977): Enable displaying media in Tweets within the stream

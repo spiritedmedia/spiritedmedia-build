@@ -200,16 +200,13 @@ class Embed extends Entity {
      * @return string
      */
     public function get_embed_html() {
-        $args = [];
-        $args['url'] = $this->get_embed_url();
-        $args['caption'] = $this->get_embed_caption();
-        $args['display_media']       = 'true';
-        if ( ! is_singular( self::$post_type ) ) {
-            $args['display_media']   = 'false';
-        }
+        $args = [
+            'url'           => $this->get_embed_url(),
+            'caption'       => $this->get_embed_caption(),
+            'display_media' => 'true',
+        ];
 
         $html = self::do_embed( $args );
-
         if ( ! empty( $html ) ) {
             $html = '<div class="' . esc_attr( 'pedestal-embed pedestal-embed-' . $this->get_embed_type() ) . '">' . $html . '</div>';
         }
