@@ -22,6 +22,11 @@ class Notifications {
      * @param array  $args      Settings to override defaults
      */
     public function send( $msg, $args ) {
+        // Prevent test environments from firing off to Slack
+        if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
+            // If you really need to test this locally, comment out the following statement
+            return;
+        }
         // Prepare the data / payload to be posted to Slack
         $data = [];
         $payload = wp_parse_args( $args, $this->defaults );

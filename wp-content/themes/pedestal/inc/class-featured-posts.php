@@ -33,7 +33,7 @@ class Featured_Posts {
         }
 
         $fm_featured = new \Fieldmanager_Group( esc_html__( 'Featured Entities', 'pedestal' ), [
-            'name'           => 'pedestal_featured_posts',
+            'name' => 'pedestal_featured_posts',
             'children' => [
                 'feat-1' => $this->get_child_fields( 'Featured 1' ),
                 'feat-2' => $this->get_child_fields( 'Featured 2' ),
@@ -70,7 +70,7 @@ class Featured_Posts {
     }
 
     /**
-     * Get the FM child fields
+     * Get the Fieldmanager child fields
      *
      * @param  string $label Label for the field
      */
@@ -89,7 +89,7 @@ class Featured_Posts {
                     'show_edit_link' => true,
                     'datasource' => new \Fieldmanager_Datasource_Post( [
                         'query_args' => [
-                            'post_type' => 'pedestal_article',
+                            'post_type' => [ 'pedestal_article', 'pedestal_whosnext' ],
                             'posts_per_page' => 15,
                             'post_status' => [ 'publish' ],
                         ],
@@ -113,7 +113,7 @@ class Featured_Posts {
     }
 
     /**
-     * Get the data from the Featured Posts FM fields
+     * Get the data from the Featured Posts Fieldmanager fields
      *
      * @return array
      */
@@ -121,11 +121,16 @@ class Featured_Posts {
         $output = [];
         $data = get_option( 'pedestal_featured_posts' );
         if ( ! empty( $data ) ) {
+            // Keep track of the index so we know what position this featured post
+            // should go to
+            $index = 0;
             foreach ( $data as $item ) {
                 if ( isset( $item['post'] ) && $item['post'] ) {
                     $key = $item['post'];
+                    $item['index'] = $index;
                     $output[ $key ] = $item;
                 }
+                $index++;
             }
         }
         return $output;
@@ -134,8 +139,13 @@ class Featured_Posts {
     /**
      * Get the IDs of the featured posts
      *
-     * If manually featured posts are specified, then prepend those to the
+     * If manually featured posts are specified, then weave those in to the
      * array of most recent articles.
+     *
+     * If the 2nd position is overriden:
+     *  - position 1 = the most recent article
+     *  - position 2 = the manually selected article
+     *  - position 3 = the 2nd most recent article
      *
      * @param  integer $num Number of post IDs to return
      * @return array Post IDs
@@ -155,16 +165,23 @@ class Featured_Posts {
         $posts = new \WP_Query( $args );
         $post_ids = $posts->posts;
 
-        // Prepend featured posts
+        // Weave in featured posts
+        // If the 2nd featured spot is manually overriden then we should reflect
+        // that positioning here
         $featured_data = $this->get_featured_data();
         $featured_post_ids = [];
         foreach ( $featured_data as $data ) {
             if ( ! empty( $data['post'] ) && is_int( $data['post'] ) ) {
-                $featured_post_ids[] = $data['post'];
+                $index = absint( $data['index'] );
+                $new_post_id = $data['post'];
+
+                // Add the new post ID in to the array in the position it should
+                // live, bumping other post IDs back
+                array_splice( $post_ids, $index, 0, $new_post_id );
             }
         }
-        $post_ids = array_merge( $featured_post_ids, $post_ids );
-        array_unique( $post_ids );
+
+        // Trim the number of post IDs to the specificed $num
         $post_ids = array_slice( $post_ids, 0, $num );
         return $post_ids;
     }
@@ -177,7 +194,7 @@ class Featured_Posts {
     public function get_posts() {
         $featured_data = $this->get_featured_data();
         $args = [
-            'post_type' => 'pedestal_article',
+            'post_type' => [ 'pedestal_article', 'pedestal_whosnext' ],
             'post_status' => 'publish',
             'post__in' => $this->get_featured_post_ids(),
             'orderby' => 'post__in',
