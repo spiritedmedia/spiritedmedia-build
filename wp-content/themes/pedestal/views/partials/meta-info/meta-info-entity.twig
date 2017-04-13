@@ -1,6 +1,6 @@
 {% set meta_info_classes = meta_info_classes|default( 'c-overview__meta' ) %}
 
-{% if item.get_authors_count >= 3 %}
+{% if item.get_authors_count >= 3 or narrow %}
     {% set meta_info_classes = meta_info_classes ~ '  c-meta-info--always-stacked' %}
 {% endif %}
 

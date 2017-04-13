@@ -252,7 +252,6 @@ class User_Management {
         $caps_admin_reporters = [
             'send_emails'         => '',
             'manage_spotlight'    => '',
-            'manage_pinned'       => '',
             'manage_terms'        => '',
             'manage_distribution' => '',
             'manage_uploads'      => '',

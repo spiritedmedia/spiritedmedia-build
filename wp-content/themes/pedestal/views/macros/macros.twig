@@ -13,9 +13,6 @@
     {% set classes = item.css_classes ~ '  ' ~ classes %}
     {% endif %}
 
-    {% if 'standard' == stream_type and item.is_pinned and not context.is_search %}
-        {% set classes = 'is-pinned  ' ~ classes %}
-    {% endif %}
     {{ classes }}
     {% endspaceless %}
 {% endmacro %}

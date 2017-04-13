@@ -189,9 +189,6 @@ class Frontend {
             $query->set( 'meta_query', $meta_query );
             $query->set( 'post_type', Types::get_entity_post_types() );
             $query->set( 'posts_per_page', 20 );
-            if ( Pedestal()->get_pinned_data()['enabled'] ) {
-                $query->set( 'post__not_in', [ Pedestal()->get_pinned_post()->get_id() ] );
-            }
         }
 
         if ( $query->is_feed() ) {
@@ -431,12 +428,6 @@ class Frontend {
             'enabled'         => $spotlight['enabled'],
             'label'           => $spotlight['label'],
             'content'         => Pedestal()->get_spotlight_post(),
-        ];
-
-        $pinned = Pedestal()->get_pinned_data();
-        $context['pinned'] = [
-            'enabled'         => $pinned['enabled'],
-            'content'         => Pedestal()->get_pinned_post(),
         ];
 
         if ( wp_get_current_user() ) {

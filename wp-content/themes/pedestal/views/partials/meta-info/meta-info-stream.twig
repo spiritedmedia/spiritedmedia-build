@@ -1,8 +1,14 @@
 {% set meta_info_classes = meta_info_classes|default( 'c-overview__meta' ) %}
+{% set standalone_icon_classes = 'hidden-for-medium-up' %}
 
-<footer class="{{ meta_info_classes }}  c-meta-info--{{ item.get_type }}  c-meta-info--stream  c-meta-info">
+{% if narrow %}
+    {% set meta_info_classes = meta_info_classes ~ '  c-meta-info--always-stacked' %}
+    {% set standalone_icon_classes = '' %}
+{% endif %}
 
-    <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item  hidden-for-medium-up">
+<footer class="c-stream__item__footer  {{ meta_info_classes }}  c-meta-info--{{ item.get_type }}  c-meta-info--stream  c-meta-info">
+
+    <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item  {{ standalone_icon_classes }}">
         {% include [
             'partials/meta-info/icon-'  ~ item.get_type ~ '.twig',
             'partials/meta-info/icon.twig'

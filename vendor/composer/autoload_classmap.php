@@ -239,6 +239,7 @@ return array(
     'Pedestal\\CLI\\CLI' => $baseDir . '/wp-content/themes/pedestal/inc/cli/class-cli.php',
     'Pedestal\\CLI\\CLI_Clusters' => $baseDir . '/wp-content/themes/pedestal/inc/cli/class-cli-clusters.php',
     'Pedestal\\Cron_Management' => $baseDir . '/wp-content/themes/pedestal/inc/class-cron-management.php',
+    'Pedestal\\Featured_Posts' => $baseDir . '/wp-content/themes/pedestal/inc/class-featured-posts.php',
     'Pedestal\\Feeds' => $baseDir . '/wp-content/themes/pedestal/inc/class-feeds.php',
     'Pedestal\\Frontend' => $baseDir . '/wp-content/themes/pedestal/inc/class-frontend.php',
     'Pedestal\\Objects\\ActiveCampaign' => $baseDir . '/wp-content/themes/pedestal/inc/objects/class-activecampaign.php',

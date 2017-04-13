@@ -261,19 +261,4 @@ abstract class Entity extends Post {
         }
         return false;
     }
-
-    /**
-     * Check if entity is currently pinned
-     *
-     * If the pin feature is turned off, this will return false.
-     *
-     * @return boolean
-     */
-    public function is_pinned() {
-        if ( $this->get_id() === Pedestal()->get_pinned_data()['content'] ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }

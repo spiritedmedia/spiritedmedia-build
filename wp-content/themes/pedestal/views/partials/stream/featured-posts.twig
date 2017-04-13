@@ -1,0 +1,25 @@
+{% for index, item in items %}
+
+    {% if index == 0 %}
+        <div class="c-stream__featured-items__primary small-12 columns">
+            {% include 'partials/stream/standard/entity.twig' with {
+                gaCategory: 'Featured'
+            } %}
+    {% else %}
+        <div class="c-stream__featured-items__secondary medium-6 columns">
+            {% include 'partials/stream/standard/entity.twig' with {
+                gaCategory: 'Featured',
+                narrow: true
+            } %}
+    {% endif %}
+
+    </div>
+
+{% endfor %}
+
+<div class="c-stream__featured-items__more columns small-12">
+    <a class="button expand" href="{{ site.url }}/articles/" data-ga-category="Button" data-ga-label="More Original Articles">
+        More Original Articles
+    </a>
+    <hr class="o-rule o-rule--slim" />
+</div>

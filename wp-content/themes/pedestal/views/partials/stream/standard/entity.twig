@@ -3,10 +3,6 @@
 <{{ stream_item_element }} class="{{ macros.get_stream_item_classes( 'standard', _context ) }}"
          {{ item.get_the_data_atts }}>
 
-    {% if is_home and item.is_pinned %}
-    {% include 'partials/stream/pin-mark.twig' %}
-    {% endif %}
-
     <div class="c-stream__item__inner  c-overview">
 
         {% if item.has_featured_image %}

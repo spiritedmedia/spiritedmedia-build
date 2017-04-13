@@ -55,6 +55,23 @@ $c: '.c-stream';
   }
 
 
+  &__featured-items {
+
+    &__primary {}
+
+    &__secondary {
+      #{$c}__item__footer {
+        @media #{$medium-up} {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    &__more {}
+
+  }
+
+
   &__items {}
 
 
@@ -91,13 +108,6 @@ $c: '.c-stream';
     }
 
 
-    &__pin {
-      @media #{$medium-up} {
-        float: right;
-      }
-    }
-
-
     &__body {}
 
 
@@ -107,6 +117,10 @@ $c: '.c-stream';
 
 
     &__img {}
+
+
+    &__footer {}
+
 
   } // __item
 
@@ -251,6 +265,18 @@ $c: '.c-stream';
     }
 
   } // &--newsletter
+
+
+
+
+
+  /// Stream that has featured items
+  &--has-featured {
+    // First item in the non-featured stream should have the standard top margin
+    #{$c}__items #{$c}__item:first-child {
+      margin-top: $stream-item-spacing;
+    }
+  }
 } // end stream
 
 

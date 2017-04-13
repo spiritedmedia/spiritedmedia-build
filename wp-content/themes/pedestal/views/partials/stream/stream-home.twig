@@ -1,15 +1,18 @@
-<section class="c-stream  c-stream--standard  js-stream">
+{% if featured_posts.items and pagination.is_first_page and not is_search %}
+    {% set stream_classes = 'c-stream--has-featured' %}
+    {% set stream_featured_items %}
+    <div class="c-stream__featured-items row">
+        {% include 'partials/stream/featured-posts.twig' with {'items': featured_posts.items } %}
+    </div>
+    {% endset %}
+{% endif %}
+
+<section class="c-stream c-stream--standard js-stream {{ stream_classes }}">
     {% set stream = true %}
 
-    <div class="c-stream__items">
+    {{ stream_featured_items }}
 
-        {% if pinned.enabled and pinned.content and not is_search %}
-            {% set item = pinned.content %}
-            {% include [
-                'partials/stream/standard/' ~ pinned.content.get_type ~ '.twig',
-                'partials/stream/standard/entity.twig'
-            ] %}
-        {% endif %}
+    <div class="c-stream__items row small-12 columns">
 
         {% for index, item in items %}
 

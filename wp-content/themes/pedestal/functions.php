@@ -2,19 +2,20 @@
 
 namespace Pedestal;
 
+use Pedestal\Featured_Posts;
 use Pedestal\Utils\Utils;
-
 use Pedestal\Registrations\Post_Types\Types;
-
-use Pedestal\Objects\Newsletter_Lists;
-
-use Pedestal\Posts\Post;
-
-use Pedestal\Objects\Stream;
-
-use Pedestal\Objects\User;
-
+use Pedestal\Registrations\Taxonomies\Taxonomies;
 use Pedestal\Posts\Entities\Embed;
+use Pedestal\Posts\{
+    Post,
+    Slots
+};
+use Pedestal\Objects\{
+    Newsletter_Lists,
+    Stream,
+    User
+};
 
 if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
@@ -232,8 +233,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
 
             $this->utilities         = Utils::get_instance();
-            $this->taxonomies        = Registrations\Taxonomies\Taxonomies::get_instance();
-            $this->post_types        = Registrations\Post_Types\Types::get_instance();
+            $this->taxonomies        = Taxonomies::get_instance();
+            $this->post_types        = Types::get_instance();
             $this->user_management   = User_Management::get_instance();
             $this->subscriptions     = Subscriptions::get_instance();
             $this->newsletter_lists  = Newsletter_Lists::get_instance();
@@ -241,6 +242,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->adverts           = Adverts::get_instance();
             $this->slots             = Posts\Slots\Slots::get_instance();
             $this->feeds             = Feeds::get_instance();
+            $this->featured_posts    = Featured_Posts::get_instance();
 
             // Some functionality should only ever run on a live environment
             if ( 'live' === PEDESTAL_ENV ) {
@@ -728,7 +730,11 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * @return array
          */
         public function get_spotlight_post() {
-            $post = $this->get_featured_post( 'spotlight' );
+            $spotlight = $this->get_spotlight_data();
+            if ( ! $spotlight['enabled'] ) {
+                return false;
+            }
+            $post = Post::get_by_post_id( $spotlight['content'] );
             if ( empty( $post ) ) {
                 $stream = new Stream( [
                     'posts_per_page' => 1,
@@ -748,55 +754,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * @return array
          */
         public function get_spotlight_data() {
-            return $this->get_featured_post_data( 'spotlight' );
-        }
-
-        /**
-         * Get the pinned post object
-         *
-         * @return array
-         */
-        public function get_pinned_post() {
-            return $this->get_featured_post( 'pinned' );
-        }
-
-        /**
-         * Get the data for a pinned post
-         *
-         * @return array
-         */
-        public function get_pinned_data() {
-            return $this->get_featured_post_data( 'pinned' );
-        }
-
-        /**
-         * Get the featured post object
-         *
-         * @param  string $name Name of feature type. Can be either 'pinned' or
-         *     'spotlight'.
-         *
-         * @return Post
-         */
-        public function get_featured_post( $name ) {
-            $featured = $this->get_featured_post_data( $name );
-            if ( $featured['enabled'] && ! empty( $featured['content'] )  ) {
-                return Post::get_by_post_id( $featured['content'] );
-            } else {
-                return false;
-            }
-        }
-
-        /**
-         * Get the data for a featured post
-         *
-         * @param  string $name Name of feature type. Can be either 'pinned' or
-         *     'spotlight'.
-         *
-         * @return array
-         */
-        public function get_featured_post_data( $name ) {
-            $name = 'pedestal_' . $name;
-            return get_option( $name, [
+            return get_option( 'pedestal_spotlight', [
                 'enabled' => 0,
                 'label'   => '',
                 'content' => 0,

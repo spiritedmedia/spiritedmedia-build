@@ -290,8 +290,6 @@ class Admin {
         $this->register_distribution_fields();
         $this->register_maintenance_mode_fields();
         $this->register_spotlight_fields();
-        $this->register_pinned_entity_fields();
-
     }
 
     /**
@@ -705,39 +703,6 @@ class Admin {
             ],
         ] );
         $fm_spotlight->add_submenu_page( 'themes.php', esc_html__( 'Spotlight Settings', 'pedestal' ), esc_html__( 'Spotlight', 'pedestal' ), 'manage_spotlight' );
-
-    }
-
-    private function register_pinned_entity_fields() {
-
-        $label_enabled = esc_html__( 'Currently this only affects the home stream.', 'pedestal' );
-        $fm_pinned = new \Fieldmanager_Group( false, [
-            'name'       => 'pedestal_pinned',
-            'children'   => [
-                'enabled' => new \Fieldmanager_Radios( $label_enabled, [
-                    'name'              => 'enabled',
-                    'default_value'     => 0,
-                    'options'           => [
-                        1               => esc_html__( 'On', 'pedestal' ),
-                        0               => esc_html__( 'Off', 'pedestal' ),
-                    ],
-                    'sanitize'          => 'intval',
-                ] ),
-                'content'     => new \Fieldmanager_Autocomplete( esc_html__( 'Entity', 'pedestal' ), [
-                    'name'             => 'content',
-                    'attributes'       => [
-                        'placeholder'  => esc_html__( 'Search by title', 'pedestal' ),
-                        'size'         => 50,
-                    ],
-                    'datasource'       => new \Fieldmanager_Datasource_Post( [
-                        'query_args'        => [
-                            'post_type'     => Types::get_entity_post_types(),
-                        ],
-                    ] ),
-                ] ),
-            ],
-        ] );
-        $fm_pinned->add_submenu_page( 'themes.php', esc_html__( 'Pinned Entity Settings', 'pedestal' ), esc_html__( 'Pinned', 'pedestal' ), 'manage_pinned' );
 
     }
 

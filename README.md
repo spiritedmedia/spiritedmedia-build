@@ -1,7 +1,7 @@
-Build [#2630](https://circleci.com/gh/spiritedmedia/spiritedmedia/2630) by kingkool68 at 2017-04-11 06:23 PM UTC
+Build [#2641](https://circleci.com/gh/spiritedmedia/spiritedmedia/2641) by kingkool68 at 2017-04-13 01:06 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.13](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.13)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.0](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.0)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.12...v5.5.13)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.5.13...v5.6.0)
 
- - [#1973](https://github.com/spiritedmedia/spiritedmedia/pull/1973): Add Google Optimize
+ - [#1921](https://github.com/spiritedmedia/spiritedmedia/pull/1921): Featured Stories on Home Stream

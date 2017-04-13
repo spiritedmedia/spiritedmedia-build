@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit435a42f5d3f2337f13f47696d534e689
+class ComposerStaticInitf0bd587e78e54ce1d5e0789977472d2b
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -309,6 +309,7 @@ class ComposerStaticInit435a42f5d3f2337f13f47696d534e689
         'Pedestal\\CLI\\CLI' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/cli/class-cli.php',
         'Pedestal\\CLI\\CLI_Clusters' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/cli/class-cli-clusters.php',
         'Pedestal\\Cron_Management' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-cron-management.php',
+        'Pedestal\\Featured_Posts' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-featured-posts.php',
         'Pedestal\\Feeds' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-feeds.php',
         'Pedestal\\Frontend' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-frontend.php',
         'Pedestal\\Objects\\ActiveCampaign' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-activecampaign.php',
@@ -805,11 +806,11 @@ class ComposerStaticInit435a42f5d3f2337f13f47696d534e689
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit435a42f5d3f2337f13f47696d534e689::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit435a42f5d3f2337f13f47696d534e689::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit435a42f5d3f2337f13f47696d534e689::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit435a42f5d3f2337f13f47696d534e689::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit435a42f5d3f2337f13f47696d534e689::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf0bd587e78e54ce1d5e0789977472d2b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf0bd587e78e54ce1d5e0789977472d2b::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitf0bd587e78e54ce1d5e0789977472d2b::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitf0bd587e78e54ce1d5e0789977472d2b::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitf0bd587e78e54ce1d5e0789977472d2b::$classMap;
 
         }, null, ClassLoader::class);
     }

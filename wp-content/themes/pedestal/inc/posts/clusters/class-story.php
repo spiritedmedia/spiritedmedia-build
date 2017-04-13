@@ -88,7 +88,6 @@ class Story extends Cluster {
             $styles['foreground_color']   = $this->get_primary_story_bar_foreground_color();
 
             $styles['panel_border_color'] = $this->get_primary_story_bar_background_color();
-            $styles['pinned_color']       = $this->get_primary_story_bar_foreground_color();
 
             $icon = $this->get_icon_id();
             if ( ! empty( $icon ) ) {

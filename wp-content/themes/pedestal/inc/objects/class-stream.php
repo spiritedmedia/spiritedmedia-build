@@ -29,6 +29,7 @@ class Stream {
      */
     public function __construct( $query_args = [] ) {
         if ( $query_args instanceof \WP_Query && $query_args->have_posts() ) {
+            $this->query = $query_args;
             $this->posts = $query_args->posts;
         } elseif ( is_array( $query_args ) && reset( $query_args ) instanceof \WP_Post ) {
             $this->posts = $query_args;
@@ -133,10 +134,7 @@ class Stream {
      */
     public function is_first_page() {
         $pagination = self::get_pagination( $this->get_query() );
-        if ( empty( $pagination ) || 1 === intval( $pagination['pages_text']['paged'] ) ) {
-            return true;
-        }
-        return false;
+        return $pagination['is_first_page'];
     }
 
     /**
@@ -146,10 +144,7 @@ class Stream {
      */
     public function is_last_page() {
         $pagination = self::get_pagination( $this->get_query() );
-        if ( intval( $pagination['pages_text']['paged'] ) === intval( $pagination['pages_text']['total'] ) ) {
-            return true;
-        }
-        return false;
+        return $pagination['is_last_page'];
     }
 
     /**

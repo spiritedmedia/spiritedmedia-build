@@ -21,7 +21,7 @@
     {% endblock %}
 </header>
 
-{% if spotlight.enabled and spotlight.content %}
+{% if spotlight.enabled and spotlight.content and not is_home %}
 <aside id="promoted-story">
     <div class="row">
         <strong>{{ spotlight.label }}</strong>
