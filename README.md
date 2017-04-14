@@ -1,8 +1,7 @@
-Build [#2655](https://circleci.com/gh/spiritedmedia/spiritedmedia/2655) by kingkool68 at 2017-04-13 09:31 PM UTC
+Build [#2662](https://circleci.com/gh/spiritedmedia/spiritedmedia/2662) by kingkool68 at 2017-04-14 02:03 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.2](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.2)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.3](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.3)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.1...v5.6.2)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.2...v5.6.3)
 
- - [#1978](https://github.com/spiritedmedia/spiritedmedia/pull/1978): Allow Who's Next Content to be Featured on Homepage, Respect Positioning
- - [#1980](https://github.com/spiritedmedia/spiritedmedia/pull/1980): Local environments should just shut up
+ - [#1982](https://github.com/spiritedmedia/spiritedmedia/pull/1982): Fix Bug in Conditional Logic of Single Cluster Template

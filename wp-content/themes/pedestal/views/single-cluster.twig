@@ -20,33 +20,31 @@
                 <div class="c-main__paged">
                     {{ macros.pagination( item.get_pagination, { 'show_nav': false } ) }}
                 </div>
-            {% else %}
+            {% endif %}
 
-                {% if item.is_story %}
+            {% if item.is_story %}
                 {% include 'partials/overview/overline.twig' %}
-                {% endif %}
+            {% endif %}
 
-                {% if item.get_headline %}
+            {% if item.get_headline %}
                 {% include 'partials/item-title.twig' with {
                     title: item.get_the_headline,
                     url: 'none'
                 } %}
-                {% endif %}
+            {% endif %}
 
-                {% include 'partials/meta-info/meta-info-cluster.twig' %}
+            {% include 'partials/meta-info/meta-info-cluster.twig' %}
 
-                {% if item.has_featured_image %}
+            {% if item.has_featured_image %}
                 {% include 'partials/overview/lead-image.twig' %}
-                {% endif %}
+            {% endif %}
 
-                {% include 'partials/entity-share.twig' %}
+            {% include 'partials/entity-share.twig' %}
 
-                {% if item.get_content %}
+            {% if item.get_content %}
                 <div class="c-overview__lead-text  s-post-content">
                     {{ item.get_the_content }}
                 </div>
-                {% endif %}
-
             {% endif %}
 
         </header>
