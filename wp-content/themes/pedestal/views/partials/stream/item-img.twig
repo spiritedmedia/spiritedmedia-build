@@ -1,6 +1,6 @@
 {% set size = 'medium-square' %}
 
-{% if item.is_original %}
+{% if item.is_original or item.is_featured %}
 {% set size = '1024-16x9' %}
 {% endif %}
 

@@ -155,7 +155,7 @@ class Admin {
                 $type = Types::get_post_type_name( $post->post_type, $plurals = false );
                 if ( 'pedestal_locality' === $post->post_type ) {
                     $locality = Post::get_by_post_id( $post->ID );
-                    $type = $locality->get_locality_type_name();
+                    $type = $locality->get_type_name();
                 }
                 $title .= ' (' . $type . ')';
             }

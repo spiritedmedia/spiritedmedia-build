@@ -2,12 +2,12 @@
 
     {% if index == 0 %}
         <div class="c-stream__featured-items__primary small-12 columns">
-            {% include 'partials/stream/standard/entity.twig' with {
+            {% include 'partials/stream/standard/featured.twig' with {
                 gaCategory: 'Featured'
             } %}
     {% else %}
         <div class="c-stream__featured-items__secondary medium-6 columns">
-            {% include 'partials/stream/standard/entity.twig' with {
+            {% include 'partials/stream/standard/featured.twig' with {
                 gaCategory: 'Featured',
                 narrow: true
             } %}

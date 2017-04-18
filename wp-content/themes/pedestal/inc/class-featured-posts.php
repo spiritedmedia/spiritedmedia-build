@@ -7,6 +7,20 @@ use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
 
 class Featured_Posts {
+
+    private $post_types = [
+        'pedestal_article',
+        'pedestal_link',
+        'pedestal_whosnext',
+        'pedestal_story',
+        'pedestal_topic',
+        'pedestal_person',
+        'pedestal_org',
+        'pedestal_embed',
+        'pedestal_place',
+        'pedestal_locality',
+    ];
+
     /**
      * Get an instance of this class
      */
@@ -32,7 +46,7 @@ class Featured_Posts {
             return;
         }
 
-        $fm_featured = new \Fieldmanager_Group( esc_html__( 'Featured Entities', 'pedestal' ), [
+        $fm_featured = new \Fieldmanager_Group( esc_html__( 'Featured Posts', 'pedestal' ), [
             'name' => 'pedestal_featured_posts',
             'children' => [
                 'feat-1' => $this->get_child_fields( 'Featured 1' ),
@@ -85,11 +99,11 @@ class Featured_Posts {
             'children' => [
                 'post' => new \Fieldmanager_Autocomplete( 'Post Selection', [
                     'name' => 'post',
-                    'description' => 'Select an Entity',
+                    'description' => 'Select a Post (anything except Events)',
                     'show_edit_link' => true,
                     'datasource' => new \Fieldmanager_Datasource_Post( [
                         'query_args' => [
-                            'post_type' => [ 'pedestal_article', 'pedestal_whosnext' ],
+                            'post_type' => $this->post_types,
                             'posts_per_page' => 15,
                             'post_status' => [ 'publish' ],
                         ],
@@ -194,7 +208,7 @@ class Featured_Posts {
     public function get_posts() {
         $featured_data = $this->get_featured_data();
         $args = [
-            'post_type' => [ 'pedestal_article', 'pedestal_whosnext' ],
+            'post_type' => $this->post_types,
             'post_status' => 'publish',
             'post__in' => $this->get_featured_post_ids(),
             'orderby' => 'post__in',
@@ -215,7 +229,9 @@ class Featured_Posts {
                     $post->post_excerpt = trim( $override['description'] );
                 }
             }
-            $new_posts[] = Post::get_instance( $post );
+            $new_post = Post::get_instance( $post );
+            $new_post->is_featured = true;
+            $new_posts[] = $new_post;
         }
         return $new_posts;
     }
