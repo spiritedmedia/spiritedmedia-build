@@ -43,6 +43,10 @@ $c: '.c-yt-placeholder';
     border-radius: 15px;
     transition: background-color 250ms linear;
     z-index: $z-index-2;
+
+    .o-icon {
+      display: block;
+    }
   }
 
   :hover,

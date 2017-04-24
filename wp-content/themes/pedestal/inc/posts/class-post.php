@@ -3,10 +3,9 @@
 namespace Pedestal\Posts;
 
 use WP_Post;
-use \Pedestal\Utils\Utils;
-
+use Pedestal\Icons;
+use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
-
 use Pedestal\Objects\{
     Figure,
     Notifications,
@@ -520,15 +519,15 @@ abstract class Post {
     }
 
     /**
-     * Get the avatar for the author
+     * Get the image for the meta info component
      *
+     * If the post has a single author, the author's avatar image will be used.
      * If there is more than one author or if the author has no avatar defined
-     * then this will default to the site logo icon
+     * then this will default to the site logo icon.
      *
      * @return string|html
      */
-    public function get_author_avatar( $size = 'thumbnail' ) {
-
+    public function get_meta_info_img( $size = 'thumbnail' ) {
         $authors = $this->get_authors();
         if ( 1 == count( $authors ) ) {
             return sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Image|%s">%s</a>',
@@ -538,13 +537,11 @@ abstract class Post {
             );
         } elseif ( 1 < count( $authors ) ) {
             $html  = '<a href="' . esc_url( home_url( '/about/' ) ) . '" data-ga-category="Author" data-ga-label="Image|Placeholder">';
-            $html .= '<i class="icon icon-logo"></i>';
+            $html .= Icons::get_logo( 'logo_icon', 'c-meta-info__img__icon' );
             $html .= '</a>';
             return $html;
         }
-
         return false;
-
     }
 
     /**

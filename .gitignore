@@ -95,6 +95,7 @@ wp-content/themes/**/vendor/
 
 # Include compiled assets
 # wp-content/themes/*/assets/dist/
+# wp-content/themes/*/assets/**/_temp/
 # !.gitkeep
 
 # Include vendor directories

@@ -4,6 +4,9 @@ styleguide_header();
 ?>
     <div class="content-wrapper row">
         <main class="c-main columns large-8 js-main" role="main">
+            <header class="c-main__header">
+                <h1 class="c-main__title">Stream Items</h1>
+            </header>
             <section class="c-stream c-stream--standard js-stream">
                 <div class="c-stream__items js-stream-items">
 
@@ -36,7 +39,7 @@ styleguide_header();
                                 </div>
                             </div>
                             <footer class="c-overview__meta  c-meta-info--article  c-meta-info--stream  c-meta-info">
-                                <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item  hidden-for-medium-up">
+                                <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item  hidden-for-medium-up">
                                     <a href="https://staging.billypenn.com/about/anna-orso/" data-ga-category="Author" data-ga-label="Image|Anna Orso">
                                         <div class="c-avatar  c-avatar--staff">
                                             <div class="c-avatar__img">
@@ -58,7 +61,7 @@ styleguide_header();
                                     <div class="c-meta-info__name c-meta-info__source__item">
                                         <a href="https://staging.billypenn.com/about/anna-orso/" data-ga-category="Author" data-ga-label="Name|Anna Orso">Anna Orso</a>
                                     </div>
-                                    <div class="c-meta-info__icon  c-meta-info__source__item">
+                                    <div class="c-meta-info__img  c-meta-info__source__item">
                                         <a href="https://staging.billypenn.com/about/anna-orso/" data-ga-category="Author" data-ga-label="Image|Anna Orso">
                                             <div class="c-avatar  c-avatar--staff">
                                                 <div class="c-avatar__img">
@@ -84,9 +87,9 @@ styleguide_header();
                                 </h1>
                             </div>
                             <footer class="c-overview__meta  c-meta-info--link  c-meta-info--stream  c-meta-info">
-                                <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item  hidden-for-medium-up">
+                                <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item  hidden-for-medium-up">
                                     <a href="http://www.philly.com/philly/living/potholes-streets-bike-lanes-paving-inga-saffron.html" data-ga-category="Source|Link" data-ga-label="Icon|external-link|Philadelphia Inquirer">
-                                        <i class="icon fa fa-external-link"></i>
+                                        <?php styleguide_icon( 'external-link' ); ?>
                                     </a>
                                 </div>
                                 <div class="c-meta-info__stack  c-meta-info__item">
@@ -105,9 +108,9 @@ styleguide_header();
                         Philadelphia Inquirer
                     </a>
                                     </div>
-                                    <div class="c-meta-info__icon  c-meta-info__source__item">
+                                    <div class="c-meta-info__img  c-meta-info__source__item">
                                         <a href="http://www.philly.com/philly/living/potholes-streets-bike-lanes-paving-inga-saffron.html" data-ga-category="Source|Link" data-ga-label="Icon|external-link|Philadelphia Inquirer">
-                                            <i class="icon fa fa-external-link"></i>
+                                            <?php styleguide_icon( 'external-link' ); ?>
                                         </a>
                                     </div>
                                 </div>
@@ -139,9 +142,9 @@ styleguide_header();
                                 </figure>
                             </div>
                             <footer class="c-overview__meta  c-meta-info--embed  c-meta-info--stream  c-meta-info">
-                                <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item  hidden-for-medium-up">
+                                <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item  hidden-for-medium-up">
                                     <a href="https://twitter.com/NovaMBB/status/839913389367373824" data-ga-category="Source|Embed" data-ga-label="Icon|twitter|Twitter">
-                                        <i class="icon fa fa-twitter"></i>
+                                        <?php styleguide_icon( 'twitter' ); ?>
                                     </a>
                                 </div>
                                 <div class="c-meta-info__stack  c-meta-info__item">
@@ -160,9 +163,9 @@ styleguide_header();
                                             Twitter
                                         </a>
                                     </div>
-                                    <div class="c-meta-info__icon  c-meta-info__source__item">
+                                    <div class="c-meta-info__img  c-meta-info__source__item">
                                         <a href="https://twitter.com/NovaMBB/status/839913389367373824" data-ga-category="Source|Embed" data-ga-label="Icon|twitter|Twitter">
-                                            <i class="icon fa fa-twitter"></i>
+                                            <?php styleguide_icon( 'twitter' ); ?>
                                         </a>
                                     </div>
                                 </div>
@@ -188,9 +191,9 @@ styleguide_header();
                                 </h1>
                             </div>
                             <footer class="c-overview__meta  c-meta-info--embed  c-meta-info--stream  c-meta-info">
-                                <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item  hidden-for-medium-up">
+                                <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item  hidden-for-medium-up">
                                     <a href="https://www.instagram.com/p/BROo1agDNV9/" data-ga-category="Source|Embed" data-ga-label="Icon|instagram|Instagram">
-                                        <i class="icon fa fa-instagram"></i>
+                                        <?php styleguide_icon( 'instagram' ); ?>
                                     </a>
                                 </div>
                                 <div class="c-meta-info__stack  c-meta-info__item">
@@ -209,9 +212,9 @@ styleguide_header();
                                             Instagram
                                         </a>
                                     </div>
-                                    <div class="c-meta-info__icon  c-meta-info__source__item">
+                                    <div class="c-meta-info__img  c-meta-info__source__item">
                                         <a href="https://www.instagram.com/p/BROo1agDNV9/" data-ga-category="Source|Embed" data-ga-label="Icon|instagram|Instagram">
-                                            <i class="icon fa fa-instagram"></i>
+                                            <?php styleguide_icon( 'instagram' ); ?>
                                         </a>
                                     </div>
                                 </div>
@@ -260,21 +263,21 @@ styleguide_header();
                                     <div class="inner">
                                         <div class="c-event__export__item">
                                             <a href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=%5B67160%5D+Town+hall+with+a+US+Senator+from+PA+%E2%80%94+the+other+one&amp;dates=20170312T143000Z%2F20170312T160000Z&amp;details=&amp;location=Penn+Museum+%283260+South+St.+19104%29&amp;output=xml"
-                                                class="[ o-icon-text  o-icon-text--responsive ]  c-event__export__link" data-ga-category="Event Export" data-ga-label="Google|This here is an event stream item">
-                                                <i class="o-icon-text__icon  c-event__export__icon  [ fa  fa-calendar ]"></i>
-                                                <span class="o-icon-text__text  c-event__export__text">Google</span>
+                                                class="c-event__export__link" data-ga-category="Event Export" data-ga-label="Google|This here is an event stream item">
+                                                <?php styleguide_icon( 'calendar', 'c-event__export__icon' ); ?>
+                                                <span class="c-event__export__text">Google</span>
                                             </a>
                                         </div>
                                         <div class="c-event__export__item">
-                                            <a href="https://staging.billypenn.com/2017/03/10/a-town-hall-from-a-pennsylvania-senator-the-other-one/ics/" class="[ o-icon-text  o-icon-text--responsive ]  c-event__export__link" data-ga-category="Event Export" data-ga-label="iCal|This here is an event stream item">
-                                                <i class="o-icon-text__icon  c-event__export__icon  [ fa  fa-calendar ]"></i>
-                                                <span class="o-icon-text__text  c-event__export__text">iCal</span>
+                                            <a href="https://staging.billypenn.com/2017/03/10/a-town-hall-from-a-pennsylvania-senator-the-other-one/ics/" class="c-event__export__link" data-ga-category="Event Export" data-ga-label="iCal|This here is an event stream item">
+                                                <?php styleguide_icon( 'calendar', 'c-event__export__icon' ); ?>
+                                                <span class="c-event__export__text">iCal</span>
                                             </a>
                                         </div>
                                         <div class="c-event__export__item">
-                                            <a href="https://staging.billypenn.com/2017/03/10/a-town-hall-from-a-pennsylvania-senator-the-other-one/ics/" class="[ o-icon-text  o-icon-text--responsive ]  c-event__export__link" data-ga-category="Event Export" data-ga-label="Outlook|This here is an event stream item">
-                                                <i class="o-icon-text__icon  c-event__export__icon  [ fa fa-calendar ]"></i>
-                                                <span class="o-icon-text__text  c-event__export__text">Outlook</span>
+                                            <a href="https://staging.billypenn.com/2017/03/10/a-town-hall-from-a-pennsylvania-senator-the-other-one/ics/" class="c-event__export__link" data-ga-category="Event Export" data-ga-label="Outlook|This here is an event stream item">
+                                                <?php styleguide_icon( 'calendar', 'c-event__export__icon' ); ?>
+                                                <span class="c-event__export__text">Outlook</span>
                                             </a>
                                         </div>
                                     </div>
@@ -307,7 +310,7 @@ styleguide_header();
                                 </div>
                             </div>
                             <footer class="c-overview__meta  c-meta-info--factcheck  c-meta-info--stream  c-meta-info">
-                                <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item  hidden-for-medium-up">
+                                <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item  hidden-for-medium-up">
                                     <a href="https://staging.billypenn.com/about/" data-ga-category="Author" data-ga-label="Image|Placeholder"><i class="icon icon-logo"></i></a>
                                 </div>
                                 <div class="c-meta-info__stack  c-meta-info__item">
@@ -322,7 +325,7 @@ styleguide_header();
                                     <div class="c-meta-info__name c-meta-info__source__item">
                                         <a href="https://staging.billypenn.com/about/anna-orso/" data-ga-category="Author" data-ga-label="Name|Anna Orso">Anna Orso</a> and <a href="https://staging.billypenn.com/about/cassie-owens/" data-ga-category="Author" data-ga-label="Name|Cassie Owens">Cassie Owens</a>
                                     </div>
-                                    <div class="c-meta-info__icon  c-meta-info__source__item">
+                                    <div class="c-meta-info__img  c-meta-info__source__item">
                                         <a href="https://staging.billypenn.com/about/" data-ga-category="Author" data-ga-label="Image|Placeholder"><i class="icon icon-logo"></i></a>
                                     </div>
                                 </div>

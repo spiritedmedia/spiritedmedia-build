@@ -2,11 +2,11 @@
 
 <div class="{{ meta_info_classes }}  c-meta-info--{{ item.get_type }}  c-meta-info--always-stacked  c-meta-info--email  c-meta-info">
 
-    <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item">
+    <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
         {% include [
-            'partials/meta-info/icon-'  ~ item.get_type ~ '.twig',
-            'partials/meta-info/icon.twig'
-        ] %}
+            'partials/meta-info/img-'  ~ item.get_type ~ '.twig',
+            'partials/meta-info/img.twig'
+        ] with { icon_color: '#9f9f9f' } %}
     </div>
 
     <div class="c-meta-info__stack  c-meta-info__item">

@@ -1,7 +1,7 @@
-Build [#2679](https://circleci.com/gh/spiritedmedia/spiritedmedia/2679) by kingkool68 at 2017-04-18 05:20 PM UTC
+Build [#2699](https://circleci.com/gh/spiritedmedia/spiritedmedia/2699) by montchr at 2017-04-24 07:13 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.4](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.4)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.7.0](https://github.com/spiritedmedia/spiritedmedia/compare/v5.7.0)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.3...v5.6.4)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.6.4...v5.7.0)
 
- - [#1983](https://github.com/spiritedmedia/spiritedmedia/pull/1983): Allow More Content Types to Be Featureable
+ - [#1904](https://github.com/spiritedmedia/spiritedmedia/pull/1904): Use SVG icons instead of icon font

@@ -6,41 +6,62 @@ styleguide_header();
     .example {
         margin-bottom: 5em;
     }
+    .icon-example {
+        display: inline-block;
+        width: 1rem;
+    }
     </style>
     <div class="content-wrapper row">
 		<main class="c-main columns large-8 js-main" role="main">
-			<p>We use the <a href="http://fontawesome.io/">Font Awesome</a> library for icons but will oneday switch to injecting SVGs inline. Below are a list of the icons we use thorughtout the sites:</p>
+            <header class="c-main__header">
+                <h1 class="c-main__title">Icons</h1>
+                <div class="c-main__excerpt">
+
+<p>We load SVG icons from a folder in Pedestal using the Twig function
+<code>ped_icon()</code>. Most of these are currently from <a
+href="http://fontawesome.io/">Font Awesome</a> but we can use any custom icon.
+Below is a list of the icons we use throughout the sites:</p>
+
+                </div>
+            </header>
+
 			<?php
 				$icons = [
-					'external-link' => 'External Link',
-					'facebook' => 'Facebook',
-					'twitter' => 'Twitter',
-				    'linkedin' => 'LinkedIn',
-				    'instagram' => 'Instagram',
-				    'vine' => 'Vine',
-				    'youtube' => 'YouTube',
-				    'calendar' => 'Calendar',
-				    'envelope' => 'Envelope',
-					'angle-left' => 'Angle Left',
-					'angle-right' => 'Angle Right',
-					'level-down' => 'Level Down',
-					'search' => 'Search',
-					'times' => 'Times (multiplication sign)',
-					'briefcase' => 'Briefcase',
-					'birthday-cake' => 'Birthday Cake',
+                    'angle-left'    => 'Angle Left',
+                    'angle-right'   => 'Angle Right',
+                    'bars'          => 'Bars AKA Hamburger',
+                    'birthday-cake' => 'Birthday Cake',
+                    'briefcase'     => 'Briefcase',
+                    'calendar'      => 'Calendar',
+                    'close'         => 'Close / X (multiplication sign)',
+                    'envelope-o'    => 'Envelope',
+                    'external-link' => 'External Link',
+                    'facebook'      => 'Facebook',
+                    'instagram'     => 'Instagram',
+                    'level-down'    => 'Level Down',
+                    'linkedin'      => 'LinkedIn',
+                    'play'          => 'Play',
+                    'scribd'        => 'Scribd',
+                    'search'        => 'Search',
+					'twitter'       => 'Twitter',
+				    'vine'          => 'Vine',
+				    'youtube'       => 'YouTube',
 				];
 				foreach ( $icons as $icon => $description ) {
-					echo '<p><i class="fa fa-' . $icon . '" aria-hidden="true"></i> - ' . $description . ' (<code>fa-' . $icon . '</code>)</p>';
+					echo '<p>';
+                    echo '<div class="icon-example">';
+                    echo styleguide_icon( $icon );
+                    echo '</div>';
+                    echo ' &emsp; ' . $description . ' &mdash; <code>' . $icon . '</code></p>';
 				}
 			?>
-			<p>See <a href="https://github.com/spiritedmedia/spiritedmedia/issues/1708">https://github.com/spiritedmedia/spiritedmedia/issues/1708</a> for how these icons are used.</p>
 
             <hr>
 
             <p><code>.o-icon-text</code></p>
             <div class="example">
                 <div class="o-icon-text">
-                    <i class="o-icon-text__icon fa fa-calendar"></i>
+                    <?php styleguide_icon( 'facebook', 'o-icon-text__icon' ); ?>
                     <span class="o-icon-text__text">Icon Text</span>
                 </div>
             </div>
@@ -49,15 +70,7 @@ styleguide_header();
             <div class="example">
                 <div class="o-icon-text o-icon-text--rev">
                     <span class="o-icon-text__text">Icon Text</span>
-                    <i class="o-icon-text__icon fa fa-calendar"></i>
-                </div>
-            </div>
-
-            <p><code>.o-icon-text--responsive</code></p>
-            <div class="example">
-                <div class="o-icon-text o-icon-text--responsive">
-                    <i class="o-icon-text__icon fa fa-calendar"></i>
-                    <span class="o-icon-text__text">Icon Text</span>
+                    <?php styleguide_icon( 'calendar', 'o-icon-text__icon' ); ?>
                 </div>
             </div>
 

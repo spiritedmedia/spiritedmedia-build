@@ -57,15 +57,16 @@
           padding-left: 0;
         }
 
-        a { color: $grey-25; }
+        a,
+        .sitewide-search-icon {
+          display: inline-block;
+          font-size: $base-spacing-unit * 1.2;
+          color: $grey-25;
+          line-height: 1;
+        }
 
         &.first {
           margin-left: halve( $icon-diameter );
-        }
-
-        .sitewide-search-icon {
-          font-size: $base-font-size;
-          display: inline-block;
         }
       }
     }

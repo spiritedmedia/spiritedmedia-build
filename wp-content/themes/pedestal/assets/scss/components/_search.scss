@@ -3,13 +3,17 @@
 // ==========================================================================
 
 
+$search-input-padding: $half-spacing-unit;
+$search-filter-link-padding: 5px;
+
+
 .c-search {
 
   &__form {
     position: relative;
 
     .is-active-search & {
-      margin-bottom: c-search-property-get( form-m-b );
+      margin-bottom: $base-spacing-unit;
     }
 
     .is-loading & {
@@ -22,10 +26,10 @@
 
 
   &__icon {
-    padding: c-search-property-get( input-pd );
+    padding: $search-input-padding;
     position: absolute;
-    top: c-search-property-get( input-pd );
-    color: c-search-property-get( input-icon-color );
+    top: $base-spacing-unit / 4;
+    color: $grey-25;
     background-color: transparent;
 
     &:hover,
@@ -34,7 +38,11 @@
       color: $black;
     }
 
-    &--search {}
+    &--search {
+      .o-icon {
+        width: icon-width-get( search ) * 1.5;
+      }
+    }
 
     &--close {
       right: 0;
@@ -43,6 +51,10 @@
       // scss-lint:disable SelectorFormat
       .js & {
         display: block;
+      }
+
+      .o-icon {
+        width: icon-width-get( close ) * 1.5;
       }
     }
   }
@@ -67,7 +79,7 @@
 
 
   &__total-results {
-    padding: c-search-property-get( filter-link-pd );
+    padding: $search-filter-link-padding;
 
     &__count {
       font-weight: 600;
@@ -110,9 +122,9 @@
     right: 0;
 
     &__label {
-      margin-left: c-search-property-get( filter-link-spacing );
+      margin-left: $base-spacing-unit;
       margin-bottom: 0;
-      padding: c-search-property-get( filter-link-pd );
+      padding: $search-filter-link-padding;
       display: inline-block;
       position: relative;
 
@@ -159,16 +171,16 @@
 input.c-search__field {
   @include stdbd(
     $side: 'bottom',
-    $color: c-search-property-get( input-bd-color ),
+    $color: $grey-80,
     $neut: true
   );
 
   box-shadow: none;
   height: auto;
-  font-size: c-search-property-get( input-f-z );
-  padding: c-search-property-get( input-pd );
-  padding-left: c-search-property-get( input-icon-w );
-  color: c-search-property-get( input-color );
+  padding: $search-input-padding;
+  padding-left: $base-spacing-unit * 2.5;
+  font-size: $h4-font-size;
+  color: $grey-25;
 
   &,
   &:focus {

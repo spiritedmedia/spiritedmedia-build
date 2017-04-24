@@ -4,7 +4,12 @@ styleguide_header();
 ?>
     <div class="content-wrapper row">
 		<main class="c-main columns large-8 js-main" role="main">
-			<p>These are utility classes found in <a href="https://github.com/spiritedmedia/spiritedmedia/blob/master/wp-content/themes/pedestal/assets/scss/utilities/_utilities.scss">https://github.com/spiritedmedia/spiritedmedia/blob/master/wp-content/themes/pedestal/assets/scss/utilities/_utilities.scss</a></p>
+            <header class="c-main__header">
+                    <h2 class="c-main__title">Utilities</h2>
+                    <div class="c-main__excerpt">
+                        <p>These are utility classes found in <a href="https://github.com/spiritedmedia/spiritedmedia/blob/master/wp-content/themes/pedestal/assets/scss/utilities/_utilities.scss">https://github.com/spiritedmedia/spiritedmedia/blob/master/wp-content/themes/pedestal/assets/scss/utilities/_utilities.scss</a></p>
+                    </div>
+                </header>
 
 			<p><code>.u-text-color-primary</code></p>
 			<p class="u-text-color-primary">This <em>should</em> be in the site's <strong>primary</strong> color!</p>

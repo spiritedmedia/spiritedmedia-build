@@ -99,17 +99,20 @@
 
   .c-pagination__item {
     @include button(
-      $padding: rem-calc(8),
+      $padding: 0,
       $bg: $pagination-button-bg,
       $border-color: $body-bg
     );
 
     margin-bottom: 0;
-    padding-top: $pagination-pd-v;
-    padding-bottom: $pagination-pd-v;
-    padding-left: 0;
-    padding-right: 0;
   }
+
+  .c-pagination__item,
+  .c-pagination__dir__icon {
+    height: 3.5rem;
+  }
+
+
 
     // Disable these linters because we need to override the default behavior of
     // the anchor element itself
@@ -131,8 +134,7 @@
 
     .c-pagination__dir__icon {
       font-size: $h3-font-size;
-      line-height: 0;
-      vertical-align: middle;
+      line-height: 1;
     }
 
     .c-pagination__dir--prev {
@@ -148,6 +150,8 @@
 
     .c-pagination__num {
       display: none;
+      padding-top: $pagination-pd-v;
+      padding-bottom: $pagination-pd-v;
 
       @media #{$medium-up} {
         display: block;

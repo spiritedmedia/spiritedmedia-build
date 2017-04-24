@@ -20,33 +20,13 @@
     @include link-dark;
   }
 
-  @if $email {
-    // Override fa icon color for email
-    .email-body & {
-      @each $icon-name in $fa-icons-used {
-        .fa-#{$icon-name} {
-          @include iconize(
-            $path: $icon-name,
-            $size: $c-meta-info-icon-size--email,
-            $fa-colorize: $c-meta-info-color,
-            $path-only: true,
-            $fallback: false,
-            $live-url: true,
-            $size-1x: true
-          );
-        }
-      }
-    }
-  }
 
   // Meta info for Original Content
   [data-original] & {
-    .c-meta-info__icon {
-      .icon {
-        @if $email {
-          width: $c-meta-info-icon-size;
-          height: $c-meta-info-icon-size;
-        }
+    .c-meta-info__img__icon {
+      @if $email {
+        width: $c-meta-info-icon-size;
+        height: $c-meta-info-icon-size;
       }
     }
   } // end [data-original] &
@@ -94,7 +74,7 @@
 }
 
 
-.c-meta-info__icon {
+.c-meta-info__img {
   // scss-lint:disable SelectorFormat
   margin-right: $c-meta-info-icon-spacing;
 
@@ -102,20 +82,6 @@
   a {
     color: $grey-62;
   }
-
-
-  .icon {
-    @extend %c-meta-info-d-ib;
-    font-size: 0;
-
-    @if not $email {
-      font-size: $c-meta-info-icon-size;
-    } @else {
-      height: $c-meta-info-icon-size--email;
-      width: $c-meta-info-icon-size--email;
-    }
-  } // end .icon
-
 
   .c-avatar {
     &,
@@ -128,9 +94,14 @@
       display: block;
     }
   }
-} // end .c-meta-info__icon
+} // end .c-meta-info__img
 
-.c-meta-info__icon--standalone {}
+.c-meta-info__img__icon {
+  @extend %c-meta-info-d-ib;
+  font-size: $c-meta-info-icon-size;
+}
+
+.c-meta-info__img--standalone {}
 
 
 .c-meta-info__name {}
@@ -169,7 +140,7 @@
 
 
 .c-meta-info--stream {
-  .c-meta-info__icon {
+  .c-meta-info__img {
     @media #{$medium-up} {
       margin-left: $c-meta-info-icon-spacing;
       margin-right: 0;

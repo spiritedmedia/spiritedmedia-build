@@ -349,7 +349,6 @@
  * @param  {bool}   $resize-only: false               Set whether to rezize only
  * @param  {bool}   $path-only:   false               Set whether to change path without resizing
  * @param  {bool}   $fallback:    true                Set whether to use SVG
- * @param  {mixed}  $fa-colorize: false               Override FontAwesome icon with colored PNG
  * @param  {bool}   $live-url:    false               If set, base the image path off the live URL
  */
 @mixin iconize(
@@ -358,9 +357,7 @@
   $resize-only: false,
   $path-only: false,
   $fallback: true,
-  $fa-colorize: false,
-  $live-url: false,
-  $size-1x: false
+  $live-url: false
 ) {
 
   @if $path-only == false {
@@ -379,28 +376,7 @@
       $png-path: $path + '.png';
       $svg-path: $path + '.svg';
 
-      // FontAwesome png fallbacks
-      @if $fa-colorize {
-        $size-2x: $size * 2;
-
-        $size-path: $size-2x / ( $size-2x * 0 + 1 );
-        @if $size-1x {
-          $size-path: $size / ( $size * 0 + 1 );
-        }
-
-        $icon-base-path: $pedestal-abspath + '/assets/images/icons/';
-        @if $live-url {
-          $icon-base-path: $pedestal-live-uri + '/assets/images/icons/';
-        }
-
-        // Convert color to string
-        $color: '"' + $fa-colorize + '"';
-        $color: str-replace( $color, '#', '' );
-
-        $png-path: $icon-base-path + $color + '/png/' + $size-path + '/' + $path + '.png';
-        $svg-path: $icon-base-path + $color + '/svg/' + $path + '.svg';
-
-      } @elseif $live-url {
+      @if $live-url {
         $png-path: $site-live-url + $path + '.png';
         $svg-path: $site-live-url + $path + '.svg';
       }

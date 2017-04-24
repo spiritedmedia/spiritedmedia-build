@@ -21,9 +21,43 @@ add_filter( 'styleguide_header', 'styleguide_search_and_replace');
 add_filter( 'styleguide_footer', 'styleguide_search_and_replace');
 
 function styleguide_header() {
-	echo apply_filters( 'styleguide_header', file_get_contents( 'header.html' ) );
+    ob_start();
+    require_once 'header.php';
+    $header = ob_get_clean();
+	echo apply_filters( 'styleguide_header', $header );
 }
 
 function styleguide_footer() {
-	echo apply_filters( 'styleguide_footer', file_get_contents( 'footer.html' ) );
+    ob_start();
+    require_once 'footer.php';
+    $footer = ob_get_clean();
+	echo apply_filters( 'styleguide_footer', $footer );
+}
+
+function styleguide_icon( $icon = '', $classes = '' ) {
+    $icon = sanitize_title( $icon );
+    if ( ! $icon ) {
+        return;
+    }
+
+    $atts = [
+        'alt'       => $icon,
+        'role'      => 'image',
+        'css_class' => 'o-icon  o-icon--' . $icon,
+    ];
+
+    if ( $classes ) {
+        $atts['css_class'] = $classes . ' ' . $atts['css_class'];
+    }
+
+    $base = get_template_directory();
+    $location = "{$base}/assets/images/icons/svg/{$icon}.svg";
+    if ( ! $location || ! file_exists( $location ) ) {
+        return;
+    }
+
+    echo str_replace( '<svg ',
+        '<svg class="' . esc_attr( $atts['css_class'] ) . '" role="' . esc_attr( $atts['role'] ) . '" ',
+        file_get_contents( $location )
+    );
 }

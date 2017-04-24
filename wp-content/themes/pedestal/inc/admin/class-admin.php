@@ -5,26 +5,19 @@ namespace Pedestal\Admin;
 use function Pedestal\Pedestal;
 
 use Timber\Timber;
-
-use \Pedestal\Utils\Utils;
-
-use \Pedestal\Registrations\Post_Types\Types;
-
-use \Pedestal\Posts\Post;
-
-use \Pedestal\Posts\Entities\Embed;
-
-use \Pedestal\Posts\Attachment;
-
-use \Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
-
-use \Pedestal\Posts\Clusters\Story;
-
-use \Pedestal\Posts\Clusters\Person;
-
+use Pedestal\Icons;
+use Pedestal\Utils\Utils;
+use Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Posts\Post;
+use Pedestal\Posts\Attachment;
+use Pedestal\Posts\Entities\Embed;
+use Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
 use Pedestal\Posts\Slots\Slots;
-
 use Pedestal\Objects\Stream;
+use Pedestal\Posts\Clusters\{
+    Person,
+    Story
+};
 
 /**
  * Encapsulates customizations for the WordPress admin
@@ -109,10 +102,6 @@ class Admin {
         add_action( 'admin_notices', [ $this, 'action_admin_notice_mandrill_failure' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_unembeddable_url' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_slot_item_defaults_missing' ] );
-
-        add_action( 'add_attachment', [ $this, 'update_svg_fallback' ] );
-        add_action( 'edit_attachment', [ $this, 'update_svg_fallback' ] );
-        add_action( 'delete_attachment', [ $this, 'delete_svg_fallback' ] );
 
         // Set up kses for all user roles
         remove_action( 'init', 'kses_init' );
@@ -847,76 +836,6 @@ class Admin {
     }
 
     /**
-     * Save a PNG fallback for SVG.
-     *
-     * @link http://eperal.com/automatically-generate-png-images-from-uploaded-svg-images-in-wordpress/
-     *
-     * @param int    $attachment_id
-     * @param string $color         Hex foreground color
-     */
-    public function save_svg_fallback( $attachment_id, $color ) {
-        $attachment_src = get_attached_file( $attachment_id );
-        $fallback_src = str_replace( '.svg','.png', $attachment_src );
-
-        // Load the re-colorized SVG into memory
-        $svg = $this->recolor_svg( $attachment_id, $color );
-
-        // Create PNG from SVG
-        $im = new \Imagick();
-        $im->setBackgroundColor( new \ImagickPixel( 'transparent' ) );
-        $im->readImageBlob( $svg );
-        $im->trimImage( 0 );
-        $im->setImageFormat( 'png24' );
-        $im->resizeImage( 25, 25, \Imagick::FILTER_LANCZOS, 1 );  /*Optional, if you need to resize*/
-        $im->writeImage( $fallback_src );
-        $im->clear();
-        $im->destroy();
-    }
-
-    /**
-     * Save optimized SVG
-     *
-     * @param  SVG    $svg          An SVG file loaded into memory
-     * @param  string $path         Path to save the SVG to
-     * @param  string $fallback_url URL to load as fallback image
-     */
-    public function save_svg( $svg, $path, $fallback_url ) {
-        // @codingStandardsIgnoreStart
-        $dom = new \DOMDocument();
-        $dom->loadXML( $svg );
-        $dom->createAttributeNS( 'http://www.w3.org/1999/xlink', 'xmlns:xlink' );
-        $dom->documentElement->removeAttribute( 'width' );
-        $dom->documentElement->removeAttribute( 'height' );
-        foreach ( $dom->getElementsByTagName( 'image' ) as $image ) {
-            $image->parentNode->removeChild( $image );
-        }
-        $f = $dom->createDocumentFragment();
-        $f->appendXML( "<image src='$fallback_url'></image>" );
-        $dom->documentElement->appendChild( $f );
-        file_put_contents( $path, $dom->saveXML() );
-        // @codingStandardsIgnoreEnd
-    }
-
-    /**
-     * Change the SVG fill color based on ID
-     *
-     * @param  int    $attachment_id SVG attachment ID
-     * @param  string $color         Hex color to replace with
-     * @return SVG
-     */
-    public function recolor_svg( $attachment_id, $color ) {
-        $attachment_src = get_attached_file( $attachment_id );
-        $svg = Utils::file_get_contents_with_auth( $attachment_src );
-        // The SVG must have the xml declaration.
-        // Very hacky.
-        if ( '?' != $svg[1] ) {
-            $svg = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' . $svg;
-        }
-        // Search/replace 3- or 6-character hex color code
-        return preg_replace( '/#(?:[0-9a-fA-F]{3}){1,2}\b/i', $color, $svg );
-    }
-
-    /**
      * Update story branding SVG and PNG icons based on color settings
      *
      * @param  int $story_id
@@ -928,38 +847,11 @@ class Admin {
             $fallback_url = str_replace( '.svg', '.png', wp_get_attachment_url( $attachment_id ) );
 
             $color = $styles['foreground_color'];
-            $svg = $this->recolor_svg( $attachment_id, $color );
+            $svg = Icons::recolor_svg( $attachment_id, $color );
             $svg_path = get_attached_file( $attachment_id );
 
-            $this->save_svg_fallback( $attachment_id, $color );
-            $this->save_svg( $svg, $svg_path, $fallback_url );
-        }
-    }
-
-    /**
-     * When an attachment is uploaded, create svg fallback.
-     *
-     * @param int $attachment_id
-     */
-    public function update_svg_fallback( $attachment_id ) {
-        $type = get_post_mime_type( $attachment_id );
-        if ( 'image/svg+xml' == $type ) {
-            $this->save_svg_fallback( $attachment_id, '#ffffff' );
-        }
-    }
-
-    /**
-     * Remove PNG fallback for SVG on attatchment delete.
-     *
-     * @link http://eperal.com/automatically-generate-png-images-from-uploaded-svg-images-in-wordpress/
-     *
-     * @param int $attachment_id
-     */
-    public function delete_svg_fallback( $attachment_id ) {
-        $type = get_post_mime_type( $attachment_id );
-        if ( 'image/svg+xml' == $type ) {
-            $attachment_src = get_attached_file( $attachment_id ); // Gets path to attachment
-            unlink( str_replace( '.svg','.png', $attachment_src ) );
+            Icons::save_svg_fallback( $attachment_id, $color );
+            Icons::save_svg( $svg, $svg_path, $fallback_url );
         }
     }
 

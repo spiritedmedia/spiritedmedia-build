@@ -106,6 +106,17 @@
 }
 
 
+/// Get the prescribed width of an icon
+///
+/// IcoMoon generates specific em widths for each icon we use.
+///
+/// @param {string} $icon Icon name
+/// @return {unit}        Icon width in ems
+@function icon-width-get( $icon ) {
+  @return map-get-strict( $icon-widths, $icon );
+}
+
+
 
 
 

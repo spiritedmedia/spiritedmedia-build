@@ -65,10 +65,16 @@
 
     &__icon {
       color: $dimmed-text-color;
+      width: $base-spacing-unit;
+      text-align: center;
+      margin-right: $base-spacing-unit / 4;
     }
 
 
-    &__text {}
+    &__text {
+      display: inline-block;
+      vertical-align: middle;
+    }
 
 
     /*h1*/&__name {

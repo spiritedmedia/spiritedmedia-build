@@ -8,7 +8,13 @@ styleguide_header();
     }
 </style>
 <div class="content-wrapper row">
-    <main class="c-main columns large-8 js-main" role="main">        <section>
+    <main class="c-main columns large-8 js-main" role="main">
+
+        <header class="c-main__header">
+            <h1 class="c-main__title">Media Object</h1>
+        </header>
+
+        <section>
             <p><code>.o-media</code></p>
             <div class="example">
                 <div class="o-media">

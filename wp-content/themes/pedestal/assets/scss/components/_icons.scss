@@ -7,61 +7,30 @@
 // scss-lint:disable SelectorFormat
 
 
-@if global-variable-exists( site-theme-name ) {
+.o-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: auto;
+  stroke-width: 0;
+  stroke: currentColor;
 
-  .icon-logo {
-    @include iconize(
-      $path: $site-theme-logo-abspath + '/logo_icon',
-      $size: $avatar-size-sm
-    );
-
-    .email-body & {
-      @include iconize(
-        $path: $site-theme-logo-abspath + '/logo_icon-20',
-        $size: $email-icon-diameter,
-        $live-url: true,
-        $size-1x: true,
-        $fallback: false
-      );
-    }
+  .social-icon & {
+    // vertical-align: baseline;
+    width: 40px;
+    height: 40px;
+    display: block;
+    padding: 10px;
   }
 }
 
 
-
-
-
-//
-// FontAwesome Tweaks and Fallbacks
-// ==========================================================================
-
-
-.email-body {
-
-  .fa {
-    display: inline-block;
-    width: $email-icon-diameter;
-    height: $email-icon-diameter;
-    background-repeat: no-repeat;
-
-    @each $icon-name in $fa-icons-used {
-      &-#{$icon-name} {
-        @include iconize(
-          $path: $icon-name,
-          $size: $email-icon-diameter,
-          $fa-colorize: $primary-color,
-          $path-only: true,
-          $fallback: false,
-          $live-url: true,
-          $size-1x: true
-        );
-      } // end &-#{$icon-name}
-
-    } // end @each
-
-  } // end .fa
-
-} // end .email-body
+// Set up prescribed widths from IcoMoon for each icon we're using
+@each $icon-name, $icon-width in $icon-widths {
+  .o-icon--#{$icon-name} {
+    width: $icon-width;
+  }
+}
 
 
 

@@ -427,6 +427,10 @@ class CLI extends \WP_CLI_Command {
                 'path'       => PEDESTAL_WP_THEMES_PATH . '/pedestal',
                 'family'     => $pedestal_family,
                 'imageSizes' => $image_sizes,
+                // Varying icon colors for email
+                'iconColors' => [
+                    '#9f9f9f',
+                ],
                 'children'   => [],
             ],
         ];
@@ -459,8 +463,12 @@ class CLI extends \WP_CLI_Command {
 
         // Wrap string array values in single quotes for compatability with Sass
         // https://github.com/Updater/node-sass-json-importer#importing-strings
+        //
+        // If the string begins with a `#` character, indicating it's a hex
+        // value, don't double wrap it in quotes because Sass needs to treat it
+        // as a color
         array_walk_recursive( $sassy_config, function( &$value, $key ) {
-            if ( is_string( $value ) && 'brandColor' !== $key ) {
+            if ( is_string( $value ) && '#' !== substr( $value, 0, 1 ) ) {
                 $value = "'" . $value . "'";
             }
         } );

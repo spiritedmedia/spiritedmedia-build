@@ -8,10 +8,10 @@
 
 <footer class="c-stream__item__footer  {{ meta_info_classes }}  c-meta-info--{{ item.get_type }}  c-meta-info--stream  c-meta-info">
 
-    <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item  {{ standalone_icon_classes }}">
+    <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item  {{ standalone_icon_classes }}">
         {% include [
-            'partials/meta-info/icon-'  ~ item.get_type ~ '.twig',
-            'partials/meta-info/icon.twig'
+            'partials/meta-info/img-'  ~ item.get_type ~ '.twig',
+            'partials/meta-info/img.twig'
         ] %}
     </div>
 
@@ -26,10 +26,10 @@
                 'partials/meta-info/source-name.twig'
             ] %}
         </div>
-        <div class="c-meta-info__icon  c-meta-info__source__item">
+        <div class="c-meta-info__img  c-meta-info__source__item">
             {% include [
-                'partials/meta-info/icon-'  ~ item.get_type ~ '.twig',
-                'partials/meta-info/icon.twig'
+                'partials/meta-info/img-'  ~ item.get_type ~ '.twig',
+                'partials/meta-info/img.twig'
             ] %}
         </div>
     </div>

@@ -140,7 +140,7 @@
                 {% set twitter_html %}
                     {% spaceless %}
                     <a href="{{ twitter_url }}" class="o-icon-text" data-ga-category="User" data-ga-label="Twitter|@{{ twitter_handle }}|{{ name }}">
-                        <i class="o-icon-text__icon fa fa-twitter"></i>
+                        {{ ped_icon( 'twitter', 'o-icon-text__icon' ) }}
                         <span class="c-user-card__twitter__handle">@{{ twitter_handle }}</span>
                     </a>
                     {% endspaceless %}
@@ -150,7 +150,7 @@
 
         {% set email_html %}
             <a href="mailto:{{ email }}" class="o-icon-text" data-ga-category="User" data-ga-label="Email|{{ email }}|{{ name }}">
-                <i class="o-icon-text__icon fa fa-envelope"></i>
+                {{ ped_icon( 'envelope-o', 'o-icon-text__icon' ) }}
                 <span itemprop="email">{{ email }}</span>
             </a>
         {% endset %}
@@ -299,7 +299,7 @@
         <div class="c-pagination__inner">
 
             <a href="{{ url_prev }}" class="c-pagination__dir--prev  c-pagination__dir  c-pagination__item {{ url_prev_disabled }}  js-pagination-item" data-ga-category="Pagination" data-ga-label="Previous">
-                <i class="c-pagination__dir__icon  fa  fa-angle-left"></i>
+                {{ ped_icon('angle-left', 'c-pagination__dir__icon') }}
             </a>
 
             {% for num, url in data.page_numbers.smaller %}
@@ -319,7 +319,7 @@
             {% endfor %}
 
             <a href="{{ url_next }}" class="c-pagination__dir--next  c-pagination__dir  c-pagination__item  {{ url_next_disabled }}  js-pagination-item" data-ga-category="Pagination" data-ga-label="Next">
-                <i class="c-pagination__dir__icon  fa  fa-angle-right"></i>
+                {{ ped_icon('angle-right', 'c-pagination__dir__icon') }}
             </a>
 
         </div>

@@ -4,13 +4,17 @@ styleguide_header();
 ?>
     <div class="content-wrapper row">
 		<main class="c-main columns large-8 js-main" role="main">
+            <header class="c-main__header">
+                <h1 class="c-main__title">Buttons</h1>
+            </header>
+
 			<p><button>Unstyled Button</button></p>
 			<p><button class="button">Button</button></p>
 			<p><button class="button--rounded button">Rounded Button</button></p>
 			<p><button class="button--rounded button large">Large Rounded Button</button></p>
 			<p>
 				<a class="button--iconic button--rounded button expand large" href="#">
-                	<i class="button--iconic__icon fa fa-facebook"></i>
+                    <?php styleguide_icon( 'facebook', 'button--iconic__icon' ); ?>
                 	<span class="button--iconic__text">Large Rounded Expanded Button</span>
             	</a>
 			</p>
@@ -26,7 +30,7 @@ styleguide_header();
 			</p>
 			<p>
 				<a class="button--iconic button--rounded button--dark button expand large" href="#">
-                	<i class="button--iconic__icon fa fa-facebook"></i>
+                	<?php styleguide_icon( 'facebook', 'button--iconic__icon' ); ?>
                 	<span class="button--iconic__text">Large Rounded Dark Expanded Button</span>
             	</a>
 			</p>

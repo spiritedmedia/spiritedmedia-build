@@ -2,11 +2,14 @@
 
 namespace Pedestal;
 
-use Pedestal\Featured_Posts;
 use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Registrations\Taxonomies\Taxonomies;
 use Pedestal\Posts\Entities\Embed;
+use Pedestal\{
+    Featured_Posts,
+    Icons
+};
 use Pedestal\Posts\{
     Post,
     Slots
@@ -243,6 +246,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->slots             = Posts\Slots\Slots::get_instance();
             $this->feeds             = Feeds::get_instance();
             $this->featured_posts    = Featured_Posts::get_instance();
+            $this->icons             = Icons::get_instance();
 
             // Some functionality should only ever run on a live environment
             if ( 'live' === PEDESTAL_ENV ) {

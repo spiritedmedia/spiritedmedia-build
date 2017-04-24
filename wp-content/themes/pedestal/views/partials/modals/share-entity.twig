@@ -7,7 +7,7 @@
                 href="{{ item.get_facebook_share_link }}"
                 data-share-dest="facebook" data-ga-category="Button"
                 data-ga-label="Share Modal|Facebook|{{item.get_the_title}}">
-                <i class="button--iconic__icon fa fa-facebook"></i>
+                {{ ped_icon( 'facebook', 'button--iconic__icon' ) }}
                 <span class="button--iconic__text">facebook</span>
             </a>
         </li>
@@ -18,7 +18,7 @@
                 data-share-dest="twitter"
                 data-ga-category="Button"
                 data-ga-label="Share Modal|Twitter|{{item.get_the_title}}">
-                <i class="button--iconic__icon fa fa-twitter"></i>
+                {{ ped_icon( 'twitter', 'button--iconic__icon' ) }}
                 <span class="button--iconic__text">twitter</span>
             </a>
         </li>
@@ -29,7 +29,7 @@
                 data-share-dest="linkedin"
                 data-ga-category="Button"
                 data-ga-label="Share Modal|LinkedIn|{{item.get_the_title}}">
-                <i class="button--iconic__icon fa fa-linkedin"></i>
+                {{ ped_icon( 'linkedin', 'button--iconic__icon' ) }}
                 <span class="button--iconic__text">linkedin</span>
             </a>
         </li>
@@ -39,7 +39,7 @@
                 data-share-dest="email"
                 data-ga-category="Button"
                 data-ga-label="Share Modal|Email|{{item.get_the_title}}">
-                <i class="button--iconic__icon fa fa-envelope"></i>
+                {{ ped_icon( 'envelope-o', 'button--iconic__icon' ) }}
                 <span class="button--iconic__text">email</span>
             </a>
         </li>

@@ -3,21 +3,21 @@
 
     {% if person.get_known_for %}
     <div class="c-whos-next-item__person__role">
-        <i class="c-whos-next-item__person__icon  fa-briefcase  fa-fw  fa"></i>
+        {{ ped_icon( 'briefcase', 'c-whos-next-item__person__icon' ) }}
         <span class="c-whos-next-item__person__text">{{ person.get_known_for }}</span>
     </div>
     {% endif %}
 
     {% if person.get_age %}
     <div class="c-whos-next-item__person__age">
-        <i class="c-whos-next-item__person__icon  fa-birthday-cake  fa-fw  fa"></i>
+        {{ ped_icon( 'birthday-cake', 'c-whos-next-item__person__icon' ) }}
         <span class="c-whos-next-item__person__text">{{ person.get_age }} years old</span>
     </div>
     {% endif %}
 
     {% if person.get_twitter_handle %}
     <div class="c-whos-next-item__person__twitter">
-        <i class="c-whos-next-item__person__icon  fa-twitter  fa-fw  fa"></i>
+        {{ ped_icon( 'twitter', 'c-whos-next-item__person__icon' ) }}
 
         <a href="{{ person.get_twitter_profile_url }}"
             title="@{{ person.get_twitter_handle }} on twitter"
@@ -35,7 +35,7 @@
 
     {% if person.get_instagram_handle %}
     <div class="c-whos-next-item__person__instagram">
-        <i class="c-whos-next-item__person__icon  fa-instagram  fa-fw  fa"></i>
+        {{ ped_icon( 'instagram', 'c-whos-next-item__person__icon' ) }}
 
         <a href="{{ person.get_instagram_url }}"
             title="@{{ person.get_instagram_handle }} on Instagram"
@@ -53,7 +53,7 @@
 
     {% if person.get_linkedin_url %}
     <div class="c-whos-next-item__person__linkedin">
-        <i class="c-whos-next-item__person__icon  fa-linkedin  fa-fw  fa"></i>
+        {{ ped_icon( 'linkedin', 'c-whos-next-item__person__icon' ) }}
 
         <a href="{{ person.get_linkedin_url }}"
             title="{{ person.get_the_title }} on LinkedIn"

@@ -41,6 +41,14 @@ a.disabled {
   overflow: hidden;
 }
 
+
+// Use cascading SVG fill color
+// https://css-tricks.com/cascading-svg-fill-color/
+svg {
+  fill: currentColor;
+}
+
+
 // Override Normalize.css figure element margins
 figure {
   margin-top: 0;

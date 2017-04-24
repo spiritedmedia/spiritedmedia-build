@@ -4,6 +4,7 @@ namespace Pedestal\Objects;
 
 use Timber\Timber;
 
+use Pedestal\Icons;
 use Pedestal\Utils\Utils;
 use Pedestal\Objects\YouTube;
 use Pedestal\Posts\Attachment;
@@ -196,7 +197,8 @@ class Figure {
 
             $context['content'] = '<a href="' . esc_url( $youtube_url ) . '" class="c-yt-placeholder__link js-yt-placeholder-link" data-youtube-id="' . esc_attr( $youtube_id ) . '" target="_blank" data-ga-category="Embed|Video" data-ga-label="Load YouTube Video">';
             $context['content'] .= '<img src="' . esc_url( $thumbnails['src'] ) . '" srcset="' . esc_attr( $srcset_attr ) . '" class="c-yt-placeholder__image">';
-            $context['content'] .= '<span class="c-yt-placeholder__play-button fa fa-play">';
+            $context['content'] .= '<span class="c-yt-placeholder__play-button">';
+            $context['content'] .= Icons::get_icon( 'play' );
             $context['content'] .= '</span></a>';
             $context['classes'] .= ' c-figure--youtube';
             $context['wrap_classes'] .= 'c-yt-placeholder js-yt-placeholder';

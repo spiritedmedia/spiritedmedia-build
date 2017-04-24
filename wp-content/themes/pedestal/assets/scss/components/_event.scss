@@ -73,9 +73,29 @@
 
     &__link {}
 
+    &__icon,
+    &__text {
+      @if not $email {
+        @media #{$medium-up} {
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+    }
+
     &__icon {
-      // Remove icon text margin when displaying block
-      margin-right: 0;
+      @include mq-base {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: $base-spacing-unit / 4;
+      };
+
+      @if not $email {
+        @media #{$medium-up} {
+          margin-right: $icon-spacing;
+        }
+      }
     }
 
     &__text {

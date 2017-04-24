@@ -242,6 +242,7 @@ return array(
     'Pedestal\\Featured_Posts' => $baseDir . '/wp-content/themes/pedestal/inc/class-featured-posts.php',
     'Pedestal\\Feeds' => $baseDir . '/wp-content/themes/pedestal/inc/class-feeds.php',
     'Pedestal\\Frontend' => $baseDir . '/wp-content/themes/pedestal/inc/class-frontend.php',
+    'Pedestal\\Icons' => $baseDir . '/wp-content/themes/pedestal/inc/class-icons.php',
     'Pedestal\\Objects\\ActiveCampaign' => $baseDir . '/wp-content/themes/pedestal/inc/objects/class-activecampaign.php',
     'Pedestal\\Objects\\Author' => $baseDir . '/wp-content/themes/pedestal/inc/objects/class-author.php',
     'Pedestal\\Objects\\Figure' => $baseDir . '/wp-content/themes/pedestal/inc/objects/class-figure.php',

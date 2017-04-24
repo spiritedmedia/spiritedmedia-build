@@ -11,9 +11,13 @@ article {
     <div class="content-wrapper row">
         <main class="c-main columns large-8 js-main" role="main">
 
-            <h1 class="c-main__title">
+            <header class="c-main__header">
+                <h1 class="c-main__title">Overviews</h1>
+            </header>
+
+            <h2>
                 Overview: Single Article
-            </h1>
+            </h2>
 
             <hr class="o-rule">
 
@@ -41,7 +45,7 @@ article {
                         <p>There aren’t a lot of them left, but here’s an updated list of when the Philly schools are playing.</p>
                     </div>
                     <div class="c-overview__meta  c-meta-info--article  c-meta-info--entity  c-meta-info">
-                        <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item">
+                        <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
                             <a href="https://staging.billypenn.com/about/dan-levy/" data-ga-category="Author" data-ga-label="Image|Dan Levy">
                                 <div class="c-avatar  c-avatar--staff">
                                     <div class="c-avatar__img">
@@ -99,7 +103,7 @@ article {
                         <p>There aren’t a lot of them left, but here’s an updated list of when the Philly schools are playing.</p>
                     </div>
                     <div class="c-overview__meta  c-meta-info--article  c-meta-info--entity  c-meta-info">
-                        <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item">
+                        <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
                             <a href="https://staging.billypenn.com/about/" data-ga-category="Author" data-ga-label="Image|Placeholder"><i class="icon icon-logo"></i></a>
                         </div>
                         <div class="c-meta-info__stack  c-meta-info__item">
@@ -149,7 +153,7 @@ article {
                         <p>There aren’t a lot of them left, but here’s an updated list of when the Philly schools are playing.</p>
                     </div>
                     <div class="c-overview__meta  c-meta-info--always-stacked  c-meta-info--article  c-meta-info--entity  c-meta-info">
-                        <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item">
+                        <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
                             <a href="https://staging.billypenn.com/about/" data-ga-category="Author" data-ga-label="Image|Placeholder"><i class="icon icon-logo"></i></a>
                         </div>
                         <div class="c-meta-info__stack  c-meta-info__item">
@@ -190,7 +194,7 @@ article {
                         <p>There aren’t a lot of them left, but here’s an updated list of when the Philly schools are playing.</p>
                     </div>
                     <div class="c-overview__meta  c-meta-info--article  c-meta-info--entity  c-meta-info">
-                        <div class="c-meta-info__icon--standalone  c-meta-info__icon  c-meta-info__item">
+                        <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
                             <a href="https://staging.billypenn.com/about/dan-levy/" data-ga-category="Author" data-ga-label="Image|Dan Levy">
                                 <div class="c-avatar  c-avatar--staff">
                                     <div class="c-avatar__img">

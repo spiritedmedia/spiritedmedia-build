@@ -9,6 +9,10 @@ styleguide_header();
     </style>
     <div class="content-wrapper row">
 		<main class="c-main columns large-8 js-main" role="main">
+            <header class="c-main__header">
+                <h1 class="c-main__title">Horizontal Rules</h1>
+            </header>
+
             <p>Generic, no classes or styling</p>
             <hr>
 
