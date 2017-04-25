@@ -344,9 +344,24 @@ class Frontend {
 
         wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic|PT+Serif', [], null );
 
+        // Functionality-specific assets
+        wp_register_script( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js', [], null, $in_footer = true );
+        wp_register_style( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/css/player.css', [], null );
+
+        if ( is_single() && is_a( $post, 'WP_Post' ) ) {
+            $post_obj = Post::get_by_post_id( $post->ID );
+            $post_published_ver = $post_obj->get_published_pedestal_ver();
+
+            // Load SoundCite assets only if shortcode is present in the current post content
+            if ( has_shortcode( $post->post_content, 'soundcite' ) ) {
+                wp_enqueue_script( 'soundcite' );
+                wp_enqueue_style( 'soundcite' );
+            }
+        }
+
         // Core site assets
         $theme_name = wp_get_theme()->get_stylesheet();
-        wp_enqueue_style( $theme_name . '-styles', get_stylesheet_directory_uri() . '/assets/dist/css/theme.css', [ 'google-fonts', 'soundcite' ], PEDESTAL_VERSION );
+        wp_enqueue_style( $theme_name . '-styles', get_stylesheet_directory_uri() . '/assets/dist/css/theme.css', [ 'google-fonts' ], PEDESTAL_VERSION );
         wp_enqueue_script( 'pedestal-scripts', get_template_directory_uri() . '/assets/dist/js/pedestal.js', [ 'jquery', 'modernizr', 'fastclick' ], PEDESTAL_VERSION, true );
 
         // Advertising
@@ -361,20 +376,7 @@ class Frontend {
 
         wp_register_script( 'pedestal-footnotes', get_template_directory_uri() . '/assets/dist/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, true );
 
-        // Functionality-specific assets
-        wp_register_script( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js', [], null, $in_footer = true );
-        wp_register_style( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/css/player.css', [], null );
-
         if ( is_single() && is_a( $post, 'WP_Post' ) ) {
-            $post_obj = Post::get_by_post_id( $post->ID );
-            $post_published_ver = $post_obj->get_published_pedestal_ver();
-
-            // Load SoundCite assets only if shortcode is present in the current post content
-            if ( has_shortcode( $post->post_content, 'soundcite' ) ) {
-                wp_enqueue_script( 'soundcite' );
-                wp_enqueue_style( 'soundcite' );
-            }
-
             // Load legacy stylesheet if current post was created before a specified Pedestal version
             foreach ( self::$fallback_stylesheet_vers as $ver ) {
                 $ver_filename = str_replace( '.', '-', $ver );
