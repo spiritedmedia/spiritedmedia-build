@@ -1,4 +1,4 @@
-/* global FastClick ga objectFitImages */
+/* global ga objectFitImages */
 
 (function($) {
 
@@ -6,9 +6,8 @@
 
     init: function() {
 
-      // Libraries
       $(document).foundation();
-      new FastClick(document.body);
+      $('html').removeClass('no-js').addClass('js');
 
       // CSS object-fit polyfill
       // https://github.com/bfred-it/object-fit-images/

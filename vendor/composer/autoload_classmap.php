@@ -288,6 +288,7 @@ return array(
     'Pedestal\\Registrations\\Post_Types\\Slot_Types' => $baseDir . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes-slots.php',
     'Pedestal\\Registrations\\Post_Types\\Types' => $baseDir . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes.php',
     'Pedestal\\Registrations\\Taxonomies\\Taxonomies' => $baseDir . '/wp-content/themes/pedestal/inc/registrations/taxonomies/class-taxonomies.php',
+    'Pedestal\\Scripts_Styles' => $baseDir . '/wp-content/themes/pedestal/inc/class-scripts-styles.php',
     'Pedestal\\Shortcode_Manager' => $baseDir . '/wp-content/themes/pedestal/inc/class-shortcode-manager.php',
     'Pedestal\\Shortcodes\\GoogleDocs' => $baseDir . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-googledocs.php',
     'Pedestal\\Shortcodes\\Iframe' => $baseDir . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-iframe.php',

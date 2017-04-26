@@ -247,6 +247,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->feeds             = Feeds::get_instance();
             $this->featured_posts    = Featured_Posts::get_instance();
             $this->icons             = Icons::get_instance();
+            $this->scripts_styles    = Scripts_Styles::get_instance();
 
             // Some functionality should only ever run on a live environment
             if ( 'live' === PEDESTAL_ENV ) {

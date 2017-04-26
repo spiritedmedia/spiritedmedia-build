@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit0085661c2e4209e40be2321649510c42
+class ComposerStaticInit150ad73f4c39fab4de92a83c47cfb977
 {
     public static $files = array (
         '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
@@ -358,6 +358,7 @@ class ComposerStaticInit0085661c2e4209e40be2321649510c42
         'Pedestal\\Registrations\\Post_Types\\Slot_Types' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes-slots.php',
         'Pedestal\\Registrations\\Post_Types\\Types' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes.php',
         'Pedestal\\Registrations\\Taxonomies\\Taxonomies' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/taxonomies/class-taxonomies.php',
+        'Pedestal\\Scripts_Styles' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-scripts-styles.php',
         'Pedestal\\Shortcode_Manager' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-shortcode-manager.php',
         'Pedestal\\Shortcodes\\GoogleDocs' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-googledocs.php',
         'Pedestal\\Shortcodes\\Iframe' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-iframe.php',
@@ -807,11 +808,11 @@ class ComposerStaticInit0085661c2e4209e40be2321649510c42
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit0085661c2e4209e40be2321649510c42::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit0085661c2e4209e40be2321649510c42::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit0085661c2e4209e40be2321649510c42::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit0085661c2e4209e40be2321649510c42::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit0085661c2e4209e40be2321649510c42::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit150ad73f4c39fab4de92a83c47cfb977::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit150ad73f4c39fab4de92a83c47cfb977::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit150ad73f4c39fab4de92a83c47cfb977::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit150ad73f4c39fab4de92a83c47cfb977::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit150ad73f4c39fab4de92a83c47cfb977::$classMap;
 
         }, null, ClassLoader::class);
     }
