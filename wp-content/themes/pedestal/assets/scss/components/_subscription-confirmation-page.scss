@@ -1,26 +1,28 @@
 // ==========================================================================
-// Pedestal // Components // SINGLE PAGE
+// Pedestal // Components // SUBSCRIPTION CONFIRMATION PAGE
 // ==========================================================================
 
-// scss-lint:disable SelectorFormat
+
+// stylelint-disable selector-no-type
+
 
 .subscription-confirmation-page {
   text-align: center;
   margin: 0 auto;
-  max-width: unitize(580);
+  max-width: unitize( 580 );
 
   h3 {
-    margin-bottom: unitize(24);
+    margin-bottom: unitize( 24 );
   }
 
   p {
-    margin-bottom: unitize(8);
+    margin-bottom: unitize( 8 );
   }
 
   input {
-    margin: unitize(32) 0 unitize(16);
-    height: unitize(40);
-    font-size: unitize(20);
+    margin: unitize( 32 ) 0 unitize( 16 );
+    height: unitize( 40 );
+    font-size: unitize( 20 );
   }
 
   .success-message p {

@@ -2,7 +2,6 @@
 
 npm install
 bower install
-bundle install
 
 if [ "$CIRCLECI" = true ] ; then
   composer install -o --no-dev

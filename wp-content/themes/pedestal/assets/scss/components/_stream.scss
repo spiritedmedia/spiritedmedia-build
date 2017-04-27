@@ -8,6 +8,7 @@ $c: '.c-stream';
 
 #{$c} {
   @include clearfix;
+
   text-align: left;
 
   &.is-empty {
@@ -88,6 +89,7 @@ $c: '.c-stream';
 
   &__item {
     @include clearfix;
+
     position: relative;
     margin-top: $stream-item-spacing;
 
@@ -150,6 +152,7 @@ $c: '.c-stream';
   &--ladder {
     #{$c}__item {
       @include stdbd( 'top' );
+
       min-height: 0;
       margin-top: 0;
       margin-bottom: 0;
@@ -188,13 +191,14 @@ $c: '.c-stream';
           height: $stream-imglist-img-size-lg;
         }
 
-        // scss-lint:disable NestingDepth
         &--placeholder {
           @include img-placeholder( $stream-imglist-img-size-sm );
 
+          // stylelint-disable max-nesting-depth
           @media #{$medium-up} {
             @include img-placeholder( $stream-imglist-img-size-lg );
           }
+          // stylelint-enable max-nesting-depth
         } // __item__img--placeholder
       } // __item__img
     } // __item
@@ -202,7 +206,6 @@ $c: '.c-stream';
 
     &.c-stream--sm {
       #{$c}__item {
-        // scss-lint:disable NestingDepth
         margin-top: $stream-item-spacing / 2;
 
         &__title {
@@ -213,9 +216,12 @@ $c: '.c-stream';
           width: $stream-imglist-img-size-sm;
           height: $stream-imglist-img-size-sm;
 
+          // stylelint-disable max-nesting-depth
           &--placeholder {
             @include img-placeholder( $stream-imglist-img-size-sm );
-          } // __item__img--placeholder
+          }
+          // stylelint-enable max-nesting-depth
+
         } // __item__img
       } // __item
     } // &.c-stream--sm
@@ -230,6 +236,7 @@ $c: '.c-stream';
 
     #{$c}__item {
       @include stdbd(bottom);
+
       padding-top: $base-spacing-unit;
       padding-bottom: $base-spacing-unit;
       margin-top: 0;
@@ -247,10 +254,12 @@ $c: '.c-stream';
 
     #{$c}__item__title {
       @include h-size(4);
+
       margin-bottom: $base-spacing-unit;
 
       @if $email {
         @include h-size(3);
+
         font-weight: 600;
       }
 
@@ -260,6 +269,7 @@ $c: '.c-stream';
       &,
       > * {
         @include h-size(5);
+
         margin-bottom: 0;
       }
     }

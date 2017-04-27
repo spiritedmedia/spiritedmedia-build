@@ -35,11 +35,13 @@
 
 .c-heading--overline {
   @include h-size( 5 );
+
   font-weight: 600;
 }
 
 .c-heading--archive {
   @include h-size( 3 );
+
   color: $header-font-color;
   font-weight: 300;
 

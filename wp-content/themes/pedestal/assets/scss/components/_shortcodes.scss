@@ -20,31 +20,31 @@
 @if not $email {
 
 
-.user-grid {
-  @include no-bullet-custom;
+  .user-grid {
+    @include no-bullet-custom;
 
-  /**
-   * Handle block grid mixins ourselves to reduce bloat
-   */
+    /**
+     * Handle block grid mixins ourselves to reduce bloat
+     */
 
-  @include block-grid( $per-row: 1, $include-spacing: false, $base-style: true );
+    @include block-grid( $per-row: 1, $include-spacing: false, $base-style: true );
 
-  @media #{$medium-up} {
-    @include block-grid( $per-row: 2, $include-spacing: false, $base-style: false );
+    @media #{$medium-up} {
+      @include block-grid( $per-row: 2, $include-spacing: false, $base-style: false );
+    }
+
+    @media #{$large-up} {
+      @include block-grid( $per-row: 3, $include-spacing: false, $base-style: false );
+    }
+
+
+
+    .c-user-card {
+      padding: c-user-card-property-get( pd );
+      text-align: center;
+    }
+
   }
-
-  @media #{$large-up} {
-    @include block-grid( $per-row: 3, $include-spacing: false, $base-style: false );
-  }
-
-
-
-  .c-user-card {
-    padding: c-user-card-property-get( pd );
-    text-align: center;
-  }
-
-}
 
 
 } // end @if not $email

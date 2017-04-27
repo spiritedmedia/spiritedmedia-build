@@ -3,9 +3,6 @@
 // ==========================================================================
 
 
-// @TODO
-// scss-lint:disable SelectorFormat
-
 /*body*/.error404 {
 
   .c-main {
@@ -46,28 +43,29 @@
   margin: 0 0 ( $page-404-primary-text-size * $page-404-primary-text-line-height );
 }
 
-  /*blockquote*/.e404-quote__body {
-    margin-bottom: 0.5rem;
-    border-left: 0;
-    padding: 0;
-  }
+/*blockquote*/.e404-quote__body {
+  margin-bottom: 0.5rem;
+  border-left: 0;
+  padding: 0;
+}
 
-  /*figcaption*/.e404-quote__caption {
-    font-weight: 700;
-    font-style: italic;
-  }
+/*figcaption*/.e404-quote__caption {
+  font-weight: 700;
+  font-style: italic;
+}
 
 .e404-message {}
 
-  /*small*/.e404-message__hook {}
+/*small*/.e404-message__hook {}
 
-  .e404-message__content {
-    font-weight: 900;
-    text-transform: uppercase;
-  }
+.e404-message__content {
+  font-weight: 900;
+  text-transform: uppercase;
+}
 
 .e404-nav {
 
+  // stylelint-disable-next-line selector-no-type
   a {
     font-weight: bold;
   }

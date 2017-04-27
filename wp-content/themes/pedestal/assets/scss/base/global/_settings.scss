@@ -36,8 +36,8 @@ $border-offset            : -( unitize( 1px ) ) !default;
 $body-font-size           : ( ( $base-font-size / $base-font-size-reset ) * 1em ) !default; // 1em
 $body-line-height         : ( $base-line-height / $base-font-size ) !default; // 1.5 // !default
 
-$font-family-sans-serif   : "Source Sans Pro", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif !default;
-$font-family-serif        : "PT Serif", Georgia, Cambria, "Times New Roman", Times, serif !default;
+$font-family-sans-serif   : 'Source Sans Pro', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif !default;
+$font-family-serif        : 'PT Serif', Georgia, Cambria, 'Times New Roman', Times, serif !default;
 
 $h1-font-size             : unitize( $base-font-size * 2.75 ) !default; // 44px
 $h2-font-size             : unitize( $base-font-size * 2.3125 ) !default; // 37px
@@ -183,21 +183,12 @@ $iconset-email-cta-p-b : $base-spacing-unit !default;
 // Z-Index
 // ==========================================================================
 
-
-$enabled-z-index        : true;
-
 $z-index-0              : 0;
 $z-index-1              : 9;
 $z-index-2              : 99;
 $z-index-3              : 999;
 $z-index-4              : 9999;
 $z-index-5              : 99999;
-
-$z-action-bar           : $z-index-4;
-$z-c-meta-bar           : $z-index-2;
-$z-entity-body          : $z-index-2;
-$z-stream-item-img      : $z-index-1;
-$z-off-canvas-wrap      : $z-index-1;
 
 // @TODO
 //
@@ -207,8 +198,6 @@ $z-off-canvas-wrap      : $z-index-1;
 // hopes that one day Foundation will fix the issue but until then we'll need to
 // use another variable in its place...
 $z-index-base           : $z-index-5;
-// And here's the replacement...
-$z-reveal-modal         : $z-index-5;
 
 
 
@@ -295,5 +284,5 @@ $nudge-punctuation               : -0.4em;
 
 // WordPress admin bar
 $wp-admin-bar-breakpoint: 'only screen and (min-width: 783px)';
-$wp-admin-bar-height-mobile: unitize(46);
-$wp-admin-bar-height-desktop: unitize(32);
+$wp-admin-bar-height-mobile: unitize( 46 );
+$wp-admin-bar-height-desktop: unitize( 32 );

@@ -5,13 +5,13 @@
 // ==========================================================================
 
 
-/*ol*/.c-footnotes {
-  /*li*/&__item {
+.c-footnotes {
+  &__item {
     font-size: $footnotes-font-size;
     font-weight: 300;
   }
 
-  /*a*/&__return {
+  &__return {
     &__icon {
       transform: rotate( 90deg );
       margin-left: $footnotes-icon-spacing;

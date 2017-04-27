@@ -38,7 +38,7 @@ $c: '.c-yt-placeholder';
     color: $white;
     position: absolute;
     background-color: $black;
-    background-color: transparentize($black, 0.5);
+    background-color: transparentize( $black, 0.5 );
     padding: unitize( 14px ) unitize( 34px );
     border-radius: 15px;
     transition: background-color 250ms linear;

@@ -43,9 +43,11 @@
   $inner-vertical-padding: double( $base-spacing-unit ),
   $explode-width: $hoz-explode-side
 ) {
+
   #{$selector} {
     $margin-top: -( $content-wrapper-m-t + $main-margin-top );
     $margin-hoz: -( $explode-width );
+
     margin: $margin-top $margin-hoz 0;
 
     &__inner {
@@ -71,7 +73,7 @@
  * Must be used on a `ul`
  */
 @mixin no-bullet {
-  // scss-lint:disable SelectorFormat
+  // stylelint-disable selector-no-type
   list-style-type: none;
   margin-#{$default-float}: $list-side-margin-no-bullet;
 
@@ -84,6 +86,7 @@
       list-style: none;
     }
   }
+  // stylelint-enable selector-no-type
 }
 
 
@@ -93,12 +96,12 @@
  * Must be used on a `ul`
  */
 @mixin no-bullet-custom {
-  // scss-lint:disable SelectorFormat
+  // stylelint-disable selector-no-type, declaration-no-important
   > li::before {
-    // scss-lint:disable ImportantRule
     width: 0 !important;
     height: 0 !important;
   }
+  // stylelint-enable selector-no-type, declaration-no-important
 }
 
 
@@ -110,8 +113,7 @@
 @mixin inline-list-min(
   $no-stacking: true,
   $line-height: $base-line-height
-  ) {
-
+) {
   margin: 0;
   padding: 0;
   list-style-type: none;
@@ -157,12 +159,12 @@
  * Unvisited/visited will be the same, hover/active will be the same.
  */
 @mixin anchorage(
-               $selector: 'a',
-               $unhovered: $anchor-font-color,
-               $hovered: $anchor-font-color-hover,
-               $unhovered-decoration: $anchor-text-decoration,
-               $hovered-decoration: $anchor-text-decoration-hover
-               ) {
+  $selector: 'a',
+  $unhovered: $anchor-font-color,
+  $hovered: $anchor-font-color-hover,
+  $unhovered-decoration: $anchor-text-decoration,
+  $hovered-decoration: $anchor-text-decoration-hover
+) {
 
   #{$selector} {
 
@@ -199,6 +201,7 @@
   $threshold: 65%
 ) {
   $bg-lightness: lightness( $bg );
+
   color: if( $bg-lightness > $threshold, $text-dark, $text-light );
 }
 
@@ -212,12 +215,12 @@
 /// @param {bool}   $do-reduction [true] - Include reduction sizing?
 @mixin h-size( $h-level, $do-reduction: true ) {
   @if not is-number( $h-level ) {
-    @error "Parameter `$h-level` with value `#{$h-level}` is not a number!";
+    @error 'Parameter `$h-level` with value `#{$h-level}` is not a number!';
   }
 
   $h-level-cl: clamp( $h-level, 1, 6 );
   @if $h-level-cl != $h-level {
-    @error 'Parameter `$h-level` with value `#{$h-level}` is not a valid heading level!'
+    @error 'Parameter `$h-level` with value `#{$h-level}` is not a valid heading level!';
   }
 
   $h-size-vars: (
@@ -243,6 +246,7 @@
   @if $do-reduction {
     $size: $size - map-fetch( $h-reduction-vars, $h-level );
   }
+
   font-size: $size;
 
   @media #{$medium-up} {
@@ -281,26 +285,26 @@
 // ==========================================================================
 
 
+// stylelint-disable selector-no-type
 @mixin iconset(
   $diameter: $icon-diameter,
   $background-color: $grey-70,
   $text-color: $white,
   $spacing: $icon-spacing
-  ) {
-
+) {
   @include iconset-sizing( $diameter );
   @include iconset-coloring( $background-color, $text-color );
+
   margin: 0;
   display: inline-block;
   overflow: visible;
 
-  // @TODO
-  // scss-lint:disable SelectorFormat
   li {
     display: inline-block;
     margin-left: $spacing;
     text-align: center;
 
+    /* stylelint-disable-next-line selector-no-qualifying-type */
     &.social-icon {
       a {
         border-radius: 50%;
@@ -309,27 +313,27 @@
     }
   }
 }
+// stylelint-enable selector-no-type
 
 
+// stylelint-disable selector-no-type
 @mixin iconset-sizing( $diameter: $icon-diameter ) {
   line-height: $diameter;
 
-  // @TODO
-  // scss-lint:disable SelectorFormat
   li {
     height: $diameter;
     width: $diameter;
   }
 }
+// stylelint-enable selector-no-type
 
 
+// stylelint-disable selector-no-type, selector-no-qualifying-type
 @mixin iconset-coloring(
   $background-color: $grey-70,
   $text-color: $white
-  ) {
+) {
 
-  // @TODO
-  // scss-lint:disable QualifyingElement SelectorFormat
   li.social-icon a {
     &,
     &:hover {
@@ -337,8 +341,8 @@
       color: $text-color;
     }
   }
-
 }
+// stylelint-enable selector-no-type, selector-no-qualifying-type
 
 
 /**
@@ -381,16 +385,14 @@
         $svg-path: $site-live-url + $path + '.svg';
       }
 
-      background-image: url( "#{$png-path}" );
+      background-image: url( '#{$png-path}' );
 
       @if $fallback {
-        background-image: url( "#{$svg-path}" );
+        background-image: url( '#{$svg-path}' );
       }
 
-    } // end @if $path
-
-  } // end @if $resize-only == false
-
+    }
+  }
 }
 
 
@@ -425,12 +427,12 @@
   $width: 1px,
   $color: $border-std-color,
   $neut: false
-  ) {
+) {
 
   $valid-sides: 'top' 'right' 'bottom' 'left' 'all';
 
   @if not sl-contain( $valid-sides, $side ) {
-    @error 'Invalid border side argument specified in mixin `stdbd`'
+    @error 'Invalid border side argument specified in mixin `stdbd`';
   }
 
   @if 'all' == $side {
@@ -439,6 +441,7 @@
     @if $neut {
       border: 0;
     }
+
     border-#{$side}: $width $color solid;
   }
 
@@ -450,7 +453,7 @@
   $color: $border-std-color,
   $side: 'bottom',
   $spacing: $border-divider-spacing
-  ) {
+) {
 
   @include stdbd( $side );
 
@@ -480,7 +483,7 @@
   $color: $border-divider-color,
   $spacing: $border-divider-spacing,
   $class: true
-  ) {
+) {
 
   @if $class {
     &.has-border--#{$side} {
@@ -505,7 +508,7 @@
   $side: 'right',
   $color: $border-divider-color,
   $spacing: $border-divider-spacing--inline
-  ) {
+) {
 
   @include border-divider( $side, $color, $spacing, false );
 }

@@ -3,8 +3,11 @@
 // ==========================================================================
 
 
-// @TODO
-// scss-lint:disable SelectorFormat
+/*
+stylelint-disable
+  selector-no-qualifying-type,
+  selector-no-type
+*/
 
 
 html,
@@ -15,11 +18,9 @@ body {
 }
 
 
-// scss-lint:disable QualifyingElement
 body.full-width {
   background-color: $page-bg-c;
 }
-// scss-lint:enable QualifyingElement
 
 
 .content-wrapper {
@@ -31,11 +32,9 @@ body.full-width {
   margin-top: $main-margin-top;
 }
 
-// scss-lint:disable QualifyingElement
 a.disabled {
   cursor: default;
 }
-// scss-lint:enable QualifyingElement
 
 .noscroll {
   overflow: hidden;
@@ -51,10 +50,7 @@ svg {
 
 // Override Normalize.css figure element margins
 figure {
-  margin-top: 0;
-  margin-right: 0;
-  margin-bottom: $base-spacing-unit;
-  margin-left: 0;
+  margin: 0 0 $base-spacing-unit 0;
 }
 
 
@@ -68,10 +64,10 @@ figure {
 
 
 .off-canvas-wrap {
-  z-index: $z-off-canvas-wrap;
+  z-index: $z-index-1;
   transition: transform 0.3s ease;
 
   .is-search-open & {
-    transform: translateY( unitize(60) );
+    transform: translateY( unitize( 60 ) );
   }
 }

@@ -70,7 +70,7 @@ article {
                     <div class="c-entity-share sticky  js-entity-share">
                         <div class="top-bar row" data-topbar="">
                             <div class="columns small-6">
-                                <a class="button--rounded button expand" href="#share-article" data-reveal-id="share-article" data-ga-category="Button" data-ga-label="Share">
+                                <a class="btn btn--primary btn--full-width" href="#share-article" data-reveal-id="share-article" data-ga-category="Button" data-ga-label="Share">
                                     share
                                 </a>
                             </div>
@@ -121,7 +121,7 @@ article {
                     <div class="c-entity-share sticky  js-entity-share">
                         <div class="top-bar row" data-topbar="">
                             <div class="columns small-6">
-                                <a class="button--rounded button expand" href="#share-article" data-reveal-id="share-article" data-ga-category="Button" data-ga-label="Share">
+                                <a class="btn btn--primary btn--full-width" href="#share-article" data-reveal-id="share-article" data-ga-category="Button" data-ga-label="Share">
                                     share
                                 </a>
                             </div>
@@ -172,7 +172,7 @@ article {
                     <div class="c-entity-share sticky  js-entity-share">
                         <div class="top-bar row" data-topbar="">
                             <div class="columns small-6">
-                                <a class="button--rounded button expand" href="#share-article" data-reveal-id="share-article" data-ga-category="Button" data-ga-label="Share">
+                                <a class="btn btn--primary btn--full-width" href="#share-article" data-reveal-id="share-article" data-ga-category="Button" data-ga-label="Share">
                                     share
                                 </a>
                             </div>
@@ -219,7 +219,7 @@ article {
                     <div class="c-entity-share sticky  js-entity-share">
                         <div class="top-bar row" data-topbar="">
                             <div class="columns small-6">
-                                <a class="button--rounded button expand" href="#share-article" data-reveal-id="share-article" data-ga-category="Button" data-ga-label="Share">
+                                <a class="btn btn--primary btn--full-width" href="#share-article" data-reveal-id="share-article" data-ga-category="Button" data-ga-label="Share">
                                     share
                                 </a>
                             </div>

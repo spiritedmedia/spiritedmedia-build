@@ -3,8 +3,7 @@
 // ==========================================================================
 
 
-// @TODO
-// scss-lint:disable SelectorFormat
+// stylelint-disable selector-no-type
 
 
 .s-post-content,
@@ -15,9 +14,9 @@
 
 
 
-//
-// Headings
-// ==========================================================================
+  //
+  // Headings
+  // ==========================================================================
 
 
   h1 { font-size: $h3-font-size; }
@@ -28,9 +27,9 @@
 
 
 
-//
-// Images + Captions
-// ==========================================================================
+  //
+  // Images + Captions
+  // ==========================================================================
 
   img {
     max-width: 100%;
@@ -71,9 +70,9 @@
 
 
 
-//
-// Blockquotes
-// ==========================================================================
+  //
+  // Blockquotes
+  // ==========================================================================
 
 
   blockquote {
@@ -105,11 +104,11 @@
 
 
 
-//
-// Pullquotes
-// ==========================================================================
-// Pullquotes must be nested within post content because they need to override
-// the default behavior of blockquotes
+  //
+  // Pullquotes
+  // ==========================================================================
+  // Pullquotes must be nested within post content because they need to override
+  // the default behavior of blockquotes
 
   .c-pullquote {
     border-top: $s-post-content-pullquote-border-v;
@@ -165,9 +164,9 @@
 
 
 
-//
-// Lists
-// ==========================================================================
+  //
+  // Lists
+  // ==========================================================================
 
 
   ul,
@@ -177,14 +176,12 @@
     li {
       padding-bottom: 0.25em;
 
-      // scss-lint:disable NestingDepth
       &::before {
         margin-bottom: 0.1em;
         margin-right: $list-side-margin;
         display: inline-block;
         vertical-align: middle;
       }
-      // scss-lint:enable NestingDepth
     }
 
   }

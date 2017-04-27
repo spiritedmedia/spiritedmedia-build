@@ -2,13 +2,13 @@
 /*!*
  * Pedestal // Admin
  *
- * Version: 5.7.2
+ * Version: 5.8.0
  *
  * Copyright ( c ) 2016 Spirited Media
  */
 
 
-// scss-lint:disable all
+/* stylelint-disable */
 
 
 @import 'spectrum/spectrum';
@@ -64,11 +64,11 @@ body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right .tablenav,
 .user-description-wrap,
 // Hide Instagram of the Day metabox by default
 #fm_meta_box_daily_insta_date {
-    display: none
+    display: none;
 }
 
 body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right {
-    width: 100%
+    width: 100%;
 }
 
 body.tools_page_pedestal_cluster_tools {
@@ -112,10 +112,10 @@ body.tools_page_pedestal_cluster_tools {
 //
 // Custom TinyMCE buttons
 // ==========================================================================
-i.mce-i-insert-post-element:before {
-    font-family: "dashicons";
+i.mce-i-insert-post-element::before {
+    font-family: 'dashicons';
     font-size: 120%;
-    content: "\f176"; // Cloud dashicon https://developer.wordpress.org/resource/dashicons/#cloud
+    content: '\f176'; // Cloud dashicon https://developer.wordpress.org/resource/dashicons/#cloud
 }
 
 
@@ -126,6 +126,7 @@ i.mce-i-insert-post-element:before {
 
 $advanced-cluster-types: ( 'org', 'place', 'locality' );
 $advanced-cluster-types-selectors: ();
+
 @each $type in $advanced_cluster_types {
   $advanced-cluster-types-selectors: append( $advanced-cluster-types-selectors, '#pedestal_#{$type}_type-adder' );
 }

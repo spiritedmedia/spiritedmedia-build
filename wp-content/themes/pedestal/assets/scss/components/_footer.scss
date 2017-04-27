@@ -3,10 +3,6 @@
 // ==========================================================================
 
 
-// @TODO
-// scss-lint:disable SelectorFormat
-
-
 .site-footer {
   clear: both;
   margin-top: $base-spacing-unit;
@@ -15,75 +11,73 @@
   border-top: 1px solid $border-std-color;
 }
 
-  .site-footer-social {
-    text-align: center;
-    margin-bottom: $base-spacing-unit;
+.site-footer-social {
+  text-align: center;
+  margin-bottom: $base-spacing-unit;
 
-    /**
-     * Overrides `.iconset`
-     */
-    /*ul*/.iconset {
-
-      @media #{$medium-up} {
-        text-align: right;
-        float: right;
-      }
-
+  .iconset {
+    @media #{$medium-up} {
+      text-align: right;
+      float: right;
     }
+  }
+}
 
+
+// stylelint-disable selector-no-type, selector-no-qualifying-type
+.site-footer-links {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: $base-spacing-unit;
+
+  ul {
+    margin-bottom: 0;
   }
 
-
-  .site-footer-links {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: $base-spacing-unit;
+  @media #{$medium-up} {
+    text-align: left;
 
     ul {
-      margin-bottom: 0;
-    }
+      border-right: 1px solid $border-std-color;
+      padding: halve( $base-spacing-unit ) 0;
+      margin-bottom: $list-margin-bottom;
 
-    @media #{$medium-up} {
-      text-align: left;
-
-      ul {
-        border-right: 1px solid $border-std-color;
-        padding: halve( $base-spacing-unit ) 0;
-        margin-bottom: $list-margin-bottom;
-
-        &.last {
-          border-right: 0;
-        }
+      &.last {
+        border-right: 0;
       }
     }
   }
+}
+// stylelint-enable selector-no-type, selector-no-qualifying-type
 
 
-  .site-footer-copyright {}
+.site-footer-copyright {}
 
-    .site-copyright {
-      text-align: center;
-      color: $grey-70;
-      font-size: $small-font-size;
+.site-copyright {
+  text-align: center;
+  color: $grey-70;
+  font-size: $small-font-size;
 
-      @media #{$medium-up} {
-        text-align: left;
-      }
-    }
+  @media #{$medium-up} {
+    text-align: left;
+  }
+}
 
-      .footer-logo,
-      .copyright-text {
-        display: inline-block;
-        vertical-align: middle;
-      }
+.footer-logo,
+.copyright-text {
+  display: inline-block;
+  vertical-align: middle;
+}
 
 
-      @if global-variable-exists( site-theme-name ) {
+@if global-variable-exists( site-theme-name ) {
 
-        .footer-logo {
-          @include iconize( $site-theme-logo-abspath + '/logo_icon' );
-          display: inline-block;
-          margin-right: halve( $base-spacing-unit );
-        }
-      }
+  .footer-logo {
+    @include iconize( $site-theme-logo-abspath + '/logo_icon' );
+
+    display: inline-block;
+    margin-right: halve( $base-spacing-unit );
+  }
+
+}

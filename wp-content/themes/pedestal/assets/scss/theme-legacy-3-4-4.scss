@@ -2,13 +2,13 @@
 /*!*
  * Pedestal // Legacy: <= v3.4.4
  *
- * Version: 5.7.2
+ * Version: 5.8.0
  *
  * Copyright ( c ) 2016 Spirited Media
  */
 
 
-// scss-lint:disable SelectorFormat IdSelector
+// stylelint-disable selector-no-type
 
 
 
@@ -21,18 +21,12 @@
 
 @import 'setup-core';
 
-
-//
-// Configuration
-// ==========================================================================
-
-
 @import 'SassyLists/dist/SassyLists';
 
-// scss-lint:disable ImportPath
+// stylelint-disable scss/at-import-no-partial-leading-underscore
 @import 'base/theme/settings';
 @import 'base/global/__config';
-// scss-lint:enable ImportPath
+// stylelint-enable scss/at-import-no-partial-leading-underscore
 
 
 /**

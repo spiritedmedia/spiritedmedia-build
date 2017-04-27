@@ -10,23 +10,24 @@
   margin-top: 0;
 
   // @TODO Override Foundation
-  // scss-lint:disable SelectorFormat
+  // stylelint-disable selector-no-type
   &,
   td,
   th {
     @include h-size(5);
+
     line-height: 1.3;
   }
 
   td {
     font-weight: 300;
   }
-  // scss-lint:enable SelectorFormat
 
 
   &__title,
   &__sponsorship {
     @include stdbd;
+
     border-bottom: 0;
     padding: halve( $c-panel-padding ) $c-panel-padding;
     margin-bottom: 0;
@@ -42,7 +43,7 @@
   &__details {
     border-bottom: 0;
 
-    /*table*/.c-details-table__inner {
+    .c-details-table__inner {
       margin-bottom: 0;
     }
   }
@@ -51,8 +52,6 @@
   &__export {
     text-align: center;
 
-    // @TODO
-    // scss-lint:disable SelectorFormat
     > .inner {
       @include stdbd;
 
@@ -89,7 +88,7 @@
         margin-left: auto;
         margin-right: auto;
         margin-bottom: $base-spacing-unit / 4;
-      };
+      }
 
       @if not $email {
         @media #{$medium-up} {

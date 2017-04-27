@@ -133,17 +133,17 @@
     <input type="text" name="pedestal-blank-field-check" id="pedestal-blank-field-check" value="" placeholder="">
 </label>
       </fieldset>
-      <button class="form-submit button--rounded button--dark button small js-form-submit" type="submit" name="subscribe">
-                <span class="form-submit__text">Sign up</span>
-<div class="form-submit__loader"><div class="c-spinner js-spinner">
-    <div class="c-spinner__inner sk-three-bounce">
-        <div class="sk-child sk-bounce1"></div>
-        <div class="sk-child sk-bounce2"></div>
-        <div class="sk-child sk-bounce3"></div>
-    </div>
-</div>
-</div>
-            </button>
+      <button class="btn btn--secondary form-submit js-form-submit" type="submit" name="subscribe">
+        <span class="form-submit__text">Sign up</span>
+        <div class="form-submit__loader"><div class="c-spinner js-spinner">
+            <div class="c-spinner__inner sk-three-bounce">
+                <div class="sk-child sk-bounce1"></div>
+                <div class="sk-child sk-bounce2"></div>
+                <div class="sk-child sk-bounce3"></div>
+            </div>
+          </div>
+        </div>
+      </button>
     </div>
   </form>
 </div>

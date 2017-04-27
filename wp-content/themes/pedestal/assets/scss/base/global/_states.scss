@@ -10,17 +10,13 @@
  */
 
 .has-cap {
-  // @TODO
-  // scss-lint:disable SelectorFormat
   > .inner {
     margin-bottom: 0;
   }
 }
 
-  .has-cap--top {
-    // @TODO
-    // scss-lint:disable SelectorFormat
-    > .inner {
-      margin-top: 0;
-    }
+.has-cap--top {
+  > .inner {
+    margin-top: 0;
   }
+}

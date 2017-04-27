@@ -15,13 +15,14 @@ $daily-insta-header-padding-v: $base-spacing-unit / 2;
   margin-bottom: ( $base-spacing-unit * 2 );
   display: table;
 
-  /*header*/&__header {
+  &__header {
     padding-top: $daily-insta-header-padding-v;
     padding-bottom: $daily-insta-header-padding-v;
   }
 
   &__title {
     @include h-size( 5 );
+
     font-weight: 300;
     text-align: center;
     margin-bottom: 0;
@@ -43,9 +44,9 @@ $daily-insta-header-padding-v: $base-spacing-unit / 2;
   }
 
   &__img {
-    // scss-lint:disable SelectorFormat
     padding-bottom: 0;
 
+    // stylelint-disable-next-line selector-no-type
     img {
       width: 100%;
     }

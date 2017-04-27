@@ -4,9 +4,9 @@
 
 
 .c-meta-info {
-  // scss-lint:disable SelectorFormat
   @include clearfix;
   @include stdbd(bottom);
+
   padding-bottom: $base-spacing-unit / 4;
   color: $c-meta-info-color;
   font-size: $small-font-size;
@@ -16,6 +16,7 @@
     font-size: $base-font-size;
   }
 
+  // stylelint-disable-next-line selector-no-type
   a {
     @include link-dark;
   }
@@ -35,6 +36,7 @@
 
 .c-meta-info__item {
   @extend %c-meta-info-d-ib;
+
   line-height: $c-meta-info-icon-size;
 }
 
@@ -75,10 +77,9 @@
 
 
 .c-meta-info__img {
-  // scss-lint:disable SelectorFormat
   margin-right: $c-meta-info-icon-spacing;
 
-
+  // stylelint-disable-next-line selector-no-type
   a {
     color: $grey-62;
   }
@@ -90,6 +91,7 @@
       height: $c-meta-info-icon-size;
     }
 
+    // stylelint-disable-next-line selector-no-type
     img {
       display: block;
     }
@@ -98,6 +100,7 @@
 
 .c-meta-info__img__icon {
   @extend %c-meta-info-d-ib;
+
   font-size: $c-meta-info-icon-size;
 }
 
@@ -159,6 +162,7 @@
 
 .c-meta-info--entity {
   @include stdbd(top);
+
   padding-top: $c-meta-info-entity-border-spacing;
   padding-bottom: $c-meta-info-entity-border-spacing;
   margin-top: $base-spacing-unit;

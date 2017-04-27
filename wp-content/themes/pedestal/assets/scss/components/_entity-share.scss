@@ -3,9 +3,6 @@
 // ==========================================================================
 
 
-// scss-lint:disable SelectorDepth NestingDepth SelectorFormat
-
-
 .c-entity-share {
   background-color: $white;
   text-align: center;
@@ -18,7 +15,7 @@
     border-bottom: 2px solid $primary-color;
 
     @if $email == false {
-      z-index: $z-action-bar;
+      z-index: $z-index-4;
     }
 
     .top-bar {
@@ -34,8 +31,9 @@
         }
       }
 
-      .button {
+      .btn {
         width: 85%;
+        margin-bottom: 0;
       }
 
     }

@@ -3,10 +3,6 @@
 // ==========================================================================
 
 
-// @TODO
-// scss-lint:disable SelectorFormat
-
-
 .o-icon {
   display: inline-block;
   vertical-align: middle;
@@ -54,9 +50,8 @@
    ========================================================================== */
 
 
-// scss-lint:disable QualifyingElement
-
-
+// @TODO
+// stylelint-disable selector-no-type, selector-max-compound-selectors
 table.iconset--email {
   width: 100%;
   margin-bottom: 0;
@@ -79,5 +74,4 @@ table.iconset--email {
     }
   }
 }
-
-// scss-lint:enable QualifyingElement
+// stylelint-enable selector-no-type, selector-max-compound-selectors

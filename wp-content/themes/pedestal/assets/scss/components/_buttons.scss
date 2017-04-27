@@ -1,0 +1,82 @@
+// ==========================================================================
+// Pedestal // Components // BUTTONS
+// ==========================================================================
+
+
+$btn-transition: 0.3s ease 0s;
+
+
+.btn {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  padding: ($base-spacing-unit / 2) ($base-spacing-unit * 2);
+  margin: 0;
+  margin-bottom: $base-spacing-unit / 2;
+  border-width: 2px;
+  border-style: solid;
+  border-color: $primary-color;
+  line-height: 1.125rem;
+  font-size: $small-font-size;
+  text-align: center;
+  text-transform: uppercase;
+  color: $primary-color;
+  background-color: $white;
+  border-radius: 2px;
+  transition:
+    background-color $btn-transition,
+    color $btn-transition;
+
+  @media #{$medium-up} {
+    font-size: $base-font-size;
+    margin-bottom: $base-spacing-unit;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:disabled,
+  &.is-disabled {
+    opacity: 0.5;
+  }
+}
+
+
+
+
+
+.btn--primary {
+  color: $white;
+  background-color: $primary-color;
+
+  &:hover {
+    color: $primary-color;
+    background-color: $white;
+  }
+}
+
+
+
+
+
+.btn--secondary {
+  color: $white;
+  background-color: $dark-prussian-blue;
+  border-color: $white;
+
+  &:hover {
+    color: $dark-prussian-blue;
+    background-color: $white;
+  }
+}
+
+
+
+
+
+.btn--no-border       { border: 0; }
+.btn--full-width      { width: 100%; }
+.btn--extra-small     { padding: ($base-spacing-unit / 4) ($base-spacing-unit / 2); }
+.btn--small           { padding: ($base-spacing-unit / 2); }
+.btn--large           { padding: $base-spacing-unit ($base-spacing-unit * 2); }

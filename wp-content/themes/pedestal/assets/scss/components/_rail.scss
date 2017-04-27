@@ -4,19 +4,21 @@
 
 
 // @TODO
-// scss-lint:disable SelectorFormat
+// stylelint-disable selector-no-type
 
 
 .rail {
   // Shrink column padding so a 300px DFP advert can fit
   padding-left: $rail-column-gutter;
   padding-right: $rail-column-gutter;
+
   // Fix for mysterious rail vertical explosion
   // https://github.com/stomping/pedestal/issues/338
   overflow: hidden;
 
-  /*h3*/.widget-title {
+  .widget-title {
     @extend %c-heading--minor;
+
     margin-top: $widget-title-m-t;
 
     &:first-child {
@@ -27,9 +29,7 @@
   /*li*/.widget {
     @include border-divider;
 
-    // All widgets need this even if they don't have a border divider
-    margin-bottom: $border-divider-spacing;
-
+    margin-bottom: $border-divider-spacing; // All widgets need this even if they don't have a border divider
     list-style-type: none;
     padding: $widget-p;
 
@@ -45,14 +45,14 @@
       margin-top: 0.75rem;
       margin-bottom: 0.75rem;
 
-      // scss-lint:disable NestingDepth
+      // stylelint-disable selector-max-compound-selectors
       &.active {
         &,
         a {
           color: $black;
         }
       }
-      // scss-lint:enable NestingDepth
+      // stylelint-enable selector-max-compound-selectors
     }
   }
 

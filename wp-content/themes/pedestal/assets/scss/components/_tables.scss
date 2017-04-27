@@ -8,43 +8,48 @@
 }
 
 
-  .c-details-table__inner {
-    // @TODO
-    // scss-lint:disable SelectorFormat
+// @TODO
+// stylelint-disable selector-no-type
+.c-details-table__inner {
+  width: 100%;
+  border: 0;
 
-    width: 100%;
-    border: 0;
+  th {
+    @include stdbd( 'right' );
 
-    th {
-      @include stdbd( 'right' );
-      text-align: right;
-      text-transform: uppercase;
-      width: 30%;
-    }
+    text-align: right;
+    text-transform: uppercase;
+    width: 30%;
+  }
 
-    .email-body & {
-      tr {
-        @include stdbd( 'bottom' );
-      }
+  .email-body & {
+    tr {
+      @include stdbd( 'bottom' );
     }
   }
 
+}
+// stylelint-enable selector-no-type
 
-  .c-details-table__link {
-    margin-top: 0;
-    margin-bottom: 0;
+
+.c-details-table__link {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.c-details-table__link__btn {
+  @include single-transition( background-color );
+
+  display: block;
+  text-align: center;
+  color: $body-font-color;
+  background-color: $latte;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  padding: $table-row-padding;
+
+  &:hover,
+  &:focus {
+    background-color: darken( $latte, 15% );
   }
-
-    .c-details-table__link__btn {
-      @include button-base( $display: block );
-      @include button-size( $padding: false );
-      @include button-style(
-        $bg: $c-details-table-link-bg-c,
-        $border-color: $c-details-table-link-bg-c
-      );
-      @include single-transition( background-color );
-
-      margin-bottom: 0;
-      padding: $table-row-padding;
-      text-transform: uppercase;
-    }
+}

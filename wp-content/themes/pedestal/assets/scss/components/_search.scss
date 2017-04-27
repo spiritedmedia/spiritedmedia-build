@@ -48,7 +48,6 @@ $search-filter-link-padding: 5px;
       right: 0;
       display: none;
 
-      // scss-lint:disable SelectorFormat
       .js & {
         display: block;
       }
@@ -88,7 +87,6 @@ $search-filter-link-padding: 5px;
 
 
   &--sitewide {
-    // scss-lint:disable SelectorFormat
     background-color: $grey-95;
 
     .js &,
@@ -134,8 +132,6 @@ $search-filter-link-padding: 5px;
     }
 
     &__radio {
-      // scss-lint:disable SelectorFormat
-
       .js & {
         opacity: 0;
         position: absolute;
@@ -144,6 +140,7 @@ $search-filter-link-padding: 5px;
         left: 0;
       }
 
+      // stylelint-disable-next-line selector-no-type
       &[type="radio"] {
         margin: 0;
       }
@@ -164,10 +161,7 @@ $search-filter-link-padding: 5px;
 }
 
 
-// We style the search field down here because we need to use a qualifying
-// element selector
-//
-// scss-lint:disable SelectorFormat QualifyingElement
+// stylelint-disable-next-line selector-no-type
 input.c-search__field {
   @include stdbd(
     $side: 'bottom',
@@ -187,4 +181,3 @@ input.c-search__field {
     background: transparent;
   }
 }
-// scss-lint:enable SelectorFormat QualifyingElement

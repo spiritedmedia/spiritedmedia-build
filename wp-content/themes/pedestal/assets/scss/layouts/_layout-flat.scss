@@ -6,25 +6,24 @@
 /*body*/.l-flat {
   background-color: $white;
 
-  // scss-lint:disable IdSelector
+  // stylelint-disable-next-line selector-no-id
   #promoted-story {
     @include stdbd( bottom );
   }
-  // scss-lint:enable IdSelector
 }
 
 
-  .l-flat__logo {}
+.l-flat__logo {}
 
-    .l-flat__logo__img {
-      display: block;
-      background: no-repeat top left;
-      background-size: contain;
-      height: l-flat-property-get( logo-height );
-    }
+.l-flat__logo__img {
+  display: block;
+  background: no-repeat top left;
+  background-size: contain;
+  height: l-flat-property-get( logo-height );
+}
 
 
-  .l-flat__explainer {
-    color: l-flat-property-get( explainer-text-color );
-    font-style: italic;
-  }
+.l-flat__explainer {
+  color: l-flat-property-get( explainer-text-color );
+  font-style: italic;
+}

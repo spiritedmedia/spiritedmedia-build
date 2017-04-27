@@ -32,7 +32,7 @@ $c: '.c-slot';
 
 
   &__img {
-    // scss-lint:disable SelectorFormat
+    // stylelint-disable-next-line selector-no-type
     img {
       max-width: 150px;
     }
@@ -67,7 +67,7 @@ $c: '.c-slot';
   }
 
   #{$c}__img {
-    // scss-lint:disable SelectorFormat
+    // stylelint-disable-next-line selector-no-type
     img {
       max-height: 50px;
     }
@@ -98,7 +98,7 @@ $c: '.c-slot';
   }
 
   /*p*/#{$c}__img {
-    // scss-lint:disable SelectorFormat
+    // stylelint-disable-next-line selector-no-type
     img {
       max-width: 100%;
       max-height: 111px;
@@ -123,6 +123,7 @@ $c: '.c-slot';
 [data-slot-component-type="daily_insta"] {
   &.c-slot {
     @include stdbd( 'bottom' );
+
     background-color: $truth-serum;
   }
 

@@ -2,11 +2,9 @@
 // The Incline // Components // 404 PAGE
 // ==========================================================================
 
-// @TODO
-// scss-lint:disable SelectorFormat
 
 /*body*/.error404 {
-  background-image: url('#{$site-theme-abspath}/assets/images/tunnel-background.jpg');
+  background-image: url( '#{$site-theme-abspath}/assets/images/tunnel-background.jpg' );
   background-size: auto;
   background-position: top center;
   background-repeat: no-repeat;
@@ -21,10 +19,7 @@
 }
 
 /*figure*/.e404-tunnel-monster {
-  margin-top: -13px;
-  margin-left: 0;
-  margin-bottom: 0;
-  margin-right: 0;
+  margin: -13px 0 0 0;
   text-align: center;
 
   @media #{$medium-up} {

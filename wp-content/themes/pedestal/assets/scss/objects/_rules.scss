@@ -29,6 +29,7 @@
   /// A slightly less obtrusive rule
   &--slim {
     @include stdbd( top );
+
     margin: 0 auto;
     margin-top: $half-spacing-unit;
     margin-bottom: $half-spacing-unit;

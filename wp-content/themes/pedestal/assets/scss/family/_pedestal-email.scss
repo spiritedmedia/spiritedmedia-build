@@ -24,12 +24,12 @@
 @import 'SassyLists/dist/SassyLists';
 @import 'susy/sass/susy';
 
-// scss-lint:disable ImportPath
+// stylelint-disable scss/at-import-no-partial-leading-underscore
 @import '../base/email/settings';
 @import '../base/global/__config';
 @import '../objects/__config';
 @import '../components/__config';
-// scss-lint:enable ImportPath
+// stylelint-enable scss/at-import-no-partial-leading-underscore
 
 
 
@@ -41,7 +41,6 @@
 
 @import 'foundation/scss/normalize';
 @import 'foundation/scss/foundation/components/type';
-@import 'foundation/scss/foundation/components/buttons';
 @import 'foundation/scss/foundation/components/panels';
 @import 'foundation/scss/foundation/components/tables';
 @import 'foundation/scss/foundation/components/inline-lists';
@@ -69,7 +68,7 @@
 // ==========================================================================
 
 
-@import '../objects/buttons';
+@import '../components/buttons';
 @import '../objects/rules';
 @import '../objects/icon-text';
 @import '../objects/media';

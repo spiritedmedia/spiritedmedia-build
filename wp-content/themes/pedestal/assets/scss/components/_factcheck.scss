@@ -3,27 +3,24 @@
 // ==========================================================================
 
 
-// scss-lint:disable SelectorFormat
-
-
 .c-factcheck {}
 
 
-  .c-factcheck__analysis {}
+.c-factcheck__analysis {}
 
 
-  .c-factcheck__ruling {}
+.c-factcheck__ruling {}
 
 
-  .c-factcheck__logo {}
+.c-factcheck__logo {}
 
-    /*a*/.c-factcheck__logo__img {
-      background-image: url( $pedestal-abspath + '/assets/images/partners/politifact/politifact-logo.png' );
-      background-image: url( $pedestal-abspath + '/assets/images/partners/politifact/politifact-logo.svg' );
-    }
-
-
-  .c-factcheck__sources {}
+/*a*/.c-factcheck__logo__img {
+  background-image: url( $pedestal-abspath + '/assets/images/partners/politifact/politifact-logo.png' );
+  background-image: url( $pedestal-abspath + '/assets/images/partners/politifact/politifact-logo.svg' );
+}
 
 
-  .c-factcheck__editor {}
+.c-factcheck__sources {}
+
+
+.c-factcheck__editor {}

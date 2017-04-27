@@ -5,7 +5,11 @@
 // ==========================================================================
 
 
-// scss-lint:disable QualifyingElement SelectorFormat
+/*
+stylelint-disable
+  selector-no-qualifying-type,
+  selector-no-type
+*/
 
 
 html.flexbox {
@@ -18,8 +22,6 @@ html.flexbox {
 
   .content-wrapper {
     flex: 1;
-    /* stupid IE10 tweener syntax */
-    -ms-flex-preferred-size: auto;
   }
 
 }

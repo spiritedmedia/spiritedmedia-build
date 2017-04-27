@@ -38,8 +38,8 @@
   .c-statement {
 
     &__img {
-      // scss-lint:disable SelectorFormat
 
+      // stylelint-disable-next-line selector-no-type
       > img {
         height: c-statement-property-get( meter-width );
 

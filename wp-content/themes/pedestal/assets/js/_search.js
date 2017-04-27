@@ -185,8 +185,8 @@ jQuery(document).ready(function($) {
     }
 
     $this.closest('.js-search-filters').find('.is-active')
-      .removeClass('is-active button');
-    $this.parent().addClass('is-active button');
+      .removeClass('is-active js-btn');
+    $this.parent().addClass('is-active js-btn');
     $form.submit();
   });
 

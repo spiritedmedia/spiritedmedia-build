@@ -3,41 +3,33 @@
 // ==========================================================================
 
 
-// @TODO
-// scss-lint:disable SelectorFormat
-
-
 /*figure*/.e404-young-penn {
   position: relative;
 }
 
-  /*img*/.e404-young-penn__img {}
+/*img*/.e404-young-penn__img {}
 
-  /*figcaption*/.e404-young-penn__caption {
+/*figcaption*/.e404-young-penn__caption {
+  margin-top: 2rem;
 
-    // @TODO
-    // scss-lint:disable SelectorFormat
+  @media #{$large-up} {
+    position: absolute;
+    bottom: 3rem;
+    right: -34rem;
+  }
 
-    margin-top: 2rem;
+  .description,
+  .source {
+    font-weight: bold;
+    font-style: italic;
 
     @media #{$large-up} {
-      position: absolute;
-      bottom: 3rem;
-      right: -34rem;
+      font-size: 0.9rem;
     }
-
-    .description,
-    .source {
-      font-weight: bold;
-      font-style: italic;
-
-      @media #{$large-up} {
-        font-size: 0.9rem;
-      }
-    }
-
-    .description {}
-
-    .source {}
-
   }
+
+  .description {}
+
+  .source {}
+
+}

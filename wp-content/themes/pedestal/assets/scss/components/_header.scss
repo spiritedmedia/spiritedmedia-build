@@ -3,8 +3,7 @@
 // ==========================================================================
 
 
-// @TODO
-// scss-lint:disable SelectorFormat
+// stylelint-disable selector-no-type
 
 
 .site-header {
@@ -21,114 +20,113 @@
 @if $email == false {
 
 
-.site-header-social {
-  text-align: right;
-  line-height: 0;
-  padding: 0;
+  .site-header-social {
+    text-align: right;
+    line-height: 0;
+    padding: 0;
 
-  @media #{$medium-up} {
-    padding: halve( $base-spacing-unit ) halve( $column-gutter );
+    @media #{$medium-up} {
+      padding: halve( $base-spacing-unit ) halve( $column-gutter );
+    }
+
+
+    /**
+     * Overrides `ul.iconset`
+     */
+    /*ul*/.iconset {
+      margin-left: -( $base-spacing-unit );
+
+      // stylelint-disable selector-max-compound-selectors
+      li {
+        &.social-icon {
+          &.last {
+            width: ( $icon-diameter + halve( $icon-diameter ) );
+            padding-right: halve( $icon-diameter );
+            border-right: 1px solid $grey-70;
+          }
+        }
+
+        &.more {
+          width: auto;
+
+          i {
+            padding: $site-header-icon-more-pd;
+            padding-left: 0;
+          }
+
+          a,
+          .sitewide-search-icon {
+            display: inline-block;
+            font-size: $base-spacing-unit * 1.2;
+            color: $grey-25;
+            line-height: 1;
+          }
+
+          &.first {
+            margin-left: halve( $icon-diameter );
+          }
+        }
+      }
+      // stylelint-enable selector-max-compound-selectors
+    }
   }
 
 
   /**
-   * Overrides `ul.iconset`
+   * @TODO this sucks...
    */
-  /*ul*/.iconset {
-    // @TODO
-    // scss-lint:disable QualifyingElement NestingDepth SelectorDepth
 
-    margin-left: -( $base-spacing-unit );
+  // stylelint-disable selector-no-id
+  #promoted-story {
+    background-color: $white;
+    border-bottom: 1px solid $border-std-color;
 
-    li {
-      &.social-icon {
-        &.last {
-          width: ( $icon-diameter + halve( $icon-diameter ) );
-          padding-right: halve( $icon-diameter );
-          border-right: 1px solid $grey-70;
-        }
+    .row {
+      padding: halve( $base-spacing-unit ) $base-spacing-unit;
+    }
+
+    strong {
+      text-transform: uppercase;
+      padding-right: 0.3rem;
+    }
+  }
+  // stylelint-enable selector-no-id
+
+
+
+
+
+  //
+  // Header Logo
+  // ==========================================================================
+
+
+  .site-header-logo {
+    margin: 0;
+
+    a {
+      display: block;
+      background: no-repeat top left;
+      background-size: contain;
+      background-image: url( $site-theme-logo-abspath + '/logo.svg' );
+      width: $site-header-logo--sm-w;
+      height: $site-header-logo--sm-h;
+
+      @media #{$medium-only} {
+        width: $site-header-logo--md-w;
+        height: $site-header-logo--md-h;
       }
 
-      &.more {
-        width: auto;
+      @media #{$large-only} {
+        width: $site-header-logo--lg-w;
+        height: $site-header-logo--lg-h;
+      }
 
-        i {
-          padding: $site-header-icon-more-pd;
-          padding-left: 0;
-        }
-
-        a,
-        .sitewide-search-icon {
-          display: inline-block;
-          font-size: $base-spacing-unit * 1.2;
-          color: $grey-25;
-          line-height: 1;
-        }
-
-        &.first {
-          margin-left: halve( $icon-diameter );
-        }
+      @media #{$xlarge-up} {
+        width: $site-header-logo--xl-w;
+        height: $site-header-logo--xl-h;
       }
     }
   }
-}
-
-
-/**
- * @TODO this sucks...
- */
-
-// scss-lint:disable IdSelector
-#promoted-story {
-  background-color: $white;
-  border-bottom: 1px solid $border-std-color;
-
-  .row {
-    padding: halve( $base-spacing-unit ) $base-spacing-unit;
-  }
-
-  strong {
-    text-transform: uppercase;
-    padding-right: 0.3rem;
-  }
-}
-// scss-lint:enable IdSelector
-
-
-
-
-
-//
-// Header Logo
-// ==========================================================================
-
-
-.site-header-logo {
-  margin: 0;
-
-  a {
-    display: block;
-    background: no-repeat top left;
-    background-size: contain;
-    background-image: url( $site-theme-logo-abspath + '/logo.svg' );
-    width: $site-header-logo--sm-w;
-    height: $site-header-logo--sm-h;
-
-    @media #{$medium-only} {
-      width: $site-header-logo--md-w;
-      height: $site-header-logo--md-h;
-    }
-
-    @media #{$large-only} {
-      width: $site-header-logo--lg-w;
-      height: $site-header-logo--lg-h;
-    }
-
-    @media #{$xlarge-up} {
-      width: $site-header-logo--xl-w;
-      height: $site-header-logo--xl-h;
-    }
-  }
-}
 
 } // endif $email == false

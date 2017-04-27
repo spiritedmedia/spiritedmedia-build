@@ -4,11 +4,11 @@
 
 
 // @TODO
-// scss-lint:disable QualifyingElement SelectorFormat
+// stylelint-disable selector-no-type
 
 
 .reveal-modal {
-  z-index: $z-reveal-modal;
+  z-index: $z-index-5; // See /scss/base/global/_general.scss
 }
 
 .dark-reveal-modal {
@@ -33,13 +33,12 @@
 }
 
 // @TODO
-// scss-lint:disable IdSelector
+// stylelint-disable-next-line selector-no-id
 #share-article ul.side-nav {
   margin-top: $base-spacing-unit;
   position: relative;
   list-style: none;
 }
-// scss-lint:enable IdSelector
 
 
 .form-submit {

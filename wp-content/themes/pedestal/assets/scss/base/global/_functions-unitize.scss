@@ -18,6 +18,7 @@
   $base-value,
   $output-unit
 ) {
+
   $new-value: null;
   $value-unit: unit( $value );
   $output-unit-unit: unit( $output-unit );
@@ -45,7 +46,7 @@
   @if $new-value {
     @return convert-to-unit( $new-value, $output-unit );
   } @else {
-    @error 'The specified unit conversion is not supported at this time. Tried to convert input value (#{$value}) to output unit (#{$output-unit-unit})'
+    @error 'The specified unit conversion is not supported at this time. Tried to convert input value (#{$value}) to output unit (#{$output-unit-unit})';
   }
 
 }

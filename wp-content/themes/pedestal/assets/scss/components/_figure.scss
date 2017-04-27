@@ -12,50 +12,53 @@
   }
 }
 
-  .c-figure__content-wrap {}
 
-    .c-figure__link {
-      display: block;
-    }
-
-      .c-figure__content {
-        display: block;
-        height: auto;
-        padding-bottom: $base-spacing-unit / 4;
-      }
+.c-figure__content-wrap {}
 
 
-  /*figcaption*/.c-figure__text {
-    line-height: 1.2;
+.c-figure__link {
+  display: block;
+}
 
-    &__caption,
-    &__credit {
-      text-transform: uppercase;
-      display: inline;
 
-      // Override `.s-post-content` heading sizes
-      &,
-      .s-post-content & {
-        font-size: $small-font-size;
-      }
-    }
+.c-figure__content {
+  display: block;
+  height: auto;
+  padding-bottom: $base-spacing-unit / 4;
+}
 
-    &__caption {
-      font-weight: 400;
-      padding-right: $base-spacing-unit / 4;
-    }
 
-    &__credit {
-      // scss-lint:disable SelectorFormat
-      color: $dimmed-text-color;
-      font-weight: 300;
-      font-style: normal;
+/*figcaption*/.c-figure__text {
+  line-height: 1.2;
 
-      a {
-        @include link-light;
-      }
+  &__caption,
+  &__credit {
+    text-transform: uppercase;
+    display: inline;
+
+    // Override `.s-post-content` heading sizes
+    &,
+    .s-post-content & {
+      font-size: $small-font-size;
     }
   }
+
+  &__caption {
+    font-weight: 400;
+    padding-right: $base-spacing-unit / 4;
+  }
+
+  &__credit {
+    color: $dimmed-text-color;
+    font-weight: 300;
+    font-style: normal;
+
+    // stylelint-disable-next-line selector-no-type
+    a {
+      @include link-light;
+    }
+  }
+}
 
 
 
@@ -70,13 +73,12 @@
   // full-width images
   display: table;
 
-  // scss-lint:disable SelectorFormat
-  img:not(.ntv-video-play-button) {
+  // stylelint-disable-next-line selector-no-type
+  img:not( .ntv-video-play-button ) {
     display: block;
     // For IE compatability
     width: 100%;
   }
-  // scss-lint:enable SelectorFormat
 
   .c-figure__text {
     display: table-caption;
@@ -115,7 +117,7 @@
  */
 
 .c-figure--responsive-iframe {
-  // scss-lint:disable SelectorFormat
+  // stylelint-disable-next-line selector-no-type
   iframe {
     position: absolute;
     top: 0;

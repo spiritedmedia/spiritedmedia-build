@@ -11,36 +11,35 @@
 
 
 
-
 .o-media,
 %o-media {
   @include clearfix;
+
   display: block;
 }
 
-  .o-media__img,
-  %o-media__img {
-    float: left;
-    margin-right: $o-media-gutter;
+.o-media__img,
+%o-media__img {
+  float: left;
+  margin-right: $o-media-gutter;
 
-    // scss-lint:disable SelectorFormat
-    > img {
-      display: block;
-    }
-
-  }
-
-  .o-media__body,
-  %o-media__body {
-    overflow: hidden;
+  // stylelint-disable-next-line selector-no-type
+  > img {
     display: block;
-
-    &,
-    > :last-child {
-      margin-bottom: 0;
-    }
-
   }
+}
+
+.o-media__body,
+%o-media__body {
+  overflow: hidden;
+  display: block;
+
+  &,
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+}
 
 
 
@@ -261,120 +260,120 @@
 @if ( $enable-o-media--responsive == true ) {
 
 
-@media screen and ( max-width: $o-media-collapse-at ) {
+  @media screen and ( max-width: $o-media-collapse-at ) {
 
-  .o-media--responsive,
-  %o-media--responsive {
-
-    /**
-     * Rework the spacings on regular media objects.
-     */
-    > .o-media__img,
-    > %o-media__img {
-      float: none;
-      margin-right: 0;
-      margin-bottom: $o-media-gutter;
-      margin-left: 0;
-    }
-
-    @if ( $enable-o-media--tiny == true ) {
+    .o-media--responsive,
+    %o-media--responsive {
 
       /**
-       * Tiny responsive media objects.
-       *
-       * Take a little more heavy-handed approach to reworking
-       * spacings on media objects that are also tiny media objects
-       * in their regular state.
+       * Rework the spacings on regular media objects.
        */
-
-      &.o-media--tiny,
-      &%o-media--tiny {
-
-        > .o-media__img,
-        > %o-media__img {
-          margin-right: 0;
-          margin-left: 0;
-          margin-bottom: $o-media-gutter--tiny;
-        }
-
+      > .o-media__img,
+      > %o-media__img {
+        float: none;
+        margin-right: 0;
+        margin-bottom: $o-media-gutter;
+        margin-left: 0;
       }
 
-    } // end @if
+      @if ( $enable-o-media--tiny == true ) {
 
-    @if ( $enable-o-media--small == true ) {
+        /**
+         * Tiny responsive media objects.
+         *
+         * Take a little more heavy-handed approach to reworking
+         * spacings on media objects that are also tiny media objects
+         * in their regular state.
+         */
 
-      /**
-       * Small responsive media objects.
-       *
-       * Take a little more heavy-handed approach to reworking
-       * spacings on media objects that are also small media objects
-       * in their regular state.
-       */
+        &.o-media--tiny,
+        &%o-media--tiny {
 
-      &.o-media--small,
-      &%o-media--small {
+          > .o-media__img,
+          > %o-media__img {
+            margin-right: 0;
+            margin-left: 0;
+            margin-bottom: $o-media-gutter--tiny;
+          }
 
-        > .o-media__img,
-        > %o-media__img {
-          margin-right: 0;
-          margin-left: 0;
-          margin-bottom: $o-media-gutter--small;
         }
 
-      }
+      } // end @if
 
-    } // end @if
+      @if ( $enable-o-media--small == true ) {
 
-    @if ( $enable-o-media--large == true ) {
+        /**
+         * Small responsive media objects.
+         *
+         * Take a little more heavy-handed approach to reworking
+         * spacings on media objects that are also small media objects
+         * in their regular state.
+         */
 
-      /**
-       * Large responsive media objects.
-       *
-       * Take a little more heavy-handed approach to reworking
-       * spacings on media objects that are also large media objects
-       * in their regular state.
-       */
+        &.o-media--small,
+        &%o-media--small {
 
-      &.o-media--large,
-      &%o-media--large {
+          > .o-media__img,
+          > %o-media__img {
+            margin-right: 0;
+            margin-left: 0;
+            margin-bottom: $o-media-gutter--small;
+          }
 
-        > .o-media__img,
-        > %o-media__img {
-          margin-right: 0;
-          margin-left: 0;
-          margin-bottom: $o-media-gutter--large;
         }
 
-      }
+      } // end @if
 
-    } // end @if
+      @if ( $enable-o-media--large == true ) {
 
-    @if ( $enable-o-media--huge == true ) {
+        /**
+         * Large responsive media objects.
+         *
+         * Take a little more heavy-handed approach to reworking
+         * spacings on media objects that are also large media objects
+         * in their regular state.
+         */
 
-      /**
-       * Huge responsive media objects.
-       *
-       * Take a little more heavy-handed approach to reworking
-       * spacings on media objects that are also huge media objects
-       * in their regular state.
-       */
+        &.o-media--large,
+        &%o-media--large {
 
-      &.o-media--huge,
-      &%o-media--huge {
+          > .o-media__img,
+          > %o-media__img {
+            margin-right: 0;
+            margin-left: 0;
+            margin-bottom: $o-media-gutter--large;
+          }
 
-        > .o-media__img,
-        > %o-media__img {
-          margin-right: 0;
-          margin-left: 0;
-          margin-bottom: $o-media-gutter--huge;
         }
 
-      }
+      } // end @if
 
-    } // end @if
+      @if ( $enable-o-media--huge == true ) {
 
-  } // end .o-media--responsive
+        /**
+         * Huge responsive media objects.
+         *
+         * Take a little more heavy-handed approach to reworking
+         * spacings on media objects that are also huge media objects
+         * in their regular state.
+         */
 
-} // end @o-media
+        &.o-media--huge,
+        &%o-media--huge {
+
+          > .o-media__img,
+          > %o-media__img {
+            margin-right: 0;
+            margin-left: 0;
+            margin-bottom: $o-media-gutter--huge;
+          }
+
+        }
+
+      } // end @if
+
+    } // end .o-media--responsive
+
+  } // end @o-media
 
 } // end @if

@@ -6,15 +6,11 @@
 // ==========================================================================
 
 
-// @TODO
-// scss-lint:disable SelectorFormat
-
-
 /*body*/.s-site-maintenance-mode {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url( $site-theme-abspath + '/assets/images/maintenance_bg.jpg') no-repeat center center fixed;
+  background: url( $site-theme-abspath + '/assets/images/maintenance_bg.jpg' ) no-repeat center center fixed;
   background-size: cover;
 
   .content-wrapper {
@@ -35,6 +31,7 @@
 // ==========================================================================
 
 
+// stylelint-disable selector-no-type
 .c-downtime-error {
   text-align: center;
 
@@ -52,3 +49,4 @@
     }
   }
 }
+// stylelint-enable selector-no-type

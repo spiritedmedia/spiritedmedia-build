@@ -13,7 +13,7 @@
         <input type="hidden" name="cluster-id" value="{{ cluster.get_id }}" />
         {% include 'partials/emails/form-honeypot.twig' %}
         <div class="row">
-            <button class="form-submit button--rounded button--dark button small js-form-submit" type="submit" name="Follow">
+            <button class="btn btn--secondary btn--large form-submit js-form-submit" type="submit" name="Follow">
                 <span class="form-submit__text">Follow</span>
                 <div class="form-submit__loader">{% include 'partials/loading.twig' %}</div>
             </button>

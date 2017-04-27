@@ -9,34 +9,34 @@
 }
 
 
-  .c-avatar__img {
-    border-radius: $global-rounded;
-    overflow: hidden;
+.c-avatar__img {
+  border-radius: $global-rounded;
+  overflow: hidden;
+
+  @if $email {
+    @include box-sizing( border-box );
+  }
+}
+
+
+@if global-variable-exists( site-theme-name ) {
+
+  .c-avatar__img--fallback {
+    $path: $site-theme-logo-abspath + '/logo_default_avatar';
+    $fallback: true;
 
     @if $email {
-      @include box-sizing( border-box );
+      $path: $site-theme-logo-abspath + '/logo_default_avatar-32';
+      $fallback: false;
     }
+
+    @include iconize(
+      $path: $path,
+      $size: $avatar-size-sm,
+      $fallback: $fallback
+    );
   }
-
-
-  @if global-variable-exists( site-theme-name ) {
-
-    .c-avatar__img--fallback {
-      $path: $site-theme-logo-abspath + '/logo_default_avatar';
-      $fallback: true;
-
-      @if $email {
-        $path: $site-theme-logo-abspath + '/logo_default_avatar-32';
-        $fallback: false;
-      }
-
-      @include iconize(
-        $path: $path,
-        $size: $avatar-size-sm,
-        $fallback: $fallback
-      );
-    }
-  }
+}
 
 
 

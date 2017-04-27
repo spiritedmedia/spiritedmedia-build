@@ -37,7 +37,7 @@
 # !.csslintrc
 # !.eslintrc.yml
 # !.jshintrc
-# !.scss-lint.yml
+# !.stylelintrc.json
 # !.editorconfig
 # !phpcs.ruleset.xml
 

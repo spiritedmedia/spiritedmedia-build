@@ -3,22 +3,16 @@
 // ==========================================================================
 
 
-// scss-lint:disable SelectorFormat
-
-
-
 
 
 
 .c-whos-next {
 
-  &__logo {
-    /*a*/&__img {
-      background-image: url( $site-theme-abspath + '/assets/images/whos-next-partner.svg' );
-    }
+  &__logo__img {
+    background-image: url( $site-theme-abspath + '/assets/images/whos-next-partner.svg' );
   }
 
-  /*section*/&__items {
+  &__items {
     @include stdbd( top );
   }
 
