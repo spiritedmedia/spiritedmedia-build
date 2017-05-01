@@ -448,7 +448,7 @@ class Subscriptions {
             'shareable'  => true,
         ] );
 
-        $subject = sprintf( '%s Update: %s', PEDESTAL_BLOG_NAME, $cluster->get_title() );
+        $subject = sprintf( 'Update: %s', $cluster->get_title() );
         $sending_args = [
             'html'       => $body,
             'subject'    => $subject,
@@ -472,7 +472,7 @@ class Subscriptions {
             'shareable'  => true,
         ] );
 
-        $subject = sprintf( '%s Daily: %s', PEDESTAL_BLOG_NAME, $newsletter->get_title() );
+        $subject = $newsletter->get_title();
         $newsletter_lists = Newsletter_Lists::get_instance();
         $daily_newsletter_id = $newsletter_lists->get_newsletter_list_id( 'Daily Newsletter' );
         $sending_args = [

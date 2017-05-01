@@ -182,7 +182,7 @@ class Figure {
             $context['url'] = null;
         }
         // Override YouTube embed content so we can lazy load videos
-        if ( $youtube_id && ! is_feed( 'fias' ) ) {
+        if ( isset( $youtube_id ) && $youtube_id && ! is_feed( 'fias' ) ) {
             $src_sets = [];
             $youtube = new YouTube;
             $youtube_url = $youtube::get_url_from_id( $youtube_id );
