@@ -4,17 +4,16 @@
 // Generated footnotes at the bottom of a post.
 // ==========================================================================
 
-
 .c-footnotes {
   &__item {
-    font-size: $footnotes-font-size;
+    font-size: unitize( 14 );
     font-weight: 300;
   }
 
   &__return {
     &__icon {
       transform: rotate( 90deg );
-      margin-left: $footnotes-icon-spacing;
+      margin-left: $icon-spacing;
     }
   }
 }

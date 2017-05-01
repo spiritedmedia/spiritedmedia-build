@@ -3,7 +3,7 @@
 // ==========================================================================
 
 
-
+$c-whos-next-spacing: $base-spacing-unit * 1.5;
 
 
 .c-whos-next {
@@ -45,7 +45,7 @@
     margin-right: $c-whos-next-spacing;
 
     @media #{$medium-up} {
-      margin-bottom: $c-whos-next-v-spacing-md;
+      margin-bottom: $base-spacing-unit * 2;
       max-width: 45%;
     }
 

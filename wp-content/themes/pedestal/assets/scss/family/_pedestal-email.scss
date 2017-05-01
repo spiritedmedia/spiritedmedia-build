@@ -21,15 +21,11 @@
 // ==========================================================================
 
 
+// Vendor libraries
 @import 'SassyLists/dist/SassyLists';
 @import 'susy/sass/susy';
 
-// stylelint-disable scss/at-import-no-partial-leading-underscore
 @import '../base/email/settings';
-@import '../base/global/__config';
-@import '../objects/__config';
-@import '../components/__config';
-// stylelint-enable scss/at-import-no-partial-leading-underscore
 
 
 
@@ -117,14 +113,3 @@
 
 
 @import '../utilities/utilities';
-
-
-
-
-
-// ==========================================================================
-// Pedestal // * Emails * // MISCELLANEOUS
-// ==========================================================================
-
-
-@import '../base/global/states';

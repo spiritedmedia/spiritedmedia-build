@@ -3,6 +3,9 @@
 // ==========================================================================
 
 
+$user-card-img-size: map-get-strict( sm-pedestal-img-sizes-get( thumbnail ), width );
+
+
 .c-user-card {
   text-align: center;
 
@@ -11,12 +14,11 @@
   }
 }
 
-
 .c-user-card__title {}
 
 .c-user-card__img {
   display: block;
-  margin-bottom: c-user-card-property-get( img-m-b );
+  margin-bottom: $base-spacing-unit;
 
   // Accommodate for all the different image sizes
   @each $size-name, $dimensions in sm-pedestal-img-sizes-get() {
@@ -26,9 +28,9 @@
       .c-avatar {
         &,
         &__img {
-          width: c-user-card-property-get( img-size );
-          height: c-user-card-property-get( img-size );
-          background-size: c-user-card-property-get( img-size );
+          width: $user-card-img-size;
+          height: $user-card-img-size;
+          background-size: $user-card-img-size;
 
           // stylelint-disable-next-line max-nesting-depth
           @media #{$large-up} {
@@ -58,18 +60,18 @@
   );
 
   &__item {
-    margin-bottom: c-user-card-property-get( section-spacing );
-    margin-right: c-user-card-property-get( section-spacing );
+    margin-bottom: $half-spacing-unit;
+    margin-right: $half-spacing-unit;
 
     .o-icon-text__icon {
-      margin-right: halve( $o-icon-text-spacing );
+      margin-right: halve( $icon-spacing );
     }
   }
 
 }
 
 .c-user-card__title {
-  font-weight: c-user-card-property-get( title-weight );
+  font-weight: 300;
 }
 
 .c-user-card__email {}

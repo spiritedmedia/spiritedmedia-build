@@ -55,7 +55,7 @@
 /**
  * Convert a list of units or values to use the unit of base spacing unit
  *
- * Similar to Foundation's `convert-to-rem` except that it factors in the unit
+ * Similar to Foundation `convert-to-rem` except that it factors in the unit
  * of $base-spacing-unit
  *
  * @param  {unit|int|list} $value        A unit or unitless value

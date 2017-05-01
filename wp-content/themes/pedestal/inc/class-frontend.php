@@ -313,7 +313,7 @@ class Frontend {
      * Set up the Twig environment
      */
     public function filter_timber_twig( $twig ) {
-        $twig->addFilter( 'addslashes', new \Twig_SimpleFilter( 'addslashes', 'addslashes' ) );
+        $twig->addFilter( new \Twig_SimpleFilter( 'addslashes', 'addslashes' ) );
         return $twig;
     }
 

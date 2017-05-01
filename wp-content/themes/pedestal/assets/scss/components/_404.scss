@@ -6,7 +6,7 @@
 /*body*/.error404 {
 
   .c-main {
-    color: $page-404-text-color;
+    color: $body-font-color;
     text-align: center;
 
     @media #{$large-up} {
@@ -18,8 +18,8 @@
 
 .e404-text {
   &--primary {
-    color: $page-404-text-color;
-    font-size: $page-404-primary-text-size;
+    color: $body-font-color;
+    font-size: $h3-font-size;
     line-height: 1.2;
     font-weight: 400;
   }
@@ -32,7 +32,7 @@
 
 
 .e404-main {
-  margin-top: $page-404-m-t;
+  margin-top: $base-spacing-unit * 3;
 }
 
 .e404-art {}
@@ -40,7 +40,7 @@
 
 
 /*figure*/.e404-quote {
-  margin: 0 0 ( $page-404-primary-text-size * $page-404-primary-text-line-height );
+  margin: 0 0 ( $h3-font-size * 1.2 );
 }
 
 /*blockquote*/.e404-quote__body {

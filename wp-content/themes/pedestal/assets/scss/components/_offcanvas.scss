@@ -2,10 +2,20 @@
 // Pedestal // Components // OFFCANVAS MENU
 // ==========================================================================
 
+// Off Canvas Menu Variables
+$off-canvas-width        : rem-calc( 275 );
+$off-canvas-bg           : $dark-prussian-blue;
+$off-canvas-bg-hover     : $prussian-blue;
+
+// Off Canvas Menu List Variables
+$off-canvas-link-padding : 0.7rem 2rem;
+$off-canvas-link-color   : $white;
+
+// Off Canvas Search Form
+$off-canvas-search-form-icon-color: rgba( 0, 0, 0, 0.3 );
 
 // @TODO
 // stylelint-disable selector-no-type, selector-max-compound-selectors
-
 
 .off-canvas-menu {
   font-weight: 400;

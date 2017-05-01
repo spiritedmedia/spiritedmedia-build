@@ -19,11 +19,11 @@
   display: block;
   background: no-repeat top left;
   background-size: contain;
-  height: l-flat-property-get( logo-height );
+  height: $base-spacing-unit * 3;
 }
 
 
 .l-flat__explainer {
-  color: l-flat-property-get( explainer-text-color );
+  color: $dimmed-text-color;
   font-style: italic;
 }

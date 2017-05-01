@@ -7,7 +7,7 @@
 
 
 .c-hero {
-  background-color: c-hero-property-get( bg-c );
+  background-color: $truth-serum;
   margin-bottom: $base-spacing-unit;
 
   // Explode hero for medium and below
@@ -19,7 +19,7 @@
 
 .c-hero__inner {
   @media #{$large-up} {
-    padding: c-hero-property-get( pd );
+    padding: double( $base-spacing-unit );
   }
 }
 

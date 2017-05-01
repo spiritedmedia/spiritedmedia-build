@@ -5,6 +5,7 @@
 
 $search-input-padding: $half-spacing-unit;
 $search-filter-link-padding: 5px;
+$filter-link-pd: 5px;
 
 
 .c-search {
@@ -26,7 +27,7 @@ $search-filter-link-padding: 5px;
 
 
   &__icon {
-    padding: $search-input-padding;
+    padding: $half-spacing-unit;
     position: absolute;
     top: $base-spacing-unit / 4;
     color: $grey-25;
@@ -78,7 +79,7 @@ $search-filter-link-padding: 5px;
 
 
   &__total-results {
-    padding: $search-filter-link-padding;
+    padding: $filter-link-pd;
 
     &__count {
       font-weight: 600;
@@ -122,7 +123,7 @@ $search-filter-link-padding: 5px;
     &__label {
       margin-left: $base-spacing-unit;
       margin-bottom: 0;
-      padding: $search-filter-link-padding;
+      padding: $filter-link-pd;
       display: inline-block;
       position: relative;
 
@@ -171,9 +172,9 @@ input.c-search__field {
 
   box-shadow: none;
   height: auto;
-  padding: $search-input-padding;
-  padding-left: $base-spacing-unit * 2.5;
   font-size: $h4-font-size;
+  padding: $half-spacing-unit;
+  padding-left: unitize( 40 ); // input icon width
   color: $grey-25;
 
   &,

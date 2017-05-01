@@ -14,7 +14,7 @@
   margin-bottom: $main-margin-bottom;
 
   .full-width & {
-    margin-top: $page-main-m-t;
+    margin-top: $base-spacing-unit * 3;
   }
 }
 

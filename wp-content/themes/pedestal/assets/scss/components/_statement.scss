@@ -5,9 +5,6 @@
 // ==========================================================================
 
 
-
-
-
 /*figure*/.c-statement {
   margin: 0;
 
@@ -41,7 +38,7 @@
 
       // stylelint-disable-next-line selector-no-type
       > img {
-        height: c-statement-property-get( meter-width );
+        height: unitize( $base-spacing-unit * 6 );
 
         @media #{$small-only} {
           margin-left: auto;

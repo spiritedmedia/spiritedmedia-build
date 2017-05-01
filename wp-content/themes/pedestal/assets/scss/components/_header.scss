@@ -38,6 +38,7 @@
 
       // stylelint-disable selector-max-compound-selectors
       li {
+
         &.social-icon {
           &.last {
             width: ( $icon-diameter + halve( $icon-diameter ) );
@@ -50,7 +51,7 @@
           width: auto;
 
           i {
-            padding: $site-header-icon-more-pd;
+            padding: $base-spacing-unit / 2;
             padding-left: 0;
           }
 
@@ -109,22 +110,22 @@
       background: no-repeat top left;
       background-size: contain;
       background-image: url( $site-theme-logo-abspath + '/logo.svg' );
-      width: $site-header-logo--sm-w;
-      height: $site-header-logo--sm-h;
+      width: 205px;
+      height: 42px;
 
       @media #{$medium-only} {
-        width: $site-header-logo--md-w;
-        height: $site-header-logo--md-h;
+        width: 281px;
+        height: 56px;
       }
 
       @media #{$large-only} {
-        width: $site-header-logo--lg-w;
-        height: $site-header-logo--lg-h;
+        width: 305px;
+        height: 61px;
       }
 
       @media #{$xlarge-up} {
-        width: $site-header-logo--xl-w;
-        height: $site-header-logo--xl-h;
+        width: 365px;
+        height: 73px;
       }
     }
   }

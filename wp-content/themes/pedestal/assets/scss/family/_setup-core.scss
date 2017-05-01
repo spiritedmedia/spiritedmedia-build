@@ -13,14 +13,9 @@
 @import 'foundation/scss/foundation/functions';
 @import '../base/global/functions';
 
-
-
-
-
-//
-// Vendor Libraries
-// ==========================================================================
-
-
+// Vendor libraries
 @import 'SassyLists/dist/SassyLists';
 @import 'susy/sass/susy';
+
+// We want Foundation's panel mixin, but we'll supply our own panel classes
+$include-html-panel-classes        : false !default;

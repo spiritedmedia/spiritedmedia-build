@@ -2,6 +2,10 @@
 // Pedestal // Components // ADVERTISING
 // ==========================================================================
 
+// Amount to offset 300x50 DFP ad on mobile
+$dfp-mobile-ad-offset           : -( $column-gutter / 4 );
+// Same as above, but for ads within panels
+$dfp-mobile-ad-offset--panelled : -( $column-gutter );
 
 /* stylelint-disable */
 
@@ -15,7 +19,7 @@
 
   .ntvShare,
   .ntv_share {
-    margin: $nativo-vertical-m 0 !important;
+    margin: ( $base-spacing-unit * 2 ) 0 !important;
   }
 
   .ntv-bullet {

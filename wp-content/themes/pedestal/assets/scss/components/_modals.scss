@@ -2,17 +2,17 @@
 // Pedestal // Components // MODALS
 // ==========================================================================
 
+$reveal-modal--dark-text-color: $white;
 
 // @TODO
 // stylelint-disable selector-no-type
-
 
 .reveal-modal {
   z-index: $z-index-5; // See /scss/base/global/_general.scss
 }
 
 .dark-reveal-modal {
-  background-color: $reveal-modal--dark-bg;
+  background-color: $prussian-blue;
   color: $reveal-modal--dark-text-color;
 
 

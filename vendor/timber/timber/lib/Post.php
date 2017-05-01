@@ -809,7 +809,7 @@ class Post extends Core implements CoreInterface {
 	 * @return array of TimberTerms
 	 */
 	public function categories() {
-		return $this->get_terms('category');
+		return $this->terms('category');
 	}
 
 	/**
@@ -830,7 +830,7 @@ class Post extends Core implements CoreInterface {
 	 * ```twig
 	 * {% if post.children %}
 	 *     Here are the child pages:
-	 *     {% for child in page.children %}
+	 *     {% for child in post.children %}
 	 *         <a href="{{ child.link }}">{{ child.title }}</a>
 	 *     {% endfor %}
 	 * {% endif %}
@@ -889,7 +889,7 @@ class Post extends Core implements CoreInterface {
 		$commenter = wp_get_current_commenter();
 		$comment_author_email = $commenter['comment_author_email'];
 
-		$args = array('status' => $status, 'order' => $order);
+		$args = array('status' => $status, 'order' => $order, 'type' => $type);
 		if ( $count > 0 ) {
 			$args['number'] = $count;
 		}
@@ -902,8 +902,10 @@ class Post extends Core implements CoreInterface {
 		} elseif ( !empty($comment_author_email) ) {
 			$args['include_unapproved'] = array($comment_author_email);
 		}
-
-		return new CommentThread($this->ID, $args);
+		$ct = new CommentThread($this->ID, false);
+		$ct->CommentClass = $CommentClass;
+		$ct->init($args);
+		return $ct;
 	}
 
 	/**
@@ -1323,7 +1325,7 @@ class Post extends Core implements CoreInterface {
 	 * @return array of TimberTerms
 	 */
 	public function get_categories() {
-		return $this->get_terms('category');
+		return $this->terms('category');
 	}
 
 	/**
@@ -1364,7 +1366,7 @@ class Post extends Core implements CoreInterface {
 	 * @return array
 	 */
 	public function get_tags() {
-		return $this->get_terms('post_tag');
+		return $this->terms('post_tag');
 	}
 
 	/**

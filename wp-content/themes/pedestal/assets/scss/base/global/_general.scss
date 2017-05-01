@@ -4,9 +4,7 @@
 
 
 /*
-stylelint-disable
-  selector-no-qualifying-type,
-  selector-no-type
+stylelint-disable selector-no-qualifying-type, selector-no-type
 */
 
 
@@ -19,7 +17,7 @@ body {
 
 
 body.full-width {
-  background-color: $page-bg-c;
+  background-color: $white;
 }
 
 

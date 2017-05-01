@@ -2,15 +2,14 @@
 // Pedestal // Components // RAIL
 // ==========================================================================
 
-
 // @TODO
 // stylelint-disable selector-no-type
 
 
 .rail {
   // Shrink column padding so a 300px DFP advert can fit
-  padding-left: $rail-column-gutter;
-  padding-right: $rail-column-gutter;
+  padding-left: halve( $base-spacing-unit );
+  padding-right: halve( $base-spacing-unit );
 
   // Fix for mysterious rail vertical explosion
   // https://github.com/stomping/pedestal/issues/338
@@ -19,7 +18,7 @@
   .widget-title {
     @extend %c-heading--minor;
 
-    margin-top: $widget-title-m-t;
+    margin-top: double( $base-spacing-unit );
 
     &:first-child {
       margin-top: 0;
@@ -31,7 +30,7 @@
 
     margin-bottom: $border-divider-spacing; // All widgets need this even if they don't have a border divider
     list-style-type: none;
-    padding: $widget-p;
+    padding: quarter( $base-spacing-unit );
 
     p {
       margin-bottom: 0.5rem;
