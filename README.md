@@ -1,8 +1,7 @@
-Build [#2741](https://circleci.com/gh/spiritedmedia/spiritedmedia/2741) by kingkool68 at 2017-05-01 02:50 PM UTC
+Build [#2746](https://circleci.com/gh/spiritedmedia/spiritedmedia/2746) by montchr at 2017-05-01 04:40 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.8.1](https://github.com/spiritedmedia/spiritedmedia/compare/v5.8.1)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.8.2](https://github.com/spiritedmedia/spiritedmedia/compare/v5.8.2)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.8.0...v5.8.1)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.8.1...v5.8.2)
 
- - [#2006](https://github.com/spiritedmedia/spiritedmedia/pull/2006): Change Email Subject Lines From A/B Testing
- - [#2015](https://github.com/spiritedmedia/spiritedmedia/pull/2015): Add OS junk files to gitignore
+ - [#2018](https://github.com/spiritedmedia/spiritedmedia/pull/2018): Use the correct Daily Insta story URL in the component title
