@@ -55,11 +55,15 @@ $user-card-img-size: map-get-strict( sm-pedestal-img-sizes-get( thumbnail ), wid
 }
 
 .c-user-card__details {
-  @include inline-list-min(
-    $no-stacking: false
-  );
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  line-height: 1;
 
   &__item {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: $base-line-height;
     margin-bottom: $half-spacing-unit;
     margin-right: $half-spacing-unit;
 

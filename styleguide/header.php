@@ -163,7 +163,7 @@
           </div>
 
           <div class="site-header-social columns small-3 medium-6 end">
-            <ul class="iconset inline-list">
+            <ul class="iconset">
               <li class="social-icon  show-for-medium-up ">
                 <a href="#subscribe-to-newsletter" data-reveal-id="subscribe-to-newsletter" data-ga-category="Social Icon - Header" data-ga-label="Email">
                   <?php styleguide_icon( 'envelope' ); ?>

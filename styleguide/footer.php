@@ -3,7 +3,7 @@
   <div class="row">
 
     <div class="site-footer-social medium-4 medium-push-8 columns">
-      <ul class="iconset inline-list">
+      <ul class="iconset">
         <li class="social-icon ">
           <a href="#subscribe-to-newsletter" data-reveal-id="subscribe-to-newsletter" data-ga-category="Social Icon - Footer" data-ga-label="Email">
             <?php styleguide_icon( 'envelope' ); ?>
@@ -71,7 +71,7 @@
 
       <li class="off-canvas-menu__follow off-canvas-menu__item">
         <a href="#" class="disabled" data-ga-category="Menu - Main Navigation" data-ga-label="Disabled|Follow">Follow</a>
-        <ul class="off-canvas-menu__follow__icons iconset inline-list">
+        <ul class="off-canvas-menu__follow__icons iconset">
 
           <li class="social-icon ">
             <a href="https://www.instagram.com/billy_penn/" target="_blank" data-ga-category="Social Icon - Off_canvas" data-ga-label="Instagram">

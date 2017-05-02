@@ -14,8 +14,13 @@ $off-canvas-link-color   : $white;
 // Off Canvas Search Form
 $off-canvas-search-form-icon-color: rgba( 0, 0, 0, 0.3 );
 
+// Icon variables
+$off-canvas-icon-width   : $base-spacing-unit * 2;
+
+
 // @TODO
 // stylelint-disable selector-no-type, selector-max-compound-selectors
+
 
 .off-canvas-menu {
   font-weight: 400;
@@ -67,10 +72,21 @@ $off-canvas-search-form-icon-color: rgba( 0, 0, 0, 0.3 );
 }
 
 .off-canvas-menu__follow__icons {
-  @include iconset-sizing( 2rem );
-  @include iconset-coloring( $white, $off-canvas-bg );
-
   float: right;
+  line-height: $off-canvas-icon-width;
   margin-top: ( $base-line-height / 3 );
   margin-right: $base-line-height;
+
+  > li {
+    height: $off-canvas-icon-width;
+    width: $off-canvas-icon-width;
+
+    a {
+      &,
+      &:hover {
+        background-color: $white;
+        color: $off-canvas-bg;
+      }
+    }
+  }
 }

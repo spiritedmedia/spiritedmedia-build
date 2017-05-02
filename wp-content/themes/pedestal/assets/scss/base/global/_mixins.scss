@@ -105,44 +105,6 @@
 }
 
 
-/**
- * A minimal inline list mixin
- *
- * https://github.com/inuitcss/objects.list-inline/blob/master/_objects.list-inline.scss
- */
-@mixin inline-list-min(
-  $no-stacking: true,
-  $line-height: $base-line-height
-) {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  // Let the child items determine line height
-  line-height: 1;
-
-  @if $no-stacking {
-
-    @media #{$medium-up} {
-      &__item {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: $line-height;
-      }
-    }
-
-  } @else {
-
-    &__item {
-      display: inline-block;
-      vertical-align: middle;
-      line-height: $line-height;
-    }
-
-  }
-
-}
-
-
 
 
 
@@ -283,66 +245,6 @@
 //
 // Icons
 // ==========================================================================
-
-
-// stylelint-disable selector-no-type
-@mixin iconset(
-  $diameter: $icon-diameter,
-  $background-color: $grey-70,
-  $text-color: $white,
-  $spacing: $icon-spacing
-) {
-  @include iconset-sizing( $diameter );
-  @include iconset-coloring( $background-color, $text-color );
-
-  margin: 0;
-  display: inline-block;
-  overflow: visible;
-
-  li {
-    display: inline-block;
-    margin-left: $spacing;
-    text-align: center;
-
-    /* stylelint-disable-next-line selector-no-qualifying-type */
-    &.social-icon {
-      a {
-        border-radius: 50%;
-        padding: 0;
-      }
-    }
-  }
-}
-// stylelint-enable selector-no-type
-
-
-// stylelint-disable selector-no-type
-@mixin iconset-sizing( $diameter: $icon-diameter ) {
-  line-height: $diameter;
-
-  li {
-    height: $diameter;
-    width: $diameter;
-  }
-}
-// stylelint-enable selector-no-type
-
-
-// stylelint-disable selector-no-type, selector-no-qualifying-type
-@mixin iconset-coloring(
-  $background-color: $grey-70,
-  $text-color: $white
-) {
-
-  li.social-icon a {
-    &,
-    &:hover {
-      background-color: $background-color;
-      color: $text-color;
-    }
-  }
-}
-// stylelint-enable selector-no-type, selector-no-qualifying-type
 
 
 /**

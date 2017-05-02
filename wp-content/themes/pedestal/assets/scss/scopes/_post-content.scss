@@ -226,11 +226,6 @@ $s-post-content-li-bullet-size     : 5px;
         border-radius: 1000px;
       }
     }
-
-    &.no-bullet,
-    &.inline-list {
-      @include no-bullet-custom;
-    }
   }
 
 

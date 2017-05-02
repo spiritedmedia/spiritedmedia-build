@@ -3,7 +3,7 @@
     <div class="row">
 
         <div class="site-footer-social medium-4 medium-push-8 columns">
-            <ul class="iconset inline-list">
+            <ul class="iconset">
                 {% include 'partials/social-icons.twig' with {'location': 'footer'} %}
             </ul>
         </div>
@@ -56,7 +56,7 @@
         {% for title, link in menu_off_canvas | slice(1, 2) %}
             <li class="off-canvas-menu__follow off-canvas-menu__item">
                 <a href="{{ link }}" class="disabled" data-ga-category="Menu - Main Navigation" data-ga-label="Disabled|{{ title }}">{{ title }}</a>
-                <ul class="off-canvas-menu__follow__icons iconset inline-list">
+                <ul class="off-canvas-menu__follow__icons iconset">
                     {% include 'partials/social-icons.twig' with {'location': 'off_canvas'} %}
                 </ul>
             </li>
