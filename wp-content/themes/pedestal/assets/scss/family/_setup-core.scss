@@ -10,11 +10,11 @@
 @import 'config-sassy.json';
 
 // Functions
-@import 'foundation/scss/foundation/functions';
+@import 'foundation-sites/scss/foundation/functions';
 @import '../base/global/functions';
 
 // Vendor libraries
-@import 'SassyLists/dist/SassyLists';
+@import 'sassy-lists/dist/SassyLists';
 @import 'susy/sass/susy';
 
 // We want Foundation's panel mixin, but we'll supply our own panel classes

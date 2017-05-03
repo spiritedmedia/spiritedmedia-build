@@ -22,19 +22,17 @@
 # !.github/
 
 # Package Managers + Dev Tools
-# !bower.json
-# !.bowerrc
 # !composer.*
 # !Gemfile
 # !Gemfile.lock
 # !Gruntfile.js
 # !package.json
+# !yarn.lock
 # !.ruby-gemset
 # !.ruby-version
 # !config/
 
 # Coding Standards
-# !.csslintrc
 # !.eslintrc.yml
 # !.jshintrc
 # !.stylelintrc.json
@@ -91,7 +89,6 @@ wp-content/themes/**/node_modules/
 wp-content/themes/**/.sass-cache
 wp-content/themes/**/wp-cli.local.yml
 wp-content/themes/**/*.map
-wp-content/themes/**/vendor/
 
 # Include compiled assets
 # wp-content/themes/*/assets/dist/

@@ -29,11 +29,6 @@ class Taxonomies {
             'name'          => 'Localities',
             'singular_name' => 'Locality',
         ],
-        'pedestal_article_type' => [
-            'post_type'    => 'pedestal_article',
-            'name'          => 'Articles',
-            'singular_name' => 'Article',
-        ],
         'pedestal_slot_item_type' => [
             'post_type'    => 'pedestal_slot_item',
             'name'          => 'Slot Items',

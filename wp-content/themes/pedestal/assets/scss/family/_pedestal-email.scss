@@ -22,7 +22,7 @@
 
 
 // Vendor libraries
-@import 'SassyLists/dist/SassyLists';
+@import 'sassy-lists/dist/SassyLists';
 @import 'susy/sass/susy';
 
 @import '../base/email/settings';
@@ -35,10 +35,10 @@
 // Foundation Components
 // ==========================================================================
 
-@import 'foundation/scss/normalize';
-@import 'foundation/scss/foundation/components/type';
-@import 'foundation/scss/foundation/components/panels';
-@import 'foundation/scss/foundation/components/tables';
+@import 'foundation-sites/scss/normalize';
+@import 'foundation-sites/scss/foundation/components/type';
+@import 'foundation-sites/scss/foundation/components/panels';
+@import 'foundation-sites/scss/foundation/components/tables';
 
 
 

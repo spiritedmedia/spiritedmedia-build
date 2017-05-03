@@ -1,7 +1,6 @@
 #!/bin/bash
 
-npm install
-bower install
+yarn install
 
 if [ "$CIRCLECI" = true ] ; then
   composer install -o --no-dev
