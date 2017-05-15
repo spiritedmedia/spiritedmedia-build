@@ -33,7 +33,6 @@
 
   &__caption,
   &__credit {
-    text-transform: uppercase;
     display: inline;
 
     // Override `.s-post-content` heading sizes
@@ -52,6 +51,7 @@
     color: $dimmed-text-color;
     font-weight: 300;
     font-style: normal;
+    text-transform: uppercase;
 
     // stylelint-disable-next-line selector-no-type
     a {
