@@ -65,6 +65,32 @@
     }
   }
 }
+
+.iconset li.follow-us-label {
+  .site-header-social &,
+  .site-footer-social & {
+    font-weight: bold;
+    text-transform: uppercase;
+    width: rem-calc( 90px );
+  }
+
+  .site-header-social & {
+    @media ( max-width: 45.625em ) { // 730px / 16
+      display: none;
+    }
+  }
+
+  .site-footer-social & {
+    @media ( max-width: 55em ) { // 880px / 16
+      display: none;
+    }
+
+    @media ( max-width: 40em ) { // 640px / 16
+      display: block;
+      width: auto;
+    }
+  }
+}
 /* stylelint-enable selector-no-type */
 
 

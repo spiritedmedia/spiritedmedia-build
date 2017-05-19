@@ -493,23 +493,23 @@
     },
     {
         "name": "symfony/css-selector",
-        "version": "v3.2.7",
-        "version_normalized": "3.2.7.0",
+        "version": "v3.2.8",
+        "version_normalized": "3.2.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/css-selector.git",
-            "reference": "a48f13dc83c168f1253a5d2a5a4fb46c36244c4c"
+            "reference": "02983c144038e697c959e6b06ef6666de759ccbc"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/css-selector/zipball/a48f13dc83c168f1253a5d2a5a4fb46c36244c4c",
-            "reference": "a48f13dc83c168f1253a5d2a5a4fb46c36244c4c",
+            "url": "https://api.github.com/repos/symfony/css-selector/zipball/02983c144038e697c959e6b06ef6666de759ccbc",
+            "reference": "02983c144038e697c959e6b06ef6666de759ccbc",
             "shasum": ""
         },
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2017-02-21T09:12:04+00:00",
+        "time": "2017-05-01T14:55:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1116,16 +1116,16 @@
     },
     {
         "name": "wpackagist-plugin/shortcode-ui",
-        "version": "0.6.2",
-        "version_normalized": "0.6.2.0",
+        "version": "0.7.2",
+        "version_normalized": "0.7.2.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/shortcode-ui/",
-            "reference": "tags/0.6.2"
+            "reference": "tags/0.7.2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/shortcode-ui.0.6.2.zip",
+            "url": "https://downloads.wordpress.org/plugin/shortcode-ui.0.7.2.zip",
             "reference": null,
             "shasum": null
         },

@@ -67,6 +67,13 @@
             margin-left: halve( $icon-diameter );
           }
         }
+
+        &.hamburger {
+          margin-right: $base-spacing-unit / 2;
+          @media #{$medium-up} {
+            display: none;
+          }
+        }
       }
       // stylelint-enable selector-max-compound-selectors
     }

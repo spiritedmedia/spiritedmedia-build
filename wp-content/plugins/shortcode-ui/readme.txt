@@ -1,9 +1,9 @@
 === Shortcake (Shortcode UI) ===
-Contributors: fusionengineering, mattheu, danielbachhuber, zebulonj, goldenapples, jitendraharpalani, sanchothefat, bfintal, davisshaver, garyj, mte90, fredserva, khromov
+Contributors: fusionengineering, mattheu, danielbachhuber, zebulonj, goldenapples, jitendraharpalani, sanchothefat, bfintal, davisshaver, garyj, mte90, fredserva, khromov, bronsonquick, dashaluna, mehigh, sc0ttkclark, kraftner, pravdomil
 Tags: shortcodes
-Requires at least: 4.1
-Tested up to: 4.4
-Stable tag: 0.6.2
+Requires at least: 4.5
+Tested up to: 4.7.4
+Stable tag: 0.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,10 +27,27 @@ New in 0.4.0 is the ability to [attach javascript functions to event attribute u
 
 == Frequently Asked Questions ==
 
-= How do I register UI for arbitrary key=>value pairs as shortcode attributes? =
+= How do I register UI for arbitrary key/value pairs as shortcode attributes? =
 
-Shortcake doesn't support custom key=>value pairs as shortcode attributes because it isn't a great user experience.
+Shortcake doesn't support custom key => value pairs as shortcode attributes because it isn't a great user experience.
 
+= After upgrading to Shortcake 0.7.x, some of the shortcode UI fields (post select, user select, etc) don't work as expected. What can I do? =
+
+In version 0.7.0, we updated to the most recent branch of the Select2 library, which provides the enhanced select fields in these field types. This causes a known conflict with plugins that enqueue older versions of Select2. (Popular plugins with known conflicts include WooCommerce and Advanced Custom Fields Pro, among others.)
+
+If you find that you're experiencing conflicts with these plugins, you can set a flag to load select2 in a distinct namespace by defining the constant `SELECT2_NOCONFLICT` in your wp-config.php (or anywhere that's defined before the 'init' hook.)
+
+`
+define( 'SELECT2_NOCONFLICT', true );
+`
+
+== Running tests ==
+
+We have test coverage for PHP using PHPunit, and JavaScript using Jasmine.
+
+= Running tests locally =
+
+Jasmine tests can be run using `grunt jasmine` and are also run as part of the `grunt scripts` task. To update the core WordPress files used by the Jasmine test suite, run `grunt updateJasmineCoreScripts --abspath="/path/to/wordpress-install"`.
 
 == Screenshots ==
 
@@ -50,6 +67,44 @@ We've removed the compatibility shim for the `placeholder` attribute argument. Y
 We've removed the compatibility shim for the magical `content` attribute. If you were using this to support editing inner content, you'll need to change your UI registration to use `inner_content`.
 
 == Changelog ==
+
+= 0.7.2 (April 24, 2017) =
+* Bug fix: Fix behavior in WordPress 4.7.4 where editing a shortcode would insert a new shortcode into the editor rather than updating the shortcode being edited.
+* Bug fix: The replacement used to escape percent (%) characters in attributes only replaced the first appearance
+* Bug fix: For select fields with multiple=true, allow multiple options to be selected by default
+* Added i18n for all strings in attachment field template
+* Added Finnish translation
+
+= 0.7.1 (March 16, 2017) =
+* Change shortcode formatting to add a space before the self-closing trailing slash.
+* Fix alignment of attachment previews with long filenames.
+* Bug fix: Set an initial value on select fields (previously, no value would be set for a select field unless the user interacts with the field).
+* Enhancement/fix: Reuse one copy of the media modal and reset its state upon closing, rather than creating duplicate markup each time the modal is accessed.
+* Compatability: Uses "full" version of select2.js 4.0.3 to prevent plugin conflicts with other plugins which expect the full version to be enqueued.
+* Compatability: Add `SELECT2_NOCONFLICT` flag to load Select2 in a unique namespace to prevent conflicts with other plugins which are loading select2.js version 3.
+* Added Norwegian translation.
+* Multiple coding style fixes.
+
+= 0.7.0 (November 18, 2016) =
+* Adds "Add post element" button to media buttons - one click to open the shortcode list, rather than clicking "Add media" button and then finding "insert post element" in the menu.
+* Added "Term Select" field type.
+* Added "User Select" field type.
+* Added new hooks that fire on rendering/editing/closing a shortcode, which can be used for field types which require custom javascript initialization or cleanup.
+* Select fields: add full support for multiple select fields.
+* Select fields: support custom ordering of options.
+* Select fields: support grouping option in `<optgroup>`s by passing them as a nested array.
+* Attachment fields: support multiple selection.
+* Attachment fields: support SVG images (if svg uploads are enabled by a plugin or theme).
+* Bug fix: Handle percent signs when decoding fields with `encode=true` specified.
+* Bug fix: fix issue where it takes two clicks on a shortcode in editor to bring up the Edit Shortcode modal.
+* Bug fix: fix issue when searching for shortcodes by name where if multiple shortcodes start with the search string, only the first is returned.
+* Bug fix: only output a description field on an attribute if it's not empty.
+* Compatability: Remove shims for handling the media modal in WP 4.1 and 4.2.
+* Compatability: Upgrade Select2 library to 4.0.3 to avoid conflicts with other plugins which use the latest version of Select2.
+* Added Turkish translation.
+* Added Finnish translation.
+* Added Swedish translation.
+* Added Hungarian translation.
 
 = 0.6.2 (November 12, 2015) =
 * Bug fix: Listens for "change" event on radio buttons and checkboxes to ensure shortcode attributes are updated.
@@ -150,7 +205,7 @@ We've removed the compatibility shim for the magical `content` attribute. If you
 
 * Supports all HTML5 input types for form fields.
 * Shortcode preview tab within the editing experience.
-* Re-labeled the UI around “Post Elements”, which is more descriptive than “Content Items.”
+ }* Re-labeled the UI around “Post Elements”, which is more descriptive than “Content Items.”
 * Many bug fixes.
 * [Full release notes](http://next.fusion.net/2014/12/23/shortcake-v0-1-0-live-previews-fieldmanager-integration/).
 

@@ -1,11 +1,11 @@
 {% set gaCategory = 'Social Icon - ' ~ location|capitalize %}
+
 {% if location == 'header' or location == 'footer' %}
-<li class="social-icon {% if location == 'header' %} show-for-medium-up {% endif %}">
-    <a href="#subscribe-to-newsletter" data-reveal-id="subscribe-to-newsletter" data-ga-category="{{gaCategory}}" data-ga-label="Email">
-        {{ ped_icon('envelope-o') }}
-    </a>
+<li class="social-icon follow-us-label">
+    Follow Us
 </li>
 {% endif %}
+
 
 <li class="social-icon {% if location == 'header' %} show-for-medium-up {% endif %}">
     <a href="{{ site.social.instagram_url }}" target="_blank" data-ga-category="{{gaCategory}}" data-ga-label="Instagram">
@@ -29,7 +29,7 @@
         {{ ped_icon('search') }}
     </label>
 </li>
-<li class="more">
+<li class="more hamburger">
     <a id="off-canvas-burger" class="right-off-canvas-toggle" href="#" data-ga-category="Menu - Main Navigation" data-ga-label="Off-Canvas Menu">
         {{ ped_icon('bars') }}
     </a>

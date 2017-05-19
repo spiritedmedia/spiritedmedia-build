@@ -38,6 +38,14 @@ class Shortcode_UI {
 	private static $instance;
 
 	/**
+	 * Select2 library handle.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public static $select2_handle = 'select2';
+
+	/**
 	 * Get instance of Shortcake controller.
 	 *
 	 * Instantiates object on the fly when not already loaded.
@@ -67,6 +75,7 @@ class Shortcode_UI {
 	private function setup_actions() {
 		add_action( 'admin_enqueue_scripts',     array( $this, 'action_admin_enqueue_scripts' ) );
 		add_action( 'wp_enqueue_editor',         array( $this, 'action_wp_enqueue_editor' ) );
+		add_action( 'media_buttons',             array( $this, 'action_media_buttons' ) );
 		add_action( 'wp_ajax_bulk_do_shortcode', array( $this, 'handle_ajax_bulk_do_shortcode' ) );
 		add_filter( 'wp_editor_settings',        array( $this, 'filter_wp_editor_settings' ), 10, 2 );
 	}
@@ -195,6 +204,23 @@ class Shortcode_UI {
 	 */
 	public function action_admin_enqueue_scripts( $editor_supports ) {
 		add_editor_style( trailingslashit( $this->plugin_url ) . 'css/shortcode-ui-editor-styles.css' );
+
+		$min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+		wp_register_script( self::$select2_handle,
+			trailingslashit( $this->plugin_url ) . "lib/select2/js/select2.full{$min}.js",
+			array( 'jquery', 'jquery-ui-sortable' ), '4.0.3'
+		);
+
+		if ( 'select2' !== self::$select2_handle ) {
+			 wp_add_inline_script( self::$select2_handle, 'var existingSelect2 = jQuery.fn.select2 || null; if (existingSelect2) { delete jQuery.fn.select2; }', 'before' );
+			 wp_add_inline_script( self::$select2_handle, 'jQuery.fn[ shortcodeUIData.select2_handle ] = jQuery.fn.select2; if (existingSelect2) { delete jQuery.fn.select2; jQuery.fn.select2 = existingSelect2; }', 'after' );
+		}
+
+		wp_register_style( self::$select2_handle,
+			trailingslashit( $this->plugin_url ) . "lib/select2/css/select2{$min}.css",
+			null, '4.0.3'
+		);
 	}
 
 	/**
@@ -212,7 +238,7 @@ class Shortcode_UI {
 		$current_post_type = get_post_type();
 		if ( $current_post_type ) {
 			foreach ( $shortcodes as $key => $args ) {
-				if ( ! empty( $args['post_type'] ) && ! in_array( $current_post_type, $args['post_type'] ) ) {
+				if ( ! empty( $args['post_type'] ) && ! in_array( $current_post_type, $args['post_type'], true ) ) {
 					unset( $shortcodes[ $key ] );
 				}
 			}
@@ -225,7 +251,7 @@ class Shortcode_UI {
 		usort( $shortcodes, array( $this, 'compare_shortcodes_by_label' ) );
 
 		// Load minified version of wp-js-hooks if not debugging.
-		$wp_js_hooks_file = 'wp-js-hooks' . ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.min' : '' ) . '.js';
+		$wp_js_hooks_file = 'wp-js-hooks' . ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min' ) . '.js';
 
 		wp_enqueue_script( 'shortcode-ui-js-hooks', $this->plugin_url . 'lib/wp-js-hooks/' . $wp_js_hooks_file, array(), '2015-03-19' );
 		wp_enqueue_script( 'shortcode-ui', $this->plugin_url . 'js/build/shortcode-ui.js', array( 'jquery', 'backbone', 'mce-view', 'shortcode-ui-js-hooks' ), $this->plugin_version );
@@ -235,7 +261,8 @@ class Shortcode_UI {
 			'strings'         => array(
 				'media_frame_title'                 => __( 'Insert Post Element', 'shortcode-ui' ),
 				'media_frame_menu_insert_label'     => __( 'Insert Post Element', 'shortcode-ui' ),
-				'media_frame_menu_update_label'     => __( '%s Details', 'shortcode-ui' ), // Substituted in JS
+				/* Translators: Ignore placeholder. This is replaced with the Shortcode name string in JS */
+				'media_frame_menu_update_label'     => __( '%s Details', 'shortcode-ui' ),
 				'media_frame_toolbar_insert_label'  => __( 'Insert Element', 'shortcode-ui' ),
 				'media_frame_toolbar_update_label'  => __( 'Update', 'shortcode-ui' ),
 				'media_frame_no_attributes_message' => __( 'There are no attributes to configure for this Post Element.', 'shortcode-ui' ),
@@ -243,10 +270,11 @@ class Shortcode_UI {
 				'search_placeholder'                => __( 'Search', 'shortcode-ui' ),
 				'insert_content_label'              => __( 'Insert Content', 'shortcode-ui' ),
 			),
-			'nonces'     => array(
+			'nonces'          => array(
 				'preview'        => wp_create_nonce( 'shortcode-ui-preview' ),
 				'thumbnailImage' => wp_create_nonce( 'shortcode-ui-get-thumbnail-image' ),
 			),
+			'select2_handle'  => self::$select2_handle,
 		) );
 
 		// add templates to the footer, instead of where we're at now
@@ -274,9 +302,22 @@ class Shortcode_UI {
 	}
 
 	/**
+	 * Output an "Add Post Element" button with the media buttons.
+	 */
+	public function action_media_buttons( $editor_id ) {
+		printf( '<button type="button" class="button shortcake-add-post-element" data-editor="%s">' .
+			'<span class="wp-media-buttons-icon dashicons dashicons-migrate"></span> %s' .
+			'</button>',
+			esc_attr( $editor_id ),
+			esc_html__( 'Add Post Element', 'shortcode-ui' )
+		);
+	}
+
+	/**
 	 * Output required underscore.js templates in the footer
 	 */
 	public function action_admin_print_footer_scripts() {
+
 		echo $this->get_view( 'media-frame' ); // WPCS: xss ok
 		echo $this->get_view( 'list-item' ); // WPCS: xss ok
 		echo $this->get_view( 'edit-form' ); // WPCS: xss ok

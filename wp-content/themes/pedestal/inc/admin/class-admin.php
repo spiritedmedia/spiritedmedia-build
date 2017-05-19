@@ -210,18 +210,6 @@ class Admin {
             return $can;
         } );
 
-        // Load custom TinyMCE buttons`
-        add_filter( 'mce_buttons', function( $buttons ) {
-            array_push( $buttons, 'insertPostElement' );
-            return $buttons;
-        });
-
-        // Load additional TinyMCE plugins
-        add_filter( 'mce_external_plugins', function( $plugins ) {
-            $plugin_array['Pedestal'] = get_template_directory_uri() . '/assets/js/custom-tinymce-buttons.js';
-            return $plugin_array;
-        });
-
         // Modify which tinyMCE buttons we show
         add_filter( 'mce_buttons_2', function( $buttons ) {
             array_unshift( $buttons, 'styleselect' );
