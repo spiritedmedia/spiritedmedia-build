@@ -84,9 +84,6 @@ class Scripts_Styles {
         // Advertising
         wp_enqueue_script( 'dfp-load', get_template_directory_uri() . '/assets/dist/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
         wp_enqueue_script( 'nativo', 'https://s.ntv.io/serve/load.js', [], null, $in_footer = true );
-        if ( defined( 'PEDESTAL_BOXTERCO_SCRIPT' ) ) {
-            wp_enqueue_script( 'boxter-funnl', PEDESTAL_BOXTERCO_SCRIPT, [], null, $in_footer = true );
-        }
         if ( isset( $_GET['show-ad-units'] ) ) {
             wp_enqueue_script( 'dfp-placeholders', get_template_directory_uri() . '/assets/dist/js/dfp-placeholders.js', [ 'jquery' ], PEDESTAL_VERSION );
         }

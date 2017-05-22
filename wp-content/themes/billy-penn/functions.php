@@ -67,7 +67,6 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_BLOG_URL'               => 'https://medium.com/billy-penn',
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'    => 'UA-54099407-1',
                 'PEDESTAL_GOOGLE_OPTIMIZE_ID'     => 'GTM-P8PWVHM',
-                'PEDESTAL_BOXTERCO_SCRIPT'        => 'https://boxter.co/f23.js',
                 'PEDESTAL_COMSCORE_ID'            => '23083389',
 
                 // Social Media
