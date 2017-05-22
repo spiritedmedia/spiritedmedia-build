@@ -405,6 +405,12 @@ class Subscriptions {
                 // Set the last sent email date
                 $newsletter->set_sent_flag( 'newsletter' );
                 $newsletter->set_sent_date( time() );
+                if ( isset( $result->id ) ) {
+                    $newsletter->set_meta( 'activecampaign_id', $result->id );
+                }
+                if ( isset( $result->message_ids ) ) {
+                    $newsletter->set_meta( 'activecampaign_message_ids', $result->message_ids );
+                }
             }
         }
 
@@ -450,8 +456,12 @@ class Subscriptions {
 
         $subject = sprintf( 'Update: %s', $cluster->get_title() );
         $sending_args = [
-            'html'       => $body,
-            'subject'    => $subject,
+            'messages'   => [
+                [
+                    'html'    => $body,
+                    'subject' => $subject,
+                ],
+            ],
             'list'       => $list_id,
             'email_type' => 'Follow Update',
         ];
@@ -466,18 +476,38 @@ class Subscriptions {
      * @return Boolean                 Did the camapign send successfully?
      */
     private function send_email_to_newsletter_followers( $newsletter, $args ) {
-        $body = $this->get_email_template( 'newsletter', 'ac', [
-            'item'       => $newsletter,
-            'email_type' => 'Daily',
-            'shareable'  => true,
-        ] );
+        $newsletter_post = get_post( $newsletter->get_id() );
+        $parent_newsletter = $newsletter_post;
+        while ( 0 != $parent_newsletter->post_parent ) {
+            $parent_newsletter = get_post( $parent_newsletter->post_parent );
+        }
+        $query_args = [
+            'post_type' => 'pedestal_newsletter',
+            'post_parent' => $parent_newsletter->ID,
+            'posts_per_page' => 5,
+            'post_status' => [ 'draft', 'publish', 'future' ],
+        ];
+        $message_posts = new \WP_Query( $query_args );
+        $message_posts = array_merge( [ $parent_newsletter ], $message_posts->posts );
+        $messages = [];
+        foreach ( $message_posts as $message_post ) {
+            $newsletter = new Newsletter( $message_post );
+            $body = $this->get_email_template( 'newsletter', 'ac', [
+                'item'       => $newsletter,
+                'email_type' => 'Daily',
+                'shareable'  => true,
+            ] );
 
-        $subject = $newsletter->get_title();
+            $subject = $newsletter->get_title();
+            $messages[] = [
+                'html' => $body,
+                'subject' => $subject,
+            ];
+        }
         $newsletter_lists = Newsletter_Lists::get_instance();
         $daily_newsletter_id = $newsletter_lists->get_newsletter_list_id( 'Daily Newsletter' );
         $sending_args = [
-            'html'       => $body,
-            'subject'    => $subject,
+            'messages'  => $messages,
             'list'       => $daily_newsletter_id,
             'email_type' => 'Daily Newsletter',
         ];
@@ -501,8 +531,12 @@ class Subscriptions {
         $newsletter_lists = Newsletter_Lists::get_instance();
         $breaking_newsletter_id = $newsletter_lists->get_newsletter_list_id( 'Breaking News' );
         $sending_args = [
-            'html'       => $body,
-            'subject'    => $subject,
+            'messages' => [
+                [
+                    'html'    => $body,
+                    'subject' => $subject,
+                ],
+            ],
             'name'       => $subject,
             'list'       => $breaking_newsletter_id,
             'email_type' => 'Breaking News',
@@ -518,8 +552,7 @@ class Subscriptions {
      */
     private function send_email( $args = [] ) {
         $default_args = [
-            'html'                  => false,     // The HTML body of the email
-            'subject'               => false,     // The subject line of the email
+            'messages'              => false,
             'name'                  => false,     // Name to describe the campaign in ActiveCampaign
             'list'                  => false,     // List ID or List Name to send the email to via ActiveCampaign
             'test_email_addresses'  => [],        // List of test email addresses to send the email to
@@ -527,25 +560,32 @@ class Subscriptions {
         ];
         $args = wp_parse_args( $args, $default_args );
         // Sanity check
-        if ( ! $args['html'] || ! $args['subject'] || ! $args['list'] ) {
+        if ( ! $args['list'] ) {
+            // If we don't have the list to send the email to then we can't proceed
+            return false;
+        }
+        if ( ! $args['messages'] || ! is_array( $args['messages'] ) ) {
             // Missing one or more key component for sending out an email, aren't we now?
             return false;
         }
         if ( ! $args['name'] ) {
-            $args['name'] = $args['subject'];
+            // Use the subject of the first message as the Campaign Name
+            $args['name'] = $args['messages'][0]['subject'];
         }
         $test_emails = $args['test_email_addresses'];
         if ( is_string( $test_emails ) ) {
             $test_emails = array_map( 'trim', explode( ',', $test_emails ) );
         }
         if ( ! empty( $test_emails ) ) {
-            $args['subject'] = '[TEST] ' . $args['subject'];
             // Ensure product@spiritedmedia.com gets sent the test emails for every send
             $test_emails[] = 'product@spiritedmedia.com';
             $to = implode( ',', $test_emails );
             add_filter( 'wp_mail_content_type', function() { return 'text/html'; } );
             $args['test_email_addresses'] = $test_emails;
-            $resp = wp_mail( $to, $args['subject'], $args['html'] );
+            foreach ( $args['messages'] as $message ) {
+                $subject = '[TEST] ' . $message['subject'];
+                $resp = wp_mail( $to, $subject, $message['html'] );
+            }
             do_action( 'pedestal_sent_test_email_campaign', $args );
             return true;
         }
@@ -556,7 +596,7 @@ class Subscriptions {
             return false;
         }
         do_action( 'pedestal_sent_email_campaign', $args );
-        return true;
+        return $resp;
     }
 
     /**

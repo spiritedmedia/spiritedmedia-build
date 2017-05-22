@@ -262,10 +262,7 @@ class ActiveCampaign {
         if ( 0 === $payload->result_code ) {
             return false;
         }
-        // Remove some extra properties we don't need
-        unset( $payload->result_code );
-        unset( $payload->result_message );
-        unset( $payload->result_output );
+        $payload = $this->cleanup_response( $payload );
         return $payload;
     }
 
@@ -322,12 +319,7 @@ class ActiveCampaign {
         }
         $args['api_action'] = 'list_list';
         $response = $this->get_request( $args );
-        $payload = $response['body'];
-
-        // Remove some extra properties we don't need
-        unset( $payload->result_code );
-        unset( $payload->result_message );
-        unset( $payload->result_output );
+        $payload = $this->cleanup_response( $response['body'] );
         return $payload;
     }
 
@@ -535,6 +527,28 @@ class ActiveCampaign {
     }
 
     /**
+     * Get details about a campaign
+     * @see http://www.activecampaign.com/api/example.php?call=campaign_list
+     * @param array $args  Arguments about camapigns to fetch
+     * @return object      Details about the API request
+     */
+    public function get_campaign( $args = [] ) {
+        $default_args = [
+            'ids'           => '',
+            'full'          => 1,
+        ];
+        $args = wp_parse_args( $args, $default_args );
+        if ( is_array( $args['ids'] ) ) {
+            $ids = array_map( 'trim', $args['ids'] );
+            $args['ids'] = implode( ',', $ids );
+        }
+        $args['api_action'] = 'campaign_list';
+        $response = $this->get_request( $args );
+        $payload = $this->cleanup_response( $response['body'] );
+        return $payload;
+    }
+
+    /**
      * Send a campaign to a given list of contacts
      * Adds a message, verifies the list, sends the email out
      * @param  array $args   Options for sending the campaign
@@ -542,14 +556,13 @@ class ActiveCampaign {
      */
     public function send_campaign( $args = [] ) {
         $default_args = [
-            'name'    => current_time( 'F j, Y g:i a' ),
-            'html'    => '',
-            'subject' => '',
-            'status'  => 1,
-            'list'    => '',
+            'name'     => current_time( 'F j, Y g:i a' ),
+            'messages' => [],
+            'status'   => 1,
+            'list'     => '',
         ];
         $args = wp_parse_args( $args, $default_args );
-        if ( ! $args['html'] || ! $args['subject'] ) {
+        if ( ! $args['messages'] || empty( $args['messages'] ) ) {
             return false;
         }
         $list = $this->get_list( $args['list'] );
@@ -557,16 +570,23 @@ class ActiveCampaign {
             return false;
         }
 
-        $message_body_args = [
-            'html'                 => $args['html'],
-            'subject'              => $args['subject'],
-            'p[' . $list->id . ']' => $list->id,
-        ];
-        $message_response = $this->add_message( $message_body_args );
-        if ( ! $message_response ) {
+        $message_ids = [];
+        foreach ( $args['messages'] as $message ) {
+            $message_body_args = [
+                'html'                 => $message['html'],
+                'subject'              => $message['subject'],
+                'p[' . $list->id . ']' => $list->id,
+            ];
+            $message_response = $this->add_message( $message_body_args );
+            if ( ! $message_response ) {
+                continue;
+            }
+            $message_ids[] = $message_response->id;
+        }
+        // Without any message IDs we can't send the campaign
+        if ( empty( $message_ids ) ) {
             return false;
         }
-        $message_id = $message_response->id;
         $newsletter_list = new Newsletter_Lists;
 
         // See http://www.activecampaign.com/api/example.php?call=campaign_create
@@ -578,10 +598,23 @@ class ActiveCampaign {
             'tracklinks'             => 'all',
             'htmlunsub'              => 0,
             'textunsub'              => 1, // Text Unsubscribe link?
-            'm[' . $message_id . ']' => 100,
             'p[' . $list->id . ']'   => $list->id, // Which list will we send the campaign to?
             'addressid'              => $newsletter_list->get_address_id(),
         ];
+
+        // Add messages to the camapign
+        foreach ( $message_ids as $message_id ) {
+            $key = 'm[' . $message_id . ']';
+            $body_args[ $key ] = 100;
+        }
+
+        // Setup split testing arguments if more than 1 message in campaign
+        if ( 1 < count( $message_ids ) ) {
+            $body_args['type'] = 'split';
+            $body_args['split_type'] = 'even'; // Send each message to even number of contacts
+            $body_args['split_content'] = 1;
+            // $body_args['status'] = 0; // Split test campaigns need to be set to draft and sent from ActiveCampaign
+        }
 
         if ( isset( $args['send_date'] ) ) {
             $body_args['sdate'] = $args['send_date'];
@@ -592,7 +625,7 @@ class ActiveCampaign {
         ];
         $response = $this->post_request( $query_args, $body_args );
         $payload = $response['body'];
-        $payload->messageid = $message_id;
+        $payload->message_ids = $message_ids;
         return $payload;
     }
 
@@ -639,12 +672,27 @@ class ActiveCampaign {
         $args = wp_parse_args( $args, $default_args );
         $args['api_action'] = 'address_list';
         $response = $this->get_request( $args );
-        $payload = $response['body'];
+        $payload = $this->cleanup_response( $response['body'] );
+        return $payload;
+    }
 
-        // Remove some extra properties we don't need
-        unset( $payload->result_code );
-        unset( $payload->result_message );
-        unset( $payload->result_output );
+    /**
+     * Remove unwanted properties from an ActiveCampaign response object
+     *
+     * @param Object $payload ActiveCampaign response object to be cleaned up
+     * @return Object   The cleaned up object
+     */
+    public function cleanup_response( $payload = '' ) {
+        $properties_to_remove = [
+            'result_code',
+            'result_message',
+            'result_output',
+        ];
+        if ( is_object( $payload ) ) {
+            foreach ( $properties_to_remove as $prop ) {
+                unset( $payload->$prop );
+            }
+        }
         return $payload;
     }
 }

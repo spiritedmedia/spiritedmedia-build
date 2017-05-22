@@ -234,6 +234,7 @@ return array(
     'Pedestal\\Admin\\Admin' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-admin.php',
     'Pedestal\\Admin\\Bulk_Action' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-bulk-actions.php',
     'Pedestal\\Admin\\Cluster_Tools' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-cluster-tools.php',
+    'Pedestal\\Admin\\Newsletter_Testing' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-newsletter-testing.php',
     'Pedestal\\Adverts' => $baseDir . '/wp-content/themes/pedestal/inc/class-adverts.php',
     'Pedestal\\Billy_Penn' => $baseDir . '/wp-content/themes/billy-penn/functions.php',
     'Pedestal\\CLI\\CLI' => $baseDir . '/wp-content/themes/pedestal/inc/cli/class-cli.php',

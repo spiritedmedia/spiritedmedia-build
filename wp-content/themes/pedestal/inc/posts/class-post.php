@@ -603,7 +603,7 @@ abstract class Post {
      * @return string Filtered permalink
      */
     public function get_the_permalink( $preview = false ) {
-        $link = apply_filters( 'the_permalink', $this->get_permalink() );
+        $link = apply_filters( 'the_permalink', $this->get_permalink(), $this->get_id() );
         if ( $preview ) {
             $link = add_query_arg( [ 'preview' => true ], $link );
         }

@@ -231,6 +231,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             if ( is_admin() ) {
                 $this->admin = Admin\Admin::get_instance();
                 $this->cluster_tools = Admin\Cluster_Tools::get_instance();
+                $this->newsletter_testing = Admin\Newsletter_Testing::get_instance();
             } else {
                 $this->frontend = Frontend::get_instance();
             }
