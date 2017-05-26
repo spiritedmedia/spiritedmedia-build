@@ -77,7 +77,11 @@ $c: '.c-stream';
   }
 
 
-  &__items {}
+  &__items.columns {
+    @media ( max-width: $medium-breakpoint ) {
+      float: none;
+    }
+  }
 
 
   // A stream heading may appear alongside stream items as a way of separating items
