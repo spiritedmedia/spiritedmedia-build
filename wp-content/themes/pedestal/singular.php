@@ -2,11 +2,16 @@
 
 use Timber\Timber;
 use Pedestal\Posts\Post;
+use Pedestal\Objects\Stream;
 
 $p = Timber::query_post();
 $item = Post::get_by_post_id( $p->ID );
 
 $context = Timber::get_context();
+
+if ( $sponsored_items = Stream::get_sponsored_items() ) {
+	$context['sponsored_items'] = $sponsored_items;
+}
 
 $templates = [];
 if ( is_a( $item, '\\Pedestal\\Posts\\Post' ) ) {

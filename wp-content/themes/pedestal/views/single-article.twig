@@ -42,6 +42,10 @@
         {% endif %}
 
         <footer class="c-main__footer  [ o-rule--closure  o-rule ]">
+            {% if sponsored_items %}
+                {% include 'partials/stream/standard/sponsored.twig' %}
+            {% endif %}
+
             {% include 'partials/cluster-list.twig' %}
 
             {% if 'feat_contributor' == item.get_single_author.get_primary_role %}

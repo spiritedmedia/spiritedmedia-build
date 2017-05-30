@@ -134,7 +134,11 @@ $c: '.c-stream';
 
   } // __item
 
-
+  &__item--sponsored {
+    .c-heading__title {
+      color: $dimmed-text-color;
+    }
+  }
 
 
 

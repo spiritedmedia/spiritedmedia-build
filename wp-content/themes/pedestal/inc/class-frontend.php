@@ -250,6 +250,18 @@ class Frontend {
             }
         }
 
+        // Add a meta refresh to the homepage
+        if ( is_home() ) {
+            $refresh = 0;
+            if ( ! empty( $_GET['refresh'] ) ) {
+                $refresh = intval( $_GET['refresh'] );
+            }
+            $refresh++;
+            echo sprintf( '<meta http-equiv="refresh" content="600;url=?refresh=%d" />',
+                intval( $refresh )
+            );
+        }
+
     }
 
     /**

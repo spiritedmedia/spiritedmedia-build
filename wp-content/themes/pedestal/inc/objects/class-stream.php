@@ -4,6 +4,8 @@ namespace Pedestal\Objects;
 
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Posts\Post;
+use Pedestal\Posts\Attachment;
+use Pedestal\Posts\Slots\Slots;
 
 class Stream {
 
@@ -145,6 +147,58 @@ class Stream {
     public function is_last_page() {
         $pagination = self::get_pagination( $this->get_query() );
         return $pagination['is_last_page'];
+    }
+
+    /**
+     * Get data about any sponsored stream items
+     *
+     * @return Array|False An array of data or false if no sponsored itmes found
+     */
+    public static function get_sponsored_items() {
+        $slots = Slots::get_slot_data( 'slot_item', [ 'type' => 'stream' ] );
+        if ( ! $slots ) {
+            return false;
+        }
+
+        // Get the slot data
+        $data = $slots->get_fm_field( 'slot_item_type', 'sponsored-stream-items' );
+        // Whitelisted keys to ensure a consistent output
+        $whitelisted_keys = [ 'position', 'url', 'title', 'sponsored_by', 'image', 'featured_image' ];
+        $output = [];
+        foreach ( $whitelisted_keys as $key ) {
+            $output[ $key ] = '';
+            if ( ! empty( $data[ $key ] ) ) {
+                $output[ $key ] = $data[ $key ];
+            }
+        }
+
+        /*
+        If we don't have a sponsored_by value then bail to prevent an empty
+        sponsored slot item from rendering
+        */
+        if ( empty( $output['sponsored_by'] ) ) {
+            return false;
+        }
+
+        $output['position'] = 2; // After the 2nd item
+
+        // Get an image
+        if ( is_numeric( $output['image'] ) ) {
+            $attachment = new Attachment( $output['image'] );
+            // Make sure we have a proper Attachment object
+            if ( method_exists( $attachment, 'get_html' ) ) {
+                $image = $attachment->get_html( 'medium-square' );
+                if ( ! empty( $output['url'] ) ) {
+                    $image = sprintf( '<a href="%s" rel="nofollow" target="_blank" data-ga-category="Sponsored" data-ga-label="Image|%s">%s</a>',
+                        esc_url( $output['url'] ),
+                        esc_attr( $output['title'] ),
+                        $image
+                    );
+                }
+                $output['featured_image'] = $attachment->get_img_caption_html( $image, [ 'classes' => 'o-media__img c-overview__img' ] );
+            }
+        }
+        return $output;
     }
 
     /**

@@ -37,6 +37,10 @@
                 'partials/stream/standard/entity.twig'
             ] with {'gaCategory': 'Stream'} %}
 
+            {% if sponsored_items and sponsored_items.position == loop.index %}
+                {% include 'partials/stream/standard/sponsored.twig' %}
+            {% endif %}
+
         {% endfor %}
 
     </div>

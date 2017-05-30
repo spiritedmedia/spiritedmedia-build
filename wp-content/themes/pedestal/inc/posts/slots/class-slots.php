@@ -393,7 +393,7 @@ class Slots {
      * @param  array  $placement_options Options for restricting Placements
      * @return Post|false                Post family object on success, false on fail
      */
-    private static function get_slot_data( string $return_type, array $placement_options ) {
+    public static function get_slot_data( string $return_type, array $placement_options ) {
         if ( ! $return_type ) {
             return false;
         }

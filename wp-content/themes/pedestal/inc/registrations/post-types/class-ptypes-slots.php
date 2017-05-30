@@ -14,6 +14,7 @@ class Slot_Types extends Types {
 
     protected static $component_support = [
         'daily_insta' => 'Instagram of the Day',
+        'stream' => 'Stream',
     ];
 
     /**
@@ -129,6 +130,12 @@ class Slot_Types extends Types {
             'Sponsorships / Partnerships'
         );
 
+        $term_id_sponsored_stream_items = Taxonomies::get_or_create_term( 'pedestal_slot_item_type',
+            'sponsored-stream-items',
+            'Sponsored Stream Item',
+            'Sponsored Stream Items'
+        );
+
         $post_type_support = Types::get_post_types_with_label(
             Types::get_post_types_by_supported_feature( 'slots' )
         );
@@ -201,6 +208,39 @@ class Slot_Types extends Types {
                         ] ),
                         'upload' => new \Fieldmanager_Media( esc_html__( 'Upload Image', 'pedestal' ), [
                             'description'        => esc_html__( $media_desc, 'pedestal' ),
+                            'button_label'       => esc_html__( 'Select an image', 'pedestal' ),
+                            'modal_button_label' => esc_html__( 'Select image', 'pedestal' ),
+                            'modal_title'        => esc_html__( 'Choose image', 'pedestal' ),
+                        ] ),
+                    ],
+                ] ),
+
+                'sponsored-stream-items' => new \Fieldmanager_Group( false, [
+                    'name' => 'sponsored-stream-items',
+                    'display_if' => [
+                        'src' => 'type',
+                        'value' => $term_id_sponsored_stream_items,
+                    ],
+                    'children' => [
+                        'url' => new \Fieldmanager_Link( esc_html__( 'Link URL', 'pedestal' ), [
+                            'required'            => true,
+                            'validation_rules'    => 'required',
+                            'validation_messages' => esc_html__( 'Required', 'pedestal' ),
+                        ] ),
+                        'title'  => new \Fieldmanager_TextField( esc_html__( 'Title', 'pedestal' ), [
+                            'name'          => 'title',
+                            'required'            => true,
+                            'validation_rules'    => 'required',
+                            'validation_messages' => esc_html__( 'Required', 'pedestal' ),
+                        ] ),
+                        'sponsored_by' => new \Fieldmanager_TextField( esc_html__( 'Sponsored by', 'pedestal' ), [
+                            'name'                => 'sponsored_by',
+                            'description'         => 'Name of company sponsoring',
+                            'required'            => true,
+                            'validation_rules'    => 'required',
+                            'validation_messages' => esc_html__( 'Required', 'pedestal' ),
+                        ] ),
+                        'image' => new \Fieldmanager_Media( esc_html__( 'Upload Image', 'pedestal' ), [
                             'button_label'       => esc_html__( 'Select an image', 'pedestal' ),
                             'modal_button_label' => esc_html__( 'Select image', 'pedestal' ),
                             'modal_title'        => esc_html__( 'Choose image', 'pedestal' ),

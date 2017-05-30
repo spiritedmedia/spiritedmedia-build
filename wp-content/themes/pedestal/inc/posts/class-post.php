@@ -1292,7 +1292,7 @@ abstract class Post {
      * @param string
      * @return mixed
      */
-    protected function get_fm_field() {
+    public function get_fm_field() {
         $fields = func_get_args();
         $parent = array_shift( $fields );
 
