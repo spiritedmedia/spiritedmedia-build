@@ -17,55 +17,50 @@
 
 
 
-@if $email == false {
+.site-header-social {
+  text-align: right;
+  line-height: 0;
+  padding: 0;
 
+  @media #{$medium-up} {
+    padding: halve( $base-spacing-unit ) halve( $column-gutter );
+  }
 
-  .site-header-social {
-    text-align: right;
-    line-height: 0;
-    padding: 0;
+  /**
+   * Overrides `ul.iconset`
+   */
+  /*ul*/.iconset {
+    margin-left: -( $base-spacing-unit );
 
-    @media #{$medium-up} {
-      padding: halve( $base-spacing-unit ) halve( $column-gutter );
-    }
+    // stylelint-disable selector-max-compound-selectors, max-nesting-depth
+    li {
 
+      &.social-icon {
+        &.last {
+          width: ( $icon-diameter + halve( $icon-diameter ) );
+          padding-right: halve( $icon-diameter );
+          border-right: 1px solid $grey-70;
+        }
+      }
 
-    /**
-     * Overrides `ul.iconset`
-     */
-    /*ul*/.iconset {
-      margin-left: -( $base-spacing-unit );
+      &.more {
+        width: auto;
 
-      // stylelint-disable selector-max-compound-selectors
-      li {
-
-        &.social-icon {
-          &.last {
-            width: ( $icon-diameter + halve( $icon-diameter ) );
-            padding-right: halve( $icon-diameter );
-            border-right: 1px solid $grey-70;
-          }
+        i {
+          padding: $base-spacing-unit / 2;
+          padding-left: 0;
         }
 
-        &.more {
-          width: auto;
+        a,
+        .sitewide-search-icon {
+          display: inline-block;
+          font-size: $base-spacing-unit * 1.2;
+          color: $grey-25;
+          line-height: 1;
+        }
 
-          i {
-            padding: $base-spacing-unit / 2;
-            padding-left: 0;
-          }
-
-          a,
-          .sitewide-search-icon {
-            display: inline-block;
-            font-size: $base-spacing-unit * 1.2;
-            color: $grey-25;
-            line-height: 1;
-          }
-
-          &.first {
-            margin-left: halve( $icon-diameter );
-          }
+        &.first {
+          margin-left: halve( $icon-diameter );
         }
 
         &.hamburger {
@@ -75,66 +70,65 @@
           }
         }
       }
-      // stylelint-enable selector-max-compound-selectors
     }
+    // stylelint-enable selector-max-compound-selectors, max-nesting-depth
+  }
+}
+
+
+/**
+ * @TODO this sucks...
+ */
+
+// stylelint-disable selector-no-id
+#promoted-story {
+  background-color: $white;
+  border-bottom: 1px solid $border-std-color;
+
+  .row {
+    padding: halve( $base-spacing-unit ) $base-spacing-unit;
   }
 
+  strong {
+    text-transform: uppercase;
+    padding-right: 0.3rem;
+  }
+}
+// stylelint-enable selector-no-id
 
-  /**
-   * @TODO this sucks...
-   */
 
-  // stylelint-disable selector-no-id
-  #promoted-story {
-    background-color: $white;
-    border-bottom: 1px solid $border-std-color;
 
-    .row {
-      padding: halve( $base-spacing-unit ) $base-spacing-unit;
+
+
+//
+// Header Logo
+// ==========================================================================
+
+
+.site-header-logo {
+  margin: 0;
+
+  a {
+    display: block;
+    background: no-repeat top left;
+    background-size: contain;
+    background-image: url( $site-theme-logo-abspath + '/logo.svg' );
+    width: 205px;
+    height: 42px;
+
+    @media #{$medium-only} {
+      width: 281px;
+      height: 56px;
     }
 
-    strong {
-      text-transform: uppercase;
-      padding-right: 0.3rem;
+    @media #{$large-only} {
+      width: 305px;
+      height: 61px;
+    }
+
+    @media #{$xlarge-up} {
+      width: 365px;
+      height: 73px;
     }
   }
-  // stylelint-enable selector-no-id
-
-
-
-
-
-  //
-  // Header Logo
-  // ==========================================================================
-
-
-  .site-header-logo {
-    margin: 0;
-
-    a {
-      display: block;
-      background: no-repeat top left;
-      background-size: contain;
-      background-image: url( $site-theme-logo-abspath + '/logo.svg' );
-      width: 205px;
-      height: 42px;
-
-      @media #{$medium-only} {
-        width: 281px;
-        height: 56px;
-      }
-
-      @media #{$large-only} {
-        width: 305px;
-        height: 61px;
-      }
-
-      @media #{$xlarge-up} {
-        width: 365px;
-        height: 73px;
-      }
-    }
-  }
-
-} // endif $email == false
+}

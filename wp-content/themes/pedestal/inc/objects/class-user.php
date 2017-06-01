@@ -2,19 +2,18 @@
 
 namespace Pedestal\Objects;
 
+use function Pedestal\Pedestal;
 use Pedestal\Registrations\Post_Types\Types;
-
 use Pedestal\User_Management;
-
-use Pedestal\Posts\Post;
-
 use Pedestal\Objects\Stream;
-
-use Pedestal\Posts\Attachment;
-
-use Pedestal\Posts\Clusters\Cluster;
-
-use Pedestal\Posts\Clusters\Story;
+use Pedestal\Posts\{
+    Attachment,
+    Post
+};
+use Pedestal\Posts\Clusters\{
+    Cluster,
+    Story
+};
 
 /**
  * Base User class
@@ -185,15 +184,7 @@ class User extends Author {
      * @return string|HTML|bool
      */
     public function get_avatar( $size ) {
-
-        if ( is_string( $size ) ) {
-            $img = $this->get_image_html( $size );
-        } elseif ( is_int( $size ) ) {
-            // If an integer size is specified, we can't get a WordPress size,
-            // so just get the default full size image
-            $img = $this->get_image_html();
-        }
-
+        $img = $this->get_image_html( $size );
         $role = $this->get_public_role();
         $role_class = 'c-avatar--' . $role['name'];
         $output = '<div class="c-avatar  ' . $role_class . '">';

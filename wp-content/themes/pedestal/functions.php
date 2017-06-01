@@ -141,7 +141,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_BRAND_COLOR' => '',
 
                 // API Keys
-                'MANDRILL_API_KEY'   => '',
                 'EVERYBLOCK_API_KEY' => '31f70243ea980f63a6545a6bc4bfabd3a284dfa7',
 
                 // Slack
@@ -217,11 +216,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             // Include WP_oEmbed class
             require_once ABSPATH . WPINC . '/class-oembed.php';
 
-            // Components
-            require_once dirname( __FILE__ ) . '/lib/mandrill-wp-mail.php';
-            // require_once dirname( __FILE__ ) . '/lib/codebird/codebird.php';
-            // require_once dirname( __FILE__ ) . '/lib/codebird/class-wp-codebird.php';
-
             if ( defined( 'WP_CLI' ) && WP_CLI ) {
                 require_once dirname( __FILE__ ) . '/inc/cli/class-cli.php';
                 require_once dirname( __FILE__ ) . '/inc/cli/class-cli-clusters.php';
@@ -294,14 +288,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 return 'edit_others_posts';
             });
 
-            /*
-             * Convert Mandrill emails to inline styles
-             */
-            add_filter( 'mandrill_wp_mail_pre_message_args', function( $args ) {
-                $args['inline_css'] = true;
-                $args['preserve_recipients'] = false; // don't ever expose multiple 'to' addresses
-                return $args;
-            });
             add_filter( 'wp_mail_from', function( $original_var ) {
                 if ( PEDESTAL_EMAIL_NEWS ) {
                     return PEDESTAL_EMAIL_NEWS;
@@ -502,8 +488,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             add_rewrite_rule( 'promotional-content/?$', 'index.php?promotional-content=1', 'top' );
             add_rewrite_rule( 'newsletter-signup/?$', 'index.php?newsletter-signup=1', 'top' );
-            add_rewrite_rule( 'unfollow-confirmation/?$', 'index.php?unfollow-confirmation=1', 'top' );
-            add_rewrite_rule( 'unsubscribe-confirmation/?$', 'index.php?unsubscribe-confirmation=1', 'top' );
             add_rewrite_endpoint( 'ics', EP_PERMALINK );
 
         }

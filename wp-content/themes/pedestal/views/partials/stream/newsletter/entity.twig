@@ -1,11 +1,10 @@
-<{{ el__item }} class="{{ macros.get_stream_item_classes( 'newsletter', _context ) }}"
+<article class="{{ macros.get_stream_item_classes( 'newsletter', _context ) }}"
     {{ item.get_the_data_atts }}>
 
     <div class="c-stream__item__inner  c-overview">
 
         <div class="c-stream__item__body">
             {% include 'partials/item-title.twig' with {
-                'item_title_element': el__item_title,
                 'title': newsletter_item.title,
                 'url': newsletter_item.url
             } %}
@@ -17,4 +16,4 @@
 
     </div>
 
-</{{ el__item }}>
+</article>

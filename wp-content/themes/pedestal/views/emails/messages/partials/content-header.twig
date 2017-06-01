@@ -1,0 +1,10 @@
+{% if show_content_header %}
+<table class="email-content-header email-container" {{ email_table_atts }} align="center" width="100%">
+    <tr>
+        <td class="email-content-header__inner">
+            {{ content_header }}
+            <div class="email-content-header__divider"></div>
+        </td>
+    </tr>
+</table>
+{% endif %}

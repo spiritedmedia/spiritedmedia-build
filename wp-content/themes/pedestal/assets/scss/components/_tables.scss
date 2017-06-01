@@ -2,18 +2,17 @@
 // Pedestal // Components // TABLES
 // ==========================================================================
 
-$table-head-font-size      : unitize( 14 ) !default;
-$table-head-padding        : unitize( 8 10 10 ) !default;
-$table-caption-font-size   : unitize( 16 ) !default;
-$table-row-padding         : unitize( 9 10 ) !default;
-$table-row-font-size       : unitize( 14 ) !default;
-$table-line-height         : unitize( 18 ) !default;
-$table-margin-bottom       : unitize( 20 ) !default;
+$table-head-font-size      : rem-calc( 14 ) !default;
+$table-head-padding        : rem-calc( 8 10 10 ) !default;
+$table-caption-font-size   : rem-calc( 16 ) !default;
+$table-row-padding         : rem-calc( 9 10 ) !default;
+$table-row-font-size       : rem-calc( 14 ) !default;
+$table-line-height         : rem-calc( 18 ) !default;
+$table-margin-bottom       : rem-calc( 20 ) !default;
 
 .c-details-table {
   @include stdbd;
 }
-
 
 // @TODO
 // stylelint-disable selector-no-type
@@ -36,8 +35,6 @@ $table-margin-bottom       : unitize( 20 ) !default;
   }
 
 }
-// stylelint-enable selector-no-type
-
 
 .c-details-table__link {
   margin-top: 0;

@@ -71,10 +71,6 @@ class Slots {
             'site'  => [ 'single_lead', 'shortcode' ],
             'email' => [],
         ],
-        'daily_insta' => [
-            'site'  => [ 'component' ],
-            'email' => [ 'component' ],
-        ],
     ];
 
     public static function get_instance() {
@@ -494,18 +490,27 @@ class Slots {
 
         $slot_data = self::get_slot_data( $slot_data_return_type, $placement_options );
         if ( Types::is_post( $slot_data ) ) {
-            $template = $item_type = $additional_classes = '';
+            $context['template'] = $item_type = $additional_classes = '';
+            $slots_path = 'partials/slots/';
+            $css_class = 'c-slot';
+            if ( Pedestal()->is_email() ) {
+                $css_class = 'email-slot';
+                $slots_path = 'emails/messages/partials/slots/';
+            }
             if ( $slot_data instanceof Slot_Item ) {
                 $item_type = $slot_data->get_slot_item_type_slug();
-                $template = 'partials/slots/' . $item_type . '.twig';
+                $context['template'] = $slots_path . $item_type . '.twig';
             } elseif ( 'newsletter_promoted_event' === $slot_position ) {
                 $context['item'] = $slot_data;
                 $item_type = $slot_data->get_type();
                 $additional_classes = 'c-stream__item';
-                $template = 'partials/slots/' . str_replace( '_', '-', $slot_position ) . '.twig';
+                $context['template'] = $slots_path . str_replace( '_', '-', $slot_position ) . '.twig';
+                if ( Pedestal()->is_email() ) {
+                    $context['template'] = 'emails/messages/partials/stream/event.twig';
+                }
             }
 
-            if ( ! $template || ! $item_type ) {
+            if ( ! $context['template'] || ! $item_type ) {
                 return '';
             }
 
@@ -519,16 +524,17 @@ class Slots {
             ];
             $data_atts_str = Utils::array_to_data_atts_str( $data_atts, 'slot' );
 
-            $item_type_class = str_replace( '_', '-', $item_type );
-            $html = sprintf( '<div class="c-slot--%s  c-slot %s" %s>',
-                $item_type_class,
+            $context['slot_atts'] = sprintf( 'class="%s--%s %s %s" %s',
+                $css_class,
+                str_replace( '_', '-', $item_type ),
+                $css_class,
                 $additional_classes,
                 $data_atts_str
             );
+
             ob_start();
-            $html .= Timber::render( $template, $context );
+            $html = Timber::render( $slots_path . '/slot.twig', $context );
             ob_get_clean();
-            $html .= '</div>';
             return $html;
         }
         return '';

@@ -137,7 +137,7 @@ $s-post-content-li-bullet-size     : 5px;
 
     &::before,
     &::after {
-      font-size: unitize( 4rem );
+      font-size: rem-calc( 4rem );
       line-height: 0;
       padding-top: 0.4em;
       position: absolute;

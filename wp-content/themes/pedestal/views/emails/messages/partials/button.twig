@@ -1,0 +1,15 @@
+{% if btn_text and btn_url %}
+
+<table class="email-btn {{ classes }}" {{ email_table_atts }} width="100%" align="center">
+    <tr>
+        <td class="email-btn__inner">
+            <a href="{{ btn_url }}" class="email-btn__link">
+                <span class="email-btn__text">
+                    {{ btn_text }}
+                </span>
+            </a>
+        </td>
+    </tr>
+</table>
+
+{% endif %}

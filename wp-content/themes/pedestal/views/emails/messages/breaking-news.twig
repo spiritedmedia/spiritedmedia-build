@@ -1,0 +1,33 @@
+{% extends "emails/messages/base-email.twig" %}
+
+{% set content_header_text = 'Breaking News' %}
+
+{% block content %}
+
+{% include 'emails/messages/partials/layouts/hero-img.twig' with {
+    img_src: item.get_featured_image_url( '640-16x9' ),
+    img_alt: item.get_featured_image.get_caption
+} %}
+
+{% include 'emails/messages/partials/layouts/text-main.twig' with {
+    body_text: item.get_the_excerpt,
+    heading_url: item.get_the_permalink,
+    heading_text: item.get_the_title
+} %}
+
+<tr class="email-text-main__item">
+    <td class="email-text-main__meta-info">
+        {% include 'emails/messages/partials/meta-info-email.twig' %}
+    </td>
+</tr>
+
+<tr>
+    <td class="email-follow-update__btn email-stream-item">
+        {% include 'emails/messages/partials/button.twig' with {
+            btn_text: 'Full Story on ' ~ site.name,
+            btn_url: item.get_the_permalink
+        } %}
+    </td>
+</tr>
+
+{% endblock %}

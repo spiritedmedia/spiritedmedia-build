@@ -2,9 +2,9 @@
 
 namespace Pedestal\Posts;
 
-use \Pedestal\Utils\Utils;
-
-use \Pedestal\Objects\Figure;
+use function Pedestal\Pedestal;
+use Pedestal\Utils\Utils;
+use Pedestal\Objects\Figure;
 
 /**
  * Base class to represent a WordPress Attachment
@@ -35,6 +35,9 @@ class Attachment extends Post {
      * @return array|false
      */
     private function get_src( $size ) {
+        if ( is_numeric( $size ) ) {
+            $size = [ $size, $size ];
+        }
         return wp_get_attachment_image_src( $this->get_id(), $size );
     }
 
@@ -104,11 +107,19 @@ class Attachment extends Post {
 
         $default_attr = [
             'src'    => $src,
-            'sizes'  => wp_get_attachment_image_sizes( $id, $size ),
-            'srcset' => wp_get_attachment_image_srcset( $id, $size ),
             'class'  => $default_classes,
             'alt'    => $alt_text,
         ];
+        if ( Pedestal()->is_email() ) {
+            $default_attr['border'] = 0;
+            if ( is_numeric( $size ) ) {
+                $default_attr['width'] = $size;
+                $default_attr['height'] = $size;
+            }
+        } else {
+            $default_attr['sizes'] = wp_get_attachment_image_sizes( $id, $size );
+            $default_attr['srcset'] = wp_get_attachment_image_srcset( $id, $size );
+        }
         $attrs = wp_parse_args( $args, $default_attr );
 
         return self::get_img_html( $attrs );
@@ -122,13 +133,7 @@ class Attachment extends Post {
      * @return string        HTML <img> element
      */
     public static function get_img_html( $attrs ) {
-        $attrs = array_map( 'esc_attr', $attrs );
-        $html = '<img';
-        foreach ( $attrs as $name => $value ) {
-            $html .= " $name=" . '"' . $value . '"';
-        }
-        $html .= ' />';
-        return $html;
+        return '<img ' . Utils::array_to_atts_str( $attrs ) . ' />';
     }
 
     /**

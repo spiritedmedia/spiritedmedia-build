@@ -1,0 +1,9 @@
+{% set type_class = type_class|default( 'email-stream-item--' ~ item.post.get_type ) %}
+
+{% set body_text = body_text|default( item.get_the_excerpt ) %}
+{% set classes = classes|default( 'email-stream-item ' ~ type_class ) %}
+{% set heading_text = heading_text|default( item.get_the_title ) %}
+{% set heading_url = heading_url|default( item.get_the_permalink ) %}
+{% set meta_info = meta_info|default( true ) %}
+
+{% include 'emails/messages/partials/layouts/text-main.twig' %}

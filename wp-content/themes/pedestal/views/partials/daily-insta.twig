@@ -1,41 +1,28 @@
 {% spaceless %}
-{% set el__base = if_email('div', 'article')  %}
-{% set el__header = if_email('div', 'header')  %}
-{% set el__title = if_email('h4', 'h1')  %}
-{% set el__body = if_email('div', 'figure') %}
-{% set el__caption = if_email('div', 'figcaption')  %}
-{% set el__caption__text = if_email('h4', 'h1')  %}
-{% set el__author = if_email('h5', 'h2')  %}
-
-<{{ el__base }} class="{{ classes }} c-daily-insta  c-panel">
-    <{{ el__header }} class="c-daily-insta__header">
-        <{{ el__title }} class="c-daily-insta__title">
+<article class="{{ classes }} c-daily-insta  c-panel">
+    <header class="c-daily-insta__header">
+        <h1 class="c-daily-insta__title">
             <a href="{{ story_url }}" class="c-daily-insta__title__link"
                 data-ga-category="Story Bar"
                 data-ga-label="Instagram of the Day">
                 Instagram of the Day
             </a>
-        </{{ el__title }}>
-    </{{ el__header }}>
-    <{{ el__body }} class="c-daily-insta__body  c-figure--img  c-figure">
+        </h1>
+    </header>
+    <figure class="c-daily-insta__body  c-figure--img  c-figure">
         <div class="c-daily-insta__img  c-figure__content">
-            {% if not is_email %}
             <a href="{{ item.get_embed_url }}" target="_blank">
-            {% endif %}
                 {{ item.get_featured_image_html( '1024-16x9' ) }}
-            {% if not is_email %}
             </a>
-            {% endif %}
         </div>
-        {{ ped_slot( 'component', 'daily_insta' ) }}
-        <{{ el__caption }} class="c-daily-insta__caption  c-figure__text  c-panel__inner">
-            <{{ el__caption__text }} class="c-daily-insta__caption__text  c-daily-insta__body__text  c-figure__text__caption">
+        <figcaption class="c-daily-insta__caption  c-figure__text  c-panel__inner">
+            <h1 class="c-daily-insta__caption__text  c-daily-insta__body__text  c-figure__text__caption">
                 {{ item.get_embed_caption }}
-            </{{ el__caption__text }}>
-            <{{ el__author }} class="c-daily-insta__author  c-daily-insta__body__text">
+            </h1>
+            <h2 class="c-daily-insta__author  c-daily-insta__body__text">
                 <a href="{{ item.get_embed_url }}" target="_blank">@{{ item.get_embed_author_name }}</a>
-            </{{ el__author }}>
-        </{{ el__caption }}>
-    </{{ el__body }}>
-</{{ el__base }}>
+            </h2>
+        </figcaption>
+    </figure>
+</article>
 {% endspaceless %}

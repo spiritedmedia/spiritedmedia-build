@@ -1,8 +1,8 @@
-Build [#2909](https://circleci.com/gh/spiritedmedia/spiritedmedia/2909) by kingkool68 at 2017-05-30 04:55 PM UTC
+Build [#2962](https://circleci.com/gh/spiritedmedia/spiritedmedia/2962) by montchr at 2017-06-01 09:34 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.9.3](https://github.com/spiritedmedia/spiritedmedia/compare/v5.9.3)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.0](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.0)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.9.2...v5.9.3)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.9.3...v5.10.0)
 
- - [#2045](https://github.com/spiritedmedia/spiritedmedia/pull/2045): Add A Sponsored Stream Item via Slots
- - [#2048](https://github.com/spiritedmedia/spiritedmedia/pull/2048): Add meta refresh to homepage <head>
+ - [#2050](https://github.com/spiritedmedia/spiritedmedia/pull/2050): HOTFIX: Use correct email-base.scss version number
+ - [#2008](https://github.com/spiritedmedia/spiritedmedia/pull/2008): Decouple email templates from site frontend

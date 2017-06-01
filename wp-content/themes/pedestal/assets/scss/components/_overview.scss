@@ -15,7 +15,7 @@
 .c-overview__title,
 .c-overview__description {
   // Because 16px is too much and 8px is too little...
-  margin-bottom: unitize( 12px );
+  margin-bottom: rem-calc( 12 );
 }
 
 .c-overview__overline {}
@@ -42,10 +42,7 @@
   // it still needs to display block
   display: block;
 
-  .email-body & {
-    margin-bottom: $base-spacing-unit;
-  }
-
+  // scss-lint:disable SelectorFormat
   .rail & {
     width: auto;
   }

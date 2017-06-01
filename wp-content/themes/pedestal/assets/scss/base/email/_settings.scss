@@ -3,30 +3,55 @@
 // ==========================================================================
 
 
-@import 'units';
 @import '../../base/global/settings';
 
 
+//
+// Units
+// ==========================================================================
+
+
+$base-font-size: 16px;
+$base-spacing-unit: 10px;
+$base-line-height: $base-spacing-unit * 2;
+
+$half-spacing-unit: $base-spacing-unit / 2;
 
 
 
-$email                        : true;
 
-$include-html-type-classes    : true;
-$include-html-global-classes  : false;
 
-$email-max-width              : 700px;
-$email-content-padding        : 20px;
+//
+// General
+// ==========================================================================
 
-$email-header-logo-w          : 300px;
-$email-header-logo-img-w      : 280px;
-$email-header-social-w        : 250px;
 
-$email-footer-f-z             : $small-font-size;
-$email-footer-m-h             : $base-line-height;
-$email-footer-p-b             : $base-line-height * 1.25;
+$font-family-sans-serif : "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-$email-follow-update-date-f-z : $h3-font-size;
+// Set the email width. Defined in two places:
+//
+// 1. max-width for all clients except Desktop Windows Outlook, allowing the
+// email to squish on narrow but never go wider than 680px.
+//
+// 2. MSO tags for Desktop Windows Outlook enforce a 680px width.
+//
+// Note: The Fluid and Responsive Cerberus templates have a different width
+// (600px). The hybrid grid is more "fragile", and its developer has found that
+// 680px is a good width. Change with caution.
+$email-container-width: 680px;
+// Container width minus left and right spacing
+$email-container-width-inner: $email-container-width - ($base-spacing-unit * 2);
+$email-container-spacing-hoz: ($base-spacing-unit * 2);
+$email-stream-item-spacing-v: ($base-spacing-unit * 2);
 
-$table-head-padding           : $half-spacing-unit;
-$table-row-padding            : $table-head-padding;
+$email-background-color: $white;
+$email-img-background-color: #dddddd; // Cerberus default
+$email-btn-background-color: $yet-another-red;
+
+$email-heading-size: 18px;
+$small-font-size: 14px;
+
+$email-divider-std: 1px solid $dimmed-text-color;
+$email-divider-wide: 3px solid $border-std-color;
+
+$email-slot-item-pd: $half-spacing-unit;

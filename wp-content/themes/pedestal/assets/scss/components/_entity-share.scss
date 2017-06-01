@@ -13,10 +13,7 @@
     margin-top: 0;
     width: 100%;
     border-bottom: 2px solid $primary-color;
-
-    @if $email == false {
-      z-index: $z-index-4;
-    }
+    z-index: $z-index-4;
 
     .top-bar {
       background-color: $grey-90;

@@ -1,0 +1,17 @@
+{% extends "emails/messages/base-email.twig" %}
+
+{% set content_header_text = 'Confirm Subscription' %}
+{% set hide_social_header_icons = true %}
+
+{% set heading_text %}
+    You have subscribed to {{ blog_name }}’s “{{ list_names }}” emails.
+{% endset %}
+{% set body_text %}
+    To confirm that you wish to be subscribed, please click the link below:<br><br>
+    <a href="{{ confirm_link }}">{{ confirm_link }}</a><br><br>
+    If you believe this is a mistake and you did not intend on subscribing, you can ignore this message and nothing else will happen.
+{% endset %}
+
+{% block content %}
+{% include 'emails/messages/partials/layouts/text-main.twig' %}
+{% endblock %}

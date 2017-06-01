@@ -23,7 +23,7 @@ class Factcheck extends Original {
      * @return string String of classes
      */
     public function css_classes_content() {
-        return implode( '  ', [
+        return implode( ' ', [
             'c-factcheck',
             'has-hero',
         ] );

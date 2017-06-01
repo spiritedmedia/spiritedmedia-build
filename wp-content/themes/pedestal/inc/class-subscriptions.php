@@ -934,7 +934,8 @@ class Subscriptions {
      * Render test email templates when /test-email/ is requested
      */
     public function handle_test_email_request() {
-        switch ( get_query_var( 'pedestal-test-email' ) ) {
+        $request = get_query_var( 'pedestal-test-email' );
+        switch ( $request ) {
             case 'all':
                 $templates = [
                     'newsletter',
@@ -942,7 +943,7 @@ class Subscriptions {
                     'follow-update-story',
                     'subscribe-confirmation',
                 ];
-                echo $this->get_email_template( get_query_var( 'pedestal-test-email' ), 'ac', [
+                echo $this->get_email_template( 'tests-index', 'ac', [
                     'items' => $templates,
                     'shareable' => false,
                 ] );
@@ -989,7 +990,7 @@ class Subscriptions {
                 break;
 
             case 'subscribe-confirmation':
-                echo $this->get_email_template( get_query_var( 'pedestal-test-email' ), 'ses', [
+                echo $this->get_email_template( $request, 'ses', [
                     'email_address' => 'foo@example.com',
                     'confirm_link' => 'http://example.com/confirm-subscription/abc123/?list_ids=255',
                     'list_names' => 'Daily Newsletter and Breaking News',

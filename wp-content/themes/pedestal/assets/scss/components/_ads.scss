@@ -205,7 +205,7 @@ $dfp-mobile-ad-offset--panelled : -( $column-gutter );
 
 .dfp-disclaimer {
   text-align: center;
-  font-size: unitize( 11px );
+  font-size: rem-calc( 11px );
   color: $dimmed-text-color;
   margin-bottom: 0;
 }

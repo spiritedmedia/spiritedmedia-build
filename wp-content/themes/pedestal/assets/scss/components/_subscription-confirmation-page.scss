@@ -9,20 +9,20 @@
 .subscription-confirmation-page {
   text-align: center;
   margin: 0 auto;
-  max-width: unitize( 580 );
+  max-width: rem-calc( 580 );
 
   h3 {
-    margin-bottom: unitize( 24 );
+    margin-bottom: rem-calc( 24 );
   }
 
   p {
-    margin-bottom: unitize( 8 );
+    margin-bottom: rem-calc( 8 );
   }
 
   input {
-    margin: unitize( 32 ) 0 unitize( 16 );
-    height: unitize( 40 );
-    font-size: unitize( 20 );
+    margin: rem-calc( 32 ) 0 rem-calc( 16 );
+    height: rem-calc( 40 );
+    font-size: rem-calc( 20 );
   }
 
   .success-message p {

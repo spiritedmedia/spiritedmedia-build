@@ -1,0 +1,39 @@
+{% if img_src and text %}
+
+<tr class="email-text-overlay">
+    <!-- Bulletproof Background Images c/o https://backgrounds.cm -->
+    <td class="email-text-overlay__inner" background="{{ img_src }}"
+        bgcolor="#222222" valign="middle">
+        <!-- @TODO Unsure what the `height: 175px;` is for...  -->
+        <!--[if gte mso 9]>
+        <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width: {{ email_container_width }}px; height:175px; background-position: center center !important;">
+        <v:fill type="tile" src="{{ img_src }}" color="#222222" />
+        <v:textbox inset="0,0,0,0">
+        <![endif]-->
+        <div>
+            <!--[if mso]>
+            <table {{ email_table_atts }} align="center" width="{{ email_module_text_overlay_width }}">
+            <tr>
+            <td align="center" valign="top" width="{{ email_module_text_overlay_width }}">
+            <![endif]-->
+            <table class="email-text-overlay__body" {{ email_table_atts }} align="center" width="100%">
+                <tr>
+                    <td class="email-text-overlay__body__inner" valign="middle">
+                        <p>{{ text }}</p>
+                    </td>
+                </tr>
+            </table>
+            <!--[if mso]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </div>
+        <!--[if gte mso 9]>
+        </v:textbox>
+        </v:rect>
+        <![endif]-->
+    </td>
+</tr>
+
+{% endif %}

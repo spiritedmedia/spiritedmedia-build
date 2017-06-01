@@ -378,13 +378,34 @@ class Utils {
         if ( ! is_array( $data_atts ) ) {
             return '';
         }
-
         $atts_str = '';
         foreach ( $data_atts as $key => $value ) {
             if ( ! empty( $prefix ) ) {
                 $key = $prefix . '-' . $key;
             }
             $atts_str .= sprintf( 'data-%s="%s" ', $key, $value );
+        }
+        return $atts_str;
+    }
+
+    /**
+     * Convert an associative array to an HTML attributes string
+     *
+     * Use Utils::array_to_data_atts_str() for working with data attributes.
+     *
+     * @param  array $atts HTML attribute keys and values
+     * @return string      HTML attribute string
+     */
+    public static function array_to_atts_str( $atts ) {
+        if ( ! is_array( $atts ) ) {
+            return '';
+        }
+        $atts_str = '';
+        foreach ( $atts as $key => $value ) {
+            if ( 'class' == $key && is_array( $value ) ) {
+                $value = implode( ' ', $value );
+            }
+            $atts_str .= sprintf( '%s="%s" ', sanitize_key( $key ), esc_attr( $value ) );
         }
         return $atts_str;
     }

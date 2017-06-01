@@ -1,0 +1,78 @@
+{% spaceless %}
+
+{% set content_header_text = '<h1 class="email-content-header__text email-heading--title">' ~ content_header_text ~ '</h1>' %}
+{% set content_header = content_header|default( content_header_text ) %}
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="x-apple-disable-message-reformatting">
+    <title></title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+
+    <!-- Email Base Styles -->
+    <style>
+        {{ email_base_styles }}
+    </style>
+
+    {% if email_debug_styles %}
+    <!-- Email Debug Styles -->
+    <style>
+    {{ email_debug_styles }}
+    </style>
+    {% endif %}
+
+    <!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+
+</head>
+<body width="100%" bgcolor="{{ email_background_color }}" class="email-body">
+<center class="email-body-inner">
+
+    {% if email_header_pre_text %}
+        <div class="email-header-pre-text">
+            {{ email_header_pre_text }}
+        </div>
+    {% endif %}
+
+    <div class="email-{{ template_name }} email-container">
+        <!--[if mso]>
+        <table {{ email_table_atts }} width="{{ email_container_width }}" align="center">
+        <tr>
+        <td>
+        <![endif]-->
+
+        {% include 'emails/messages/partials/top-bar.twig' %}
+
+        {% include 'emails/messages/partials/header.twig' %}
+
+        {% include 'emails/messages/partials/content-header.twig' %}
+
+        <table class="email-content email-container" {{ email_table_atts }} align="center" width="100%">
+        {% block content %}
+        {% endblock %}
+        </table>
+
+        {% include 'emails/messages/partials/footer.twig' %}
+
+        <!--[if mso]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+    </div>
+
+</center>
+</body>
+</html>
+
+{% endspaceless %}

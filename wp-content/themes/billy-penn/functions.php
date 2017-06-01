@@ -88,9 +88,6 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_SLACK_CHANNEL_NEWSLETTER'     => '#phl-newsletter',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'BillyPennBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':billypenn:',
-
-                // API Keys
-                'MANDRILL_API_KEY' => '0h1-xD3bRFb5x10ULwJusA',
             ];
         } );
 

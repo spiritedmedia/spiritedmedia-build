@@ -24,7 +24,7 @@ if ( $data = get_transient( $transient_key ) ) {
         $result = $activecampaign->subscribe_contact( $data['email'], $data['list_ids'] );
         if ( $result ) {
             delete_transient( $transient_key );
-            Timber::render( 'emails/confirm-subscription.twig', $context );
+            Timber::render( 'emails/pages/confirm-subscription.twig', $context );
             exit;
         }
     }
@@ -53,4 +53,4 @@ switch ( $subscription_type ) {
         $context['help_text'] = $help_text . $subscription_title;
         break;
 }
-Timber::render( 'emails/confirm-subscription-fail.twig', $context );
+Timber::render( 'emails/pages/confirm-subscription-fail.twig', $context );

@@ -2,12 +2,13 @@
 
 namespace Pedestal\Posts\Entities;
 
+use function Pedestal\Pedestal;
+use Pedestal\Utils\Utils;
+use Pedestal\Posts\Clusters\Story;
 use Pedestal\Objects\{
     Stream,
     YouTube
 };
-use Pedestal\Utils\Utils;
-use Pedestal\Posts\Clusters\Story;
 
 class Embed extends Entity {
 
@@ -689,8 +690,13 @@ class Embed extends Entity {
             $context['story_url'] = $daily_insta_story->get_permalink();
         }
 
+        $template = 'partials/daily-insta.twig';
+        if ( Pedestal()->is_email() ) {
+            $template = 'emails/messages/partials/daily-insta.twig';
+        }
+
         ob_start();
-        \Timber\Timber::render( 'partials/daily-insta.twig', $context );
+        \Timber\Timber::render( $template, $context );
         $html = ob_get_clean();
         return $html;
     }

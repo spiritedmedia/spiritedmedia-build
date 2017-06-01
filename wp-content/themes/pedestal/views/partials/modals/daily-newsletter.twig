@@ -6,12 +6,12 @@
         data-ga-label="Newsletter Signup Modal">
         <div class="form-fields">
             <fieldset>
-                {% include 'partials/emails/form-daily-legend.twig' %}
-                {% include 'partials/emails/form-daily-input-address.twig' %}
-                {% include 'partials/emails/form-honeypot.twig' %}
+                {% include 'partials/email-forms/form-daily-legend.twig' %}
+                {% include 'partials/email-forms/form-daily-input-address.twig' %}
+                {% include 'partials/email-forms/form-honeypot.twig' %}
             </fieldset>
             <button class="btn btn--secondary btn--large form-submit js-form-submit" type="submit" name="subscribe">
-                {% include 'partials/emails/form-submit-signup-inner.twig' %}
+                {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
             </button>
         </div>
     </form>
@@ -20,6 +20,6 @@
 <div id="confirm-subscribe-to-newsletter" class="reveal-modal dark-reveal-modal small" data-reveal>
     <a class="close-reveal-modal">&#215;</a>
     <form>
-        {% include 'partials/emails/form-daily-subscribed.twig' %}
+        {% include 'partials/email-forms/form-daily-subscribed.twig' %}
     </form>
 </div>

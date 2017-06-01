@@ -3,6 +3,7 @@
 namespace Pedestal;
 
 use function Pedestal\Pedestal;
+use \Pedestal\Utils\Utils;
 
 class Icons {
 
@@ -43,30 +44,37 @@ class Icons {
     /**
      * Helper for fetching icons
      *
-     * @param  string $icon    Name of the file in the icons directory
-     * @param  string $classes Additional classes to apply to the SVG element
-     * @param  string $color   Color of the PNG for email -- should be a hex
+     * @param  string     $icon    Name of the file in the icons directory
+     * @param  string     $classes Additional classes to apply to the SVG element
+     * @param  string     $color   Color of the PNG for email -- should be a hex
      *     value. Defaults to primary color.
-     * @return string          Inline SVG/PNG markup
+     * @param  int|string $size    Width|height for email PNG
+     * @return string              Inline SVG/PNG markup
      */
-    static function get_icon( $icon = '', $classes = '', $color = '' ) {
+    static function get_icon( $icon = '', $classes = '', $color = '', $size = 40 ) {
         $icon = sanitize_title( $icon );
         if ( ! $icon ) {
             return;
         }
 
-        $args = [
-            'alt'       => $icon,
-            'css_class' => 'o-icon  o-icon--' . $icon,
+        $atts = [
+            'alt'   => $icon,
+            'class' => 'o-icon  o-icon--' . $icon,
         ];
 
         if ( $classes ) {
-            $args['css_class'] = $classes . ' ' . $args['css_class'];
+            $atts['class'] = $classes . ' ' . $atts['class'];
         }
 
         if ( Pedestal()->is_email() ) {
             $color = $color ?: 'primary';
             $base = get_template_directory_uri();
+            // Border must be removed for MSO
+            $atts['border'] = '0';
+            // Size must be set explicitly for MSO
+            if ( $size && is_numeric( $size ) ) {
+                $atts['width'] = $size;
+            }
             // Primary colors are set per child theme, so assets must be stored there
             if ( 'primary' == $color ) {
                 $site_config = Pedestal()->get_site_config();
@@ -78,40 +86,47 @@ class Icons {
             }
             $icon = $icon . '.' . str_replace( '#', '', $color );
             $location = "{$base}/assets/images/icons/png/{$icon}.png";
-            return static::get_png( $location, $args );
+            return static::get_png( $location, $atts );
         }
 
         $base = get_template_directory();
         $location = "{$base}/assets/images/icons/svg/{$icon}.svg";
-        return static::get_svg( $location, $args );
+        return static::get_svg( $location, $atts );
     }
 
     /**
      * Helper for fetching logos
      *
-     * @param  string $logo    Name of the file in the logos directory
-     * @param  string $classes Additional CSS classes
-     * @return string          Inline SVG/PNG markup
+     * @param  string     $logo    Name of the file in the logos directory
+     * @param  string     $classes Additional CSS classes
+     * @param  int|string $size    Width|height for email PNG
+     * @return string              Inline SVG/PNG markup
      */
-    static function get_logo( string $logo = '', $classes = '' ) {
+    static function get_logo( string $logo = '', $classes = '', $size = 40 ) {
         $logo = sanitize_title( $logo );
         if ( ! $logo ) {
             return;
         }
 
-        $args = [
-            'css_class' => $classes . ' o-icon o-icon--logo o-icon--logo--' . $logo,
+        $atts = [
+            'class' => $classes . ' o-icon o-icon--logo o-icon--logo--' . $logo,
         ];
 
         if ( Pedestal()->is_email() ) {
             $base = get_stylesheet_directory_uri();
             $location = "{$base}/assets/images/logos/{$logo}.png";
-            return static::get_png( $location, $args );
+            // Border must be removed for MSO
+            $atts['border'] = '0';
+            // Size must be set explicitly for MSO
+            if ( $size && is_numeric( $size ) ) {
+                $atts['width'] = $size;
+            }
+            return static::get_png( $location, $atts );
         }
 
         $base = get_stylesheet_directory();
         $location = "{$base}/assets/images/logos/{$logo}.svg";
-        return static::get_svg( $location, $args );
+        return static::get_svg( $location, $atts );
     }
 
     /**
@@ -127,7 +142,7 @@ class Icons {
         }
         $atts = static::handle_element_atts( $atts );
         return str_replace( '<svg ',
-            '<svg class="' . esc_attr( $atts['css_class'] ) . '" role="' . esc_attr( $atts['role'] ) . '" ',
+            '<svg ' . Utils::array_to_atts_str( $atts ),
             file_get_contents( $location )
         );
     }
@@ -144,10 +159,9 @@ class Icons {
             return;
         }
         $atts = static::handle_element_atts( $atts );
-        return sprintf( '<img src="%s" alt="%s" class="%s" />',
+        return sprintf( '<img src="%s" %s />',
             $location,
-            esc_attr( $atts['alt'] ),
-            esc_attr( $atts['css_class'] )
+            Utils::array_to_atts_str( $atts )
         );
     }
 
@@ -161,11 +175,11 @@ class Icons {
         $defaults = [
             'alt'       => '',
             'role'      => 'image',
-            'css_class' => '',
+            'class' => '',
         ];
         $atts = wp_parse_args( $atts, $defaults );
-        if ( is_array( $atts['css_class'] ) ) {
-            $atts['css_class'] = implode( ' ', $atts['css_class'] );
+        if ( is_array( $atts['class'] ) ) {
+            $atts['class'] = implode( ' ', $atts['class'] );
         }
         return $atts;
     }

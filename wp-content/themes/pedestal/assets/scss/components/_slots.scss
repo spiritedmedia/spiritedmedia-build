@@ -2,13 +2,12 @@
 // Pedestal // Components // SLOTS
 // ==========================================================================
 
+
 $c-slot-item-pd      : $half-spacing-unit;
 $c-slot-item-lead-pd : $base-spacing-unit;
 
-$c: '.c-slot';
 
-
-#{$c} {
+.c-slot {
   &__item {
     &,
     > * {
@@ -23,7 +22,7 @@ $c: '.c-slot';
   }
 
 
-  /*p*/&__label {
+  &__label {
     color: $dimmed-text-color;
     font-size: $small-font-size;
     font-weight: 300;
@@ -63,12 +62,12 @@ $c: '.c-slot';
 [data-slot-position*="shortcode"],
 [data-slot-position*="newsletter_item"],
 [data-slot-position*="component"] {
-  #{$c}__item {
+  .c-slot__item {
     padding-bottom: $c-slot-item-pd;
     padding-left: $c-slot-item-pd;
   }
 
-  #{$c}__img {
+  .c-slot__img {
     // stylelint-disable-next-line selector-no-type
     img {
       max-height: 50px;
@@ -89,17 +88,13 @@ $c: '.c-slot';
 
 // * Supports -- Premium Images
 [data-slot-supports-premium] {
-  #{$c}__item {
+  .c-slot__item {
     > * {
-      margin-bottom: unitize( 0.25rem );
+      margin-bottom: 0.25rem;
     }
   }
 
-  #{$c}__label {
-    margin-right: 0;
-  }
-
-  /*p*/#{$c}__img {
+  .c-slot__img {
     // stylelint-disable-next-line selector-no-type
     img {
       max-width: 100%;
@@ -110,30 +105,7 @@ $c: '.c-slot';
 
 
 // Lead Position -- Email Scope
-[data-slot-position="email_lead"] {
-  &.c-slot {
-    background-color: $body-bg;
-  }
-
-  #{$c}__item {
-    padding-bottom: $c-slot-item-lead-pd;
-  }
-}
-
-
-// Daily Instagram Component Type
-[data-slot-component-type="daily_insta"] {
-  &.c-slot {
-    @include stdbd( 'bottom' );
-
-    background-color: $truth-serum;
-  }
-
-  #{$c}__item {
-    padding-top: $c-slot-item-pd;
-    padding-bottom: $c-slot-item-pd;
-  }
-}
+[data-slot-position="email_lead"] {}
 
 
 // Single Lead Position -- Site Scope

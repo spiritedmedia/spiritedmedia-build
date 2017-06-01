@@ -1,0 +1,39 @@
+<tr>
+    <td class="email-text-main {{ classes }}" bgcolor="{{ email_background_color }}">
+        <table {{ email_table_atts }} width="100%">
+
+            {% if heading_text %}
+            <tr class="email-text-main__item">
+                <td class="email-text-main__heading">
+                    {% include 'emails/messages/partials/item-title.twig' %}
+                </td>
+            </tr>
+            {% endif %}
+
+            {% if body_text %}
+            <tr class="email-text-main__item">
+                <td class="email-text-main__body">
+                    {{ body_text }}
+                </td>
+            </tr>
+            {% endif %}
+
+            {% if btn_text and btn_url %}
+            <tr class="email-text-main__item">
+                <td class="email-text-main__btn">
+                    {% include 'emails/messages/partials/button.twig' %}
+                </td>
+            </tr>
+            {% endif %}
+
+            {% if meta_info %}
+            <tr class="email-text-main__item">
+                <td class="email-text-main__meta-info">
+                    {% include 'emails/messages/partials/meta-info-email.twig' %}
+                </td>
+            </tr>
+            {% endif %}
+
+        </table>
+    </td>
+</tr>

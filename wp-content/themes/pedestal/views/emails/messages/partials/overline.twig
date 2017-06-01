@@ -1,0 +1,4 @@
+{% set title = title|default( item.get_primary_story.get_permalink ) %}
+{% set url = url|default( item.get_primary_story.get_the_title ) %}
+
+<h4><a href="{{ url }}">{{ title }}</a></h4>

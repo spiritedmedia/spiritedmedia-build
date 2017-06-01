@@ -174,7 +174,7 @@ input.c-search__field {
   height: auto;
   font-size: $h4-font-size;
   padding: $half-spacing-unit;
-  padding-left: unitize( 40 ); // input icon width
+  padding-left: rem-calc( 40 ); // input icon width
   color: $grey-25;
 
   &,

@@ -1,0 +1,12 @@
+{% if img_src %}
+
+<tr class="email-hero-img {{ classes }}">
+    <td bgcolor="{{ email_background_color }}">
+        <img src="{{ img_src }}"
+            alt="{{ img_alt }}"
+            aria-hidden="true" width="{{ email_container_width }}"
+            border="0" align="center" class="g-img">
+    </td>
+</tr>
+
+{% endif %}

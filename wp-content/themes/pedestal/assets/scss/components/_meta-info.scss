@@ -23,17 +23,6 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
   a {
     @include link-dark;
   }
-
-
-  // Meta info for Original Content
-  [data-original] & {
-    .c-meta-info__img__icon {
-      @if $email {
-        width: $c-meta-info-icon-size;
-        height: $c-meta-info-icon-size;
-      }
-    }
-  } // end [data-original] &
 } // end .c-meta-info
 
 
@@ -197,14 +186,3 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
 .c-meta-info--cluster {
   margin-bottom: $base-spacing-unit;
 }
-
-
-
-
-
-//
-// Email
-// ==========================================================================
-
-
-.c-meta-info--email {}

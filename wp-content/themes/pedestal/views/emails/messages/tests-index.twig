@@ -1,0 +1,13 @@
+{% extends "emails/messages/base-email.twig" %}
+
+{% block content %}
+
+<h1>All Email Templates</h1>
+
+<ol>
+    {% for item in items %}
+    <li><a href="{{ item }}/">{{ item }}</a></li>
+    {% endfor %}
+</ol>
+
+{% endblock %}

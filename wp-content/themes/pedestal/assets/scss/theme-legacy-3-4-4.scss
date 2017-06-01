@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Legacy: <= v3.4.4
  *
- * Version: 5.9.3
+ * Version: 5.10.0
  *
  * Copyright ( c ) 2016 Spirited Media
  */
@@ -21,18 +21,13 @@
 
 @import 'setup-core';
 
+// Vendor
 @import 'sassy-lists/dist/SassyLists';
 
-// stylelint-disable scss/at-import-no-partial-leading-underscore
+// Base
 @import 'base/theme/settings';
-// stylelint-enable scss/at-import-no-partial-leading-underscore
-
-
-/**
- * High-level styles and mixins
- */
-
 @import 'base/global/mixins';
+@import '../base/theme/mixins';
 
 
 

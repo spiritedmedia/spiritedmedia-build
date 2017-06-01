@@ -13,7 +13,6 @@ use Pedestal\Posts\Slots\Slots;
 class Slot_Types extends Types {
 
     protected static $component_support = [
-        'daily_insta' => 'Instagram of the Day',
         'stream' => 'Stream',
     ];
 

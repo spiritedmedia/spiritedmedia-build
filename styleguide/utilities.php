@@ -43,29 +43,6 @@ styleguide_header();
 
           echo '<hr>';
         }
-
-        $classes = [
-          'u-tt-none' => 'as written',
-          'u-tt-upper' => 'in uppercase',
-          'u-tt-lower' => 'in lowercase',
-          'u-tt-capital' => 'in capitalized case',
-        ];
-
-        $texts = [
-          'uppercase' => 'THIS IS TEXT WRITTEN IN ALL UPPERCASE ',
-          'lowercase' => 'this is text written in all lowercase ',
-          'capitalize' => 'This Text Is Written In Capitalization Case ',
-          'normal' => 'This text is written normally ',
-        ];
-
-        foreach ( $classes as $class => $label ) {
-          echo '<p><code>.' . $class . '</code></p>';
-          foreach ( $texts as $desc => $text ) {
-            echo '<p class="' . $class . '">' . $text . ' but should be displayed ' . $label . '.</p>';
-          }
-
-          echo '<hr>';
-        }
       ?>
 
       <p>Our loading spinner&hellip;</p>

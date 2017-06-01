@@ -6,18 +6,18 @@
 
     <div class="form-fields">
         <fieldset>
-            {% include 'partials/emails/form-daily-legend.twig' %}
-            {% include 'partials/emails/form-daily-input-address.twig' %}
-            {% include 'partials/emails/form-honeypot.twig' %}
+            {% include 'partials/email-forms/form-daily-legend.twig' %}
+            {% include 'partials/email-forms/form-daily-input-address.twig' %}
+            {% include 'partials/email-forms/form-honeypot.twig' %}
         </fieldset>
         <button class="btn form-submit right js-form-submit" type="submit">
-            {% include 'partials/emails/form-submit-signup-inner.twig' %}
+            {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
         </button>
         <div class="u-clear-right"></div>
     </div>
 
     <div class="success-message">
-        {% include 'partials/emails/form-daily-subscribed.twig' %}
+        {% include 'partials/email-forms/form-daily-subscribed.twig' %}
     </div>
 
 </form>

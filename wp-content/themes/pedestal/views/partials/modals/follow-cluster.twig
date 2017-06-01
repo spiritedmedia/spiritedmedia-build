@@ -7,11 +7,11 @@
         <h3>Follow this {{ cluster.get_type_name|lower }}</h3>
         <div class="row">
             <label>
-                {% include 'partials/emails/form-follow-cluster-input-address.twig' %}
+                {% include 'partials/email-forms/form-follow-cluster-input-address.twig' %}
             </label>
         </div>
         <input type="hidden" name="cluster-id" value="{{ cluster.get_id }}" />
-        {% include 'partials/emails/form-honeypot.twig' %}
+        {% include 'partials/email-forms/form-honeypot.twig' %}
         <div class="row">
             <button class="btn btn--secondary btn--large form-submit js-form-submit" type="submit" name="Follow">
                 <span class="form-submit__text">Follow</span>

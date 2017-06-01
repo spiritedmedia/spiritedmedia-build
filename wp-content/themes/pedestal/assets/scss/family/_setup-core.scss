@@ -2,12 +2,22 @@
 // Pedestal // Base // SETUP: CORE
 //
 // Set up the basic variables, functions, and libraries we'll need across the
-// project.
+// project. This gets loaded by both the theme and email stylesheets.
 // ==========================================================================
 
 
 // Load Spirited Media configuration from JSON
 @import 'config-sassy.json';
+
+$pedestal-abspath              : '/' + map-get-strict( $spiritedmedia-pedestal, path );
+$pedestal-social-icons-abspath : $pedestal-abspath + '/assets/images/social';
+
+// This allows us to test some assets live on the QA site
+$qa-test                       : false !default;
+$pedestal-live-uri             : map-get-strict( $spiritedmedia-pedestal, liveURI );
+@if $qa-test {
+  $pedestal-live-uri : map-get-strict( $spiritedmedia-pedestal, stagingURI );
+}
 
 // Functions
 @import 'foundation-sites/scss/foundation/functions';
@@ -15,7 +25,3 @@
 
 // Vendor libraries
 @import 'sassy-lists/dist/SassyLists';
-@import 'susy/sass/susy';
-
-// We want Foundation's panel mixin, but we'll supply our own panel classes
-$include-html-panel-classes        : false !default;

@@ -3,6 +3,7 @@
 namespace Pedestal\Posts;
 
 use WP_Post;
+use function Pedestal\Pedestal;
 use Pedestal\Icons;
 use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
@@ -529,18 +530,31 @@ abstract class Post {
      */
     public function get_meta_info_img( $size = 'thumbnail' ) {
         $authors = $this->get_authors();
+
+        $link_classes = '';
+        if ( Pedestal()->is_email() ) {
+            $link_classes = 'email-avatar';
+        }
+
         if ( 1 == count( $authors ) ) {
-            return sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Image|%s">%s</a>',
+            if ( Pedestal()->is_email() ) {
+                $content = $this->get_single_author()->get_image_html( $size );
+            } else {
+                $content = $this->get_single_author()->get_avatar( $size );
+            }
+            return sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Image|%s" class="%s">%s</a>',
                 esc_url( $this->get_single_author()->get_permalink() ),
                 esc_attr( $this->get_single_author()->get_display_name() ),
-                $this->get_single_author()->get_avatar( $size )
+                $link_classes,
+                $content
             );
         } elseif ( 1 < count( $authors ) ) {
             $html  = '<a href="' . esc_url( home_url( '/about/' ) ) . '" data-ga-category="Author" data-ga-label="Image|Placeholder">';
-            $html .= Icons::get_logo( 'logo_icon', 'c-meta-info__img__icon' );
+            $html .= Icons::get_logo( 'logo_icon', 'c-meta-info__img__icon', 40 );
             $html .= '</a>';
             return $html;
         }
+
         return false;
     }
 

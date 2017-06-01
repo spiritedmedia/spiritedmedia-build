@@ -82,13 +82,7 @@ $daily-insta-header-padding-v: $base-spacing-unit / 2;
   //
   // Context: Newsletter
   //
-  &--newsletter {
-    #{$c}__body__text {
-      @if not $email {
-        font-size: $h5-font-size;
-      }
-    }
-  }
+  &--newsletter {}
 
 
   //

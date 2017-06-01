@@ -1,11 +1,13 @@
-@charset 'UTF-8';
-/*!*
- * Pedestal // Emails
- *
- * Version: 4.0.0
- *
- * Copyright ( c ) 2016 Spirited Media
- */
+// ==========================================================================
+// PEDESTAL: EMAIL
+//
+// This is the master Pedestal email stylesheet, to be imported by child themes
+// only.
+// ==========================================================================
+
+
+/* stylelint-disable property-no-unknown, selector-no-type,
+  declaration-no-important */
 
 
 // ==========================================================================
@@ -15,58 +17,410 @@
 
 @import 'setup-core';
 
-
-//
-// Configuration
-// ==========================================================================
-
-
 // Vendor libraries
 @import 'sassy-lists/dist/SassyLists';
 @import 'susy/sass/susy';
 
+// Base
 @import '../base/email/settings';
-
-
-
-
-
-//
-// Foundation Components
-// ==========================================================================
-
-@import 'foundation-sites/scss/normalize';
-@import 'foundation-sites/scss/foundation/components/type';
-@import 'foundation-sites/scss/foundation/components/panels';
-@import 'foundation-sites/scss/foundation/components/tables';
-
-
-
-
-
-//
-// High-level
-// ==========================================================================
-
-
 @import '../base/global/mixins';
-@import '../base/global/general';
-@import '../base/global/main';
-@import '../base/email/general';
+@import '../base/email/mixins';
+@import '../utilities/utilities';
 
 
 
 
 
 // ==========================================================================
-// Pedestal // * Emails * // OBJECTS
+// Pedestal // * Emails * // GENERAL
 // ==========================================================================
 
 
-@import '../components/buttons';
-@import '../objects/rules';
-@import '../objects/icon-text';
-@import '../objects/media';
+@include anchorage;
+
+
+// <body>
+.email-body {
+  margin: 0;
+  mso-line-height-rule: exactly;
+}
+
+// <center>
+.email-body-inner {
+  width: 100%;
+  background-color: $email-background-color;
+  text-align: left;
+}
+
+.email-header-pre-text {
+  display: none;
+  font-size: 1px;
+  line-height: 1px;
+  max-height: 0;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  mso-hide: all;
+  font-family: $font-family-sans-serif;
+}
+
+.email-container {
+  max-width: $email-container-width;
+  margin: auto;
+}
+
+.email-stream-item {
+  border-bottom: $email-divider-std;
+  padding-top: $email-stream-item-spacing-v;
+  padding-bottom: $email-stream-item-spacing-v;
+}
+
+.email-stream-item--heading {
+  padding: ($base-spacing-unit * 2) $email-container-spacing-hoz 0;
+  text-transform: uppercase;
+  border-bottom: 0;
+}
+
+
+
+
+
+//
+// Headings
+// ==========================================================================
+
+.email-heading--title,
+.email-heading--minor {
+  @include email-heading-type;
+
+  text-transform: uppercase;
+}
+
+.email-heading--title {}
+
+.email-heading--headline {
+  @include email-heading-type;
+}
+
+.email-heading--minor {
+  color: $dimmed-text-color;
+}
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Emails * // HEADER
+// ==========================================================================
+
+.email-header {
+  width: 100%;
+  max-width: $email-container-width;
+  background-color: $primary-color;
+}
+
+.email-header__inner {
+  padding: ($base-spacing-unit * 2) 0;
+  text-align: center;
+}
+
+.email-header__logo {
+  @include email-body-type;
+
+  height: auto;
+}
+
+
+
+
+
+//
+// Top Bar
+// ==========================================================================
+
+.email-top-bar {}
+
+.email-top-bar__inner {
+  padding: ($base-spacing-unit * 2) $email-container-spacing-hoz;
+
+  > table {
+    width: 100%;
+  }
+}
+
+.email-top-bar__date,
+.email-top-bar__browser-link {
+  @include email-body-type;
+
+  &,
+  a {
+    color: $dimmed-text-color;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.email-top-bar__date {}
+
+.email-top-bar__browser-link {
+  text-align: right;
+}
+
+
+
+
+
+//
+// Content Header
+// ==========================================================================
+
+.email-content-header {
+  @include email-body-type;
+}
+
+.email-content-header__inner {
+  padding: ($base-spacing-unit * 2) $email-container-spacing-hoz;
+  text-align: center;
+}
+
+.email-content-header__text {
+  padding-bottom: $base-spacing-unit;
+
+  // The divider should only look like a divider when it follows the default
+  // content header text
+  + .email-content-header__divider {
+    @include dash-rule;
+  }
+}
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Emails * // LAYOUT MODULES
+// ==========================================================================
+
+
+// Hero image flush
+.email-hero-img {
+  > td {
+    padding-bottom: $base-spacing-unit * 2;
+  }
+
+  img {
+    @include email-img-base;
+
+    max-width: $email-container-width;
+  }
+}
+
+
+
+
+
+//
+// Single-Column Main Text Layout
+// ==========================================================================
+
+.email-text-main {
+  padding-bottom: $base-spacing-unit * 2;
+}
+
+.email-text-main__item {
+  > td {
+    padding: 0 $email-container-spacing-hoz $base-spacing-unit;
+  }
+
+  &:last-child {
+    > td {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.email-text-main__heading {}
+
+.email-text-main__body,
+.email-text-main__btn {
+  @include email-body-type;
+}
+
+.email-text-main__body {
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+
+.email-text-main__btn {}
+
+.email-text-main__meta-info {}
+
+
+
+
+//
+// Image Overlaid with Text
+// ==========================================================================
+
+.email-text-overlay {}
+
+.email-text-overlay__inner {
+  text-align: center;
+  background-position: center center !important;
+  background-size: cover !important;
+}
+
+.email-text-overlay__body {
+  max-width: 500px;
+  margin: auto;
+}
+
+.email-text-overlay__body__inner {
+  @include email-body-type;
+
+  text-align: center;
+  padding: ($base-spacing-unit * 4) $base-spacing-unit;
+  color: #ffffff;
+
+  p {
+    margin: 0;
+  }
+}
+
+
+
+
+//
+// Grid+Column Layouts
+// ==========================================================================
+
+.email-grid {}
+
+.email-grid__inner {
+  max-width: $email-container-width-inner;
+}
+
+.email-grid__column {
+  @include email-grid-column;
+}
+
+.email-grid__column__inner {
+  padding: $base-spacing-unit;
+
+  > table {
+    // text-align: left;
+    // font-size: 14px;
+  }
+}
+
+.email-grid__column__img {
+  @include email-img-base;
+}
+
+.email-grid__column__text {
+  @include email-body-type;
+
+  padding-top: $base-spacing-unit;
+
+  p {
+    margin: 0;
+  }
+}
+
+// Two column layout
+.email-grid--2up {
+  $column-max-width: 330px;
+
+  .email-grid__column {
+    min-width: 200px;
+    max-width: $column-max-width;
+  }
+
+  .email-grid__column__img {
+    max-width: $column-max-width - ($base-spacing-unit * 2);
+  }
+}
+
+// Three column layout
+.email-grid--3up {
+  $column-max-width: 33.3333333%;
+
+  .email-grid__column {
+    min-width: 220px;
+    max-width: $column-max-width;
+  }
+
+  .email-grid__column__img {
+    max-width: 200px;
+  }
+}
+
+
+
+
+
+//
+// Media Object
+// ==========================================================================
+
+.email-media-layout {
+  padding: $base-spacing-unit 0;
+
+  > table {
+    max-width: $email-container-width-inner;
+  }
+}
+
+.email-media-layout__inner {
+  font-size: 0;
+  padding: $base-spacing-unit 0;
+}
+
+.email-media-layout__img {
+  @include email-grid-column;
+
+  max-width: 200px;
+  min-width: 160px;
+}
+
+.email-media-layout__img__inner {
+  padding: $base-spacing-unit;
+  padding-top: 0;
+
+  img {
+    @include email-img-base;
+
+    max-width: 200px;
+  }
+}
+
+.email-media-layout__body {
+  @include email-grid-column;
+
+  max-width: 66.66%;
+  min-width: 320px;
+}
+
+.email-media-layout__body__inner {
+  padding: $base-spacing-unit $base-spacing-unit 0;
+}
+
+.email-media-layout__body__heading {
+  @include email-heading-type;
+
+  margin-bottom: $base-spacing-unit;
+}
+
+.email-media-layout__body__text {
+  margin: 0;
+  margin-bottom: $base-spacing-unit;
+}
 
 
 
@@ -77,38 +431,294 @@
 // ==========================================================================
 
 
-@import '../components/panels';
-@import '../components/type-headings';
-@import '../components/stream';
-@import '../components/overview';
-@import '../components/header';
-@import '../components/newsletter';
-@import '../components/figure';
-@import '../components/tables';
-@import '../components/icons';
-@import '../components/story';
-@import '../components/event';
-@import '../components/meta-info';
-@import '../components/avatar';
-@import '../components/shortcodes';
-@import '../components/slots';
-@import '../components/daily-insta';
-@import '../components/footer';
+//
+// Meta Info
+// ==========================================================================
+
+.email-meta-info {
+  margin: 0 !important;
+  max-width: $email-container-width-inner;
+
+  a {
+    color: $body-font-color;
+    text-decoration: none;
+  }
+}
+
+.email-meta-info__item {
+  vertical-align: middle;
+}
+
+.email-meta-info__img {
+  $_meta-info-img-size: $base-line-height * 2;
+
+  width: $_meta-info-img-size;
+
+  &,
+  img {
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    @include email-img-base;
+  }
+
+  .email-avatar {
+    &,
+    img {
+      display: block !important;
+      width: $_meta-info-img-size !important;
+      border-radius: 999px;
+    }
+  }
+
+}
+
+.email-meta-info__text {
+  max-width: 80%;
+
+  &,
+  > table {
+    margin: 0 !important;
+    margin-left: $base-spacing-unit !important;
+  }
+}
+
+.email-meta-info__source-name,
+.email-meta-info__timestamp {
+  @include email-body-type;
+
+  font-size: $small-font-size;
+  text-transform: uppercase;
+}
+
+.email-meta-info__source-name {
+  line-height: 1;
+}
+
+.email-meta-info__timestamp {}
 
 
-/**
- * Email-specific styles
- */
 
-@import '../components/email';
+
+
+//
+// Event
+// ==========================================================================
+
+.email-event {
+  padding-left: $email-container-spacing-hoz;
+  padding-right: $email-container-spacing-hoz;
+}
+
+.email-event__heading {}
+
+.email-event__detail {
+  > td {
+    border-bottom: $email-divider-std;
+    padding-top: $base-spacing-unit;
+    padding-bottom: $base-spacing-unit;
+  }
+
+  &:last-child > td {
+    border: 0;
+  }
+}
+
+.email-event__detail__label {
+  padding-bottom: $base-spacing-unit / 2;
+}
+
+.email-event__detail__content {
+  @include email-body-type;
+}
+
+.email-event__btn {
+  > td {
+    padding-top: $base-spacing-unit;
+  }
+}
+
+
+
+
+
+//
+// Instagram of the Day
+// ==========================================================================
+
+.email-daily-insta {
+  text-align: center;
+  border-bottom: $email-divider-wide;
+}
+
+.email-daily-insta__heading h2,
+.email-daily-insta__meta {
+  text-align: center;
+}
+
+.email-daily-insta__heading {
+  padding-top: $base-spacing-unit * 2;
+
+  h2 {
+    padding-bottom: $base-spacing-unit;
+  }
+}
+
+.email-daily-insta__divider {
+  @include dash-rule;
+
+  margin-bottom: $base-spacing-unit;
+}
+
+.email-daily-insta__meta {
+  @include email-body-type;
+}
 
 
 
 
 
 // ==========================================================================
-// Pedestal // * Emails * // UTILITIES
+// Pedestal // Components // SLOTS
 // ==========================================================================
 
 
-@import '../utilities/utilities';
+.email-slot {}
+
+.email-slot__item {
+  padding: $base-spacing-unit 0;
+
+  > table {
+    margin: 0;
+  }
+}
+
+.email-slot__label,
+.email-slot__img {
+  display: inline-block;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.email-slot__label {
+  font-family: $font-family-sans-serif;
+  font-size: $small-font-size;
+  line-height: $base-line-height;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $dimmed-text-color;
+  margin-right: $email-slot-item-pd;
+}
+
+.email-slot__img {
+  img {
+    max-width: 150px;
+    display: block;
+  }
+}
+
+// Slot Item Type: Sponsors & Partners
+.email-slot--sponsors-partners {}
+
+[data-slot-position*="shortcode"],
+[data-slot-position*="newsletter_item"],
+[data-slot-position*="component"] {
+  .email-slot__img {
+    img {
+      max-height: 50px;
+    }
+  }
+}
+
+[data-slot-position*="lead"],
+[data-slot-position*="component"] {
+  &.email-slot {
+    text-align: center;
+  }
+}
+
+
+// Supports premium images
+[data-slot-supports-premium] {
+  .email-slot__label {
+    margin-bottom: 0.25rem;
+  }
+
+  .email-slot__img {
+    img {
+      max-width: 100%;
+      max-height: 111px;
+    }
+  }
+}
+
+[data-slot-position="email_lead"] {}
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Emails * // FOOTER
+// ==========================================================================
+
+
+.email-footer {
+  padding: 0 ($base-spacing-unit * 2) ($base-spacing-unit * 4);
+  width: 100%;
+  font-family: $font-family-sans-serif;
+  font-size: $small-font-size;
+  line-height: 1.5;
+  text-align: center;
+  color: $dimmed-text-color;
+}
+
+.email-share-icons {
+  th {
+    padding-top: $base-spacing-unit * 4;
+    padding-bottom: $base-spacing-unit;
+
+    h2 {
+      font-family: $font-family-sans-serif;
+      font-size: $email-heading-size;
+      line-height: $base-line-height;
+      text-transform: uppercase;
+      color: $dimmed-text-color;
+      margin: 0;
+    }
+  }
+
+  td {
+    padding-left: $base-spacing-unit;
+    padding-right: $base-spacing-unit;
+  }
+
+  img {
+    display: block;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Emails * // TYPE-SPECIFIC
+// ==========================================================================
+
+
+.email-follow-update {
+  .email-content-header {
+    border-bottom: $email-divider-wide;
+  }
+}
+
+.email-follow-update__btn {
+  padding-left: $email-container-spacing-hoz;
+  padding-right: $email-container-spacing-hoz;
+}

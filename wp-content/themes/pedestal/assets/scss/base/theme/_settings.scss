@@ -3,10 +3,12 @@
 // ==========================================================================
 
 
-@import 'units';
-@import '../../base/global/settings';
+//
+// Configuration
+// ==========================================================================
 
-$email: false;
+
+@import '../../base/global/settings';
 
 // Handle block grids ourselves to reduce bloat
 $include-html-block-grid-classes: false;
@@ -16,29 +18,200 @@ $include-html-block-grid-classes: false;
 
 
 //
-// Forms
+// Units
 // ==========================================================================
 
 
-$input-font-color : rgba( 0, 0, 0, 0.75 ); // !default
+$base-font-size    : rem-calc( 16px );
+$base-line-height  : rem-calc( 24px );
+
+$base-spacing-unit : $base-font-size;
+$half-spacing-unit : $base-spacing-unit / 2;
 
 
 
 
 
 //
-// Offcanvas Menu
+// Typography
 // ==========================================================================
 
 
-// Off Canvas Menu Variables
-$off-canvas-width        : rem-calc( 275 );
-$off-canvas-bg           : $dark-prussian-blue;
-$off-canvas-bg-hover     : $prussian-blue;
+$body-font-size           : 1em; // 1em; // 1em
+$body-line-height         : $base-line-height / $base-font-size;
 
-// Off Canvas Menu List Variables
-$off-canvas-link-padding : 0.7rem 2rem;
-$off-canvas-link-color   : $white;
+$h1-font-size             : $base-font-size * 2.75; // 44px
+$h2-font-size             : $base-font-size * 2.3125; // 37px
+$h3-font-size             : $base-font-size * 1.6875; // 27px
+$h4-font-size             : $base-font-size * 1.375; // 22px
+$h5-font-size             : $base-font-size * 1.125; // 18px
+$h6-font-size             : $base-font-size;
 
-// Off Canvas Search Form
-$off-canvas-search-form-icon-color: rgba( 0, 0, 0, 0.3 );
+// Header size reduction on small screens
+$h1-font-reduction        : rem-calc( 10 );
+$h2-font-reduction        : rem-calc( 10 );
+$h3-font-reduction        : rem-calc( 5 );
+$h4-font-reduction        : rem-calc( 5 );
+$h5-font-reduction        : rem-calc( 0 );
+$h6-font-reduction        : rem-calc( 0 );
+
+$small-font-size          : $base-font-size * 0.8;
+
+$header-font-weight       : 600;
+$header-line-height       : 1.2;
+$header-top-margin        : 0;
+
+$paragraph-margin-bottom  : rem-calc( 20 );
+$list-side-margin         : halve( $base-font-size );
+$list-ordered-side-margin : $list-side-margin;
+$list-margin-bottom       : $paragraph-margin-bottom;
+
+$site-header-pd-v         : $base-spacing-unit;
+
+$heading-minor-f-z        : $base-font-size;
+
+$input-font-color         : rgba( 0, 0, 0, 0.75 ); // !default
+
+
+
+
+
+//
+// Iconography
+// ==========================================================================
+
+
+$icon-diameter         : rem-calc( 40px );
+$icon-diameter--med    : rem-calc( 32px );
+$icon-diameter--sm     : rem-calc( 28px );
+$icon-diameter--xs     : rem-calc( 20px );
+$icon-spacing          : $base-spacing-unit / 2;
+
+$avatar-size-sm        : $icon-diameter--sm;
+
+
+
+
+
+//
+// Z-Index
+// ==========================================================================
+
+
+$enabled-z-index   : true;
+
+$z-index-0         : 0;
+$z-index-1         : 9;
+$z-index-2         : 99;
+$z-index-3         : 999;
+$z-index-4         : 9999;
+$z-index-5         : 99999;
+
+$z-action-bar      : $z-index-4;
+$z-c-meta-bar      : $z-index-2;
+$z-entity-body     : $z-index-2;
+$z-stream-item-img : $z-index-1;
+$z-off-canvas-wrap : $z-index-1;
+
+// @TODO
+//
+// Somehow this variable specifically controls the reveal modal z-index even
+// though in no way does its name indicate that... thanks Foundation! Also, it's
+// not overrideable... no `!default` flag. So leaving it here temporarily in the
+// hopes that one day Foundation will fix the issue but until then we'll need to
+// use another variable in its place...
+$z-index-base      : $z-index-5;
+// And here's the replacement...
+$z-reveal-modal    : $z-index-5;
+
+
+
+
+
+//
+// Grid / Media Queries
+// ==========================================================================
+
+
+$row-width           : rem-calc( 1060 );
+$column-gutter       : rem-calc( 30 ); // !default
+
+$content-wrapper-m-t : $base-spacing-unit !default;
+$content-wrapper-m-b : ( $base-spacing-unit * 4 ) !default;
+
+$screen              : 'only screen'; // !default
+
+// Here we define the lower and upper bounds for each media size
+$small-range         : ( 0, 40em ); /* 0, 640px */
+$medium-range        : ( 40.063em, 64em ); /* 641px, 1024px */
+$large-range         : ( 64.063em, 90em ); /* 1025px, 1440px */
+$xlarge-range        : ( 90.063em, 120em ); /* 1441px, 1920px */
+$xxlarge-range       : 120.063em; /* 1921px */
+
+
+
+
+
+//
+// Main Element
+// ==========================================================================
+
+
+$main-margin-top           : $base-spacing-unit;
+$main-margin-bottom        : $base-spacing-unit * 2;
+$main-header-margin-bottom : $base-spacing-unit * 2;
+$main-title-margin-bottom  : ( $base-spacing-unit * 4 ) !default;
+$main-subtitle-font-weight : 400 !default;
+$main-subtitle-margin-top  : ( $base-spacing-unit * 1.2 ) !default;
+
+$main-rail-item-pd         : $half-spacing-unit !default;
+$main-rail-f-z             : $small-font-size !default;
+
+
+
+
+
+//
+// Single Page
+// ==========================================================================
+
+
+$page-bg-c      : $white;
+$page-bg-c--alt : $sea-foam-green;
+$page-main-m-t  : triple( $base-spacing-unit );
+
+
+
+
+
+//
+// Miscellaneous
+// ==========================================================================
+
+
+// Overviews
+$overview-thumbnail-img-size    : rem-calc( 150px );
+
+// Border dividers
+$border-divider-spacing         : ( $base-spacing-unit * 1.5 ) !default;
+$border-divider-spacing--inline : halve( $base-spacing-unit ) !default;
+$border-divider-color           : $border-std-color !default;
+
+// Forms
+$input-font-color               : rgba( 0, 0, 0, 0.75 ); //
+
+// Spinkit loading indicator
+$spinkit-spinner-margin         : 16px auto;
+$spinkit-size                   : 32px;
+$spinkit-spinner-color          : $grey-80;
+
+// Horizontal explosion
+$hoz-explode-side               : 600rem;
+
+// Hanging quotation mark nudge
+$nudge-punctuation              : -0.4em;
+
+// WordPress admin bar
+$wp-admin-bar-breakpoint        : 'only screen and (min-width: 783px)';
+$wp-admin-bar-height-mobile     : rem-calc( 46 );
+$wp-admin-bar-height-desktop    : rem-calc( 32 );

@@ -268,13 +268,6 @@ $c: '.c-stream';
       @include h-size(4);
 
       margin-bottom: $base-spacing-unit;
-
-      @if $email {
-        @include h-size(3);
-
-        font-weight: 600;
-      }
-
     }
 
     #{$c}__item__description {

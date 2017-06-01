@@ -1,26 +1,20 @@
 // ==========================================================================
-// Pedestal // UTILITIES
+// Pedestal // UTILITIES -- Global
 // ==========================================================================
 
 
 // stylelint-disable declaration-no-important
 
 
-.u-cf {
-  @include clearfix;
-}
+.u-clear-both { clear: both; }
+.u-clear-left { clear: left; }
+.u-clear-right { clear: right; }
 
-.u-clear-both {
-  clear: both;
-}
+.u-float-none { float: none; }
+.u-float-left { float: left; }
+.u-float-right { float: right; }
 
-.u-clear-left {
-  clear: left;
-}
 
-.u-clear-right {
-  clear: right;
-}
 
 
 //
@@ -34,28 +28,10 @@
 }
 
 
-// Heading sizing
-.u-size-h1 { font-size: $h1-font-size; }
-.u-size-h2 { font-size: $h2-font-size; }
-.u-size-h3 { font-size: $h3-font-size; }
-.u-size-h4 { font-size: $h4-font-size; }
-.u-size-h5 { font-size: $h5-font-size; }
-.u-size-h6 { font-size: $h6-font-size; }
-
-
-// Hanging punctuation margin nudge
-.u-hang-punc {
-  &::before {
-    margin-left: $nudge-punctuation;
-  }
-}
-
-
-// Text transform
-.u-tt-upper   { text-transform: uppercase; }
-.u-tt-lower   { text-transform: lowercase; }
-.u-tt-capital { text-transform: capitalize; }
-.u-tt-none    { text-transform: none; }
+// Text alignment
+.u-text-align--left { text-align: left; }
+.u-text-align--center { text-align: center; }
+.u-text-align--right { text-align: right; }
 
 
 // Wrap long text strings
@@ -67,14 +43,3 @@
   word-break: break-word;
   hyphens: auto;
 }
-
-
-
-
-
-//
-// Loading Spinners
-// ==========================================================================
-
-
-@import 'spinkit/scss/spinners/7-three-bounce';

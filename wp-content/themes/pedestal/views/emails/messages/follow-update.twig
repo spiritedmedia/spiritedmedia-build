@@ -1,0 +1,34 @@
+{% extends "emails/messages/base-email.twig" %}
+
+{% set content_header %}
+You are receiving emails<br>
+with updates about<br>
+<strong>&ldquo;<a href="{{ item.get_the_permalink }}">{{ item.get_the_title }}</a>&rdquo;</strong>
+{% endset %}
+
+{% block content %}
+
+{% set stream = true %}
+{% for item in entities %}
+    {% set reverse = false %}
+    {% if loop.index is even %}
+        {# Uncomment the following to alternate left/right img alignment #}
+        {# {% set reverse = true %} #}
+    {% endif %}
+
+    {% include [
+        'emails/messages/partials/stream/' ~ item.get_type ~ '.twig',
+        'emails/messages/partials/stream/entity.twig'
+    ] %}
+{% endfor %}
+
+<tr>
+    <td class="email-follow-update__btn email-stream-item">
+        {% include 'emails/messages/partials/button.twig' with {
+            btn_text: 'Full Story on ' ~ site.name,
+            btn_url: item.get_the_permalink
+        } %}
+    </td>
+</tr>
+
+{% endblock %}

@@ -38,7 +38,7 @@
 
       // stylelint-disable-next-line selector-no-type
       > img {
-        height: unitize( $base-spacing-unit * 6 );
+        height: $base-spacing-unit * 6;
 
         @media #{$small-only} {
           margin-left: auto;

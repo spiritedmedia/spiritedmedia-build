@@ -1,0 +1,84 @@
+{% set reverse = reverse|default( false ) %}
+
+{% set dir = 'ltr' %}
+{% if reverse %}
+    {% set dir = 'rtl' %}
+{% endif %}
+
+<tr>
+    <td dir="{{ dir }}" class="email-media-layout" bgcolor="{{ email_background_color }}"
+        align="center" height="100%" valign="top" width="100%">
+        <!--[if mso]>
+        <table {{ email_table_atts }} align="center" width="{{ email_container_width_inner }}">
+        <tr>
+        <td align="center" valign="top" width="{{ email_container_width_inner }}">
+        <![endif]-->
+        <table {{ email_table_atts }} align="center" width="100%">
+            <tr>
+                <td class="email-media-layout__inner" align="center" valign="top">
+                    <!--[if mso]>
+                    <table {{ email_table_atts }} align="center" width="{{ email_container_width_inner }}">
+                    <tr>
+                    <td align="left" valign="top" width="220">
+                    <![endif]-->
+                    <div class="email-media-layout__img stack-column">
+                        <table {{ email_table_atts }} width="100%">
+                            <tr>
+                                <td dir="{{ dir }}" class="email-media-layout__img__inner">
+                                    <img src="{{ img_url }}" aria-hidden="true" border="0"
+                                        width="200" alt="{{ alt_text }}" class="center-on-narrow">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--[if mso]>
+                    </td>
+                    <td align="left" valign="top" width="440">
+                    <![endif]-->
+                    <div class="email-media-layout__body stack-column">
+                        <table {{ email_table_atts }} width="100%">
+                            <tr>
+                                <td dir="{{ dir }}" class="email-media-layout__body__inner center-on-narrow">
+
+                                    {% if heading_text %}
+                                    <h2 class="email-media-layout__body__heading">
+                                        {% if heading_url %}
+                                        <a href="{{ heading_url }}">
+                                        {% endif %}
+
+                                            {{ heading_text }}
+
+                                        {% if heading_url %}
+                                        </a>
+                                        {% endif %}
+                                    </h2>
+                                    {% endif %}
+
+                                    {% if body_text %}
+                                        <p class="email-media-layout__body__text">{{ body_text }}</p>
+                                    {% endif %}
+
+                                    {% if btn_text and btn_url %}
+                                        {% include 'emails/messages/partials/button.twig' with {
+                                            classes: 'center-on-narrow u-float-left'
+                                        } %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--[if mso]>
+                    </td>
+                    </tr>
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+        </table>
+        <!--[if mso]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+    </td>
+</tr>

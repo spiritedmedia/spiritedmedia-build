@@ -1,0 +1,49 @@
+{% if columns == 2 or columns == 3 %}
+
+{% set grid_inner_width = email_container_width - 10 * 2 %}
+
+{% set column_min_width = 200 %}
+{% set column_max_width = 310 %}
+{% set column_mso_width = 330 %}
+{% if columns == 3 %}
+    {% set column_min_width = 160 %}
+    {% set column_max_width = 200 %}
+    {% set column_mso_width = 220 %}
+{% endif %}
+<tr>
+    <td class="email-grid--{{ columns }}up email-grid"
+        bgcolor="{{ email_background_color }}" align="center" height="100%"
+        valign="top" width="100%">
+        <!--[if mso]>
+        <table {{ email_table_atts }} align="center" width="{{ grid_inner_width }}">
+        <tr>
+        <td align="center" valign="top" width="{{ grid_inner_width }}">
+        <![endif]-->
+        <table class="email-grid__inner" {{ email_table_atts }} align="center" width="100%">
+            <tr>
+                <td align="center" valign="top" style="font-size:0;">
+                    <!--[if mso]>
+                    <table {{ email_table_atts }} align="center" width="{{ grid_inner_width }}">
+                    <tr>
+                    <![endif]-->
+
+                    {% for index in range(1, columns) %}
+                        hello
+                        {% include 'emails/messages/partials/layouts/column.twig' %}
+                    {% endfor %}
+                    <!--[if mso]>
+                    </tr>
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+        </table>
+        <!--[if mso]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+    </td>
+</tr>
+
+{% endif %}

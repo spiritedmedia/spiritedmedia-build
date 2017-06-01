@@ -1,0 +1,37 @@
+{% if img_src and alt_text %}
+
+<!--[if mso]>
+<td align="left" valign="top" width="{{ column_mso_width }}">
+<![endif]-->
+<div class="email-grid__column stack-column">
+
+    <table {{ email_table_atts }} width="100%">
+        <tr>
+            <td class="email-grid__column__inner">
+                <table {{ email_table_atts }} width="100%">
+                    <tr>
+                        <td>
+                            <img class="email-grid__column__img center-on-narrow"
+                                src="{{ img_src }}" alt="{{ alt_text }}" width="{{ column_min_width }}"
+                                border="0" aria-hidden="true">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="email-grid__column__text stack-column-center">
+                            <p style="margin: 0;"></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<!--[if mso]>
+</td>
+{% if not loop.last %}
+<td align="left" valign="top" width="220">
+{% endif %}
+<![endif]-->
+
+{% endif %}

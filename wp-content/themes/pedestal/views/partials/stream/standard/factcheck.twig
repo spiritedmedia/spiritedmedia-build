@@ -5,7 +5,7 @@
 
     <div class="c-stream__item__inner  c-overview--factcheck  c-overview  o-media  o-media--responsive">
 
-        {% if item.get_statement_img and not is_email %}
+        {% if item.get_statement_img %}
         {% include 'partials/stream/factcheck-img.twig' %}
         {% endif %}
 
@@ -25,7 +25,7 @@
             {% endif %}
         </div>
 
-        {% include 'partials/meta-info/meta-info.twig' %}
+        {% include 'partials/meta-info/meta-info-stream.twig' %}
 
     </div>
 

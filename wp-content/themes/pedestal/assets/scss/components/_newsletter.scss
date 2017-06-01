@@ -14,12 +14,4 @@
       width: 0;
     }
   }
-
-
-  @if $email {
-    .c-main__subtitle {
-      margin-bottom: $base-spacing-unit * 2;
-      font-size: $h5-font-size;
-    }
-  }
 }

@@ -15,11 +15,6 @@
   > .o-icon-text__icon {
     margin-right: $icon-spacing;
     margin-left: 0;
-
-    @if $email {
-      padding-bottom: $base-spacing-unit / 4;
-    }
-
   }
 
   > .o-icon-text__text {}

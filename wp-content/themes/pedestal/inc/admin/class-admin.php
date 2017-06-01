@@ -99,7 +99,6 @@ class Admin {
         add_action( 'admin_notices', [ $this, 'action_admin_notice_maintenance_mode' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_excerpt_required' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_locality_type_required' ] );
-        add_action( 'admin_notices', [ $this, 'action_admin_notice_mandrill_failure' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_unembeddable_url' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_slot_item_defaults_missing' ] );
 
@@ -407,14 +406,6 @@ class Admin {
     public function action_admin_notice_locality_type_required() {
         $message = 'Please set the Locality Type in the field below!';
         self::handle_admin_notice_error( 'locality_type_required', $message );
-    }
-
-    /**
-     * Display admin notice if the Mandrill API responds with a failure code
-     */
-    public function action_admin_notice_mandrill_failure() {
-        $message = 'Mandrill API responded with error code {GET_VAR}. Email still may have sent. Check API logs.';
-        self::handle_admin_notice_error( 'mandrill_resp', $message );
     }
 
     /**

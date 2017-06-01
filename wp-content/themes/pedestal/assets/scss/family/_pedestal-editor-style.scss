@@ -1,11 +1,9 @@
-@charset 'UTF-8';
-/*!*
- * Pedestal // Editor Style
- *
- * Version: 4.0.5
- *
- * Copyright ( c ) 2016 Spirited Media
- */
+// ==========================================================================
+// PEDESTAL: EDITOR STYLE
+//
+// This is the master Pedestal editor style stylesheet, to be imported by child
+// themes only.
+// ==========================================================================
 
 
 // stylelint-disable
@@ -50,8 +48,8 @@
 
 
 @import '../base/global/mixins';
-@import '../base/global/general';
-@import '../base/global/main';
+@import '../base/theme/mixins';
+@import '../base/theme/general';
 
 
 
@@ -87,6 +85,7 @@
 // ==========================================================================
 
 
+@import '../components/main';
 @import '../components/type-headings';
 @import '../components/overview';
 @import '../components/figure';

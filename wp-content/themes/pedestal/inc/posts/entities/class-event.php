@@ -125,13 +125,31 @@ class Event extends Entity {
     }
 
     /**
+     * Get the more info link URL
+     *
+     * @return string URL
+     */
+    public function get_details_link_url() {
+        return $this->get_fm_field( 'event_link', 'url' );
+    }
+
+    /**
+     * Get the more info link text
+     *
+     * @return string
+     */
+    public function get_details_link_text() {
+        return $this->get_fm_field( 'event_link', 'text' );
+    }
+
+    /**
      * Get the link to more info
      *
      * @return string
      */
     public function get_details_link() {
-        $url = $this->get_fm_field( 'event_link', 'url' );
-        $text = $this->get_fm_field( 'event_link', 'text' );
+        $url = $this->get_details_link_url();
+        $text = $this->get_details_link_text();
         if ( $url && $text ) {
             $out = '<p class="c-details-table__link">';
             $out .= '<a href="' . esc_url( $url ) . '" class="c-details-table__link__btn" target="_blank"';

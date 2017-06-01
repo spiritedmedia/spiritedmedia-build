@@ -1,0 +1,41 @@
+{% set event_details = {
+    'What': item.get_what,
+    'Where': item.get_venue_name ~ ' at ' ~ item.get_address,
+    'When': item.get_when,
+    'How Much': item.get_cost
+} %}
+
+<tr>
+    <td class="email-event email-stream-item email-stream-item--event" bgcolor="{{ email_background_color }}">
+        <table {{ email_table_atts }} width="100%">
+
+            <tr class="email-event__heading">
+                <td>
+                    {% include 'emails/messages/partials/item-title.twig' %}
+                </td>
+            </tr>
+
+            {{ ped_slot( 'newsletter_item' ) }}
+
+            <tr class="email-event__details">
+                <td>
+                    <table {{ email_table_atts }} width="100%">
+                        {% for label, content in event_details %}
+                        {% include 'emails/messages/partials/stream/event-detail.twig' %}
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="email-event__btn">
+                <td>
+                    {% include 'emails/messages/partials/button.twig' with {
+                        btn_text: item.get_details_link_text,
+                        btn_url: item.get_details_link_url
+                    } %}
+                </td>
+            </tr>
+
+        </table>
+    </td>
+</tr>

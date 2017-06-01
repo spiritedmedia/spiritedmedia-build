@@ -5,7 +5,7 @@
 
     <div class="c-stream__item__inner  c-overview--thumbnail-crop  c-overview  o-media  o-media--responsive">
 
-        {% if item.has_featured_image and not is_email %}
+        {% if item.has_featured_image %}
         {% include 'partials/stream/item-img.twig' with {'classes': 'o-media__img'} %}
         {% endif %}
 
@@ -19,7 +19,7 @@
             {% include 'partials/item-title.twig' %}
         </div>
 
-        {% include 'partials/meta-info/meta-info.twig' %}
+        {% include 'partials/meta-info/meta-info-stream.twig' %}
 
     </div>
 

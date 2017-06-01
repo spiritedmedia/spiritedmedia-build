@@ -17,37 +17,31 @@
 // ==========================================================================
 
 
-@if not $email {
+.user-grid {
+  @include no-bullet-custom;
 
+  /**
+   * Handle block grid mixins ourselves to reduce bloat
+   */
 
-  .user-grid {
-    @include no-bullet-custom;
+  @include block-grid( $per-row: 1, $include-spacing: false, $base-style: true );
 
-    /**
-     * Handle block grid mixins ourselves to reduce bloat
-     */
+  @media #{$medium-up} {
+    @include block-grid( $per-row: 2, $include-spacing: false, $base-style: false );
+  }
 
-    @include block-grid( $per-row: 1, $include-spacing: false, $base-style: true );
-
-    @media #{$medium-up} {
-      @include block-grid( $per-row: 2, $include-spacing: false, $base-style: false );
-    }
-
-    @media #{$large-up} {
-      @include block-grid( $per-row: 3, $include-spacing: false, $base-style: false );
-    }
-
-
-
-    .c-user-card {
-      padding: $base-spacing-unit;
-      text-align: center;
-    }
-
+  @media #{$large-up} {
+    @include block-grid( $per-row: 3, $include-spacing: false, $base-style: false );
   }
 
 
-} // end @if not $email
+
+  .c-user-card {
+    padding: $base-spacing-unit;
+    text-align: center;
+  }
+
+}
 
 
 

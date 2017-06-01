@@ -3,71 +3,19 @@
 // ==========================================================================
 
 
-@import 'units';
-
-
-//
-// Paths
-// ==========================================================================
-
-
-$pedestal-abspath              : '/' + map-get-strict( $spiritedmedia-pedestal, path );
-$pedestal-social-icons-abspath : $pedestal-abspath + '/assets/images/social';
-
-
-// This allows us to test some assets live on the QA site
-$qa-test                       : false !default;
-$pedestal-live-uri             : map-get-strict( $spiritedmedia-pedestal, liveURI );
-@if $qa-test {
-  $pedestal-live-uri : map-get-strict( $spiritedmedia-pedestal, stagingURI );
-}
-
-
 
 
 
 //
-// General
+// Typography
 // ==========================================================================
 
 
-$border-offset            : -( unitize( 1px ) ) !default;
+$font-family-sans-serif   : "Source Sans Pro", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif !default;
+$font-family-serif        : "PT Serif", Georgia, Cambria, "Times New Roman", Times, serif !default;
 
-$body-font-size           : ( ( $base-font-size / $base-font-size-reset ) * 1em ) !default; // 1em
-$body-line-height         : ( $base-line-height / $base-font-size ) !default; // 1.5 // !default
-
-$font-family-sans-serif   : 'Source Sans Pro', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif !default;
-$font-family-serif        : 'PT Serif', Georgia, Cambria, 'Times New Roman', Times, serif !default;
-
-$h1-font-size             : unitize( $base-font-size * 2.75 ) !default; // 44px
-$h2-font-size             : unitize( $base-font-size * 2.3125 ) !default; // 37px
-$h3-font-size             : unitize( $base-font-size * 1.6875 ) !default; // 27px
-$h4-font-size             : unitize( $base-font-size * 1.375 ) !default; // 22px
-$h5-font-size             : unitize( $base-font-size * 1.125 ) !default; // 18px
-$h6-font-size             : unitize( $base-font-size ) !default;
-
-// Header size reduction on small screens
-$h1-font-reduction        : unitize( 10 ) !default;
-$h2-font-reduction        : unitize( 10 ) !default;
-$h3-font-reduction        : unitize( 5 ) !default;
-$h4-font-reduction        : unitize( 5 ) !default;
-$h5-font-reduction        : 0 !default;
-$h6-font-reduction        : 0 !default;
-
-$small-font-size          : unitize( $base-font-size * 0.8 ) !default;
-
-$header-font-weight       : 600 !default;
-$header-line-height       : 1.2 !default;
-$header-top-margin        : 0 !default;
-
-$paragraph-margin-bottom  : unitize( 20 ) !default; // !default
-$list-side-margin         : halve( $base-font-size ) !default;
-$list-ordered-side-margin : $list-side-margin !default;
-$list-margin-bottom       : $paragraph-margin-bottom !default; // !default
-
-$site-header-pd-v         : $base-spacing-unit !default;
-
-$heading-minor-f-z        : $base-font-size;
+$anchor-text-decoration: none;
+$anchor-text-decoration-hover: none;
 
 
 
@@ -95,6 +43,7 @@ $prussian-blue           : #122b3a;
 $dark-prussian-blue      : #122027;
 $purple-phase            : #bf7dbb;
 $blood-orange            : #db7053;
+$yet-another-red         : #c73e1d; // only used as email button
 $hello-yellow            : #fff558; // Hand-picked by Nativo
 $absinthe                : #c1a540;
 $latte                   : #e6e6de;
@@ -112,6 +61,7 @@ $secondary-color         : lighten( $spiritedmedia-brand, 10% ) !default;
 $body-bg                 : $white !default;
 $body-font-color         : $grey-25;
 $c-panel-bg              : $white !default;
+$anchor-font-color       : $primary-color; // Foundation default
 $anchor-font-color-hover : $black !default;
 $border-std-color        : $grey-90 !default;
 $header-font-color       : $body-font-color !default;
@@ -163,93 +113,6 @@ $icon-widths: (
   youtube       : 0.8571428571428571em,
 );
 
-$icon-diameter         : unitize( 40px );
-$icon-diameter--med    : unitize( 32px );
-$icon-diameter--sm     : unitize( 28px );
-$icon-diameter--xs     : unitize( 20px );
-$icon-spacing          : $base-spacing-unit / 2;
-
-$email-icon-diameter   : $icon-diameter--xs;
-$avatar-size-sm        : $icon-diameter--sm;
-
-$iconset-email-cta-p-t : ( $base-spacing-unit / 2 ) !default;
-$iconset-email-cta-p-b : $base-spacing-unit !default;
-
-
-
-
-
-//
-// Z-Index
-// ==========================================================================
-
-$z-index-0              : 0;
-$z-index-1              : 9;
-$z-index-2              : 99;
-$z-index-3              : 999;
-$z-index-4              : 9999;
-$z-index-5              : 99999;
-
-// @TODO
-//
-// Somehow this variable specifically controls the reveal modal z-index even
-// though in no way does its name indicate that... thanks Foundation! Also, it's
-// not overrideable... no `!default` flag. So leaving it here temporarily in the
-// hopes that one day Foundation will fix the issue but until then we'll need to
-// use another variable in its place...
-$z-index-base           : $z-index-5;
-
-
-
-
-
-//
-// Grid / Spacing
-// ==========================================================================
-
-
-$row-width         : rem-calc( 1060 );
-$column-gutter     : rem-calc( 30 ); // !default
-
-$content-wrapper-m-t          : $base-spacing-unit !default;
-$content-wrapper-m-b          : ( $base-spacing-unit * 4 ) !default;
-
-
-
-
-//
-// Media Queries
-// ==========================================================================
-
-
-$screen                : 'only screen'; // !default
-
-// Here we define the lower and upper bounds for each media size
-$small-range           : ( 0, 40em ); /* 0, 640px */
-$medium-range          : ( 40.063em, 64em ); /* 641px, 1024px */
-$large-range           : ( 64.063em, 90em ); /* 1025px, 1440px */
-$xlarge-range          : ( 90.063em, 120em ); /* 1441px, 1920px */
-$xxlarge-range         : 120.063em; /* 1921px */
-
-
-
-
-
-//
-// Main Element
-// ==========================================================================
-
-
-$main-margin-top           : $base-spacing-unit;
-$main-margin-bottom        : $base-spacing-unit * 2;
-$main-header-margin-bottom : $base-spacing-unit * 2;
-$main-title-margin-bottom  : ( $base-spacing-unit * 4 ) !default;
-$main-subtitle-font-weight : 400 !default;
-$main-subtitle-margin-top  : ( $base-spacing-unit * 1.2 ) !default;
-
-$main-rail-item-pd         : $half-spacing-unit !default;
-$main-rail-f-z             : $small-font-size !default;
-
 
 
 
@@ -259,30 +122,6 @@ $main-rail-f-z             : $small-font-size !default;
 // ==========================================================================
 
 
-// Overviews
-$overview-thumbnail-img-size     : unitize( 150px );
-
-// Border dividers
-$border-divider-spacing          : ( $base-spacing-unit * 1.5 ) !default;
-$border-divider-spacing--inline  : halve( $base-spacing-unit ) !default;
-$border-divider-color            : $border-std-color !default;
-
 // Text color mixin
 $mixin-text-color-light          : $white;
 $mixin-text-color-dark           : $grey-25;
-
-// Spinkit loading indicator
-$spinkit-spinner-margin          : 16px auto;
-$spinkit-size                    : 32px;
-$spinkit-spinner-color           : $grey-80;
-
-// Horizontal explosion
-$hoz-explode-side                : unitize( 600rem );
-
-// Hanging quotation mark nudge
-$nudge-punctuation               : -0.4em;
-
-// WordPress admin bar
-$wp-admin-bar-breakpoint: 'only screen and (min-width: 783px)';
-$wp-admin-bar-height-mobile: unitize( 46 );
-$wp-admin-bar-height-desktop: unitize( 32 );

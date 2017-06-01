@@ -1,0 +1,24 @@
+{% include 'emails/messages/partials/layouts/hero-img.twig' with {
+    classes: 'email-daily-insta__img',
+    img_src: item.get_featured_image_url( '1024-16x9' ),
+    img_alt: item.get_embed_caption ~ ' by Instagram user ' ~ item.get_embed_author_name
+} %}
+
+<tr>
+    <td class="email-daily-insta__heading">
+        <h2 class="email-heading--title"><a href="{{ story_url }}">Instagram of the Day</a></h2>
+        <div class="email-daily-insta__divider"></div>
+    </td>
+</tr>
+
+{% set daily_insta_meta %}
+<p class="email-daily-insta__meta">
+    {{ item.get_embed_caption }}<br>
+    Photo by <a href="{{ item.get_embed_url }}" target="_blank"><strong>@{{ item.get_embed_author_name }}</strong></a>
+</p>
+{% endset %}
+{% include 'emails/messages/partials/layouts/text-main.twig' with {
+    classes: 'email-daily-insta__meta',
+    body_text: daily_insta_meta,
+    title: ''
+} %}

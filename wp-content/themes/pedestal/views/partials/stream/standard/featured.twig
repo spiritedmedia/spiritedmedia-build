@@ -25,14 +25,14 @@
 
         </div>
 
-        {% if 'twitter' == item.get_embed_type and not is_email %}
+        {% if 'twitter' == item.get_embed_type %}
             {{ item.get_embed_html }}
         {% endif %}
 
         {% if item.is_cluster %}
             {% include 'partials/meta-info/meta-info-empty.twig' %}
         {% else %}
-            {% include 'partials/meta-info/meta-info.twig' %}
+            {% include 'partials/meta-info/meta-info-stream.twig' %}
         {% endif %}
 
     </div>

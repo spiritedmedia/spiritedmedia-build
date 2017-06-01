@@ -487,8 +487,6 @@ class Frontend {
         switch ( $request ) {
             case 'promotional-content':
             case 'newsletter-signup':
-            case 'unfollow-confirmation':
-            case 'unsubscribe-confirmation':
                 $template = get_template_directory() . '/page-' . $request . '.php';
                 break;
         }

@@ -36,10 +36,16 @@ class Newsletter extends Post {
      * @return string
      */
     public function get_newsletter_subtitle() {
-        return sprintf( 'Newsletter for %s, %s',
-            $this->get_post_date( 'l' ),
-            $this->get_post_date( get_option( 'date_format' ) )
-        );
+        return 'Newsletter for ' . $this->get_newsletter_date_string();
+    }
+
+    /**
+     * Get the newsletter's date string
+     *
+     * @return string
+     */
+    public function get_newsletter_date_string() {
+        return $this->get_post_date( 'l' ) . ', ' . $this->get_post_date( get_option( 'date_format' ) );
     }
 
     /**

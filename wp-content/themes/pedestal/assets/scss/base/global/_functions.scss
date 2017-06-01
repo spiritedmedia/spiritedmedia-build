@@ -68,6 +68,26 @@
 
 
 
+/**
+ * Convert each value in a map of units or numbers to rems
+ *
+ * @param  {map} $map Map where each value is a unit or number
+ * @return {map}
+ */
+@function rem-calc-map-values( $map ) {
+  $new-map: ();
+  @each $key, $value in $map {
+    @if ( number == type-of( $value ) ) {
+      $new-map: map-merge( $new-map, ( $key: rem-calc( $value ) ) );
+    }
+  }
+  @return $new-map;
+}
+
+
+
+
+
 //
 // Maps
 // ==========================================================================
@@ -157,7 +177,7 @@
 
 
 /**
- * Get a map of the unitized dimensions for image sizes
+ * Get a map of the rem dimensions for image sizes
  *
  * @param  {string} $size Optional name of a WP image size to get dimension map
  * @return {map}
@@ -167,11 +187,11 @@
 
   @if ( $size != null and string == type-of( $size ) ) {
     $dimensions: map-fetch( $spiritedmedia-pedestal, imageSizes, $size );
-    @return unitize-map-values( $dimensions );
+    @return rem-calc-map-values( $dimensions );
   } @else {
     $sizes: map-fetch( $spiritedmedia-pedestal, imageSizes );
     @each $size, $dimensions in $sizes {
-      $new-dims: unitize-map-values( $dimensions );
+      $new-dims: rem-calc-map-values( $dimensions );
       $new-sizes: map-merge( $new-sizes, ( $size: $new-dims ) );
     }
     @return $new-sizes;

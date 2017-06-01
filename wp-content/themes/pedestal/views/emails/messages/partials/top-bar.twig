@@ -1,0 +1,18 @@
+{% if 'newsletter' == item.get_type %}
+<table class="email-top-bar email-container" {{ email_table_atts }} align="center" width="100%">
+    <tr>
+        <td class="email-top-bar__inner">
+            <table>
+                <tr>
+                    <td class="email-top-bar__date stack-column-center">
+                        {{ item.get_newsletter_date_string }}
+                    </td>
+                    <td class="email-top-bar__browser-link stack-column-center">
+                        <a href="{{ item.get_the_permalink }}">View in Browser</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+{% endif %}
