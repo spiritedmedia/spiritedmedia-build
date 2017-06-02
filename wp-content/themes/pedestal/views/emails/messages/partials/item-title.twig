@@ -1,4 +1,4 @@
-{% set heading_text = title|default( item.get_the_title ) %}
+{% set heading_text = heading_text|default( item.get_the_title ) %}
 {% set heading_url = url|default( item.get_the_permalink ) %}
 
 <h1 class="email-heading--headline">
