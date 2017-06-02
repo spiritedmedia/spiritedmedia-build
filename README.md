@@ -1,7 +1,7 @@
-Build [#2966](https://circleci.com/gh/spiritedmedia/spiritedmedia/2966) by kingkool68 at 2017-06-02 04:08 AM UTC
+Build [#2971](https://circleci.com/gh/spiritedmedia/spiritedmedia/2971) by montchr at 2017-06-02 01:45 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.1](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.1)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.2](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.2)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.0...v5.10.1)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.1...v5.10.2)
 
- - [#2051](https://github.com/spiritedmedia/spiritedmedia/pull/2051): HOTFIX: Overriding Newsletter Item Titles Doesn't Work
+ - [#2052](https://github.com/spiritedmedia/spiritedmedia/pull/2052): HOTFIX: Exclude meta info from newsletter entities

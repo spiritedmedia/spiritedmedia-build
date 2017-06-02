@@ -4,6 +4,9 @@
 {% set classes = classes|default( 'email-stream-item ' ~ type_class ) %}
 {% set heading_text = heading_text|default( item.get_the_title ) %}
 {% set heading_url = heading_url|default( item.get_the_permalink ) %}
-{% set meta_info = meta_info|default( true ) %}
+
+{% if meta_info is not same as(false) %}
+    {% set meta_info = true %}
+{% endif %}
 
 {% include 'emails/messages/partials/layouts/text-main.twig' %}
