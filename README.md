@@ -1,9 +1,8 @@
-Build [#3005](https://circleci.com/gh/spiritedmedia/spiritedmedia/3005) by kingkool68 at 2017-06-07 03:41 PM UTC
+Build [#3011](https://circleci.com/gh/spiritedmedia/spiritedmedia/3011) by kingkool68 at 2017-06-07 04:05 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.3](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.3)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.4](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.4)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.2...v5.10.3)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.3...v5.10.4)
 
- - [#2056](https://github.com/spiritedmedia/spiritedmedia/pull/2056): A/B Test New Follow Updates Treatment
- - [#2049](https://github.com/spiritedmedia/spiritedmedia/pull/2049): A/B Test New Share Icon Treatment
- - [#2053](https://github.com/spiritedmedia/spiritedmedia/pull/2053): HOTFIX: Use proper logo images for email header
+ - [#2058](https://github.com/spiritedmedia/spiritedmedia/pull/2058): Add Relay Links Script to Footer of All Pages
+ - [#2054](https://github.com/spiritedmedia/spiritedmedia/pull/2054): HOTFIX: Fix event "Where" and "How Much" bugs

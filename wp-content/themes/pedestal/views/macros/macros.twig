@@ -345,3 +345,13 @@
         {% endif %}
     {% endspaceless %}
 {% endmacro %}
+
+
+
+
+
+{% macro event_where( item ) %}
+    {% if item.get_venue_name %}{{ item.get_venue_name }}{% endif %}
+    {% if item.get_venue_name and item.get_address %} at {% endif %}
+    {% if item.get_address %}{{ item.get_address }}{% endif %}
+{% endmacro %}

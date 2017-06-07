@@ -12,8 +12,7 @@
         <tr>
             <th scope="row">Where</th>
             <td>
-                {% if item.get_venue_name() %}{{ item.get_venue_name() }}{% endif %}<!--
-                -->{% if item.get_address() %} at {{ item.get_address() }}{% endif %}
+                {{ macros.event_where( item ) }}
             </td>
         </tr>
 

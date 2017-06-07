@@ -1,6 +1,6 @@
 {% set event_details = {
     'What': item.get_what,
-    'Where': item.get_venue_name ~ ' at ' ~ item.get_address,
+    'Where': macros.event_where( item ),
     'When': item.get_when,
     'How Much': item.get_cost
 } %}
@@ -21,7 +21,9 @@
                 <td>
                     <table {{ email_table_atts }} width="100%">
                         {% for label, content in event_details %}
-                        {% include 'emails/messages/partials/stream/event-detail.twig' %}
+                            {% if content %}
+                            {% include 'emails/messages/partials/stream/event-detail.twig' %}
+                            {% endif %}
                         {% endfor %}
                     </table>
                 </td>
