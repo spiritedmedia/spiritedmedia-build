@@ -27,6 +27,12 @@ we'll need to add SVG icon support back to the overline #}
         </a>
         {% endif %}
 
+        {% if overline_link and item.has_story and is_single %}
+        <a href="#get-updates" class="c-heading__get-updates js-get-updates-anchor">Follow This</a>
+        {% endif %}
+
+
+
     </{{ overline_title_element }}>
 </div>
 

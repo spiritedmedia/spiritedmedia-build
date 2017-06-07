@@ -191,7 +191,7 @@ jQuery(document).ready(function($) {
   });
 
   $(window).bind('popstate', function(e) {
-    if (!e.originalEvent.state.spiritedSearch) {
+    if (!e.originalEvent.state || !e.originalEvent.state.spiritedSearch) {
       // The popstate event was fired but it didn't come from us, so ignore
       return;
     }

@@ -7,6 +7,18 @@
 
 .c-heading__title {}
 
+.c-heading__get-updates {
+  text-transform: uppercase;
+  color: $white;
+  background-color: $yet-another-red;
+  font-size: rem-calc( 10px );
+  border-radius: rem-calc( 10px );
+  padding: rem-calc( 2px ) rem-calc( 6px );
+  position: relative;
+  top: rem-calc( 2px ) * -1;
+  white-space: nowrap;
+}
+
 /*a*/.c-heading__link {}
 
 

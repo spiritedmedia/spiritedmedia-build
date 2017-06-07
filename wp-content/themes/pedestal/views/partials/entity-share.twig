@@ -1,7 +1,7 @@
 <div class="c-entity-share sticky  js-entity-share">
     <div class="top-bar row" data-topbar>
     {% if cluster %}
-        <div class="columns small-6">
+        <div class="columns small-6 original-follow-cluster">
             <a class="btn btn--small btn--full-width"
                 href="#follow-cluster"
                 data-reveal-id="follow-cluster"
@@ -11,7 +11,7 @@
             </a>
         </div>
     {% endif %}
-        <div class="columns small-6">
+        <div class="columns small-6 original-share-button">
             <a class="btn btn--small btn--full-width"
                 href="#share-article"
                 data-reveal-id="share-article"
@@ -21,4 +21,38 @@
             </a>
         </div>
     </div>
+</div>
+
+<div class="c-new-share">
+<ul class="c-new-share__inner">
+    <li class="c-new-share__item">
+        <a class="c-new-share__link c-new-share__link--facebook"
+            target="_blank"
+            href="{{ item.get_facebook_share_link }}"
+            data-ga-category="Button"
+            data-ga-label="New Share|Facebook|{{item.get_the_title}}">
+            {{ ped_icon( 'facebook', 'c-new-share__icon' ) }}
+            Share
+        </a>
+    </li>
+    <li class="c-new-share__item">
+        <a class="c-new-share__link c-new-share__link--twitter"
+            target="_blank"
+            href="{{ item.get_twitter_share_link }}"
+            data-ga-category="Button"
+            data-ga-label="New Share|Twitter|{{item.get_the_title}}">
+            {{ ped_icon( 'twitter', 'c-new-share__icon' ) }}
+            Tweet
+        </a>
+    </li>
+    <li class="c-new-share__item">
+        <a class="c-new-share__link c-new-share__link--email"
+            href="{{ item.get_mailto_share_string }}"
+            data-ga-category="Button"
+            data-ga-label="New Share|Email|{{item.get_the_title}}">
+            {{ ped_icon( 'envelope-o', 'c-new-share__icon' ) }}
+            Email
+        </a>
+    </li>
+</ul>
 </div>
