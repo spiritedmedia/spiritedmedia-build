@@ -1,15 +1,14 @@
 /**
  * Activate new get updates functionality
  */
- // eslint-disable-next-line no-unused-vars
-function showGetUpdates() {
-  // If jQuery isn't available then bail!
-  if ( ! window.jQuery ) {
+jQuery(document).ready(function($) {
+
+  // Look for hidden styles applied by Google Optimize
+  // If not found then the test isn't running and bail
+  if ( $('.c-overview__title').css('borderBottomWidth') !== '3px' ) {
     return false;
   }
 
-  // Set $ to jQuery
-  var $ = window.jQuery;
   var $body = $('body');
   // Check if there is a follow buton on the page, if not then bail!
   if ( $('[data-reveal-id="follow-cluster"]').length === 0 ) {
@@ -49,6 +48,4 @@ function showGetUpdates() {
       $this.addClass('submitted-fail').removeClass('is-loading');
     });
   });
-
-  return true;
-}
+});

@@ -48,15 +48,13 @@ function NewShareButtons($) {
 /**
  * Activate new share buttons and hide the top-bar/action bar
  */
- // eslint-disable-next-line no-unused-vars
-function showNewShareButtons() {
-  // If jQuery isn't available then bail!
-  if ( ! window.jQuery ) {
+jQuery(document).ready(function($) {
+  // Look for hidden styles applied by Google Optimize
+  // If not found then the test isn't running and bail
+  if ( $('.c-overview__title').css('borderBottomWidth') !== '2px' ) {
     return false;
   }
 
-  // Set $ to jQuery
-  var $ = window.jQuery;
   var $win = $(window);
   var obj = new NewShareButtons($);
   var result = obj.result;
@@ -70,13 +68,11 @@ function showNewShareButtons() {
   var resizeCb = $.proxy(obj.resize, obj);
   $win.on( 'resize', PedUtils.throttle( resizeCb, 250 ) );
 
+  var mutationCb = $.proxy(obj.resize, obj);
   if ( typeof MutationObserver === 'function' ) {
     var observer = new MutationObserver(function(mutations) {
-
-      // For the sake of...observation...let's output the mutation to console to see how this all works
       mutations.forEach(function() {
-        // console.log(mutation.type);
-        resizeCb.call();
+        mutationCb.call();
       });
     });
 
@@ -87,11 +83,9 @@ function showNewShareButtons() {
       characterData: false
     };
 
-    // Node, config
-    // In this case we'll listen to all changes to body and child nodes
-    // var targetNode = $('.c-main__content')[0];
+    // Listen to all changes to body and child nodes
     var targetNode = document.body;
     observer.observe(targetNode, observerConfig);
   }
   return result;
-}
+});
