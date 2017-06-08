@@ -48,44 +48,46 @@ function NewShareButtons($) {
 /**
  * Activate new share buttons and hide the top-bar/action bar
  */
-jQuery(document).ready(function($) {
+setTimeout( function() {
+  jQuery(document).ready(function($) {
   // Look for hidden styles applied by Google Optimize
   // If not found then the test isn't running and bail
-  if ( $('.c-overview__title').css('borderBottomWidth') !== '2px' ) {
-    return false;
-  }
+    if ( $('.c-overview__title').css('borderBottomWidth') !== '2px' ) {
+      return false;
+    }
 
-  var $win = $(window);
-  var obj = new NewShareButtons($);
-  var result = obj.result;
-  if ( !result ) {
-    return false;
-  }
+    var $win = $(window);
+    var obj = new NewShareButtons($);
+    var result = obj.result;
+    if ( !result ) {
+      return false;
+    }
 
-  var scrollCb = $.proxy(obj.scroll, obj);
-  $win.on( 'scroll', PedUtils.throttle( scrollCb, 50 ) );
+    var scrollCb = $.proxy(obj.scroll, obj);
+    $win.on( 'scroll', PedUtils.throttle( scrollCb, 50 ) );
 
-  var resizeCb = $.proxy(obj.resize, obj);
-  $win.on( 'resize', PedUtils.throttle( resizeCb, 250 ) );
+    var resizeCb = $.proxy(obj.resize, obj);
+    $win.on( 'resize', PedUtils.throttle( resizeCb, 250 ) );
 
-  var mutationCb = $.proxy(obj.resize, obj);
-  if ( typeof MutationObserver === 'function' ) {
-    var observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function() {
-        mutationCb.call();
+    var mutationCb = $.proxy(obj.resize, obj);
+    if ( typeof MutationObserver === 'function' ) {
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function() {
+          mutationCb.call();
+        });
       });
-    });
 
     // Notify me of everything!
-    var observerConfig = {
-      attributes: false,
-      childList: true,
-      characterData: false
-    };
+      var observerConfig = {
+        attributes: false,
+        childList: true,
+        characterData: false
+      };
 
     // Listen to all changes to body and child nodes
-    var targetNode = document.body;
-    observer.observe(targetNode, observerConfig);
-  }
-  return result;
-});
+      var targetNode = document.body;
+      observer.observe(targetNode, observerConfig);
+    }
+    return result;
+  });
+}, 750 );
