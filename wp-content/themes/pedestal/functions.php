@@ -430,6 +430,12 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'caption',
             ] );
 
+            // Enable RSS feed links
+            add_theme_support( 'automatic-feed-links' );
+
+            // Disable comment RSS feeds
+            add_filter( 'feed_links_show_comments_feed', '__return_false' );
+
             // Images
             add_image_size( 'medium-square', 300, 300, true );
 
