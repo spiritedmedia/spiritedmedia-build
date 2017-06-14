@@ -126,7 +126,17 @@ class Stream {
             $args['paged'] = $paged;
         }
 
-        $this->query = new \WP_Query( $args );
+        // Sort the $args for caching consistency
+        ksort( $args );
+        // json_encode is faster than serialize()
+        $cache_key = md5( json_encode( $args ) );
+        $cache_group = 'ped_stream';
+        $query = wp_cache_get( $cache_key, $cache_group );
+        if ( ! $query ) {
+            $query = new \WP_Query( $args );
+            wp_cache_set( $cache_key, $query, $cache_group );
+        }
+        $this->query = $query;
     }
 
     /**

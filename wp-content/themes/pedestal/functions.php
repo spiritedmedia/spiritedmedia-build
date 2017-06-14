@@ -391,6 +391,22 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 } ) );
                 return $twig;
             }, 99 );
+
+            // Since we don't have comments, skip running the query to count all of the comments on every load
+            add_filter( 'wp_count_comments', function( $count, $post_id ) {
+                if ( 0 === $post_id ) {
+                    $stats = [
+                        'approved'       => 0,
+                        'moderated'      => 0,
+                        'spam'           => 0,
+                        'trash'          => 0,
+                        'post-trashed'   => 0,
+                        'total_comments' => 0,
+                        'all'            => 0,
+                    ];
+                    return (object) $stats;
+                }
+            }, 10, 2 );
         }
 
         /**

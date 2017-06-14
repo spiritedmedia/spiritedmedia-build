@@ -1,7 +1,7 @@
-Build [#3026](https://circleci.com/gh/spiritedmedia/spiritedmedia/3026) by kingkool68 at 2017-06-12 08:28 PM UTC
+Build [#3031](https://circleci.com/gh/spiritedmedia/spiritedmedia/3031) by kingkool68 at 2017-06-14 08:00 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.7](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.7)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.8](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.8)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.6...v5.10.7)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.7...v5.10.8)
 
- - [#2065](https://github.com/spiritedmedia/spiritedmedia/pull/2065): Add RSS Feed Link in Page HEAD
+ - [#2066](https://github.com/spiritedmedia/spiritedmedia/pull/2066): Reduce Database Queries from Streams

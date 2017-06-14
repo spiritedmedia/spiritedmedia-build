@@ -315,7 +315,7 @@ class Slots {
 
         $args = [
             'post_type' => '_slot_item_placement',
-            'posts_per_page' => 1000,
+            'posts_per_page'         => 100,
             'meta_query' => [
                 'relation' => 'AND',
                 [
@@ -342,8 +342,17 @@ class Slots {
             ];
         }
 
-        $query = new \WP_Query( $args );
-        $placements = $query->posts;
+        // Sort the $args for caching consistency
+        ksort( $args );
+        // json_encode is faster than serialize()
+        $cache_key = md5( json_encode( $args ) );
+        $cache_group = 'ped_slots';
+        $placements = wp_cache_get( $cache_key, $cache_group );
+        if ( ! $placements ) {
+            $query = new \WP_Query( $args );
+            $placements = $query->posts;
+            wp_cache_set( $cache_key, $placements, $cache_group );
+        }
 
         if ( empty( $placements ) ) {
             return false;
