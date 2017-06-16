@@ -725,6 +725,37 @@ class CLI extends \WP_CLI_Command {
         WP_CLI::success( 'Converted ' . $credit_count . ' credits' );
         WP_CLI::success( 'Converted ' . $credit_link_count . ' credit links' );
     }
+
+    /**
+     * Normalize exclude_from_home_stream meta data
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal normalize-exclude-from-home-stream
+     *     wp pedestal normalize-exclude-from-home-stream --url=http://billypenn.dev
+     *
+     * @subcommand normalize-exclude-from-home-stream
+     */
+    public function normalize_exclude_from_home_stream() {
+        $args = [
+            'post_type' => Types::get_entity_post_types(),
+            'posts_per_page' => -1,
+            'meta_query' => [
+                [
+                    'key'     => 'exclude_from_home_stream',
+                    'value'   => '',
+                    'compare' => 'NOT EXISTS',
+                ],
+            ],
+        ];
+        $posts = new \WP_Query( $args );
+        WP_CLI::line( count( $posts->posts ) . ' found' );
+        foreach ( $posts->posts as $post ) {
+            update_post_meta( $post->ID, 'exclude_from_home_stream', '' );
+        }
+
+        WP_CLI::success( 'Done' );
+    }
 }
 
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );

@@ -184,16 +184,11 @@ class Frontend {
 
         if ( $query->is_home() ) {
             $meta_query = [
-                'relation' => 'OR',
                 [
                     'key'     => 'exclude_from_home_stream',
                     'value'   => 1,
                     'compare' => '!=',
                 ],
-                [
-                    'key'     => 'exclude_from_home_stream',
-                    'compare' => 'NOT EXISTS',
-                ]
             ];
             $query->set( 'meta_query', $meta_query );
             $query->set( 'post_type', Types::get_entity_post_types() );
