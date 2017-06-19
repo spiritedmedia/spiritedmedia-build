@@ -1,8 +1,7 @@
-Build [#3039](https://circleci.com/gh/spiritedmedia/spiritedmedia/3039) by kingkool68 at 2017-06-16 08:51 PM UTC
+Build [#3047](https://circleci.com/gh/spiritedmedia/spiritedmedia/3047) by kingkool68 at 2017-06-19 08:19 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.9](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.9)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.10](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.10)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.8...v5.10.9)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.9...v5.10.10)
 
- - [#2071](https://github.com/spiritedmedia/spiritedmedia/pull/2071): Improve Homepage Main Query Performance
- - [#2068](https://github.com/spiritedmedia/spiritedmedia/pull/2068): Add Soundcloud source icon
+ - [#2073](https://github.com/spiritedmedia/spiritedmedia/pull/2073): Set the `s-post-content` Class For Flat Layouts
