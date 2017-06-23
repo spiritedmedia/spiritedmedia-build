@@ -715,7 +715,7 @@ class Types {
     public static function is_story( $post_token ) {
         if (
             ( is_string( $post_token ) && 'pedestal_story' === $post_token ) ||
-            ( $post_token instanceof Pedestal\Posts\Clusters\Story )
+            ( $post_token instanceof \Pedestal\Posts\Clusters\Story )
         ) {
             return true;
         }

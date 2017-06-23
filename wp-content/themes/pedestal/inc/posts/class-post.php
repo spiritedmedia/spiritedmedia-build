@@ -391,6 +391,7 @@ abstract class Post {
         $type_obj = get_post_type_object( $type );
         $singular_name = strtolower( $type_obj->labels->singular_name );
         $url = esc_url( $this->get_the_permalink() );
+        $source = false;
         switch ( $type ) {
             case 'pedestal_link':
                 if ( $source = $this->get_source() ) {
@@ -764,10 +765,32 @@ abstract class Post {
         }
 
         $upload_dir = wp_upload_dir();
+        $file_size = false;
+        $path = path_join( $upload_dir['basedir'], $thumbnail['path'] );
+
+        /**
+         * In production images uploaded may not be on the same file system as
+         * the request to the RSS feed. If the image isn't found then get the
+         * URL of the CDN version and do a HEAD request to get the file size
+         */
+        if ( file_exists( $path ) ) {
+            $file_size = filesize( $path );
+        } elseif ( ! empty( $thumbnail['url'] ) ) {
+            $request = wp_remote_head( $thumbnail['url'] );
+            if ( ! is_wp_error( $request ) ) {
+                if ( ! empty( $request['headers']['content-length'] ) ) {
+                    $file_size = $request['headers']['content-length'];
+                }
+            }
+        }
+
+        if ( ! $file_size ) {
+            return false;
+        }
         return sprintf(
             '<enclosure url="%s" length="%s" type="%s" />',
             $thumbnail['url'],
-            filesize( path_join( $upload_dir['basedir'], $thumbnail['path'] ) ),
+            $file_size,
             get_post_mime_type( $this->get_featured_image_id() )
         );
 
