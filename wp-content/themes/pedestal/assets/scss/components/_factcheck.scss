@@ -15,8 +15,12 @@
 .c-factcheck__logo {}
 
 /*a*/.c-factcheck__logo__img {
+  background: no-repeat top left;
   background-image: url( $pedestal-abspath + '/assets/images/partners/politifact/politifact-logo.png' );
   background-image: url( $pedestal-abspath + '/assets/images/partners/politifact/politifact-logo.svg' );
+  background-size: contain;
+  display: block;
+  height: $base-spacing-unit * 3;
 }
 
 

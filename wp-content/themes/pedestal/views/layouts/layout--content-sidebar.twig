@@ -1,0 +1,21 @@
+{% extends 'base.twig' %}
+
+{% block the_body %}
+    <main role="main" class="c-main columns large-8 js-main">
+        {% block content %}
+        {% endblock %}
+    </main>
+{% endblock %}
+
+{% block the_sidebar %}
+    <aside class="rail columns large-4">
+        <ul class="sidebar {{ sidebar_class }}">
+            {% block sidebar %}
+                {# The default sidebar if no sidebar is specified #}
+                <li class="widget widget_pedestal_signup_newsletter">
+                    {% include 'widgets/signup-newsletter.twig' %}
+                </li>
+            {% endblock %}
+        </ul>
+    </aside>
+{% endblock %}

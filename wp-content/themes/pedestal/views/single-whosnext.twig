@@ -1,6 +1,60 @@
-{% extends item.get_single_base_template %}
+{% extends 'layouts/layout--content-sidebar.twig' %}
 
-{% block content__body %}
-    {% include 'partials/whosnext/content.twig' %}
-    {% include 'partials/get-updates.twig' %}
+{% block content %}
+<article class="c-main__content  {{ item.css_classes }}  {{ item.css_classes_content }}"
+    {{ item.get_the_data_atts }} >
+
+    <header class="c-main__header  c-overview">
+        {% if item.has_featured_image %}
+            {% include 'partials/overview/lead-image.twig' %}
+        {% endif %}
+
+        {% include 'partials/overview/overline.twig' %}
+        {% include 'partials/item-title.twig' with { url: 'none' } %}
+
+        {% if item.get_excerpt %}
+            <div class="c-overview__description">
+                {{ item.get_the_excerpt }}
+            </div>
+        {% endif %}
+
+        {% include 'partials/meta-info/meta-info-entity.twig' %}
+        {% include 'partials/entity-share.twig' %}
+    </header>
+
+    <section class="c-main__body">
+        {% include 'partials/whosnext/content.twig' %}
+        {% include 'partials/get-updates.twig' %}
+    </section>
+
+    {% if item.get_the_footnotes %}
+        <aside class="c-main__footnotes  js-content-footnotes">
+            {{ item.get_the_footnotes }}
+        </aside>
+    {% endif %}
+
+    <footer class="c-main__footer  [ o-rule--closure  o-rule ]">
+        {% include 'partials/cluster-list.twig' %}
+    </footer>
+
+    {% include 'partials/modals/entity-share-modal.twig' %}
+
+</article>
+
+{{ macros.nativo( 'content-below' ) }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'partials/whosnext/sponsor-logo.twig' ignore missing %}
+    <li class="widget has-border--bottom  widget_pedestal_explainer">
+        <p>{{ site.name }}’s “Who's Next” series highlights some of the
+        most dynamic people under 40 shaping {{ site.address.city }} every day.
+        Our goal is to identify and track the next generation of leaders and
+        influencers.</p>
+    </li>
+
+
+    <li class="widget has-border--bottom  widget_pedestal_whosnext_archive">
+        {% include 'partials/sidebar-whosnext-items.twig' %}
+    </li>
 {% endblock %}

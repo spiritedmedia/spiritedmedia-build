@@ -13,8 +13,6 @@ class Factcheck extends Original {
 
     use \Pedestal\Posts\Emailable;
 
-    protected $single_base_template = 'layout-flat.twig';
-
     protected static $post_type = 'pedestal_factcheck';
 
     /**

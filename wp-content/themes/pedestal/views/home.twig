@@ -1,11 +1,12 @@
-{% extends "base.twig" %}
+{% extends 'layouts/layout--content-sidebar.twig' %}
 
 {% block content %}
+    {% include 'partials/search-tools.twig' %}
+    {% include 'partials/stream/stream-home.twig' %}
+{% endblock %}
 
-<main role="main" class="{{ main_classes }}">
-
-{% include 'partials/search-tools.twig' %}
-{% include 'partials/stream/stream-home.twig' %}
-
-</main>
+{% block sidebar %}
+    {% if sidebar %}
+        {{ sidebar }}
+    {% endif %}
 {% endblock %}

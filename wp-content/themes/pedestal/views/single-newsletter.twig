@@ -1,8 +1,6 @@
-{% extends item.get_single_base_template %}
+{% extends 'layouts/layout--content-sidebar.twig' %}
 
 {% block content %}
-
-<main role="main" class="{{ main_classes }}">
 
     <article class="c-newsletter  c-main__content  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
@@ -80,6 +78,6 @@
 
     </article>
 
-</main>
-
 {% endblock %}
+
+{# Uses the default sidebar #}

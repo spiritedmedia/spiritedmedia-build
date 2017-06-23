@@ -1,8 +1,6 @@
-{% extends "base.twig" %}
+{% extends 'layouts/layout--content-sidebar.twig' %}
 
 {% block content %}
-
-<main role="main" class="c-main--archive  {{ main_classes }}">
 
     <article class="c-main__content">
         <header class="c-overview  c-main__header">
@@ -28,7 +26,5 @@
         {% endif %}
 
     </article>
-
-</main>
 
 {% endblock %}

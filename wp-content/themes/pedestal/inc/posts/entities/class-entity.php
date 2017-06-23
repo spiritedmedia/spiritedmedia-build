@@ -39,20 +39,6 @@ abstract class Entity extends Post {
     ];
 
     /**
-     * Get CSS classes
-     *
-     * @return array
-     */
-    public function get_css_classes() {
-        $classes = [];
-        if ( $this->has_story() ) {
-            $classes[] = 'in-story';
-        }
-        $classes = array_merge( $classes, parent::get_css_classes() );
-        return $classes;
-    }
-
-    /**
      * Set up the Post's HTML data attributes
      */
     protected function set_data_atts() {
@@ -63,8 +49,9 @@ abstract class Entity extends Post {
             'source-external' => '',
         ];
 
-        if ( $this->has_story() ) {
-            $new_atts['primary-story'] = $this->get_primary_story()->get_id();
+        $story = $this->get_primary_story();
+        if ( $story && Types::is_story( $story ) ) {
+            $new_atts['primary-story'] = $story->get_id();
         }
 
         $this->data_attributes = array_merge( $atts, $new_atts );
@@ -222,7 +209,7 @@ abstract class Entity extends Post {
             'post_status'     => 'publish',
             'posts_per_page'  => $count,
             'no_found_rows'   => true,
-            'connected_type'  => Types::get_cluster_connection_types_from_entities(),
+            'connected_type'  => Types::get_cluster_connection_types( $types ),
             'connected_items' => $this->post,
         ] + $args;
 

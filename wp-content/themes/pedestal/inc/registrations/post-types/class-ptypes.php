@@ -389,38 +389,30 @@ class Types {
     }
 
     /**
-     * Get the Entities-to-Clusters connection types
-     *
-     * @param bool $proto Include the connection setup data in the return array?
-     * @return array
-     */
-    public static function get_cluster_connection_types_from_entities( $proto = false ) {
-        $clusters = self::$groups['clusters'];
-        $types = $clusters->connection_types_entities;
-        if ( $proto ) {
-            return $types;
-        }
-        return array_keys( $types );
-    }
-
-    /**
-     * Get the Geospace connection type names
-     *
-     * @return array
-     */
-    public static function get_geospace_connection_types() {
-        return self::$groups['clusters']->connection_types_geospaces;
-    }
-
-    /**
      * Get an array of all cluster connection types
      *
-     * @param bool $proto Include the connection setup data in the return array?
+     * @param array|string $post_types Post types to get connection types for. Defaults to all.
+     * @param bool         $proto      Include the connection setup data in the return array?
      * @return array
      */
-    public static function get_cluster_connection_types( $proto = false ) {
+    public static function get_cluster_connection_types( $post_types = [], $proto = false ) {
         $clusters = self::$groups['clusters'];
         $types = $clusters->connection_types;
+        $types_by_post_type = $clusters->connection_types_by_post_type;
+
+        if ( ! empty( $post_types ) ) {
+            $types = [];
+            if ( is_string( $post_types ) ) {
+                $post_types = [ $post_types ];
+            }
+
+            foreach ( $post_types as $post_type ) {
+                if ( ! empty( $types_by_post_type[ $post_type ] ) ) {
+                    $types = $types + $types_by_post_type[ $post_type ];
+                }
+            }
+        }
+
         if ( $proto ) {
             return $types;
         }

@@ -178,7 +178,7 @@ class Cluster_Tools {
             return;
         }
 
-        $connection_types = Types::get_cluster_connection_types( $include_proto_data = true );
+        $connection_types = Types::get_cluster_connection_types( $_post_types = [], $include_proto_data = true );
         $msg_report = 'What a strange occurrence! Best report to #product...';
 
         $merge_clusters = [];
@@ -280,14 +280,15 @@ class Cluster_Tools {
                     $new_connection_type
                 );
 
-                if ( in_array( $new_connection_type, Types::get_geospace_connection_types() ) ) {
+                $geospace_connection_types = Types::get_cluster_connection_types( Types::get_geospace_post_types() );
+                if ( in_array( $new_connection_type, $geospace_connection_types ) ) {
                     $log_successful_connection .= ' Note that the geospatial
                     relationship for this new connection will have to be
                     defined manually by editing one of the posts in the new
                     connection and setting this metadata in the appropriate
                     connection box.';
 
-                    if ( in_array( $p2p_type, Types::get_geospace_connection_types() ) ) {
+                    if ( in_array( $p2p_type, $geospace_connection_types ) ) {
                         $log_successful_connection .= ' The old relationship
                         metadata no longer exists because the connection type
                         has changed.';

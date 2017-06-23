@@ -1,17 +1,12 @@
-{% extends item.get_single_base_template %}
+{% extends 'layouts/layout--content.twig' %}
 
-{% set hide_sidebar = true %}
 {% set content_before = true %}
 
 {% block content_before %}
-
-{% include 'partials/pages/statement.twig' %}
-
+    {% include 'partials/pages/statement.twig' %}
 {% endblock %}
 
 {% block content %}
-
-<main role="main" class="{{ main_classes }}">
 
     <article class="c-main__content  {{ item.css_classes }}" {{ item.get_the_data_atts }} >
 
@@ -24,7 +19,5 @@
         </section>
 
     </article>
-
-</main>
 
 {% endblock %}

@@ -27,35 +27,6 @@
 
 
 /**
- * Inner content
- *
- * If the content has its own internal Rail, then the `inner` element needs to
- * serve as a wrapper around the non-Rail content for purposes of grid layout.
- */
-
-.c-main__content__inner {}
-
-
-/**
- * Content Rail
- *
- * Sometimes articles might have their own content-specific rail, as opposed
- * to a sitewide rail that appears outside the `main` element.
- */
-
-.c-main__content__rail {
-
-  .sidebar {
-    margin-left: $half-spacing-unit;
-  }
-
-  .widget {
-    padding: 0 $main-rail-item-pd;
-  }
-}
-
-
-/**
  * Hero
  *
  * Content-specific Hero styles

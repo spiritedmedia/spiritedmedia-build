@@ -32,26 +32,12 @@
         {% endif %}
 
         <div class="content-wrapper row">
+           {% block the_body %}
+           {% endblock %}
 
-            {% if sidebar %}
-                {% set main_classes = "c-main columns large-8 js-main" %}
-            {% else %}
-                {% set main_classes = "c-main columns js-main" %}
-            {% endif %}
-
-            {% block content %}
-            {% endblock %}
-
-            {% if sidebar %}
-            {% block sidebar %}
-            <aside class="rail columns large-4">
-                <ul class="sidebar {{ sidebar_class }}">
-                    {{ sidebar }}
-                </ul>
-            </aside>
-            {% endblock %}
-            {% endif %}
-        </div>
+           {% block the_sidebar %}
+           {% endblock %}
+       </div>
 
         {% include 'footer.twig' %}
     </body>

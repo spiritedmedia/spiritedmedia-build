@@ -1,27 +1,24 @@
-{% set sidebar = false %}
-{% extends "base.twig" %}
+{% extends 'layouts/layout--content.twig' %}
 
 {% block content %}
-<main role="main" class="{{ main_classes }}">
-    <div id="subscribe-to-newsletter-page" class="subscription-confirmation-page">
-        <form action="{{ site.url }}/subscribe-to-email-list/" method="POST" data-ga-category="Submitted Form" data-ga-label="Newsletter Signup Page">
+<div id="subscribe-to-newsletter-page" class="subscription-confirmation-page">
+    <form action="{{ site.url }}/subscribe-to-email-list/" method="POST" data-ga-category="Submitted Form" data-ga-label="Newsletter Signup Page">
 
-            <div class="form-fields">
-                <fieldset>
-                    {% include 'partials/email-forms/form-daily-legend.twig' %}
-                    {% include 'partials/email-forms/form-daily-input-address.twig' %}
-                    {% include 'partials/email-forms/form-honeypot.twig' %}
-                </fieldset>
-                <button type="submit" name="subscribe" class="btn btn--large btn--full-width form-submit js-form-submit">
-                    {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
-                </button>
-            </div>
+        <div class="form-fields">
+            <fieldset>
+                {% include 'partials/email-forms/form-daily-legend.twig' %}
+                {% include 'partials/email-forms/form-daily-input-address.twig' %}
+                {% include 'partials/email-forms/form-honeypot.twig' %}
+            </fieldset>
+            <button type="submit" name="subscribe" class="btn btn--large btn--full-width form-submit js-form-submit">
+                {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
+            </button>
+        </div>
 
-            <div class="success-message">
-                {% include 'partials/email-forms/form-daily-subscribed.twig' %}
-                {% include 'partials/email-forms/form-button-explore.twig' %}
-            </div>
-        </form>
-    </div>
-</main>
+        <div class="success-message">
+            {% include 'partials/email-forms/form-daily-subscribed.twig' %}
+            {% include 'partials/email-forms/form-button-explore.twig' %}
+        </div>
+    </form>
+</div>
 {% endblock %}

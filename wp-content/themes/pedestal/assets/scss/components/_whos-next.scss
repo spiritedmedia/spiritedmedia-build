@@ -9,7 +9,11 @@ $c-whos-next-spacing: $base-spacing-unit * 1.5;
 .c-whos-next {
 
   &__logo__img {
+    background: no-repeat top left;
     background-image: url( $site-theme-abspath + '/assets/images/whos-next-partner.svg' );
+    background-size: contain;
+    display: block;
+    height: $base-spacing-unit * 3;
   }
 
   &__items {

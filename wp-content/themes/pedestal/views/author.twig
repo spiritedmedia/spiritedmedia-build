@@ -1,19 +1,11 @@
-{% extends "base.twig" %}
+{% extends 'layouts/layout--content.twig' %}
 
 {% block content %}
-
-<main role="main" class="c-main--profile  {{ main_classes }}">
-
-    <article class="c-profile  c-main__content">
-
-        {{ macros.user_card( _context, user, {
-            'format': 'extended',
-            'img_size': 'medium-square',
-            'posts': true
-        } ) }}
-
-    </article>
-
-</main>
-
+<article class="c-profile  c-main__content">
+    {{ macros.user_card( _context, user, {
+        'format': 'extended',
+        'img_size': 'medium-square',
+        'posts': true
+    } ) }}
+</article>
 {% endblock %}

@@ -28,16 +28,6 @@ abstract class Post {
      */
     protected static $original = false;
 
-    /**
-     * Single post view base template
-     *
-     * The base template for Twig to use when rendering the single view
-     * for this post.
-     *
-     * @var string
-     */
-    protected $single_base_template = 'base.twig';
-
     protected $data_attributes = [];
 
     protected $p2p_data = [];
@@ -182,15 +172,6 @@ abstract class Post {
     public function get_css_classes() {
         $classes = [];
         return $classes;
-    }
-
-    /**
-     * Get the name of the base template for this post's single view
-     *
-     * @return string
-     */
-    public function get_single_base_template() {
-        return $this->single_base_template;
     }
 
     /**

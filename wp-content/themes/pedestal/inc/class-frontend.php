@@ -400,20 +400,13 @@ class Frontend {
             if ( is_a( $post, '\\Pedestal\\Posts\\Post' ) ) :
                 $post_type = $post->get_post_type();
 
-                if ( Types::is_entity( $post_type ) ) {
-                    if ( is_active_sidebar( 'sidebar-entity' ) ) {
-                        $context['sidebar'] = Timber::get_widgets( 'sidebar-entity' );
-                    }
-                } elseif ( Types::is_cluster( $post_type ) ) {
+                if ( Types::is_cluster( $post_type ) ) {
                     $context['is_cluster'] = true;
                 }
 
                 switch ( $post_type ) :
                     case 'pedestal_story':
                         $context['is_story'] = true;
-                        if ( is_active_sidebar( 'sidebar-story' ) ) {
-                            $context['sidebar'] = Timber::get_widgets( 'sidebar-story' );
-                        }
                         break;
 
                     case 'pedestal_event':
@@ -425,29 +418,8 @@ class Frontend {
                         break;
                 endswitch;
 
-                if ( 'layout-flat.twig' === $post->get_single_base_template() ) {
-                    $context['sidebar_class'] = 'sidebar--' . $post->get_type();
-
-                    ob_start();
-                    $context['sidebar'] = Timber::render( 'sidebar-' . $post->get_type() . '.twig', $context );
-                    ob_get_clean();
-                }
             endif;
-        else :
-            if ( is_active_sidebar( 'sidebar-stream' ) ) {
-                $context['sidebar'] = Timber::get_widgets( 'sidebar-stream' );
-            }
         endif;
-
-        if ( empty( $context['sidebar'] ) ) {
-            ob_start();
-            $context['sidebar'] = Timber::render( 'sidebar-default.twig', $context );
-            ob_get_clean();
-        }
-
-        if ( is_page() || is_404() ||is_author() ) {
-            $context['sidebar'] = false;
-        }
 
         if ( is_404() ) {
             $context['e404_links'] = [

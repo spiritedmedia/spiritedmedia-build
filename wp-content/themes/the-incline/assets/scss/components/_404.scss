@@ -19,11 +19,11 @@
 }
 
 /*figure*/.e404-tunnel-monster {
-  margin: -13px 0 0 0;
+  margin: rem-calc( -29px ) 0 0 0;
   text-align: center;
 
   @media #{$medium-up} {
-    margin-top: -20px;
+    margin-top: rem-calc( -36px );
     margin-left: 20px;
     text-align: left;
   }
