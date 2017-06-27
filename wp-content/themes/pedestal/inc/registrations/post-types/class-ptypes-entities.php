@@ -234,10 +234,10 @@ class Entity_Types extends Types {
         }
 
         $embed = Embed::get_by_post_id( $post_id );
-        $embed_url = $_POST['embed_url'];
-        if ( ! $embed instanceof Embed || empty( $embed_url ) ) {
+        if ( ! $embed instanceof Embed || empty( $_POST['embed_url'] ) ) {
             return;
         }
+        $embed_url = $_POST['embed_url'];
 
         $embed_type = Embed::get_embed_type_from_url( $embed_url );
         if ( $embed_type !== $embed->get_meta( 'embed_type' ) ) {

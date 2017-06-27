@@ -111,7 +111,10 @@ class Instagram extends Shortcode {
      * @return string        Embed HTML
      */
     protected static function get_oembed_html( $url, $args = [] ) {
-        global $post;
+        $post = get_post();
+        if ( ! $post ) {
+            return;
+        }
         $post_id = $post->ID;
         $tag = self::get_shortcode_tag();
 

@@ -278,10 +278,11 @@ class User_Management {
 
         // Associate Reporter
         $caps_reporter_assoc = [
-            'edit_entities' => true,
-            'edit_articles' => true,
-            'edit_events'   => true,
-            'edit_clusters' => true,
+            'edit_entities'  => true,
+            'edit_articles'  => true,
+            'edit_events'    => true,
+            'edit_clusters'  => true,
+            'manage_uploads' => true,
         ] + $tablepress_caps;
         $this->merge_role_caps( 'reporter_assoc', $caps_reporter_assoc );
 

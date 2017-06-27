@@ -684,9 +684,15 @@ class Frontend {
         } elseif ( is_post_type_archive() ) {
             $title = post_type_archive_title( '', false );
         } elseif ( is_tax() ) {
-            $tax = get_taxonomy( get_queried_object()->taxonomy );
+            $singular_name = '';
+            if ( isset( get_queried_object()->taxonomy ) ) {
+                $tax = get_taxonomy( get_queried_object()->taxonomy );
+                if ( isset( $tax->labels->singular_name ) ) {
+                    $singular_name = $tax->labels->singular_name;
+                }
+            }
             /* translators: 1: Taxonomy singular name, 2: Current taxonomy term */
-            $title = sprintf( __( '%1$s: %2$s' ), $tax->labels->singular_name, single_term_title( '', false ) );
+            $title = sprintf( __( '%1$s: %2$s' ), $singular_name, single_term_title( '', false ) );
         } else {
             $title = __( 'Archives' );
         }
