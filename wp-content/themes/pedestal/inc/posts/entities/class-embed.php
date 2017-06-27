@@ -246,8 +246,9 @@ class Embed extends Entity {
                 break;
         }
         if ( ! empty( $args['caption'] ) ) {
-            $shortcode .= sprintf( 'caption="%s"]', $args['caption'] );
+            $shortcode .= sprintf( 'caption="%s"', $args['caption'] );
         }
+        $shortcode .= ']';
         return do_shortcode( $shortcode );
     }
 
