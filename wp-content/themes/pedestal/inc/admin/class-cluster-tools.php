@@ -178,7 +178,9 @@ class Cluster_Tools {
             return;
         }
 
-        $connection_types = Types::get_cluster_connection_types( $_post_types = [], $include_proto_data = true );
+        $_post_types = [];
+        $include_proto_data = true;
+        $connection_types = Types::get_cluster_connection_types( $_post_types, $include_proto_data );
         $msg_report = 'What a strange occurrence! Best report to #product...';
 
         $merge_clusters = [];

@@ -5,7 +5,7 @@
 $reveal-modal--dark-text-color: $white;
 
 // @TODO
-// stylelint-disable selector-no-type
+// stylelint-disable selector-max-type
 
 .reveal-modal {
   z-index: $z-index-5; // See /scss/base/global/_general.scss
@@ -33,7 +33,7 @@ $reveal-modal--dark-text-color: $white;
 }
 
 // @TODO
-// stylelint-disable-next-line selector-no-id
+// stylelint-disable-next-line selector-max-id
 #share-article ul.side-nav {
   margin-top: $base-spacing-unit;
   position: relative;

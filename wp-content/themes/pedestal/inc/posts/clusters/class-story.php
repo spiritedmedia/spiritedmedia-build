@@ -49,13 +49,17 @@ class Story extends Cluster {
      * @return string
      */
     public function get_seo_title() {
-        if ( $title = $this->get_fm_field( 'pedestal_distribution', 'seo', 'title' ) ) {
+        $title = $this->get_fm_field( 'pedestal_distribution', 'seo', 'title' );
+        if ( $title ) {
             return $title;
-        } elseif ( $headline = $this->get_headline() ) {
-            return $headline;
-        } else {
-            return $this->get_default_seo_title();
         }
+
+        $headline = $this->get_headline();
+        if ( $headline ) {
+            return $headline;
+        }
+
+        return $this->get_default_seo_title();
     }
 
     /**
@@ -109,11 +113,7 @@ class Story extends Cluster {
      * @return string|bool
      */
     public function get_primary_story_bar_background_color() {
-        if ( $background_color = $this->get_fm_field( 'story_branding', 'background_color' ) ) {
-            return $background_color;
-        } else {
-            return false;
-        }
+        return $this->get_fm_field( 'story_branding', 'background_color' ) ?: false;
     }
 
     /**
@@ -122,11 +122,7 @@ class Story extends Cluster {
      * @return string|bool
      */
     public function get_primary_story_bar_foreground_color() {
-        if ( $foreground_color = $this->get_fm_field( 'story_branding', 'foreground_color' ) ) {
-            return $foreground_color;
-        } else {
-            return false;
-        }
+        return $this->get_fm_field( 'story_branding', 'foreground_color' ) ?: false;
     }
 
     /**
@@ -135,10 +131,6 @@ class Story extends Cluster {
      * @return int|bool ID
      */
     public function get_icon_id() {
-        if ( $icon = $this->get_fm_field( 'story_branding', 'icon' ) ) {
-            return $icon;
-        } else {
-            return false;
-        }
+        return $this->get_fm_field( 'story_branding', 'icon' ) ?: false;
     }
 }

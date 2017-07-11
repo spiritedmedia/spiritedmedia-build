@@ -84,7 +84,7 @@ class General_Types extends Types {
                     ];
                     break;
 
-            }
+            }// End switch().
 
             $post_types[ $post_type ] = compact( 'singular', 'plural', 'class', 'args' );
 

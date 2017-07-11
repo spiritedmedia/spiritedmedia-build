@@ -13,7 +13,9 @@ use \Pedestal\Objects\Stream;
 class Recent_Content_Widget extends \WP_Widget {
 
     public function __construct() {
-        $widget_options = [ 'description' => esc_html( 'The most recent stories or articles.' ) ];
+        $widget_options = [
+            'description' => esc_html( 'The most recent stories or articles.' ),
+        ];
         parent::__construct( 'pedestal-recent-content',
             esc_html( 'Recent Content' ),
             $widget_options
@@ -96,7 +98,8 @@ class Recent_Content_Widget extends \WP_Widget {
         ];
 
         // Escape field ids and names
-        $field_ids = $field_names = $instance;
+        $field_ids = $instance;
+        $field_names = $instance;
         array_walk( $field_ids, function( &$v, $k ) {
             $v = $this->get_field_id( $k );
         } );

@@ -72,7 +72,7 @@
 
 
 .c-overview__lead-text {
-  // stylelint-disable-next-line selector-no-type
+  // stylelint-disable-next-line selector-max-type
   p {
     @include lead;
 
@@ -100,7 +100,7 @@
       position: static;
     }
 
-    // stylelint-disable-next-line selector-no-type
+    // stylelint-disable-next-line selector-max-type
     img:not( .ntv-video-play-button ) {
       position: absolute;
       width: 100%;

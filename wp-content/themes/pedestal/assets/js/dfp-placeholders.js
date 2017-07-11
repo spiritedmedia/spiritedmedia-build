@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-    // Get the theme color from the page to be used for the placeholder ads
+  // Get the theme color from the page to be used for the placeholder ads
   var themeColor = $('meta[name="theme-color"]').attr('content');
   themeColor = themeColor.replace('#', '');
   if ( ! themeColor ) {
@@ -39,16 +39,16 @@ jQuery(document).ready(function($) {
           display: displayVal
         });
         $placeholder.append(
-            $('<a href="#" class="js-dfp-placeholder"><img src="' + dummyImg + '"></a>'),
-            $('<p>' + adName + '</p>').css({
-              position: 'absolute',
-              top: '5px',
-              right: '5px',
-              margin: 0,
-              padding: 0,
-              color: '#fff',
-              fontSize: '10px'
-            }),
+          $('<a href="#" class="js-dfp-placeholder"><img src="' + dummyImg + '"></a>'),
+          $('<p>' + adName + '</p>').css({
+            position: 'absolute',
+            top: '5px',
+            right: '5px',
+            margin: 0,
+            padding: 0,
+            color: '#fff',
+            fontSize: '10px'
+          }),
           $('<p class="">' + counterText + '</p>').css({
             position: 'absolute',
             top: '18px',

@@ -127,7 +127,7 @@ class Newsletter extends Post {
                 unset( $item['heading_title'] );
 
             endif;
-        }
+        }// End foreach().
 
         return $items;
     }

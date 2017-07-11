@@ -41,7 +41,13 @@ class Newsletter_Testing {
      * @param WP Post $post The post object being edited
      */
     public function action_add_meta_boxes_pedestal_newsletter( $post ) {
-        add_meta_box( 'pedestal-newsletter-testing', 'Split Testing', [ $this, 'newsletter_testing_metabox' ], null, $context = 'advanced', $priority = 'high' );
+        add_meta_box( 'pedestal-newsletter-testing',
+            'Split Testing',
+            [ $this, 'newsletter_testing_metabox' ],
+            null,
+            'advanced',
+            'high'
+        );
     }
 
     /**

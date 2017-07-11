@@ -21,7 +21,9 @@ class Recent_Video_Widget extends \WP_Widget {
 
     public function __construct() {
         $this->youtube = new YouTube;
-        $widget_options = [ 'description' => 'Display a recent video from YouTube.' ];
+        $widget_options = [
+			'description' => 'Display a recent video from YouTube.',
+		];
         parent::__construct( 'pedestal-recent-video',
             esc_html( 'Recent Video' ),
             $widget_options

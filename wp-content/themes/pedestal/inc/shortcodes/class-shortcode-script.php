@@ -23,23 +23,23 @@ class Script extends Shortcode {
     }
 
     public static function reversal( $content ) {
-
-        if ( $scripts = self::parse_scripts( $content ) ) {
-            $replacements = [];
-            $shortcode_tag = static::get_shortcode_tag();
-            foreach ( $scripts as $script ) {
-                $shortcode_attrs = $script->attrs;
-                unset( $shortcode_attrs['src'] );
-                $other_attrs = '';
-                foreach ( $shortcode_attrs as $key => $val ) {
-                    $other_attrs .= ' ' . $key . '="' . esc_attr( $val ) . '"';
-                }
-
-                $replacements[ $script->original ] = '[' . $shortcode_tag . ' src="' . esc_url_raw( $script->attrs['src'] ) . '"' . $other_attrs . ']';
-            }
-            $content = self::make_replacements_to_content( $content, $replacements );
+        $scripts = self::parse_scripts( $content );
+        if ( ! $scripts ) {
+            return $content;
         }
-        return $content;
+        $replacements = [];
+        $shortcode_tag = static::get_shortcode_tag();
+        foreach ( $scripts as $script ) {
+            $shortcode_attrs = $script->attrs;
+            unset( $shortcode_attrs['src'] );
+            $other_attrs = '';
+            foreach ( $shortcode_attrs as $key => $val ) {
+                $other_attrs .= ' ' . $key . '="' . esc_attr( $val ) . '"';
+            }
+
+            $replacements[ $script->original ] = '[' . $shortcode_tag . ' src="' . esc_url_raw( $script->attrs['src'] ) . '"' . $other_attrs . ']';
+        }
+        return self::make_replacements_to_content( $content, $replacements );
     }
 
     public static function callback( $attrs, $content = '' ) {

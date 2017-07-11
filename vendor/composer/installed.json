@@ -143,23 +143,23 @@
     },
     {
         "name": "deliciousbrains/wp-amazon-web-services",
-        "version": "1.0.2",
-        "version_normalized": "1.0.2.0",
+        "version": "1.0.3",
+        "version_normalized": "1.0.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/deliciousbrains/wp-amazon-web-services.git",
-            "reference": "0b64dc5ec5582378b948c48d02817dd2079f6562"
+            "reference": "297cb203b7e640253323a4322721f7e1f0f924d9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/deliciousbrains/wp-amazon-web-services/zipball/0b64dc5ec5582378b948c48d02817dd2079f6562",
-            "reference": "0b64dc5ec5582378b948c48d02817dd2079f6562",
+            "url": "https://api.github.com/repos/deliciousbrains/wp-amazon-web-services/zipball/297cb203b7e640253323a4322721f7e1f0f924d9",
+            "reference": "297cb203b7e640253323a4322721f7e1f0f924d9",
             "shasum": ""
         },
         "require": {
             "composer/installers": "~1.0.6"
         },
-        "time": "2017-03-13T13:15:50+00:00",
+        "time": "2017-06-19T14:08:48+00:00",
         "type": "wordpress-plugin",
         "installation-source": "dist",
         "license": [
@@ -174,7 +174,7 @@
             "plugin"
         ],
         "support": {
-            "source": "https://github.com/deliciousbrains/wp-amazon-web-services/tree/1.0.2",
+            "source": "https://github.com/deliciousbrains/wp-amazon-web-services/tree/1.0.3",
             "issues": "https://github.com/deliciousbrains/wp-amazon-web-services/issues"
         }
     },
@@ -224,19 +224,19 @@
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/shortcake-bakery.git",
-            "reference": "6dcd2796f724b46630bc440303887ac78d2b05d8"
+            "reference": "8c3ab6153ab8fb637e9cd1fb75e7edc7aff280ba"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/shortcake-bakery/zipball/6dcd2796f724b46630bc440303887ac78d2b05d8",
-            "reference": "6dcd2796f724b46630bc440303887ac78d2b05d8",
+            "url": "https://api.github.com/repos/spiritedmedia/shortcake-bakery/zipball/8c3ab6153ab8fb637e9cd1fb75e7edc7aff280ba",
+            "reference": "8c3ab6153ab8fb637e9cd1fb75e7edc7aff280ba",
             "shasum": ""
         },
         "require-dev": {
-            "squizlabs/php_codesniffer": "2.3.4",
+            "squizlabs/php_codesniffer": "2.8.1",
             "wp-coding-standards/wpcs": "dev-master"
         },
-        "time": "2016-10-03T22:00:37+00:00",
+        "time": "2017-07-06T17:24:45+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -254,7 +254,7 @@
             }
         ],
         "support": {
-            "source": "https://github.com/spiritedmedia/shortcake-bakery/tree/disable-fb-regex-validation"
+            "source": "https://github.com/spiritedmedia/shortcake-bakery/tree/spiritedmedia"
         }
     },
     {
@@ -317,12 +317,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/joshtronic/php-loremipsum.git",
-            "reference": "5ad1e4e9f75392f51b4ee9a1b9d0ac6b082dfe2f"
+            "reference": "e033baaa7913f0e2f36e20d42678b2842bc6e54a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/joshtronic/php-loremipsum/zipball/5ad1e4e9f75392f51b4ee9a1b9d0ac6b082dfe2f",
-            "reference": "5ad1e4e9f75392f51b4ee9a1b9d0ac6b082dfe2f",
+            "url": "https://api.github.com/repos/joshtronic/php-loremipsum/zipball/e033baaa7913f0e2f36e20d42678b2842bc6e54a",
+            "reference": "e033baaa7913f0e2f36e20d42678b2842bc6e54a",
             "shasum": ""
         },
         "require": {
@@ -331,7 +331,7 @@
         "require-dev": {
             "satooshi/php-coveralls": "~1.0"
         },
-        "time": "2016-06-09T03:04:41+00:00",
+        "time": "2017-05-28T23:30:23+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -493,27 +493,27 @@
     },
     {
         "name": "symfony/css-selector",
-        "version": "v3.2.8",
-        "version_normalized": "3.2.8.0",
+        "version": "v3.3.4",
+        "version_normalized": "3.3.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/css-selector.git",
-            "reference": "02983c144038e697c959e6b06ef6666de759ccbc"
+            "reference": "4d882dced7b995d5274293039370148e291808f2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/css-selector/zipball/02983c144038e697c959e6b06ef6666de759ccbc",
-            "reference": "02983c144038e697c959e6b06ef6666de759ccbc",
+            "url": "https://api.github.com/repos/symfony/css-selector/zipball/4d882dced7b995d5274293039370148e291808f2",
+            "reference": "4d882dced7b995d5274293039370148e291808f2",
             "shasum": ""
         },
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2017-05-01T14:55:58+00:00",
+        "time": "2017-05-01T15:01:29+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "3.2-dev"
+                "dev-master": "3.3-dev"
             }
         },
         "installation-source": "dist",
@@ -703,38 +703,41 @@
     },
     {
         "name": "twig/twig",
-        "version": "v1.33.2",
-        "version_normalized": "1.33.2.0",
+        "version": "v1.34.4",
+        "version_normalized": "1.34.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/twigphp/Twig.git",
-            "reference": "dd6ca96227917e1e85b41c7c3cc6507b411e0927"
+            "reference": "f878bab48edb66ad9c6ed626bf817f60c6c096ee"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig/zipball/dd6ca96227917e1e85b41c7c3cc6507b411e0927",
-            "reference": "dd6ca96227917e1e85b41c7c3cc6507b411e0927",
+            "url": "https://api.github.com/repos/twigphp/Twig/zipball/f878bab48edb66ad9c6ed626bf817f60c6c096ee",
+            "reference": "f878bab48edb66ad9c6ed626bf817f60c6c096ee",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.2.7"
+            "php": ">=5.3.3"
         },
         "require-dev": {
             "psr/container": "^1.0",
             "symfony/debug": "~2.7",
             "symfony/phpunit-bridge": "~3.3@dev"
         },
-        "time": "2017-04-20T17:39:48+00:00",
+        "time": "2017-07-04T13:19:31+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.33-dev"
+                "dev-master": "1.34-dev"
             }
         },
         "installation-source": "dist",
         "autoload": {
             "psr-0": {
                 "Twig_": "lib/"
+            },
+            "psr-4": {
+                "Twig\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -823,17 +826,17 @@
     },
     {
         "name": "timber/timber",
-        "version": "1.3.0",
-        "version_normalized": "1.3.0.0",
+        "version": "1.3.3",
+        "version_normalized": "1.3.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/timber/timber.git",
-            "reference": "dd766a0d4b80329e7b256f64be5623bc1d24ee6f"
+            "reference": "8f54e7cb27f66859f43f82d3f7ad318c772f3218"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/timber/timber/zipball/dd766a0d4b80329e7b256f64be5623bc1d24ee6f",
-            "reference": "dd766a0d4b80329e7b256f64be5623bc1d24ee6f",
+            "url": "https://api.github.com/repos/timber/timber/zipball/8f54e7cb27f66859f43f82d3f7ad318c772f3218",
+            "reference": "8f54e7cb27f66859f43f82d3f7ad318c772f3218",
             "shasum": ""
         },
         "require": {
@@ -853,7 +856,7 @@
             "phpdocumentor/phpdocumentor": "2.* for generating docs",
             "satooshi/php-coveralls": "1.0.* for code coverage"
         },
-        "time": "2017-04-25T20:41:47+00:00",
+        "time": "2017-06-19T14:24:56+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -888,17 +891,17 @@
     },
     {
         "name": "squizlabs/php_codesniffer",
-        "version": "2.6.2",
-        "version_normalized": "2.6.2.0",
+        "version": "2.9.1",
+        "version_normalized": "2.9.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-            "reference": "4edb770cb853def6e60c93abb088ad5ac2010c83"
+            "reference": "dcbed1074f8244661eecddfc2a675430d8d33f62"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/4edb770cb853def6e60c93abb088ad5ac2010c83",
-            "reference": "4edb770cb853def6e60c93abb088ad5ac2010c83",
+            "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/dcbed1074f8244661eecddfc2a675430d8d33f62",
+            "reference": "dcbed1074f8244661eecddfc2a675430d8d33f62",
             "shasum": ""
         },
         "require": {
@@ -910,7 +913,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2016-07-13T23:29:13+00:00",
+        "time": "2017-05-22T02:43:20+00:00",
         "bin": [
             "scripts/phpcs",
             "scripts/phpcbf"
@@ -968,23 +971,23 @@
     },
     {
         "name": "wp-coding-standards/wpcs",
-        "version": "0.10.0",
-        "version_normalized": "0.10.0.0",
+        "version": "0.11.0",
+        "version_normalized": "0.11.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git",
-            "reference": "b39490465f6fd7375743a395019cd597e12119c9"
+            "reference": "407e4b85f547a5251185f89ceae6599917343388"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/b39490465f6fd7375743a395019cd597e12119c9",
-            "reference": "b39490465f6fd7375743a395019cd597e12119c9",
+            "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/407e4b85f547a5251185f89ceae6599917343388",
+            "reference": "407e4b85f547a5251185f89ceae6599917343388",
             "shasum": ""
         },
         "require": {
-            "squizlabs/php_codesniffer": "^2.6"
+            "squizlabs/php_codesniffer": "^2.8.1"
         },
-        "time": "2016-08-29T20:04:47+00:00",
+        "time": "2017-03-20T23:17:58+00:00",
         "type": "library",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -1094,16 +1097,16 @@
     },
     {
         "name": "wpackagist-plugin/redirection",
-        "version": "2.5",
-        "version_normalized": "2.5.0.0",
+        "version": "2.6.3",
+        "version_normalized": "2.6.3.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/redirection/",
-            "reference": "tags/2.5"
+            "reference": "tags/2.6.3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/redirection.2.5.zip",
+            "url": "https://downloads.wordpress.org/plugin/redirection.2.6.3.zip",
             "reference": null,
             "shasum": null
         },
@@ -1182,16 +1185,16 @@
     },
     {
         "name": "wpackagist-plugin/wp-redis",
-        "version": "0.6.1",
-        "version_normalized": "0.6.1.0",
+        "version": "0.6.2",
+        "version_normalized": "0.6.2.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/wp-redis/",
-            "reference": "tags/0.6.1"
+            "reference": "tags/0.6.2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/wp-redis.0.6.1.zip",
+            "url": "https://downloads.wordpress.org/plugin/wp-redis.0.6.2.zip",
             "reference": null,
             "shasum": null
         },

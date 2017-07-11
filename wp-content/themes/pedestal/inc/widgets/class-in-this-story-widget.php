@@ -36,9 +36,13 @@ class In_This_Story_Widget extends \WP_Widget {
             return;
         }
         $context['current_item'] = $obj;
-        $context['items'] = $obj->get_primary_story()->get_entities( [ 'posts_per_page' => 30 ] );
+        $context['items'] = $obj->get_primary_story()->get_entities( [
+			'posts_per_page' => 30,
+		] );
 
-        $instance = [ 'title' => esc_html__( 'In This Story', 'pedestal' ) ];
+        $instance = [
+			'title' => esc_html__( 'In This Story', 'pedestal' ),
+		];
 
         echo $args['before_widget'];
 

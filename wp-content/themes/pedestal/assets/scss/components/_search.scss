@@ -141,7 +141,7 @@ $filter-link-pd: 5px;
         left: 0;
       }
 
-      // stylelint-disable-next-line selector-no-type
+      // stylelint-disable-next-line selector-max-type
       &[type="radio"] {
         margin: 0;
       }
@@ -162,7 +162,7 @@ $filter-link-pd: 5px;
 }
 
 
-// stylelint-disable-next-line selector-no-type
+// stylelint-disable selector-max-type
 input.c-search__field {
   @include stdbd(
     $side: 'bottom',
@@ -182,3 +182,4 @@ input.c-search__field {
     background: transparent;
   }
 }
+// stylelint-enable selector-max-type

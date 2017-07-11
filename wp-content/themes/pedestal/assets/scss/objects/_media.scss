@@ -8,6 +8,9 @@
 // ==========================================================================
 
 
+// stylelint-disable selector-max-type
+
+
 $o-media-gutter             : $base-spacing-unit !default;
 $o-media-gutter--tiny       : ( $o-media-gutter / 4 ) !default;
 $o-media-gutter--small      : ( $o-media-gutter / 2 ) !default;
@@ -38,7 +41,6 @@ $o-media-collapse-at        : lower-bound( $medium-range );
   float: left;
   margin-right: $o-media-gutter;
 
-  // stylelint-disable-next-line selector-no-type
   > img {
     display: block;
   }

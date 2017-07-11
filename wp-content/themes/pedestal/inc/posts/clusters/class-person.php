@@ -130,7 +130,8 @@ class Person extends Cluster {
      */
     public function get_age() {
         $age = $this->get_person_details_field( 'age' );
-        if ( ! empty( $dob = $this->get_person_details_field( 'dob' ) ) ) {
+        $dob = $this->get_person_details_field( 'dob' );
+        if ( ! empty( $dob ) ) {
             $dob = new DateTime( date( 'Y-m-d', $dob ) );
             $today = new DateTime( 'today' );
             $age = $dob->diff( $today )->y;
@@ -198,8 +199,11 @@ class Person extends Cluster {
     public function get_short_name( $middle_initial = true ) {
         $name = '';
         $name .= $this->get_first_name() . ' ';
-        if ( $middle_initial && $middle = $this->get_middle_name() ) {
-            $name .= $middle[0] . '. ';
+        if ( $middle_initial ) {
+            $middle = $this->get_middle_name();
+            if ( $middle ) {
+                $name .= $middle[0] . '. ';
+            }
         }
         $name .= $this->get_last_name();
         return $name;

@@ -124,7 +124,9 @@ class YouTube {
         $cache_key = 'yt_video_data_' . $id;
         $response = get_site_option( $cache_key );
         if ( ! $response || empty( $response['success'] ) ) {
-            $response = $this->get_api_request( 'videos', [ 'id' => $id ] );
+            $response = $this->get_api_request( 'videos', [
+				'id' => $id,
+			] );
             if ( ! $response || empty( $response['success'] ) ) {
                 return false;
             }

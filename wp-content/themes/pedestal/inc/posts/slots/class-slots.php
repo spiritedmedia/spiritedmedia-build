@@ -102,7 +102,9 @@ class Slots {
         add_filter( 'timber/twig', function( $twig ) {
             $twig->addFunction( new \Twig_SimpleFunction( PEDESTAL_PREFIX . 'slot',
                 [ $this, 'handle_twig_func_slot' ],
-                [ 'needs_context' => true ]
+                [
+					'needs_context' => true,
+				]
             ) );
             return $twig;
         }, 99 );
@@ -163,7 +165,9 @@ class Slots {
         }
 
         $_POST['slot_item_placement_defaults'] = $placement_defaults;
-        $default_placement_data = $placement_defaults + [ 'index' => 0 ];
+        $default_placement_data = $placement_defaults + [
+			'index' => 0,
+		];
         $setup_dates( $default_placement_data );
         $this->handle_setup_placement_post( $post_id, $default_placement_data );
 
@@ -461,7 +465,8 @@ class Slots {
             return '';
         }
 
-        $default_options = $data_atts = [];
+        $default_options = [];
+        $data_atts = [];
 
         $slot_data_return_type = 'slot_item';
         if ( 'newsletter_promoted_event' === $slot_position ) {
@@ -499,13 +504,17 @@ class Slots {
 
         $slot_data = self::get_slot_data( $slot_data_return_type, $placement_options );
         if ( Types::is_post( $slot_data ) ) {
-            $context['template'] = $item_type = $additional_classes = '';
+            $context['template'] = '';
+            $item_type = '';
+            $additional_classes = '';
             $slots_path = 'partials/slots/';
             $css_class = 'c-slot';
+
             if ( Pedestal()->is_email() ) {
                 $css_class = 'email-slot';
                 $slots_path = 'emails/messages/partials/slots/';
             }
+
             if ( $slot_data instanceof Slot_Item ) {
                 $item_type = $slot_data->get_slot_item_type_slug();
                 $context['template'] = $slots_path . $item_type . '.twig';
@@ -545,7 +554,7 @@ class Slots {
             $html = Timber::render( $slots_path . '/slot.twig', $context );
             ob_get_clean();
             return $html;
-        }
+        }// End if().
         return '';
     }
 

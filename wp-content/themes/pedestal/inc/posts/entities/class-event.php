@@ -14,11 +14,11 @@ class Event extends Entity {
      * @return string
      */
     public function get_more() {
-        if ( $more_field = $this->get_fm_field( 'event_details', 'more' ) ) {
+        $more_field = $this->get_fm_field( 'event_details', 'more' );
+        if ( $more_field ) {
             return $more_field;
-        } else {
-            return $this->get_content();
         }
+        return $this->get_content();
     }
 
     /**
@@ -29,11 +29,11 @@ class Event extends Entity {
      * @return string
      */
     public function get_what() {
-        if ( $what_field = $this->get_fm_field( 'event_details', 'what' ) ) {
+        $what_field = $this->get_fm_field( 'event_details', 'what' );
+        if ( $what_field ) {
             return $what_field;
-        } else {
-            return $this->get_excerpt();
         }
+        return $this->get_excerpt();
     }
 
     /**
@@ -102,11 +102,11 @@ class Event extends Entity {
      * @return string
      */
     public function get_start_time( $format = 'U' ) {
-        if ( $start_time = $this->get_fm_field( 'event_details', 'start_time' ) ) {
+        $start_time = $this->get_fm_field( 'event_details', 'start_time' );
+        if ( $start_time ) {
             return date( $format, $start_time );
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**
@@ -117,11 +117,11 @@ class Event extends Entity {
      * @return string
      */
     public function get_end_time( $format = 'U' ) {
-        if ( $end_time = $this->get_fm_field( 'event_details', 'end_time' ) ) {
+        $end_time = $this->get_fm_field( 'event_details', 'end_time' );
+        if ( $end_time ) {
             return date( $format, $end_time );
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**
@@ -212,9 +212,8 @@ class Event extends Entity {
      * @return string
      */
     public function get_dtend() {
-        if ( $end = $this->get_fm_field( 'event_details', 'end_time' ) ) {
-            $end = $end;
-        } else {
+        $end = $this->get_fm_field( 'event_details', 'end_time' );
+        if ( ! $end ) {
             $start = $this->get_fm_field( 'event_details', 'start_time' );
             $end = $start + 60 * 60;
         }

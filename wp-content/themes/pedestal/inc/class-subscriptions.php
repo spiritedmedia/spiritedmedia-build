@@ -175,7 +175,8 @@ class Subscriptions {
 
         $last_sent = '';
         $last_sent_human_diff = 'N/A';
-        if ( $last_sent_date = $cluster->get_last_email_notification_date() ) {
+        $last_sent_date = $cluster->get_last_email_notification_date();
+        if ( $last_sent_date ) {
             $last_sent = get_date_from_gmt( date( 'Y-m-d H:i:s', $last_sent_date ), 'm/d/Y g:i a' );
             $last_sent_human_diff = human_time_diff( $last_sent_date ) . ' ago';
         }
@@ -198,7 +199,8 @@ class Subscriptions {
 
         $send_button = '';
         $follower_label = 'Followers';
-        $cluster_count = $cluster->get_following_users_count( $force = true );
+        $force = true;
+        $cluster_count = $cluster->get_following_users_count( $force );
         if ( 0 == $cluster_count ) {
             $attributes['disabled'] = 'disabled';
         }
@@ -580,7 +582,9 @@ class Subscriptions {
             // Ensure product@spiritedmedia.com gets sent the test emails for every send
             $test_emails[] = 'product@spiritedmedia.com';
             $to = implode( ',', $test_emails );
-            add_filter( 'wp_mail_content_type', function() { return 'text/html'; } );
+            add_filter( 'wp_mail_content_type', function() {
+                return 'text/html';
+            } );
             $args['test_email_addresses'] = $test_emails;
             foreach ( $args['messages'] as $message ) {
                 $subject = '[TEST] ' . $message['subject'];
@@ -685,7 +689,9 @@ class Subscriptions {
         ];
         $transient_key = 'pending_email_confirmation_' . $nonce;
         set_transient( $transient_key, $confirmation_data, 12 * HOUR_IN_SECONDS );
-        add_filter( 'wp_mail_content_type', function() { return 'text/html'; } );
+        add_filter( 'wp_mail_content_type', function() {
+            return 'text/html';
+        } );
         return wp_mail( $email, $subject, $body );
     }
 
@@ -935,7 +941,7 @@ class Subscriptions {
      */
     public function handle_test_email_request() {
         $request = get_query_var( 'pedestal-test-email' );
-        switch ( $request ) {
+        switch ( $request ) :
             case 'all':
                 $templates = [
                     'newsletter',
@@ -1019,6 +1025,6 @@ class Subscriptions {
             default:
                 echo '<img src="http://i.imgur.com/lnKvhQ7.jpg" alt="Invalid email type" title="dingus!"><br>';
                 break;
-        }
+        endswitch;
     }
 }

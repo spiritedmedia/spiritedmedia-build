@@ -87,9 +87,9 @@ class Newsletter_Lists {
             'name' => esc_attr( $this->address_option_key ),
             'label' => 'Address ID',
         ];
-        $context['nonce_field'] = wp_nonce_field( $action = $this->admin_page_slug, $name = '_wpnonce', $referer = true, $echo = false );
-        $context['primary_button'] = get_submit_button( 'Sync & Save', 'primary', 'sync-and-save', $wrap = false );
-        $context['secondary_button'] = get_submit_button( 'Save', 'secondary', 'save', $wrap = false );
+        $context['nonce_field'] = wp_nonce_field( $this->admin_page_slug, '_wpnonce', true, false );
+        $context['primary_button'] = get_submit_button( 'Sync & Save', 'primary', 'sync-and-save', false );
+        $context['secondary_button'] = get_submit_button( 'Save', 'secondary', 'save', false );
 
         Timber::render( 'partials/admin/newsletter-settings.twig', $context );
     }
@@ -104,7 +104,8 @@ class Newsletter_Lists {
         }
 
         // Check for cross-site request forgery
-        if ( ! check_admin_referer( $action = $this->admin_page_slug ) ) {
+        $action = $this->admin_page_slug;
+        if ( ! check_admin_referer( $action ) ) {
             wp_die( 'Bad nonce!' );
         }
 
@@ -140,11 +141,13 @@ class Newsletter_Lists {
      */
     public function get_newsletter_list_id( $name = '' ) {
         $key = $this->sanitize_newsletter_option_name( $name );
-        if ( $id = get_option( $key ) ) {
+        $id = get_option( $key );
+        if ( $id ) {
             return $id;
         }
 
-        if ( $id = $this->fetch_list_id_from_api( $name ) ) {
+        $id = $this->fetch_list_id_from_api( $name );
+        if ( $id ) {
             // If the ID was fetched then we should save it
             $this->save_newsletter_option( $name, $id );
             return $id;
@@ -188,12 +191,14 @@ class Newsletter_Lists {
      */
     public function get_address_id() {
         // Check if the ID was previously saved
-        if ( $id = get_option( $this->address_option_key ) ) {
+        $id = get_option( $this->address_option_key );
+        if ( $id ) {
             return $id;
         }
 
         // Check the API for the address ID
-        if ( $id = $this->fetch_address_id_from_api() ) {
+        $id = $this->fetch_address_id_from_api();
+        if ( $id ) {
             // If the ID was fetched then we should save it
             $this->save_address_option( $id );
             return $id;

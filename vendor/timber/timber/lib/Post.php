@@ -375,7 +375,7 @@ class Post extends Core implements CoreInterface {
 	 * get a preview of your post, if you have an excerpt it will use that,
 	 * otherwise it will pull from the post_content.
 	 * If there's a <!-- more --> tag it will use that to mark where to pull through.
-	 * @api
+	 * @deprecated since 1.3.1, use {{ post.preview }} instead
 	 * @example
 	 * ```twig
 	 * <p>{{post.get_preview(50)}}</p>
@@ -410,7 +410,9 @@ class Post extends Core implements CoreInterface {
 			$text = do_shortcode($text);
 		}
 		if ( !strlen($text) ) {
-			$text = TextHelper::trim_words($this->get_content(), $len, false);
+			$text = $this->content();
+			$text = TextHelper::remove_tags($text, array('script', 'style'));
+			$text = TextHelper::trim_words($text, $len, false);
 			$trimmed = true;
 		}
 		if ( !strlen(trim($text)) ) {
@@ -1184,11 +1186,13 @@ class Post extends Core implements CoreInterface {
 
 	/**
 	 * Finds any WP_Post objects and converts them to Timber\Posts
-	 * @param array $data
+	 * @param array|WP_Post $data
 	 * @param string $class
 	 */
 	public function convert( $data, $class ) {
-		if ( is_array($data) ) {
+		if ( $data instanceof WP_Post ) {
+			$data = new $class($data);
+		} else if ( is_array($data) ) {
 			$func = __FUNCTION__;
 			foreach ( $data as &$ele ) {
 				if ( gettype($ele) === 'array' ) {

@@ -45,7 +45,7 @@
  * Must be used on a `ul`
  */
 @mixin no-bullet {
-  // stylelint-disable selector-no-type
+  // stylelint-disable selector-max-type
   list-style-type: none;
   margin-#{$default-float}: $list-side-margin-no-bullet;
 
@@ -58,7 +58,7 @@
       list-style: none;
     }
   }
-  // stylelint-enable selector-no-type
+  // stylelint-enable selector-max-type
 }
 
 
@@ -68,12 +68,12 @@
  * Must be used on a `ul`
  */
 @mixin no-bullet-custom {
-  // stylelint-disable selector-no-type, declaration-no-important
+  // stylelint-disable selector-max-type, declaration-no-important
   > li::before {
     width: 0 !important;
     height: 0 !important;
   }
-  // stylelint-enable selector-no-type, declaration-no-important
+  // stylelint-enable selector-max-type, declaration-no-important
 }
 
 

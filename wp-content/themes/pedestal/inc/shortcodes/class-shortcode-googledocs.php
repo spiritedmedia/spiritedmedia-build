@@ -67,82 +67,85 @@ class GoogleDocs extends Shortcode {
     }
 
     public static function reversal( $content ) {
-        if ( $iframes = self::parse_iframes( $content ) ) {
-            $replacements = [];
-            foreach ( $iframes as $iframe ) {
-                if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts ) ) {
-                    continue;
-                }
-
-                if ( ! $parsed_from_url = self::parse_from_url( $iframe->attrs['src'] ) ) {
-                    continue;
-                }
-
-                switch ( $parsed_from_url['doc_type'] ) {
-                    case 'document':
-                        $replacement_url = 'https://docs.google.com/document/d/' . $parsed_from_url['embed_id'];
-                        $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
-                            ' url="' . esc_url_raw( $replacement_url ) . '"' .
-                            ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
-                            ( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
-                            ']';
-                        break;
-                    case 'spreadsheet':
-                    case 'spreadsheets':
-                        parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
-                        $replacement_url = 'https://docs.google.com/spreadsheets/d/' . $parsed_from_url['embed_id'];
-                        $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
-                            ' url="' . esc_url_raw( $replacement_url ) . '"' .
-                            ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
-                            ( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
-                            ( ! empty( $query_vars['headers'] ) && 'false' !== $query_vars['headers'] ? ' headers="true"' : '' ) .
-                            ']';
-                        break;
-                    case 'presentation':
-                        parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
-                        $replacement_url = 'https://docs.google.com/presentation/d/' . $parsed_from_url['embed_id'];
-                        $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
-                            ' url="' . esc_url_raw( $replacement_url ) . '"' .
-                            ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
-                            ( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
-                            ( ! empty( $query_vars['start'] ) && 'false' !== $query_vars['start'] ? ' start="true"' : '' ) .
-                            ( ! empty( $query_vars['loop'] ) && 'false' !== $query_vars['loop'] ? ' loop="true"' : '' ) .
-                            ( ! empty( $query_vars['delayms'] ) ? ' delayms=' . intval( $query_vars['delayms'] ) : '' ) .
-                            ']';
-                        break;
-                    case 'form':
-                    case 'forms':
-                        $replacement_url = $iframe->attrs['src'];
-                        $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
-                            ' url="' . esc_url_raw( $replacement_url ) . '"' .
-                            ( ! empty( $iframe->attrs['height'] ) ? ' height=' . esc_attr( $iframe->attrs['height'] ) : '' ) .
-                            ' width=100%' .
-                            ']';
-                        break;
-                    case 'map':
-                    case 'maps':
-                        parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
-                        if ( empty( $query_vars['mid'] ) ) {
-                            return;
-                        }
-                        $replacement_url = add_query_arg(
-                            [
-                                'mid' => $query_vars['mid'],
-                            ],
-                            'https://www.google.com/maps/d/embed'
-                        );
-                        $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
-                            ' url="' . esc_url_raw( $replacement_url ) . '"' .
-                            ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
-                            ( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
-                            ']';
-                        break;
-                }
-            }
-            $content = self::make_replacements_to_content( $content, $replacements );
+        $iframes = self::parse_iframes( $content );
+        if ( ! $iframes ) {
+            return $content;
         }
 
-        return $content;
+        $replacements = [];
+        foreach ( $iframes as $iframe ) :
+            if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts ) ) {
+                continue;
+            }
+
+            $parsed_from_url = self::parse_from_url( $iframe->attrs['src'] );
+            if ( ! $parsed_from_url ) {
+                continue;
+            }
+
+            switch ( $parsed_from_url['doc_type'] ) :
+                case 'document':
+                    $replacement_url = 'https://docs.google.com/document/d/' . $parsed_from_url['embed_id'];
+                    $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+                        ' url="' . esc_url_raw( $replacement_url ) . '"' .
+                        ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
+                        ( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
+                        ']';
+                    break;
+                case 'spreadsheet':
+                case 'spreadsheets':
+                    parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
+                    $replacement_url = 'https://docs.google.com/spreadsheets/d/' . $parsed_from_url['embed_id'];
+                    $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+                        ' url="' . esc_url_raw( $replacement_url ) . '"' .
+                        ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
+                        ( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
+                        ( ! empty( $query_vars['headers'] ) && 'false' !== $query_vars['headers'] ? ' headers="true"' : '' ) .
+                        ']';
+                    break;
+                case 'presentation':
+                    parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
+                    $replacement_url = 'https://docs.google.com/presentation/d/' . $parsed_from_url['embed_id'];
+                    $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+                        ' url="' . esc_url_raw( $replacement_url ) . '"' .
+                        ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
+                        ( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
+                        ( ! empty( $query_vars['start'] ) && 'false' !== $query_vars['start'] ? ' start="true"' : '' ) .
+                        ( ! empty( $query_vars['loop'] ) && 'false' !== $query_vars['loop'] ? ' loop="true"' : '' ) .
+                        ( ! empty( $query_vars['delayms'] ) ? ' delayms=' . intval( $query_vars['delayms'] ) : '' ) .
+                        ']';
+                    break;
+                case 'form':
+                case 'forms':
+                    $replacement_url = $iframe->attrs['src'];
+                    $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+                        ' url="' . esc_url_raw( $replacement_url ) . '"' .
+                        ( ! empty( $iframe->attrs['height'] ) ? ' height=' . esc_attr( $iframe->attrs['height'] ) : '' ) .
+                        ' width=100%' .
+                        ']';
+                    break;
+                case 'map':
+                case 'maps':
+                    parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
+                    if ( empty( $query_vars['mid'] ) ) {
+                        return;
+                    }
+                    $replacement_url = add_query_arg(
+                        [
+                            'mid' => $query_vars['mid'],
+                        ],
+                        'https://www.google.com/maps/d/embed'
+                    );
+                    $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+                        ' url="' . esc_url_raw( $replacement_url ) . '"' .
+                        ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
+                        ( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
+                        ']';
+                    break;
+            endswitch;
+        endforeach;
+
+        return self::make_replacements_to_content( $content, $replacements );
     }
 
     public static function callback( $attrs, $content = '' ) {
@@ -214,7 +217,7 @@ class GoogleDocs extends Shortcode {
                 break;
             default:
                 return '';
-        }
+        }// End switch().
 
         $additional_attributes['width'] = $width_attr;
         $additional_attributes['height'] = $height_attr;

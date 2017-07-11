@@ -29,9 +29,9 @@ class ImageHelper {
 	const BASE_CONTENT = 2;
 
 	public static function init() {
-		self::add_constants();
 		self::add_actions();
 		self::add_filters();
+		return true;
 	}
 
 	/**
@@ -177,17 +177,6 @@ class ImageHelper {
 			\Timber\ImageHelper::_delete_generated_if_image($post_id);
 			return $metadata;
 		}, 10, 2);
-	}
-
-	/**
-	 * Adds a constant defining the path to the content directory relative to the site
-	 * for example /wp-content or /content
-	 */
-	protected static function add_constants() {
-		if ( !defined('WP_CONTENT_SUBDIR') ) {
-			$wp_content_path = str_replace(get_home_url(), '', WP_CONTENT_URL);
-			define('WP_CONTENT_SUBDIR', $wp_content_path);
-		}
 	}
 
 	/**
@@ -358,28 +347,23 @@ class ImageHelper {
 			$result['absolute'] = true;
 			if ( TextHelper::starts_with($tmp, $upload_dir['basedir']) ) {
 				$result['base'] = self::BASE_UPLOADS; // upload based
-				$tmp = str_replace($upload_dir['basedir'], '', $tmp);
+				$tmp = URLHelper::remove_url_component($tmp, $upload_dir['basedir']);
 			}
 			if ( TextHelper::starts_with($tmp, WP_CONTENT_DIR) ) {
 				$result['base'] = self::BASE_CONTENT; // content based
-				$tmp = str_replace(WP_CONTENT_DIR, '', $tmp);
+				$tmp = URLHelper::remove_url_component($tmp, WP_CONTENT_DIR);
 			}
 		} else {
-			// if upload dir does not contain site_url, the content-directory seems to be outside of the site_url
-			// therefore using site_url() would lead to a wrong content/ path
-			if ( false === strpos($upload_dir['baseurl'], site_url()) ) {
-				// use HOME_URL and relative image path
-				$tmp = get_home_url().$tmp;
-			} else if ( !$result['absolute'] ) {
-				$tmp = site_url().$tmp;
+			if ( !$result['absolute'] ) {
+				$tmp = untrailingslashit(network_home_url()).$tmp;
 			}
-			if ( TextHelper::starts_with($tmp, $upload_dir['baseurl']) ) {
+			if ( URLHelper::starts_with($tmp, $upload_dir['baseurl']) ) {
 				$result['base'] = self::BASE_UPLOADS; // upload based
-				$tmp = str_replace($upload_dir['baseurl'], '', $tmp);
-			} else if ( TextHelper::starts_with($tmp, content_url()) ) {
+				$tmp = URLHelper::remove_url_component($tmp, $upload_dir['baseurl']);
+			} else if ( URLHelper::starts_with($tmp, content_url()) ) {
 				$result['base'] = self::BASE_CONTENT; // content-based
 				$tmp = self::theme_url_to_dir($tmp);
-				$tmp = str_replace(WP_CONTENT_DIR, '', $tmp);
+				$tmp = URLHelper::remove_url_component($tmp, WP_CONTENT_DIR);
 			}
 		}
 		$parts = pathinfo($tmp);
@@ -468,7 +452,7 @@ class ImageHelper {
 			$subdir = URLHelper::url_to_file_system($subdir);
 		}
 		$subdir = self::maybe_realpath($subdir);
-		
+
 		$path = '';
 		if ( self::BASE_UPLOADS == $base ) {
 			//it is in the Uploads directory
@@ -535,11 +519,11 @@ class ImageHelper {
 			$au['subdir'],
 			$au['basename']
 		);
-		
+
 		$new_url = apply_filters('timber/image/new_url', $new_url);
 		$destination_path = apply_filters('timber/image/new_path', $destination_path);
 		// if already exists...
-		if ( file_exists($destination_path) ) {
+		if ( file_exists($source_path) && file_exists($destination_path) ) {
 			if ( $force || filemtime($source_path) > filemtime($destination_path) ) {
 				// Force operation - warning: will regenerate the image on every pageload, use for testing purposes only!
 				unlink($destination_path);

@@ -19,7 +19,7 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
     font-size: $base-font-size;
   }
 
-  // stylelint-disable-next-line selector-no-type
+  // stylelint-disable-next-line selector-max-type
   a {
     @include link-dark;
   }
@@ -72,7 +72,7 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
 .c-meta-info__img {
   margin-right: $c-meta-info-icon-spacing;
 
-  // stylelint-disable-next-line selector-no-type
+  // stylelint-disable-next-line selector-max-type
   a {
     color: $grey-62;
   }
@@ -84,7 +84,7 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
       height: $c-meta-info-icon-size;
     }
 
-    // stylelint-disable-next-line selector-no-type
+    // stylelint-disable-next-line selector-max-type
     img {
       display: block;
     }

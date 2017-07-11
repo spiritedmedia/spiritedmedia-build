@@ -9,7 +9,8 @@ $item = Post::get_by_post_id( $p->ID );
 
 $context = Timber::get_context();
 
-if ( $sponsored_items = Stream::get_sponsored_items() ) {
+$sponsored_items = Stream::get_sponsored_items();
+if ( $sponsored_items ) {
     $context['sponsored_items'] = $sponsored_items;
 }
 

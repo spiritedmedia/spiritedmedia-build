@@ -14,7 +14,9 @@ class Daily_Insta_Widget extends \WP_Widget {
 
         parent::__construct( 'pedestal-widget-daily-insta',
             esc_html( 'Instagram of the Day' ),
-            [ 'description' => esc_html( $desc ) ]
+            [
+				'description' => esc_html( $desc ),
+			]
         );
     }
 

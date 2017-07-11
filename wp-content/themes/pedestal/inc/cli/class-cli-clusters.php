@@ -24,7 +24,9 @@ class CLI_Clusters extends \WP_CLI_Command {
      * @return integer         New term ID
      */
     private function _term_adder( $slug, $term, $tax, $parent = 0 ) {
-        $args = [ 'slug' => $slug ];
+        $args = [
+            'slug' => $slug,
+        ];
         $msg = "Added type {$term['singular']}.";
         if ( 0 !== $parent ) {
             $msg = "Added type {$term['singular']} with parent {$parent}.";
@@ -103,7 +105,7 @@ class CLI_Clusters extends \WP_CLI_Command {
             $post_type = 'pedestal_' . $k;
             $count_items = 0;
             WP_CLI::line( "Creating {$post_type} posts..." );
-            foreach ( $v['items'] as $item_slug => $item ) {
+            foreach ( $v['items'] as $item_slug => $item ) :
                 $post_args = [
                     'post_title'  => (string) $item['title'],
                     'post_name'   => $item_slug,
@@ -178,7 +180,7 @@ class CLI_Clusters extends \WP_CLI_Command {
                 WP_CLI::line( "Added \"{$item['title']}\" with ID {$post_id}." );
                 $count_items++;
 
-            }
+            endforeach;
 
             WP_CLI::success( "Added {$count_items} {$k}." );
 
@@ -192,7 +194,7 @@ class CLI_Clusters extends \WP_CLI_Command {
             $post_type = $post->get_type();
             $post_title = $post->get_title();
 
-            foreach ( $item['connections'] as $connection ) {
+            foreach ( $item['connections'] as $connection ) :
 
                 if ( ! isset( $connection['to'] ) ) {
                     WP_CLI::error( "The `to` property was not set for one of {$post_type} {$item['id']}'s connections!" );
@@ -234,8 +236,7 @@ class CLI_Clusters extends \WP_CLI_Command {
                     'rel' => $connection['rel'],
                 ] );
                 WP_CLI::line( "Connected {$post_type} {$item['id']} \"{$post_title}\" to locality {$to_obj->ID} \"{$to_obj->post_title}\" with relationship {$connection['rel']}." );
-            }
-
+            endforeach;
         endforeach;
 
         WP_CLI::success( 'Locality connections made!' );
@@ -263,7 +264,9 @@ class CLI_Clusters extends \WP_CLI_Command {
                 'p2p_from' => $row->p2p_to,
                 'p2p_to'   => $row->p2p_from,
             ];
-            $wpdb_update_where = [ 'p2p_id' => $row->p2p_id ];
+            $wpdb_update_where = [
+                'p2p_id' => $row->p2p_id,
+            ];
             $wpdb->update( 'wp_p2p', $wpdb_update_data, $wpdb_update_where );
             WP_CLI::line( "Swapped `from`={$row->p2p_from} with `to`={$row->p2p_to} for connection {$row->p2p_id}." );
             $count_rows++;

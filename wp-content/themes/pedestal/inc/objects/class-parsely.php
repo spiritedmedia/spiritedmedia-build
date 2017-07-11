@@ -168,7 +168,7 @@ class Parsely {
                     'url'            => home_url(),
                 ] );
                 break;
-        }
+        }// End switch().
 
         $this->data = $data;
     }

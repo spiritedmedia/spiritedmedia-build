@@ -2,7 +2,7 @@
 Contributors: jarednova, connorjburton, lggorman
 Tags: template engine, templates, twig
 Requires at least: 3.7
-Stable tag: 1.3.0
+Stable tag: 1.3.2
 Tested up to: 4.7.3
 PHP version: 5.3.0 or greater
 License: GPLv2 or later
@@ -40,6 +40,18 @@ Timber is great for any WordPress developer who cares about writing good, mainta
 
 
 == Changelog ==
+
+= 1.3.2 =
+* Fix for image bug with WPML and Roots/Bedrock active #1445 (thanks @njbarrett)
+* Fix for some HTTPs issues #1448 (thanks @baldursson)
+* Improved docs! #1441 (thanks @gchtr)
+* Allow ACF to convert single WP_Post objects to Timber Posts #1439 (thanks @luism-s)
+
+= 1.3.1 =
+* Fix for Timber::get_widgets with Twig 2.0 #1422 (thanks @gchtr)
+* Fix for WPML Menus #1414 (thanks @mikeyb31)
+* Fix for WPCLI integration #1429 #1430 (thanks @vyarmolenko)
+* Fix for image format processing #1421 (thanks @mgussekloo)
 
 = 1.3.0 =
 * Default $context object now returns a PostQuery for $context['posts'] this is cool because you can use `{{ posts.pagination }}` in your Twig templates without any further PHP work (thanks @lggorman)

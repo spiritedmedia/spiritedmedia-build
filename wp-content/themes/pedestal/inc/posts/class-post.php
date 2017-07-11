@@ -209,7 +209,8 @@ abstract class Post {
      */
     protected function set_data_atts() {
         $author_role = '';
-        if ( $author = $this->get_single_author() ) {
+        $author = $this->get_single_author();
+        if ( method_exists( $author, 'get_public_role' ) ) {
             $public_role = $author->get_public_role();
             $author_role = $public_role['name'];
         }
@@ -247,7 +248,8 @@ abstract class Post {
      * @return string
      */
     public function get_title() {
-        if ( $title = $this->get_field( 'post_title' ) ) {
+        $title = $this->get_field( 'post_title' );
+        if ( $title ) {
             return $title;
         }
         return false;
@@ -375,7 +377,8 @@ abstract class Post {
         $source = false;
         switch ( $type ) {
             case 'pedestal_link':
-                if ( $source = $this->get_source() ) {
+                $source = $this->get_source();
+                if ( method_exists( $source, 'get_name' ) ) {
                     $source = esc_html( $source->get_name() );
                 }
                 break;
@@ -436,7 +439,9 @@ abstract class Post {
 
         }
 
-        return Utils::get_byline_list( $authors_names_with_links, [ 'truncate' => $truncate ] );
+        return Utils::get_byline_list( $authors_names_with_links, [
+			'truncate' => $truncate,
+		] );
     }
 
     /**
@@ -498,7 +503,9 @@ abstract class Post {
      * @return string
      */
     public function get_author_names_rss() {
-        return Utils::get_byline_list( $this->get_author_names(), [ 'pretext' => '' ] );
+        return Utils::get_byline_list( $this->get_author_names(), [
+			'pretext' => '',
+		] );
     }
 
     /**
@@ -576,7 +583,9 @@ abstract class Post {
     public function get_permalink( $preview = false ) {
         $link = get_permalink( $this->get_id() );
         if ( $preview ) {
-            $link = add_query_arg( [ 'preview' => true ], $link );
+            $link = add_query_arg( [
+				'preview' => true,
+			], $link );
         }
         return $link;
     }
@@ -601,7 +610,9 @@ abstract class Post {
     public function get_the_permalink( $preview = false ) {
         $link = apply_filters( 'the_permalink', $this->get_permalink(), $this->get_id() );
         if ( $preview ) {
-            $link = add_query_arg( [ 'preview' => true ], $link );
+            $link = add_query_arg( [
+				'preview' => true,
+			], $link );
         }
         return $link;
     }
@@ -783,7 +794,8 @@ abstract class Post {
      * @return bool
      */
     public function has_featured_image() {
-        return (bool) $this->get_featured_image();;
+        return (bool) $this->get_featured_image();
+        ;
     }
 
     /**
@@ -874,11 +886,11 @@ abstract class Post {
      */
     public function get_featured_image() {
         $id = $this->get_featured_image_id();
-        if ( ! empty( $id ) && $attachment = Attachment::get_by_post_id( (int) $id ) ) {
+        $attachment = Attachment::get_by_post_id( $id );
+        if ( Types::is_post( $attachment ) ) {
             return $attachment;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -887,11 +899,11 @@ abstract class Post {
      * @return string
      */
     public function get_seo_title() {
-        if ( $title = $this->get_fm_field( 'pedestal_distribution', 'seo', 'title' ) ) {
+        $title = $this->get_fm_field( 'pedestal_distribution', 'seo', 'title' );
+        if ( $title ) {
             return $title;
-        } else {
-            return $this->get_default_seo_title();
         }
+        return $this->get_default_seo_title();
     }
 
     /**
@@ -909,11 +921,11 @@ abstract class Post {
      * @return string
      */
     public function get_seo_description() {
-        if ( $description = $this->get_fm_field( 'pedestal_distribution', 'seo', 'description' ) ) {
+        $description = $this->get_fm_field( 'pedestal_distribution', 'seo', 'description' );
+        if ( $description ) {
             return $description;
-        } else {
-            return $this->get_default_seo_description();
         }
+        return $this->get_default_seo_description();
     }
 
     /**
@@ -963,10 +975,10 @@ abstract class Post {
 
             case 'image':
                 $image_id = $this->get_fm_field( 'pedestal_distribution', 'facebook', 'image' );
-                if ( $src = wp_get_attachment_image_src( $image_id, 'facebook-open-graph' ) ) {
+                $src = wp_get_attachment_image_src( $image_id, 'facebook-open-graph' );
+                $val = '';
+                if ( $src ) {
                     $val = $src[0];
-                } else {
-                    $val = '';
                 }
                 break;
 
@@ -982,7 +994,7 @@ abstract class Post {
 
             default:
                 break;
-        }
+        }// End switch().
 
         if ( ! empty( $val ) ) {
             return $val;
@@ -1037,6 +1049,7 @@ abstract class Post {
      * @return string
      */
     public function get_twitter_card_tag( $tag_name ) {
+        $val = '';
 
         switch ( $tag_name ) {
 
@@ -1056,24 +1069,18 @@ abstract class Post {
 
             case 'image':
                 $image_id = $this->get_fm_field( 'pedestal_distribution', 'twitter', 'image' );
-                if ( $src = wp_get_attachment_image_src( $image_id, 'twitter-card' ) ) {
+                $src = wp_get_attachment_image_src( $image_id, 'twitter-card' );
+                if ( $src ) {
                     $val = $src[0];
-                } else {
-                    $val = '';
                 }
-                break;
-
-            default:
-                $val = '';
                 break;
         }
 
-        if ( ! empty( $val ) ) {
-            return $val;
-        } else {
+        if ( empty( $val ) ) {
             return $this->get_default_twitter_card_tag( $tag_name );
         }
 
+        return $val;
     }
 
     /**
@@ -1295,7 +1302,14 @@ abstract class Post {
      */
     protected function set_field( $key, $value ) {
         global $wp, $wpdb;
-        $wpdb->update( $wpdb->posts, [ $key => $value ], [ 'ID' => $this->get_id() ] );
+        $wpdb->update( $wpdb->posts,
+            [
+                $key => $value,
+            ],
+            [
+                'ID' => $this->get_id(),
+            ]
+        );
         // Clear our own internal post cache for this given object for the duration of the request
         if ( isset( $wp->pedestal_post_cache[ $this->get_id() ] ) ) {
             unset( $wp->pedestal_post_cache[ $this->get_id() ] );
@@ -1612,11 +1626,11 @@ trait Emailable {
      * @return mixed
      */
     public function get_sent_date( $format = 'U' ) {
-        if ( $sent_date = $this->get_meta( 'sent_date' ) ) {
+        $sent_date = $this->get_meta( 'sent_date' );
+        if ( $sent_date ) {
             return date( $format, strtotime( date( 'Y-m-d H:i:s', $sent_date ) ) );
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

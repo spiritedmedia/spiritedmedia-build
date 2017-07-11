@@ -67,7 +67,8 @@ class Featured_Posts {
         }
 
         if ( $query->is_home() ) {
-            if ( $post_ids = $this->get_featured_post_ids() ) {
+            $post_ids = $this->get_featured_post_ids();
+            if ( $post_ids ) {
                 $query->set( 'post__not_in', $post_ids );
             }
         }

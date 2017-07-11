@@ -209,11 +209,11 @@ class User extends Author {
      * @return string
      */
     public function get_title() {
-        if ( $title_field = $this->get_meta( 'user_title' ) ) {
+        $title_field = $this->get_meta( 'user_title' );
+        if ( $title_field ) {
             return $title_field;
-        } else {
-            return $this->get_public_role_label();
         }
+        return $this->get_public_role_label();
     }
 
     /**
@@ -486,7 +486,13 @@ class User extends Author {
     protected function set_field( $key, $value ) {
         global $wpdb;
 
-        $wpdb->update( $wpdb->users, [ $key => $value ], [ 'ID' => $this->get_id() ] );
+        $wpdb->update( $wpdb->users,
+            [
+                $key => $value,
+            ], [
+                'ID' => $this->get_id(),
+            ]
+        );
         clean_user_cache( $this->get_id() );
 
         $this->user = get_user_by( 'id', $this->get_id() );

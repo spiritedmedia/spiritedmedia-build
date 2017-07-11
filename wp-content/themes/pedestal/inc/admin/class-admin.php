@@ -60,7 +60,8 @@ class Admin {
         add_action( 'fm_user', [ $this, 'action_user_fields' ] );
 
         add_action( 'save_post', function( $post_id, $post, $update ) {
-            switch ( $post_type = get_post_type( $post_id ) ) {
+            $post_type = get_post_type( $post_id );
+            switch ( $post_type ) {
                 case 'pedestal_embed':
                     $embed = new Embed( $post_id );
                     $embed->update_embed_data();
@@ -140,7 +141,8 @@ class Admin {
         // Filter the post titles in FM Post Datasource results
         add_filter( 'fm_datasource_post_title', function( $title, $post ) {
             if ( isset( $post->post_type ) ) {
-                $type = Types::get_post_type_name( $post->post_type, $plurals = false );
+                $plurals = false;
+                $type = Types::get_post_type_name( $post->post_type, $plurals );
                 if ( 'pedestal_locality' === $post->post_type ) {
                     $locality = Post::get_by_post_id( $post->ID );
                     $type = $locality->get_type_name();
@@ -157,10 +159,10 @@ class Admin {
         add_filter( 'parent_file', function( $parent_file ) {
             global $pagenow;
             if ( ! empty( $_GET['taxonomy'] ) && 'edit-tags.php' == $pagenow ) {
-                if ( 'pedestal_subscriptions' == $_GET['taxonomy']  ) {
+                if ( 'pedestal_subscriptions' == $_GET['taxonomy'] ) {
                     $parent_file = 'users.php';
                 }
-                if ( 'pedestal_slot_item_type' == $_GET['taxonomy']  ) {
+                if ( 'pedestal_slot_item_type' == $_GET['taxonomy'] ) {
                     $parent_file = 'slots';
                 }
             }
@@ -820,7 +822,8 @@ class Admin {
      */
     public function update_story_branding( $story_id ) {
         $story = Story::get_by_post_id( $story_id );
-        if ( $styles = $story->get_primary_story_branding() ) {
+        $styles = $story->get_primary_story_branding();
+        if ( $styles ) {
             $attachment_id = $story->get_icon_id();
             $fallback_url = str_replace( '.svg', '.png', wp_get_attachment_url( $attachment_id ) );
 
@@ -846,7 +849,9 @@ class Admin {
             'orderby'        => 'date',
             'order'          => 'ASC',
         ] );
-        $context = array_merge( Timber::get_context(), [ 'items' => $future_posts ] );
+        $context = array_merge( Timber::get_context(), [
+            'items' => $future_posts,
+        ] );
         Timber::render( 'partials/admin/dash-widget-scheduled-posts.twig', $context );
     }
 }

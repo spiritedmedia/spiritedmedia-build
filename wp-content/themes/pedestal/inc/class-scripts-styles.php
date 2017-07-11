@@ -61,7 +61,7 @@ class Scripts_Styles {
         wp_register_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic|PT+Serif', [], null );
 
         // Functionality-specific assets
-        wp_register_script( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js', [], null, $in_footer = true );
+        wp_register_script( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js', [], null, true );
         wp_register_style( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/css/player.css', [], null );
 
         if ( is_single() && is_a( $post, 'WP_Post' ) ) {
@@ -79,19 +79,19 @@ class Scripts_Styles {
         // Core site assets
         $theme_name = wp_get_theme()->get_stylesheet();
         wp_enqueue_style( $theme_name . '-styles', get_stylesheet_directory_uri() . '/assets/dist/css/theme.css', [ 'google-fonts' ], PEDESTAL_VERSION );
-        wp_enqueue_script( 'pedestal-scripts', get_template_directory_uri() . '/assets/dist/js/pedestal.js', [ 'jquery' ], PEDESTAL_VERSION, true );
+        wp_enqueue_script( 'pedestal-scripts', get_template_directory_uri() . '/assets/dist/js/theme.js', [ 'jquery' ], PEDESTAL_VERSION, true );
 
         // Advertising
         wp_enqueue_script( 'dfp-load', get_template_directory_uri() . '/assets/dist/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
-        wp_enqueue_script( 'nativo', 'https://s.ntv.io/serve/load.js', [], null, $in_footer = true );
+        wp_enqueue_script( 'nativo', 'https://s.ntv.io/serve/load.js', [], null, true );
         if ( isset( $_GET['show-ad-units'] ) ) {
             wp_enqueue_script( 'dfp-placeholders', get_template_directory_uri() . '/assets/dist/js/dfp-placeholders.js', [ 'jquery' ], PEDESTAL_VERSION );
         }
 
         // Relay Links from Relay Media
-        wp_enqueue_script( 'relay-links', 'https://static.relaymedia.com/embed/relay-links.js', [], null, $in_footer = true );
+        wp_enqueue_script( 'relay-links', 'https://static.relaymedia.com/embed/relay-links.js', [], null, true );
 
-        wp_register_script( 'pedestal-footnotes', get_template_directory_uri() . '/assets/dist/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, $in_footer = true );
+        wp_register_script( 'pedestal-footnotes', get_template_directory_uri() . '/assets/dist/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, true );
     }
 
     /**

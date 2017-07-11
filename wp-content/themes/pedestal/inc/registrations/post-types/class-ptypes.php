@@ -185,7 +185,8 @@ class Types {
                 echo esc_html( $obj->get_venue_name() );
                 break;
             case 'pedestal_entity_cluster_connections':
-                if ( ! empty( $clusters_with_links = $obj->get_clusters_with_links() ) ) {
+                $clusters_with_links = $obj->get_clusters_with_links();
+                if ( ! empty( $clusters_with_links ) ) {
                     echo $clusters_with_links;
                 } else {
                     echo '&mdash;';
@@ -508,7 +509,8 @@ class Types {
      * @return array Post type capabilities map
      */
     public static function get_post_type_capabilities( string $post_type, $exclusions = [] ) {
-        if ( empty( $obj = get_post_type_object( $post_type ) ) || empty( $obj->cap ) ) {
+        $obj = get_post_type_object( $post_type );
+        if ( empty( $obj ) || empty( $obj->cap ) ) {
             return false;
         }
         $caps = (array) $obj->cap;

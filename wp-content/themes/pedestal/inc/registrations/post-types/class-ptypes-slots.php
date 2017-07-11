@@ -107,7 +107,7 @@ class Slot_Types extends Types {
                     $args['has_archive'] = false;
                     break;
 
-            }
+            }// End switch().
 
             $post_types[ $post_type ] = compact( 'singular', 'plural', 'class', 'args' );
 
@@ -280,8 +280,13 @@ class Slot_Types extends Types {
         }
 
         // Add the date fields after everything else
-        $placement_fields['date_start']         = new \Fieldmanager_Datepicker( esc_html__( 'Start Date', 'pedestal' ) );
-        $placement_fields['date_end']           = new \Fieldmanager_Datepicker( esc_html__( 'End Date (Optional)', 'pedestal' ) );
+        $datepicker_opts = [
+            'js_opts'    => [
+                'firstDay' => 0,
+            ],
+        ];
+        $placement_fields['date_start']         = new \Fieldmanager_Datepicker( esc_html__( 'Start Date', 'pedestal' ), $datepicker_opts );
+        $placement_fields['date_end']           = new \Fieldmanager_Datepicker( esc_html__( 'End Date (Optional)', 'pedestal' ), $datepicker_opts );
         $placement_fields['date_subrange_days'] = new \Fieldmanager_Checkboxes( esc_html__( 'Sub-range Days of Week (Optional)', 'pedestal' ), [
             'description' => esc_html__( $days_desc, 'pedestal' ),
             'options'     => Utils::get_days_of_week(),

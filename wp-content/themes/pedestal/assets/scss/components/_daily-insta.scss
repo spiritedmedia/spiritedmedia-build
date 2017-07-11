@@ -46,7 +46,7 @@ $daily-insta-header-padding-v: $base-spacing-unit / 2;
   &__img {
     padding-bottom: 0;
 
-    // stylelint-disable-next-line selector-no-type
+    // stylelint-disable-next-line selector-max-type
     img {
       width: 100%;
     }

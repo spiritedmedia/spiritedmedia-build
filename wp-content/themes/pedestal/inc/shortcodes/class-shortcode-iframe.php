@@ -52,22 +52,21 @@ class Iframe extends Shortcode {
      * @return string
      */
     public static function reversal( $content ) {
-
-        if ( $iframes = self::parse_iframes( $content ) ) {
-            $replacements = [];
-            foreach ( $iframes as $iframe ) {
-                $iframe_atts = $iframe->attrs;
-                unset( $iframe_atts['src'] );
-                $other_atts = '';
-                foreach ( $iframe_atts as $key => $val ) {
-                    $other_atts .= ' ' . $key . '="' . esc_attr( $val ) . '"';
-                }
-                $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' src="' . esc_url_raw( $iframe->attrs['src'] ) . '"' . $other_atts . ']';
-            }
-            $content = self::make_replacements_to_content( $content, $replacements );
+        $iframes = self::parse_iframes( $content );
+        if ( ! $iframes ) {
+            return $content;
         }
-
-        return $content;
+        $replacements = [];
+        foreach ( $iframes as $iframe ) {
+            $iframe_atts = $iframe->attrs;
+            unset( $iframe_atts['src'] );
+            $other_atts = '';
+            foreach ( $iframe_atts as $key => $val ) {
+                $other_atts .= ' ' . $key . '="' . esc_attr( $val ) . '"';
+            }
+            $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' src="' . esc_url_raw( $iframe->attrs['src'] ) . '"' . $other_atts . ']';
+        }
+        return self::make_replacements_to_content( $content, $replacements );
     }
 
     public static function callback( $attrs, $content = '' ) {

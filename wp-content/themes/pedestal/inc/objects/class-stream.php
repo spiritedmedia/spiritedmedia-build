@@ -165,7 +165,9 @@ class Stream {
      * @return Array|False An array of data or false if no sponsored itmes found
      */
     public static function get_sponsored_items() {
-        $slots = Slots::get_slot_data( 'slot_item', [ 'type' => 'stream' ] );
+        $slots = Slots::get_slot_data( 'slot_item', [
+			'type' => 'stream',
+		] );
         if ( ! $slots ) {
             return false;
         }
@@ -205,7 +207,9 @@ class Stream {
                         $image
                     );
                 }
-                $output['featured_image'] = $attachment->get_img_caption_html( $image, [ 'classes' => 'o-media__img c-overview__img' ] );
+                $output['featured_image'] = $attachment->get_img_caption_html( $image, [
+					'classes' => 'o-media__img c-overview__img',
+				] );
             }
         }
         return $output;

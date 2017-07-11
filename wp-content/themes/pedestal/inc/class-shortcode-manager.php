@@ -402,16 +402,23 @@ class Shortcode_Manager {
      */
     public function filter_img_shortcode_send_to_editor_attrs( $shortcode_attrs, $html, $attachment_id, $attachment ) {
         $obj = Attachment::get_by_post_id( (int) $attachment_id );
-        if ( $credit = $obj->get_credit() ) {
+        if ( ! $obj instanceof Attachment ) {
+            return $shortcode_attrs;
+        }
+
+        $credit = $obj->get_credit();
+        $credit_link = $obj->get_credit_link();
+        if ( $credit ) {
             $shortcode_attrs = wp_parse_args( [
                 'credit' => $credit,
             ], $shortcode_attrs );
         }
-        if ( $credit_link = $obj->get_credit_link() ) {
+        if ( $credit_link ) {
             $shortcode_attrs = wp_parse_args( [
                 'credit_link' => $credit_link,
             ], $shortcode_attrs );
         }
+
         return $shortcode_attrs;
     }
 
@@ -558,7 +565,9 @@ class Shortcode_Manager {
 
         $out .= '<ul class="pedestal-shortcode user-grid">';
         foreach ( $ids as $id ) {
-            $users_filter = wp_filter_object_list( $users, [ 'ID' => $id ] );
+            $users_filter = wp_filter_object_list( $users, [
+                'ID' => $id,
+            ] );
             if ( empty( $users_filter ) ) {
                 continue;
             }
@@ -567,7 +576,9 @@ class Shortcode_Manager {
             $user = new \Pedestal\Objects\User( $user );
             $out .= '<li class="user-grid__user">';
 
-            $context = [ 'user' => $user ];
+            $context = [
+                'user' => $user,
+            ];
             ob_start();
             Timber::render( 'partials/shortcode/user-card-grid.twig', $context );
             $out .= ob_get_clean();

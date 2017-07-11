@@ -24,7 +24,7 @@
 }
 
 
-// stylelint-disable selector-no-type, selector-no-qualifying-type
+// stylelint-disable selector-max-type, selector-no-qualifying-type
 .site-footer-links {
   text-align: center;
   text-transform: uppercase;
@@ -49,7 +49,7 @@
     }
   }
 }
-// stylelint-enable selector-no-type, selector-no-qualifying-type
+// stylelint-enable selector-max-type, selector-no-qualifying-type
 
 
 .site-footer-copyright {}

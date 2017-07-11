@@ -187,7 +187,7 @@ class Entity_Types extends Types {
                     $this->original_post_types[] = $post_type;
                     break;
 
-            }
+            }// End switch().
 
             $post_types[ $post_type ] = compact( 'singular', 'plural', 'class', 'args' );
 
@@ -332,7 +332,9 @@ class Entity_Types extends Types {
     private function register_embed_fields() {
 
         $services = array_values( Embed::get_embeddable_services() );
-        $services = Utils::get_byline_list( $services, [ 'pretext' => '' ] );
+        $services = Utils::get_byline_list( $services, [
+			'pretext' => '',
+		] );
         $description = sprintf( 'Only %s URLs are supported at this time. Other URLs will not save and your post will be blocked from publishing.', $services );
         $fm = new \Fieldmanager_Textfield( [
             'name'     => 'embed_url',
@@ -361,8 +363,11 @@ class Entity_Types extends Types {
         be featured as Instagram of the Day, set the date here. To cancel, just
         clear the contents of the date field.", 'pedestal' );
         $daily_insta = new \Fieldmanager_Datepicker( false, [
-            'name' => 'daily_insta_date',
+            'name'        => 'daily_insta_date',
             'description' => $daily_insta_description,
+            'js_opts'     => [
+                'firstDay' => 0,
+            ],
         ] );
         $daily_insta->add_meta_box( esc_html__( 'Instagram of the Day', 'pedestal' ), [ 'pedestal_embed' ], 'normal', 'high' );
 
@@ -382,10 +387,16 @@ class Entity_Types extends Types {
                 'start_time'     => new \Fieldmanager_Datepicker( esc_html__( 'Start Time', 'pedestal' ), [
                     'name'       => 'start_time',
                     'use_time'   => true,
+                    'js_opts'    => [
+                        'firstDay' => 0,
+                    ],
                 ] ),
                 'end_time'     => new \Fieldmanager_Datepicker( esc_html__( 'End Time', 'pedestal' ), [
                     'name'       => 'end_time',
                     'use_time'   => true,
+                    'js_opts'    => [
+                        'firstDay' => 0,
+                    ],
                 ] ),
                 'venue_name'     => new \Fieldmanager_Textfield( esc_html__( 'Venue Name', 'pedestal' ), [
                     'name'       => 'venue_name',
@@ -483,7 +494,10 @@ class Entity_Types extends Types {
                     'description'         => esc_html__( 'Where / in what context did the speaker make the statement?', 'pedestal' ),
                 ] ),
                 'date' => new \Fieldmanager_Datepicker( esc_html__( 'Date', 'pedestal' ), [
-                    'name'                => 'date',
+                    'name'    => 'date',
+                    'js_opts' => [
+                        'firstDay' => 0,
+                    ],
                 ] ),
             ],
         ] );
@@ -592,7 +606,7 @@ class Entity_Types extends Types {
             ],
         ] );
 
-        $details = $items = new \Fieldmanager_Group( false, [
+        $details = new \Fieldmanager_Group( false, [
             'name'           => 'whosnext_details',
             'children'       => [
                 'type' => new \Fieldmanager_Radios( esc_html__( 'Type', 'pedestal' ), [

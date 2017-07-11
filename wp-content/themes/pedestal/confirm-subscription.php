@@ -18,7 +18,8 @@ if ( ! empty( $_GET['list_ids'] ) ) {
     $context['provided_list_ids'] = $provided_list_ids;
 }
 $transient_key = 'pending_email_confirmation_' . $key;
-if ( $data = get_transient( $transient_key ) ) {
+$data = get_transient( $transient_key );
+if ( $data ) {
     if ( isset( $data['email'] ) && isset( $data['list_ids'] ) ) {
         $activecampaign = new ActiveCampaign;
         $result = $activecampaign->subscribe_contact( $data['email'], $data['list_ids'] );

@@ -122,18 +122,6 @@ class Frontend {
             return $body_classes;
         });
 
-        add_filter( 'the_content_feed', function( $content ) {
-            $obj = \Pedestal\Posts\Post::get_by_post_id( get_the_ID() );
-            if ( $obj ) {
-                if ( 'link' == $obj->get_type() && $source = $obj->get_source() ) {
-                    $content = esc_html__( 'See it at: ', 'pedestal' ) . '<a href="' . esc_url( $obj->get_permalink() ) . '">' . esc_html( $obj->get_source()->get_name() ) . '</a>';
-                } elseif ( 'embed' == $obj->get_type() && $source = $obj->get_source() ) {
-                    $content = esc_html__( 'See it at: ', 'pedestal' ) . '<a href="' . esc_url( $obj->get_embed_url() ) . '">' . esc_html( $obj->get_source() ) . '</a>';
-                }
-            }
-            return $content;
-        });
-
         add_filter( 'the_content', [ $this, 'filter_the_content_prepare_footnotes' ] );
         add_filter( 'the_footnotes', [ $this, 'filter_the_footnotes_render' ], 10, 2 );
         add_filter( 'nav_menu_link_attributes', function( $attrs = [], $item, $args = [], $depth ) {
@@ -240,15 +228,18 @@ class Frontend {
         $facebook_tags = $this->get_facebook_open_graph_meta_tags();
         $twitter_tags = $this->get_twitter_card_meta_tags();
 
-        $tags = array_merge( [ 'description' => $meta_description ], $facebook_tags, $twitter_tags );
-        foreach ( $tags as $name => $value ) {
+        $tags = array_merge( [
+            'description' => $meta_description,
+        ], $facebook_tags, $twitter_tags );
 
-            switch ( $name ) {
+        foreach ( $tags as $name => $value ) :
+            switch ( $name ) :
                 // Include meta tag for original content authors if they've provided their Facebook profile URL
                 case 'article:author':
                     if ( is_array( $value ) ) :
                         foreach ( $value as $author_data ) {
-                            if ( ! empty( $profile = $author_data['profile'] ) ) {
+                            $profile = $author_data['profile'];
+                            if ( ! empty( $profile ) ) {
                                 echo sprintf( '<meta name="%s" property="%s" content="%s" />' . PHP_EOL,
                                     esc_attr( $name ),
                                     esc_attr( $name ),
@@ -258,7 +249,6 @@ class Frontend {
                         }
                     endif;
                     break;
-
                 case 'description':
                     echo sprintf( '<meta name="%s" property="%s" content="%s" />' . PHP_EOL,
                         esc_attr( $name ),
@@ -266,16 +256,14 @@ class Frontend {
                         esc_attr( $value )
                     );
                     break;
-
                 default:
                     echo sprintf( '<meta property="%s" content="%s" />' . PHP_EOL,
                         esc_attr( $name ),
                         esc_attr( $value )
                     );
                     break;
-
-            }
-        }
+            endswitch;
+        endforeach;
 
         // Add a meta refresh to the homepage
         if ( is_home() ) {
@@ -324,7 +312,9 @@ class Frontend {
 
         $post = Post::get_by_post_id( get_the_ID() );
         $permalink = $post->get_permalink();
-        $beacon_url = add_query_arg( [ 'url' => urlencode( $permalink ) ], 'https://cdn.relaymedia.com/ping' );
+        $beacon_url = add_query_arg( [
+            'url' => urlencode( $permalink ),
+        ], 'https://cdn.relaymedia.com/ping' );
 
         echo '<img src="' . esc_url( $beacon_url ) . '" width="1" height="1">' . PHP_EOL;
     }
@@ -519,7 +509,7 @@ class Frontend {
         // `$matches[0]` = The whole match including the square brackets: `[0. numoffset="5" This is a footnote]`
         // `$matches[4]` = numoffset value: 5
         // `$matches[5]` = The footnote text: This is a footnote
-        if ( preg_match_all( '/\[(\d+\.((\s+)?numoffset="(\d+)+")? (.*?))\]/s', $content, $matches ) ) {
+        if ( preg_match_all( '/\[(\d+\.((\s+)?numoffset="(\d+)+")? (.*?))\]/s', $content, $matches ) ) :
             foreach ( $matches[0] as $index => $target ) {
                 $offset_value = (int) $matches[4][ $index ];
                 $text = trim( $matches[5][ $index ] );
@@ -559,7 +549,7 @@ class Frontend {
             // opening <p> but not the closing </p>. There are a bunch of open
             // wpautop tickets. See 4298 and 7988 in particular.
             $content .= "\n\n";
-        }
+        endif;
 
         return $content ;
     }
@@ -615,7 +605,8 @@ class Frontend {
                 $tags['article:author'] = $obj->get_facebook_open_graph_tag( 'author' );
             }
 
-            if ( $image = $obj->get_facebook_open_graph_tag( 'image' ) ) {
+            $image = $obj->get_facebook_open_graph_tag( 'image' );
+            if ( $image ) {
                 $tags['og:image'] = $image;
             }
         }
@@ -651,7 +642,8 @@ class Frontend {
                     $tags['twitter:description'] = $post_description;
                 }
 
-                if ( $image = $post_obj->get_twitter_card_tag( 'image' ) ) {
+                $image = $post_obj->get_twitter_card_tag( 'image' );
+                if ( $image ) {
                     $tags['twitter:image'] = $image;
                 }
             }
@@ -704,6 +696,8 @@ class Frontend {
         if ( ! defined( 'PEDESTAL_COMSCORE_ID' ) || ! PEDESTAL_COMSCORE_ID ) {
             return;
         }
-        Timber::render( 'partials/analytics/comscore.twig', [ 'comscore_id' => PEDESTAL_COMSCORE_ID ] );
+        Timber::render( 'partials/analytics/comscore.twig', [
+            'comscore_id' => PEDESTAL_COMSCORE_ID,
+        ] );
     }
 }

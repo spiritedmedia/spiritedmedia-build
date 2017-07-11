@@ -554,7 +554,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * @return [type]       [description]
          */
         public function filter_oembed_result( $data, $url, $args ) {
-            return Embed::do_embed( [ 'url' => $url ] );
+            return Embed::do_embed( [
+                'url' => $url,
+            ] );
         }
 
         /**

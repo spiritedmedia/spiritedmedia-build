@@ -136,7 +136,7 @@ $pagination-button-bg: $grey-80 !default;
 // Disable these linters because we need to override the default behavior of
 // the anchor element itself
 //
-// stylelint-disable selector-no-type
+// stylelint-disable selector-max-type
 a.c-pagination__item.is-disabled {
   background-color: $grey-80;
   border-color: $grey-70;
@@ -151,7 +151,7 @@ a.c-pagination__item.is-disabled:focus {
   background-color: $grey-80;
   color: $grey-25;
 }
-// stylelint-enable selector-no-type
+// stylelint-enable selector-max-type
 
 .c-pagination__dir {
   @include span( 1 of 2 0.01 );

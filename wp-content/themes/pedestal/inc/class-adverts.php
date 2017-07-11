@@ -36,7 +36,8 @@ class Adverts {
         });
         add_filter( 'template_include', function( $template_path ) {
             if ( 1 == get_query_var( 'pedestal-ad-tester' ) ) {
-                if ( $new_template_path = locate_template( [ 'ad-tester.php' ] ) ) {
+                $new_template_path = locate_template( [ 'ad-tester.php' ] );
+                if ( $new_template_path ) {
                     $template_path = $new_template_path;
                 }
             }

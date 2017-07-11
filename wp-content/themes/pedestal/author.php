@@ -10,8 +10,8 @@ global $wp_query;
 
 $context = Timber::get_context();
 
-if ( $author_id = get_query_var( 'author' ) ) {
-
+$author_id = get_query_var( 'author' );
+if ( $author_id ) {
     $author = new User( $author_id );
 
     $context['items']   = $author->get_entities();

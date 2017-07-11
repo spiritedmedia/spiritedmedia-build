@@ -36,7 +36,7 @@
 
     &__img {
 
-      // stylelint-disable-next-line selector-no-type
+      // stylelint-disable-next-line selector-max-type
       > img {
         height: $base-spacing-unit * 6;
 

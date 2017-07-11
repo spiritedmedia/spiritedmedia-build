@@ -53,7 +53,7 @@
     font-style: normal;
     text-transform: uppercase;
 
-    // stylelint-disable-next-line selector-no-type
+    // stylelint-disable-next-line selector-max-type
     a {
       @include link-light;
     }
@@ -73,7 +73,7 @@
   // full-width images
   display: table;
 
-  // stylelint-disable-next-line selector-no-type
+  // stylelint-disable-next-line selector-max-type
   img:not( .ntv-video-play-button ) {
     display: block;
     // For IE compatability
@@ -117,7 +117,7 @@
  */
 
 .c-figure--responsive-iframe {
-  // stylelint-disable-next-line selector-no-type
+  // stylelint-disable-next-line selector-max-type
   iframe {
     position: absolute;
     top: 0;

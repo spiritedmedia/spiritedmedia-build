@@ -154,7 +154,7 @@
  * Footnote Text
  */
 
-// stylelint-disable selector-no-qualifying-type, selector-no-type
+// stylelint-disable selector-no-qualifying-type, selector-max-type
 /*aside*/.c-main__footnotes {
   font-style: italic;
   color: $dimmed-text-color;
@@ -168,7 +168,7 @@
     font-style: normal;
   }
 }
-// stylelint-enable selector-no-qualifying-type, selector-no-type
+// stylelint-enable selector-no-qualifying-type, selector-max-type
 
 
 

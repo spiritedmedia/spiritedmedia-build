@@ -226,9 +226,9 @@ class User_Management {
         }
 
         // Sales Manager
-        $caps_sales_manager =
-            [ 'manage_uploads' => true ] +
-            Types::get_post_type_capabilities( 'pedestal_slot_item' ) +
+        $caps_sales_manager = [
+            'manage_uploads' => true,
+        ] + Types::get_post_type_capabilities( 'pedestal_slot_item' ) +
             Types::get_post_type_capabilities( 'pedestal_event' );
         $this->add_role( 'sales_manager', self::$roles_labels['sales_manager'], $caps_sales_manager );
 
@@ -287,7 +287,7 @@ class User_Management {
         $this->merge_role_caps( 'reporter_assoc', $caps_reporter_assoc );
 
         // Common capabilities
-        foreach ( static::get_roles() as $role_name => $role_label ) {
+        foreach ( static::get_roles() as $role_name => $role_label ) :
             $basic_caps = [
                 'read'                             => true,
                 'manage_options'                   => false,
@@ -324,7 +324,7 @@ class User_Management {
                 }
                 $this->remove_role_caps( $role_name, $non_admin_caps );
             }
-        }
+        endforeach;
     }
 
     /**
@@ -405,7 +405,9 @@ class User_Management {
      */
     public static function get_users_from_csv( $ids ) {
         $user_ids = array_map( 'trim', explode( ',', $ids ) );
-        $users = get_users( [ 'include' => array_map( 'intval', $user_ids ) ] );
+        $users = get_users( [
+            'include' => array_map( 'intval', $user_ids ),
+        ] );
         return [
             'ids'   => $user_ids,
             'users' => $users,

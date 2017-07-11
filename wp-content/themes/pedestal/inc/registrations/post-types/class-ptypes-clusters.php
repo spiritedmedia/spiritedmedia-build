@@ -263,7 +263,7 @@ class Cluster_Types extends Types {
                     $args['has_archive'] = false;
                     break;
 
-            }
+            }// End switch().
 
             $post_types[ $post_type ] = compact( 'singular', 'plural', 'class', 'args' );
 
@@ -579,48 +579,6 @@ class Cluster_Types extends Types {
         ] );
         $this->pedestal_headline_context = new \Fieldmanager_Context_Post( esc_html__( 'Headline', 'pedestal' ), [ 'pedestal_story' ], 'edit_form_after_title', 'default', $headline );
 
-        $story_branding = new \Fieldmanager_Group( [
-            'name'     => 'story_branding',
-            'children' => [
-                'enabled' => new \Fieldmanager_Radios( false, [
-                    'name'              => 'enabled',
-                    'default_value'     => 0,
-                    'options'           => [
-                        'data' => [
-                            0 => esc_html__( 'Off', 'pedestal' ),
-                            1 => esc_html__( 'On', 'pedestal' ),
-                        ],
-                    ],
-                    'sanitize'          => 'intval',
-                ] ),
-                'background_color' => new \Fieldmanager_TextField( 'Background Color', [
-                    'name'          => 'background_color',
-                    'default_value' => '#1d3557',
-                    'attributes'    => [
-                        'class'       => 'js-background-color',
-                        'placeholder' => esc_html__( 'Background Color (optional)', 'pedestal' ),
-                    ],
-                ] ),
-                'foreground_color'  => new \Fieldmanager_TextField( 'Text Color', [
-                    'name'          => 'foreground_color',
-                    'default_value' => '#fff',
-                    'attributes'    => [
-                        'class'       => 'js-foreground-color',
-                        'placeholder' => esc_html__( 'Foreground Color (optional)', 'pedestal' ),
-                    ],
-                ] ),
-                'icon'              => new \Fieldmanager_Media( 'Icon Upload', [
-                    'name'        => 'icon',
-                    'description' => esc_html__( 'Each story should use a unique file. Files should be SVGs with a square artboard.', 'pedestal' ),
-                    'attributes'  => [
-                        'class'       => 'js-icon-upload',
-                        'placeholder' => esc_html__( 'Icon Upload', 'pedestal' ),
-                    ],
-                ]),
-            ],
-        ] );
-        $story_branding->add_meta_box( 'Branding', 'pedestal_story', 'advanced', 'low' );
-
     }
 
     /**
@@ -674,6 +632,7 @@ class Cluster_Types extends Types {
                 'js_opts' => [
                     'changeMonth' => true,
                     'changeYear'  => true,
+                    'firstDay'    => 0,
                     // Last 100 years
                     // https://api.jqueryui.com/datepicker/#option-yearRange
                     'yearRange'   => '-100:+0',

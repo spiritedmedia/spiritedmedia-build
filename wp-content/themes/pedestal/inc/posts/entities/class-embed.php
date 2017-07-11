@@ -44,7 +44,8 @@ class Embed extends Entity {
      */
     public function get_css_classes() {
         $classes = parent::get_css_classes();
-        if ( $embed_type = $this->get_embed_type() ) {
+        $embed_type = $this->get_embed_type();
+        if ( $embed_type ) {
             $classes = array_merge( [
                 'embed-' . $embed_type
             ], $classes );
@@ -315,8 +316,9 @@ class Embed extends Entity {
      */
     public static function get_oembed_data( string $url ) {
         $cache_key = 'oembed_' . $url;
+        $data = wp_cache_get( $cache_key );
 
-        if ( $data = wp_cache_get( $cache_key ) ) {
+        if ( $data ) {
             return $data;
         }
 
@@ -365,12 +367,12 @@ class Embed extends Entity {
      * @return string
      */
     public function get_source() {
-        if ( $embed_type = $this->get_embed_type() ) {
+        $embed_type = $this->get_embed_type();
+        if ( $embed_type ) {
             $sources = self::get_embeddable_services();
             return $sources[ $embed_type ];
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**
@@ -457,7 +459,9 @@ class Embed extends Entity {
                     'instagram_id'      => $id,
                 ];
                 $image_url = sprintf( 'http://instagram.com/p/%s/media/?size=l', $id );
-                $response = wp_remote_get( $image_url, [ 'redirection' => 0 ] );
+                $response = wp_remote_get( $image_url, [
+					'redirection' => 0,
+				] );
 
                 // If the image URL is not redirected to the actual image, then
                 // bail and return nothing
@@ -471,7 +475,7 @@ class Embed extends Entity {
                 }
 
                 break;
-        }
+        }// End switch().
 
     }
 

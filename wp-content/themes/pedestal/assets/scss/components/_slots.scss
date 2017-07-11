@@ -33,7 +33,7 @@ $c-slot-item-lead-pd : $base-spacing-unit;
 
 
   &__img {
-    // stylelint-disable-next-line selector-no-type
+    // stylelint-disable-next-line selector-max-type
     img {
       max-width: 150px;
     }
@@ -68,7 +68,7 @@ $c-slot-item-lead-pd : $base-spacing-unit;
   }
 
   .c-slot__img {
-    // stylelint-disable-next-line selector-no-type
+    // stylelint-disable-next-line selector-max-type
     img {
       max-height: 50px;
     }
@@ -95,7 +95,7 @@ $c-slot-item-lead-pd : $base-spacing-unit;
   }
 
   .c-slot__img {
-    // stylelint-disable-next-line selector-no-type
+    // stylelint-disable-next-line selector-max-type
     img {
       max-width: 100%;
       max-height: 111px;

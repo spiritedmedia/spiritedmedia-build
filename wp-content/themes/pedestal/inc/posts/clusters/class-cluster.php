@@ -215,11 +215,11 @@ abstract class Cluster extends Post {
      * @return mixed
      */
     public function get_last_email_notification_date( $format = 'U' ) {
-        if ( $last_date = $this->get_meta( 'last_email_notification_date' ) ) {
+        $last_date = $this->get_meta( 'last_email_notification_date' );
+        if ( $last_date ) {
             return date( $format, strtotime( date( 'Y-m-d H:i:s', $last_date ) ) );
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -238,8 +238,11 @@ abstract class Cluster extends Post {
      * @return array
      */
     public function get_entities_since_last_email_notification() {
-        $args = [ 'posts_per_page' => 30 ];
-        if ( $last_date = $this->get_last_email_notification_date( 'Y-m-d H:i:s' ) ) {
+        $args = [
+            'posts_per_page' => 30,
+        ];
+        $last_date = $this->get_last_email_notification_date( 'Y-m-d H:i:s' );
+        if ( $last_date ) {
             $args['date_query'] = [
                 'after'         => $last_date,
                 'column'        => 'post_date_gmt',

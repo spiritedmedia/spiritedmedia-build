@@ -46,22 +46,23 @@ class Instagram extends Shortcode {
             $content = self::make_replacements_to_content( $content, $replacements );
         }
 
-        if ( $iframes = self::parse_iframes( $content ) ) {
-            $replacements = [];
-            foreach ( $iframes as $iframe ) {
-                if ( 'instagram.com' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
-                    continue;
-                }
-                if ( preg_match( '#//instagram\.com/p/([^/]+)/embed/?#', $iframe->attrs['src'], $matches ) ) {
-                    $embed_id = $matches[1];
-                } else {
-                    continue;
-                }
-                $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'https://instagram.com/p/' . $embed_id . '/' ) . '"]';
-            }
-            $content = self::make_replacements_to_content( $content, $replacements );
+        $iframes = self::parse_iframes( $content );
+        if ( ! $iframes ) {
+            return $content;
         }
-        return $content;
+        $replacements = [];
+        foreach ( $iframes as $iframe ) {
+            if ( 'instagram.com' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
+                continue;
+            }
+            if ( preg_match( '#//instagram\.com/p/([^/]+)/embed/?#', $iframe->attrs['src'], $matches ) ) {
+                $embed_id = $matches[1];
+            } else {
+                continue;
+            }
+            $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'https://instagram.com/p/' . $embed_id . '/' ) . '"]';
+        }
+        return self::make_replacements_to_content( $content, $replacements );
     }
 
     public static function callback( $attrs, $content = '' ) {

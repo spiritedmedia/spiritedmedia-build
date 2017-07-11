@@ -20,7 +20,9 @@ class Signup_Newsletter_Widget extends \WP_Widget {
 
     public function widget( $args, $instance ) {
 
-        $instance = [ 'title' => '' ];
+        $instance = [
+			'title' => '',
+		];
 
         echo $args['before_widget'];
 

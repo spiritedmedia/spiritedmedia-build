@@ -61,7 +61,9 @@ class CLI extends \WP_CLI_Command {
             $_POST['slot_item_placement_rules'] = $placements;
 
             // We update the post here to trigger the `save_post_pedestal_slot_item` hook
-            wp_update_post( [ 'ID' => $slot_item->get_id() ] );
+            wp_update_post( [
+                'ID' => $slot_item->get_id(),
+            ] );
 
             WP_CLI::line( "Slot Item \"{$slot_item->get_title()}\" with ID {$slot_item->get_id()} was successfully migrated to new format" );
             $slot_item_count_migrated++;
@@ -136,21 +138,26 @@ class CLI extends \WP_CLI_Command {
      */
     public function generate( $args, $assoc_args ) {
 
+        // @TODO
+        // @codingStandardsIgnoreStart
+
         // Define $assoc_args vars before extraction so we can check to see if
         // they've been set in $assoc_args
         $post_title = $post_status = $post_author = $story = $count = $maybe_story = $error = '';
 
         list( $post_type ) = $args;
 
-        // @TODO
-        // @codingStandardsIgnoreStart
         extract( $assoc_args );
         // @codingStandardsIgnoreEnd
 
         $lipsum = new LoremIpsum;
         $type = $post_type;
-        $admins = get_users( [ 'role' => 'administrator' ] );
-        $sources = get_terms( 'pedestal_source', [ 'fields' => 'ids' ] );
+        $admins = get_users( [
+            'role' => 'administrator',
+        ] );
+        $sources = get_terms( 'pedestal_source', [
+            'fields' => 'ids',
+        ] );
         $post_status = $post_status ? $post_status : 'publish';
         $count = $count ? $count : 1;
 
@@ -302,8 +309,11 @@ class CLI extends \WP_CLI_Command {
         foreach ( $users as $user ) {
             $new_email = Pedestal()->get_internal_email( $user->user_login );
             $wpdb->update( $wpdb->users,
-                [ 'user_email' => $new_email ],
-                [ 'ID' => $user->ID ]
+                [
+                    'user_email' => $new_email,
+                ], [
+                    'ID' => $user->ID,
+                ]
             );
             WP_CLI::line( "Set email address for user {$user->ID} to {$new_email}." );
             $count++;
@@ -358,7 +368,9 @@ class CLI extends \WP_CLI_Command {
         ];
 
         // Set up some site-specific settings
-        $sites = get_sites( [ 'site__not_in' => '1' ] );
+        $sites = get_sites( [
+            'site__not_in' => '1',
+        ] );
         foreach ( $sites as $site ) {
             switch_to_blog( $site->blog_id );
 
@@ -529,7 +541,7 @@ class CLI extends \WP_CLI_Command {
             'role' => 'subscriber',
         ];
         $user_query = new \WP_User_Query( $args );
-        if ( ! empty( $user_query->results ) ) {
+        if ( ! empty( $user_query->results ) ) :
             $user_ids_to_delete = [];
 
             // Remove Users that are authors of 1 or more posts
@@ -575,7 +587,7 @@ class CLI extends \WP_CLI_Command {
                     WP_CLI::line( 'Progress: ' . $percentage_complete . '%, ' . number_format( $loop_count ) . ' processed (' . $current_time . ' ' . $time_format . ')' );
                 }
             }
-        }
+        endif;
 
         // Stats
         WP_CLI::success( 'Removed ' . number_format( $removed_users ) . ' users' );
@@ -596,7 +608,9 @@ class CLI extends \WP_CLI_Command {
         foreach ( User_Management::$rename_roles as $old_role => $new_role ) {
             $count_users = 0;
             WP_CLI::line( "Changing `{$old_role}` to `{$new_role}`..." );
-            $users = get_users( [ 'role' => $old_role ] );
+            $users = get_users( [
+                'role' => $old_role,
+            ] );
             foreach ( $users as $user ) {
                 $display_name = $user->display_name;
                 $user->set_role( $new_role );
@@ -636,7 +650,7 @@ class CLI extends \WP_CLI_Command {
         global $wpdb;
         $data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}attachment_meta;" ) );
         $count = 0;
-        foreach ( $data as $obj ) {
+        foreach ( $data as $obj ) :
             $post_id = intval( $obj->post_id );
             $old_meta = maybe_unserialize( $obj->meta_value );
             if ( empty( $old_meta['image_meta'] ) ) {
@@ -674,7 +688,7 @@ class CLI extends \WP_CLI_Command {
                 $new_meta['image_meta']['credit_link'] = $old_credit_link;
                 update_post_meta( $post_id, '_wp_attachment_metadata', $new_meta );
             }
-        }
+        endforeach;
         WP_CLI::success( 'Restored ' . $count . ' credits!' );
     }
 

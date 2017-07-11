@@ -57,11 +57,11 @@ class Link extends Entity {
      * @return Source|false
      */
     public function get_source() {
-        if ( $sources = $this->get_taxonomy_terms( 'pedestal_source' ) ) {
+        $sources = $this->get_taxonomy_terms( 'pedestal_source' );
+        if ( $sources ) {
             $source = array_shift( $sources );
             return new Source( $source );
-        } else {
-            return false;
         }
+        return false;
     }
 }

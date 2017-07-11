@@ -141,7 +141,7 @@ class Figure {
                     $parts = explode( '/embed/', $youtube_url );
                     $youtube_id = untrailingslashit( $parts[1] );
                 }
-            }
+            }// End foreach().
 
             if ( $width && $height && $is_responsive ) {
                 $classes = 'c-figure--responsive-iframe ' . $classes;
@@ -151,7 +151,7 @@ class Figure {
                 }
                 $style = 'padding-bottom: ' . $ratio . '%;';
             }
-        }
+        }// End if().
 
         if ( $style ) {
             $style = 'style="' . esc_attr( $style ) . '"';
