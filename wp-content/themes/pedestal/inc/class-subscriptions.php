@@ -910,8 +910,9 @@ class Subscriptions {
             return '';
         }
 
-        if ( Types::is_post( $vars['item'] ) ) {
-            $vars['preview_text'] = $vars['item']->get_meta( 'email_preview_text' );
+        $item = $vars['item'] ?? null;
+        if ( Types::is_post( $item ) ) {
+            $vars['preview_text'] = $item->get_meta( 'email_preview_text' );
         }
 
         ob_start();

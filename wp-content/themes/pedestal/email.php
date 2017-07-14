@@ -34,7 +34,7 @@ add_filter( 'timber_context', function( $context ) use (
         'email_container_width_inner'     => 680 - $base_spacing_unit * 2,
         'email_module_text_overlay_width' => 500,
         'email_table_atts'                => 'role="presentation" aria-hidden="true" cellspacing="0" cellpadding="0" border="0"',
-        'email_header_preview_text'       => $vars['preview_text'],
+        'email_header_preview_text'       => $vars['preview_text'] ?? '',
     ] );
     return $context;
 
