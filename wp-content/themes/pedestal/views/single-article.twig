@@ -5,7 +5,7 @@
     <article class="c-main__content  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
-        <header class="c-main__header  c-overview">
+        <header class="c-main__header js-main-header  c-overview">
 
             {% if item.has_featured_image %}
             {% include 'partials/overview/lead-image.twig' %}
@@ -25,7 +25,7 @@
             {% endif %}
 
             {% include 'partials/meta-info/meta-info-entity.twig' %}
-            {% include 'partials/entity-share.twig' %}
+            {% include 'partials/share-buttons.twig' %}
 
         </header>
 
@@ -39,9 +39,9 @@
         </aside>
         {% endif %}
 
-        {% include 'partials/get-updates.twig' %}
+        {% include 'partials/follow-this-form.twig' %}
 
-        <footer class="c-main__footer  [ o-rule--closure  o-rule ]">
+        <footer class="c-main__footer js-main-footer  [ o-rule--closure  o-rule ]">
             {% if sponsored_items %}
                 {% include 'partials/stream/standard/sponsored.twig' %}
             {% endif %}
@@ -54,8 +54,6 @@
             </div>
             {% endif %}
         </footer>
-
-        {% include 'partials/modals/entity-share-modal.twig' %}
 
     </article>
 

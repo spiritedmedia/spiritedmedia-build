@@ -4,11 +4,6 @@
 
     <div class="site-footer-social medium-4 medium-push-8 columns">
       <ul class="iconset">
-        <li class="social-icon ">
-          <a href="#subscribe-to-newsletter" data-reveal-id="subscribe-to-newsletter" data-ga-category="Social Icon - Footer" data-ga-label="Email">
-            <?php styleguide_icon( 'envelope' ); ?>
-          </a>
-        </li>
 
         <li class="social-icon ">
           <a href="https://www.instagram.com/billy_penn/" target="_blank" data-ga-category="Social Icon - Footer" data-ga-label="Instagram">
@@ -110,80 +105,6 @@
 
 
 </div>
-</div>
-
-<div id="subscribe-to-newsletter" class="reveal-modal dark-reveal-modal small" data-reveal>
-  <a class="close-reveal-modal">&#215;</a>
-  <form action="https://billypenn.com/subscribe-to-email-list/" method="POST" data-confirm-id="confirm-subscribe-to-newsletter" data-ga-category="Submitted Form" data-ga-label="Newsletter Signup Modal">
-    <div class="form-fields">
-      <fieldset>
-        <legend><span class="show-for-sr">Sign up for </span>Newsletter and Breaking News</legend>
-        <label>
-    Get once-daily headlines and occasional breaking news in your inbox.
-    <input type="email" name="email_address" placeholder="william.penn@example.org" required />
-</label>
-        <input type="hidden" name="list-ids[]" value="320">
-        <input type="hidden" name="list-ids[]" value="381">
-        <label class="pedestal-current-year-check" for="pedestal-current-year-check">
-    What is the current year?
-    <input type="text" name="pedestal-current-year-check" id="pedestal-current-year-check" class="js-pedestal-current-year-check" value="" placeholder="YYYY" >
-</label>
-        <label style="display:none;" for="pedestal-blank-field-check">
-    Leave this field blank.
-    <input type="text" name="pedestal-blank-field-check" id="pedestal-blank-field-check" value="" placeholder="">
-</label>
-      </fieldset>
-      <button class="btn btn--secondary form-submit js-form-submit" type="submit" name="subscribe">
-        <span class="form-submit__text">Sign up</span>
-        <div class="form-submit__loader"><div class="c-spinner js-spinner">
-            <div class="c-spinner__inner sk-three-bounce">
-                <div class="sk-child sk-bounce1"></div>
-                <div class="sk-child sk-bounce2"></div>
-                <div class="sk-child sk-bounce3"></div>
-            </div>
-          </div>
-        </div>
-      </button>
-    </div>
-  </form>
-</div>
-
-<div id="confirm-subscribe-to-newsletter" class="reveal-modal dark-reveal-modal small" data-reveal>
-  <a class="close-reveal-modal">&#215;</a>
-  <form>
-    <fieldset>
-      <legend>Thanks for signing up!</legend>
-      <p>Please check your email to confirm your subscription.</p>
-    </fieldset>
-  </form>
-</div>
-
-<div class="c-search c-search--sitewide">
-  <form class="c-search__form row js-search-form" action="https://billypenn.com" role="search">
-
-    <div class="c-search__input js-search-input">
-      <button type="submit" class="c-search__icon--search  c-search__icon">
-        <?php styleguide_icon( 'search' ); ?>
-        <span class="show-for-sr">submit</span>
-      </button>
-
-      <input type="text" class="c-search__field  js-search-field" name="s" id="the-search-field" placeholder="Enter search term" value="" tabindex="1" />
-
-      <a class="c-search__icon--close  c-search__icon  js-search-icon-close" href="#">
-        <?php styleguide_icon( 'times' ); ?>
-        <span class="show-for-sr">close search</span>
-      </a>
-    </div>
-
-    <div class="c-spinner js-spinner">
-      <div class="c-spinner__inner sk-three-bounce">
-        <div class="sk-child sk-bounce1"></div>
-        <div class="sk-child sk-bounce2"></div>
-        <div class="sk-child sk-bounce3"></div>
-      </div>
-    </div>
-
-  </form>
 </div>
 
 <!-- 10.0.2.181 -->

@@ -117,9 +117,38 @@ class General_Types extends Types {
     }
 
     /**
-     * Register newsletter fields
+     * Register fields
      */
     public function action_init_after_post_types_registered() {
+        $this->register_email_pretext_field();
+        $this->register_newsletter_fields();
+    }
+
+    /**
+     * Register email preview text field
+     */
+    private function register_email_pretext_field() {
+        $post_types = array_merge(
+            [ 'pedestal_newsletter' ],
+            static::get_post_types_by_supported_feature( 'breaking' )
+        );
+
+        $description = 'Aim for 140 characters and test it!';
+        $field = new \Fieldmanager_Textfield( false, [
+            'name'        => 'email_preview_text',
+            'description' => $description,
+            'attributes' => [
+                'placeholder' => '(Optional)',
+                'size' => 100,
+            ],
+        ] );
+        $field->add_meta_box( esc_html( 'Email Preview Text' ), $post_types, 'normal', 'high' );
+    }
+
+    /**
+     * Register newsletter fields
+     */
+    private function register_newsletter_fields() {
         $items = new \Fieldmanager_Group( esc_html__( 'Item', 'pedestal' ), [
             'name'           => 'newsletter_items',
             'limit'          => 0,

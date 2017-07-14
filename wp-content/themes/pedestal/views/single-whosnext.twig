@@ -4,7 +4,7 @@
 <article class="c-main__content  {{ item.css_classes }}  {{ item.css_classes_content }}"
     {{ item.get_the_data_atts }} >
 
-    <header class="c-main__header  c-overview">
+    <header class="c-main__header js-main-header  c-overview">
         {% if item.has_featured_image %}
             {% include 'partials/overview/lead-image.twig' %}
         {% endif %}
@@ -19,12 +19,12 @@
         {% endif %}
 
         {% include 'partials/meta-info/meta-info-entity.twig' %}
-        {% include 'partials/entity-share.twig' %}
+        {% include 'partials/share-buttons.twig' %}
     </header>
 
     <section class="c-main__body">
         {% include 'partials/whosnext/content.twig' %}
-        {% include 'partials/get-updates.twig' %}
+        {% include 'partials/follow-this-form.twig' %}
     </section>
 
     {% if item.get_the_footnotes %}
@@ -33,11 +33,9 @@
         </aside>
     {% endif %}
 
-    <footer class="c-main__footer  [ o-rule--closure  o-rule ]">
+    <footer class="c-main__footer js-main-footer  [ o-rule--closure  o-rule ]">
         {% include 'partials/cluster-list.twig' %}
     </footer>
-
-    {% include 'partials/modals/entity-share-modal.twig' %}
 
 </article>
 

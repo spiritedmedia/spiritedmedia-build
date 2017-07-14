@@ -1,11 +1,10 @@
-Build [#3131](https://circleci.com/gh/spiritedmedia/spiritedmedia/3131) by montchr at 2017-07-11 04:38 PM UTC
+Build [#3154](https://circleci.com/gh/spiritedmedia/spiritedmedia/3154) by montchr at 2017-07-14 02:40 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.18](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.18)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.0](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.0)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.17...v5.10.18)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.10.18...v5.11.0)
 
- - [#2096](https://github.com/spiritedmedia/spiritedmedia/pull/2096): Disable Story branding
- - [#2093](https://github.com/spiritedmedia/spiritedmedia/pull/2093): Display Sunday as first day in Fieldmanager Datepicker
- - [#2094](https://github.com/spiritedmedia/spiritedmedia/pull/2094): 2017-07-06 Update Plugins + Composer Dependencies
- - [#2097](https://github.com/spiritedmedia/spiritedmedia/pull/2097): Move theme and admin JS partials into separate directories
- - [#2095](https://github.com/spiritedmedia/spiritedmedia/pull/2095): Update NPM/Yarn Packages
+ - [#2100](https://github.com/spiritedmedia/spiritedmedia/pull/2100): Permanentalize New Share Buttons + "Follow This" UI // Remove Foundation Reveal + Top Bar Components
+ - [#2103](https://github.com/spiritedmedia/spiritedmedia/pull/2103): Update Shortcake Bakery to handle new Infogram URLs
+ - [#2101](https://github.com/spiritedmedia/spiritedmedia/pull/2101): Add support for customizing email preview text
+ - [#2102](https://github.com/spiritedmedia/spiritedmedia/pull/2102): Use a filter to validate Facebook embed URLs

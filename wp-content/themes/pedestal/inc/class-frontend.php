@@ -35,7 +35,6 @@ class Frontend {
      * Set up actions used on the frontend
      */
     private function setup_actions() {
-
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts' ] );
         add_action( 'wp_head', [ $this, 'action_wp_head_meta_tags' ] );
         add_action( 'wp_head', [ $this, 'action_add_comscore_tracking_pixel' ] );
@@ -43,38 +42,6 @@ class Frontend {
         // RelayMedia's AMP version requries these
         add_action( 'wp_head', [ $this, 'action_wp_head_amp_link' ] );
         add_action( 'wp_footer', [ $this, 'action_wp_footer_amp_beacon_pixel' ] );
-
-        // Show new share buttons by default if URL ends with ?show-new-share-buttons
-        add_action( 'wp_footer', function() {
-            if ( ! isset( $_GET['show-new-share-buttons'] ) ) {
-                return;
-            }
-            ?>
-            <script>
-            jQuery(document).ready(function($) {
-                if ( typeof showNewShareButtons == 'function' ) {
-                    showNewShareButtons();
-                }
-            });
-            </script>
-            <?php
-        }, 10 );
-
-        // Show new get-updates by default if URL ends with ?show-get-updates
-        add_action( 'wp_footer', function() {
-            if ( ! isset( $_GET['show-get-updates'] ) ) {
-                return;
-            }
-            ?>
-            <script>
-            jQuery(document).ready(function($) {
-                if ( typeof showGetUpdates == 'function' ) {
-                    showGetUpdates();
-                }
-            });
-            </script>
-            <?php
-        }, 10 );
     }
 
     /**

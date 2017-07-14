@@ -19,6 +19,7 @@ add_filter( 'timber_context', function( $context ) use (
     $debug_styles,
     $base_css
     ) {
+
     $template_name = str_replace( '_', '-', $template_name );
     $base_spacing_unit = 10;
     $context = array_merge( $context, [
@@ -33,9 +34,10 @@ add_filter( 'timber_context', function( $context ) use (
         'email_container_width_inner'     => 680 - $base_spacing_unit * 2,
         'email_module_text_overlay_width' => 500,
         'email_table_atts'                => 'role="presentation" aria-hidden="true" cellspacing="0" cellpadding="0" border="0"',
-        'email_header_pre_text'           => '',
+        'email_header_preview_text'       => $vars['preview_text'],
     ] );
     return $context;
+
 } );
 
 $context = array_merge( Timber::get_context(), $vars );

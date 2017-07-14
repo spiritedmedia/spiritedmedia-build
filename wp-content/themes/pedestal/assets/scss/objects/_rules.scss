@@ -22,66 +22,62 @@ $o-rule--closure-sum-height : ( $o-rule--closure-h + $o-rule-p-t + $o-rule--clos
 }
 
 
-
-
-
 /// A noticeably thick horizontal rule before an element
 .o-rule {
   border-top: $o-rule-height solid $o-rule-color;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   padding-top: $o-rule-p-t;
-
-
-
-
-
-  /// A slightly less obtrusive rule
-  &--slim {
-    @include stdbd( top );
-
-    margin: 0 auto;
-    margin-top: $half-spacing-unit;
-    margin-bottom: $half-spacing-unit;
-  }
-
-
-
-
-
-  /// A rule with a logo centered in the middle
-  &--closure {
-    margin-top: $o-rule--closure-m-t;
-    border-top-width: $o-rule--closure-h;
-
-    &::before {
-      @if global-variable-exists( site-theme-name ) {
-        @include iconize(
-          $path: $site-theme-logo-abspath + '/logo_icon',
-          $path-only: true
-        );
-      }
-
-      display: block;
-      background-position: top center;
-      background-size: $o-rule--closure-sum-height;
-      background-repeat: no-repeat;
-      width: ( $o-rule--closure-sum-height + $o-rule--closure-spacing-h * 2 );
-      height: $o-rule--closure-sum-height;
-      background-color: $white;
-      margin: -( $o-rule--closure-sum-height / 2 ) auto $base-spacing-unit;
-      content: '';
-    }
-  } // &--closure
-
-
-
-
-
-  /// Underline an element with a rule-thickness primary color bar
-  &--underline {
-    display: inline-block;
-    padding-bottom: 0.2em;
-    border-bottom: $o-rule-height solid $primary-color;
-  } // &--underline
 } // rule
+
+
+/// A slightly less obtrusive rule
+.o-rule--slim {
+  @include stdbd( top );
+
+  margin: 0 auto;
+  margin-top: $half-spacing-unit;
+  margin-bottom: $half-spacing-unit;
+}
+
+
+/// A rule with a logo centered in the middle
+.o-rule--closure {
+  margin-top: $o-rule--closure-m-t;
+  border-top-width: $o-rule--closure-h;
+
+  &::before {
+    @if global-variable-exists( site-theme-name ) {
+      @include iconize(
+        $path: $site-theme-logo-abspath + '/logo_icon',
+        $path-only: true
+      );
+    }
+
+    display: block;
+    background-position: top center;
+    background-size: $o-rule--closure-sum-height;
+    background-repeat: no-repeat;
+    width: ( $o-rule--closure-sum-height + $o-rule--closure-spacing-h * 2 );
+    height: $o-rule--closure-sum-height;
+    background-color: $white;
+    margin: -( $o-rule--closure-sum-height / 2 ) auto $base-spacing-unit;
+    content: '';
+  }
+} // &--closure
+
+
+/// Underline an element with a rule-thickness primary color bar
+.o-rule--underline {
+  display: inline-block;
+  padding-bottom: 0.2em;
+  border-bottom: $o-rule-height solid $primary-color;
+} // &--underline
+
+
+/// A small rule for accents
+.o-rule--accent {
+  width: rem-calc( 40px );
+  height: rem-calc( 4px );
+  background-color: $primary-color;
+}

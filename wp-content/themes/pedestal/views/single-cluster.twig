@@ -5,7 +5,7 @@
     <section class="c-main__content  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
-        <header class="c-main__header  c-overview">
+        <header class="c-main__header js-main-header  c-overview">
 
             {% if not item.is_story %}
             <h1 class="c-overview__title  c-heading--archive">
@@ -37,12 +37,16 @@
                 {% include 'partials/overview/lead-image.twig' %}
             {% endif %}
 
-            {% include 'partials/entity-share.twig' %}
+            {% include 'partials/share-buttons.twig' %}
 
             {% if item.get_content %}
                 <div class="c-overview__lead-text  s-post-content">
                     {{ item.get_the_content }}
                 </div>
+            {% endif %}
+
+            {% if item.is_story %}
+                {% include 'partials/follow-this-form.twig' %}
             {% endif %}
 
         </header>
@@ -98,8 +102,6 @@
             {% endif %}
 
         </section>
-
-        {% include 'partials/modals/entity-share-modal.twig' %}
 
     </section>
 

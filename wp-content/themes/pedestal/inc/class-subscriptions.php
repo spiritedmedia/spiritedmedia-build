@@ -910,6 +910,10 @@ class Subscriptions {
             return '';
         }
 
+        if ( Types::is_post( $vars['item'] ) ) {
+            $vars['preview_text'] = $vars['item']->get_meta( 'email_preview_text' );
+        }
+
         ob_start();
         Pedestal()->set_property( 'is_email', true );
         include $full_path;

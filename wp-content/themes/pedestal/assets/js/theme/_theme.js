@@ -14,10 +14,9 @@
       objectFitImages('.js-stream-item-img img', {watchMQ: true});
 
       this.bindEvents();
+      this.handleSubscriptionForms();
       this.responsiveIframes();
       this.disabledAnchors();
-      this.revealModalClose();
-      this.revealModalPreventScrolling();
       this.analyticsEventTracking();
       this.honeyPotHelper();
       this.lazyLoad();
@@ -27,7 +26,6 @@
      * Bind all events
      */
     bindEvents: function() {
-
       var delayedResizeTimer = false;
       $(window).resize($.proxy(function() {
         if (delayedResizeTimer) {
@@ -37,50 +35,52 @@
           this.responsiveIframes();
         }, this), 30);
       }, this));
+    },
 
+    /**
+     * Handle email subscription form submission and errors
+     */
+    handleSubscriptionForms: function() {
       var subscriptionForms = [
-        '#follow-cluster',
-        '#subscribe-to-newsletter',
+        '.js-follow-this-form-container',
         '#subscribe-to-newsletter-page',
         '.widget_pedestal_signup_newsletter'
       ];
 
       $(subscriptionForms.join(', ')).find('form').on('submit', function(e) {
         e.preventDefault();
-        var el        = $(this);
-        var confirmId = el.data('confirm-id');
-        var $submitBtn = el.find('.js-form-submit');
+        var $el = $(this);
+        var $submitBtn = $el.find('.js-form-submit');
+        var $alert = $('<div data-alert class="alert-box alert js-form-alert"></div>');
         var buttonWidth = $submitBtn.width();
-        var actionURL = el.attr('action');
+        var actionURL = $el.attr('action');
         var actionUrlSeparator = actionURL.indexOf('?') >= 0 ? '&' : '?';
         actionURL += actionUrlSeparator + $.param({'ajax-request': 1});
 
         $submitBtn.width(buttonWidth);
         $submitBtn.css('padding-left', 0);
         $submitBtn.css('padding-right', 0);
-        el.find('.alert').remove();
-        el.addClass('is-loading');
+        $el.find('.js-form-alert').remove();
+        $el.addClass('is-loading');
 
-        $.post(actionURL, el.serialize(), function() {
-          if (typeof confirmId !== 'undefined') {
-            $('#' + confirmId).foundation('reveal', 'open');
-          } else if (el.find('.success-message').length) {
-            el.removeClass('is-loading');
-            el.find('.form-fields').hide();
-            el.find('.success-message').show();
+        $.post(actionURL, $el.serialize(), function() {
+          if ($el.find('.js-success-message').length) {
+            $el.removeClass('is-loading');
+            $el.find('.js-form-fields').hide();
+            $el.find('.js-success-message').show();
           }
         }).fail(function(response) {
-          var alert = $('<div data-alert class="alert-box alert"></div>');
-          el.removeClass('is-loading');
-          alert.text(response.responseText);
-          if (el.find('h3').length) {
-            el.find('h3').after(alert);
+          $el.removeClass('is-loading');
+          $el.find('.js-fail-message').show();
+          $alert.text(response.responseText);
+          var $errorText = $el.find('.js-error-message-text');
+          if ($errorText.length) {
+            $errorText.after($alert);
           } else {
-            el.prepend(alert);
+            $el.prepend($alert);
           }
         });
       });
-
     },
 
     /**
@@ -113,36 +113,6 @@
 
       $('a.disabled').click(function(e) {
         e.preventDefault();
-      });
-
-    },
-
-    /**
-     * Close the modal when a social button has been clicked
-     */
-    revealModalClose: function()  {
-
-      $(document).on('click', '.js-share-modal-btn', function() {
-        $('.js-share-modal').foundation('reveal', 'close');
-      });
-
-    },
-
-    /**
-     * Prevent body from scrolling when Reveal modal is open
-     */
-    revealModalPreventScrolling: function() {
-
-      $(document).on('open.fndtn.reveal', '[data-reveal]', function() {
-        $('body').addClass('noscroll');
-        $('body').bind('touchmove', function(e) {
-          e.preventDefault();
-        });
-      });
-
-      $(document).on('close.fndtn.reveal', '[data-reveal]', function() {
-        $('body').removeClass('noscroll');
-        $('body').unbind('touchmove');
       });
 
     },

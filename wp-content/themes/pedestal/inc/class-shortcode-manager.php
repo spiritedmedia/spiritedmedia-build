@@ -83,6 +83,11 @@ class Shortcode_Manager {
                 'player.ooyala.com',
             ];
         }, 10, 1 );
+        add_filter( 'shortcake_bakery_facebook_url_patterns', function( $patterns ) {
+            return array_merge( $patterns, [
+                '#https?:\/\/www?\.facebook\.com\/?#',
+            ] );
+        } );
     }
 
     /**

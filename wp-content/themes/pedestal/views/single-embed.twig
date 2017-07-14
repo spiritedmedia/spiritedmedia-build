@@ -5,7 +5,7 @@
     <article class="c-main__content  {{ item.css_classes }}"
         {{ item.get_the_data_atts }} >
 
-        <header class="c-main__header  c-overview">
+        <header class="c-main__header js-main-header  c-overview">
 
             <div class="c-overview__sponsorship">
                 {{ ped_slot( 'single_lead' ) }}
@@ -14,7 +14,7 @@
             {% include 'partials/overview/overline.twig' %}
             {% include 'partials/item-title.twig' with { url: 'none' } %}
             {% include 'partials/meta-info/meta-info-entity.twig' %}
-            {% include 'partials/entity-share.twig' %}
+            {% include 'partials/share-buttons.twig' %}
 
             {% if item.get_excerpt %}
             <div class="c-overview__description">
@@ -29,12 +29,10 @@
         </section>
 
         {% if item.has_clusters %}
-            <footer class="c-main__footer  [ o-rule--closure  o-rule ]">
+            <footer class="c-main__footer js-main-footer  [ o-rule--closure  o-rule ]">
                 {% include 'partials/cluster-list.twig' %}
             </footer>
         {% endif %}
-
-        {% include 'partials/modals/entity-share-modal.twig' %}
 
     </article>
 

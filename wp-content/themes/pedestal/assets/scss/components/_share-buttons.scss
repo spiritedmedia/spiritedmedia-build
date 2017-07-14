@@ -1,0 +1,65 @@
+// ==========================================================================
+// Pedestal // Components // SHARE BUTTONS
+// ==========================================================================
+
+
+.c-share-buttons {
+  overflow: auto;
+  background-color: $white;
+  margin-top: $base-spacing-unit * 2;
+  margin-bottom: $base-spacing-unit * 2;
+
+  .has-sticky-share-buttons & {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: $z-index-2;
+    border: rem-calc( 3px ) solid $white;
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+.c-share-buttons__inner {
+  margin: 0 auto;
+  max-width: $row-width;
+}
+
+.c-share-buttons__item {
+  list-style: none;
+  float: left;
+  width: 33.3333%;
+}
+
+.c-share-buttons__link {
+  display: block;
+  text-align: center;
+  background-color: $grey-62;
+  color: $white;
+  padding: rem-calc( 12px ) 0;
+  text-transform: uppercase;
+}
+
+.c-share-buttons__link--facebook {
+  background-color: $facebook-blue;
+
+  .c-share-buttons__icon {
+    font-size: $base-font-size;
+  }
+}
+
+.c-share-buttons__link--twitter {
+  $_twitter-margin: $base-spacing-unit * 0.25;
+
+  margin-left: $_twitter-margin;
+  margin-right: $_twitter-margin;
+  background-color: $twitter-blue;
+}
+
+.c-share-buttons__icon {
+  font-size: rem-calc( 20px );
+  margin-right: $half-spacing-unit;
+  position: relative;
+  vertical-align: sub;
+}

@@ -113,17 +113,6 @@ $z-entity-body     : $z-index-2;
 $z-stream-item-img : $z-index-1;
 $z-off-canvas-wrap : $z-index-1;
 
-// @TODO
-//
-// Somehow this variable specifically controls the reveal modal z-index even
-// though in no way does its name indicate that... thanks Foundation! Also, it's
-// not overrideable... no `!default` flag. So leaving it here temporarily in the
-// hopes that one day Foundation will fix the issue but until then we'll need to
-// use another variable in its place...
-$z-index-base      : $z-index-5;
-// And here's the replacement...
-$z-reveal-modal    : $z-index-5;
-
 
 
 

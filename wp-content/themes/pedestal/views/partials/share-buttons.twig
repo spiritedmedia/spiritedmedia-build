@@ -1,0 +1,33 @@
+<div class="c-share-buttons js-share-buttons">
+    <ul class="c-share-buttons__inner">
+        <li class="c-share-buttons__item">
+            <a class="c-share-buttons__link c-share-buttons__link--facebook"
+                target="_blank"
+                href="{{ item.get_facebook_share_link }}"
+                data-ga-category="Button"
+                data-ga-label="Share|Facebook|{{item.get_the_title}}">
+                {{ ped_icon( 'facebook', 'c-share-buttons__icon' ) }}
+                Share
+            </a>
+        </li>
+        <li class="c-share-buttons__item">
+            <a class="c-share-buttons__link c-share-buttons__link--twitter"
+                target="_blank"
+                href="{{ item.get_twitter_share_link }}"
+                data-ga-category="Button"
+                data-ga-label="Share|Twitter|{{item.get_the_title}}">
+                {{ ped_icon( 'twitter', 'c-share-buttons__icon' ) }}
+                Tweet
+            </a>
+        </li>
+        <li class="c-share-buttons__item">
+            <a class="c-share-buttons__link c-share-buttons__link--email"
+                href="{{ item.get_mailto_share_string }}"
+                data-ga-category="Button"
+                data-ga-label="Share|Email|{{item.get_the_title}}">
+                {{ ped_icon( 'envelope-o', 'c-share-buttons__icon' ) }}
+                Email
+            </a>
+        </li>
+    </ul>
+</div>

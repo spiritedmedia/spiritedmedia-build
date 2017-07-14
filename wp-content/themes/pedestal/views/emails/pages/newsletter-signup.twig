@@ -4,7 +4,7 @@
 <div id="subscribe-to-newsletter-page" class="subscription-confirmation-page">
     <form action="{{ site.url }}/subscribe-to-email-list/" method="POST" data-ga-category="Submitted Form" data-ga-label="Newsletter Signup Page">
 
-        <div class="form-fields">
+        <div class="js-form-fields">
             <fieldset>
                 {% include 'partials/email-forms/form-daily-legend.twig' %}
                 {% include 'partials/email-forms/form-daily-input-address.twig' %}
@@ -15,7 +15,7 @@
             </button>
         </div>
 
-        <div class="success-message">
+        <div class="success-message js-success-message">
             {% include 'partials/email-forms/form-daily-subscribed.twig' %}
             {% include 'partials/email-forms/form-button-explore.twig' %}
         </div>
