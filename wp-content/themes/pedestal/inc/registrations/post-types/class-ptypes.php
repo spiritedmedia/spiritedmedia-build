@@ -6,10 +6,30 @@ use \Pedestal\Utils\Utils;
 
 use \Pedestal\Posts\Post;
 
+/**
+ * Post Types
+ */
 class Types {
 
+    /**
+     * Instance
+     *
+     * @var object
+     */
+    private static $instance;
+
+    /**
+     * Post type settings
+     *
+     * @var array
+     */
     protected $post_types = [];
 
+    /**
+     * Post type names
+     *
+     * @var array
+     */
     private static $post_type_names = [];
 
     /**
@@ -26,17 +46,27 @@ class Types {
         'attachment'   => 'Posts\\Attachment',
     ];
 
+    /**
+     * WP core post types we override with our classes
+     *
+     * @var array
+     */
     private static $overridden_types = [
         'attachment',
         'page',
     ];
 
+    /**
+     * Groups of post types
+     *
+     * @var array
+     */
     public static $groups = [];
 
-    private static $instance;
-
+    /**
+     * Set up the instance
+     */
     public static function get_instance() {
-
         if ( ! isset( self::$instance ) ) {
             self::$instance = new Types;
             self::$instance->setup_types();
@@ -50,11 +80,11 @@ class Types {
      * Set up general post type actions
      */
     private function setup_actions() {
-
         add_action( 'init', [ $this, 'action_init_register_post_types' ] );
         add_action( 'init', [ $this, 'action_init_disable_default_post_type' ] );
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'manage_posts_custom_column', [ $this, 'action_manage_posts_custom_column' ], 10, 2 );
+        add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts_sortable_columns' ] );
         add_action( 'template_redirect', [ $this, 'action_redirect_found_post_names' ], 10, 2 );
     }
 
@@ -68,10 +98,14 @@ class Types {
 
         foreach ( self::get_post_types() as $post_type ) {
             add_filter( "manage_{$post_type}_posts_columns", [ $this, 'filter_manage_posts_columns' ] );
+            add_filter( "manage_edit-{$post_type}_sortable_columns", [ $this, 'filter_manage_posts_sortable_columns' ] );
         }
 
     }
 
+    /**
+     * Setup post type groups
+     */
     private function setup_types() {
         self::$groups['general']  = General_Types::get_instance();
         self::$groups['entities'] = Entity_Types::get_instance();
@@ -79,6 +113,11 @@ class Types {
         self::$groups['slots']    = Slot_Types::get_instance();
     }
 
+    /**
+     * Get the post type settings
+     *
+     * @return array
+     */
     protected function get_type_settings() {
         return $this->post_types;
     }
@@ -167,11 +206,14 @@ class Types {
 
     /**
      * Handle the output for a custom column
+     *
+     * @param string $column_name
+     * @param int    $post_id
      */
     public function action_manage_posts_custom_column( $column_name, $post_id ) {
 
         $obj = \Pedestal\Posts\Post::get_by_post_id( $post_id );
-        switch ( $column_name ) {
+        switch ( $column_name ) :
             case 'pedestal_external_url':
                 echo '<a href="' . esc_url( $obj->get_external_url() ) . '">' . esc_url( $obj->get_external_url() ) . '</a>';
                 break;
@@ -199,24 +241,57 @@ class Types {
                     echo '&mdash;';
                 }
                 break;
-            case 'pedestal_cluster_followers_count':
+            case 'pedestal_cluster_subscribers_count':
                 echo esc_html__( $obj->get_following_users_count(), 'pedestal' );
+                break;
+            case 'pedestal_cluster_unsent_entities_count':
+                $count = $obj->get_unsent_entities( [
+                    'count_only' => true,
+                ] );
+                echo esc_html( $count );
                 break;
             case 'pedestal_id':
                 echo esc_html( $obj->get_id() );
                 break;
+        endswitch;
+    }
+
+    /**
+     * Set up sortable post admin columns
+     *
+     * @param object $query WP_Query
+     */
+    public function action_pre_get_posts_sortable_columns( $query ) {
+        if ( ! is_admin() ) {
+            return;
         }
 
+        $orderby = $query->get( 'orderby' );
+        if ( ! $orderby ) {
+            return;
+        }
+
+        $query->set( 'orderby', 'meta_value_num' );
+        switch ( $orderby ) {
+            case 'pedestal_cluster_subscribers_count':
+                $query->set( 'meta_key', 'subscriber_count' );
+                break;
+            case 'pedestal_cluster_unsent_entities_count':
+                $query->set( 'meta_key', 'unsent_entities_count' );
+                break;
+        }
     }
 
     /**
      * Customize columns on the "Manage Posts" views
+     *
+     * @param array $columns
      */
     public function filter_manage_posts_columns( $columns ) {
 
         $new_columns = [];
 
-        foreach ( $columns as $key => $label ) {
+        foreach ( $columns as $key => $label ) :
             $new_columns[ $key ] = $label;
 
             // Link columns
@@ -244,20 +319,41 @@ class Types {
                 }
             }
 
-            // Cluster followers column
+            // Cluster columns
             if ( in_array( get_current_screen()->post_type, self::get_cluster_post_types() ) ) {
                 if ( 'title' === $key ) {
-                    $new_columns['pedestal_cluster_followers_count'] = esc_html__( '№ of Followers', 'pedestal' );
+                    $new_columns['pedestal_cluster_subscribers_count'] = '№ of Subscribers';
+                    $new_columns['pedestal_cluster_unsent_entities_count'] = '№ of Unsent Entities';
                 }
             }
-        }
+        endforeach;
 
         $new_columns['pedestal_id'] = esc_html__( 'ID', 'pedestal' );
         return $new_columns;
     }
 
     /**
+     * Set up the sortable post admin columns
+     *
+     * @link https://wordpress.stackexchange.com/questions/173438/initial-sort-order-for-a-sortable-custom-column-in-admin
+     * @param array $columns
+     */
+    public function filter_manage_posts_sortable_columns( $columns ) {
+        $sortable = [
+            'pedestal_cluster_subscribers_count',
+            'pedestal_cluster_unsent_entities_count',
+        ];
+        foreach ( $sortable as $column_name ) {
+            $columns[ $column_name ] = [ $column_name, 1 ];
+        }
+        return $columns;
+    }
+
+    /**
      * Filter post type links
+     *
+     * @param string $link Permalink
+     * @param object $post WP_Post
      */
     public function filter_post_type_link( $link, $post ) {
 
@@ -298,6 +394,13 @@ class Types {
 
     /**
      * Filter unique slugs to ensure slugs are unique across all post types
+     *
+     * @param string $slug          The post slug.
+     * @param int    $post_id       Post ID.
+     * @param string $post_status   The post status.
+     * @param string $post_type     Post type.
+     * @param int    $post_parent   Post parent ID
+     * @param string $original_slug The original post slug.
      */
     public function filter_wp_unique_post_slug( $slug, $post_id, $post_status, $post_type, $post_parent, $original_slug ) {
         global $wpdb, $wp_rewrite;
@@ -424,8 +527,7 @@ class Types {
      * Get the name of the user connection type by post type
      *
      * @uses self::get_connection_type()
-     *
-     * @param  obj    $post The post object or post type string to check.
+     * @param  object    $post The post object or post type string to check.
      * @return string       The name of the user connection type
      */
     public static function get_user_connection_type( $post = null ) {
@@ -436,8 +538,7 @@ class Types {
      * Get the name of the entity connection type by post type
      *
      * @uses self::get_connection_type()
-     *
-     * @param  obj    $post The post object or post type string to check.
+     * @param object $post The post object or post type string to check.
      * @return string       The name of the entity connection type
      */
     public static function get_entity_connection_type( $post = null ) {
@@ -533,8 +634,8 @@ class Types {
      * Get a post type's label name
      *
      * @param  string  $post_type The post type
-     * @param  boolean $plural    Whether to return the plural name or singular.
-     * @param  boolean $sanitize  Whether to return a sanitized name
+     * @param  bool $plural    Whether to return the plural name or singular.
+     * @param  bool $sanitize  Whether to return a sanitized name
      * @return string            The label name of the post type
      */
     public static function get_post_type_name( $post_type, $plural = true, $sanitize = false ) {
@@ -671,8 +772,8 @@ class Types {
     /**
      * Determine whether a post type or object is an entity
      *
-     * @param string|obj $post_token The post type or object to check
-     * @return boolean
+     * @param string|object $post_token The post type or object to check
+     * @return bool
      */
     public static function is_entity( $post_token ) {
         if (
@@ -687,8 +788,8 @@ class Types {
     /**
      * Determine whether a post type or object is a cluster
      *
-     * @param string|obj $post_token The post type or object to check
-     * @return boolean
+     * @param string|object $post_token The post type or object to check
+     * @return bool
      */
     public static function is_cluster( $post_token ) {
         if (
@@ -703,8 +804,8 @@ class Types {
     /**
      * Determine whether a post type or object is a Story
      *
-     * @param string|obj $post_token The post type or object to check
-     * @return boolean
+     * @param string|object $post_token The post type or object to check
+     * @return bool
      */
     public static function is_story( $post_token ) {
         if (
@@ -719,8 +820,8 @@ class Types {
     /**
      * Determine whether a post type or object is a Locality
      *
-     * @param string|obj $post_token The post type or object to check
-     * @return boolean
+     * @param string|object $post_token The post type or object to check
+     * @return bool
      */
     public static function is_locality( $post_token ) {
         if (
@@ -736,7 +837,7 @@ class Types {
      * Determine whether an object is one of our Post objects
      *
      * @param  mixed  $post_obj An object to test
-     * @return boolean
+     * @return bool
      */
     public static function is_post( $post_obj ) {
         return is_a( $post_obj, '\\Pedestal\\Posts\\Post' );
@@ -760,7 +861,7 @@ class Types {
     /**
      * Get the emailable post types
      *
-     * @param  boolean $sort Sort alphabetically or not?
+     * @param  bool $sort Sort alphabetically or not?
      * @return array
      */
     public static function get_emailable_post_types( $sort = true ) {
@@ -801,7 +902,7 @@ class Types {
      *
      * Handles our Post objects with a fallback to the core get_post_type() method.
      *
-     * @param  int|obj     $post Post ID or post object.
+     * @param  int|object     $post Post ID or post object.
      * @return string|bool
      */
     public static function get_post_type( $post = '' ) {

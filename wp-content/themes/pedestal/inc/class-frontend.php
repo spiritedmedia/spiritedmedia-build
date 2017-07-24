@@ -233,7 +233,7 @@ class Frontend {
         endforeach;
 
         // Add a meta refresh to the homepage
-        if ( is_home() ) {
+        if ( is_home() && 'live' === PEDESTAL_ENV ) {
             $refresh = 0;
             if ( ! empty( $_GET['refresh'] ) ) {
                 $refresh = intval( $_GET['refresh'] );
@@ -339,12 +339,14 @@ class Frontend {
             $context['pagination'] = Stream::get_pagination( $wp_query );
         }
 
-        $spotlight = Pedestal()->get_spotlight_data();
-        $context['spotlight'] = [
-            'enabled'         => $spotlight['enabled'],
-            'label'           => $spotlight['label'],
-            'content'         => Pedestal()->get_spotlight_post(),
-        ];
+        if ( ! is_home() ) {
+            $spotlight = Pedestal()->get_spotlight_data();
+            $context['spotlight'] = [
+                'enabled'         => $spotlight['enabled'],
+                'label'           => $spotlight['label'],
+                'content'         => Pedestal()->get_spotlight_post(),
+            ];
+        }
 
         if ( wp_get_current_user() ) {
             $context['current_user'] = new User( wp_get_current_user() );

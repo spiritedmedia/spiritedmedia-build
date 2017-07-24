@@ -749,14 +749,22 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
             $post = Post::get_by_post_id( $spotlight['content'] );
             if ( empty( $post ) ) {
-                $stream = new Stream( [
-                    'posts_per_page' => 1,
-                    'post_type'      => Types::get_original_post_types(),
+                $posts = new \WP_Query( [
+                    'posts_per_page'         => 1,
+                    'post_type'              => Types::get_original_post_types(),
+                    'no_found_rows'          => true,
+                    'update_post_meta_cache' => false,
+                    'update_post_term_cache' => false,
                 ] );
-                if ( empty( $stream->get_stream() ) ) {
-                    return;
+                if ( empty( $posts->posts ) ) {
+                    return false;
                 }
-                $post = $stream->get_stream()[0];
+                $post_id = $posts->posts[0]->ID;
+                $post = Post::get_by_post_id( $post_id );
+            }
+            // If the Spotlight post is the same as the currently requested post then bail
+            if ( $post->get_id() == get_the_ID() ) {
+                return false;
             }
             return $post;
         }

@@ -12,21 +12,40 @@ use Pedestal\Posts\Post;
 use Pedestal\Posts\Newsletter;
 use Pedestal\Posts\Clusters\Cluster;
 use Pedestal\Posts\Clusters\Story;
-use Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Utils\Utils;
 
+/**
+ * Manage email subscriptions
+ */
 class Subscriptions {
 
-    private static $default_notify_channel = PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL;
-
+    /**
+     * Instance
+     *
+     * @var object
+     */
     private static $instance;
 
-    // The meta key where we store associated list IDs for a given post
+    /**
+     * Default Slack channel to send notifications to
+     *
+     * @var string
+     */
+    private static $default_notify_channel = PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL;
+
+
+    /**
+     * Meta key where we store associated list IDs for a given post
+     *
+     * @var string
+     */
     private static $list_id_meta_key = 'activecampaign-list-id';
 
+    /**
+     * Set up instance
+     */
     public static function get_instance() {
-
         if ( ! isset( self::$instance ) ) {
             self::$instance = new Subscriptions;
             self::$instance->setup_actions();
@@ -118,6 +137,9 @@ class Subscriptions {
 
     /**
      * Add subscription-related meta boxes
+     *
+     * @param string $post_type
+     * @param object $post
      */
     public function action_add_meta_boxes( $post_type, $post ) {
         if ( ! current_user_can( 'send_emails' ) || ! in_array( $post_type, Types::get_emailable_post_types() ) ) {
@@ -170,7 +192,7 @@ class Subscriptions {
         $post_id = $post->ID;
         $cluster = Cluster::get_by_post_id( (int) $post_id );
         $type = $cluster->get_type();
-        $entities = $cluster->get_entities_since_last_email_notification();
+        $entities = $cluster->get_unsent_entities( true );
         $entity_count = count( $entities );
 
         $last_sent = '';
@@ -229,7 +251,8 @@ class Subscriptions {
     /**
      * Handle the meta box to trigger a newsletter email send to subscribers
      *
-     * @param  object $post WP_Post
+     * @param object $post WP_Post
+     * @param array  $metabox
      */
     public function handle_notify_primary_list_subscribers_meta_box( $post, $metabox ) {
         $post = Post::get_by_post_id( (int) $post->ID );
@@ -277,7 +300,8 @@ class Subscriptions {
     /**
      * Handle the meta box to trigger a breaking news email send to subscribers
      *
-     * @param  object $post WP_Post
+     * @param object $post WP_Post
+     * @param array  $metabox
      */
     public function handle_notify_breaking_news_subscribers_meta_box( $post, $metabox ) {
         $post = Post::get_by_post_id( (int) $post->ID );
@@ -333,6 +357,10 @@ class Subscriptions {
 
     /**
      * Rename a Cluster's ActiveCampaign list name if its title changes
+     *
+     * @param int    $post_id
+     * @param object $post_after WP_Post after changes
+     * @param object $post_before WP_Post before changes
      */
     public function action_post_updated_activecampaign_list( $post_id, $post_after, $post_before ) {
         if ( ! Types::is_cluster( $post_after->post_type ) ) {
@@ -355,6 +383,8 @@ class Subscriptions {
 
     /**
      * Handle requests to send email notifications
+     *
+     * @param int $post_id
      */
     public function action_save_post_send_email( $post_id ) {
         $post_type = get_post_type( $post_id );
@@ -439,9 +469,10 @@ class Subscriptions {
 
     /**
      * Send an email campaign to those following a given cluster
+     *
      * @param  Cluster $cluster  The cluster we are notifing followers about
-     * @param  Array $args       Options
-     * @return Boolean           Did the camapign send successfully?
+     * @param  array   $args       Options
+     * @return bool           Did the camapign send successfully?
      */
     private function send_email_to_users_following_cluster( $cluster, $args = [] ) {
         if ( ! Types::is_cluster( $cluster ) ) {
@@ -451,7 +482,7 @@ class Subscriptions {
         $list_id = self::get_list_ids_from_cluster( $cluster_id );
         $body = $this->get_email_template( 'follow-update', 'ac', [
             'item'       => $cluster,
-            'entities'   => $cluster->get_entities_since_last_email_notification(),
+            'entities'   => $cluster->get_unsent_entities( true ),
             'email_type' => $cluster->get_email_type(),
             'shareable'  => true,
         ] );
@@ -468,14 +499,21 @@ class Subscriptions {
             'email_type' => 'Follow Update',
         ];
         $sending_args = wp_parse_args( $sending_args, $args );
-        return $this->send_email( $sending_args );
+        $sent = $this->send_email( $sending_args );
+        if ( $sent ) {
+            $expiration = Utils::get_fuzzy_expire_time( HOUR_IN_SECONDS / 2 );
+            set_transient( 'pedestal_cluster_unsent_entities_count_' . $cluster_id, 0, $expiration );
+            update_post_meta( $cluster_id, 'unsent_entities_count', 0 );
+        }
+        return $sent;
     }
 
     /**
      * Send an email campaign to newsletter subscribers
-     * @param  Newsletter $newsletter  The newsletter we are notifing subscribers about
-     * @param  Array $args             Options
-     * @return Boolean                 Did the camapign send successfully?
+     *
+     * @param  Newsletter $newsletter The newsletter we are notifing subscribers about
+     * @param  array      $args Options
+     * @return bool Did the camapign send successfully?
      */
     private function send_email_to_newsletter_followers( $newsletter, $args ) {
         $newsletter_post = get_post( $newsletter->get_id() );
@@ -519,9 +557,10 @@ class Subscriptions {
 
     /**
      * Send an email campaign to breaking news subscribers
+     *
      * @param  Post $post   The entity we are notifing subscribers about
-     * @param  Array $args  Options
-     * @return Boolean      Did the camapign send successfully?
+     * @param  array $args  Options
+     * @return bool      Did the camapign send successfully?
      */
     private function send_email_to_breaking_news_followers( $post, $args ) {
         $body = $this->get_email_template( 'breaking-news', 'ac', [
@@ -549,8 +588,9 @@ class Subscriptions {
 
     /**
      * Handle sending the email campaign
-     * @param  Array $args  Details about the campaign
-     * @return Boolean      Did the camapign send successfully?
+     *
+     * @param  array $args  Details about the campaign
+     * @return bool Did the camapign send successfully?
      */
     private function send_email( $args = [] ) {
         $default_args = [
@@ -713,9 +753,10 @@ class Subscriptions {
 
     /**
      * Get list IDs from a given cluster
-     * @param  integer $cluster_id                   Post ID of the Cluster
-     * @param  boolean $create_list_if_doesnt_exist  Whether to create a list if it doesn't exist
-     * @return False|integer                         List id or False if no list id found
+     *
+     * @param  int $cluster_id                   Post ID of the Cluster
+     * @param  bool $create_list_if_doesnt_exist Whether to create a list if it doesn't exist
+     * @return false|int List id or False if no list id found
      */
     public static function get_list_ids_from_cluster( $cluster_id = 0, $create_list_if_doesnt_exist = true ) {
         $cluster_id = intval( $cluster_id );
@@ -760,7 +801,7 @@ class Subscriptions {
      */
     public static function get_clusters_from_list_ids( $list_ids = [] ) {
         $output = [];
-        if ( is_string( $list_ids ) ) {
+        if ( is_numeric( $list_ids ) ) {
             $list_ids = [ $list_ids ];
         }
         $list_ids = array_map( 'intval', $list_ids );
@@ -787,8 +828,9 @@ class Subscriptions {
 
     /**
      * Get an ActiveCampaign List ID stored as post_meta
-     * @param  integer $post_id  Post ID to check
-     * @return string            List ID
+     *
+     * @param  int $post_id  Post ID to check
+     * @return string List ID
      */
     public static function get_list_id_from_meta( $post_id = 0 ) {
         $post_id = absint( $post_id );
@@ -800,8 +842,9 @@ class Subscriptions {
 
     /**
      * Delete the ActiveCampaign List ID stored as post_meta
-     * @param  integer $post_id  Post ID to check
-     * @return boolean           False for failure. True for success.
+     *
+     * @param  int $post_id  Post ID to check
+     * @return bool           False for failure. True for success.
      */
     public static function delete_list_id_from_meta( $post_id = 0 ) {
         $post_id = absint( $post_id );
@@ -813,7 +856,8 @@ class Subscriptions {
 
     /**
      * Verify a $_POST request isn't from a dumb bot
-     * @return Boolean  True if the request passes the check
+     *
+     * @return bool  True if the request passes the check
      */
     private function handle_honeypot_check() {
         if ( isset( $_POST['pedestal-current-year-check'] ) && isset( $_POST['pedestal-blank-field-check'] ) ) {
@@ -862,16 +906,14 @@ class Subscriptions {
 
     /**
      * Get the subscriber count for a given ActiveCampaign List ID
-     * @param  integer $list_id  The ActiveCampaign List ID
-     * @param  boolean $force    If True, bypasses any caching to force refresh the number
-     * @return integer           The number of subscribers for the list
+     *
+     * @param  int $list_id  The ActiveCampaign List ID
+     * @param  bool $force    If True, bypasses any caching to force refresh the number
+     * @return int           The number of subscribers for the list
      */
     public static function get_subscriber_count( $list_id = 0, $force = false ) {
         $key = 'activecampaign_subscriber_count_' . $list_id;
-
-        // Prevent the transients from all expiring at once by fuzzing the expiration time
-        $fuzz = rand( 0, 10 ) * 0.1;
-        $expiration = ( 1 + $fuzz ) * HOUR_IN_SECONDS;
+        $expiration = Utils::get_fuzzy_expire_time();
 
         $subscriber_count = get_transient( $key );
         // The transient returns false if not found but it is also possible the transient has a value of ''
@@ -890,6 +932,15 @@ class Subscriptions {
             set_transient( $key, -1, $expiration );
             return -1;
         }
+
+        // If the specified list ID belongs to a cluster, then save the
+        // subscriber count to post meta upon setting the transient -- we need
+        // this stored as post meta to make sortable admin columns possible
+        $cluster = static::get_clusters_from_list_ids( $list_id );
+        if ( ! empty( $cluster ) && Types::is_cluster( $cluster[0] ) ) {
+            $cluster[0]->set_meta( 'subscriber_count', $list->subscriber_count );
+        }
+
         set_transient( $key, $list->subscriber_count, $expiration );
         return $list->subscriber_count;
     }
@@ -924,6 +975,8 @@ class Subscriptions {
 
     /**
      * Notify Slack of the current newsletter subscriber count
+     *
+     * @param array $notification_args Options to pass to Notifications
      */
     public function notify_newsletter_subscriber_count( $notification_args = [] ) {
         $count = $this->get_daily_newsletter_subscriber_count();
@@ -1021,7 +1074,7 @@ class Subscriptions {
                 $story = new Story( $stories->posts[0] );
                 echo $this->get_email_template( 'follow-update', 'ac', [
                     'item' => $story,
-                    'entities' => $story->get_entities_since_last_email_notification(),
+                    'entities' => $story->get_unsent_entities(),
                     'email_type' => $story->get_email_type(),
                     'shareable' => true,
                 ] );

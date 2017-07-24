@@ -2,6 +2,9 @@
 
 namespace Pedestal\Utils;
 
+/**
+ * Utilities
+ */
 class Utils {
 
     /**
@@ -25,19 +28,27 @@ class Utils {
         'linkedin.com'    => 'linkedin',
     ];
 
+    /**
+     * Instance
+     *
+     * @var object
+     */
     private static $instance;
 
+    /**
+     * Setup instance
+     */
     public static function get_instance() {
-
         if ( ! isset( self::$instance ) ) {
             self::$instance = new Utils;
         }
         return self::$instance;
-
     }
 
     /**
      * Get image size data
+     *
+     * @param string $size Size name
      */
     public static function get_image_sizes( $size = '' ) {
 
@@ -92,8 +103,8 @@ class Utils {
     /**
      * Get the Unix timestamp for the New York timezone
      *
-     * @param  integer $time Timestamp to offset with timezone. Defaults to current UTC time.
-     * @return integer
+     * @param  int $time Timestamp to offset with timezone. Defaults to current UTC time.
+     * @return int
      */
     public static function get_time( $time = 0 ) {
         if ( empty( $time ) ) {
@@ -102,6 +113,22 @@ class Utils {
         $timezone = new \DateTime( 'now', new \DateTimeZone( 'America/New_York' ) );
         $offset = $timezone->getOffset();
         return $time + $offset;
+    }
+
+    /**
+     * Get a random number for use as a time interval
+     *
+     * Useful for spacing apart transient expiration times to prevent them from
+     * expiring all at once.
+     *
+     * @link https://codex.wordpress.org/Easier_Expression_of_Time_Constants
+     * @param  int $base_interval Time interval upon which calculation is based
+     *     -- should be a WordPress Easier Expression of Time Constant
+     * @return int                Base interval plus a random fraction of that
+     */
+    public static function get_fuzzy_expire_time( $base_interval = HOUR_IN_SECONDS ) {
+        $fuzz = rand( 0, 10 ) * 0.1;
+        return ( 1 + $fuzz ) * $base_interval;
     }
 
     /**
@@ -282,15 +309,15 @@ class Utils {
      * @param  array  $items    An array of strings to format
      * @param  array  $args {
      *
-     *     @type string $pretext  Text to prepend. Default is 'By'.
+     *     @property string $pretext  Text to prepend. Default is 'By'.
      *
-     *     @type string $posttext Text to separate last item from previous items.
+     *     @property string $posttext Text to separate last item from previous items.
      *         Default is 'and'.
      *
-     *     @type bool   $truncate Should byline string be truncated if 3 or more
+     *     @property bool   $truncate Should byline string be truncated if 3 or more
      *         items are present? Default is false.
      *
-     *     @type string $truncated_str String to substitute when truncated.
+     *     @property string $truncated_str String to substitute when truncated.
      *         Defaults to "{Site Name} Staff".
      *
      * }
@@ -357,7 +384,7 @@ class Utils {
      * @link http://stackoverflow.com/a/10254414
      *
      * @param  string  $str String to truncate
-     * @param  integer $len Length to aim for
+     * @param  int     $len Length to aim for
      * @return string       Truncated string
      */
     public static function str_limit_sentence( string $str, int $len = 150 ) {
@@ -439,8 +466,8 @@ class Utils {
      * @author Gabriel Sobrinho <gabriel (dot) sobrinho (at) gmail (dot) com>
      * @link http://php.net/manual/en/function.array-merge-recursive.php#92195
      *
-     * @param array $defaults_array
-     * @param array $new_array
+     * @param array &$defaults_array
+     * @param array &$new_array
      *
      * @return array
      */
@@ -464,7 +491,7 @@ class Utils {
     /**
      * Standardizes the response from remote API requests
      *
-     * @param  array|WP_Error $response  Response from wp_remote_*
+     * @param  array|\WP_Error $response  Response from wp_remote_*
      * @param  string $expected_format   Expected format of the response body (xml, json, or serialize)
      * @return array                     Details from the response
      */

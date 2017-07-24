@@ -2,20 +2,26 @@
 
 namespace Pedestal\Posts\Clusters;
 
-use Pedestal\Registrations\Post_Types\Types;
-
-use Pedestal\Subscriptions;
-
-use Pedestal\Posts\Post;
-
-use Pedestal\Posts\Attachment;
-
 use Pedestal\Objects\Stream;
+use Pedestal\Posts\Post;
+use Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Subscriptions;
+use Pedestal\Utils\Utils;
 
 abstract class Cluster extends Post {
 
+    /**
+     * Email type for public display
+     *
+     * @var string
+     */
     protected $email_type = 'cluster updates';
 
+    /**
+     * Cached stream
+     *
+     * @var Stream
+     */
     private $cached_stream = [];
 
     /**
@@ -46,8 +52,7 @@ abstract class Cluster extends Post {
     /**
      * Get the entities associated with an Cluster
      *
-     * @param array
-     * @param string $connected_type The name of the connection type to get entities for
+     * @param array $args
      * @return array
      */
     public function get_entities( $args = [] ) {
@@ -87,7 +92,7 @@ abstract class Cluster extends Post {
     /**
      * Check if the stream is on its first page
      *
-     * @return boolean
+     * @return bool
      */
     public function is_stream_first_page() {
         return $this->get_stream()->is_first_page();
@@ -96,7 +101,7 @@ abstract class Cluster extends Post {
     /**
      * Check if the stream is on its last page
      *
-     * @return boolean
+     * @return bool
      */
     public function is_stream_last_page() {
         return $this->get_stream()->is_last_page();
@@ -139,12 +144,12 @@ abstract class Cluster extends Post {
 
     /**
      * Get the number of users following this cluster
-     * @param boolean $force  Whether to make a request to ActiveCampaign to get the List ID
+     * @param bool $force  Whether to make a request to ActiveCampaign to get the List ID
      * @return int
      */
     public function get_following_users_count( $force = false ) {
         $list_id = $this->get_meta( 'activecampaign-list-id', true );
-        if ( ! $list_id && $force ) {
+        if ( $force ) {
             $list_id = Subscriptions::get_list_ids_from_cluster( $this->get_id() );
         }
 
@@ -155,38 +160,11 @@ abstract class Cluster extends Post {
     }
 
     /**
-     * Get the users following this cluster
-     *
-     * @return array
-     */
-    public function get_following_users( $args = [] ) {
-        $defaults = [
-            'connected_items' => $this->post,
-            'connected_type'  => $this->get_cluster_user_connection_type(),
-        ];
-        $args = array_merge( $defaults, $args );
-
-        return get_users( $args );
-    }
-
-    /**
-     * Get the name of the user connection type by post type
-     *
-     * @uses $this->get_cluster_connection_type()
-     *
-     * @param  obj    $post The post object or post type string to check. Defaults to the current post object.
-     * @return string       The name of the user connection type
-     */
-    public function get_cluster_user_connection_type( $post = null ) {
-        return $this->get_cluster_connection_type( 'user', $post );
-    }
-
-    /**
      * Get the name of the entity connection type by post type
      *
      * @uses $this->get_cluster_connection_type()
      *
-     * @param  obj    $post The post object or post type string to check. Defaults to the current post object.
+     * @param  object    $post The post object or post type string to check. Defaults to the current post object.
      * @return string       The name of the entity connection type
      */
     public function get_cluster_entity_connection_type( $post = null ) {
@@ -212,6 +190,7 @@ abstract class Cluster extends Post {
     /**
      * Get the time of the last email notification
      *
+     * @param string $format Time format
      * @return mixed
      */
     public function get_last_email_notification_date( $format = 'U' ) {
@@ -224,6 +203,8 @@ abstract class Cluster extends Post {
 
     /**
      * Set the time of the last email notification
+     *
+     * @param bool $time Use a specific time. Defaults to current time.
      */
     public function set_last_email_notification_date( $time = false ) {
         if ( ! $time ) {
@@ -235,12 +216,28 @@ abstract class Cluster extends Post {
     /**
      * Get the entities since last email notification
      *
+     * @param array $args
      * @return array
      */
-    public function get_entities_since_last_email_notification() {
-        $args = [
-            'posts_per_page' => 30,
-        ];
+    public function get_unsent_entities( $args = [] ) {
+        $key = 'pedestal_cluster_unsent_entities_count_' . $this->get_id();
+        $expiration = Utils::get_fuzzy_expire_time( HOUR_IN_SECONDS / 2 );
+        $count = get_transient( $key );
+
+        $args = wp_parse_args( $args, [
+            'posts_per_page' => 99,
+            'count_only'     => false,
+            'force'          => false,
+        ] );
+
+        // The transient returns false if not found but it is also possible the transient has a value of ''
+        if ( false !== $count && $args['count_only'] && ! $args['force'] ) {
+            if ( empty( $count ) ) {
+                $count = 0;
+            }
+            return $count;
+        }
+
         $last_date = $this->get_last_email_notification_date( 'Y-m-d H:i:s' );
         if ( $last_date ) {
             $args['date_query'] = [
@@ -248,7 +245,18 @@ abstract class Cluster extends Post {
                 'column'        => 'post_date_gmt',
             ];
         }
-        return $this->get_entities( $args );
+
+        $entities = $this->get_entities( $args );
+        $count = count( $entities );
+
+        // Store this as post meta to make sortable admin columns possible
+        $this->set_meta( 'unsent_entities_count', $count );
+        set_transient( $key, $count, $expiration );
+
+        if ( $args['count_only'] ) {
+            return $count;
+        }
+        return $entities;
     }
 
     /**
