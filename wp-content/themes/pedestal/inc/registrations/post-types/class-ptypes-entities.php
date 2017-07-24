@@ -103,6 +103,7 @@ class Entity_Types extends Types {
                     $class = 'Posts\\Entities\\Link';
                     $args['menu_position'] = 8;
                     $args['menu_icon'] = 'dashicons-admin-links';
+                    $args['capability_type'] = [ 'link', 'links' ];
                     $args['supports'] = [
                         'title',
                         'thumbnail',
@@ -119,6 +120,7 @@ class Entity_Types extends Types {
                     $class = 'Posts\\Entities\\Embed';
                     $args['menu_position'] = 9;
                     $args['menu_icon'] = 'dashicons-twitter';
+                    $args['capability_type'] = [ 'embed', 'embeds' ];
                     $args['supports'] = [
                         'title',
                         'author',

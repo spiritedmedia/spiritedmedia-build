@@ -2,13 +2,13 @@
 
 namespace Pedestal;
 
-use Pedestal\Utils\Utils;
 use Pedestal\Objects\User;
 use Pedestal\Registrations\Post_Types\Types;
 
+/**
+ * User Management
+ */
 class User_Management {
-
-    private static $instance;
 
     /**
      * Roles considered to be Producers
@@ -24,6 +24,7 @@ class User_Management {
      */
     private static $roles_labels = [
         'reporter'           => 'Reporter',
+        'curator'            => 'Curator',
         'reporter_assoc'     => 'Associate Reporter',
         'sales_manager'      => 'Sales Manager',
         'sales_assoc'        => 'Sales Associate',
@@ -49,14 +50,18 @@ class User_Management {
      */
     private static $producer_role_url_bases = [];
 
+    /**
+     * Get an instance of this class
+     */
     public static function get_instance() {
-        if ( ! isset( self::$instance ) ) {
-            self::$instance = new User_Management;
-            self::$instance->setup_producer_roles();
-            self::$instance->setup_actions();
-            self::$instance->setup_filters();
+        static $instance = null;
+        if ( null === $instance ) {
+            $instance = new static();
+            $instance->setup_producer_roles();
+            $instance->setup_actions();
+            $instance->setup_filters();
         }
-        return self::$instance;
+        return $instance;
     }
 
     /**
@@ -245,9 +250,6 @@ class User_Management {
             'edit_articles' => true,
         ] );
 
-        // Featured Contributor
-        $this->duplicate_role( 'reporter_freelance', 'feat_contributor', self::$roles_labels['feat_contributor'], [] );
-
         // Administrators and Reporters
         $caps_admin_reporters = [
             'send_emails'         => '',
@@ -280,11 +282,24 @@ class User_Management {
         $caps_reporter_assoc = [
             'edit_entities'  => true,
             'edit_articles'  => true,
+            'edit_links'     => true,
+            'edit_embeds'    => true,
             'edit_events'    => true,
             'edit_clusters'  => true,
             'manage_uploads' => true,
         ] + $tablepress_caps;
         $this->merge_role_caps( 'reporter_assoc', $caps_reporter_assoc );
+
+        // Featured Contributor
+        $this->duplicate_role( 'reporter_freelance', 'feat_contributor', self::$roles_labels['feat_contributor'], [] );
+
+        // Curator
+        $this->duplicate_role( 'reporter_assoc', 'curator', self::$roles_labels['curator'], [
+            'publish_embeds'        => true,
+            'publish_links'         => true,
+            'edit_published_embeds' => true,
+            'edit_published_links'  => true,
+        ] );
 
         // Common capabilities
         foreach ( static::get_roles() as $role_name => $role_label ) :
@@ -341,7 +356,11 @@ class User_Management {
     /**
      * Filter the link returned by `get_author_posts_url()`
      *
-     * @TODO Y U NO WORK? Nothing is returned.
+     * @todo Y U NO WORK? Nothing is returned.
+     *
+     * @param string $link            The URL to the author's page.
+     * @param int    $author_id       The author's id.
+     * @param string $author_nicename The author's nice name.
      */
     public function filter_author_link( $link, $author_id, $author_nicename ) {
         $user = new User( $author_id );
@@ -351,8 +370,10 @@ class User_Management {
 
     /**
      * Create a slug based on the user's display name
-     * Store it in user meta to be used later
-     * @param  integer $user_id The ID of the user to update
+     *
+     * Store it in user meta to be used later.
+     *
+     * @param int $user_id The ID of the user to update
      */
     public function action_profile_update( $user_id = 0 ) {
         if ( empty( $_POST['display_name'] ) ) {
@@ -366,7 +387,7 @@ class User_Management {
      * Create a new user in the database
      *
      * @param string $user_login
-     * @return User|WP_Error
+     * @return User|\WP_Error
      */
     public static function create( $user_login ) {
 
@@ -384,7 +405,7 @@ class User_Management {
     /**
      * Get an array of user objects based on a WP_User_Query object
      *
-     * @param  WP_User_Query $query
+     * @param  \WP_User_Query $query
      * @return array
      */
     public static function get_users( $query ) {
