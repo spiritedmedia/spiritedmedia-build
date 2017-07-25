@@ -116,7 +116,7 @@ class The_Incline extends Pedestal {
             $this->site_config = [
                 'site_name'           => get_bloginfo( 'name' ),
                 'site_live_url'       => 'http://theincline.com/',
-                'site_branding_color' => '#ef5029',
+                'site_branding_color' => '#F05329',
             ];
         }
     }
