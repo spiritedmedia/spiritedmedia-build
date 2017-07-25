@@ -14,68 +14,6 @@
 }
 
 
-
-
-
-.site-header-social {
-  text-align: right;
-  line-height: 0;
-  padding: 0;
-
-  @media #{$medium-up} {
-    padding: halve( $base-spacing-unit ) halve( $column-gutter );
-  }
-
-  /**
-   * Overrides `ul.iconset`
-   */
-  /*ul*/.iconset {
-    margin-left: -( $base-spacing-unit );
-
-    // stylelint-disable selector-max-compound-selectors, max-nesting-depth
-    li {
-
-      &.social-icon {
-        &.last {
-          width: ( $icon-diameter + halve( $icon-diameter ) );
-          padding-right: halve( $icon-diameter );
-          border-right: 1px solid $grey-70;
-        }
-      }
-
-      &.more {
-        width: auto;
-
-        i {
-          padding: $base-spacing-unit / 2;
-          padding-left: 0;
-        }
-
-        a,
-        .sitewide-search-icon {
-          display: inline-block;
-          font-size: $base-spacing-unit * 1.2;
-          color: $grey-25;
-          line-height: 1;
-        }
-
-        &.first {
-          margin-left: halve( $icon-diameter );
-        }
-
-        &.hamburger {
-          margin-right: $base-spacing-unit / 2;
-          @media #{$medium-up} {
-            display: none;
-          }
-        }
-      }
-    }
-    // stylelint-enable selector-max-compound-selectors, max-nesting-depth
-  }
-}
-
-
 /**
  * @TODO this sucks...
  */

@@ -3,6 +3,9 @@
 // ==========================================================================
 
 
+$share-button-twitter-margin: $base-spacing-unit * 0.25;
+
+
 .c-share-buttons {
   overflow: auto;
   background-color: $white;
@@ -50,10 +53,8 @@
 }
 
 .c-share-buttons__link--twitter {
-  $_twitter-margin: $base-spacing-unit * 0.25;
-
-  margin-left: $_twitter-margin;
-  margin-right: $_twitter-margin;
+  margin-left: $share-button-twitter-margin;
+  margin-right: $share-button-twitter-margin;
   background-color: $twitter-blue;
 }
 

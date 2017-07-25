@@ -1,21 +1,18 @@
-<div class="off-canvas-wrap" data-offcanvas>
-<div class="inner-wrap">
+<div class="site-wrap">
 
 <header class="site-header" role="banner">
     {% block header %}
     <div class="row">
 
-        <div class="columns small-9 medium-6">
+        <div class="columns small-7 medium-6">
             <h1 class="site-header-logo">
                 <a href="{{ site.url }}" rel="home" data-ga-category="Site Logo|Header" data-ga-label=""><span class="hidden-for-small-up">Home</span></a>
             </h1>
         </div>
 
-        <div class="site-header-social columns small-3 medium-6 end">
-            <ul class="iconset">
-                {% include 'partials/social-icons.twig' with {'location': 'header'} %}
-            </ul>
-        </div>
+        <ul class="site-ctas columns small-5 medium-6">
+            {% include 'partials/site-ctas.twig' with {'location': 'header'} %}
+        </ul>
 
     </div>
     {% endblock %}

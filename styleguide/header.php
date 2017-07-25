@@ -150,9 +150,7 @@
 </head>
 
 <body class="home blog " data-template="base.twig">
-  <div class="off-canvas-wrap" data-offcanvas>
-    <div class="inner-wrap">
-
+  <div class="site-wrap">
       <header class="site-header" role="banner">
         <div class="row">
 
@@ -182,14 +180,9 @@
               </li>
 
               <li class="more first">
-                <label for="the-search-field" class="js-sitewide-search-icon sitewide-search-icon" tabindex="0" data-ga-category="Search Icon - header" data-ga-label="Search">
+                <label for="the-search-field" class="js-sitewide-search-icon" tabindex="0" data-ga-category="Search Icon - header" data-ga-label="Search">
                     <?php styleguide_icon( 'search' ); ?>
                 </label>
-              </li>
-              <li class="more">
-                <a id="off-canvas-burger" class="right-off-canvas-toggle" href="#" data-ga-category="Menu - Main Navigation" data-ga-label="Off-Canvas Menu">
-                  <?php styleguide_icon( 'bars' ); ?>
-                </a>
               </li>
             </ul>
           </div>

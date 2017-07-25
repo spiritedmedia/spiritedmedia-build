@@ -1,0 +1,42 @@
+{% set gaCategory = 'Social Icon - ' ~ location|capitalize %}
+
+{% if location == 'header' or location == 'footer' %}
+<li class="site-ctas__follow-us site-ctas__item">
+    Follow Us
+</li>
+{% endif %}
+
+
+<li class="site-ctas__social site-ctas__icon site-ctas__item">
+    <a class="site-ctas__social__link" href="{{ site.social.instagram_url }}" target="_blank" data-ga-category="{{gaCategory}}" data-ga-label="Instagram">
+        {{ ped_icon('instagram', 'site-ctas__icon__img') }}
+    </a>
+</li>
+<li class="site-ctas__social site-ctas__icon site-ctas__item">
+    <a class="site-ctas__social__link" href="{{ site.social.twitter_url }}" target="_blank" data-ga-category="{{gaCategory}}" data-ga-label="Twitter">
+        {{ ped_icon('twitter', 'site-ctas__icon__img') }}
+    </a>
+</li>
+<li class="site-ctas__social site-ctas__icon site-ctas__item">
+    <a class="site-ctas__social__link" href="{{ site.social.facebook_url }}" target="_blank" data-ga-category="{{gaCategory}}" data-ga-label="Facebook">
+        {{ ped_icon('facebook', 'site-ctas__icon__img') }}
+    </a>
+</li>
+
+{% if location == 'header' %}
+<li class="site-ctas__search site-ctas__icon--standalone site-ctas__icon site-ctas__item">
+    <label for="the-search-field" class="js-sitewide-search-icon" tabindex="0" data-ga-category="Search Icon - {{location}}" data-ga-label="Search">
+        {{ ped_icon('search', 'site-ctas__icon__img') }}
+    </label>
+</li>
+<li class="site-ctas__about-icon site-ctas__icon--standalone site-ctas__icon site-ctas__item">
+    <a href="{{ site.url }}/about/" data-ga-category="{{ gaCategory }}" data-ga-label="About Us | Icon">
+        {{ ped_icon('info', 'site-ctas__icon__img') }}
+    </a>
+</li>
+<li class="site-ctas__about-label site-ctas__item">
+    <a href="{{ site.url }}/about/" data-ga-category="{{ gaCategory }}" data-ga-label="About Us | Label">
+        About Us
+    </a>
+</li>
+{% endif %}

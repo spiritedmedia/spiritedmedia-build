@@ -29,7 +29,6 @@ Below is a list of the icons we use throughout the sites:</p>
 				$icons = [
                     'angle-left'    => 'Angle Left',
                     'angle-right'   => 'Angle Right',
-                    'bars'          => 'Bars AKA Hamburger',
                     'birthday-cake' => 'Birthday Cake',
                     'briefcase'     => 'Briefcase',
                     'calendar'      => 'Calendar',
@@ -37,6 +36,7 @@ Below is a list of the icons we use throughout the sites:</p>
                     'envelope-o'    => 'Envelope',
                     'external-link' => 'External Link',
                     'facebook'      => 'Facebook',
+                    'info'          => 'Info',
                     'instagram'     => 'Instagram',
                     'level-down'    => 'Level Down',
                     'linkedin'      => 'LinkedIn',

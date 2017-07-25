@@ -52,16 +52,9 @@ figure {
 }
 
 
-
-
-
-//
-// Foundation: Offcanvas
-// ==========================================================================
-// Adjust Foundation's Offcanvas component to account for our search component
-
-
-.off-canvas-wrap {
+// Adjust site wrapper for search input
+.site-wrap {
+  position: relative;
   z-index: $z-index-1;
   transition: transform 0.3s ease;
 

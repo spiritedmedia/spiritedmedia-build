@@ -26,6 +26,8 @@ $input-focus-bg-color: $input-focus-border-color;
 $select-bg-color: $ghost;
 $select-hover-bg-color: scale-color( $select-bg-color, $lightness: -3% );
 
+$legend-offset: rem-calc( 3px );
+
 
 
 
@@ -272,12 +274,10 @@ fieldset {
   }
 
   legend {
-    $_offset: rem-calc( 3px );
-
     font-weight: 700;
     margin: 0;
-    margin-left: -( $_offset );
-    padding: 0 $_offset;
+    margin-left: -( $legend-offset );
+    padding: 0 $legend-offset;
   }
 }
 

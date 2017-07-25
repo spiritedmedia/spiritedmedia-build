@@ -111,7 +111,6 @@ $z-action-bar      : $z-index-4;
 $z-c-meta-bar      : $z-index-2;
 $z-entity-body     : $z-index-2;
 $z-stream-item-img : $z-index-1;
-$z-off-canvas-wrap : $z-index-1;
 
 
 
@@ -204,3 +203,6 @@ $nudge-punctuation              : -0.4em;
 $wp-admin-bar-breakpoint        : 'only screen and (min-width: 783px)';
 $wp-admin-bar-height-mobile     : rem-calc( 46 );
 $wp-admin-bar-height-desktop    : rem-calc( 32 );
+
+// Sitewide CTA icon spacing
+$site-cta-icon-spacing          : $icon-spacing / 2;

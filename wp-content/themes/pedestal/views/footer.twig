@@ -2,11 +2,9 @@
 
     <div class="row">
 
-        <div class="site-footer-social medium-4 medium-push-8 columns">
-            <ul class="iconset">
-                {% include 'partials/social-icons.twig' with {'location': 'footer'} %}
-            </ul>
-        </div>
+        <ul class="site-ctas medium-4 medium-push-8 columns">
+            {% include 'partials/site-ctas.twig' with {'location': 'footer'} %}
+        </ul>
 
         <div class="site-footer-links large-6 large-pull-6 medium-8 medium-pull-4 columns">
             <div class="row">
@@ -43,40 +41,7 @@
 
 </footer>
 
-<nav class="main-navigation" role="navigation">
-
-    <div class="off-canvas-menu right-off-canvas-menu">
-
-        <ul class="off-canvas-menu__list off-canvas-list">
-
-        {% for title, link in menu_off_canvas | slice(0, 1) %}
-            <li class="off-canvas-menu__item"><a href="{{ link }}" data-ga-category="Menu - Main Navigation" data-ga-label="{{ title }}">{{ title }}</a></li>
-        {% endfor %}
-
-        {% for title, link in menu_off_canvas | slice(1, 2) %}
-            <li class="off-canvas-menu__follow off-canvas-menu__item">
-                <a href="{{ link }}" class="disabled" data-ga-category="Menu - Main Navigation" data-ga-label="Disabled|{{ title }}">{{ title }}</a>
-                <ul class="off-canvas-menu__follow__icons iconset">
-                    {% include 'partials/social-icons.twig' with {'location': 'off_canvas'} %}
-                </ul>
-            </li>
-        {% endfor %}
-
-        {% for title, link in menu %}
-            <li class="off-canvas-menu__item"><a href="{{ link }}" data-ga-category="Menu - Main Navigation" data-ga-label="{{ title }}">{{ title }}</a></li>
-        {% endfor %}
-
-        </ul>
-
-    </div>
-
-    <a class="exit-off-canvas" href="#close" data-ga-category="Menu - Main Navigation" data-ga-label="Close"></a>
-
-</nav>
-
-
-</div>
-</div>
+</div><!-- end .site-wrap -->
 
 {% include 'partials/search.twig' with {'sitewide': true} %}
 

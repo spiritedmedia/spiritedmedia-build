@@ -56,56 +56,7 @@
 
 </footer>
 
-<nav class="main-navigation" role="navigation">
-
-  <div class="off-canvas-menu right-off-canvas-menu">
-
-    <ul class="off-canvas-menu__list off-canvas-list">
-
-      <li class="off-canvas-menu__item"><a href="/newsletter-signup" data-ga-category="Menu - Main Navigation" data-ga-label="Newsletter">Newsletter</a></li>
-
-      <li class="off-canvas-menu__follow off-canvas-menu__item">
-        <a href="#" class="disabled" data-ga-category="Menu - Main Navigation" data-ga-label="Disabled|Follow">Follow</a>
-        <ul class="off-canvas-menu__follow__icons iconset">
-
-          <li class="social-icon ">
-            <a href="https://www.instagram.com/billy_penn/" target="_blank" data-ga-category="Social Icon - Off_canvas" data-ga-label="Instagram">
-              <?php styleguide_icon( 'instagram' ); ?>
-            </a>
-          </li>
-          <li class="social-icon ">
-            <a href="https://twitter.com/billy_penn" target="_blank" data-ga-category="Social Icon - Off_canvas" data-ga-label="Twitter">
-              <?php styleguide_icon( 'twitter' ); ?>
-            </a>
-          </li>
-          <li class="social-icon ">
-            <a href="https://www.facebook.com/billypennnews" target="_blank" data-ga-category="Social Icon - Off_canvas" data-ga-label="Facebook">
-              <?php styleguide_icon( 'facebook' ); ?>
-            </a>
-          </li>
-
-        </ul>
-      </li>
-
-      <li class="off-canvas-menu__item"><a href="/about" data-ga-category="Menu - Main Navigation" data-ga-label="About">About</a></li>
-      <li class="off-canvas-menu__item"><a href="https://medium.com/billy-penn" data-ga-category="Menu - Main Navigation" data-ga-label="Blog">Blog</a></li>
-      <li class="off-canvas-menu__item"><a href="/jobs" data-ga-category="Menu - Main Navigation" data-ga-label="Jobs">Jobs</a></li>
-      <li class="off-canvas-menu__item"><a href="/press" data-ga-category="Menu - Main Navigation" data-ga-label="Press">Press</a></li>
-      <li class="off-canvas-menu__item"><a href="/advertising" data-ga-category="Menu - Main Navigation" data-ga-label="Advertising">Advertising</a></li>
-      <li class="off-canvas-menu__item"><a href="/terms-of-use" data-ga-category="Menu - Main Navigation" data-ga-label="Terms of Use">Terms of Use</a></li>
-      <li class="off-canvas-menu__item"><a href="/privacy-policy" data-ga-category="Menu - Main Navigation" data-ga-label="Privacy Policy">Privacy Policy</a></li>
-
-    </ul>
-
-  </div>
-
-  <a class="exit-off-canvas" href="#close" data-ga-category="Menu - Main Navigation" data-ga-label="Close"></a>
-
-</nav>
-
-
-</div>
-</div>
+</div><!-- end .site-wrap -->
 
 <!-- 10.0.2.181 -->
 <script type='text/javascript' src='https://a.spirited.media/wp-content/themes/pedestal/assets/dist/js/fastclick.js?ver=1.0'></script>

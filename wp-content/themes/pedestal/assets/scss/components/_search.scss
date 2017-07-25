@@ -39,12 +39,6 @@ $filter-link-pd: 5px;
       color: $black;
     }
 
-    &--search {
-      .o-icon {
-        width: icon-width-get( search ) * 1.5;
-      }
-    }
-
     &--close {
       right: 0;
       display: none;

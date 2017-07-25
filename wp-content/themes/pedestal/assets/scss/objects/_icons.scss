@@ -1,0 +1,29 @@
+// ==========================================================================
+// Pedestal // Objects // ICONS
+// ==========================================================================
+
+
+.o-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: auto;
+  stroke-width: 0;
+  stroke: currentColor;
+
+  .email-social-icon & {
+    // vertical-align: baseline;
+    width: 40px;
+    height: 40px;
+    display: block;
+    padding: 10px;
+  }
+}
+
+
+// Set up prescribed widths from IcoMoon for each icon we're using
+@each $icon-name, $icon-width in $icon-widths {
+  .o-icon--#{$icon-name} {
+    width: $icon-width;
+  }
+}

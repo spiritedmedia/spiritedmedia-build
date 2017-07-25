@@ -327,11 +327,6 @@ class Frontend {
             'Privacy Policy' => '/privacy-policy',
         ];
 
-        $context['menu_off_canvas'] = [
-            'Newsletter' => '/newsletter-signup',
-            'Follow'     => '#',
-        ];
-
         $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) . ' Spirited Media. All rights reserved.';
 
         if ( is_main_query() ) {

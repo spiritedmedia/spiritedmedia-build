@@ -11,18 +11,6 @@
   border-top: 1px solid $border-std-color;
 }
 
-.site-footer-social {
-  text-align: center;
-  margin-bottom: $base-spacing-unit;
-
-  .iconset {
-    @media #{$medium-up} {
-      text-align: right;
-      float: right;
-    }
-  }
-}
-
 
 // stylelint-disable selector-max-type, selector-no-qualifying-type
 .site-footer-links {
