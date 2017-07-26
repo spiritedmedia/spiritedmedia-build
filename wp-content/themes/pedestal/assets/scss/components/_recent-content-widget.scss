@@ -1,0 +1,24 @@
+$recent-content-thumbnail-size: rem-calc( 48px );
+
+.widget_pedestal-recent-content .widget-title {
+  margin-bottom: rem-calc( 28px );
+}
+
+.recent-content-widget__item {
+  font-size: $base-spacing-unit;
+  line-height: 1.2;
+  display: block;
+  overflow: auto;
+  height: 100%;
+  margin-bottom: rem-calc( 20px );
+}
+
+.recent-content-widget__thumbnail,
+.recent-content-widget__placeholder {
+  height: $recent-content-thumbnail-size;
+  width: $recent-content-thumbnail-size;
+}
+
+.recent-content-widget__placeholder {
+  @include img-placeholder( $recent-content-thumbnail-size );
+}

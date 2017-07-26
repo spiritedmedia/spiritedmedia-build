@@ -19,7 +19,7 @@ use \Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
 /**
  * Base class to represent a WordPress Post
  */
-abstract class Post {
+class Post {
 
     /**
      * Is the post Original?

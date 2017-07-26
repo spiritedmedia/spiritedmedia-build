@@ -3,12 +3,8 @@
 namespace Pedestal\Widgets;
 
 use Timber\Timber;
-
 use \Pedestal\Registrations\Post_Types\Types;
-
 use \Pedestal\Posts\Post;
-
-use \Pedestal\Objects\Stream;
 
 class Recent_Content_Widget extends \WP_Widget {
 
@@ -23,9 +19,6 @@ class Recent_Content_Widget extends \WP_Widget {
     }
 
     public function widget( $args, $instance ) {
-
-        $obj = Post::get_by_post_id( get_queried_object_id() );
-
         $post_types = [];
         switch ( $instance['type'] ) {
             case 'stories':
@@ -46,38 +39,56 @@ class Recent_Content_Widget extends \WP_Widget {
             return;
         }
 
-        $stream = new Stream( [
-            'posts_per_page'      => $instance['number'],
-            'paged'               => 1,
-            'no_found_rows'       => true,
-            'post_status'         => 'publish',
-            'ignore_sticky_posts' => true,
-            'post_type'           => $post_types,
+        $posts = new \WP_Query( [
+            'posts_per_page'         => intval( $instance['number'] ),
+            'paged'                  => 1,
+            'post_status'            => 'publish',
+            'ignore_sticky_posts'    => true,
+            'post_type'              => $post_types,
+            'no_found_rows'          => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
         ] );
-        $items = $stream->get_stream();
 
-        echo $args['before_widget'];
-
-        if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'];
-            if ( ! empty( $instance['title_link'] ) ) {
-                echo '<a href="' . esc_url( $instance['title_link'] ) . '">';
-            }
-            echo esc_html( $instance['title'] );
-            if ( ! empty( $instance['title_link'] ) ) {
-                echo '</a>';
-            }
-            echo $args['after_title'];
+        if ( empty( $posts->posts ) ) {
+            return false;
         }
 
-        $context = Timber::get_context();
-        $context['items'] = $items;
-        $context['current_item'] = $obj;
-        $context['show_thumbs'] = (bool) $instance['show_thumbs'];
-        Timber::render( 'widgets/recent-content.twig', $context );
+        $items = '';
+        foreach ( $posts->posts as $index => $post ) {
+            $ped_post = new Post( $post );
+            $item_context = [
+                'title'     => $ped_post->get_the_title(),
+                'permalink' => $ped_post->get_the_permalink(),
+                'type'      => $instance['type'],
+                'thumbnail' => false,
+            ];
+            if ( $instance['show_thumbs'] ) {
+                $feat_image = $ped_post->get_featured_image_html( 'thumbnail', [
+                    'class' => 'o-media__img recent-content-widget__thumbnail',
+                ] );
 
-        echo $args['after_widget'];
+                // If no featured image, use a placeholder graphic
+                if ( ! $feat_image ) {
+                    $feat_image = '<i class="o-media__img recent-content-widget__placeholder"></i>';
+                }
+                $item_context['thumbnail'] = $feat_image;
+            }
+            ob_start();
+                Timber::render( 'widgets/recent-content-item.twig', $item_context );
+            $items .= ob_get_clean();
+        }
 
+        $widget_context = [
+            'before_widget' => $args['before_widget'],
+            'after_widget'  => $args['after_widget'],
+            'before_title'  => $args['before_title'],
+            'after_title'   => $args['after_title'],
+            'title'         => esc_html( $instance['title'] ),
+            'title_link'    => esc_url( $instance['title_link'] ),
+            'items'         => $items,
+        ];
+        Timber::render( 'widgets/recent-content.twig', $widget_context );
     }
 
     public function form( $instance ) {
@@ -94,7 +105,7 @@ class Recent_Content_Widget extends \WP_Widget {
             'stories'    => 'Stories',
             'articles'   => 'Articles',
             'factchecks' => 'Factchecks',
-            'original'  => 'Original Content',
+            'original'   => 'Original Content',
         ];
 
         // Escape field ids and names

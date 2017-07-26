@@ -1,0 +1,18 @@
+<a
+    {% if permalink %}href="{{ permalink }}"{% endif %}
+    class="recent-content-widget__item"
+    data-ga-category="Widget|Recent Content"
+    data-ga-label="Title|{{ title }}|Type: {{ type }}"
+>
+
+    {% if thumbnail %}
+        {{ thumbnail }}
+        <div class="o-media__body">
+    {% endif %}
+
+            {{ title }}
+
+    {% if thumbnail %}
+        </div>
+    {% endif %}
+</a>

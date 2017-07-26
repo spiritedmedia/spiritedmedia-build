@@ -1,11 +1,13 @@
-<section class="c-stream--imglist  c-stream--sm  c-stream">
-{% set stream = true %}
+{{ before_widget }}
 
-{% for item in items %}
-{% include 'partials/stream/imglist/item.twig' with {
-    'gaCategory': 'Widget|Recent Content',
-    'show_thumbs': show_thumbs
-} %}
-{% endfor %}
+    {{ before_title }}
+        {% if title_link %}
+            <a href="{{ title_link }}">{{ title }}</a>
+        {% else %}
+            {{ title }}
+        {% endif %}
+    {{ after_title }}
 
-</section>
+    {{ items }}
+
+{{ after_widget }}
