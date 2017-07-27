@@ -1,7 +1,7 @@
-Build [#3255](https://circleci.com/gh/spiritedmedia/spiritedmedia/3255) by kingkool68 at 2017-07-26 08:52 PM UTC
+Build [#3259](https://circleci.com/gh/spiritedmedia/spiritedmedia/3259) by kingkool68 at 2017-07-27 11:24 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.6](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.6)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.7](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.7)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.5...v5.11.6)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.6...v5.11.7)
 
- - [#2137](https://github.com/spiritedmedia/spiritedmedia/pull/2137): Refactor Recent Content Widget
+ - [#2139](https://github.com/spiritedmedia/spiritedmedia/pull/2139): Hotfix: Emails ImgList Item.twig file (Fatal Error)
