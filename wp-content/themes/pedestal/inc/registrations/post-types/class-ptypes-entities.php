@@ -298,7 +298,6 @@ class Entity_Types extends Types {
      * Register fields for all entities
      */
     private function register_entity_fields() {
-
         // Replaces deprecated `hidden_in_stream` post meta
         $exclude = new \Fieldmanager_Select( [
             'name' => 'exclude_from_home_stream',
@@ -309,11 +308,7 @@ class Entity_Types extends Types {
                 ],
             ],
         ] );
-
-        if ( current_user_can( 'publish_events' ) ) {
-            $exclude->add_meta_box( 'Exclude from Home Stream', Types::get_entity_post_types(), 'side', 'low' );
-        }
-
+        $exclude->add_meta_box( 'Exclude from Home Stream', Types::get_entity_post_types(), 'side', 'low' );
     }
 
     /**

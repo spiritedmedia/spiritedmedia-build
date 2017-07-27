@@ -1,7 +1,7 @@
-Build [#3259](https://circleci.com/gh/spiritedmedia/spiritedmedia/3259) by kingkool68 at 2017-07-27 11:24 AM UTC
+Build [#3263](https://circleci.com/gh/spiritedmedia/spiritedmedia/3263) by montchr at 2017-07-27 07:34 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.7](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.7)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.8](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.8)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.6...v5.11.7)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.7...v5.11.8)
 
- - [#2139](https://github.com/spiritedmedia/spiritedmedia/pull/2139): Hotfix: Emails ImgList Item.twig file (Fatal Error)
+ - [#2140](https://github.com/spiritedmedia/spiritedmedia/pull/2140): [HOTFIX] Allow links and embeds published by a Curator to show up in home stream
