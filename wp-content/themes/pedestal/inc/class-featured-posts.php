@@ -4,7 +4,6 @@ namespace Pedestal;
 
 use function Pedestal\Pedestal;
 use Pedestal\Posts\Post;
-use Pedestal\Registrations\Post_Types\Types;
 
 class Featured_Posts {
 
@@ -19,6 +18,7 @@ class Featured_Posts {
         'pedestal_embed',
         'pedestal_place',
         'pedestal_locality',
+        'pedestal_factcheck',
     ];
 
     /**

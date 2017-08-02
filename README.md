@@ -1,7 +1,7 @@
-Build [#3284](https://circleci.com/gh/spiritedmedia/spiritedmedia/3284) by kingkool68 at 2017-08-01 08:10 PM UTC
+Build [#3300](https://circleci.com/gh/spiritedmedia/spiritedmedia/3300) by kingkool68 at 2017-08-02 06:55 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.10](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.10)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.11](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.11)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.9...v5.11.10)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.10...v5.11.11)
 
- - [#2147](https://github.com/spiritedmedia/spiritedmedia/pull/2147): DFP Slot Variable Is Now C
+ - [#2148](https://github.com/spiritedmedia/spiritedmedia/pull/2148): Allow Factchecks To Be Featured

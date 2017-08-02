@@ -314,6 +314,13 @@ $c: '.c-stream';
   }
 }
 
+// If a Factcheck is featured the thumbnail should be full width
+.c-stream__featured-items {
+  .c-stream__item__img {
+    max-width: none;
+  }
+}
+
 
 .c-stream__item--event {
   border-bottom: 0;
