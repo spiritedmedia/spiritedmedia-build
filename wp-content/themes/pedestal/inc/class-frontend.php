@@ -68,11 +68,7 @@ class Frontend {
 
         add_filter( 'body_class', function( $body_classes ) {
 
-            global $wp, $wp_query;
-            $request = rtrim( $wp->request, '/' );
-            if ( 'promotional-content' == $request ) {
-                $body_classes[] = 'nativo';
-            }
+            global $wp_query;
 
             if ( is_page() || is_author() ) {
                 $body_classes[] = 'full-width';
@@ -438,7 +434,6 @@ class Frontend {
 
         $request = rtrim( $wp->request, '/' );
         switch ( $request ) {
-            case 'promotional-content':
             case 'newsletter-signup':
                 $template = get_template_directory() . '/page-' . $request . '.php';
                 break;

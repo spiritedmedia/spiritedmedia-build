@@ -15,22 +15,16 @@ styleguide_header();
 
       <h5>Size Examples</h5>
 
-      <!-- Extra Small Button Example -->
-      <p>
-        <a class="btn btn--extra-small" href="#">Extra Small Button</a>
-        <button class="btn btn--extra-small">Extra Small Button</button>
-      </p>
-
       <!-- Small Button Example -->
       <p>
-        <a class="btn btn--small" href="#">Small Button</a>
-        <button class="btn btn--small">Small Button</button>
+        <a class="btn btn--sm" href="#">Small Button</a>
+        <button class="btn btn--sm">Small Button</button>
       </p>
 
       <!-- Large Button Example -->
       <p>
-        <a class="btn btn--large" href="#">Large Button</a>
-        <button class="btn btn--large">Large Button</button>
+        <a class="btn btn--lg" href="#">Large Button</a>
+        <button class="btn btn--lg">Large Button</button>
       </p>
 
       <!-- Full Width Button Example -->
@@ -43,53 +37,22 @@ styleguide_header();
       </p>
 
 
-
-      <h5>Primary Examples</h5>
+      <h5>Color Examples</h5>
       <p>
-        <a class="btn btn--primary" href="#">Primary Button</a>
-        <button class="btn btn--primary">Primary Button</button>
+        <a class="btn btn--primary" href="#">Primary Color</a>
+        <button class="btn btn--primary">Primary Color</button>
       </p>
 
       <p>
-        <a class="btn btn--primary btn--large" href="#">Primary Large Button</a>
-        <button class="btn btn--primary btn--large">Primary Large Button</button>
+        <a class="btn btn--secondary" href="#">Secondary Color</a>
+        <button class="btn btn--secondary">Secondary Color</button>
       </p>
 
       <p>
-        <a class="btn btn--primary btn--large btn--full-width" href="#">
-          Primary Large Full Width Button
-        </a>
+        <a class="btn btn--alert" href="#">Alert Color</a>
+        <button class="btn btn--alert">Alert Color</button>
       </p>
 
-      <p>
-        <button class="btn btn--primary btn--large btn--full-width">
-          Primary Large Full Width Button
-        </button>
-      </p>
-
-
-      <h5>Secondary Examples</h5>
-      <p>
-        <a class="btn btn--secondary" href="#">Secondary Button</a>
-        <button class="btn btn--secondary">Secondary Button</button>
-      </p>
-
-      <p>
-        <a class="btn btn--secondary btn--large" href="#">Secondary Large Button</a>
-        <button class="btn btn--secondary btn--large">Secondary Large Button</button>
-      </p>
-
-      <p>
-        <a class="btn btn--secondary btn--large btn--full-width" href="#">
-          Secondary Large Full Width Button
-        </a>
-      </p>
-
-      <p>
-        <button class="btn btn--secondary btn--large btn--full-width">
-          Secondary Large Full Width Button
-        </button>
-      </p>
 
     </main>
     <aside class="rail columns large-4"></aside>

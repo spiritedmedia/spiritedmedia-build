@@ -7,13 +7,13 @@
 	{% endif %}
 
 	<form method="get">
-		<label>Ad unit name</label>
-		<input type="text" name="ad-name" value="{{ ad_name }}" required>
+		<label for="ad-name">Ad unit name</label>
+		<input type="text" class="form-input" name="ad-name" id="ad-name" value="{{ ad_name }}" required>
 
-		<label>Ad unit size(s) <em>Separate multiple sizes with a comma</em></label>
-		<input type="text" name="ad-sizes" value="{{ ad_sizes }}" required>
+		<label for="ad-sizes">Ad unit size(s) <em>Separate multiple sizes with a comma</em></label>
+		<input type="text" class="form-input" name="ad-sizes" id="ad-sizes" value="{{ ad_sizes }}" required>
 
-		<input type="submit" value="Test Ad Unit">
+		<input type="submit" class="btn btn--primary" value="Test Ad Unit">
 	</form>
 
 {% endblock %}

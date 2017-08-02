@@ -181,12 +181,26 @@ $page-main-m-t  : triple( $base-spacing-unit );
 $overview-thumbnail-img-size    : rem-calc( 150px );
 
 // Border dividers
-$border-divider-spacing         : ( $base-spacing-unit * 1.5 ) !default;
-$border-divider-spacing--inline : halve( $base-spacing-unit ) !default;
-$border-divider-color           : $border-std-color !default;
+$border-divider-spacing         : ( $base-spacing-unit * 1.5 );
+$border-divider-spacing--inline : halve( $base-spacing-unit );
+$border-divider-color           : $border-std-color;
 
-// Forms
-$input-font-color               : rgba( 0, 0, 0, 0.75 ); //
+// Forms + Buttons
+$input-font-color               : rgba( 0, 0, 0, 0.75 );
+$input-border-color             : $grey-80;
+$input-border-width             : rem-calc( 1px );
+$input-btn-font-size-lg         : $h5-font-size;
+$input-btn-spacing-y            : ( $base-spacing-unit * 0.5 );
+$input-btn-spacing-x            : ( $base-spacing-unit * 0.75 );
+$input-btn-line-height          : 1.25;
+$input-btn-spacing-y-sm         : 0.25rem;
+$input-btn-spacing-x-sm         : 0.5rem;
+$input-btn-line-height-sm       : 1.5;
+$input-btn-spacing-y-lg         : 0.5rem;
+$input-btn-spacing-x-lg         : 1rem;
+$input-btn-line-height-lg       : 1.5;
+$btn-border-width               : rem-calc( 2px );
+
 
 // Spinkit loading indicator
 $spinkit-spinner-margin         : 16px auto;

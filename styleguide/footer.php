@@ -61,7 +61,6 @@
 <!-- 10.0.2.181 -->
 <script type='text/javascript' src='https://a.spirited.media/wp-content/themes/pedestal/assets/dist/js/fastclick.js?ver=1.0'></script>
 <script type='text/javascript' src='https://a.spirited.media/wp-content/themes/pedestal/assets/dist/js/pedestal.js?ver=5.2.5'></script>
-<script type='text/javascript' src='https://s.ntv.io/serve/load.js'></script>
 <script type='text/javascript' src='https://boxter.co/f23.js'></script>
 <script type='text/javascript' src='https://a.spirited.media/wp-includes/js/wp-embed.min.js?ver=4.7.2'></script>
 <script type='text/javascript' src='https://a.spirited.media/wp-content/plugins/shortcake-bakery/assets/js/shortcake-bakery.js?ver=0.2.0-alpha'></script>

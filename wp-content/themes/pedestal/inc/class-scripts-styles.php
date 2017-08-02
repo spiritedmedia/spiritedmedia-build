@@ -44,7 +44,7 @@ class Scripts_Styles {
         // 3rd party hosted JavaScript should have async set so they don't block
         // our JavaScript from functioning if 3rd party scripts fail to load.
         add_filter( 'script_loader_tag', function( $script_tag = '', $handle = '' ) {
-            $whitelisted_handles = [ 'nativo', 'soundcite', 'relay-links' ];
+            $whitelisted_handles = [ 'soundcite', 'relay-links' ];
             if ( ! in_array( $handle, $whitelisted_handles ) ) {
                 return $script_tag;
             }
@@ -83,7 +83,6 @@ class Scripts_Styles {
 
         // Advertising
         wp_enqueue_script( 'dfp-load', get_template_directory_uri() . '/assets/dist/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
-        wp_enqueue_script( 'nativo', 'https://s.ntv.io/serve/load.js', [], null, true );
         if ( isset( $_GET['show-ad-units'] ) ) {
             wp_enqueue_script( 'dfp-placeholders', get_template_directory_uri() . '/assets/dist/js/dfp-placeholders.js', [ 'jquery' ], PEDESTAL_VERSION );
         }

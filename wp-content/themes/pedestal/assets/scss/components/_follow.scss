@@ -3,16 +3,10 @@
 // ==========================================================================
 
 
-.c-follow-this {
-  overflow: auto;
-  height: 100%;
-  display: block;
-  position: relative;
-  padding-bottom: $base-spacing-unit * 1.5;
-}
+$breakpoint-follow-submit-label-length: em-calc( 420px );
 
-.c-follow-this__accent {
-  background-color: $yet-another-red;
+.c-follow-this {
+  padding-bottom: $base-spacing-unit * 1.5;
 }
 
 .c-follow-this__label {
@@ -20,48 +14,26 @@
   margin-bottom: $base-spacing-unit;
 }
 
-.c-follow-this__cluster-title {
-  text-transform: uppercase;
+.c-follow-this__fields {
+  .is-loading & {
+    display: none;
+  }
 }
 
-// @TODO These grouped form element styles would be a good starting point for
-// our own generic field group component -- Foundation has this but its
-// implementation relies on a bunch of chained classes...
-//
-// @TODO Overrides Foundation <input> styles
-// stylelint-disable-next-line selector-max-type
-input.c-follow-this__email {
-  float: left;
-  width: 75%;
-  border-top-left-radius: $global-radius;
-  border-bottom-left-radius: $global-radius;
-  border-right: 0;
-  padding: $half-spacing-unit;
-  margin-bottom: 0;
-  font-size: $h5-font-size;
-  height: auto;
-  box-shadow: none;
-}
+.c-follow-this__cluster-title {}
 
-.c-follow-this__submit {
-  float: left;
-  width: 25%;
-  background-color: $yet-another-red;
-  color: $white;
-  text-transform: uppercase;
-  // @TODO yuck to this magic number
-  padding: rem-calc( 10.5px ) 0;
-  margin-bottom: 0;
-  border-top-right-radius: $global-radius;
-  border-bottom-right-radius: $global-radius;
+.c-follow-this__email {}
+
+.c-follow-this__submit {}
+
+.c-follow-this__feedback {
+  overflow: hidden;
+  height: 100%;
+  position: relative;
 }
 
 .is-loading .c-follow-this__loader {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: $white;
+  height: rem-calc( 100px );
 
   .c-spinner {
     position: absolute;
@@ -69,16 +41,16 @@ input.c-follow-this__email {
   }
 
   .sk-child {
-    background-color: $yet-another-red;
+    background-color: $alert-color;
   }
 }
 
 .c-follow-this__success-message,
 .c-follow-this__fail-message {
   display: none;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: $white;
+}
+
+.is-success .c-follow-this__success-message,
+.is-failed .c-follow-this__fail-message {
+  display: block;
 }

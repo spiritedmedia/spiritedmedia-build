@@ -74,7 +74,7 @@
   display: table;
 
   // stylelint-disable-next-line selector-max-type
-  img:not( .ntv-video-play-button ) {
+  img {
     display: block;
     // For IE compatability
     width: 100%;

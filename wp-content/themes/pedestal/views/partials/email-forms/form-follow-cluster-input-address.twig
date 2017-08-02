@@ -1,2 +1,10 @@
-For updates, please enter your email address and we'll send you important developments as they happen.
-<input type="email" name="email_address" value="{{ current_user.get_email_address() }}" placeholder="{{ site.emails.placeholder }}" required />
+<label>
+    For updates, please enter your email address and we'll send you important developments as they happen.
+    <input type="email"
+        class="{{ input_classes }} form-input"
+        name="email_address"
+        value="{{ current_user.get_email_address }}"
+        placeholder="{{ site.emails.placeholder }}"
+        required
+    />
+</label>

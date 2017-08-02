@@ -3,80 +3,97 @@
 // ==========================================================================
 
 
-$btn-transition: 0.3s ease 0s;
+$btn-transition: 300ms ease 0s;
+
+
+/// Make a button color variation
+///
+/// @param {color} $color
+@mixin btn-color-variant( $color ) {
+  @include text-color( $color );
+
+  background-color: $color;
+  border-color: $color;
+
+  &:hover {
+    background-color: $white;
+    color: $color;
+  }
+}
 
 
 .btn {
-  display: inline-block;
-  vertical-align: middle;
-  position: relative;
-  padding: ($base-spacing-unit / 2) ($base-spacing-unit * 2);
-  margin: 0;
-  margin-bottom: $base-spacing-unit / 2;
-  border-width: 2px;
-  border-style: solid;
-  border-color: $primary-color;
-  line-height: 1.125rem;
-  font-size: $small-font-size;
-  text-align: center;
-  text-transform: uppercase;
-  color: $primary-color;
   background-color: $white;
-  border-radius: 2px;
+  border: $btn-border-width solid $primary-color;
+  border-radius: $global-radius;
+  color: $primary-color;
+  cursor: pointer;
+  display: inline-block;
+  font-size: $small-font-size;
+  line-height: 1.125;
+  margin: 0;
+  margin-bottom: $input-btn-spacing-y;
+  padding: $input-btn-spacing-y $input-btn-spacing-x;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
   transition:
     background-color $btn-transition,
     color $btn-transition;
+  vertical-align: middle;
 
   @media #{$medium-up} {
     font-size: $base-font-size;
-    margin-bottom: $base-spacing-unit;
   }
 
   &:hover {
-    text-decoration: none;
+    @include text-color( $primary-color );
+
+    background-color: $primary-color;
   }
 
   &:disabled,
   &.is-disabled {
+    box-shadow: none;
+    cursor: default;
     opacity: 0.5;
   }
 }
 
 
+//
+// Color Variants
+//
+// @todo this could be handled better with maps
+
+.btn--primary   { @include btn-color-variant( $primary-color ); }
+.btn--secondary { @include btn-color-variant( $secondary-color ); }
+.btn--alert     { @include btn-color-variant( $alert-color ); }
 
 
+//
+// Size Variants
+//
 
-.btn--primary {
-  color: $white;
-  background-color: $primary-color;
+.btn--sm {
+  font-size: $small-font-size;
+  line-height: 1.5;
+  margin-bottom: $input-btn-spacing-y-sm;
+  padding: $input-btn-spacing-y-sm $input-btn-spacing-x-sm;
+}
 
-  &:hover {
-    color: $primary-color;
-    background-color: $white;
-  }
+.btn--lg {
+  font-size: $input-btn-font-size-lg;
+  line-height: 1.5;
+  margin-bottom: $input-btn-spacing-y-lg;
+  padding: $input-btn-spacing-y-lg $input-btn-spacing-x-lg;
 }
 
 
-
-
-
-.btn--secondary {
-  color: $white;
-  background-color: $dark-prussian-blue;
-  border-color: $white;
-
-  &:hover {
-    color: $dark-prussian-blue;
-    background-color: $white;
-  }
-}
-
-
-
-
+//
+// Misc. Variants
+//
 
 .btn--no-border       { border: 0; }
 .btn--full-width      { width: 100%; }
-.btn--extra-small     { padding: ($base-spacing-unit / 4) ($base-spacing-unit / 2); }
-.btn--small           { padding: ($base-spacing-unit / 2); }
-.btn--large           { padding: $base-spacing-unit ($base-spacing-unit * 2); }

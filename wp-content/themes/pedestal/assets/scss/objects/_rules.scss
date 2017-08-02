@@ -6,14 +6,13 @@
 $section-header-p-t       : double( $base-spacing-unit ) !default;
 
 $o-rule-height              : quarter( $base-spacing-unit ) !default;
-$o-rule-p-t                 : quarter( $base-spacing-unit ) !default;
+$rule-spacing-y             : quarter( $base-spacing-unit ) !default;
 $o-rule-color               : $grey-95 !default;
 
 $o-rule--closure-h          : halve( $o-rule-height );
 $o-rule--closure-m-t        : ( $base-spacing-unit * 3 ) !default;
 $o-rule--closure-icon-size  : $icon-diameter--med !default;
-$o-rule--closure-spacing-h  : $o-rule-p-t;
-$o-rule--closure-sum-height : ( $o-rule--closure-h + $o-rule-p-t + $o-rule--closure-icon-size ) !default;
+$o-rule--closure-sum-height : ( $o-rule--closure-h + $rule-spacing-y + $o-rule--closure-icon-size ) !default;
 
 
 .section-header {
@@ -27,7 +26,7 @@ $o-rule--closure-sum-height : ( $o-rule--closure-h + $o-rule-p-t + $o-rule--clos
   border-top: $o-rule-height solid $o-rule-color;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  padding-top: $o-rule-p-t;
+  padding-top: $rule-spacing-y;
 } // rule
 
 
@@ -58,7 +57,7 @@ $o-rule--closure-sum-height : ( $o-rule--closure-h + $o-rule-p-t + $o-rule--clos
     background-position: top center;
     background-size: $o-rule--closure-sum-height;
     background-repeat: no-repeat;
-    width: ( $o-rule--closure-sum-height + $o-rule--closure-spacing-h * 2 );
+    width: ( $o-rule--closure-sum-height + $rule-spacing-y * 2 );
     height: $o-rule--closure-sum-height;
     background-color: $white;
     margin: -( $o-rule--closure-sum-height / 2 ) auto $base-spacing-unit;
@@ -77,7 +76,20 @@ $o-rule--closure-sum-height : ( $o-rule--closure-h + $o-rule-p-t + $o-rule--clos
 
 /// A small rule for accents
 .o-rule--accent {
-  width: rem-calc( 40px );
-  height: rem-calc( 4px );
-  background-color: $primary-color;
+  &::before {
+    background-color: $primary-color;
+    content: '';
+    display: block;
+    width: rem-calc( 40px );
+    height: rem-calc( 4px );
+    margin-bottom: 0.5rem;
+  }
+}
+
+
+/// A rule in the alert color
+.o-rule--alert {
+  &::before {
+    background-color: $alert-color;
+  }
 }

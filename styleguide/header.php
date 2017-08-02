@@ -15,8 +15,6 @@
   <meta property="fb:pages" content="666155016815882" />
   <link rel="pingback" href="https://billypenn.com/xmlrpc.php" />
 
-  <link rel='dns-prefetch' href='//s.ntv.io' />
-  <link rel='dns-prefetch' href='//boxter.co' />
   <link rel='dns-prefetch' href='//fonts.googleapis.com' />
   <link rel='dns-prefetch' href='//billypenn.com' />
   <link rel='dns-prefetch' href='//s.w.org' />
@@ -147,6 +145,12 @@
       "headline": "Billy Penn"
     }
   </script>
+  <style>
+      h4, h5 {
+          margin-top: 3rem;
+          margin-bottom: 1rem;
+      }
+  </style>
 </head>
 
 <body class="home blog " data-template="base.twig">

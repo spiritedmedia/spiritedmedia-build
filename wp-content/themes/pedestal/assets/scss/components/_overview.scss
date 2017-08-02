@@ -101,7 +101,7 @@
     }
 
     // stylelint-disable-next-line selector-max-type
-    img:not( .ntv-video-play-button ) {
+    img {
       position: absolute;
       width: 100%;
       height: 100%;

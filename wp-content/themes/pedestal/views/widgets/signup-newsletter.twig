@@ -5,15 +5,15 @@
     data-ga-label="Newsletter Signup Widget">
 
     <div class="js-form-fields">
-        <fieldset>
+        <fieldset class="form-group">
             {% include 'partials/email-forms/form-daily-legend.twig' %}
             {% include 'partials/email-forms/form-daily-input-address.twig' %}
             {% include 'partials/email-forms/form-honeypot.twig' %}
+            <div class="js-fail-message invalid-feedback"></div>
+            <button class="btn js-form-submit" type="submit">
+                {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
+            </button>
         </fieldset>
-        <button class="btn form-submit right js-form-submit" type="submit">
-            {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
-        </button>
-        <div class="u-clear-right"></div>
     </div>
 
     <div class="success-message js-success-message">

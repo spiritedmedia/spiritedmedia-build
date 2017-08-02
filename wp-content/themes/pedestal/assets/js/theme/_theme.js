@@ -50,8 +50,9 @@
       $(subscriptionForms.join(', ')).find('form').on('submit', function(e) {
         e.preventDefault();
         var $el = $(this);
+        var $fields = $el.find('.js-form-fields');
         var $submitBtn = $el.find('.js-form-submit');
-        var $alert = $('<div data-alert class="alert-box alert js-form-alert"></div>');
+        var $invalidFeedback = $el.find('.js-fail-message');
         var buttonWidth = $submitBtn.width();
         var actionURL = $el.attr('action');
         var actionUrlSeparator = actionURL.indexOf('?') >= 0 ? '&' : '?';
@@ -60,24 +61,23 @@
         $submitBtn.width(buttonWidth);
         $submitBtn.css('padding-left', 0);
         $submitBtn.css('padding-right', 0);
-        $el.find('.js-form-alert').remove();
+        $el.removeClass('is-failed');
         $el.addClass('is-loading');
 
         $.post(actionURL, $el.serialize(), function() {
           if ($el.find('.js-success-message').length) {
+            $fields.hide();
             $el.removeClass('is-loading');
-            $el.find('.js-form-fields').hide();
-            $el.find('.js-success-message').show();
+            $el.addClass('is-success');
           }
         }).fail(function(response) {
+          var msg = response.responseText;
           $el.removeClass('is-loading');
-          $el.find('.js-fail-message').show();
-          $alert.text(response.responseText);
-          var $errorText = $el.find('.js-error-message-text');
-          if ($errorText.length) {
-            $errorText.after($alert);
+          $el.addClass('is-failed');
+          if ($invalidFeedback.length && msg.length) {
+            $invalidFeedback.text(msg);
           } else {
-            $el.prepend($alert);
+            $submitBtn.before(msg);
           }
         });
       });

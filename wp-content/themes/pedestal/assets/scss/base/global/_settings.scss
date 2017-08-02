@@ -44,7 +44,6 @@ $dark-prussian-blue      : #122027;
 $purple-phase            : #bf7dbb;
 $blood-orange            : #db7053;
 $yet-another-red         : #c73e1d; // Red call to action
-$hello-yellow            : #fff558; // Hand-picked by Nativo
 $absinthe                : #c1a540;
 $latte                   : #e6e6de;
 $mustard-gas             : #b26536;
@@ -59,6 +58,9 @@ $facebook-blue           : #3b5998;
 // the child themes
 $primary-color           : $spiritedmedia-brand !default;
 $secondary-color         : lighten( $spiritedmedia-brand, 10% ) !default;
+
+$success-color           : #43ac6a; // From Foundation
+$alert-color             : $yet-another-red;
 
 $body-bg                 : $white !default;
 $body-font-color         : $grey-25;
@@ -76,7 +78,6 @@ $dimmed-text-color       : $grey-46 !default;
 // User role colors
 $user-staff-color        : $primary-color !default;
 $user-contributor-color  : $mustard-gas !default;
-
 
 $loading-default-opacity : 0.25;
 

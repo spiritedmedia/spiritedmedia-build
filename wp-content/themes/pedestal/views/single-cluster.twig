@@ -61,16 +61,8 @@
 
                     {% set counter = ( counter | default(0) ) + 1 %}
 
-                    {% if counter == 4 %}
-                        {{ macros.nativo( 'cluster-stream-04' ) }}
-                    {% endif %}
-
                     {% if counter == 8 %}
                         {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
-                    {% endif %}
-
-                    {% if counter == 12 %}
-                        {{ macros.nativo( 'cluster-stream-12' ) }}
                     {% endif %}
 
                     {% if counter == 16 %}

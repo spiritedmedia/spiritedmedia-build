@@ -156,8 +156,8 @@ $filter-link-pd: 5px;
 }
 
 
-// stylelint-disable selector-max-type
-input.c-search__field {
+
+.c-search__field {
   @include stdbd(
     $side: 'bottom',
     $color: $grey-80,
@@ -170,10 +170,10 @@ input.c-search__field {
   padding: $half-spacing-unit;
   padding-left: rem-calc( 40 ); // input icon width
   color: $grey-25;
+  margin-bottom: $base-spacing-unit;
 
   &,
   &:focus {
     background: transparent;
   }
 }
-// stylelint-enable selector-max-type
