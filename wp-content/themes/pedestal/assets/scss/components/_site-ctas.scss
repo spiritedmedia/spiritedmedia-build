@@ -95,7 +95,12 @@ $breakpoint-header-display-social-icons: em-calc( 738px );
 }
 
 
-.site-ctas__search {}
+.site-ctas__search {
+  // stylelint-disable-next-line selector-max-type
+  label {
+    margin-bottom: 0;
+  }
+}
 
 
 .site-ctas__about-label,
