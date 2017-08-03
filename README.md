@@ -1,7 +1,7 @@
-Build [#3311](https://circleci.com/gh/spiritedmedia/spiritedmedia/3311) by montchr at 2017-08-02 07:56 PM UTC
+Build [#3317](https://circleci.com/gh/spiritedmedia/spiritedmedia/3317) by montchr at 2017-08-03 02:30 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.14](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.14)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.15](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.15)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.13...v5.11.14)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.14...v5.11.15)
 
- - [#2150](https://github.com/spiritedmedia/spiritedmedia/pull/2150): [HOTFIX] Fix misaligned search icon in header
+ - [#2151](https://github.com/spiritedmedia/spiritedmedia/pull/2151): Update our Image Shortcake fork

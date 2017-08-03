@@ -185,18 +185,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/image-shortcake.git",
-            "reference": "67140e98eb598f446e2571ff5db4c7eb6ae1e715"
+            "reference": "fb9e91456ccabc39f10188ca697870c0c7ed2918"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/image-shortcake/zipball/67140e98eb598f446e2571ff5db4c7eb6ae1e715",
-            "reference": "67140e98eb598f446e2571ff5db4c7eb6ae1e715",
+            "url": "https://api.github.com/repos/spiritedmedia/image-shortcake/zipball/fb9e91456ccabc39f10188ca697870c0c7ed2918",
+            "reference": "fb9e91456ccabc39f10188ca697870c0c7ed2918",
             "shasum": ""
         },
         "require-dev": {
             "wp-coding-standards/wpcs": "dev-develop"
         },
-        "time": "2016-08-04T16:38:41+00:00",
+        "time": "2017-08-02T20:16:38+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -1019,7 +1019,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/bwp-google-xml-sitemaps.1.4.1.zip",
-            "reference": null,
+            "reference": "tags/1.4.1",
             "shasum": null
         },
         "require": {
@@ -1041,7 +1041,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/co-authors-plus.3.2.2.zip",
-            "reference": null,
+            "reference": "tags/3.2.2",
             "shasum": null
         },
         "require": {
@@ -1063,7 +1063,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.10.zip",
-            "reference": null,
+            "reference": "tags/1.9.10",
             "shasum": null
         },
         "require": {
@@ -1085,7 +1085,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/posts-to-posts.1.6.5.zip",
-            "reference": null,
+            "reference": "tags/1.6.5",
             "shasum": null
         },
         "require": {
@@ -1107,7 +1107,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/redirection.2.6.3.zip",
-            "reference": null,
+            "reference": "tags/2.6.3",
             "shasum": null
         },
         "require": {
@@ -1129,7 +1129,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/shortcode-ui.0.7.2.zip",
-            "reference": null,
+            "reference": "tags/0.7.2",
             "shasum": null
         },
         "require": {
@@ -1151,7 +1151,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/tablepress.1.8.zip",
-            "reference": null,
+            "reference": "tags/1.8",
             "shasum": null
         },
         "require": {
@@ -1173,7 +1173,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/user-switching.1.0.9.zip",
-            "reference": null,
+            "reference": "tags/1.0.9",
             "shasum": null
         },
         "require": {
@@ -1195,7 +1195,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/wp-redis.0.6.2.zip",
-            "reference": null,
+            "reference": "tags/0.6.2",
             "shasum": null
         },
         "require": {
