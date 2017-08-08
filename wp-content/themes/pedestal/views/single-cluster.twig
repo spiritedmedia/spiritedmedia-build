@@ -100,7 +100,12 @@
 {% endblock %}
 
 {% block sidebar %}
-	{% if sidebar %}
-		{{ sidebar }}
-	{% endif %}
+    {% if cluster.get_slug == 'whos-next' %}
+        {% include 'partials/whosnext/sponsor-logo.twig' ignore missing %}
+        {% include 'partials/whosnext/description-widget.twig' %}
+    {% endif %}
+
+    {% if sidebar %}
+        {{ sidebar }}
+    {% endif %}
 {% endblock %}

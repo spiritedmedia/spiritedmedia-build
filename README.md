@@ -1,8 +1,7 @@
-Build [#3341](https://circleci.com/gh/spiritedmedia/spiritedmedia/3341) by montchr at 2017-08-08 03:48 PM UTC
+Build [#3346](https://circleci.com/gh/spiritedmedia/spiritedmedia/3346) by kingkool68 at 2017-08-08 09:08 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.0](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.0)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.1](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.1)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.11.15...v5.12.0)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.0...v5.12.1)
 
- - [#2146](https://github.com/spiritedmedia/spiritedmedia/pull/2146): Site Footer Redesign
- - [#2153](https://github.com/spiritedmedia/spiritedmedia/pull/2153): Update WPCS to 0.13.0 and PHPCS to 3.0.2
+ - [#2159](https://github.com/spiritedmedia/spiritedmedia/pull/2159): Add Knight Foundation Logo and Description to Who's Next Story Page
