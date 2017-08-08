@@ -162,7 +162,7 @@ class Recent_Content_Widget extends \WP_Widget {
                 name="<?php echo esc_attr( $field_names['show_thumbs'] ); ?>"
                 type="checkbox"
                 value="show_thumbs"
-                <?php checked( (bool) $instance['show_thumbs'], true ) ?>
+                <?php checked( (bool) $instance['show_thumbs'], true ); ?>
             />
         </p>
 

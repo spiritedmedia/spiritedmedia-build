@@ -89,6 +89,30 @@
 
 
 //
+// Colors
+// ==========================================================================
+
+
+/// Calculate text color with sufficient contrast against a given background color
+///
+/// @param  {color} $bg - $primary-color - Background color
+/// @param  {color} $text-light - $white
+/// @param  {color} $text-dark - $body-font-color
+/// @param  {percent} $threshold - Lightness threshold
+@function text-contrast(
+  $bg: $primary-color,
+  $text-light: $white,
+  $text-dark: $body-font-color,
+  $threshold: 65%
+) {
+  @return if( lightness( $bg ) > $threshold, $text-dark, $text-light );
+}
+
+
+
+
+
+//
 // Maps
 // ==========================================================================
 

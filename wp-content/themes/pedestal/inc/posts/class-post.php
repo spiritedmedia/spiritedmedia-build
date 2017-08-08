@@ -539,7 +539,7 @@ class Post {
             );
         } elseif ( 1 < count( $authors ) ) {
             $html  = '<a href="' . esc_url( home_url( '/about/' ) ) . '" data-ga-category="Author" data-ga-label="Image|Placeholder">';
-            $html .= Icons::get_logo( 'logo_icon', 'c-meta-info__img__icon', 40 );
+            $html .= Icons::get_logo( 'logo-icon', 'c-meta-info__img__icon', 40 );
             $html .= '</a>';
             return $html;
         }

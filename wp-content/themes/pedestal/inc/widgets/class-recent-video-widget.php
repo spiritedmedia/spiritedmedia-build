@@ -173,8 +173,8 @@ class Recent_Video_Widget extends \WP_Widget {
                 <br />
 
                 If a valid YouTube video URL is supplied, then display that
-                specific video. If left empty, the most recent video from <?php
-                echo PEDESTAL_BLOG_NAME ?>'s YouTube channel will be used.
+                specific video. If left empty, the most recent video from
+                <?php echo PEDESTAL_BLOG_NAME; ?>'s YouTube channel will be used.
 
             </label>
 
@@ -197,8 +197,10 @@ class Recent_Video_Widget extends \WP_Widget {
                 name="<?php echo esc_attr( $this->get_field_name( 'display_author' ) ); ?>"
                 type="checkbox"
                 value="display_author"
-                <?php checked( (bool) $instance['display_author'], true );
-                echo $display_display_author_field; ?>
+                <?php
+                checked( (bool) $instance['display_author'], true );
+                echo $display_display_author_field;
+                ?>
             />
         </p>
 

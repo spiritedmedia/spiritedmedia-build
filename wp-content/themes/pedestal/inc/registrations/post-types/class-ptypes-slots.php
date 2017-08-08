@@ -81,7 +81,7 @@ class Slot_Types extends Types {
                     $args['menu_position'] = 61;
                     $args['menu_icon'] = 'dashicons-businessman';
                     $args['supports'] = [
-                        'title'
+                        'title',
                     ];
                     $args['rewrite'] = false;
                     $args['public'] = false;
@@ -97,7 +97,7 @@ class Slot_Types extends Types {
                     $args['menu_position'] = 61;
                     $args['menu_icon'] = 'dashicons-businessman';
                     $args['supports'] = [
-                        'title'
+                        'title',
                     ];
                     $args['rewrite'] = false;
                     $args['public'] = false;

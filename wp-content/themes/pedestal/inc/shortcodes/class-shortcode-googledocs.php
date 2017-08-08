@@ -158,7 +158,7 @@ class GoogleDocs extends Shortcode {
 
         $url = '';
         $inner_content = '';
-        $width_attr  = ! empty( $attrs['width'] )  ? $attrs['width'] : '';
+        $width_attr  = ! empty( $attrs['width'] ) ? $attrs['width'] : '';
         $height_attr = ! empty( $attrs['height'] ) ? $attrs['height'] : '';
         $additional_attributes = [
             'frameborder' => '0',

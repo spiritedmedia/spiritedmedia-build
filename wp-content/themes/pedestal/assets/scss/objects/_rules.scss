@@ -48,7 +48,7 @@ $o-rule--closure-sum-height : ( $o-rule--closure-h + $rule-spacing-y + $o-rule--
   &::before {
     @if global-variable-exists( site-theme-name ) {
       @include iconize(
-        $path: $site-theme-logo-abspath + '/logo_icon',
+        $path: $site-theme-logo-abspath + '/logo-icon',
         $path-only: true
       );
     }

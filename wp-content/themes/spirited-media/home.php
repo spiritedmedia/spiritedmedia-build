@@ -204,19 +204,19 @@ get_header(); ?>
     <section class="section home-press-coverage" id="press">
         <h2 class="home-press-coverage--heading">National Press Coverage</h2>
         <ul class="home-press-list">
-        <?php foreach ( $press_links as $press ) {
+        <?php
+        foreach ( $press_links as $press ) :
             $press = (object) $press;
         ?>
             <li class="home-press-list-item"><a href="<?php echo esc_url( $press->url ); ?>" class="home-press-list-link"><?php echo $press->title; ?></a> <?php echo $press->date; ?>, <em class="home-press-list-publisher"><?php echo $press->publication; ?></em></li>
-        <?php } ?>
+        <?php endforeach; ?>
         </ul>
 
     </section>
 
     <section class="home-contact" id="contact">
         <div class="section">
-        <?php
-        if ( sent_home_contact_form() ) : ?>
+        <?php if ( sent_home_contact_form() ) : ?>
             <div class="home-contact--form-sent">
                 <h2 class="home-contact--heading">Your message has been sent!</h2>
                 <p>Thank you. We'll get back to you shortly.</p>

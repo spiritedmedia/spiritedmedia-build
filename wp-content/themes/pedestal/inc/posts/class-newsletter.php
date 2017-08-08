@@ -25,7 +25,7 @@ class Newsletter extends Post {
         // @TODO should `entity` really be included as a new css class here, or
         //     should newsletter php class extend entity php class?
         $classes = array_merge( [
-            'entity'
+            'entity',
         ], $classes );
         return $classes;
     }

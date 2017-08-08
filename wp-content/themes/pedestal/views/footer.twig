@@ -1,29 +1,38 @@
 <footer class="site-footer" role="contentinfo">
+    <nav class="site-footer__nav">
+        <div class="row">
+            <ul class="site-ctas">
+                {% include 'partials/site-ctas.twig' with {'location': 'footer'} %}
+            </ul>
 
-    <div class="row">
+            {% spaceless %}
+            <div class="site-footer__links--inline site-footer__links">
+                <ul class="no-bullet">
+                    {% for title, link in menu | slice(0, 3) %}
+                    <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
+                    {% endfor %}
+                </ul>
+                <ul class="no-bullet">
+                    {% for title, link in menu | slice(3, 3) %}
+                    <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endspaceless %}
 
-        <ul class="site-ctas medium-4 medium-push-8 columns">
-            {% include 'partials/site-ctas.twig' with {'location': 'footer'} %}
-        </ul>
-
-        <div class="site-footer-links large-6 large-pull-6 medium-8 medium-pull-4 columns">
-            <div class="row">
-                <div class="columns medium-4">
-                    <ul class="no-bullet">
+            <div class="site-footer__links--columns site-footer__links">
+                <div class="row">
+                    <ul class="site-footer__links__column no-bullet">
                         {% for title, link in menu | slice(0, 2) %}
                         <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                         {% endfor %}
                     </ul>
-                </div>
-                <div class="columns medium-4">
-                    <ul class="no-bullet">
+                    <ul class="site-footer__links__column no-bullet">
                         {% for title, link in menu | slice(2, 2) %}
                         <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                         {% endfor %}
                     </ul>
-                </div>
-                <div class="columns medium-4">
-                    <ul class="last no-bullet">
+                    <ul class="site-footer__links__column no-bullet">
                         {% for title, link in menu | slice(4, 2) %}
                         <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                         {% endfor %}
@@ -31,14 +40,19 @@
                 </div>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <div class="row">
-        <div class="site-footer-copyright columns small-12">
-            {% include 'partials/footer/copyright.twig' with { 'img': true } %}
+    <div class="site-footer__colophon">
+        <div class="row">
+            <div class="columns small-12">
+                <span class="site-footer__newsroom">
+                    {{ ped_logo( 'logo-icon-white', 'site-footer__logo' ) }}
+                    {{ site.name }} is a <a href="https://spiritedmedia.com/">Spirited Newsroom</a>
+                </span>
+                <span class="site-footer__copyright">{{ copyright_text }}</span>
+            </div>
         </div>
     </div>
-
 </footer>
 
 </div><!-- end .site-wrap -->

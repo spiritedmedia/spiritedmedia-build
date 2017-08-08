@@ -68,7 +68,7 @@ class Subscriptions {
             if ( ! $post instanceof \WP_Post ) {
                 return;
             }
-            if ( 'pedestal_newsletter' !== $post->post_type ||  'publish' === $post->post_status ) {
+            if ( 'pedestal_newsletter' !== $post->post_type || 'publish' === $post->post_status ) {
                 return;
             }
             ?>

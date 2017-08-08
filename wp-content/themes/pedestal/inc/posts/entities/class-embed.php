@@ -47,7 +47,7 @@ class Embed extends Entity {
         $embed_type = $this->get_embed_type();
         if ( $embed_type ) {
             $classes = array_merge( [
-                'embed-' . $embed_type
+                'embed-' . $embed_type,
             ], $classes );
         }
         return $classes;
@@ -128,7 +128,6 @@ class Embed extends Entity {
 
         switch ( $this->get_embed_type() ) {
             case 'instagram':
-
                 $embed_data = $this->get_embed_data();
                 if ( ! empty( $embed_data['image_url_large'] ) ) {
                     return true;
@@ -138,7 +137,6 @@ class Embed extends Entity {
                 break;
 
             case 'youtube':
-
                 $embed_data = $this->get_embed_data();
                 if ( ! empty( $embed_data['thumbnail_url'] ) ) {
                     return true;

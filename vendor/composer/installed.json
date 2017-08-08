@@ -891,67 +891,40 @@
     },
     {
         "name": "squizlabs/php_codesniffer",
-        "version": "2.9.1",
-        "version_normalized": "2.9.1.0",
+        "version": "3.0.2",
+        "version_normalized": "3.0.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-            "reference": "dcbed1074f8244661eecddfc2a675430d8d33f62"
+            "reference": "c7594a88ae75401e8f8d0bd4deb8431b39045c51"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/dcbed1074f8244661eecddfc2a675430d8d33f62",
-            "reference": "dcbed1074f8244661eecddfc2a675430d8d33f62",
+            "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/c7594a88ae75401e8f8d0bd4deb8431b39045c51",
+            "reference": "c7594a88ae75401e8f8d0bd4deb8431b39045c51",
             "shasum": ""
         },
         "require": {
             "ext-simplexml": "*",
             "ext-tokenizer": "*",
             "ext-xmlwriter": "*",
-            "php": ">=5.1.2"
+            "php": ">=5.4.0"
         },
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2017-05-22T02:43:20+00:00",
+        "time": "2017-07-18T01:12:32+00:00",
         "bin": [
-            "scripts/phpcs",
-            "scripts/phpcbf"
+            "bin/phpcs",
+            "bin/phpcbf"
         ],
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "2.x-dev"
+                "dev-master": "3.x-dev"
             }
         },
         "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "CodeSniffer.php",
-                "CodeSniffer/CLI.php",
-                "CodeSniffer/Exception.php",
-                "CodeSniffer/File.php",
-                "CodeSniffer/Fixer.php",
-                "CodeSniffer/Report.php",
-                "CodeSniffer/Reporting.php",
-                "CodeSniffer/Sniff.php",
-                "CodeSniffer/Tokens.php",
-                "CodeSniffer/Reports/",
-                "CodeSniffer/Tokenizers/",
-                "CodeSniffer/DocGenerators/",
-                "CodeSniffer/Standards/AbstractPatternSniff.php",
-                "CodeSniffer/Standards/AbstractScopeSniff.php",
-                "CodeSniffer/Standards/AbstractVariableSniff.php",
-                "CodeSniffer/Standards/IncorrectPatternException.php",
-                "CodeSniffer/Standards/Generic/Sniffs/",
-                "CodeSniffer/Standards/MySource/Sniffs/",
-                "CodeSniffer/Standards/PEAR/Sniffs/",
-                "CodeSniffer/Standards/PSR1/Sniffs/",
-                "CodeSniffer/Standards/PSR2/Sniffs/",
-                "CodeSniffer/Standards/Squiz/Sniffs/",
-                "CodeSniffer/Standards/Zend/Sniffs/"
-            ]
-        },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
             "BSD-3-Clause"
@@ -971,24 +944,28 @@
     },
     {
         "name": "wp-coding-standards/wpcs",
-        "version": "0.11.0",
-        "version_normalized": "0.11.0.0",
+        "version": "0.13.0",
+        "version_normalized": "0.13.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git",
-            "reference": "407e4b85f547a5251185f89ceae6599917343388"
+            "reference": "2d693836586866412dd910ede4b097a8445222cb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/407e4b85f547a5251185f89ceae6599917343388",
-            "reference": "407e4b85f547a5251185f89ceae6599917343388",
+            "url": "https://api.github.com/repos/WordPress-Coding-Standards/WordPress-Coding-Standards/zipball/2d693836586866412dd910ede4b097a8445222cb",
+            "reference": "2d693836586866412dd910ede4b097a8445222cb",
             "shasum": ""
         },
         "require": {
-            "squizlabs/php_codesniffer": "^2.8.1"
+            "php": ">=5.3",
+            "squizlabs/php_codesniffer": "^2.9.0 || ^3.0.2"
         },
-        "time": "2017-03-20T23:17:58+00:00",
-        "type": "library",
+        "suggest": {
+            "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1"
+        },
+        "time": "2017-08-03T02:00:57+00:00",
+        "type": "phpcodesniffer-standard",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
         "license": [

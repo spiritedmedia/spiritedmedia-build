@@ -10,10 +10,9 @@ $btn-transition: 300ms ease 0s;
 ///
 /// @param {color} $color
 @mixin btn-color-variant( $color ) {
-  @include text-color( $color );
-
   background-color: $color;
   border-color: $color;
+  color: text-contrast( $color );
 
   &:hover {
     background-color: $white;
@@ -48,9 +47,8 @@ $btn-transition: 300ms ease 0s;
   }
 
   &:hover {
-    @include text-color( $primary-color );
-
     background-color: $primary-color;
+    color: text-contrast();
   }
 
   &:disabled,

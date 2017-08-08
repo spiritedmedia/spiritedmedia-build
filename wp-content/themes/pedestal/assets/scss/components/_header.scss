@@ -3,6 +3,9 @@
 // ==========================================================================
 
 
+$breakpoint-header-display-social-icons: em-calc( 738px );
+
+
 // stylelint-disable selector-max-type
 
 
@@ -11,6 +14,27 @@
   border-bottom: 1px solid $border-std-color;
   padding-top: $site-header-pd-v;
   padding-bottom: $site-header-pd-v;
+
+  .site-ctas {
+    margin-left: -( $half-spacing-unit );
+    margin-top: $half-spacing-unit;
+    margin-bottom: 0;
+
+    @media
+      ( min-width: lower-bound( $medium-range ) ) and
+      ( max-width: $breakpoint-header-display-social-icons ) {
+      margin-top: $base-spacing-unit;
+    }
+  }
+
+  .site-ctas__follow-us,
+  .site-ctas__social {
+    display: none;
+
+    @media ( min-width: $breakpoint-header-display-social-icons + em-calc( 1px ) ) {
+      display: inline-block;
+    }
+  }
 }
 
 

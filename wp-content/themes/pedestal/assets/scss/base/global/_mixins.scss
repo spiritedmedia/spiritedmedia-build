@@ -44,28 +44,6 @@
 }
 
 
-/**
- * Calculate text color with sufficient contrast with a given background color
- *
- * Based on Foundation `button-style` mixin
- *
- * @param  {color} $bg:          Background color
- * @param  {color} $text-light:  $mixin-text-color-light
- * @param  {color} $text-dark:   $mixin-text-color-dark
- * @param  {percent} $threshold: Lightness threshold
- */
-@mixin text-color(
-  $bg,
-  $text-light: $mixin-text-color-light,
-  $text-dark: $mixin-text-color-dark,
-  $threshold: 65%
-) {
-  $bg-lightness: lightness( $bg );
-
-  color: if( $bg-lightness > $threshold, $text-dark, $text-light );
-}
-
-
 /// Lighten/dim some links
 @mixin link-light {
   color: $dimmed-text-color;
@@ -107,7 +85,7 @@
 
   @if global-variable-exists( site-theme-name ) {
     @include iconize(
-      $path: $site-theme-logo-abspath + '/logo_icon_placeholder',
+      $path: $site-theme-logo-abspath + '/logo-icon-placeholder',
       $size: $size
     );
   }

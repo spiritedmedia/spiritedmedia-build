@@ -265,7 +265,9 @@ class User_Management {
         );
         foreach ( $ptypes_admin_reporters as $post_type ) {
             $caps = Types::get_post_type_capabilities( $post_type );
-            if ( empty( $caps ) ) { continue; }
+            if ( empty( $caps ) ) {
+                continue;
+            }
             $caps_admin_reporters += $caps;
         }
         $caps_admin_reporters = array_map( '__return_true', $caps_admin_reporters );

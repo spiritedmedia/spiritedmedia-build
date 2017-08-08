@@ -314,16 +314,16 @@ class Frontend {
      */
     public function filter_timber_context( $context ) {
         $context['menu'] = [
-            'About'          => '/about',
+            'About Us'       => '/about/',
             'Blog'           => PEDESTAL_BLOG_URL,
-            'Jobs'           => '/jobs',
-            'Press'          => '/press',
-            'Advertising'    => '/advertising',
-            'Terms of Use'   => '/terms-of-use',
-            'Privacy Policy' => '/privacy-policy',
+            'Jobs'           => '/jobs/',
+            'Press'          => '/press/',
+            'Advertising'    => '/advertising/',
+            'Terms of Use'   => '/terms-of-use/',
+            'Privacy Policy' => '/privacy-policy/',
         ];
 
-        $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) . ' Spirited Media. All rights reserved.';
+        $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) . ' Spirited Media';
 
         if ( is_main_query() ) {
             global $wp_query;
@@ -373,8 +373,8 @@ class Frontend {
 
         if ( is_404() ) {
             $context['e404_links'] = [
-               'Search' => get_site_url() . '/?s=',
-               'Home'   => get_site_url(),
+                'Search' => get_site_url() . '/?s=',
+                'Home'   => get_site_url(),
             ];
         }
 
@@ -548,7 +548,7 @@ class Frontend {
             'og:title'            => get_bloginfo( 'name' ),
             'og:description'      => $this->get_current_meta_description(),
             'og:url'              => esc_url( home_url( Utils::get_request_uri() ) ),
-            'og:image'            => get_stylesheet_directory_uri() . '/assets/images/logos/logo_icon_placeholder.png',
+            'og:image'            => get_stylesheet_directory_uri() . '/assets/images/logos/logo-icon-placeholder.png',
         ];
 
         // Single posts
@@ -586,7 +586,7 @@ class Frontend {
             'twitter:title'       => get_bloginfo( 'name' ),
             'twitter:description' => $this->get_current_meta_description(),
             'twitter:url'         => esc_url( home_url( Utils::get_request_uri() ) ),
-            'twitter:image'       => get_stylesheet_directory_uri() . '/assets/images/logos/logo_icon_placeholder.png',
+            'twitter:image'       => get_stylesheet_directory_uri() . '/assets/images/logos/logo-icon-placeholder.png',
         ];
 
         // Single posts
