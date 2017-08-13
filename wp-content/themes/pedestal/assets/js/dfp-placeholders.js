@@ -19,6 +19,7 @@ jQuery(document).ready(function($) {
         var adWidth = adSize.split('x')[0];
         var adHeight = adSize.split('x')[1];
         var dummyImg = 'https://dummyimage.com/' + adSize + '/' + themeColor + '/fff/.png';
+        var imgHTML = `<img src="${dummyImg}">`;
 
         var displayVal = 'none';
         if ( i === 0 ) {
@@ -39,7 +40,7 @@ jQuery(document).ready(function($) {
           display: displayVal
         });
         $placeholder.append(
-          $('<a href="#" class="js-dfp-placeholder"><img src="' + dummyImg + '"></a>'),
+          $('<a href="#" class="js-dfp-placeholder">' + imgHTML + '</a>'),
           $('<p>' + adName + '</p>').css({
             position: 'absolute',
             top: '5px',

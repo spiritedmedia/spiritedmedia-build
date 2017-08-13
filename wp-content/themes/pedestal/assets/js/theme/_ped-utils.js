@@ -8,6 +8,7 @@ var PedUtils = {
 
   /**
    * Execute a function only once after a defined interval of time
+   *
    * Example: for firing an event after xms after typing in an input
    *
    * @see https://john-dugan.com/javascript-debounce/
@@ -36,11 +37,13 @@ var PedUtils = {
   },
 
   /**
-   * Throttle a function when you want it to execute periodically with an interval in between each execution
+   * Throttle a function when you want it to execute periodically
+   *
    * Example: Scrolling, resizing events
+   *
    * @see http://sampsonblog.com/749/simple-throttle-function
-   * @param  function callback  A callback to be fired
-   * @param  init     limit     The delay between executions
+   * @param  {function} callback  A callback to be fired
+   * @param  {int}      limit     The delay between executions
    */
   throttle: function(callback, limit) {
     var wait = false;
@@ -55,4 +58,26 @@ var PedUtils = {
     };
   }
 
+};
+
+
+/**
+ * Convert a string to camelCase
+ *
+ * @return {string} camelCase string
+ */
+String.prototype.toCamelCase = function() {
+  return this
+    .replace(/\s(.)/g, function(s) { return s.toUpperCase(); })
+    .replace(/\s/g, '')
+    .replace(/^(.)/, function(s) { return s.toLowerCase(); });
+};
+
+/**
+ * Capitalize the first letter of a string
+ *
+ * @return {string}
+ */
+String.prototype.capFirst = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
 };

@@ -30,7 +30,10 @@ function ShareButtons($) {
   this.scroll = function() {
     var currentPosition = $win.scrollTop();
 
-    if (currentPosition > this.cutoffs.top && currentPosition < this.cutoffs.bottom) {
+    if (
+      currentPosition > this.cutoffs.top
+      && currentPosition < this.cutoffs.bottom
+    ) {
       $body.addClass('has-sticky-share-buttons');
     } else {
       $body.removeClass('has-sticky-share-buttons');

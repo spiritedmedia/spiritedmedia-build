@@ -1,4 +1,4 @@
-/* global ga objectFitImages */
+/* global ga objectFitImages ScrollDepth */
 
 (function($) {
 
@@ -18,6 +18,7 @@
       this.responsiveIframes();
       this.disabledAnchors();
       this.analyticsEventTracking();
+      this.scrollDepthTracking();
       this.honeyPotHelper();
       this.lazyLoad();
     },
@@ -169,6 +170,14 @@
         });
 
     }, // end analyticsEventTracking()
+
+    scrollDepthTracking: function() {
+      new ScrollDepth(
+        '.js-original-content-body',
+        'Original Content Body',
+        [0, 50, 100]
+      );
+    },
 
     honeyPotHelper: function() {
       var fullYear = new Date().getFullYear();

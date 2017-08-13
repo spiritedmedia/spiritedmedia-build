@@ -34,7 +34,6 @@
 
 # Coding Standards
 # !.eslintrc.yml
-# !.jshintrc
 # !.stylelintrc.json
 # !.editorconfig
 # !phpcs.ruleset.xml
