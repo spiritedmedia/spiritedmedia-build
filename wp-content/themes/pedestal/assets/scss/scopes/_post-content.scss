@@ -128,12 +128,6 @@ $s-post-content-li-bullet-size     : 5px;
     border-bottom: $s-post-content-pullquote-border-v;
     position: relative;
     margin-bottom: $base-spacing-unit;
-    font-size: $h5-font-size;
-
-    @media #{$medium-up} {
-      font-size: $h4-font-size;
-    }
-
 
     &::before,
     &::after {
@@ -163,6 +157,11 @@ $s-post-content-li-bullet-size     : 5px;
       line-height: 1.6;
       padding: $base-spacing-unit $base-spacing-unit 0;
       margin-bottom: 0;
+      font-size: $h5-font-size;
+
+      @media #{$medium-up} {
+        font-size: $h4-font-size;
+      }
     }
 
 
@@ -170,6 +169,7 @@ $s-post-content-li-bullet-size     : 5px;
       padding: ($base-spacing-unit / 2) ($base-spacing-unit * 2) $base-spacing-unit;
       display: block;
       text-align: right;
+      font-style: normal;
     }
   }
 
