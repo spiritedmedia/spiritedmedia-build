@@ -6,7 +6,9 @@
 
     <header class="c-main__header js-main-header  c-overview">
         {% if item.has_featured_image %}
+        <div class="experiment-unit-var-a">
             {% include 'partials/overview/lead-image.twig' %}
+        </div>
         {% endif %}
 
         {% include 'partials/overview/overline.twig' %}
@@ -16,6 +18,12 @@
             <div class="c-overview__description">
                 {{ item.get_the_excerpt }}
             </div>
+        {% endif %}
+
+        {% if item.has_featured_image %}
+        <div class="experiment-unit-var-b">
+            {% include 'partials/overview/lead-image.twig' %}
+        </div>
         {% endif %}
 
         {% include 'partials/meta-info/meta-info-entity.twig' %}

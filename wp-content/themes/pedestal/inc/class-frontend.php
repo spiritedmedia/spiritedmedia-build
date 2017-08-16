@@ -96,6 +96,8 @@ class Frontend {
             $attrs['data-ga-label'] = $item->title;
             return $attrs;
         }, 10, 4 );
+
+        add_filter( 'robots_txt', [ $this, 'filter_robots_txt' ] );
     }
 
     /**
@@ -572,6 +574,13 @@ class Frontend {
 
         return $tags;
 
+    }
+
+    public function filter_robots_txt( $txt ) {
+        ob_start();
+        Timber::render( 'partials/robots-txt.twig', [] );
+        $txt .= ob_get_clean();
+        return $txt;
     }
 
     /**

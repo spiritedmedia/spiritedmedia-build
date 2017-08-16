@@ -125,8 +125,8 @@ class YouTube {
         $response = get_site_option( $cache_key );
         if ( ! $response || empty( $response['success'] ) ) {
             $response = $this->get_api_request( 'videos', [
-				'id' => $id,
-			] );
+                'id' => $id,
+            ] );
             if ( ! $response || empty( $response['success'] ) ) {
                 return false;
             }

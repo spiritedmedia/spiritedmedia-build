@@ -9,7 +9,7 @@ $context = Timber::get_context();
 $context['items'] = Stream::get( $wp_query->posts );
 $context['found_results'] = $wp_query->found_posts;
 if ( $wp_query->found_posts < 1 ) {
-	$context['items'] = [];
+    $context['items'] = [];
 }
 
 $context['search_query'] = get_search_query();

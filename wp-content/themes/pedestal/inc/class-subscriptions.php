@@ -806,11 +806,11 @@ class Subscriptions {
         }
         $list_ids = array_map( 'intval', $list_ids );
         $args = [
-        	'post_type' => 'any',
-        	'meta_key' => self::$list_id_meta_key,
-        	'meta_value' => $list_ids,
-        	'fields' => 'ids',
-        	'no_found_rows' => true,
+            'post_type' => 'any',
+            'meta_key' => self::$list_id_meta_key,
+            'meta_value' => $list_ids,
+            'fields' => 'ids',
+            'no_found_rows' => true,
         ];
         $meta_query = new \WP_Query( $args );
         $post_ids = $meta_query->posts;

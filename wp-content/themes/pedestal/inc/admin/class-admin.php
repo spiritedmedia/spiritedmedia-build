@@ -220,7 +220,7 @@ class Admin {
                     unset( $buttons[ $index ] );
                 }
             }
-	        return $buttons;
+            return $buttons;
         });
 
         add_filter( 'wp_kses_allowed_html', function( $allowed_tags, $context ) {

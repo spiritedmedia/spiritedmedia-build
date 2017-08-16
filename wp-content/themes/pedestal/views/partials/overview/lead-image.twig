@@ -1,6 +1,6 @@
 {% if item.has_featured_image %}
 {{ item.get_featured_image_figure_html('1024-16x9', {
-    'classes': 'c-main__lead-img',
+    'classes': 'c-main__lead-img ' ~ classes,
     'linkto': false
 } ) }}
 {% endif %}

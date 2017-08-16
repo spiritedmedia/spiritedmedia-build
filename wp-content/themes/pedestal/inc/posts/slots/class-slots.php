@@ -103,8 +103,8 @@ class Slots {
             $twig->addFunction( new \Twig_SimpleFunction( PEDESTAL_PREFIX . 'slot',
                 [ $this, 'handle_twig_func_slot' ],
                 [
-					'needs_context' => true,
-				]
+                    'needs_context' => true,
+                ]
             ) );
             return $twig;
         }, 99 );
@@ -166,8 +166,8 @@ class Slots {
 
         $_POST['slot_item_placement_defaults'] = $placement_defaults;
         $default_placement_data = $placement_defaults + [
-			'index' => 0,
-		];
+            'index' => 0,
+        ];
         $setup_dates( $default_placement_data );
         $this->handle_setup_placement_post( $post_id, $default_placement_data );
 

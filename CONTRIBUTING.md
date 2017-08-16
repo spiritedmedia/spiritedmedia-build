@@ -42,6 +42,26 @@ These aren't just arbitrary rules, but are in fact [widely](http://tbaggery.com/
 
 The 50/72 character rule is especially important in making commit messages readable on GitHub and in `git log`.
 
+## Issue Intake
+Per our #product get-together in Denver on 8/15/2017, the following is our agreed upon workflow for documenting/prioritizing issues as they come in.
+
+1. **Get a message/notice the issue** - This might come from another team in #bugs or #feature-requests Slack channels, it might be a bug discovered from investigating another bug, or it might just be something we noticed. Issues arise from many places and Step 1 is to recognize them.
+1. **Capture the issue in GitHub** - Write down any relevant details including links, screnshots, documenting who raised the issue, how to reproduce the bug, noting duplicate bugs were mentioned again. 
+1. **Broad Prioritization/Is the issue critical?** - Is the site down (no one can access our site)? Does the issue directly impact revenue (issue with ads)? If so take action right away and let #product team know 1) you are stopping your work and jumping in on a new issue 2) you are not available for other things. Otherwise we will prioritize the issue later.
+1. **Specific Prioritization/Categorization** - Add labels to the issue relevant to what the issue is about. What priority is the issue? Where does it fit in our schedule for getting it done? Does anyone need to be alerted (i.e. design issues should be brought to the attention of Livia)? We usually discuss all new issues Monday morning after scrum where we figure out what we're going to work on that week. Sometimes it makes sense to group together several smaller issues into a milestone to tackle at one time. 
+1. **Backlog grooming** - Once a quarter we go through the backlog of old issues and close out ones that are no longer relevant or clarify details of issues that need it.
+
+### Issue Intake Responsibilites
+
+|                                           |    Brian    |    Chris    |    Livia    |   Russell   |
+|-------------------------------------------|:-----------:|:-----------:|:-----------:|:-----------:|
+| Write down issue/Judge if critical or not |   Support   |   Support   |   Support   | Responsible |
+| Triage/Tag/Categorize                     |    Inform   | Responsible |   Consult   |   Support   |
+| Run Group Priorization/Backlog Grooming   | Accountable |   Consult   |   Consult   | Responsible |
+| Set Big Team Goals                        | Responsible |   Consult   |   Consult   |   Consult   |
+| Send Weekly Update to Other Teams         | Responsbile |    Inform   |    Inform   |   Consult   |
+| Understand Editorial Needs                |             |             | Responsible |             |
+
 ## Issues
 
 * Clear titles make everything much more manageable. For instance, "Twitter optimization" is better written as "Incorporate Twitter Card meta tags into header".
@@ -54,7 +74,7 @@ The 50/72 character rule is especially important in making commit messages reada
 	```
 
 * Be descriptive in your issue description. Feel free to rewrite / modify as needed.
-* Poorly-defined issues, or ideas more broadly, shouldn't be filed as Github issues. These should be discussed with the product team at [product@billypenn.com](product@billypenn.com) or on Slack in `#product`.
+* Poorly-defined issues, or ideas more broadly, shouldn't be filed as Github issues. These should be discussed with the product team at [product@spiritedmedia.com](product@spiritedmedia.com) or on Slack in `#product-backchannel`.
 
 ## Pull Requests
 

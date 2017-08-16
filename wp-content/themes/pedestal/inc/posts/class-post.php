@@ -440,8 +440,8 @@ class Post {
         }
 
         return Utils::get_byline_list( $authors_names_with_links, [
-			'truncate' => $truncate,
-		] );
+            'truncate' => $truncate,
+        ] );
     }
 
     /**
@@ -504,8 +504,8 @@ class Post {
      */
     public function get_author_names_rss() {
         return Utils::get_byline_list( $this->get_author_names(), [
-			'pretext' => '',
-		] );
+            'pretext' => '',
+        ] );
     }
 
     /**
@@ -584,8 +584,8 @@ class Post {
         $link = get_permalink( $this->get_id() );
         if ( $preview ) {
             $link = add_query_arg( [
-				'preview' => true,
-			], $link );
+                'preview' => true,
+            ], $link );
         }
         return $link;
     }
@@ -611,8 +611,8 @@ class Post {
         $link = apply_filters( 'the_permalink', $this->get_permalink(), $this->get_id() );
         if ( $preview ) {
             $link = add_query_arg( [
-				'preview' => true,
-			], $link );
+                'preview' => true,
+            ], $link );
         }
         return $link;
     }

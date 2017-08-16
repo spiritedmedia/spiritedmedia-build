@@ -330,8 +330,8 @@ class Entity_Types extends Types {
 
         $services = array_values( Embed::get_embeddable_services() );
         $services = Utils::get_byline_list( $services, [
-			'pretext' => '',
-		] );
+            'pretext' => '',
+        ] );
         $description = sprintf( 'Only %s URLs are supported at this time. Other URLs will not save and your post will be blocked from publishing.', $services );
         $fm = new \Fieldmanager_Textfield( [
             'name'     => 'embed_url',

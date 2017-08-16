@@ -458,8 +458,8 @@ class Embed extends Entity {
                 ];
                 $image_url = sprintf( 'http://instagram.com/p/%s/media/?size=l', $id );
                 $response = wp_remote_get( $image_url, [
-					'redirection' => 0,
-				] );
+                    'redirection' => 0,
+                ] );
 
                 // If the image URL is not redirected to the actual image, then
                 // bail and return nothing

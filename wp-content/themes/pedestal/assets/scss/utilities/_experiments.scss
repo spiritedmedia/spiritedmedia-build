@@ -1,0 +1,18 @@
+//
+// Google Optimize
+// ==========================================================================
+
+
+.experiment-unit-var-b {
+  display: none;
+}
+
+.is-experiment-variant-b {
+  .experiment-unit-var-a {
+    display: none;
+  }
+
+  .experiment-unit-var-b {
+    display: block;
+  }
+}

@@ -166,8 +166,8 @@ class Stream {
      */
     public static function get_sponsored_items() {
         $slots = Slots::get_slot_data( 'slot_item', [
-			'type' => 'stream',
-		] );
+            'type' => 'stream',
+        ] );
         if ( ! $slots ) {
             return false;
         }
@@ -208,8 +208,8 @@ class Stream {
                     );
                 }
                 $output['featured_image'] = $attachment->get_img_caption_html( $image, [
-					'classes' => 'o-media__img c-overview__img',
-				] );
+                    'classes' => 'o-media__img c-overview__img',
+                ] );
             }
         }
         return $output;
