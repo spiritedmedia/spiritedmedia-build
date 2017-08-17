@@ -4,6 +4,7 @@ namespace Pedestal;
 
 use function Pedestal\Pedestal;
 use Pedestal\Posts\Post;
+use Pedestal\Registrations\Post_Types\Types;
 
 class Featured_Posts {
 
@@ -170,9 +171,9 @@ class Featured_Posts {
         if ( ! $num ) {
             $num = 3;
         }
-        // Get most recent original articles
+        // Get most recent original content
         $args = [
-            'post_type' => 'pedestal_article',
+            'post_type' => Types::get_original_post_types(),
             'post_status' => 'publish',
             'posts_per_page' => $num,
             'fields' => 'ids',

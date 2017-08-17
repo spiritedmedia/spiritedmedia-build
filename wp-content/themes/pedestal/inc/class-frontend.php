@@ -281,7 +281,7 @@ class Frontend {
             'url' => urlencode( $permalink ),
         ], 'https://cdn.relaymedia.com/ping' );
 
-        echo '<img src="' . esc_url( $beacon_url ) . '" width="1" height="1">' . PHP_EOL;
+        echo '<img src="' . esc_url( $beacon_url ) . '" width="1" height="1" style="display: block;">' . PHP_EOL;
     }
 
     /**
@@ -653,6 +653,8 @@ class Frontend {
             }
             /* translators: 1: Taxonomy singular name, 2: Current taxonomy term */
             $title = sprintf( __( '%1$s: %2$s' ), $singular_name, single_term_title( '', false ) );
+        } elseif ( is_archive() && 'originals' == get_query_var( 'pedestal_originals' ) ) {
+            $title = __( 'Originals' );
         } else {
             $title = __( 'Archives' );
         }

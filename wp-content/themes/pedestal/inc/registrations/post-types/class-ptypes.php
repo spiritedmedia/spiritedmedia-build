@@ -85,6 +85,7 @@ class Types {
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'manage_posts_custom_column', [ $this, 'action_manage_posts_custom_column' ], 10, 2 );
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts_sortable_columns' ] );
+        add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts_originals' ] );
         add_action( 'template_redirect', [ $this, 'action_redirect_found_post_names' ], 10, 2 );
     }
 
@@ -95,6 +96,9 @@ class Types {
 
         add_filter( 'post_type_link', [ $this, 'filter_post_type_link' ], 10, 2 );
         add_filter( 'wp_unique_post_slug', [ $this, 'filter_wp_unique_post_slug' ], 10, 6 );
+        add_filter( 'rewrite_rules_array', [ $this, 'filter_rewrite_rules_array' ] );
+        add_filter( 'query_vars', [ $this, 'filter_query_vars' ] );
+        add_filter( 'template_include', [ $this, 'filter_template_include' ] );
 
         foreach ( self::get_post_types() as $post_type ) {
             add_filter( "manage_{$post_type}_posts_columns", [ $this, 'filter_manage_posts_columns' ] );
@@ -283,6 +287,26 @@ class Types {
     }
 
     /**
+     * Modify the post types to query when accessing the Originals archive
+     *
+     * @param  WP_Query $query The WP Query to modify
+     */
+    public function action_pre_get_posts_originals( $query ) {
+        if ( ! $query->is_main_query() ) {
+            return;
+        }
+
+        if ( ! isset( $query->query_vars['pedestal_originals'] ) || 'originals' != $query->query_vars['pedestal_originals'] ) {
+            return;
+        }
+
+        // Need to override the conditionals set by WordPress to better describe this request
+        $query->is_archive = true;
+        $query->is_home = false;
+        $query->set( 'post_type', self::get_original_post_types() );
+    }
+
+    /**
      * Customize columns on the "Manage Posts" views
      *
      * @param array $columns
@@ -454,6 +478,45 @@ class Types {
 
         return $slug;
 
+    }
+
+    /**
+     * Modify the rewrite rules array to add /originals/
+     *
+     * @param  array  $rules The rewrite rules to modify
+     * @return array         Modified rewrite rules array
+     */
+    public function filter_rewrite_rules_array( $rules = [] ) {
+        global $wp_rewrite;
+        $original_post_types = implode( ',', self::get_original_post_types() );
+        add_rewrite_tag( '%pedestal_orignals%', '(originals)', 'pedestal_originals=' );
+        $new_rules = $wp_rewrite->generate_rewrite_rules( $wp_rewrite->root . '%pedestal_orignals%' );
+        $rules = $new_rules + $rules;
+        return $rules;
+    }
+
+    /**
+     * Register new query vars with WordPress
+     *
+     * @param  array  $query_vars List of whitelisted query vars
+     * @return array              Modified list of query vars
+     */
+    public function filter_query_vars( $query_vars = [] ) {
+        $query_vars[] = 'pedestal_originals';
+        return $query_vars;
+    }
+
+    /**
+     * Modify which template is loaded for a given request
+     *
+     * @param  string $include Path to a PHP template
+     * @return string          Possibly modified template path
+     */
+    public function filter_template_include( $include ) {
+        if ( ! get_query_var( 'pedestal_originals' ) ) {
+            return $include;
+        }
+        return locate_template( [ 'archive.php', 'index.php' ] );
     }
 
     /**
