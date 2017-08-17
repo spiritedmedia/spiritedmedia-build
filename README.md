@@ -1,10 +1,7 @@
-Build [#3405](https://circleci.com/gh/spiritedmedia/spiritedmedia/3405) by montchr at 2017-08-16 07:15 PM UTC
+Build [#3417](https://circleci.com/gh/spiritedmedia/spiritedmedia/3417) by kingkool68 at 2017-08-17 05:46 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.4](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.4)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.5](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.5)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.3...v5.12.4)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.4...v5.12.5)
 
- - [#2167](https://github.com/spiritedmedia/spiritedmedia/pull/2167): Set up markup for A/B testing position of featured image on single articles
- - [#2188](https://github.com/spiritedmedia/spiritedmedia/pull/2188): Good job everyone 👯 
- - [#2189](https://github.com/spiritedmedia/spiritedmedia/pull/2189): Disallow tab indentation in PHP files
- - [#2172](https://github.com/spiritedmedia/spiritedmedia/pull/2172): Add a robots.txt Template
+ - [#2192](https://github.com/spiritedmedia/spiritedmedia/pull/2192): Add a section on QA checklists to the Contributing guidelines

@@ -110,6 +110,17 @@ Some PRs are more involved than others, requiring extra steps to be taken on the
 
 ![](http://cl.montchr.io/1e2d331T1y0H/Image%202016-04-01%20at%2013.55.48.png)
 
+### QA Checklist
+
+For most PRs, you'll want to put together a QA checklist for the reviewer to verify the proposed feature or bugfix works as expected. Each item in the checklist should represent a single simple action. Checklist items can pose a question voiced in the affirmative so that a check confirms the proposal of the question. In general it's best to prompt the reviewer as little as possible so that they may be more likely to discover issues – e.g. instead of saying "go to this specific article" say "find an article".
+
+For example:
+
+- [ ] Create a new article on staging
+- [ ] Type a bunch of words over and over
+- [ ] Delete the words
+- [ ] Are there no more words?
+
 ## Labels
 
 - **Scopes** — `scope:` — represent different components of the product. Each issue should have one or more scope labels assigned. Scope names (the part after the word "scope") should be concise, as they'll be used in commit messages (see above).
