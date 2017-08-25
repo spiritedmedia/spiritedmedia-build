@@ -7,12 +7,12 @@
 
             {% spaceless %}
             <div class="site-footer__links--inline site-footer__links">
-                <ul class="no-bullet">
+                <ul class="site-footer__links__group">
                     {% for title, link in menu | slice(0, 3) %}
                     <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                     {% endfor %}
                 </ul>
-                <ul class="no-bullet">
+                <ul class="site-footer__links__group">
                     {% for title, link in menu | slice(3, 3) %}
                     <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                     {% endfor %}
@@ -22,17 +22,17 @@
 
             <div class="site-footer__links--columns site-footer__links">
                 <div class="row">
-                    <ul class="site-footer__links__column no-bullet">
+                    <ul class="site-footer__links__group">
                         {% for title, link in menu | slice(0, 2) %}
                         <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                         {% endfor %}
                     </ul>
-                    <ul class="site-footer__links__column no-bullet">
+                    <ul class="site-footer__links__group">
                         {% for title, link in menu | slice(2, 2) %}
                         <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                         {% endfor %}
                     </ul>
-                    <ul class="site-footer__links__column no-bullet">
+                    <ul class="site-footer__links__group">
                         {% for title, link in menu | slice(4, 2) %}
                         <li><a href="{{ link }}" data-ga-category="Footer Links" data-ga-label="{{ title }}">{{ title }}</a></li>
                         {% endfor %}

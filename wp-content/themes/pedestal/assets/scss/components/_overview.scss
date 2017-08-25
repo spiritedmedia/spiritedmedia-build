@@ -74,9 +74,9 @@
 .c-overview__lead-text {
   // stylelint-disable-next-line selector-max-type
   p {
-    @include lead;
-
+    font-size: $h5-font-size;
     font-style: italic;
+    line-height: 1.6;
   }
 }
 

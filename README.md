@@ -1,8 +1,7 @@
-Build [#3421](https://circleci.com/gh/spiritedmedia/spiritedmedia/3421) by kingkool68 at 2017-08-17 06:06 PM UTC
+Build [#3439](https://circleci.com/gh/spiritedmedia/spiritedmedia/3439) by montchr at 2017-08-25 03:28 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.6](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.6)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.7](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.7)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.5...v5.12.6)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v5.12.6...v5.12.7)
 
- - [#2163](https://github.com/spiritedmedia/spiritedmedia/pull/2163): Add /originals/ Archive + Automatically Feature Originals on Homepage
- - [#2191](https://github.com/spiritedmedia/spiritedmedia/pull/2191): Force RelayMedia's AMP Tracking Pixel to be display: block
+ - [#2206](https://github.com/spiritedmedia/spiritedmedia/pull/2206): Remove Foundation `type` component

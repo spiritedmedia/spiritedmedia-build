@@ -52,54 +52,6 @@
 
 
 //
-// Lists
-// ==========================================================================
-
-
-/**
- * Remove standard bullets from `li`
- *
- * Mixin version of Foundation's `.no-bullet`
- *
- * Must be used on a `ul`
- */
-@mixin no-bullet {
-  // stylelint-disable selector-max-type
-  list-style-type: none;
-  margin-#{$default-float}: $list-side-margin-no-bullet;
-
-
-  li {
-    ul,
-    ol {
-      margin-#{$default-float}: $list-nested-margin;
-      margin-bottom: 0;
-      list-style: none;
-    }
-  }
-  // stylelint-enable selector-max-type
-}
-
-
-/**
- * Remove custom bullets from `li`
- *
- * Must be used on a `ul`
- */
-@mixin no-bullet-custom {
-  // stylelint-disable selector-max-type, declaration-no-important
-  > li::before {
-    width: 0 !important;
-    height: 0 !important;
-  }
-  // stylelint-enable selector-max-type, declaration-no-important
-}
-
-
-
-
-
-//
 // Typography
 // ==========================================================================
 

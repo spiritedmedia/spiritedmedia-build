@@ -14,6 +14,7 @@ styleguide_header();
                 <section class="c-main__body s-post-content">
                     <p>Lorem ipsum dolor sit amet, id nam prima pertinax sadipscing, vix ea dicunt intellegebat. Et pri hinc labore apeirian, veritus postulant eum et, in quas epicurei sea. Mea tale detraxit senserit at. Salutatus dissentias at est, alii ullum reprimique mel cu. Ne vis corpora appellantur, partem alterum concludaturque ea mei. Posse ludus omnesque sit ea.</p>
                     <h1>Heading 1</h1>
+                    <h1>Heading 1 <small>with some small text</small></h1>
                     <h2>Heading 2</h2>
                     <h3>Heading 3</h3>
                     <h4>Heading 4</h4>
@@ -101,6 +102,25 @@ styleguide_header();
                         </li>
                         <li>List Item 3</li>
                     </ol>
+
+                    <h3>Pullquote</h3>
+
+                    <aside class="c-pullquote alignright">
+                        <blockquote class="c-pullquote__content">
+                            Sometimes they’ll mislead you, whether it’s intentionally or unintentionally.
+                        </blockquote>
+                        <cite class="c-pullquote__credit">
+                            Andre Altrez
+                        </cite>
+                    </aside>
+
+                    <p>Etiam et facilisis mi. Aenean est libero, rutrum eu sem vitae, molestie porttitor ipsum. Proin eget metus egestas, fringilla lectus ac, tempor arcu. Fusce fringilla dictum dignissim. In hac habitasse platea dictumst. Nunc luctus neque quam, ac pharetra risus consequat in. Cras sed dui nulla. Etiam scelerisque, neque sit amet consectetur semper, metus ligula convallis eros, non laoreet dolor neque sed mi. Phasellus laoreet, nisl vitae scelerisque laoreet, eros nulla ullamcorper lorem, eu ornare tellus arcu sit amet leo. Nulla nec faucibus nulla. Aliquam lorem sem, euismod eu nisi consequat, accumsan bibendum est. Quisque vehicula id urna sed ornare. Donec vulputate, risus id varius faucibus, justo augue scelerisque mauris, in efficitur urna nunc eu felis. Curabitur neque diam, posuere vitae mauris nec, porttitor elementum nunc. Donec vitae consectetur erat, vel efficitur tellus. Nulla id orci viverra, euismod orci et, scelerisque metus.</p>
+
+                    <h3>Blockquote</h3>
+                    <blockquote><p>If I could reach out and be like hey, ‘I wanna do this here, walk me through these first steps, I’ll try to be as compliant as I can,’ but it’s like you don’t necessarily want to say something sometimes. You feel like you’re telling on yourself. ‘Can I trust you to actually legitimately help me?’</p></blockquote>
+
+
+
                 </section>
                 <footer class="c-main__footer [ o-rule--closure o-rule ]"></footer>
             </article>

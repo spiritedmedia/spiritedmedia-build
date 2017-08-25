@@ -66,6 +66,31 @@
 }
 
 
+/// List without bullet or numbers
+///
+/// @param {bool} $post-content Hide custom bullets/numbers?
+@mixin no-bullet( $post-content: false ) {
+  // stylelint-disable selector-max-type, declaration-no-important
+
+  margin-left: 0;
+
+  &,
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  @if $post-content {
+    li::before {
+      // Must be !important to override `.s-post-content` styles
+      width: 0 !important;
+      height: 0 !important;
+    }
+  }
+  // stylelint-enable selector-max-type, declaration-no-important
+}
+
+
 
 
 

@@ -20,12 +20,12 @@
             </ul>
             <div class="site-footer__links--inline site-footer__links">
                 <!-- These must have spaces removed between all items -->
-                <ul class="no-bullet">
+                <ul class="site-footer__links__group">
                     <li><a href="/about" data-ga-category="Footer Links" data-ga-label="About">About</a></li><!--
                     --><li><a href="" data-ga-category="Footer Links" data-ga-label="Blog">Blog</a></li><!--
                     --><li><a href="/jobs" data-ga-category="Footer Links" data-ga-label="Jobs">Jobs</a></li>
                 </ul><!--
-                --><ul class="no-bullet">
+                --><ul class="site-footer__links__group">
                     <li><a href="/press" data-ga-category="Footer Links" data-ga-label="Press">Press</a></li><!--
                     --><li><a href="/advertising" data-ga-category="Footer Links" data-ga-label="Advertising">Advertising</a></li><!--
                     --><li><a href="/terms-of-use" data-ga-category="Footer Links" data-ga-label="Terms of Use">Terms of Use</a></li>
@@ -34,15 +34,15 @@
             <div class="site-footer__links--columns site-footer__links">
                 <div class="row">
                     <!-- These must have spaces removed between all items -->
-                    <ul class="site-footer__links__column no-bullet">
+                    <ul class="site-footer__links__group">
                         <li><a href="/about" data-ga-category="Footer Links" data-ga-label="About">About</a></li><!--
                         --><li><a href="" data-ga-category="Footer Links" data-ga-label="Blog">Blog</a></li>
                     </ul><!--
-                    --><ul class="site-footer__links__column no-bullet">
+                    --><ul class="site-footer__links__group">
                         <li><a href="/jobs" data-ga-category="Footer Links" data-ga-label="Jobs">Jobs</a></li><!--
                         --><li><a href="/press" data-ga-category="Footer Links" data-ga-label="Press">Press</a></li>
                     </ul><!--
-                    --><ul class="site-footer__links__column no-bullet">
+                    --><ul class="site-footer__links__group">
                         <li><a href="/advertising" data-ga-category="Footer Links" data-ga-label="Advertising">Advertising</a></li><!--
                         --><li><a href="/terms-of-use" data-ga-category="Footer Links" data-ga-label="Terms of Use">Terms of Use</a></li>
                     </ul>

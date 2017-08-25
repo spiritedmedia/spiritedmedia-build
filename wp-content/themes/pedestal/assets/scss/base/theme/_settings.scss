@@ -40,25 +40,26 @@ $half-spacing-unit : $base-spacing-unit / 2;
 $body-font-size           : 1em; // 1em; // 1em
 $body-line-height         : $base-line-height / $base-font-size;
 
-$h1-font-size             : $base-font-size * 2.75; // 44px
-$h2-font-size             : $base-font-size * 2.3125; // 37px
-$h3-font-size             : $base-font-size * 1.6875; // 27px
-$h4-font-size             : $base-font-size * 1.375; // 22px
-$h5-font-size             : $base-font-size * 1.125; // 18px
+$h1-font-size             : rem-calc( 44px );
+$h2-font-size             : rem-calc( 37px );
+$h3-font-size             : rem-calc( 27px );
+$h4-font-size             : rem-calc( 22px );
+$h5-font-size             : rem-calc( 18px );
 $h6-font-size             : $base-font-size;
 
-// Header size reduction on small screens
-$h1-font-reduction        : rem-calc( 10 );
-$h2-font-reduction        : rem-calc( 10 );
-$h3-font-reduction        : rem-calc( 5 );
-$h4-font-reduction        : rem-calc( 5 );
-$h5-font-reduction        : rem-calc( 0 );
-$h6-font-reduction        : rem-calc( 0 );
+// We use these to control header size reduction on small screens
+$h1-font-reduction        : rem-calc( 10px );
+$h2-font-reduction        : rem-calc( 10px );
+$h3-font-reduction        : rem-calc( 5px );
+$h4-font-reduction        : rem-calc( 5px );
+$h5-font-reduction        : 0;
+$h6-font-reduction        : 0;
 
+$paragraph-font-size      : 1rem;
+$paragraph-line-height    : 1.6;
 $small-font-size          : $base-font-size * 0.8;
 
-$header-font-weight       : 600;
-$header-line-height       : 1.2;
+
 $header-top-margin        : 0;
 
 $paragraph-margin-bottom  : rem-calc( 20 );

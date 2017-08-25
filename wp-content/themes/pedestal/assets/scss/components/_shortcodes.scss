@@ -18,7 +18,7 @@
 
 
 .user-grid {
-  @include no-bullet-custom;
+  @include no-bullet( $post-content: true );
 
   /**
    * Handle block grid mixins ourselves to reduce bloat
