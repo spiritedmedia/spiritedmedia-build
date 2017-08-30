@@ -50,7 +50,6 @@ class Entity_Types extends Types {
      */
     private function setup_actions() {
         add_action( 'init', [ $this, 'action_init_after_post_types_registered' ], 11 );
-        add_action( 'edit_form_after_title', [ $this, 'action_edit_form_after_title' ] );
         add_action( 'save_post_pedestal_embed', [ $this, 'action_save_post_pedestal_embed' ], 10, 3 );
         add_action( 'save_post_pedestal_whosnext', [ $this, 'action_save_post_whosnext_clusters' ], 10, 3 );
     }
@@ -213,20 +212,6 @@ class Entity_Types extends Types {
     }
 
     /**
-     * Do whatever below the title field
-     */
-    public function action_edit_form_after_title() {
-
-        switch ( get_current_screen()->post_type ) {
-            case 'pedestal_event':
-                $this->pedestal_event_details_context->render_meta_box( get_post( get_the_ID() ) );
-                $this->pedestal_event_link_context->render_meta_box( get_post( get_the_ID() ) );
-                break;
-        }
-
-    }
-
-    /**
      * Perform actions on saving Embeds
      */
     public function action_save_post_pedestal_embed( $post_id, $post, $update ) {
@@ -378,8 +363,13 @@ class Entity_Types extends Types {
         $details = new \Fieldmanager_Group( false, [
             'name'       => 'event_details',
             'children'   => [
-                'what'           => new \Fieldmanager_Textarea( esc_html__( 'What', 'pedestal' ), [
-                    'name'       => 'what',
+                'what'                => new \Fieldmanager_RichTextArea( esc_html__( 'What', 'pedestal' ), [
+                    'name'            => 'what',
+                    'editor_settings' => [
+                        'teeny'         => true,
+                        'media_buttons' => false,
+                        'editor_height' => 300,
+                    ],
                 ] ),
                 'start_time'     => new \Fieldmanager_Datepicker( esc_html__( 'Start Time', 'pedestal' ), [
                     'name'       => 'start_time',
@@ -404,15 +394,15 @@ class Entity_Types extends Types {
                 'cost'        => new \Fieldmanager_Textfield( esc_html__( 'Cost', 'pedestal' ), [
                     'name'       => 'cost',
                 ] ),
-                'more'           => new \Fieldmanager_Textarea( esc_html__( 'More Details', 'pedestal' ), [
-                    'name'       => 'more',
-                    'description' => esc_html__( 'These additional details will only display on the single event page.', 'pedestal' ),
+                'more'                => new \Fieldmanager_RichTextArea( esc_html__( 'More Details', 'pedestal' ), [
+                    'name'            => 'more',
+                    'description'     => esc_html__( 'These additional details will only display on the single event page.', 'pedestal' ),
+                    'editor_settings' => [
+                        'teeny'         => true,
+                        'media_buttons' => false,
+                        'editor_height' => 300,
+                    ],
                 ] ),
-            ],
-        ] );
-        $link = new \Fieldmanager_Group( false, [
-            'name' => 'event_link',
-            'children' => [
                 'url' => new \Fieldmanager_Link( esc_html__( 'Event URL', 'pedestal' ), [
                     'description' => esc_html__( 'If URL isn\'t set, the link will not display.', 'pedestal' ),
                 ] ),
@@ -422,9 +412,7 @@ class Entity_Types extends Types {
                 ] ),
             ],
         ] );
-        $this->pedestal_event_details_context = new \Fieldmanager_Context_Post( esc_html__( 'Event Details', 'pedestal' ), [ 'pedestal_event' ], 'edit_form_after_title', 'default', $details );
-        $this->pedestal_event_link_context = new \Fieldmanager_Context_Post( esc_html__( 'Event Link', 'pedestal' ), [ 'pedestal_event' ], 'edit_form_after_title', 'default', $link );
-
+        $details->add_meta_box( esc_html__( 'Event Details', 'pedestal' ), [ 'pedestal_event' ], 'normal', 'high' );
     }
 
     /**

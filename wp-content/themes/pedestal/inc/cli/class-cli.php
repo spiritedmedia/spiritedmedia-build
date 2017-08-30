@@ -770,6 +770,43 @@ class CLI extends \WP_CLI_Command {
 
         WP_CLI::success( 'Done' );
     }
-}
 
+    /**
+     * Normalize event_link meta data
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal normalize-event-link-meta
+     *     wp pedestal normalize-event-link-meta --url=http://billypenn.dev
+     *
+     * @subcommand normalize-event-link-meta
+     */
+    public function normalize_event_link_meta() {
+        $args = [
+            'post_type'      => 'pedestal_event',
+            'posts_per_page' => -1,
+            'post_status'    => 'any',
+        ];
+        $posts = new \WP_Query( $args );
+        WP_CLI::line( number_format( count( $posts->posts ) ) . ' found' );
+        foreach ( $posts->posts as $post ) {
+            $event_link = get_post_meta( $post->ID, 'event_link', true );
+            $event_details = get_post_meta( $post->ID, 'event_details', true );
+            if ( empty( $event_details['url'] ) ) {
+                $event_details['url'] = '';
+            }
+            if ( empty( $event_details['text'] ) ) {
+                $event_details['text'] = '';
+            }
+            if ( ! empty( $event_link ) ) {
+                $event_details['url'] = $event_link['url'];
+                $event_details['text'] = $event_link['text'];
+            }
+            update_post_meta( $post->ID, 'event_details', $event_details );
+            delete_post_meta( $post->ID, 'event_link' );
+        }
+
+        WP_CLI::success( 'Done' );
+    }
+}
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );

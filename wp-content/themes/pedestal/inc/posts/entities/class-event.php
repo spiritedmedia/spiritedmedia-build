@@ -130,6 +130,11 @@ class Event extends Entity {
      * @return string URL
      */
     public function get_details_link_url() {
+        $url = $this->get_fm_field( 'event_details', 'url' );
+        if ( $url ) {
+            return $url;
+        }
+        // Fallback for old behavior
         return $this->get_fm_field( 'event_link', 'url' );
     }
 
@@ -139,6 +144,11 @@ class Event extends Entity {
      * @return string
      */
     public function get_details_link_text() {
+        $text = $this->get_fm_field( 'event_details', 'text' );
+        if ( $text ) {
+            return $text;
+        }
+        // Fallback for old behavior
         return $this->get_fm_field( 'event_link', 'text' );
     }
 
