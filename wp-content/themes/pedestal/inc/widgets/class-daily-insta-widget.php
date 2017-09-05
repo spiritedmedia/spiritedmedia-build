@@ -3,7 +3,6 @@
 namespace Pedestal\Widgets;
 
 use Timber\Timber;
-use Pedestal\Objects\Stream;
 use Pedestal\Posts\Entities\Embed;
 
 class Daily_Insta_Widget extends \WP_Widget {

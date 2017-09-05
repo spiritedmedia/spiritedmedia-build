@@ -3,18 +3,12 @@
 namespace Pedestal\Posts\Entities;
 
 use function Pedestal\Pedestal;
-
 use \Pedestal\Utils\Utils;
-
 use Pedestal\Registrations\Post_Types\Types;
-
 use Pedestal\Posts\Post;
-
-use Pedestal\Objects\Stream;
-
 use Pedestal\Posts\Clusters\Story;
 
-abstract class Entity extends Post {
+class Entity extends Post {
 
     /**
      * Primary Story
@@ -224,19 +218,20 @@ abstract class Entity extends Post {
         }
 
         $count = 0;
-        $stream = new Stream( $query_args );
-        if ( $stream->has_posts() ) {
-            $clusters = [];
-
-            if ( $args['flatten'] ) {
-                return $stream->get_stream();
-            }
+        $query = new \WP_Query( $query_args );
+        if ( ! empty( $query->posts ) ) {
 
             if ( $count_only ) {
-                return count( $stream->get_posts() );
+                return $query->found_posts;
             }
 
-            foreach ( $stream->get_stream() as $cluster ) {
+            $ped_posts = Post::get_posts( $query );
+            if ( $args['flatten'] ) {
+                return $ped_posts;
+            }
+
+            $clusters = [];
+            foreach ( $ped_posts as $cluster ) {
                 $cluster_type = $cluster->get_type();
                 if ( ! isset( $clusters[ $cluster_type ] ) ) {
                     $clusters[ $cluster_type ] = [];

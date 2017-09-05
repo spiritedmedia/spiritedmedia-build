@@ -3,7 +3,7 @@
 namespace Pedestal\Posts\Clusters\Geospaces;
 
 use \Pedestal\Registrations\Post_Types\Cluster_Types;
-
+use Pedestal\Posts\Post;
 use Pedestal\Posts\Clusters\Cluster;
 
 abstract class Geospace extends Cluster {
@@ -110,7 +110,7 @@ abstract class Geospace extends Cluster {
      * @return array       Array of post objects
      */
     private function get_connected_geospaces( $dir ) {
-        return $this->get_connected_geospaces_stream( $dir )->get_stream();
+        return $this->get_connected_geospaces_stream( $dir );
     }
 
     /**
@@ -124,7 +124,7 @@ abstract class Geospace extends Cluster {
         $post_type_name_sanitize = true;
         $sanitized_name = $this->get_post_type_name( $post_type_name_plural, $post_type_name_sanitize );
         $connection_type = $sanitized_name . '_to_' . $sanitized_name;
-        return new \Pedestal\Objects\Stream( [
+        $query = new \WP_Query( [
             'post_type'           => static::$post_type,
             'posts_per_page'      => -1,
             'connected_type'      => $connection_type,
@@ -133,5 +133,6 @@ abstract class Geospace extends Cluster {
             'orderby'             => 'title',
             'order'               => 'asc',
         ] );
+        return Post::get_posts( $query );
     }
 }

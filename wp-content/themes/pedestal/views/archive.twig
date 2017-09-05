@@ -2,29 +2,19 @@
 
 {% block content %}
 
-    <article class="c-main__content">
-        <header class="c-overview  c-main__header js-main-header">
-            <h1 class="c-overview__title  c-main__title">{{ archive_title }}</h1>
-        </header>
+    {% if archive_title %}
+    <header class="c-overview  c-main__header js-main-header">
+        <h1 class="c-overview__title  c-main__title">{{ archive_title }}</h1>
+    </header>
+    {% endif %}
 
-        <section class="c-main__entities  archive__nav  c-stream--{{ archive_stream_type }}  c-stream">
-            {% set stream = true %}
-
-            {% for item in items %}
-                {% include [
-                    'partials/stream/' ~ archive_stream_type ~ '/' ~ item.get_type ~ '.twig',
-                    'partials/stream/' ~ archive_stream_type ~ '/entity.twig',
-                    'partials/stream/' ~ archive_stream_type ~ '/item.twig'
-                ] with {'gaCategory': 'Stream'} %}
-            {% endfor %}
+    {% if stream %}
+        <section class="stream {{ extra_stream_container_classes }}">
+            {{ stream }}
         </section>
 
-        {% if pagination %}
-        <footer class="c-stream__footer {{ last_page_classes }}">
-            {{ macros.pagination( pagination, { 'show_text': false } ) }}
-        </footer>
-        {% endif %}
+        {{ pagination }}
 
-    </article>
+    {% endif %}
 
 {% endblock %}

@@ -1,0 +1,209 @@
+$stream-item-breakpoint : em-calc( 640px );
+$stream-item-footer-image : rem-calc( 28px );
+
+.stream-item {
+  .stream & {
+    margin-bottom: $stream-item-spacing;
+  }
+
+  .stream.stream--list & {
+    margin-bottom: rem-calc( 32px );
+  }
+}
+
+.stream-item__thumbnail-container {
+  // stylelint-disable selector-max-type
+  img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  // stylelint-enable selector-max-type
+}
+
+.stream-item__inner {
+  overflow: auto;
+}
+
+.stream-item__overline {
+  font-size: $h6-font-size;
+  line-height: 1.2;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: rem-calc( 12px );
+}
+
+.stream-item__title {
+  font-size: $h3-font-size;
+  line-height: 1.2;
+  font-weight: 400;
+
+  .stream--list & {
+    font-size: $h5-font-size;
+  }
+}
+
+.stream-item__title,
+.stream-item__title-link {
+  color: $body-font-color;
+
+  .stream--list & {
+    color: $primary-color;
+  }
+
+  &:hover,
+  &:focus {
+    color: $grey-40;
+  }
+}
+
+// stylelint-disable selector-max-type
+.stream-item__description {
+  &,
+  p {
+    font-weight: 300;
+    line-height: 1.3;
+    font-size: $h4-font-size;
+  }
+}
+// stylelint-enable selector-max-type
+
+.stream-item__footer {
+  @include stdbd( bottom );
+
+  clear: both;
+  color: $body-font-color;
+  padding-bottom: rem-calc( 4px );
+  margin-top: rem-calc( 16px );
+  overflow: hidden;
+}
+
+// .stream-item__footer--compact forces the stream item footer to stay in a
+// compact state when it would otherwise expand like for featured stream items
+.stream-item__source-image,
+.stream-item__author-image,
+.stream-item__footer--compact .stream-item__source-image,
+.stream-item__footer--compact .stream-item__author-image {
+  color: $grey-62;
+  float: left;
+  margin-left: 0;
+  margin-right: rem-calc( 4px );
+  font-size: $stream-item-footer-image;
+
+  .o-icon {
+    height: rem-calc( 28px );
+  }
+  // stylelint-disable selector-max-type
+  .o-icon,
+  img {
+    display: block;
+  }
+
+  // Correct the vertical centering of external links
+  .o-icon--external-link {
+    position: relative;
+    top: rem-calc( 4px );
+    height: rem-calc( 20px );
+  }
+
+  img {
+    border-radius: 100%;
+    overflow: hidden;
+    height: $stream-item-footer-image;
+    width: $stream-item-footer-image;
+  }
+  // stylelint-enable selector-max-type
+}
+
+// .stream-item__footer--compact forces the stream item footer to stay in a
+// compact state when it would otherwise expand like for featured stream items
+.stream-item__source-name,
+.stream-item__author-names,
+.stream-item__datetime,
+.stream-item__footer--compact .stream-item__source-name,
+.stream-item__footer--compact .stream-item__author-names,
+.stream-item__footer--compact .stream-item__datetime, {
+  font-size: $small-font-size;
+  text-transform: uppercase;
+  display: block;
+  line-height: 1;
+  text-align: left;
+}
+
+// stylelint-disable selector-max-type
+.stream-item__source-name,
+.stream-item__author-names a {
+  color: $body-font-color;
+
+  &:hover,
+  &:focus {
+    color: $grey-40;
+  }
+}
+// stylelint-enable selector-max-type
+
+.stream-item--sponsored {
+  .stream-item__source-name {
+    padding-top: rem-calc( 8px );
+    padding-bottom: rem-calc( 8px );
+  }
+}
+
+@media ( min-width: $stream-item-breakpoint ) {
+
+  .stream-item__footer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  .stream-item__footer.stream-item__footer--compact {
+    display: block;
+  }
+
+  .stream-item__source-image,
+  .stream-item__author-image {
+    float: none;
+    margin-right: 0;
+    margin-left: rem-calc( 4px );
+    display: block;
+
+    .o-icon--external-link {
+      position: static;
+    }
+  }
+
+  .stream-item__source-name,
+  .stream-item__author-names,
+  .stream-item__datetime {
+    font-size: $h6-font-size;
+    flex: 1;
+  }
+
+  .stream-item__source-name,
+  .stream-item__author-names {
+    text-align: right;
+    flex: 2;
+  }
+
+  .stream-item--sponsored {
+    .stream-item__source-name {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+
+}
+
+@media #{$medium-up} {
+  .stream .stream-item {
+    margin-bottom: $stream-item-spacing * 1.2;
+  }
+
+  .stream-item__thumbnail-container {
+    float: left;
+    margin-right: rem-calc( 16px );
+    margin-bottom: rem-calc( 8px );
+    width: rem-calc( 150px );
+  }
+}

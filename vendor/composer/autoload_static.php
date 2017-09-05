@@ -4,13 +4,8 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitbad55c15a3c49229a7651fc9af352179
+class ComposerStaticInit85b5143e009576d4cec1224b94687802
 {
-    public static $files = array (
-        '026a968263ec72e63c0a08beed134bb1' => __DIR__ . '/..' . '/scribu/scb-framework/load-composer.php',
-        'a5d94d5918910fbb77c98dd8aa0cc5d9' => __DIR__ . '/..' . '/scribu/scb-framework/Util.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
         'j' => 
         array (
@@ -216,6 +211,11 @@ class ComposerStaticInitbad55c15a3c49229a7651fc9af352179
         'Pedestal\\Registrations\\Post_Types\\Cluster_Types' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes-clusters.php',
         'Pedestal\\Registrations\\Post_Types\\Entity_Types' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes-entities.php',
         'Pedestal\\Registrations\\Post_Types\\General_Types' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes-general.php',
+        'Pedestal\\Registrations\\Post_Types\\Pedestal_Embed' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-pedestal-embed.php',
+        'Pedestal\\Registrations\\Post_Types\\Pedestal_Entity' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-pedestal-entity.php',
+        'Pedestal\\Registrations\\Post_Types\\Pedestal_Event' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-pedestal-event.php',
+        'Pedestal\\Registrations\\Post_Types\\Pedestal_Factcheck' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-pedestal-factcheck.php',
+        'Pedestal\\Registrations\\Post_Types\\Pedestal_Link' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-pedestal-link.php',
         'Pedestal\\Registrations\\Post_Types\\Slot_Types' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes-slots.php',
         'Pedestal\\Registrations\\Post_Types\\Types' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes.php',
         'Pedestal\\Registrations\\Taxonomies\\Taxonomies' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/taxonomies/class-taxonomies.php',
@@ -341,6 +341,7 @@ class ComposerStaticInitbad55c15a3c49229a7651fc9af352179
         'Timber\\Theme' => __DIR__ . '/..' . '/timber/timber/lib/Theme.php',
         'Timber\\Timber' => __DIR__ . '/..' . '/timber/timber/lib/Timber.php',
         'Timber\\Twig' => __DIR__ . '/..' . '/timber/timber/lib/Twig.php',
+        'Timber\\Twig_Function' => __DIR__ . '/..' . '/timber/timber/lib/Twig_Function.php',
         'Timber\\URLHelper' => __DIR__ . '/..' . '/timber/timber/lib/URLHelper.php',
         'Timber\\User' => __DIR__ . '/..' . '/timber/timber/lib/User.php',
         'Twig\\Cache\\CacheInterface' => __DIR__ . '/..' . '/twig/twig/src/Cache/CacheInterface.php',
@@ -712,37 +713,16 @@ class ComposerStaticInitbad55c15a3c49229a7651fc9af352179
         'Twig_Util_DeprecationCollector' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/DeprecationCollector.php',
         'Twig_Util_TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/TemplateDirIterator.php',
         'joshtronic\\LoremIpsum' => __DIR__ . '/..' . '/joshtronic/php-loremipsum/src/LoremIpsum.php',
-        'scbAdminPage' => __DIR__ . '/..' . '/scribu/scb-framework/AdminPage.php',
-        'scbBoxesPage' => __DIR__ . '/..' . '/scribu/scb-framework/BoxesPage.php',
-        'scbCron' => __DIR__ . '/..' . '/scribu/scb-framework/Cron.php',
-        'scbCustomField' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbForm' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbFormField' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbFormField_I' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbForms' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbHooks' => __DIR__ . '/..' . '/scribu/scb-framework/Hooks.php',
-        'scbLoad4' => __DIR__ . '/..' . '/scribu/scb-framework/load.php',
-        'scbMultipleChoiceField' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbOptions' => __DIR__ . '/..' . '/scribu/scb-framework/Options.php',
-        'scbPostMetabox' => __DIR__ . '/..' . '/scribu/scb-framework/PostMetabox.php',
-        'scbRadiosField' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbSelectField' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbSingleCheckboxField' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbSingleChoiceField' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbTable' => __DIR__ . '/..' . '/scribu/scb-framework/Table.php',
-        'scbTextField' => __DIR__ . '/..' . '/scribu/scb-framework/Forms.php',
-        'scbUtil' => __DIR__ . '/..' . '/scribu/scb-framework/Util.php',
-        'scbWidget' => __DIR__ . '/..' . '/scribu/scb-framework/Widget.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitbad55c15a3c49229a7651fc9af352179::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitbad55c15a3c49229a7651fc9af352179::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitbad55c15a3c49229a7651fc9af352179::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitbad55c15a3c49229a7651fc9af352179::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitbad55c15a3c49229a7651fc9af352179::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit85b5143e009576d4cec1224b94687802::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit85b5143e009576d4cec1224b94687802::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit85b5143e009576d4cec1224b94687802::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit85b5143e009576d4cec1224b94687802::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit85b5143e009576d4cec1224b94687802::$classMap;
 
         }, null, ClassLoader::class);
     }

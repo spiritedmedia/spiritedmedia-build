@@ -4,7 +4,9 @@ namespace Pedestal;
 
 use function Pedestal\Pedestal;
 use Pedestal\Posts\Post;
+use Pedestal\Objects\Stream;
 use Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Utils\Utils;
 
 class Featured_Posts {
 
@@ -28,20 +30,24 @@ class Featured_Posts {
     public static function get_instance() {
         static $instance = null;
         if ( null === $instance ) {
-            // Late static binding (PHP 5.3+)
             $instance = new static();
             $instance->setup_hooks();
         }
         return $instance;
     }
 
+    /**
+     * Hook in to various actions and filters
+     */
     private function setup_hooks() {
         // Needs to happen after post types are registered
         add_action( 'init', [ $this, 'action_init' ], 11 );
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts' ] );
-        add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
     }
 
+    /**
+     * Setup submenu page and fields
+     */
     public function action_init() {
         if ( ! is_admin() ) {
             return;
@@ -62,6 +68,11 @@ class Featured_Posts {
         );
     }
 
+    /**
+     * Modify the main query to exclude featured posts from the stream
+     *
+     * @param  \WP_Query $query  The WordPress query we're modifying
+     */
     public function action_pre_get_posts( $query ) {
         if ( ! $query->is_main_query() ) {
             return;
@@ -73,16 +84,6 @@ class Featured_Posts {
                 $query->set( 'post__not_in', $post_ids );
             }
         }
-    }
-
-    public function filter_timber_context( $context ) {
-        $featured_posts = $this->get_posts();
-        if ( ! empty( $featured_posts ) ) {
-            $context['featured_posts'] = [
-                'items' => $featured_posts,
-            ];
-        }
-        return $context;
     }
 
     /**
@@ -97,29 +98,29 @@ class Featured_Posts {
                 'post',
             ],
             'collapsible' => true,
-            'collapsed' => true,
-            'children' => [
+            'collapsed'   => true,
+            'children'    => [
                 'post' => new \Fieldmanager_Autocomplete( 'Post Selection', [
-                    'name' => 'post',
-                    'description' => 'Select a Post (anything except Events)',
+                    'name'           => 'post',
+                    'description'    => 'Select a Post (anything except Events)',
                     'show_edit_link' => true,
-                    'datasource' => new \Fieldmanager_Datasource_Post( [
+                    'datasource'     => new \Fieldmanager_Datasource_Post( [
                         'query_args' => [
-                            'post_type' => $this->post_types,
+                            'post_type'      => $this->post_types,
                             'posts_per_page' => 15,
-                            'post_status' => [ 'publish' ],
+                            'post_status'    => [ 'publish' ],
                         ],
                     ] ),
                 ] ),
                 'post_title' => new \Fieldmanager_Textfield( esc_html__( 'Title Override', 'pedestal' ), [
-                    'name' => 'post_title',
+                    'name'        => 'post_title',
                     'description' => 'Customize the display title.',
                 ] ),
                 'description' => new \Fieldmanager_RichTextArea( 'Description Override', [
-                    'name' => 'description',
-                    'description' => 'Customize the description.',
+                    'name'            => 'description',
+                    'description'     => 'Customize the description.',
                     'editor_settings' => [
-                        'teeny' => true,
+                        'teeny'         => true,
                         'media_buttons' => false,
                         'editor_height' => 300,
                     ],
@@ -231,10 +232,55 @@ class Featured_Posts {
                     $post->post_excerpt = trim( $override['description'] );
                 }
             }
-            $new_post = Post::get_instance( $post );
-            $new_post->is_featured = true;
-            $new_posts[] = $new_post;
+            $new_posts[] = $post;
         }
         return $new_posts;
+    }
+
+    /**
+     * Get array of rendered featured post items
+     *
+     * @return array  Set of HTML strings for each of the featured posts
+     */
+    public function get_the_featured_posts() {
+        $posts = $this->get_posts();
+        $stream = new Stream;
+        $items = [];
+        foreach ( $posts as $index => $post ) {
+            $index++;
+            $ped_post = new Post( $post );
+            $context = apply_filters( 'pedestal_stream_item_context', [
+                'post'              => $post,
+                'type'              => $ped_post->get_type(),
+                '__context'         => 'featured', // Where is this stream item going to be displayed?
+                'stream_index'      => $index,
+                'featured_image'    => '',
+                'thumbnail_image'   => '',
+                'overline'          => '',
+                'overline_url'      => '',
+                'title'             => $ped_post->get_the_title(),
+                'permalink'         => $ped_post->get_the_permalink(),
+                'date_time'         => $ped_post->get_the_datetime(),
+                'machine_time'      => $ped_post->get_post_date( 'c' ),
+                'description'       => $ped_post->get_the_excerpt(),
+                'author_names'      => '',
+                'author_image'      => '',
+                'author_link'       => '',
+                'source_name'       => '',
+                'source_image'      => '',
+                'source_link'       => '',
+                'is_footer_compact' => false,
+            ] );
+            if ( $index > 1 ) {
+                $context['is_footer_compact'] = true;
+            }
+
+            ob_start();
+            do_action( 'pedestal_before_featured_item_' . $index, $post );
+            echo $stream->get_the_stream_item( $context );
+            do_action( 'pedestal_after_featured_item_' . $index, $post );
+            $items[] = ob_get_clean();
+        }
+        return $items;
     }
 }

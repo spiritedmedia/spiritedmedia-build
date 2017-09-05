@@ -30,10 +30,10 @@
 
         {% if item.get_items %}
 
-        <section class="c-main__entities  c-stream  c-stream--newsletter  c-stream--standard  js-stream">
+        <section class="c-main__entities">
             {% set stream = true %}
 
-            <div class="c-stream__items">
+            <div class="newsletter-items">
 
             {% set first_heading = true %}
             {% for item in item.get_items %}
@@ -51,13 +51,13 @@
                 {% elseif 'heading' == item.type %}
                     {% if first_heading %}
                         {% if ped_slot( 'newsletter_promoted_event' ) %}
-                            <h2 class="c-stream__heading  c-heading--overline">Sponsored Event</h2>
+                            <h2 class="c-heading--overline">Sponsored Event</h2>
                             {{ ped_slot( 'newsletter_promoted_event' ) }}
                         {% endif %}
                         {% set first_heading = false %}
                     {% endif %}
 
-                    <h2 class="c-stream__heading  c-heading--overline">{{ item.title }}</h2>
+                    <h2 class="c-heading--overline">{{ item.title }}</h2>
                 {% endif %}
 
             {% endfor %}

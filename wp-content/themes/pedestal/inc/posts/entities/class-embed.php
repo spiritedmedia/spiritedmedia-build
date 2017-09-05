@@ -4,9 +4,9 @@ namespace Pedestal\Posts\Entities;
 
 use function Pedestal\Pedestal;
 use Pedestal\Utils\Utils;
+use Pedestal\Posts\Post;
 use Pedestal\Posts\Clusters\Story;
 use Pedestal\Objects\{
-    Stream,
     YouTube
 };
 
@@ -671,12 +671,16 @@ class Embed extends Entity {
         if ( 'newsletter' == $options['context'] ) {
             $args['post_status'] = [ 'publish', 'future' ];
         }
-        $posts = Stream::get( $args );
+        $query = new \WP_Query( $args );
+        $posts = $query->posts;
         if ( empty( $posts ) ) {
             return false;
         }
 
         $daily_insta = $posts[0];
+        if ( $daily_insta instanceof \WP_Post ) {
+            $daily_insta = Post::get_instance( $daily_insta );
+        }
         if ( ! $daily_insta instanceof self ) {
             return '';
         }

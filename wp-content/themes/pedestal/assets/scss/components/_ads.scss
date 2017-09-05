@@ -44,12 +44,6 @@ $dfp-mobile-ad-offset--panelled : -( $column-gutter );
   }
 }
 
-.dfp-stream-08-wrapper,
-.dfp-stream-16-wrapper {
-  @include stdbd(bottom);
-  padding-bottom: $base-spacing-unit * 2.5;
-}
-
 .rail {
   .widget_pedestal_dfp_rail_right {
     // Override default widget padding for BP-RailRight

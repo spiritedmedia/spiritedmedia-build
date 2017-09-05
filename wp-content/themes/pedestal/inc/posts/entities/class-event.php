@@ -2,6 +2,8 @@
 
 namespace Pedestal\Posts\Entities;
 
+use Timber\Timber;
+
 class Event extends Entity {
 
     protected static $post_type = 'pedestal_event';
@@ -54,6 +56,12 @@ class Event extends Entity {
         return $this->get_fm_field( 'event_details', 'address' );
     }
 
+    /**
+     * Get an event location in "venue (address)"" format
+     *
+     * @param  boolean $escape  Whether to escape the string
+     * @return string           The location in "venue (address)" format"
+     */
     public function get_location( $escape = false ) {
         $venue = $this->get_venue_name();
         $address = $this->get_address();
@@ -172,6 +180,11 @@ class Event extends Entity {
         return '';
     }
 
+    /**
+     * Get a Google Calendar link with all of the event details
+     *
+     * @return string  Google Calendar URL
+     */
     public function get_google_calendar_link() {
         $endpoint = 'https://www.google.com/calendar/render?';
         $dates = $this->get_dtstart() . '/' . $this->get_dtend();
@@ -187,6 +200,11 @@ class Event extends Entity {
         return $endpoint . http_build_query( $params );
     }
 
+    /**
+     * Get the link to the iCal version of the event
+     *
+     * @return string  URL of the iCal version of the event
+     */
     public function get_ics_link() {
         return rtrim( $this->get_permalink(), '/' ) . '/ics/';
     }
@@ -287,5 +305,19 @@ class Event extends Entity {
             $description = parent::get_default_seo_description( $len );
         }
         return strip_tags( $description );
+    }
+
+    /**
+     * Render a table of event details
+     *
+     * @return string  HTML markup of the event details table
+     */
+    public function get_details_table() {
+        $context = Timber::get_context();
+        $context['item'] = $this;
+
+        ob_start();
+            Timber::render( 'partials/events/details.twig', $context );
+        return ob_get_clean();
     }
 }

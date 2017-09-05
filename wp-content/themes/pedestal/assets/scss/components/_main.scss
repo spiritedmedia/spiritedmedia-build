@@ -144,8 +144,8 @@
  */
 
 .c-main__footer {
-  .c-stream__item--sponsored {
-    margin-bottom: $base-spacing-unit * 2.5;
+  .stream-item--sponsored {
+    margin-bottom: $stream-item-spacing;
   }
 }
 

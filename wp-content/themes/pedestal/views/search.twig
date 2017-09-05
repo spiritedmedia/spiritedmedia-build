@@ -1,8 +1,14 @@
 {% extends 'layouts/layout--content-sidebar.twig' %}
 
 {% set main_classes = 'is-active-search' %}
-
 {% block content %}
-{% include 'partials/search-tools.twig' %}
-{% include 'partials/stream/stream-home.twig' %}
+    {% include 'partials/search-tools.twig' %}
+
+    {% if stream %}
+        <section class="stream row small-12 columns">
+            {{ stream }}
+        </section>
+
+        {{ pagination }}
+    {% endif %}
 {% endblock %}

@@ -22,11 +22,13 @@ $o-rule--closure-sum-height : ( $o-rule--closure-h + $rule-spacing-y + $o-rule--
 
 
 /// A noticeably thick horizontal rule before an element
+// stylelint-disable-next-line selector-max-type
+hr,
 .o-rule {
+  border: 0;
   border-top: $o-rule-height solid $o-rule-color;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  padding-top: $rule-spacing-y;
 } // rule
 
 

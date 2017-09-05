@@ -2,7 +2,6 @@
 
 namespace Pedestal\Posts\Clusters;
 
-use Pedestal\Objects\Stream;
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Subscriptions;
@@ -60,8 +59,21 @@ abstract class Cluster extends Post {
             'post_type'      => Types::get_entity_post_types(),
             'connected_type' => $this->get_cluster_entity_connection_type(),
         ] );
-        $stream = $this->get_stream( $args );
-        return $stream->get_stream();
+        return $this->get_stream( $args );
+    }
+
+    /**
+     * Get a WP_Query object for the entities connected to this cluster
+     *
+     * @param  array  $args  Args for modifying the query
+     * @return WP_Query      WP_Query object
+     */
+    public function get_entities_query( $args = [] ) {
+        $args = wp_parse_args( $args, [
+            'post_type'      => Types::get_entity_post_types(),
+            'connected_type' => $this->get_cluster_entity_connection_type(),
+        ] );
+        return $this->get_stream_query( $args );
     }
 
     /**
@@ -75,36 +87,7 @@ abstract class Cluster extends Post {
             'connected_type' => Types::get_cluster_connection_types(),
             'posts_per_page' => 500,
         ] );
-        $stream = $this->get_stream( $args );
-        return $stream->get_stream();
-    }
-
-    /**
-     * Get the cluster stream's pagination
-     *
-     * @return array Pagination HTML
-     */
-    public function get_pagination() {
-        $stream = $this->get_stream();
-        return $stream::get_pagination( $stream->get_query() );
-    }
-
-    /**
-     * Check if the stream is on its first page
-     *
-     * @return bool
-     */
-    public function is_stream_first_page() {
-        return $this->get_stream()->is_first_page();
-    }
-
-    /**
-     * Check if the stream is on its last page
-     *
-     * @return bool
-     */
-    public function is_stream_last_page() {
-        return $this->get_stream()->is_last_page();
+        return $this->get_stream( $args );
     }
 
     /**
@@ -114,6 +97,23 @@ abstract class Cluster extends Post {
      * @return Stream
      */
     public function get_stream( $args = [] ) {
+        $query = $this->get_stream_query( $args );
+        $args_hash = md5( serialize( $query->query_vars ) );
+        if ( ! empty( $this->cached_stream[ $args_hash ] ) ) {
+            return $this->cached_stream[ $args_hash ];
+        }
+        $ped_posts = Post::get_posts( $query );
+        $this->cached_stream[ $args_hash ] = $ped_posts;
+        return $this->cached_stream[ $args_hash ];
+    }
+
+    /**
+     * Helper for getting a WP_Query object
+     *
+     * @param  array  $args  Args to modify the query
+     * @return WP_Query      WP_Query object
+     */
+    public function get_stream_query( $args = [] ) {
         $defaults = [
             'post_type'      => Types::get_post_types(),
             'post_status'    => 'publish',
@@ -125,12 +125,7 @@ abstract class Cluster extends Post {
         $args['paged'] = $paged ? $paged : 1;
         $args['connected_items'] = $this->post;
         $args['connected_type'] = Types::get_cluster_connection_types();
-        $args_hash = md5( serialize( $args ) );
-        if ( ! empty( $this->cached_stream[ $args_hash ] ) ) {
-            return $this->cached_stream[ $args_hash ];
-        }
-        $this->cached_stream[ $args_hash ] = new Stream( $args );
-        return $this->cached_stream[ $args_hash ];
+        return new \WP_Query( $args );
     }
 
     /**

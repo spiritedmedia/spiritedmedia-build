@@ -21,14 +21,6 @@
 {% set link_classes = 'c-overview__link' ~ link_classes %}
 {% endif %}
 
-{% if stream %}
-    {% set item_title_classes = 'c-stream__item__title  ' ~ item_title_classes %}
-    {% set link_classes = 'c-stream__item__link  ' ~ link_classes %}
-    {% if is_cluster %}
-        {% set item_title_element = 'h4' %}
-    {% endif %}
-{% endif %}
-
 <{{ item_title_element }} class="{{ item_title_classes }}">
 
     {% if url %}

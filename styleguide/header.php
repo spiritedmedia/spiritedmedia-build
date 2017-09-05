@@ -99,13 +99,13 @@
   <meta property="og:title" content="Billy Penn" />
   <meta property="og:description" content="Billy Penn is a mobile platform for a better Philly -- the easiest way to find and follow local and breaking news in Philadelphia." />
   <meta property="og:url" content="https://billypenn.com/" />
-  <meta property="og:image" content="https://a.spirited.media/wp-content/themes/billy-penn/assets/images/logos/logo_icon_placeholder.png" />
+  <meta property="og:image" content="https://a.spirited.media/wp-content/themes/billy-penn/assets/images/logos/logo-icon-placeholder.png" />
   <meta property="twitter:card" content="summary" />
   <meta property="twitter:site" content="@billy_penn" />
   <meta property="twitter:title" content="Billy Penn" />
   <meta property="twitter:description" content="Billy Penn is a mobile platform for a better Philly -- the easiest way to find and follow local and breaking news in Philadelphia." />
   <meta property="twitter:url" content="https://billypenn.com/" />
-  <meta property="twitter:image" content="https://a.spirited.media/wp-content/themes/billy-penn/assets/images/logos/logo_icon_placeholder.png" />
+  <meta property="twitter:image" content="https://a.spirited.media/wp-content/themes/billy-penn/assets/images/logos/logo-icon-placeholder.png" />
   <!-- Begin comScore Tag -->
   <script>
     var _comscore = _comscore || [];

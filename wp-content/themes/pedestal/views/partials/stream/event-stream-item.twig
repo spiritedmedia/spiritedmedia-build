@@ -1,0 +1,17 @@
+{% if stream_index %}
+    {% set stream_index = 'data-stream-index="{{ stream_index }}"' %}
+{% endif %}
+<article class="stream-item stream-item--{{ type }} c-event" {{ stream_index }}>
+    <h1 class="stream-item__title c-event__title">
+        {% if permalink %}
+            <a
+                href="{{ permalink }}" class="stream-item__title-link"
+                data-ga-category="Stream"
+                data-ga-label="Title|{{ title|e( 'html_attr' ) }}|Type: Event"
+            >{{ title }}</a>
+        {% else %}
+            {{ title }}
+        {% endif %}
+    </h1>
+    {{ details_table }}
+</article>

@@ -3,7 +3,6 @@
 // ==========================================================================
 
 $pagination-button-bg: $grey-80 !default;
-
 /**
  * Left/right pagination for stream
  */
@@ -66,11 +65,12 @@ $pagination-button-bg: $grey-80 !default;
     &--fourths,
     &--fifths {
       .c-pagination__dir--prev {
-        @include first;
+        margin-left: 0;
       }
 
       .c-pagination__dir--next {
-        @include last;
+        float: right;
+        margin-right: 0;
       }
     }
   }
@@ -81,6 +81,7 @@ $pagination-button-bg: $grey-80 !default;
   font-size: $h5-font-size;
   text-transform: uppercase;
   padding-bottom: $half-spacing-unit;
+  margin-bottom: 0; // Needed on single cluster pages
   color: $dimmed-text-color;
   font-style: italic;
 }
@@ -161,30 +162,30 @@ a.c-pagination__item.is-disabled:focus {
 }
 
 .c-pagination__dir--prev {
-  @include first;
+  margin-left: 0;
 }
 
 .c-pagination__dir--next {
-  @include last;
+  float: right;
+  margin-right: 0;
 }
 
 .c-pagination__dir__icon {
   font-size: $h3-font-size;
   line-height: 0;
   vertical-align: middle;
+  height: rem-calc( 28px );
 }
 
 .c-pagination__nums {}
 
 .c-pagination__dir--prev {
-  @include first;
-
-  // Compensate for different dimensions of the angle icons
-  padding-top: 0.85rem;
+  margin-left: 0;
 }
 
 .c-pagination__dir--next {
-  @include last;
+  float: right;
+  margin-right: 0;
 }
 
 .c-pagination__num {

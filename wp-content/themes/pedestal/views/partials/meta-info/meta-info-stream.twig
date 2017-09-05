@@ -6,7 +6,7 @@
     {% set standalone_icon_classes = '' %}
 {% endif %}
 
-<footer class="c-stream__item__footer  {{ meta_info_classes }}  c-meta-info--{{ item.get_type }}  c-meta-info--stream  c-meta-info">
+<footer class="{{ meta_info_classes }} c-meta-info--{{ item.get_type }} c-meta-info--stream c-meta-info">
 
     <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item  {{ standalone_icon_classes }}">
         {% include [

@@ -14,8 +14,6 @@ use \Pedestal\Posts\Post;
 
 use \Pedestal\Objects\User;
 
-use \Pedestal\Objects\Stream;
-
 class Frontend {
 
     private static $instance;
@@ -327,11 +325,6 @@ class Frontend {
 
         $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) . ' Spirited Media';
 
-        if ( is_main_query() ) {
-            global $wp_query;
-            $context['pagination'] = Stream::get_pagination( $wp_query );
-        }
-
         if ( ! is_home() ) {
             $spotlight = Pedestal()->get_spotlight_data();
             $context['spotlight'] = [
@@ -378,14 +371,6 @@ class Frontend {
                 'Search' => get_site_url() . '/?s=',
                 'Home'   => get_site_url(),
             ];
-        }
-
-        if ( is_archive() ) {
-            $context['archive_stream_type'] = 'standard';
-            // Display non-chronological archive items in list format
-            if ( is_post_type_archive( Types::get_cluster_post_types() ) || is_tax() ) {
-                $context['archive_stream_type'] = 'imglist';
-            }
         }
 
         // Load some WP conditional functions as Timber context variables

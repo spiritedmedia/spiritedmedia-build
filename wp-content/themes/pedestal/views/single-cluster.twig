@@ -14,11 +14,7 @@
             </h1>
             {% endif %}
 
-            {% if not item.is_stream_first_page %}
-                <div class="c-main__paged">
-                    {{ macros.pagination( item.get_pagination, { 'show_nav': false } ) }}
-                </div>
-            {% endif %}
+            {{ upper_pagination }}
 
             {% if item.is_story %}
                 {% include 'partials/overview/overline.twig' %}
@@ -51,49 +47,18 @@
 
         </header>
 
-        <section class="c-main__entities  c-stream  c-stream--standard  js-stream">
-            {% set stream = true %}
+        {% if stream %}
+            <section class="stream">
+                {{ stream }}
+            </section>
 
-            <div class="c-stream__items">
-
-            {% for item in item.get_entities %}
-                {% if not ( 'whosnext' == item.get_type and 'nomination' == item.get_whosnext_type ) %}
-
-                    {% set counter = ( counter | default(0) ) + 1 %}
-
-                    {% if counter == 8 %}
-                        {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
-                    {% endif %}
-
-                    {% if counter == 16 %}
-                        {% include 'partials/adverts/dfp-stream-16.twig' ignore missing %}
-                    {% endif %}
-
-                    {% include [
-                        'partials/stream/standard/' ~ item.get_type ~ '.twig',
-                        'partials/stream/standard/entity.twig'
-                    ] with { 'gaCategory': 'Stream' } %}
-
-                {% endif %}
-
-                {% if loop.length < 8 and loop.last %}
-                    {% include 'partials/adverts/dfp-stream-08.twig' ignore missing %}
-                {% endif %}
-
-            {% endfor %}
-
-            </div>
-
-            {% if item.get_pagination or item.is_stream_last_page %}
-                {% if item.is_stream_last_page %}
-                    {% set last_page_classes = 'o-rule--closure  o-rule' %}
-                {% endif %}
-                <footer class="c-stream__footer {{ last_page_classes }}">
-                    {{ macros.pagination( item.get_pagination ) }}
-                </footer>
+            {% if show_closure_rule %}
+                <footer class="o-rule--closure  o-rule"></footer>
             {% endif %}
 
-        </section>
+            {{ pagination }}
+
+        {% endif %}
 
     </section>
 

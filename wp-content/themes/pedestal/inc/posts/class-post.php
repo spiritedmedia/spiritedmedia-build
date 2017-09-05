@@ -10,7 +10,6 @@ use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Objects\{
     Figure,
     Notifications,
-    Stream,
     User
 };
 
@@ -43,7 +42,6 @@ class Post {
         }
 
         $this->post = $post;
-        $this->set_data_atts();
         $this->set_p2p_data();
 
         // Cache these objects throughout the duration of the page request...
@@ -112,14 +110,15 @@ class Post {
             'update_post_term_cache' => false,
         ];
         $args = wp_parse_args( $args, $defaults );
-        $posts = Stream::get( $args );
+        $query = new \WP_Query( $args );
+        $posts = $query->posts;
         if ( ! is_array( $posts ) || ! isset( $posts[0] ) ) {
             return false;
         }
         if ( 1 == $args['numberposts'] ) {
-            return $posts[0];
+            return Post::get_instance( $posts[0] );
         }
-        return $posts;
+        return Post::get_posts( $query );
     }
 
     /**
@@ -153,6 +152,26 @@ class Post {
         }
 
         return new $class( $post );
+    }
+
+    /**
+     * Get an array of Pedestal Posts based on a WP_Query
+     *
+     * @param  object $query A WP_Query object
+     * @return array         Array of Pedestal Post objects
+     */
+    public static function get_posts( $query ) {
+        $ped_posts = [];
+        if ( ! is_object( $query ) || ! $query instanceof \WP_Query ) {
+            return $ped_posts;
+        }
+        foreach ( $query->posts as $post ) {
+            if ( $post instanceof \WP_Post ) {
+                $post = Post::get_instance( $post );
+            }
+            $ped_posts[] = $post;
+        }
+        return $ped_posts;
     }
 
     /**
@@ -288,7 +307,7 @@ class Post {
      * @return string
      */
     public function get_type_name_plural() {
-        return Types::get_post_type_name( static::$post_type );
+        return Types::get_post_type_name( $this->post->post_type );
     }
 
     /**
@@ -297,7 +316,7 @@ class Post {
      * @return string
      */
     public function get_type_name() {
-        return Types::get_post_type_name( static::$post_type, false );
+        return Types::get_post_type_name( $this->post->post_type, false );
     }
 
     /**
@@ -306,7 +325,7 @@ class Post {
      * @return string
      */
     public function get_type() {
-        return Utils::remove_name_prefix( static::$post_type );
+        return Utils::remove_name_prefix( $this->post->post_type );
     }
 
     /**
@@ -422,6 +441,7 @@ class Post {
     /**
      * Get the authors with links
      *
+     * @param  boolean $truncate Whether to truncate 3+ authors
      * @return string HTML
      */
     public function get_the_authors( $truncate = false ) {
@@ -429,6 +449,14 @@ class Post {
         $posttext = esc_html__( 'and', 'pedestal' );
 
         $authors = $this->get_authors();
+        if ( $truncate && count( $authors ) >= 3 ) {
+            $name = PEDESTAL_BLOG_NAME . ' Staff';
+            return sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Name|%s">%s</a>',
+                esc_url( get_site_url() . '/about/' ),
+                esc_attr( $name ),
+                esc_html( $name )
+            );
+        }
         $authors_names_with_links = [];
         foreach ( $authors as $author ) {
             $authors_names_with_links[] = sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Name|%s">%s</a>',
@@ -548,6 +576,48 @@ class Post {
     }
 
     /**
+     * Get an author avatar at a specified size
+     * If more than one author is set a logo icon will be returned
+     *
+     * @param  string $size  Size of the image to use
+     * @return string        HTML markup of the image or SVG of the logo
+     */
+    public function get_author_avatar( $size = 'thumbnail' ) {
+        $authors = $this->get_authors();
+        $num_of_authors = count( $authors );
+        if ( 1 == $num_of_authors ) {
+            return $this->get_single_author()->get_image_html( $size );
+        }
+
+        if ( 1 < $num_of_authors ) {
+            $icon_size = 40;
+            return Icons::get_logo( 'logo-icon', '', $icon_size );
+        }
+
+        return;
+    }
+
+    /**
+     * Get the permalink for the author of the post
+     * If two or more authors a link to the site's About page is returned
+     *
+     * @return string  URL of the authors permalink or site's about page
+     */
+    public function get_author_permalink() {
+        $authors = $this->get_authors();
+        $num_of_authors = count( $authors );
+        if ( 1 == $num_of_authors ) {
+            return $this->get_single_author()->get_permalink();
+        }
+
+        if ( 1 < $num_of_authors ) {
+            return esc_url( home_url( '/about/' ) );
+        }
+
+        return;
+    }
+
+    /**
      * Get the author names
      *
      * @return array
@@ -570,6 +640,11 @@ class Post {
         return json_encode( $authors );
     }
 
+    /**
+     * Get the edit link for the post
+     *
+     * @return string  URL to edit the post
+     */
     public function get_edit_link() {
         return get_edit_post_link( $this->get_id() );
     }
@@ -717,6 +792,15 @@ class Post {
      */
     public function set_post_date( $post_date ) {
         $this->set_field( 'post_date', date( 'Y-m-d H:i:s', strtotime( $post_date ) ) );
+    }
+
+    /**
+     * Get a formatted date time string
+     *
+     * @return string  Datetime of the post separated by a dot
+     */
+    public function get_the_datetime() {
+        return $this->get_post_date( PEDESTAL_DATE_FORMAT ) . ' &middot; ' . $this->get_post_date( PEDESTAL_TIME_FORMAT );
     }
 
     /**

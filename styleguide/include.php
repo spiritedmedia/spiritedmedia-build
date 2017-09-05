@@ -1,10 +1,12 @@
 <?php
-// define( 'WP_USE_THEMES', false );
-require ( '../wp-load.php' );
+require( '../wp-load.php' );
 
 if ( ! is_user_logged_in() ) {
 	auth_redirect();
 }
+
+// Initiate Pedestal
+$pedestal = \Pedestal\Pedestal();
 
 function styleguide_search_and_replace( $string = '' ) {
 	// Replace any links to the root with styleguide root links

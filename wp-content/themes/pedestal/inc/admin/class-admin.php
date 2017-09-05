@@ -13,7 +13,6 @@ use Pedestal\Posts\Attachment;
 use Pedestal\Posts\Entities\Embed;
 use Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
 use Pedestal\Posts\Slots\Slots;
-use Pedestal\Objects\Stream;
 use Pedestal\Posts\Clusters\{
     Person,
     Story
@@ -842,7 +841,7 @@ class Admin {
     public function handle_dashboard_widget_scheduled_posts() {
         $post_types = Types::get_entity_post_types();
         $post_types[] = 'pedestal_newsletter';
-        $future_posts = Stream::get( [
+        $future_posts_query = new \WP_Query( [
             'post_type'      => $post_types,
             'posts_per_page' => 15,
             'post_status'    => 'future',
@@ -850,7 +849,7 @@ class Admin {
             'order'          => 'ASC',
         ] );
         $context = array_merge( Timber::get_context(), [
-            'items' => $future_posts,
+            'items' => Post::get_posts( $future_posts_query ),
         ] );
         Timber::render( 'partials/admin/dash-widget-scheduled-posts.twig', $context );
     }

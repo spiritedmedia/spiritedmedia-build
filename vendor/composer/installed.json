@@ -417,84 +417,9 @@
         }
     },
     {
-        "name": "scribu/scb-framework",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/scribu/wp-scb-framework.git",
-            "reference": "95b23ac342fce16bf5eb8d939ac5a361b94b104b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/scribu/wp-scb-framework/zipball/95b23ac342fce16bf5eb8d939ac5a361b94b104b",
-            "reference": "95b23ac342fce16bf5eb8d939ac5a361b94b104b",
-            "shasum": ""
-        },
-        "time": "2015-10-25T20:19:41+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "."
-            ],
-            "files": [
-                "load-composer.php",
-                "Util.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-3.0+"
-        ],
-        "authors": [
-            {
-                "name": "Cristi Burcă",
-                "homepage": "http://scribu.net/"
-            }
-        ],
-        "description": "A set of useful classes for faster plugin development",
-        "homepage": "https://github.com/scribu/wp-scb-framework",
-        "keywords": [
-            "wordpress"
-        ]
-    },
-    {
-        "name": "spiritedmedia/wp-pagenavi",
-        "version": "dev-spiritedmedia",
-        "version_normalized": "dev-spiritedmedia",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/spiritedmedia/wp-pagenavi.git",
-            "reference": "bf0130011815cc0c87ac9bd6143223c892ca2711"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/wp-pagenavi/zipball/bf0130011815cc0c87ac9bd6143223c892ca2711",
-            "reference": "bf0130011815cc0c87ac9bd6143223c892ca2711",
-            "shasum": ""
-        },
-        "require": {
-            "scribu/scb-framework": "dev-master"
-        },
-        "time": "2017-04-04T17:08:48+00:00",
-        "type": "wordpress-plugin",
-        "installation-source": "source",
-        "authors": [
-            {
-                "name": "Chris Montgomery",
-                "email": "chris@montchr.io"
-            }
-        ],
-        "description": "Fork of lesterchan/wp-pagenavi",
-        "support": {
-            "source": "https://github.com/spiritedmedia/wp-pagenavi/tree/spiritedmedia"
-        }
-    },
-    {
         "name": "symfony/css-selector",
-        "version": "v3.3.4",
-        "version_normalized": "3.3.4.0",
+        "version": "v3.3.6",
+        "version_normalized": "3.3.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/css-selector.git",
@@ -826,17 +751,17 @@
     },
     {
         "name": "timber/timber",
-        "version": "1.3.3",
-        "version_normalized": "1.3.3.0",
+        "version": "1.3.4",
+        "version_normalized": "1.3.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/timber/timber.git",
-            "reference": "8f54e7cb27f66859f43f82d3f7ad318c772f3218"
+            "reference": "43417d09cfdc37384d25e95201ce0cc3dace9f0d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/timber/timber/zipball/8f54e7cb27f66859f43f82d3f7ad318c772f3218",
-            "reference": "8f54e7cb27f66859f43f82d3f7ad318c772f3218",
+            "url": "https://api.github.com/repos/timber/timber/zipball/43417d09cfdc37384d25e95201ce0cc3dace9f0d",
+            "reference": "43417d09cfdc37384d25e95201ce0cc3dace9f0d",
             "shasum": ""
         },
         "require": {
@@ -856,7 +781,7 @@
             "phpdocumentor/phpdocumentor": "2.* for generating docs",
             "satooshi/php-coveralls": "1.0.* for code coverage"
         },
-        "time": "2017-06-19T14:24:56+00:00",
+        "time": "2017-07-19T00:23:46+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -996,7 +921,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/bwp-google-xml-sitemaps.1.4.1.zip",
-            "reference": "tags/1.4.1",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1018,7 +943,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/co-authors-plus.3.2.2.zip",
-            "reference": "tags/3.2.2",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1040,7 +965,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.10.zip",
-            "reference": "tags/1.9.10",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1062,7 +987,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/posts-to-posts.1.6.5.zip",
-            "reference": "tags/1.6.5",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1074,17 +999,17 @@
     },
     {
         "name": "wpackagist-plugin/redirection",
-        "version": "2.6.3",
-        "version_normalized": "2.6.3.0",
+        "version": "2.6.6",
+        "version_normalized": "2.6.6.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/redirection/",
-            "reference": "tags/2.6.3"
+            "reference": "tags/2.6.6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/redirection.2.6.3.zip",
-            "reference": "tags/2.6.3",
+            "url": "https://downloads.wordpress.org/plugin/redirection.2.6.6.zip",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1106,7 +1031,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/shortcode-ui.0.7.2.zip",
-            "reference": "tags/0.7.2",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1128,7 +1053,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/tablepress.1.8.zip",
-            "reference": "tags/1.8",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1150,7 +1075,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/user-switching.1.0.9.zip",
-            "reference": "tags/1.0.9",
+            "reference": null,
             "shasum": null
         },
         "require": {
@@ -1172,7 +1097,7 @@
         "dist": {
             "type": "zip",
             "url": "https://downloads.wordpress.org/plugin/wp-redis.0.6.2.zip",
-            "reference": "tags/0.6.2",
+            "reference": null,
             "shasum": null
         },
         "require": {

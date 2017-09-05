@@ -64,4 +64,17 @@ class Link extends Entity {
         }
         return false;
     }
+
+    /**
+     * Get the source name for the link
+     *
+     * @return string
+     */
+    public function get_source_name() {
+        $source = $this->get_source();
+        if ( method_exists( $source, 'get_name' ) ) {
+            return $source->get_name();
+        }
+        return '';
+    }
 }

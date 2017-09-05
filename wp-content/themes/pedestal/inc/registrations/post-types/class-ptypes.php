@@ -64,6 +64,13 @@ class Types {
     public static $groups = [];
 
     /**
+     * Groups of content types
+     *
+     * @var array
+     */
+    public static $content_types = [];
+
+    /**
      * Set up the instance
      */
     public static function get_instance() {
@@ -96,6 +103,7 @@ class Types {
 
         add_filter( 'post_type_link', [ $this, 'filter_post_type_link' ], 10, 2 );
         add_filter( 'wp_unique_post_slug', [ $this, 'filter_wp_unique_post_slug' ], 10, 6 );
+        add_filter( 'pedestal_stream_item_context', [ $this, 'filter_pedestal_stream_item_context' ] );
         add_filter( 'rewrite_rules_array', [ $this, 'filter_rewrite_rules_array' ] );
         add_filter( 'query_vars', [ $this, 'filter_query_vars' ] );
         add_filter( 'template_include', [ $this, 'filter_template_include' ] );
@@ -115,6 +123,13 @@ class Types {
         self::$groups['entities'] = Entity_Types::get_instance();
         self::$groups['clusters'] = Cluster_Types::get_instance();
         self::$groups['slots']    = Slot_Types::get_instance();
+
+        // Content Types
+        self::$content_types['pedestal_embed']     = Pedestal_Embed::get_instance();
+        self::$content_types['pedestal_entity']    = Pedestal_Entity::get_instance();
+        self::$content_types['pedestal_event']     = Pedestal_Event::get_instance();
+        self::$content_types['pedestal_factcheck'] = Pedestal_Factcheck::get_instance();
+        self::$content_types['pedestal_link']      = Pedestal_Link::get_instance();
     }
 
     /**
@@ -481,6 +496,31 @@ class Types {
     }
 
     /**
+     * Set authors for stream items of certain post types
+     *
+     * @param  array $context  List of properties for a stream item
+     * @return array           Modified list of properties
+     */
+    public function filter_pedestal_stream_item_context( $context = [] ) {
+        $allowed_types = [
+            'article',
+            'factcheck',
+            'whosnext',
+            'newsletter',
+        ];
+        if ( empty( $context['type'] ) || ! in_array( $context['type'], $allowed_types ) ) {
+            return $context;
+        }
+        $post = $context['post'];
+        $ped_post = new Post( $post );
+        $truncate = true;
+        $context['author_names'] = $ped_post->get_the_authors( $truncate );
+        $context['author_image'] = $ped_post->get_author_avatar();
+        $context['author_link']  = $ped_post->get_author_permalink();
+        return $context;
+    }
+
+    /*
      * Modify the rewrite rules array to add /originals/
      *
      * @param  array  $rules The rewrite rules to modify

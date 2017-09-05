@@ -1,8 +1,38 @@
 {% extends 'layouts/layout--content-sidebar.twig' %}
 
 {% block content %}
-    {% include 'partials/search-tools.twig' %}
-    {% include 'partials/stream/stream-home.twig' %}
+
+    {% if featured_stream_items %}
+        <section class="featured-stream-items">
+            {% for index, item in featured_stream_items %}
+                {% if index == 0 %}
+                    <div class="featured-stream-items__primary">
+                        {{ item }}
+                    </div>
+                {% else %}
+                    <div class="featured-stream-items__secondary medium-6 columns">
+                        {{ item }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <a class="btn btn--primary btn--lg btn--full-width" href="{{ get_site_url }}/articles/" data-ga-category="Button" data-ga-label="More Original Articles">
+                More Original Articles
+            </a>
+            <hr class="o-rule o-rule--slim">
+        </section>
+
+    {% endif %}
+
+    {% if stream %}
+        <section class="stream">
+            {{ stream }}
+        </section>
+
+        {{ pagination }}
+
+    {% endif %}
+
 {% endblock %}
 
 {% block sidebar %}

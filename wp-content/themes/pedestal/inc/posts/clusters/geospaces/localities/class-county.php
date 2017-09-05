@@ -2,10 +2,6 @@
 
 namespace Pedestal\Posts\Clusters\Geospaces\Localities;
 
-use \Pedestal\Utils\Utils;
-
-use Pedestal\Objects\Stream;
-
 /**
  * County
  */

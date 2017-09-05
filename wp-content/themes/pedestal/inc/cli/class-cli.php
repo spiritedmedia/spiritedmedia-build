@@ -3,30 +3,25 @@
 namespace Pedestal\CLI;
 
 use function Pedestal\Pedestal;
-
 use WP_CLI;
-
 use joshtronic\LoremIpsum;
-
 use Pedestal\Utils\Utils;
-
 use Pedestal\Registrations\Post_Types\Types;
-
 use Pedestal\User_Management;
-
 use Pedestal\Posts\Post;
-
 use Pedestal\Objects\Newsletter_Lists;
-
 use Pedestal\Posts\Slots\Slot_Item;
-
-use Pedestal\Objects\{Stream, User, ActiveCampaign};
+use Pedestal\Objects\{
+    User,
+    ActiveCampaign
+};
 
 class CLI extends \WP_CLI_Command {
 
     /**
      * Migrate legacy Slot Item Sponsor meta to new format
      */
+    /*
     public function migrate_sponsorship_meta( $args, $assoc_args ) {
         $slot_item_count_migrated = 0;
         $slot_item_count_drafted = 0;
@@ -73,10 +68,12 @@ class CLI extends \WP_CLI_Command {
         $success_message = "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ Migrated {$slot_item_count_migrated} slot items to new format!";
         WP_CLI::success( $success_message );
     }
+    */
 
     /**
      * Swap Org titles with alias
      */
+    /*
     public function cluster_swap_alias_title( $args, $assoc_args ) {
         $count = 0;
         $orgs = new \Pedestal\Objects\Stream( [
@@ -100,6 +97,7 @@ class CLI extends \WP_CLI_Command {
         }
         WP_CLI::success( "Swapped alias and title for {$count} organizations." );
     }
+    */
 
     /**
      * Generate entities or stories

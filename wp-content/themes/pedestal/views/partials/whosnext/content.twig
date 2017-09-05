@@ -12,12 +12,12 @@
 {% endif %}
 
 {% if item.get_items %}
-<section class="c-whos-next__items  c-stream--ladder  c-stream">
+<section class="c-whos-next__items">
     {% set stream = true %}
 
     {% for item in item.get_items %}
 
-        <section class="c-whos-next-item  c-stream__item" data-whos-next-people-count="{{ item.people|length }}">
+        <section class="c-whos-next-item" data-whos-next-people-count="{{ item.people|length }}">
             {% if item.img %}
             <div class="c-whos-next-item__img">{{ item.img }}</div>
             {% endif %}

@@ -3,11 +3,6 @@
     {% import _self as macros %}
     {% set item = context.item %}
     {% set stream = true %}
-    {% set classes = 'c-stream__item' %}
-
-    {% if item.get_type %}
-    {% set classes = 'c-stream__item--' ~ item.get_type ~ '  ' ~ classes %}
-    {% endif %}
 
     {% if item.css_classes %}
     {% set classes = item.css_classes ~ '  ' ~ classes %}
@@ -16,17 +11,6 @@
     {{ classes }}
     {% endspaceless %}
 {% endmacro %}
-
-
-
-
-
-{% macro blox( context, options, type ) %}
-    {{ options.title }}
-{% endmacro %}
-
-
-
 
 
 {##
@@ -38,7 +22,9 @@
         'twitter': true,
         'format': 'compact',
         'float': true,
-        'posts': false
+        'stream': false,
+        'pagination': false,
+        'show_closure_rule': false,
     } %}
     {% if options %}
         {% set options = defaults|merge( options ) %}
@@ -92,7 +78,7 @@
         {% set img_classes = 'c-user-card__img  img--' ~ img_size ~ '  ' ~ img_classes %}
         {% set img = user.get_avatar( img_size ) %}
 
-        {% set pagination = user.get_stream_pagination %}
+        {% set pagination = false %}
         {% set is_first_page = user.get_stream.is_first_page %}
         {% set is_last_page = user.get_stream.is_last_page %}
 
@@ -186,40 +172,21 @@
                 </{{ bio_element }}>
                 {% endif %}
 
-                {% if options.posts and items %}
-
-                    <section class="c-user-card__entities  c-stream  c-stream--standard  js-stream">
-                        {% set stream = true %}
-
-                        <header class="c-stream__header">
-                            <h1 class="c-stream__title  c-stream__header__item">Recent Articles</h1>
-                            {% if pagination %}
-                                <div class="c-stream__paged  c-stream__header__item">
-                                    {{ macros.pagination( pagination, { 'show_nav': false } ) }}
-                                </div>
-                            {% endif %}
-                            <hr class="c-stream__header__rule  o-rule" />
-                        </header>
-
-                        <div class="c-stream__items">
-                            {% for item in items %}
-                                {% include [
-                                    'partials/stream/standard/' ~ item.get_type ~ '.twig',
-                                    'partials/stream/standard/entity.twig'
-                                ] %}
-                            {% endfor %}
-                        </div>
-
-                        {% if pagination or is_last_page %}
-                            {% if is_last_page %}
-                                {% set last_page_classes = 'o-rule--closure  o-rule' %}
-                            {% endif %}
-                            <footer class="c-stream__footer {{ last_page_classes }}">
-                                {{ macros.pagination( pagination ) }}
-                            </footer>
-                        {% endif %}
+                {% if options.stream %}
+                    <header class="c-user-card__stream-header">
+                        <h1 class="c-user-card__stream-header__title">Recent Articles</h1>
+                        {{ options.upper_pagination }}
+                        <hr class="o-rule" />
+                    </header>
+                    <section class="stream">
+                        {{ options.stream }}
                     </section>
 
+                    {% if options.show_closure_rule %}
+                        <footer class="o-rule--closure  o-rule"></footer>
+                    {% endif %}
+
+                    {{ options.pagination }}
                 {% endif %}
 
             </div>
@@ -228,102 +195,6 @@
 
     {% endif %}
 {% endmacro %}
-
-
-
-
-
-{% macro pagination( data, options ) %}
-    {% if data %}
-
-    {% set defaults = {
-        'show_text': true,
-        'show_nav': true
-    } %}
-    {% if options %}
-        {% set options = defaults|merge( options ) %}
-    {% else %}
-        {% set options = defaults %}
-    {% endif %}
-
-    {% set url_prev_disabled = 'is-disabled  js-is-disabled' %}
-    {% set url_next_disabled = 'is-disabled  js-is-disabled' %}
-
-    {# Number of page buttons visible #}
-    {% set num_pages_visible = data.page_numbers.smaller|length + data.page_numbers.larger|length + 1 %}
-    {% if 2 == num_pages_visible %}
-        {% set num_pages_visible_fraction = 'halves' %}
-    {% elseif 3 == num_pages_visible %}
-        {% set num_pages_visible_fraction = 'thirds' %}
-    {% elseif 4 == num_pages_visible %}
-        {% set num_pages_visible_fraction = 'fourths' %}
-    {% elseif 5 == num_pages_visible %}
-        {% set num_pages_visible_fraction = 'fifths' %}
-    {% endif %}
-
-    {# Previous #}
-    {% if data.previous %}
-        {% set url_prev = data.previous %}
-        {% set url_prev_disabled = '' %}
-    {% else %}
-        {% set url_prev = '#' %}
-    {% endif %}
-
-    {# Next #}
-    {% if data.next %}
-        {% set url_next = data.next %}
-        {% set url_next_disabled = '' %}
-    {% else %}
-        {% set url_next = '#' %}
-    {% endif %}
-
-
-    <div class="c-pagination  js-pagination  c-pagination--{{ num_pages_visible_fraction }}" aria-label="Pagination">
-
-        {% if options.show_text %}
-        <div class="c-pagination__text">
-            Page <span class="c-pagination__text__paged">{{ data.pages_text.paged }}</span> of <span class="c-pagination__text__total">{{ data.pages_text.total }}</span>
-        </div>
-        {% endif %}
-
-        {% if options.show_nav %}
-
-        <div class="c-pagination__inner">
-
-            <a href="{{ url_prev }}" class="c-pagination__dir--prev  c-pagination__dir  c-pagination__item {{ url_prev_disabled }}  js-pagination-item" data-ga-category="Pagination" data-ga-label="Previous">
-                {{ ped_icon('angle-left', 'c-pagination__dir__icon') }}
-            </a>
-
-            {% for num, url in data.page_numbers.smaller %}
-                <a href="{{ url }}" class="c-pagination__num  c-pagination__num--smaller  c-pagination__item  js-pagination-item" data-ga-category="Pagination" data-ga-label="Number|{{ num|replace({ 'p_': '' }) }}">
-                    {{ num|replace({ 'p_': '' }) }}
-                </a>
-            {% endfor %}
-
-            <a href="#" class="c-pagination__num  c-pagination__num--current  c-pagination__item  is-disabled  js-is-disabled  js-pagination-item" data-ga-category="Pagination" data-ga-label="Number|Current|{{ data.page_numbers.current }}">
-                {{ data.page_numbers.current }}
-            </a>
-
-            {% for num, url in data.page_numbers.larger %}
-                <a href="{{ url }}" class="c-pagination__num  c-pagination__num--larger  c-pagination__item  js-pagination-item" data-ga-category="Pagination" data-ga-label="Number|{{ num|replace({ 'p_': '' }) }}">
-                    {{ num|replace({ 'p_': '' }) }}
-                </a>
-            {% endfor %}
-
-            <a href="{{ url_next }}" class="c-pagination__dir--next  c-pagination__dir  c-pagination__item  {{ url_next_disabled }}  js-pagination-item" data-ga-category="Pagination" data-ga-label="Next">
-                {{ ped_icon('angle-right', 'c-pagination__dir__icon') }}
-            </a>
-
-        </div>
-
-        {% endif %}
-
-    </div>
-    {% endif %}
-{% endmacro %}
-
-
-
 
 
 {% macro dfp_unit( id = '', sizes = '' ) %}

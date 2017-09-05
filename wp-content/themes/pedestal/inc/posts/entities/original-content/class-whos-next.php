@@ -2,8 +2,10 @@
 
 namespace Pedestal\Posts\Entities\Originals;
 
-use Pedestal\Objects\Stream;
-use Pedestal\Posts\Attachment;
+use Pedestal\Posts\{
+    Attachment,
+    Post
+};
 use Pedestal\Posts\Clusters\{
     Person,
     Story
@@ -104,10 +106,12 @@ class Whos_Next extends Original {
      * @return array Posts
      */
     public function get_archive_items() {
-        $whosnext_posts = Stream::get( [
+        $args = [
             'posts_per_page' => 50,
             'post_type' => self::$post_type,
-        ] );
+        ];
+        $query = new \WP_Query( $args );
+        $whosnext_posts = Post::get_posts( $query );
 
         $whosnext_story = self::get_whosnext_story();
         if ( empty( $whosnext_story ) ) {

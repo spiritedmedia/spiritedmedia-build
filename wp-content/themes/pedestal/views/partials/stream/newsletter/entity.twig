@@ -1,19 +1,15 @@
-<article class="{{ macros.get_stream_item_classes( 'newsletter', _context ) }}"
+<article class="{{ macros.get_stream_item_classes( 'newsletter', _context ) }} newsletter-item"
     {{ item.get_the_data_atts }}>
 
-    <div class="c-stream__item__inner  c-overview">
+    <div class="c-overview">
+        {% include 'partials/item-title.twig' with {
+            'title': newsletter_item.title,
+            'url': newsletter_item.url
+        } %}
 
-        <div class="c-stream__item__body">
-            {% include 'partials/item-title.twig' with {
-                'title': newsletter_item.title,
-                'url': newsletter_item.url
-            } %}
-
-            <div class="c-overview__description  c-stream__item__description">
-                {{ newsletter_item.description }}
-            </div>
+        <div class="c-overview__description">
+            {{ newsletter_item.description }}
         </div>
-
     </div>
 
 </article>

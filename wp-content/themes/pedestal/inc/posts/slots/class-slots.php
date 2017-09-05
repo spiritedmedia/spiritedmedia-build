@@ -506,7 +506,6 @@ class Slots {
         if ( Types::is_post( $slot_data ) ) {
             $context['template'] = '';
             $item_type = '';
-            $additional_classes = '';
             $slots_path = 'partials/slots/';
             $css_class = 'c-slot';
 
@@ -521,7 +520,6 @@ class Slots {
             } elseif ( 'newsletter_promoted_event' === $slot_position ) {
                 $context['item'] = $slot_data;
                 $item_type = $slot_data->get_type();
-                $additional_classes = 'c-stream__item';
                 $context['template'] = $slots_path . str_replace( '_', '-', $slot_position ) . '.twig';
                 if ( Pedestal()->is_email() ) {
                     $context['template'] = 'emails/messages/partials/stream/event.twig';
@@ -542,11 +540,10 @@ class Slots {
             ];
             $data_atts_str = Utils::array_to_data_atts_str( $data_atts, 'slot' );
 
-            $context['slot_atts'] = sprintf( 'class="%s--%s %s %s" %s',
+            $context['slot_atts'] = sprintf( 'class="%s--%s %s" %s',
                 $css_class,
                 str_replace( '_', '-', $item_type ),
                 $css_class,
-                $additional_classes,
                 $data_atts_str
             );
 

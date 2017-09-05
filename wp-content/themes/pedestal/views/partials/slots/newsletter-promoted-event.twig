@@ -1,11 +1,9 @@
-<div class="c-event    c-stream__item__inner">
-    <div class="c-stream__item__body  ">
-        <div class="c-event__title">
-            {% include 'partials/item-title.twig' with {'overview': false} %}
-        </div>
-        <div class="c-event__sponsorship">
-            {{ ped_slot( 'newsletter_item' ) }}
-        </div>
-        {% include 'partials/events/details.twig' %}
+<div class="c-event">
+    <div class="c-event__title">
+        {% include 'partials/item-title.twig' with {'overview': false} %}
     </div>
+    <div class="c-event__sponsorship">
+        {{ ped_slot( 'newsletter_item' ) }}
+    </div>
+    {% include 'partials/events/details.twig' %}
 </div>

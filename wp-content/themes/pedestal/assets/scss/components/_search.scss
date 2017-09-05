@@ -1,161 +1,78 @@
-// ==========================================================================
-// Pedestal // Components // SEARCH
-// ==========================================================================
-
-
-$search-input-padding: $half-spacing-unit;
-$search-filter-link-padding: 5px;
-$filter-link-pd: 5px;
-
-
 .c-search {
+  background-color: $grey-95;
 
-  &__form {
-    position: relative;
-
-    .is-active-search & {
-      margin-bottom: $base-spacing-unit;
-    }
-
-    .is-loading & {
-      opacity: $loading-default-opacity;
-    }
-  }
-
-
-  &__input {}
-
-
-  &__icon {
-    padding: $half-spacing-unit;
+  .js &,
+  .is-search-open & {
     position: absolute;
-    top: $base-spacing-unit / 4;
-    color: $grey-25;
-    background-color: transparent;
-
-    &:hover,
-    &:focus {
-      background-color: transparent;
-      color: $black;
-    }
-
-    &--close {
-      right: 0;
-      display: none;
-
-      .js & {
-        display: block;
-      }
-
-      .o-icon {
-        width: icon-width-get( close ) * 1.5;
-      }
-    }
+    top: 0;
+    width: 100%;
+    z-index: 1; // So it displays under the header
   }
 
+  .admin-bar.is-search-open & {
+    top: $wp-admin-bar-height-mobile;
 
-  &__tools {
-    display: none;
-    position: relative;
-
-    .is-loading & {
-      opacity: $loading-default-opacity;
-    }
-
-    .is-active-search & {
-      display: block;
-    }
-
-    &__item {
-      display: inline-block;
-    }
-  }
-
-
-  &__total-results {
-    padding: $filter-link-pd;
-
-    &__count {
-      font-weight: 600;
-    }
-  }
-
-
-  &--sitewide {
-    background-color: $grey-95;
-
-    .js &,
-    .is-search-open & {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      z-index: 1; // So it displays under the header
-
-      .c-spinner {
-        margin-top: 0;
-        margin-bottom: 0;
-        top: 0;
-      }
-    }
-
-    // Account for the WP admin bar height
-    .admin-bar.is-search-open &,
-    .js .admin-bar & {
-      top: $wp-admin-bar-height-mobile;
-
-      @media #{$wp-admin-bar-breakpoint} {
-        top: $wp-admin-bar-height-desktop;
-      }
-    }
-  }
-
-
-  &__filters {
-    position: absolute;
-    right: 0;
-
-    &__label {
-      margin-left: $base-spacing-unit;
-      margin-bottom: 0;
-      padding: $filter-link-pd;
-      display: inline-block;
-      position: relative;
-
-      &.is-active {
-        font-weight: 600;
-      }
-    }
-
-    &__radio {
-      .js & {
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-      }
-
-      // stylelint-disable-next-line selector-max-type
-      &[type="radio"] {
-        margin: 0;
-      }
-    }
-  }
-
-
-  .c-spinner {
-    margin-top: $half-spacing-unit;
-    margin-bottom: $half-spacing-unit;
-    position: absolute;
-
-    .is-loading & {
-      position: absolute;
-      z-index: 1;
+    @media #{$wp-admin-bar-breakpoint} {
+      top: $wp-admin-bar-height-desktop;
     }
   }
 }
 
+.c-search__form {
+  position: relative;
 
+  .is-active-search & {
+    margin-bottom: $base-spacing-unit;
+  }
+}
+
+.c-search__icon {
+  padding: $half-spacing-unit;
+  position: absolute;
+  top: $base-spacing-unit / 4;
+  color: $grey-25;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    color: $black;
+  }
+}
+
+.c-search__icon--close {
+  right: 0;
+  display: none;
+
+  .js & {
+    display: block;
+  }
+
+  .o-icon {
+    width: icon-width-get( close ) * 1.5;
+  }
+}
+
+.c-search__tools {
+  display: none;
+  position: relative;
+
+  .is-active-search & {
+    display: block;
+  }
+}
+
+.c-search__tools__item {
+  display: inline-block;
+}
+
+.c-search__total-results {
+  padding: rem-calc( 4px );
+}
+
+.c-search__total-results__count {
+  font-weight: 600;
+}
 
 .c-search__field {
   @include stdbd(

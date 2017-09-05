@@ -3,15 +3,18 @@
 use Timber\Timber;
 use Pedestal\Objects\Stream;
 
-global $wp_query;
+$stream = new Stream;
 
 $context = Timber::get_context();
-$items = Stream::get( $wp_query->posts );
-$context['items'] = $items;
 $context['archive_title'] = Pedestal\Frontend::get_archive_title();
-
-if ( $items ) {
-    Timber::render( 'archive.twig', $context );
+if ( $stream->is_stream_list() ) {
+    $context['stream'] = $stream->get_the_stream_list();
+    $context['extra_stream_container_classes'] = 'stream--list';
 } else {
-    locate_template( [ '404.php' ], true );
+    $context['stream'] = $stream->get_the_stream();
 }
+$context['pagination'] = $stream->get_pagination( [
+    'show_text' => false,
+] );
+
+Timber::render( 'archive.twig', $context );

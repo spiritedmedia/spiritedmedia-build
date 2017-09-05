@@ -1,9 +1,7 @@
-<div class="c-search__tools js-search-tools">
-        {% if found_results %}
-    <p class="c-search__total-results  c-search__tools__item">
-        <span class="c-search__total-results__count">{{found_results|number_format}}</span> results found for <em>{{search_query}}</em>
-    </p>
-    {% endif %}
-</div>
-
-{% include 'partials/loading.twig' %}
+{% if found_results %}
+    <div class="c-search__tools js-search-tools">
+        <p class="c-search__total-results  c-search__tools__item">
+            <span class="c-search__total-results__count">{{ found_results|number_format }}</span> results found for <em>{{ search_query }}</em>
+        </p>
+    </div>
+{% endif %}

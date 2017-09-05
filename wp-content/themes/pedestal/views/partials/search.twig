@@ -1,9 +1,4 @@
-{% set container_classes = "c-search" %}
-{% if sitewide %}
-    {% set container_classes = "c-search c-search--sitewide" %}
-{% endif %}
-
-<div class="{{ container_classes }}">
+<div class="c-search">
     <form class="c-search__form row js-search-form" action="{{ site.url }}" role="search">
 
         <div class="c-search__input js-search-input">

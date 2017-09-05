@@ -16,7 +16,6 @@ use Pedestal\Posts\{
 };
 use Pedestal\Objects\{
     Newsletter_Lists,
-    Stream,
     User
 };
 

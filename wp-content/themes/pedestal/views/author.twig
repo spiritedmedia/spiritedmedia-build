@@ -5,7 +5,12 @@
     {{ macros.user_card( _context, user, {
         'format': 'extended',
         'img_size': 'medium-square',
-        'posts': true
+        'posts': false,
+        'stream': stream,
+        'pagination': pagination,
+        'upper_pagination': upper_pagination,
+        'show_closure_rule': show_closure_rule
     } ) }}
 </article>
+
 {% endblock %}

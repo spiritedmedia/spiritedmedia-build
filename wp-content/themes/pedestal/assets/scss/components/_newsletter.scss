@@ -3,15 +3,34 @@
 // ==========================================================================
 
 
-.c-newsletter {
-  $-event: '.c-stream__item[data-post-type="event"]';
+.newsletter-items {
+  .newsletter-item {
+    padding-bottom: $base-spacing-unit;
+    border-bottom: rem-calc( 1px ) solid $grey-90;
+    margin-bottom: $base-spacing-unit;
 
-  #{$-event} + #{$-event} {
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+
+  .newsletter-item--event + .newsletter-item--event {
     border-top: 0;
     margin-top: 0;
 
     &::before {
       width: 0;
     }
+  }
+}
+
+.newsletter-item {
+  .c-overview__title {
+    font-size: $h4-font-size;
+    margin-bottom: $base-spacing-unit;
+  }
+
+  .c-overview__description > * {
+    font-size: $h5-font-size;
   }
 }

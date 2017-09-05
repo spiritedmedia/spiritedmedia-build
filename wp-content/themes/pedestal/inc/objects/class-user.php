@@ -5,7 +5,6 @@ namespace Pedestal\Objects;
 use function Pedestal\Pedestal;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\User_Management;
-use Pedestal\Objects\Stream;
 use Pedestal\Posts\{
     Attachment,
     Post
@@ -36,41 +35,6 @@ class User extends Author {
 
         $this->user = $user;
 
-    }
-
-    /**
-     * Is the User a member of the current or specified site?
-     *
-     * @param  int  $site_id Site ID. Defaults to current site ID.
-     * @return boolean
-     */
-    public function is_site_member( $site_id = null ) {
-        if ( null === $site_id || ! is_numeric( $site_id ) ) {
-            $site_id = get_current_blog_id();
-        }
-        return is_user_member_of_blog( $this->get_id(), $site_id );
-    }
-
-    /**
-     * Add the User to site current or specified site
-     *
-     * @param string $role    Role to assign to the user
-     * @param int    $site_id Site ID. Defaults to current site ID.
-     * @return bool|WP_Error
-     */
-    public function add_to_site( string $role, $site_id = null ) {
-        self::$errors = new \WP_Error;
-
-        if ( null === $site_id || ! is_numeric( $site_id ) ) {
-            $site_id = get_current_blog_id();
-        }
-
-        if ( ! isset( User_Management::get_roles()[ strtolower( $role ) ] ) ) {
-            self::$errors->add( 'invalid_role', sprintf( '%s is not a valid role!', $role ) );
-            return self::$errors;
-        }
-
-        return add_user_to_blog( $site_id, $this->get_id(), $role );
     }
 
     /**
@@ -161,20 +125,6 @@ class User extends Author {
      */
     public function set_email( $email ) {
         $this->set_field( 'user_email', $email );
-    }
-
-    /**
-     * Check whether the user has an avatar
-     *
-     * @return boolean
-     */
-    public function has_avatar() {
-        if ( $this->get_email() ) {
-            if ( $this->get_image_html( 1 ) ) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -340,15 +290,6 @@ class User extends Author {
     }
 
     /**
-     * Get the user's registration date
-     *
-     * @return string
-     */
-    public function get_registered_date() {
-        return $this->get_field( 'user_registered' );
-    }
-
-    /**
      * Get the description for the user
      *
      * @return string
@@ -367,29 +308,6 @@ class User extends Author {
     }
 
     /**
-     * Get the pagination data for the user's stream
-     *
-     * @return array Pagination data
-     */
-    public function get_stream_pagination() {
-        $stream = $this->get_stream();
-        return $stream::get_pagination( $stream->get_query() );
-    }
-
-    /**
-     * Get the user entities array
-     *
-     * Default includes articles only.
-     *
-     * @param  array  $args WP_Query args
-     * @return array        Entities
-     */
-    public function get_entities( $args = [] ) {
-        $stream = $this->get_stream();
-        return $stream->get_stream();
-    }
-
-    /**
      * Get the user's stream object
      *
      * Default includes articles only.
@@ -398,12 +316,24 @@ class User extends Author {
      * @return array
      */
     public function get_stream( $args = [] ) {
+        $query = $this->get_stream_query( $args );
+        return Post::get_posts( $query );
+    }
+
+    /**
+     * Helper for getting a WP_Query object
+     *
+     * @param  array  $args  Args to modify the query
+     * @return WP_Query      WP_Query object
+     */
+    public function get_stream_query( $args = [] ) {
         $defaults = [
             'author_name' => $this->get_user_login(),
             'post_type'   => Types::get_original_post_types(),
         ];
         $args = wp_parse_args( $args, $defaults );
-        return new Stream( $args );
+        $args['paged'] = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+        return new \WP_Query( $args );
     }
 
     /**
