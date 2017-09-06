@@ -6,7 +6,7 @@
 #}
 
 {% if stream_index %}
-    {% set stream_index = 'data-stream-index="{{ stream_index }}"' %}
+    {% set stream_index = 'data-stream-index="' ~ stream_index|esc_attr ~ '"' %}
 {% endif %}
 
 <article class="stream-item stream-item--{{ type }}" {{ stream_index }}>
@@ -15,12 +15,12 @@
         <p class="stream-item__overline">
             {% if overline_url %}
                 <a
-                    href="{{ overline_url|e( 'url' ) }}"
+                    href="{{ overline_url|esc_url }}"
                     rel="nofollow"
                     target="_blank"
                     class="stream-item__overline-link"
                     data-ga-category="Sponsored"
-                    data-ga-label="Overline|{{ overline|e( 'html_attr' ) }}"
+                    data-ga-label="Overline|{{ overline|esc_attr }}"
                 >
                     {{ overline }}
                 </a>
@@ -34,10 +34,10 @@
         <figure class="stream-item__thumbnail-container">
             {% if permalink %}
                 <a
-                    href="{{ permalink|e( 'url' ) }}"
+                    href="{{ permalink|esc_url }}"
                     class="stream-item__thumbnail-image-link"
                     data-ga-category="Sponsored"
-                    data-ga-label="Image|{{ title|e( 'html_attr' ) }}"
+                    data-ga-label="Image|{{ title|esc_attr }}"
                 >
                     {{ thumbnail_image }}
                 </a>
@@ -54,12 +54,12 @@
     <h1 class="stream-item__title">
         {% if permalink %}
             <a
-                href="{{ permalink|e( 'url' ) }}"
+                href="{{ permalink|esc_url }}"
                 rel="nofollow"
                 target="_blank"
                 class="stream-item__title-link"
                 data-ga-category="Sponsored"
-                data-ga-label="Title|{{ title|e( 'html_attr' ) }}"
+                data-ga-label="Title|{{ title|esc_attr }}"
             >
                 {{ title }}
             </a>
@@ -77,7 +77,7 @@
 
             {# Setup some attributes #}
             {% if source_link %}
-                {% set source_link_href = 'href="' ~ source_link ~ '"' %}
+                {% set source_link_href = 'href="' ~ source_link|esc_url ~ '"' %}
             {% endif %}
 
             {# Display stuff #}
@@ -87,8 +87,8 @@
                     rel="nofollow"
                     target="_blank"
                     class="stream-item__source-image"
-                    data-ga-category="Source|{{ type|e( 'html_attr' ) }}"
-                    data-ga-label="Source Image|{{ source_name|e( 'html_attr' ) }}"
+                    data-ga-category="Source|{{ type|esc_attr }}"
+                    data-ga-label="Source Image|{{ source_name|esc_attr }}"
                 >
                     {{ source_image }}
                 </a>
@@ -100,8 +100,8 @@
                     rel="nofollow"
                     target="_blank"
                     class="stream-item__source-name"
-                    data-ga-category="Source|{{ type|e( 'html_attr' ) }}"
-                    data-ga-label="Name|{{ source_name|e( 'html_attr' ) }}"
+                    data-ga-category="Source|{{ type|esc_attr }}"
+                    data-ga-label="Name|{{ source_name|esc_attr }}"
                 >
                     {{ source_name }}
                 </a>

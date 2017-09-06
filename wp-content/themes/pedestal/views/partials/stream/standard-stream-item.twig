@@ -21,7 +21,7 @@ source_name        - The name of a source
 source_image       - Image associated with a source (usually an icon)
 source_link        - URL associated with the source
 date_time          - Human readable date time format for the stream item
-machine_time       - Machine readable verison (ISO 8601 format usually) of the date time 
+machine_time       - Machine readable verison (ISO 8601 format usually) of the date time
 #}
 
 
@@ -35,19 +35,19 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
 {% endif %}
 
 {% if stream_index %}
-    {% set stream_index = 'data-stream-index="{{ stream_index }}"' %}
+    {% set stream_index = 'data-stream-index="' ~ stream_index|esc_attr ~ '"' %}
 {% endif %}
 
-<article class="stream-item stream-item--{{ type }}" {{ stream_index }}>
+<article class="stream-item stream-item--{{ type|esc_attr }}" {{ stream_index }}>
     {% if thumbnail_image %}
         <figure class="stream-item__thumbnail-container">
             {% if permalink %}
                 <a
-                    href="{{ permalink|e( 'html_attr' ) }}"
+                    href="{{ permalink|esc_url }}"
                     {{ permalink_target }}
                     class="stream-item__thumbnail-image-link"
-                    data-ga-category="{{ ga_category_stream|e( 'html_attr' ) }}"
-                    data-ga-label="Image|{{ title|e( 'html_attr' ) }}"
+                    data-ga-category="{{ ga_category_stream|esc_attr }}"
+                    data-ga-label="Image|{{ title|esc_attr }}"
                 >{{ thumbnail_image }}</a>
             {% else %}
                 {{ thumbnail_image }}
@@ -59,11 +59,11 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
         <figure class="stream-item__featured-container">
             {% if permalink %}
                 <a
-                    href="{{ permalink|e( 'html_attr' ) }}"
+                    href="{{ permalink|esc_url }}"
                     {{ permalink_target }}
                     class="stream-item__featured-image-link"
-                    data-ga-category="{{ ga_category_stream|e( 'html_attr' ) }}"
-                    data-ga-label="Image|{{ title|e( 'html_attr' ) }}"
+                    data-ga-category="{{ ga_category_stream|esc_attr }}"
+                    data-ga-label="Image|{{ title|esc_attr }}"
                 >{{ featured_image }}</a>
             {% else %}
                 {{ featured_image }}
@@ -79,10 +79,10 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
         <p class="stream-item__overline">
             {% if overline_url %}
                 <a
-                    href="{{ overline_url }}"
+                    href="{{ overline_url|esc_url }}"
                     class="stream-item__overline-link"
-                    data-ga-category="{{ ga_category_stream|e( 'html_attr' ) }}"
-                    data-ga-label="Overline|{{ overline|e( 'html_attr' ) }}"
+                    data-ga-category="{{ ga_category_stream|esc_attr }}"
+                    data-ga-label="Overline|{{ overline|esc_attr }}"
                 >
                     {{ overline }}
                 </a>
@@ -95,11 +95,11 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
     <h1 class="stream-item__title">
         {% if permalink %}
             <a
-                href="{{ permalink|e( 'html_attr' ) }}"
+                href="{{ permalink|esc_url }}"
                 {{ permalink_target }}
                 class="stream-item__title-link"
-                data-ga-category="{{ ga_category_stream|e( 'html_attr' ) }}"
-                data-ga-label="Title|{{ title|e( 'html_attr' ) }}"
+                data-ga-category="{{ ga_category_stream|esc_attr }}"
+                data-ga-label="Title|{{ title|esc_attr }}"
             >
                 {{ title }}
             </a>
@@ -123,11 +123,11 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
 
             {# Setup some attributes #}
             {% if source_link %}
-                {% set source_link_href = 'href="' ~ source_link|e( 'html_attr' ) ~ '"' %}
+                {% set source_link_href = 'href="' ~ source_link|esc_url ~ '"' %}
             {% endif %}
 
             {% if author_link %}
-                {% set author_link_href = 'href="' ~ author_link|e( 'html_attr' ) ~ '"' %}
+                {% set author_link_href = 'href="' ~ author_link|esc_url ~ '"' %}
             {% endif %}
 
             {# Display stuff #}
@@ -135,8 +135,8 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 <a
                     {{ source_link_href }}
                     class="stream-item__source-image"
-                    data-ga-category="Source|{{ type|e( 'html_attr' ) }}"
-                    data-ga-label="Source Image|{{ source_name|e( 'html_attr' ) }}"
+                    data-ga-category="Source|{{ type|esc_attr }}"
+                    data-ga-label="Source Image|{{ source_name|esc_attr }}"
                 >
                     {{ source_image }}
                 </a>
@@ -146,8 +146,8 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 <a
                     {{ source_link_href }}
                     class="stream-item__source-name"
-                    data-ga-category="Source|{{ type|e( 'html_attr' ) }}"
-                    data-ga-label="Name|{{ source_name|e( 'html_attr' ) }}"
+                    data-ga-category="Source|{{ type|esc_attr }}"
+                    data-ga-label="Name|{{ source_name|esc_attr }}"
                 >
                     {{ source_name }}
                 </a>
@@ -169,7 +169,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
             {% endif %}
 
             {% if date_time %}
-                <time {% if machine_time %}datetime="{{ machine_time }}"{% endif %} class="stream-item__datetime">{{ date_time }}</time>
+                <time {% if machine_time %}datetime="{{ machine_time|esc_attr }}"{% endif %} class="stream-item__datetime">{{ date_time }}</time>
             {% endif %}
 
         </footer>
