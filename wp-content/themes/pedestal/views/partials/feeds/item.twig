@@ -1,6 +1,6 @@
 <title>{{ item.get_title }}</title>
-<link>{{ item.get_permalink }}</link>
-<pubDate>{{ item.get_post_date_gmt('c') }}</pubDate>
+<link>{{ item.get_permalink|e }}</link>
+<pubDate>{{ item.get_post_date_gmt('r') }}</pubDate>
 <dc:creator><![CDATA[{{ item.get_author_names_rss }}]]></dc:creator>
 <guid isPermaLink="false">{{ item.get_guid }}</guid>
 

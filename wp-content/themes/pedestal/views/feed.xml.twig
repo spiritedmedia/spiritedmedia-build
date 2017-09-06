@@ -13,8 +13,8 @@
 
 {% block header %}
     <title>{{ feed.title }}</title>
-    <atom:link href="{{ feed.self_link }}" rel="self" type="application/rss+xml" />
-    <link>{{ feed.site_link }}</link>
+    <atom:link href="{{ feed.self_link|esc_url }}" rel="self" type="application/rss+xml" />
+    <link>{{ feed.site_link|e }}</link>
     <description>{{ feed.description }}</description>
     <lastBuildDate>{{ feed.build_date }}</lastBuildDate>
     <language>{{ feed.language }}</language>

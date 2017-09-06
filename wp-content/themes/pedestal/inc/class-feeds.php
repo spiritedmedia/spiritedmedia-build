@@ -174,10 +174,10 @@ class Feeds {
     /**
      * Get the feed's last build date
      *
-     * @return string ISO-8601 datetime
+     * @return string RFC 822 datetime
      */
     private function get_feed_last_build_date() {
-        return mysql2date( 'c', get_lastpostmodified( 'GMT' ), false );
+        return mysql2date( 'r', get_lastpostmodified( 'GMT' ), false );
     }
 
     /**

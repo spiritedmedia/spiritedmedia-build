@@ -863,11 +863,12 @@ class Post {
         if ( ! $file_size ) {
             return false;
         }
+        $mime_type = get_post_mime_type( $this->get_featured_image_id() );
         return sprintf(
             '<enclosure url="%s" length="%s" type="%s" />',
-            $thumbnail['url'],
-            $file_size,
-            get_post_mime_type( $this->get_featured_image_id() )
+            esc_url( $thumbnail['url'] ),
+            esc_attr( $file_size ),
+            esc_attr( $mime_type )
         );
 
     }
