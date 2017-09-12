@@ -131,7 +131,7 @@
 
   @if global-variable-exists( site-theme-name ) {
     @include iconize(
-      $path: $site-logo-dir-abspath + '/logo-icon-placeholder',
+      $path: $site-theme-logo-abspath + '/logo-icon-placeholder',
       $size: $size
     );
   }

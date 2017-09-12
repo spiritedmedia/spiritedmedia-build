@@ -11,8 +11,8 @@
 // ==========================================================================
 
 
-$font-family-sans-serif   : "Source Sans Pro", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-$font-family-serif        : "PT Serif", Georgia, Cambria, "Times New Roman", Times, serif;
+$font-family-sans-serif   : "Source Sans Pro", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif !default;
+$font-family-serif        : "PT Serif", Georgia, Cambria, "Times New Roman", Times, serif !default;
 
 $anchor-text-decoration: none;
 $anchor-text-decoration-hover: none;
@@ -56,28 +56,28 @@ $facebook-blue           : #3b5998;
 
 // We need to set these two commonly-used defaults which should be overridden in
 // the child themes
-$primary-color           : $spiritedmedia-brand;
-$secondary-color         : lighten( $spiritedmedia-brand, 10% );
+$primary-color           : $spiritedmedia-brand !default;
+$secondary-color         : lighten( $spiritedmedia-brand, 10% ) !default;
 
 $success-color           : #43ac6a; // From Foundation
 $alert-color             : $yet-another-red;
 
-$body-bg                 : $white;
+$body-bg                 : $white !default;
 $body-font-color         : $grey-25;
-$c-panel-bg              : $white;
+$c-panel-bg              : $white !default;
 $anchor-font-color       : $primary-color;
-$anchor-font-color-hover : $black;
-$border-std-color        : $grey-90;
-$header-font-color       : $body-font-color;
+$anchor-font-color-hover : $black !default;
+$border-std-color        : $grey-90 !default;
+$header-font-color       : $body-font-color !default;
 
 // WCAG 2.0 guidelines require a text contrast ratio of at least 4.5:1 (#767676)
 // for AA and 7:1 for AAA (#595959).
 // https://www.w3.org/TR/WCAG20/#visual-audio-contrast
-$dimmed-text-color       : $grey-46;
+$dimmed-text-color       : $grey-46 !default;
 
 // User role colors
-$user-staff-color        : $primary-color;
-$user-contributor-color  : $mustard-gas;
+$user-staff-color        : $primary-color !default;
+$user-contributor-color  : $mustard-gas !default;
 
 $loading-default-opacity : 0.25;
 

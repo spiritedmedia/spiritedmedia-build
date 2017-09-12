@@ -68,7 +68,7 @@ $site-header-pd-v         : $base-spacing-unit;
 
 $heading-minor-f-z        : $base-font-size;
 
-$input-font-color         : rgba( 0, 0, 0, 0.75 ); //
+$input-font-color         : rgba( 0, 0, 0, 0.75 ); // !default
 
 
 
@@ -120,12 +120,12 @@ $z-stream-item-img : $z-index-1;
 
 
 $row-width           : rem-calc( 1060 );
-$column-gutter       : rem-calc( 30 ); //
+$column-gutter       : rem-calc( 30 ); // !default
 
-$content-wrapper-m-t : $base-spacing-unit;
-$content-wrapper-m-b : ( $base-spacing-unit * 4 );
+$content-wrapper-m-t : $base-spacing-unit !default;
+$content-wrapper-m-b : ( $base-spacing-unit * 4 ) !default;
 
-$screen              : 'only screen'; //
+$screen              : 'only screen'; // !default
 
 // Here we define the lower and upper bounds for each media size
 $small-range         : ( 0, 40em ); /* 0, 640px */
@@ -146,12 +146,12 @@ $xxlarge-range       : 120.063em; /* 1921px */
 $main-margin-top           : $base-spacing-unit;
 $main-margin-bottom        : $base-spacing-unit * 2;
 $main-header-margin-bottom : $base-spacing-unit * 2;
-$main-title-margin-bottom  : ( $base-spacing-unit * 4 );
-$main-subtitle-font-weight : 400;
-$main-subtitle-margin-top  : ( $base-spacing-unit * 1.2 );
+$main-title-margin-bottom  : ( $base-spacing-unit * 4 ) !default;
+$main-subtitle-font-weight : 400 !default;
+$main-subtitle-margin-top  : ( $base-spacing-unit * 1.2 ) !default;
 
-$main-rail-item-pd         : $half-spacing-unit;
-$main-rail-f-z             : $small-font-size;
+$main-rail-item-pd         : $half-spacing-unit !default;
+$main-rail-f-z             : $small-font-size !default;
 
 
 

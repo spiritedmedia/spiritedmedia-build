@@ -11,19 +11,19 @@
 // stylelint-disable selector-max-type
 
 
-$o-media-gutter             : $base-spacing-unit;
-$o-media-gutter--tiny       : ( $o-media-gutter / 4 );
-$o-media-gutter--small      : ( $o-media-gutter / 2 );
-$o-media-gutter--large      : ( $o-media-gutter * 2 );
-$o-media-gutter--huge       : ( $o-media-gutter * 4 );
+$o-media-gutter             : $base-spacing-unit !default;
+$o-media-gutter--tiny       : ( $o-media-gutter / 4 ) !default;
+$o-media-gutter--small      : ( $o-media-gutter / 2 ) !default;
+$o-media-gutter--large      : ( $o-media-gutter * 2 ) !default;
+$o-media-gutter--huge       : ( $o-media-gutter * 4 ) !default;
 
-$enable-o-media--tiny       : false;
-$enable-o-media--small      : false;
-$enable-o-media--large      : true;
-$enable-o-media--huge       : false;
-$enable-o-media--rev        : true;
-$enable-o-media--flush      : false;
-$enable-o-media--responsive : true;
+$enable-o-media--tiny       : false !default;
+$enable-o-media--small      : false !default;
+$enable-o-media--large      : true !default;
+$enable-o-media--huge       : false !default;
+$enable-o-media--rev        : true !default;
+$enable-o-media--flush      : false !default;
+$enable-o-media--responsive : true !default;
 
 // Minimum width for media objects to float
 $o-media-collapse-at        : lower-bound( $medium-range );

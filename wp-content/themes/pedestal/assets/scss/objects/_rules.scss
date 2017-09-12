@@ -3,16 +3,16 @@
 // ==========================================================================
 
 
-$section-header-p-t       : double( $base-spacing-unit );
+$section-header-p-t       : double( $base-spacing-unit ) !default;
 
-$o-rule-height              : quarter( $base-spacing-unit );
-$rule-spacing-y             : quarter( $base-spacing-unit );
-$o-rule-color               : $grey-95;
+$o-rule-height              : quarter( $base-spacing-unit ) !default;
+$rule-spacing-y             : quarter( $base-spacing-unit ) !default;
+$o-rule-color               : $grey-95 !default;
 
 $o-rule--closure-h          : halve( $o-rule-height );
-$o-rule--closure-m-t        : ( $base-spacing-unit * 3 );
-$o-rule--closure-icon-size  : $icon-diameter--med;
-$o-rule--closure-sum-height : ( $o-rule--closure-h + $rule-spacing-y + $o-rule--closure-icon-size );
+$o-rule--closure-m-t        : ( $base-spacing-unit * 3 ) !default;
+$o-rule--closure-icon-size  : $icon-diameter--med !default;
+$o-rule--closure-sum-height : ( $o-rule--closure-h + $rule-spacing-y + $o-rule--closure-icon-size ) !default;
 
 
 .section-header {
@@ -50,7 +50,7 @@ hr,
   &::before {
     @if global-variable-exists( site-theme-name ) {
       @include iconize(
-        $path: $site-logo-dir-abspath + '/logo-icon',
+        $path: $site-theme-logo-abspath + '/logo-icon',
         $path-only: true
       );
     }
