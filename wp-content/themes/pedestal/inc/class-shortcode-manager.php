@@ -387,6 +387,12 @@ class Shortcode_Manager {
         }
         if ( ! empty( $attachment ) && ! empty( $size ) ) {
             $obj = Attachment::get_by_post_id( (int) $attachment );
+            if ( 'full' == $size ) {
+                $meta = $obj->get_metadata();
+                if ( ! empty( $meta['width'] ) && 1024 < $meta['width'] ) {
+                    $size = 'large';
+                }
+            }
 
             if ( is_feed( 'fias' ) ) {
                 $size = 'full';

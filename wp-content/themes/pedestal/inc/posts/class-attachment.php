@@ -200,7 +200,7 @@ class Attachment extends Post {
      *
      * @return array
      */
-    protected function get_metadata() {
+    public function get_metadata() {
         return wp_get_attachment_metadata( $this->get_id() );
     }
 

@@ -1,11 +1,7 @@
-Build [#3551](https://circleci.com/gh/spiritedmedia/spiritedmedia/3551) by montchr at 2017-09-12 04:17 PM UTC
+Build [#3559](https://circleci.com/gh/spiritedmedia/spiritedmedia/3559) by kingkool68 at 2017-09-12 06:31 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.3](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.3)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.4](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.4)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.2...v6.0.3)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.3...v6.0.4)
 
- - [#2261](https://github.com/spiritedmedia/spiritedmedia/pull/2261): Make site tagline logo appear by default
- - [#2195](https://github.com/spiritedmedia/spiritedmedia/pull/2195): Start a coding standards markdown doc
- - [#2246](https://github.com/spiritedmedia/spiritedmedia/pull/2246): Remove Foundation "visibility" component
- - [#2247](https://github.com/spiritedmedia/spiritedmedia/pull/2247): Remove Foundation "block grid" component
- - [#2244](https://github.com/spiritedmedia/spiritedmedia/pull/2244): Add CLI Command to Add All Unique Contacts for a Site to One ActiveCampaign List
+ - [#2259](https://github.com/spiritedmedia/spiritedmedia/pull/2259): Prevent Full Sized Image from Being Used on the Frontend If They're Too Big
