@@ -806,5 +806,87 @@ class CLI extends \WP_CLI_Command {
 
         WP_CLI::success( 'Done' );
     }
+
+    /**
+     * Add contacts subscribed to any of the site's email lists to the ALL list
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal update-all-activecampaign-list
+     *     wp pedestal update-all-activecampaign-list --url=http://billypenn.dev
+     *
+     * @subcommand update-all-activecampaign-list
+     */
+    public function update_all_activecampaign_list() {
+        $ac = new ActiveCampaign;
+
+        // Get the ALL list
+        $all_list_name = 'All Contacts - ' . PEDESTAL_BLOG_NAME;
+        $all_list = $ac->get_list_by_name( $all_list_name );
+        if ( ! $all_list ) {
+            $all_list = $ac->add_list([
+                'name' => $all_list_name,
+            ]);
+        }
+        if ( ! $all_list ) {
+            WP_CLI::error( 'Problem getting the ALL list, ' . $all_list_name );
+            return false;
+        }
+        $all_list_id = $all_list->id;
+
+        // Get all of the site's lists
+        $lists = (array) $ac->get_lists([
+            'filters[name]' => '- ' . PEDESTAL_BLOG_NAME,
+        ]);
+        $total_lists = count( $lists );
+        $active_list_ids = [];
+        foreach ( $lists as $list ) {
+            if ( $list->subscriber_count > 0 && $list->id != $all_list_id ) {
+                // WP_CLI::line( $list->id . ' | ' . $list->name . ' | ' . $list->subscriber_count );
+                $active_list_ids[] = $list->id;
+            }
+        }
+        WP_CLI::line( count( $active_list_ids ) . ' / ' . $total_lists . ' lists have subscribers.' );
+
+        // Get all of the contacts who aren't on the ALL list already
+        $contacts_to_add = [];
+        $page = 1;
+        $keep_going = true;
+        while ( $keep_going ) {
+            $contacts = (array) $ac->get_contacts([
+                'full' => 1,
+                'filters[listid]' => implode( ',', $active_list_ids ),
+                'filters[status]' => '1',
+                'page' => $page,
+            ]);
+
+            if ( empty( $contacts ) ) {
+                $keep_going = false;
+                break;
+            } else {
+                foreach ( $contacts as $contact ) {
+                    $subscribed_lists = (array) $contact->lists;
+                    $already_subscribed = false;
+                    foreach ( $subscribed_lists as $list ) {
+                        if ( $list->listid == $all_list_id ) {
+                            $already_subscribed = true;
+                            break;
+                        }
+                    }
+                    if ( ! $already_subscribed ) {
+                        $contacts_to_add[] = $contact->email;
+                        $ac->subscribe_contact( $contact->email, $all_list_id );
+                    }
+                }
+            }
+
+            $contacts_to_add_count = number_format( count( $contacts_to_add ) );
+            WP_CLI::line( 'Page ' . $page . ' | ' . $contacts_to_add_count . ' contacts added' );
+            $page++;
+        }
+
+        $contacts_to_add_count = number_format( count( $contacts_to_add ) );
+        WP_CLI::line( 'Done! ' . $contacts_to_add_count . ' contacts added' );
+    }
 }
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );

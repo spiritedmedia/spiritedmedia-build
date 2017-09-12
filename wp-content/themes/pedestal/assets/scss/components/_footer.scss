@@ -249,7 +249,7 @@ $breakpoint-footer-links-columns-shrink: em-calc( 818px );
 
 @if global-variable-exists( site-theme-name ) {
   .site-footer__logo {
-    @include iconize( $site-theme-logo-abspath + '/logo-icon-white', $footer-logo-size );
+    @include iconize( $site-logo-dir-abspath + '/logo-icon-white', $footer-logo-size );
 
     margin: 0 auto;
     margin-bottom: 1rem;

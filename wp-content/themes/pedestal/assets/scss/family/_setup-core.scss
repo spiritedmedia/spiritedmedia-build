@@ -13,7 +13,7 @@ $pedestal-abspath              : '/' + map-get-strict( $spiritedmedia-pedestal, 
 $pedestal-social-icons-abspath : $pedestal-abspath + '/assets/images/social';
 
 // This allows us to test some assets live on the QA site
-$qa-test                       : false !default;
+$qa-test                       : false;
 $pedestal-live-uri             : map-get-strict( $spiritedmedia-pedestal, liveURI );
 @if $qa-test {
   $pedestal-live-uri : map-get-strict( $spiritedmedia-pedestal, stagingURI );

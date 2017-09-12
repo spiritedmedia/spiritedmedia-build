@@ -97,8 +97,6 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
   font-size: $c-meta-info-icon-size;
 }
 
-.c-meta-info__img--standalone {}
-
 
 .c-meta-info__name {}
 
@@ -136,10 +134,14 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
 
 
 .c-meta-info--stream {
-  .c-meta-info__img {
-    @media #{$medium-up} {
+  @media #{$medium-up} {
+    .c-meta-info__img {
       margin-left: $c-meta-info-icon-spacing;
       margin-right: 0;
+    }
+
+    .c-meta-info__img--standalone {
+      @include invisible;
     }
   }
 } // .c-meta-info--stream

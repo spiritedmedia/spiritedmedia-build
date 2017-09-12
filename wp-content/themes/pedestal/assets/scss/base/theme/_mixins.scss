@@ -3,32 +3,6 @@
 // ==========================================================================
 
 
-/**
- * Break a component out of the bounds of its parent to span viewport width
- *
- * @param  {string} $selector:             '&'                          Selector
- * @param  {unit} $inner-vertical-padding: double( $base-spacing-unit ) Interior vertical padding
- * @param  {unit} $explode-width:          $hoz-explode-side            Blast radius
- */
-@mixin explode-component(
-  $selector: '&',
-  $inner-vertical-padding: double( $base-spacing-unit ),
-  $explode-width: $hoz-explode-side
-) {
-
-  #{$selector} {
-    $margin-top: -( $content-wrapper-m-t + $main-margin-top );
-    $margin-hoz: -( $explode-width );
-
-    margin: $margin-top $margin-hoz 0;
-
-    &__inner {
-      padding: $inner-vertical-padding $explode-width;
-    }
-  }
-}
-
-
 /// Add a glowing effect to a block element state
 ///
 /// @param {string} $selector - Used for selector state. Default: focus, Options: hover, active, visited
@@ -264,4 +238,93 @@
     border-left: $size solid transparent;
   }
 
+}
+
+
+
+
+
+//
+// Layout
+// ==========================================================================
+
+
+/// Block grid layout
+///
+/// Use this when you want a fluid grid layout for an arbitrary number of
+/// similarly-sized items like user cards or videos or photos etc.
+///
+/// @param {number|bool} $per-row [false]            How many items to display per row
+/// @param {number}      $spacing [rem-calc( 16px )] Spacing between items
+/// @param {bool}        $include-spacing [true]     Do you want to include spacing between items?
+/// @param {string}      $child-selector [`> *`]     Selector for the child elements
+/// @param {bool}        $base-style [true]          Include the base styles? Should probably be false if in a media query
+@mixin block-grid(
+  $per-row: false,
+  $spacing: rem-calc( 16px ),
+  $include-spacing: true,
+  $child-selector: '> *',
+  $base-style: true
+) {
+
+  @if $include-spacing {
+    #{$child-selector} {
+      padding: 0 ( $spacing / 2 ) $spacing;
+    }
+  }
+
+  @if $base-style {
+    @include clearfix;
+
+    display: block;
+    margin: 0 ( -$spacing / 2 );
+    padding: 0;
+
+    #{$child-selector} {
+      display: block;
+      float: left;
+      height: auto;
+    }
+  }
+
+  @if $per-row {
+    #{$child-selector} {
+      list-style: none;
+      width: 100% / $per-row;
+
+      &:nth-of-type( 1n ) {
+        clear: none;
+      }
+
+      &:nth-of-type( #{$per-row}n+1 ) {
+        clear: both;
+      }
+    }
+  }
+}
+
+
+/**
+ * Break a component out of the bounds of its parent to span viewport width
+ *
+ * @param  {string} $selector:             '&'                          Selector
+ * @param  {unit} $inner-vertical-padding: double( $base-spacing-unit ) Interior vertical padding
+ * @param  {unit} $explode-width:          $hoz-explode-side            Blast radius
+ */
+@mixin explode-component(
+  $selector: '&',
+  $inner-vertical-padding: double( $base-spacing-unit ),
+  $explode-width: $hoz-explode-side
+) {
+
+  #{$selector} {
+    $margin-top: -( $content-wrapper-m-t + $main-margin-top );
+    $margin-hoz: -( $explode-width );
+
+    margin: $margin-top $margin-hoz 0;
+
+    &__inner {
+      padding: $inner-vertical-padding $explode-width;
+    }
+  }
 }

@@ -2,13 +2,13 @@
 // Pedestal // Components // TABLES
 // ==========================================================================
 
-$table-head-font-size      : rem-calc( 14 ) !default;
-$table-head-padding        : rem-calc( 8 10 10 ) !default;
-$table-caption-font-size   : rem-calc( 16 ) !default;
-$table-row-padding         : rem-calc( 9 10 ) !default;
-$table-row-font-size       : rem-calc( 14 ) !default;
-$table-line-height         : rem-calc( 18 ) !default;
-$table-margin-bottom       : rem-calc( 20 ) !default;
+$table-head-font-size      : rem-calc( 14 );
+$table-head-padding        : rem-calc( 8 10 10 );
+$table-caption-font-size   : rem-calc( 16 );
+$table-row-padding         : rem-calc( 9 10 );
+$table-row-font-size       : rem-calc( 14 );
+$table-line-height         : rem-calc( 18 );
+$table-margin-bottom       : rem-calc( 20 );
 
 .c-details-table {
   @include stdbd;

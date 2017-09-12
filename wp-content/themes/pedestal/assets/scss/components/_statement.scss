@@ -1,25 +1,5 @@
-// ==========================================================================
-// Pedestal // Components // STATEMENT
-//
-// Statements and quotes for Factchecks and Pages
-// ==========================================================================
-
-
-/*figure*/.c-statement {
+.c-statement {
   margin: 0;
-
-  &__img {}
-  &__body {}
-  &__content {
-    &__text {}
-    /*blockquote*/&--quote {}
-  }
-
-  /*figcaption*/&__speaker {
-    &__name {}
-    &__setting {}
-    &__date {}
-  }
 }
 
 
@@ -115,6 +95,12 @@
       font-weight: 100;
       font-style: italic;
     }
+  }
+}
 
+
+@media #{$small-only} {
+  .c-statement--page {
+    @include invisible;
   }
 }

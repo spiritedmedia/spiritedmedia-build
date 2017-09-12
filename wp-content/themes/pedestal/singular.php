@@ -17,7 +17,7 @@ if ( $sponsored_item ) {
 }
 
 $templates = [];
-if ( is_a( $item, '\\Pedestal\\Posts\\Post' ) ) {
+if ( is_a( $item, '\\Pedestal\\Posts\\Post' ) ) :
     $templates[] = 'single-' . $item->get_type() . '.twig';
 
     if ( $item->is_cluster() ) {
@@ -55,7 +55,7 @@ if ( is_a( $item, '\\Pedestal\\Posts\\Post' ) ) {
             $context['sidebar'] = Timber::get_widgets( 'sidebar-entity' );
         }
     }
-}
+endif;
 $templates[] = 'single.twig';
 
 $context['item'] = $item;

@@ -1,8 +1,6 @@
-// ==========================================================================
-// Pedestal // Components // PAGINATION
-// ==========================================================================
+$pagination-button-bg: $grey-80;
 
-$pagination-button-bg: $grey-80 !default;
+
 /**
  * Left/right pagination for stream
  */
@@ -122,16 +120,12 @@ $pagination-button-bg: $grey-80 !default;
   transition: background-color 300ms ease-out;
   margin-bottom: 0;
   padding: $base-spacing-unit 0;
-}
 
-.c-pagination__item:hover,
-.c-pagination__item:focus {
-  background-color: $grey-70;
-}
-
-.c-pagination__item:hover,
-.c-pagination__item:focus {
-  color: $white;
+  &:hover,
+  &:focus {
+    background-color: $grey-70;
+    color: $white;
+  }
 }
 
 // Disable these linters because we need to override the default behavior of
@@ -177,16 +171,11 @@ a.c-pagination__item.is-disabled:focus {
   height: rem-calc( 28px );
 }
 
+.c-pagination__dir__label {
+  @include invisible;
+}
+
 .c-pagination__nums {}
-
-.c-pagination__dir--prev {
-  margin-left: 0;
-}
-
-.c-pagination__dir--next {
-  float: right;
-  margin-right: 0;
-}
 
 .c-pagination__num {
   display: none;

@@ -568,7 +568,7 @@ class Shortcode_Manager {
             return $out;
         }
 
-        $out .= '<ul class="pedestal-shortcode user-grid">';
+        $out .= '<div class="user-grid">';
         foreach ( $ids as $id ) {
             $users_filter = wp_filter_object_list( $users, [
                 'ID' => $id,
@@ -579,7 +579,7 @@ class Shortcode_Manager {
             $user = array_shift( $users_filter );
 
             $user = new \Pedestal\Objects\User( $user );
-            $out .= '<li class="user-grid__user">';
+            $out .= '<div class="user-grid__user">';
 
             $context = [
                 'user' => $user,
@@ -588,10 +588,10 @@ class Shortcode_Manager {
             Timber::render( 'partials/shortcode/user-card-grid.twig', $context );
             $out .= ob_get_clean();
 
-            $out .= '</li>';
+            $out .= '</div>';
         }
 
-        $out .= '</ul>';
+        $out .= '</div>';
 
         return $out;
     }

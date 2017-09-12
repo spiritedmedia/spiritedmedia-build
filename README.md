@@ -1,8 +1,11 @@
-Build [#3504](https://circleci.com/gh/spiritedmedia/spiritedmedia/3504) by kingkool68 at 2017-09-06 08:15 PM UTC
+Build [#3551](https://circleci.com/gh/spiritedmedia/spiritedmedia/3551) by montchr at 2017-09-12 04:17 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.2](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.2)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.3](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.3)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.1...v6.0.2)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.2...v6.0.3)
 
- - [#2242](https://github.com/spiritedmedia/spiritedmedia/pull/2242): Escape RSS Fields Where Appropriate
- - [#2241](https://github.com/spiritedmedia/spiritedmedia/pull/2241): Constrain Sponsorship Logo in Outlook
+ - [#2261](https://github.com/spiritedmedia/spiritedmedia/pull/2261): Make site tagline logo appear by default
+ - [#2195](https://github.com/spiritedmedia/spiritedmedia/pull/2195): Start a coding standards markdown doc
+ - [#2246](https://github.com/spiritedmedia/spiritedmedia/pull/2246): Remove Foundation "visibility" component
+ - [#2247](https://github.com/spiritedmedia/spiritedmedia/pull/2247): Remove Foundation "block grid" component
+ - [#2244](https://github.com/spiritedmedia/spiritedmedia/pull/2244): Add CLI Command to Add All Unique Contacts for a Site to One ActiveCampaign List

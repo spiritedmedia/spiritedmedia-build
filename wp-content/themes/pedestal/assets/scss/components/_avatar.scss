@@ -16,7 +16,7 @@
 @if global-variable-exists( site-theme-name ) {
   .c-avatar__img--fallback {
     @include iconize(
-      $path: $site-theme-logo-abspath + '/logo-default-avatar',
+      $path: $site-logo-dir-abspath + '/logo-default-avatar',
       $size: $avatar-size-sm,
       $fallback: true
     );

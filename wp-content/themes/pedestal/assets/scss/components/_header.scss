@@ -74,7 +74,7 @@ $breakpoint-header-display-social-icons: em-calc( 738px );
     display: block;
     background: no-repeat top left;
     background-size: contain;
-    background-image: url( $site-theme-logo-abspath + '/logo.svg' );
+    background-image: url( $theme-logo-img-abspath );
     width: 205px;
     height: 42px;
 
@@ -93,4 +93,8 @@ $breakpoint-header-display-social-icons: em-calc( 738px );
       height: 73px;
     }
   }
+}
+
+.site-header-logo__text {
+  @include invisible;
 }

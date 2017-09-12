@@ -3,6 +3,27 @@
 // ==========================================================================
 
 
+/// Visually hide an element
+///
+/// Shows for screen-readers
+///
+/// https://allyjs.io/tutorials/hiding-elements.html#2017-edition-of-visuallyhidden
+@mixin invisible {
+  &:not( :focus ):not( :active ) {
+    border: 0;
+    clip-path: inset( 100% );
+    clip: rect( 0 0 0 0 );
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}
+
+
 
 
 
@@ -110,7 +131,7 @@
 
   @if global-variable-exists( site-theme-name ) {
     @include iconize(
-      $path: $site-theme-logo-abspath + '/logo-icon-placeholder',
+      $path: $site-logo-dir-abspath + '/logo-icon-placeholder',
       $size: $size
     );
   }

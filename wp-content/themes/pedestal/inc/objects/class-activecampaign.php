@@ -66,7 +66,9 @@ class ActiveCampaign {
         $args = wp_parse_args( $args, $default_args );
         $url = ACTIVECAMPAIGN_URL . $endpoint;
         $request_url = add_query_arg( $args, $url );
-        $response = wp_remote_get( $request_url, [] );
+        $response = wp_remote_get( $request_url, [
+            'timeout' => 15,
+        ] );
         return Utils::handle_api_request_response( $response, $args['api_output'] );
     }
 
@@ -267,6 +269,27 @@ class ActiveCampaign {
     }
 
     /**
+     * Get multiple contacts
+     * @see    http://www.activecampaign.com/api/example.php?call=contact_list
+     * @param  array $args  Array of arguments
+     * @return object       Contact details
+     */
+    public function get_contacts( $args = [] ) {
+        $default_args = [
+            'full' => 0,
+        ];
+        $args = wp_parse_args( $args, $default_args );
+        if ( isset( $args['ids'] ) && is_array( $args['ids'] ) ) {
+            $ids = array_map( 'trim', $args['ids'] );
+            $args['ids'] = implode( ',', $ids );
+        }
+        $args['api_action'] = 'contact_list';
+        $response = $this->get_request( $args );
+        $payload = $this->cleanup_response( $response['body'] );
+        return $payload;
+    }
+
+    /**
      * Get the lists the contact is subscribed to
      * @param  mixed $contact_token  An identifier to get a contact from
      * @param  string $filter        Whether to show all, subscribed, or unsubscribed
@@ -313,7 +336,7 @@ class ActiveCampaign {
             'full'          => 0,
         ];
         $args = wp_parse_args( $args, $default_args );
-        if ( is_array( $args['ids'] ) ) {
+        if ( isset( $args['ids'] ) && is_array( $args['ids'] ) ) {
             $ids = array_map( 'trim', $args['ids'] );
             $args['ids'] = implode( ',', $ids );
         }

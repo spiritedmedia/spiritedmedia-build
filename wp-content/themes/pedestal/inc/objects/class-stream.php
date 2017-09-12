@@ -317,9 +317,9 @@ class Stream {
         }
 
         $default_next_text = Icons::get_icon( 'angle-right', 'c-pagination__dir__icon' ) . ' ';
-        $default_next_text .= '<span class="show-for-sr">Next Page</span>';
+        $default_next_text .= '<span class="c-pagination__dir__label">Next Page</span>';
         $default_prev_text = Icons::get_icon( 'angle-left', 'c-pagination__dir__icon' ) . ' ';
-        $default_prev_text .= '<span class="show-for-sr">Previous Page</span>';
+        $default_prev_text .= '<span class="c-pagination__dir__label">Previous Page</span>';
 
         $defaults = [
             'show_text' => true,

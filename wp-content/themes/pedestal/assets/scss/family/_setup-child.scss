@@ -5,7 +5,16 @@
 // ==========================================================================
 
 
+//
+// Configuration
+// ==========================================================================
+// Set theme defaults here -- these can be overridden in the individual theme
+// stylesheets before importing this file. Note that the `!default` flags are
+// required here.
+
+
 $site-theme-name: 'pedestal' !default;
+$theme-logo-tagline: true !default;
 
 
 @import 'setup-core';
@@ -33,10 +42,19 @@ $site-theme-name: 'pedestal' !default;
 // ==========================================================================
 
 
+//
 // URLs and paths
-$site-live-url            : sm-theme-setting-get( siteLiveURL );
-$site-theme-abspath       : '/' + sm-theme-setting-get( themePath );
-$site-theme-logo-abspath  : $site-theme-abspath + '/assets/images/logos';
+//
+
+$site-live-url               : sm-theme-setting-get( siteLiveURL );
+$site-theme-abspath          : '/' + sm-theme-setting-get( themePath );
+$site-logo-dir-abspath : $site-theme-abspath + '/assets/images/logos';
+
+$theme-logo-img-abspath       : $site-logo-dir-abspath + '/logo.svg';
+@if $theme-logo-tagline {
+  $theme-logo-img-abspath     : $site-logo-dir-abspath + '/logo-tagline.svg';
+}
+
 
 // Colors
-$site-theme-brand-color   : sm-theme-setting-get( brandColor );
+$site-brand-color   : sm-theme-setting-get( brandColor );

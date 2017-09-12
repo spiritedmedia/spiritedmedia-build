@@ -18,12 +18,6 @@
 
 
 .user-grid {
-  @include no-bullet( $post-content: true );
-
-  /**
-   * Handle block grid mixins ourselves to reduce bloat
-   */
-
   @include block-grid( $per-row: 1, $include-spacing: false, $base-style: true );
 
   @media #{$medium-up} {
@@ -34,13 +28,10 @@
     @include block-grid( $per-row: 3, $include-spacing: false, $base-style: false );
   }
 
-
-
   .c-user-card {
     padding: $base-spacing-unit;
     text-align: center;
   }
-
 }
 
 
