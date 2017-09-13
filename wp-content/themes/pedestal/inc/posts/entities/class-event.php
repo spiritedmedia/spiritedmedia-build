@@ -3,6 +3,7 @@
 namespace Pedestal\Posts\Entities;
 
 use Timber\Timber;
+use Pedestal\Utils\Utils;
 
 class Event extends Entity {
 
@@ -33,7 +34,7 @@ class Event extends Entity {
     public function get_what() {
         $what_field = $this->get_fm_field( 'event_details', 'what' );
         if ( $what_field ) {
-            return $what_field;
+            return Utils::reverse_wpautop( $what_field );
         }
         return $this->get_excerpt();
     }

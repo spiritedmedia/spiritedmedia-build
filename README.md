@@ -1,7 +1,8 @@
-Build [#3564](https://circleci.com/gh/spiritedmedia/spiritedmedia/3564) by kingkool68 at 2017-09-12 07:06 PM UTC
+Build [#3568](https://circleci.com/gh/spiritedmedia/spiritedmedia/3568) by kingkool68 at 2017-09-13 03:05 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.5](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.5)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.6](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.6)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.4...v6.0.5)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.0.5...v6.0.6)
 
- - [#2266](https://github.com/spiritedmedia/spiritedmedia/pull/2266): [HOTFIX] Revert #2261 // Hardcode site logo with tagline
+ - [#2262](https://github.com/spiritedmedia/spiritedmedia/pull/2262): 2254 Exclude Staff Traffic from Google Analytics
+ - [#2264](https://github.com/spiritedmedia/spiritedmedia/pull/2264): Fix Font Issues with WHAT Section of Events

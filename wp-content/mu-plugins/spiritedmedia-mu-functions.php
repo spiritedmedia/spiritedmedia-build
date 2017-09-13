@@ -32,6 +32,10 @@ add_filter( 'mercator.sso.multinetwork.enabled', '__return_false' );
 
 add_action( 'set_auth_cookie', function( $auth_cookie, $expire, $expiration, $user_id, $scheme ) {
     setcookie( 'is_logged_in', 'true', $expire, COOKIEPATH, COOKIE_DOMAIN, false, false );
+    if ( user_can( $user_id, 'edit_posts' ) ) {
+        $one_year = time() + YEAR_IN_SECONDS;
+        setcookie( 'is_staff', 'true', $one_year, COOKIEPATH, COOKIE_DOMAIN, false, false );
+    }
 }, 10, 5 );
 
 add_action( 'clear_auth_cookie', function() {

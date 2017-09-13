@@ -576,4 +576,19 @@ class Utils {
 
         return $services[ $url_domain ];
     }
+
+    /**
+     * Does the opposite of WordPress' wpautop() function
+     *
+     * @see https://wordpress.stackexchange.com/a/10972/2744
+     * @param  string $string HTML string to be modified
+     * @return string         Modified string
+     */
+    public static function reverse_wpautop( $string = '' ) {
+        $string = str_replace( "\n", '', $string );
+        $string = str_replace( '<p>', '', $string );
+        $string = str_replace( [ '<br />', '<br>', '<br/>' ], "\n", $string );
+        $string = str_replace( '</p>', "\n\n", $string );
+        return $string;
+    }
 }

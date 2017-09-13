@@ -665,6 +665,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $context['site']->analytics = [
                 'ga_id' => PEDESTAL_GOOGLE_ANALYTICS_ID,
                 'ga_optimize_id' => PEDESTAL_GOOGLE_OPTIMIZE_ID,
+                'hide_ga' => current_user_can( 'edit_posts' ),
                 'parsely' => [
                     'site' => parse_url( home_url(), PHP_URL_HOST ),
                     'data' => $parsely->get_data(),
