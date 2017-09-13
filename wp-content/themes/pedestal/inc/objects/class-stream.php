@@ -230,7 +230,7 @@ class Stream {
         }
 
         $next_page_num = $current_page + 1;
-        if ( $next_page_num < $total_pages ) {
+        if ( $next_page_num <= $total_pages ) {
             $output['next_page_num'] = $next_page_num;
             $output['next_url'] = $this->get_pagination_link( $next_page_num, $args['base'], $args['format'], $args['add_args'] );
         }
