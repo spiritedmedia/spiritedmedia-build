@@ -71,7 +71,7 @@ function ScrollDepth(selector, label, percs) {
    * @param  {int}    value
    */
   function sendEvent(action, label, value) {
-    if (typeof window.ga === 'undefined') {
+    if (typeof window.ga !== 'function') {
       return;
     }
     window.ga('send', 'event', 'Scroll Depth', action, label, value, {

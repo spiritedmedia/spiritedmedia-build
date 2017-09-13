@@ -128,7 +128,7 @@
       if ($('body').is('.js-debug-ga')) {
         debugging = true;
       }
-      if (typeof ga === 'undefined' && !debugging) {
+      if (typeof ga !== 'function' && !debugging) {
         return;
       }
       $('body')
