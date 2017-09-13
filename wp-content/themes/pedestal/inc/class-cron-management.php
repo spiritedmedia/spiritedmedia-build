@@ -7,25 +7,29 @@ use function Pedestal\Pedestal;
 use \Pedestal\Utils\Utils;
 
 use \Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Email\Newsletter_Emails;
+use Pedestal\Objects\Notifications;
 
 class Cron_Management {
 
-    private static $default_notify_channel = PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL;
-
-    private static $instance;
-
+    /**
+     * Get an instance of this class
+     */
     public static function get_instance() {
-
-        if ( ! isset( self::$instance ) ) {
-            self::$instance = new Cron_Management;
-            self::$instance->setup_actions();
+        static $instance = null;
+        if ( null === $instance ) {
+            $instance = new static();
+            $instance->setup_actions();
         }
-        return self::$instance;
+        return $instance;
     }
 
+    /**
+     * Hook into WordPress via actions
+     */
     private function setup_actions() {
-        add_action( 'pedestal_cron_notify_newsletter_subscriber_count', [ $this, 'notify_newsletter_subscriber_count' ] );
         add_action( 'wp', [ $this, 'action_wp_cron_notify_newsletter_subscriber_count' ] );
+        add_action( 'pedestal_cron_notify_newsletter_subscriber_count', [ $this, 'notify_newsletter_subscriber_count' ] );
     }
 
     /**
@@ -41,12 +45,21 @@ class Cron_Management {
 
     /**
      * Notify Slack of the current newsletter subscriber count
-     *
-     * Wrapper for Subscriptions->notify_newsletter_subscriber_count()
-     *
-     * @uses \Pedestal\Subscriptions::notify_newsletter_subscriber_count()
      */
-    public function notify_newsletter_subscriber_count() {
-        Pedestal()->subscriptions->notify_newsletter_subscriber_count();
+    public function notify_newsletter_subscriber_count( $notification_args = [] ) {
+        $newsletter = Newsletter_Emails::get_instance();
+        $count = $newsletter->get_daily_newsletter_subscriber_count();
+
+        if ( empty( $count ) ) {
+            return;
+        }
+
+        $notification_args = wp_parse_args( $notification_args, [
+            'channel' => PEDESTAL_SLACK_CHANNEL_NEWSLETTER,
+        ] );
+
+        $msg = sprintf( 'There are currently %d email addresses subscribed to the Daily Newsletter.', $count );
+        $notifier = new Notifications;
+        $notifier->send( $msg, $notification_args );
     }
 }

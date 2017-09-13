@@ -129,7 +129,6 @@ class Admin {
 
         add_filter( 'fm_element_markup_start', [ $this, 'filter_fm_element_markup_start' ], 10, 2 );
         add_filter( 'wp_insert_post_data', [ $this, 'filter_wp_insert_post_data' ], 10, 2 );
-        add_filter( 'gettext', [ $this, 'filter_gettext_publish_button' ], 10, 2 );
         add_filter( 'tiny_mce_before_init', [ $this, 'filter_tiny_mce_before_init' ] );
 
         if ( current_user_can( 'manage_uploads' ) ) {
@@ -530,37 +529,6 @@ class Admin {
             update_post_meta( $post_id, 'credit_link', $val );
         }
         return $post;
-    }
-
-    /**
-     * Filter the text of the post Publish button
-     */
-    public function filter_gettext_publish_button( $translation, $text ) {
-        if ( 'Publish' !== $text ) {
-            return $translation;
-        }
-
-        // We need to account for the var postL10n JavaScript variable translation
-        // as well and `get_post_type()` returns null during that context.
-        $post_type = get_post_type();
-        if ( ! $post_type && isset( $_GET['post'] ) ) {
-            $post_type = get_post_type( $_GET['post'] );
-        }
-        if ( ! $post_type && isset( $_GET['post_type'] ) ) {
-            $post_type = $_GET['post_type'];
-        }
-        if ( 'pedestal_newsletter' !== $post_type ) {
-            return $translation;
-        }
-
-        $new_text = 'Send Newsletter';
-        // If the trash is disabled we need to use a shorter label
-        // 'Move to Trash' changes to 'Delete Permanently' and there is less space
-        if ( ! EMPTY_TRASH_DAYS ) {
-            $new_text = 'Send';
-        }
-
-        return $new_text;
     }
 
     /**

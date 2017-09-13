@@ -19,20 +19,20 @@
 }
 
 /*figure*/.e404-tunnel-monster {
-  margin: rem-calc( -29px ) 0 0 0;
+  margin: rem( -29px ) 0 0 0;
   text-align: center;
 
   @media #{$medium-up} {
-    margin-top: rem-calc( -36px );
-    margin-left: 20px;
+    margin-top: rem( -36px );
+    margin-left: rem( 20px );
     text-align: left;
   }
 }
 
 .e404-tunnel-monster__img {
-  width: 300px;
+  width: rem( 300px );
 
   @media #{$medium-up} {
-    width: 450px;
+    width: rem( 450px );
   }
 }

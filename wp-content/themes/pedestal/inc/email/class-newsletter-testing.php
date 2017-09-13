@@ -1,5 +1,5 @@
 <?php
-namespace Pedestal\Admin;
+namespace Pedestal\Email;
 
 /**
  * Tools for setting up split-test emails in WordPress

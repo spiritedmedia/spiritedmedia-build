@@ -76,7 +76,7 @@
 }
 
 .email-stream-item--heading {
-  padding: ($base-spacing-unit * 2) $email-container-spacing-hoz 0;
+  padding: 20px $email-container-spacing-hoz 0;
   text-transform: uppercase;
   border-bottom: 0;
 }
@@ -121,7 +121,7 @@
 }
 
 .email-header__inner {
-  padding: ($base-spacing-unit * 2) 0;
+  padding: 20px 0;
   text-align: center;
 }
 
@@ -142,7 +142,7 @@
 .email-top-bar {}
 
 .email-top-bar__inner {
-  padding: ($base-spacing-unit * 2) $email-container-spacing-hoz;
+  padding: 20px $email-container-spacing-hoz;
 
   > table {
     width: 100%;
@@ -182,12 +182,12 @@
 }
 
 .email-content-header__inner {
-  padding: ($base-spacing-unit * 2) $email-container-spacing-hoz;
+  padding: 20px $email-container-spacing-hoz;
   text-align: center;
 }
 
 .email-content-header__text {
-  padding-bottom: $base-spacing-unit;
+  padding-bottom: 10px;
 
   // The divider should only look like a divider when it follows the default
   // content header text
@@ -208,7 +208,7 @@
 // Hero image flush
 .email-hero-img {
   > td {
-    padding-bottom: $base-spacing-unit * 2;
+    padding-bottom: 20px;
   }
 
   img {
@@ -227,12 +227,12 @@
 // ==========================================================================
 
 .email-text-main {
-  padding-bottom: $base-spacing-unit * 2;
+  padding-bottom: 20px;
 }
 
 .email-text-main__item {
   > td {
-    padding: 0 $email-container-spacing-hoz $base-spacing-unit;
+    padding: 0 $email-container-spacing-hoz 10px;
   }
 
   &:last-child {
@@ -285,7 +285,7 @@
   @include email-body-type;
 
   text-align: center;
-  padding: ($base-spacing-unit * 4) $base-spacing-unit;
+  padding: 40px 10px;
   color: #ffffff;
 
   p {
@@ -311,7 +311,7 @@
 }
 
 .email-grid__column__inner {
-  padding: $base-spacing-unit;
+  padding: 10px;
 
   > table {
     // text-align: left;
@@ -326,7 +326,7 @@
 .email-grid__column__text {
   @include email-body-type;
 
-  padding-top: $base-spacing-unit;
+  padding-top: 10px;
 
   p {
     margin: 0;
@@ -343,7 +343,7 @@
   }
 
   .email-grid__column__img {
-    max-width: $column-max-width - ($base-spacing-unit * 2);
+    max-width: $column-max-width - 20px;
   }
 }
 
@@ -370,7 +370,7 @@
 // ==========================================================================
 
 .email-media-layout {
-  padding: $base-spacing-unit 0;
+  padding: 10px 0;
 
   > table {
     max-width: $email-container-width-inner;
@@ -379,7 +379,7 @@
 
 .email-media-layout__inner {
   font-size: 0;
-  padding: $base-spacing-unit 0;
+  padding: 10px 0;
 }
 
 .email-media-layout__img {
@@ -390,7 +390,7 @@
 }
 
 .email-media-layout__img__inner {
-  padding: $base-spacing-unit;
+  padding: 10px;
   padding-top: 0;
 
   img {
@@ -408,18 +408,18 @@
 }
 
 .email-media-layout__body__inner {
-  padding: $base-spacing-unit $base-spacing-unit 0;
+  padding: 10px 10px 0;
 }
 
 .email-media-layout__body__heading {
   @include email-heading-type;
 
-  margin-bottom: $base-spacing-unit;
+  margin-bottom: 10px;
 }
 
 .email-media-layout__body__text {
   margin: 0;
-  margin-bottom: $base-spacing-unit;
+  margin-bottom: 10px;
 }
 
 
@@ -479,7 +479,7 @@
   &,
   > table {
     margin: 0 !important;
-    margin-left: $base-spacing-unit !important;
+    margin-left: 10px !important;
   }
 }
 
@@ -515,8 +515,8 @@
 .email-event__detail {
   > td {
     border-bottom: $email-divider-std;
-    padding-top: $base-spacing-unit;
-    padding-bottom: $base-spacing-unit;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   &:last-child > td {
@@ -525,7 +525,7 @@
 }
 
 .email-event__detail__label {
-  padding-bottom: $base-spacing-unit / 2;
+  padding-bottom: 5px;
 }
 
 .email-event__detail__content {
@@ -534,7 +534,7 @@
 
 .email-event__btn {
   > td {
-    padding-top: $base-spacing-unit;
+    padding-top: 10px;
   }
 }
 
@@ -557,17 +557,17 @@
 }
 
 .email-daily-insta__heading {
-  padding-top: $base-spacing-unit * 2;
+  padding-top: 20px;
 
   h2 {
-    padding-bottom: $base-spacing-unit;
+    padding-bottom: 10px;
   }
 }
 
 .email-daily-insta__divider {
   @include dash-rule;
 
-  margin-bottom: $base-spacing-unit;
+  margin-bottom: 10px;
 }
 
 .email-daily-insta__meta {
@@ -586,7 +586,7 @@
 .email-slot {}
 
 .email-slot__item {
-  padding: $base-spacing-unit 0;
+  padding: 10px 0;
 
   > table {
     margin: 0;
@@ -642,7 +642,7 @@
 // Supports premium images
 [data-slot-supports-premium] {
   .email-slot__label {
-    margin-bottom: 0.25rem;
+    margin-bottom: 2.5px;
   }
 
   .email-slot__img {
@@ -665,7 +665,7 @@
 
 
 .email-footer {
-  padding: 0 ($base-spacing-unit * 2) ($base-spacing-unit * 4);
+  padding: 0 20px 40px;
   width: 100%;
   font-family: $font-family-sans-serif;
   font-size: $small-font-size;
@@ -676,8 +676,8 @@
 
 .email-share-icons {
   th {
-    padding-top: $base-spacing-unit * 4;
-    padding-bottom: $base-spacing-unit;
+    padding-top: 40px;
+    padding-bottom: 10px;
 
     h2 {
       font-family: $font-family-sans-serif;
@@ -690,8 +690,8 @@
   }
 
   td {
-    padding-left: $base-spacing-unit;
-    padding-right: $base-spacing-unit;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   img {

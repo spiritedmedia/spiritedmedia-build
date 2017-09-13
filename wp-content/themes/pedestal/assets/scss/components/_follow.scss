@@ -3,15 +3,15 @@
 // ==========================================================================
 
 
-$breakpoint-follow-submit-label-length: em-calc( 420px );
+$breakpoint-follow-submit-label-length: em( 420px );
 
 .c-follow-this {
-  padding-bottom: $base-spacing-unit * 1.5;
+  padding-bottom: rem( 24px );
 }
 
 .c-follow-this__label {
   font-size: $h5-font-size;
-  margin-bottom: $base-spacing-unit;
+  margin-bottom: rem( 16px );
 }
 
 .c-follow-this__fields {
@@ -33,7 +33,7 @@ $breakpoint-follow-submit-label-length: em-calc( 420px );
 }
 
 .is-loading .c-follow-this__loader {
-  height: rem-calc( 100px );
+  height: rem( 100px );
 
   .c-spinner {
     position: absolute;

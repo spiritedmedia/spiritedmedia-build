@@ -19,6 +19,10 @@ $pedestal-live-uri             : map-get-strict( $spiritedmedia-pedestal, liveUR
   $pedestal-live-uri : map-get-strict( $spiritedmedia-pedestal, stagingURI );
 }
 
+// This is the default html and body font-size for the base rem value. We need
+// to set it as its own variable to make `rem()` work.
+$rem-base : 16px;
+
 // Functions
 @import 'foundation-sites/scss/foundation/functions';
 @import '../base/global/functions';

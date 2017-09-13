@@ -26,7 +26,7 @@ $dfp-mobile-ad-offset--panelled : -( $column-gutter );
 
 .dfp-disclaimer {
   text-align: center;
-  font-size: rem-calc( 11px );
+  font-size: rem( 11px );
   color: $dimmed-text-color;
   margin-bottom: 0;
 }
@@ -42,6 +42,13 @@ $dfp-mobile-ad-offset--panelled : -( $column-gutter );
       margin-right: $dfp-mobile-ad-offset--panelled;
     }
   }
+}
+
+.dfp-stream-08-wrapper,
+.dfp-stream-16-wrapper {
+  @include stdbd(bottom);
+
+  padding-bottom: $stream-item-spacing;
 }
 
 .rail {

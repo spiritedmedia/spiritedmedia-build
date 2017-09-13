@@ -3,27 +3,28 @@
 // ==========================================================================
 
 
-$breakpoint-header-display-social-icons: em-calc( 738px );
+$breakpoint-header-display-social-icons: em( 738px );
 
 
 // stylelint-disable selector-max-type
 
 
 .site-header {
+  @include stdbd( bottom );
+
   background: $white;
-  border-bottom: 1px solid $border-std-color;
   padding-top: $site-header-pd-v;
   padding-bottom: $site-header-pd-v;
 
   .site-ctas {
-    margin-left: -( $half-spacing-unit );
-    margin-top: $half-spacing-unit;
+    margin-left: rem( -8px );
+    margin-top: rem( 8px );
     margin-bottom: 0;
 
     @media
       ( min-width: lower-bound( $medium-range ) ) and
       ( max-width: $breakpoint-header-display-social-icons ) {
-      margin-top: $base-spacing-unit;
+      margin-top: rem( 16px );
     }
   }
 
@@ -31,7 +32,7 @@ $breakpoint-header-display-social-icons: em-calc( 738px );
   .site-ctas__social {
     display: none;
 
-    @media ( min-width: $breakpoint-header-display-social-icons + em-calc( 1px ) ) {
+    @media ( min-width: $breakpoint-header-display-social-icons + em( 1px ) ) {
       display: inline-block;
     }
   }
@@ -44,11 +45,12 @@ $breakpoint-header-display-social-icons: em-calc( 738px );
 
 // stylelint-disable selector-max-id
 #promoted-story {
+  @include stdbd( bottom );
+
   background-color: $white;
-  border-bottom: 1px solid $border-std-color;
 
   .row {
-    padding: halve( $base-spacing-unit ) $base-spacing-unit;
+    padding: rem( 8px ) rem( 16px );
   }
 
   strong {

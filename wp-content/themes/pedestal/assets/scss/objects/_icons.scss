@@ -6,17 +6,17 @@
 .o-icon {
   display: inline-block;
   vertical-align: middle;
-  width: 1em;
+  width: em( 16px );
   height: auto;
   stroke-width: 0;
   stroke: currentColor;
 
   .email-social-icon & {
     // vertical-align: baseline;
-    width: 40px;
-    height: 40px;
+    width: rem( 40px );
+    height: rem( 40px );
     display: block;
-    padding: 10px;
+    padding: rem( 10px );
   }
 }
 

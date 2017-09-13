@@ -6,7 +6,7 @@
 .c-video-widget {
 
   &__caption {
-    margin-top: $base-spacing-unit;
+    margin-top: rem( 16px );
   }
 
 
@@ -44,6 +44,6 @@
 
   &__description {
     color: $dimmed-text-color;
-    margin-top: 0.5em;
+    margin-top: rem( 8px );
   }
 }

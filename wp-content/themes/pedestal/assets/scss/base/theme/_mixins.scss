@@ -17,7 +17,7 @@
 
   &:#{$selector} {
     border-color: $glowing-effect-color;
-    box-shadow: 0 0 5px $glowing-effect-color;
+    box-shadow: 0 0 rem( 5px ) $glowing-effect-color;
   }
 }
 
@@ -147,7 +147,7 @@
 
 
 @mixin border-divider-scaffold(
-  $size: 1px,
+  $size: rem( 1px ),
   $color: $border-std-color,
   $side: 'bottom',
   $spacing: $border-divider-spacing
@@ -220,7 +220,7 @@
 // ==========================================================================
 
 
-@mixin corner-triangle( $size: $base-spacing-unit, $color: $primary-color, $corner: 'top-right' ) {
+@mixin corner-triangle( $size: rem( 16px ), $color: $primary-color, $corner: 'top-right' ) {
   width: 0;
   height: 0;
 
@@ -255,13 +255,13 @@
 /// similarly-sized items like user cards or videos or photos etc.
 ///
 /// @param {number|bool} $per-row [false]            How many items to display per row
-/// @param {number}      $spacing [rem-calc( 16px )] Spacing between items
+/// @param {number}      $spacing [rem( 16px )] Spacing between items
 /// @param {bool}        $include-spacing [true]     Do you want to include spacing between items?
 /// @param {string}      $child-selector [`> *`]     Selector for the child elements
 /// @param {bool}        $base-style [true]          Include the base styles? Should probably be false if in a media query
 @mixin block-grid(
   $per-row: false,
-  $spacing: rem-calc( 16px ),
+  $spacing: rem( 16px ),
   $include-spacing: true,
   $child-selector: '> *',
   $base-style: true
@@ -308,12 +308,12 @@
  * Break a component out of the bounds of its parent to span viewport width
  *
  * @param  {string} $selector:             '&'                          Selector
- * @param  {unit} $inner-vertical-padding: double( $base-spacing-unit ) Interior vertical padding
+ * @param  {unit} $inner-vertical-padding: rem( 32px ) Interior vertical padding
  * @param  {unit} $explode-width:          $hoz-explode-side            Blast radius
  */
 @mixin explode-component(
   $selector: '&',
-  $inner-vertical-padding: double( $base-spacing-unit ),
+  $inner-vertical-padding: rem( 32px ),
   $explode-width: $hoz-explode-side
 ) {
 

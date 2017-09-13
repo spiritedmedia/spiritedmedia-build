@@ -11,7 +11,7 @@
 // stylelint-disable selector-max-type
 
 
-$o-media-gutter             : $base-spacing-unit !default;
+$o-media-gutter             : rem( 16px ) !default;
 $o-media-gutter--tiny       : ( $o-media-gutter / 4 ) !default;
 $o-media-gutter--small      : ( $o-media-gutter / 2 ) !default;
 $o-media-gutter--large      : ( $o-media-gutter * 2 ) !default;

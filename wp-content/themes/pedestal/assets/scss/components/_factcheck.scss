@@ -20,7 +20,7 @@
   background-image: url( $pedestal-abspath + '/assets/images/partners/politifact/politifact-logo.svg' );
   background-size: contain;
   display: block;
-  height: $base-spacing-unit * 3;
+  height: rem( 48px );
 }
 
 

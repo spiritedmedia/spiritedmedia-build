@@ -48,6 +48,7 @@
 
 
 @import '../base/global/mixins';
+
 @import '../base/theme/mixins';
 @import '../base/theme/type';
 @import '../base/theme/general';
@@ -114,7 +115,7 @@
 body#tinymce {
   // `html`/`body` height makes editor go insane
   height: auto;
-  padding: 15px !important;
+  padding: rem( 16px ) !important;
   background-color: $white;
 
   .entity {
@@ -134,11 +135,11 @@ body#tinymce {
   .o-rule.o-rule--pedal {
 
     &:first-of-type {
-      border-top: 4px solid $o-rule-color;
-      margin-top: 1.2rem;
+      border-top: rem( 4px ) solid $o-rule-color;
+      margin-top: rem( 20px );
 
       &::before {
-        height: 4px;
+        height: rem( 4px );
       }
     }
   }

@@ -4,7 +4,7 @@
 
 
 /*figure*/.c-figure {
-  margin-bottom: $base-spacing-unit;
+  margin-bottom: rem( 16px );
 
   &,
   &__content-wrap {
@@ -24,7 +24,7 @@
 .c-figure__content {
   display: block;
   height: auto;
-  padding-bottom: $base-spacing-unit / 4;
+  padding-bottom: rem( 4px );
 }
 
 
@@ -44,7 +44,7 @@
 
   &__caption {
     font-weight: 400;
-    padding-right: $base-spacing-unit / 4;
+    padding-right: rem( 4px );
   }
 
   &__credit {

@@ -1,4 +1,4 @@
-$list-nested-margin: 1.25rem;
+$list-nested-margin: rem( 20px );
 
 
 /*
@@ -86,7 +86,7 @@ acronym {
 }
 
 abbr[title] {
-  border-bottom: rem-calc( 1px ) dotted $dimmed-text-color;
+  border-bottom: rem( 1px ) dotted $dimmed-text-color;
 }
 
 acronym {
@@ -128,7 +128,7 @@ dl {
 // Nested lists
 ul,
 ol {
-  margin-left: 0.5rem;
+  margin-left: rem( 8px );
 
   ul,
   ol {
@@ -139,7 +139,7 @@ ol {
 
 dl {
   dt {
-    margin-bottom: 0.25rem;
+    margin-bottom: rem( 4px );
     font-weight: 600;
   }
 
@@ -164,7 +164,7 @@ h6 {
   color: $header-font-color;
   font-weight: 600;
   line-height: 1.2;
-  margin-bottom: 0.5rem;
+  margin-bottom: rem( 8px );
   margin-top: 0;
   text-rendering: optimizeLegibility;
 
@@ -234,7 +234,7 @@ h6 { @include h-size( 6 ); }
 
   pre,
   blockquote {
-    border: rem-calc( 1px ) solid $dimmed-text-color;
+    border: rem( 1px ) solid $dimmed-text-color;
     page-break-inside: avoid;
   }
 

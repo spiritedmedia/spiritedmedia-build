@@ -5,8 +5,8 @@
 
 .c-overview {
   .c-figure--embed {
-    margin-top: $base-spacing-unit;
-    margin-bottom: $base-spacing-unit;
+    margin-top: rem( 16px );
+    margin-bottom: rem( 16px );
   }
 }
 
@@ -14,8 +14,7 @@
 .c-overview__overline,
 .c-overview__title,
 .c-overview__description {
-  // Because 16px is too much and 8px is too little...
-  margin-bottom: rem-calc( 12 );
+  margin-bottom: rem( 12px );
 }
 
 .c-overview__overline {}
@@ -66,7 +65,7 @@
 
 
 .c-overview__meta {
-  margin-top: $base-spacing-unit;
+  margin-top: rem( 16px );
   clear: both;
 }
 
@@ -109,7 +108,7 @@
     }
 
     @media #{$medium-up} {
-      margin-bottom: $base-spacing-unit / 2;
+      margin-bottom: rem( 8px );
       width: $overview-thumbnail-img-size;
       padding-bottom: $overview-thumbnail-img-size;
     }

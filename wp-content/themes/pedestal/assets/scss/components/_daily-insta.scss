@@ -5,14 +5,14 @@
 
 $c: '.c-daily-insta';
 
-$daily-insta-header-padding-v: $base-spacing-unit / 2;
+$daily-insta-header-padding-v: rem( 8px );
 
 
 #{$c} {
   background-color: $truth-serum;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: ( $base-spacing-unit * 2 );
+  margin-bottom: rem( 32px );
   display: table;
 
   &__header {
@@ -54,7 +54,7 @@ $daily-insta-header-padding-v: $base-spacing-unit / 2;
 
   /*figcaption*/&__caption {
     background-color: $truth-serum;
-    padding: $half-spacing-unit;
+    padding: rem( 8px );
     text-align: left;
 
     // Override .c-panel__inner

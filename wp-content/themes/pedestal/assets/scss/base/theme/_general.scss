@@ -48,7 +48,7 @@ svg {
 
 // Override Normalize.css figure element margins
 figure {
-  margin: 0 0 $base-spacing-unit 0;
+  margin: 0 0 rem( 16px ) 0;
 }
 
 
@@ -59,6 +59,6 @@ figure {
   transition: transform 0.3s ease;
 
   .is-search-open & {
-    transform: translateY( rem-calc( 60 ) );
+    transform: translateY( rem( 60 ) );
   }
 }

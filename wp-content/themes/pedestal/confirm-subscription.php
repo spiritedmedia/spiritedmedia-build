@@ -1,9 +1,9 @@
 <?php
 
 use Timber\Timber;
-use \Pedestal\Subscriptions;
 use \Pedestal\Posts\Clusters;
 use \Pedestal\Objects\ActiveCampaign;
+use \Pedestal\Email\Email_Lists;
 
 $context = Timber::get_context();
 
@@ -31,7 +31,7 @@ if ( $data ) {
     }
 }
 
-$clusters = Subscriptions::get_clusters_from_list_ids( $provided_list_ids );
+$clusters = Email_Lists::get_clusters_from_list_ids( $provided_list_ids );
 $subscription_title = '';
 if ( 1 == count( $clusters ) ) {
     $cluster = $clusters[0];

@@ -1,16 +1,16 @@
-$recent-content-thumbnail-size: rem-calc( 48px );
+$recent-content-thumbnail-size: rem( 48px );
 
 .widget_pedestal-recent-content .widget-title {
-  margin-bottom: rem-calc( 28px );
+  margin-bottom: rem( 28px );
 }
 
 .recent-content-widget__item {
-  font-size: $base-spacing-unit;
+  font-size: rem( 16px );
   line-height: 1.2;
   display: block;
   overflow: auto;
   height: 100%;
-  margin-bottom: rem-calc( 20px );
+  margin-bottom: rem( 20px );
 }
 
 .recent-content-widget__thumbnail,

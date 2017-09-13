@@ -1,15 +1,15 @@
 $footer-nav-bg: $grey-25;
 $footer-nav-text-color: $grey-95;
-$footer-logo-size: 2rem;
-$breakpoint-footer-links-columns: em-calc( 666px );
-$breakpoint-footer-links-columns-shrink: em-calc( 818px );
+$footer-logo-size: rem( 32px );
+$breakpoint-footer-links-columns: em( 666px );
+$breakpoint-footer-links-columns-shrink: em( 818px );
 
 
 .site-footer {
   clear: both;
-  margin-top: 1rem;
-  border-top: rem-calc( 1px ) solid $border-std-color;
-  border-bottom: rem-calc( 5px ) solid $primary-color;
+  margin-top: rem( 16px );
+  border-top: rem( 1px ) solid $border-std-color;
+  border-bottom: rem( 5px ) solid $primary-color;
 
   @media ( min-width: $breakpoint-footer-links-columns ) {
     border: none;
@@ -37,8 +37,8 @@ $breakpoint-footer-links-columns-shrink: em-calc( 818px );
 
 .site-footer__nav {
   @media ( min-width: $breakpoint-footer-links-columns ) {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: rem( 32px );
+    padding-bottom: rem( 32px );
   }
 }
 
@@ -57,8 +57,8 @@ $breakpoint-footer-links-columns-shrink: em-calc( 818px );
   text-align: center;
   margin-bottom: 0;
   background-color: $white;
-  padding-top: 1.25rem;
-  padding-bottom: 1rem;
+  padding-top: rem( 20px );
+  padding-bottom: rem( 16px );
 
   @media ( min-width: $breakpoint-footer-links-columns ) {
     @include grid-column(
@@ -122,8 +122,8 @@ $breakpoint-footer-links-columns-shrink: em-calc( 818px );
 .site-footer__links--inline {
   @include grid-column( 12 );
 
-  padding-top: 1.25rem;
-  padding-bottom: 2rem;
+  padding-top: rem( 20px );
+  padding-bottom: rem( 32px );
 
   @media ( min-width: $breakpoint-footer-links-columns ) {
     display: none;
@@ -131,11 +131,11 @@ $breakpoint-footer-links-columns-shrink: em-calc( 818px );
 
   li {
     display: inline-block;
-    padding-left: 0.25rem;
+    padding-left: rem( 4px );
 
     &::after {
       content: '·';
-      padding-left: 0.25rem;
+      padding-left: rem( 4px );
       color: $primary-color;
     }
 
@@ -164,9 +164,9 @@ $breakpoint-footer-links-columns-shrink: em-calc( 818px );
     $pull: 4
   );
 
-  padding-left: 1rem;
+  padding-left: rem( 16px );
 
-  @media ( max-width: $breakpoint-footer-links-columns - em-calc( 1 ) ) {
+  @media ( max-width: $breakpoint-footer-links-columns - em( 1 ) ) {
     display: none;
   }
 
@@ -202,11 +202,11 @@ $breakpoint-footer-links-columns-shrink: em-calc( 818px );
   font-size: $small-font-size;
   font-weight: 300;
   padding: 0;
-  padding-bottom: 1rem;
+  padding-bottom: rem( 16px );
 
   @media ( min-width: $breakpoint-footer-links-columns ) {
     text-align: left;
-    padding-top: 1rem;
+    padding-top: rem( 16px );
     background-color: $primary-color;
 
     // stylelint-disable selector-max-type
@@ -252,10 +252,10 @@ $breakpoint-footer-links-columns-shrink: em-calc( 818px );
     @include iconize( $site-theme-logo-abspath + '/logo-icon-white', $footer-logo-size );
 
     margin: 0 auto;
-    margin-bottom: 1rem;
+    margin-bottom: rem( 16px );
 
     @media ( min-width: $breakpoint-footer-links-columns ) {
-      margin-right: rem-calc( 10px );
+      margin-right: rem( 10px );
       margin-bottom: 0;
     }
   }

@@ -32,7 +32,7 @@
 
 
 .e404-main {
-  margin-top: $base-spacing-unit * 3;
+  margin-top: rem( 48px );
 }
 
 .e404-art {}
@@ -44,7 +44,7 @@
 }
 
 /*blockquote*/.e404-quote__body {
-  margin-bottom: 0.5rem;
+  margin-bottom: rem( 8px );
   border-left: 0;
   padding: 0;
 }

@@ -18,6 +18,6 @@
 
 
 .c-panel__inner {
-  padding: $base-spacing-unit;
-  min-height: ( $base-spacing-unit * 5 );
+  padding: rem( 16px );
+  min-height: ( rem( 80px ) );
 }

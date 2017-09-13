@@ -3,7 +3,7 @@
 // ==========================================================================
 
 
-$c-whos-next-spacing: $base-spacing-unit * 1.5;
+$c-whos-next-spacing: rem( 24px );
 
 
 .c-whos-next {
@@ -13,7 +13,7 @@ $c-whos-next-spacing: $base-spacing-unit * 1.5;
     background-image: url( $site-theme-abspath + '/assets/images/whos-next-partner.svg' );
     background-size: contain;
     display: block;
-    height: $base-spacing-unit * 3;
+    height: rem( 48px );
   }
 
   &__items {
@@ -49,7 +49,7 @@ $c-whos-next-spacing: $base-spacing-unit * 1.5;
     margin-right: $c-whos-next-spacing;
 
     @media #{$medium-up} {
-      margin-bottom: $base-spacing-unit * 2;
+      margin-bottom: rem( 32px );
       max-width: 45%;
     }
 
@@ -63,9 +63,9 @@ $c-whos-next-spacing: $base-spacing-unit * 1.5;
 
     &__icon {
       color: $dimmed-text-color;
-      width: $base-spacing-unit;
+      width: rem( 16px );
       text-align: center;
-      margin-right: $base-spacing-unit / 4;
+      margin-right: rem( 4px );
     }
 
 

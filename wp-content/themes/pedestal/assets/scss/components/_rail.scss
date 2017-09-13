@@ -8,17 +8,17 @@
 
 .rail {
   // Shrink column padding so a 300px DFP advert can fit
-  padding-left: halve( $base-spacing-unit );
-  padding-right: halve( $base-spacing-unit );
+  padding-left: rem( 8px );
+  padding-right: rem( 8px );
 
   // Fix for mysterious rail vertical explosion
-  // https://github.com/stomping/pedestal/issues/338
+  // https://github.com/spiritedmedia/spiritedmedia/issues/338
   overflow: hidden;
 
   .widget-title {
     @extend %c-heading--minor;
 
-    margin-top: double( $base-spacing-unit );
+    margin-top: rem( 32px );
 
     &:first-child {
       margin-top: 0;
@@ -30,10 +30,10 @@
 
     margin-bottom: $border-divider-spacing; // All widgets need this even if they don't have a border divider
     list-style-type: none;
-    padding: quarter( $base-spacing-unit );
+    padding: rem( 4px );
 
     p {
-      margin-bottom: 0.5rem;
+      margin-bottom: rem( 8px );
     }
 
     ul {

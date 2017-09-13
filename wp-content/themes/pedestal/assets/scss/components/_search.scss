@@ -22,14 +22,14 @@
   position: relative;
 
   .is-active-search & {
-    margin-bottom: $base-spacing-unit;
+    margin-bottom: rem( 16px );
   }
 }
 
 .c-search__icon {
-  padding: $half-spacing-unit;
+  padding: rem( 8px );
   position: absolute;
-  top: $base-spacing-unit / 4;
+  top: rem( 4px );
   color: $grey-25;
   background-color: transparent;
 
@@ -67,7 +67,7 @@
 }
 
 .c-search__total-results {
-  padding: rem-calc( 4px );
+  padding: rem( 4px );
 }
 
 .c-search__total-results__count {
@@ -84,10 +84,10 @@
   box-shadow: none;
   height: auto;
   font-size: $h4-font-size;
-  padding: $half-spacing-unit;
-  padding-left: rem-calc( 40 ); // input icon width
+  padding: rem( 8px );
+  padding-left: rem( 40 ); // input icon width
   color: $grey-25;
-  margin-bottom: $base-spacing-unit;
+  margin-bottom: rem( 16px );
 
   &,
   &:focus {

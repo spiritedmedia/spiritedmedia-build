@@ -78,7 +78,7 @@ $pagination-button-bg: $grey-80 !default;
   font-weight: 300;
   font-size: $h5-font-size;
   text-transform: uppercase;
-  padding-bottom: $half-spacing-unit;
+  padding-bottom: rem( 8px );
   margin-bottom: 0; // Needed on single cluster pages
   color: $dimmed-text-color;
   font-style: italic;
@@ -109,7 +109,7 @@ $pagination-button-bg: $grey-80 !default;
   font-family: $font-family-sans-serif;
   font-weight: normal;
   line-height: normal;
-  margin: 0 0 1.25rem;
+  margin: 0 0 rem( 20px );
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -119,7 +119,7 @@ $pagination-button-bg: $grey-80 !default;
   color: $grey-25;
   transition: background-color 300ms ease-out;
   margin-bottom: 0;
-  padding: $base-spacing-unit 0;
+  padding: rem( 16px ) 0;
 
   &:hover,
   &:focus {
@@ -168,7 +168,7 @@ a.c-pagination__item.is-disabled:focus {
   font-size: $h3-font-size;
   line-height: 0;
   vertical-align: middle;
-  height: rem-calc( 28px );
+  height: rem( 28px );
 }
 
 .c-pagination__dir__label {

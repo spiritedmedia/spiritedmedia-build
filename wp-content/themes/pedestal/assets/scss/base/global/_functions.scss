@@ -11,31 +11,82 @@
 // ==========================================================================
 
 
-/**
- * Math helpers.
- *
- * Halve and double numbers, E.G.:
- *
- * .foo {
- *     padding: halve( $base-spacing-unit );
- * }
- */
-@function quarter( $number ) {
-  @return $number / 4;
+/// Strip the unit from a number
+///
+/// @param {number} $num
+@function strip-unit( $num ) {
+  @return $num / ( $num * 0 + 1 );
 }
 
-@function halve( $number ) {
-  @return $number / 2;
+/// Helper function for rem()
+///
+/// Does calculation for individual unit conversion
+///
+/// @param {number} $value - Single pixel value to convert to rem
+/// @param {number} $base-value [$rem-base] - Base rem calculation off this unit
+@function _convert-to-rem( $value, $base-value: $rem-base ) {
+  $value: strip-unit( $value ) / strip-unit( $base-value ) * 1rem;
+  // stylelint-disable-next-line length-zero-no-unit
+  @if ( $value == 0rem ) {
+    $value: 0;
+  }
+  @return $value;
 }
 
-@function double( $number ) {
-  @return $number * 2;
+/// Convert pixels to rems
+///
+/// Call with 1, 2, 3 or 4 parameters -- px is not required but suggested.
+///
+///   rem(10 20 30px 40);
+///
+/// Space delimited, if you want to delimit using comma's, wrap it in another pair of brackets
+///
+///   rem((10, 20, 30, 40px));
+///
+/// Optionally call with a different base (eg: 8px) to calculate rem.
+///
+///   rem(16px 32px 48px, 8px);
+///
+/// @require {function} _convert-to-rem
+/// @param {number|list} $values - Pixel values to convert to rem, can be up to 4
+/// @param {number}      $base-value [$rem-base] - Base rem calculation off this unit
+/// @return {number|list} Single rem, list of rems, or zero
+@function rem( $values, $base-value: $rem-base ) {
+  $max: length( $values );
+
+  @if $max == 1 {
+    @return _convert-to-rem( nth( $values, 1 ), $base-value );
+  }
+
+  $rem-values: ();
+  @for $i from 1 through $max {
+    $rem-values: append( $rem-values, _convert-to-rem( nth( $values, $i ), $base-value ) );
+  }
+  @return $rem-values;
 }
 
-@function quadruple( $number ) {
-  @return $number * 4;
-}
+/// Convert pixels to ems
+///
+/// See documentation for `rem()`
+///
+/// @require {function} strip-unit
+/// @require {function} rem
+/// @see {function} rem
+@function em( $values, $base-value: $rem-base ) {
+  $rem-values: rem( $values, $base-value: $rem-base );
 
+  $max: length( $rem-values );
+
+  @if $max == 1 {
+    @return strip-unit( nth( $rem-values, 1 ) ) * 1em;
+  }
+
+  $em-values: ();
+  @for $i from 1 through $max {
+    $em-values: append( $em-values, strip-unit( nth( $rem-values, $i ) ) * 1em );
+  }
+  @return $em-values;
+}
 
 /// Clamp `$number` between `$min` and `$max`
 ///
@@ -50,21 +101,6 @@
 }
 
 
-/**
- * Convert a value to the specified unit
- *
- * The unit's value is arbitrary - it could be 1px or 2000px - this function
- * just gets the unit from that.
- *
- * @param  {unit} $value The value to convert
- * @param  {unit} $unit  The output unit
- * @return {unit}
- */
-@function convert-to-unit( $value, $unit ) {
-  @return strip-unit( $value ) * ( $unit - $unit + 1 );
-}
-
-
 
 
 
@@ -74,11 +110,11 @@
  * @param  {map} $map Map where each value is a unit or number
  * @return {map}
  */
-@function rem-calc-map-values( $map ) {
+@function rem-map-values( $map ) {
   $new-map: ();
   @each $key, $value in $map {
     @if ( number == type-of( $value ) ) {
-      $new-map: map-merge( $new-map, ( $key: rem-calc( $value ) ) );
+      $new-map: map-merge( $new-map, ( $key: rem( $value ) ) );
     }
   }
   @return $new-map;
@@ -211,11 +247,11 @@
 
   @if ( $size != null and string == type-of( $size ) ) {
     $dimensions: map-fetch( $spiritedmedia-pedestal, imageSizes, $size );
-    @return rem-calc-map-values( $dimensions );
+    @return rem-map-values( $dimensions );
   } @else {
     $sizes: map-fetch( $spiritedmedia-pedestal, imageSizes );
     @each $size, $dimensions in $sizes {
-      $new-dims: rem-calc-map-values( $dimensions );
+      $new-dims: rem-map-values( $dimensions );
       $new-sizes: map-merge( $new-sizes, ( $size: $new-dims ) );
     }
     @return $new-sizes;

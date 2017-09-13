@@ -1,5 +1,5 @@
-$stream-item-breakpoint : em-calc( 640px );
-$stream-item-footer-image : rem-calc( 28px );
+$stream-item-breakpoint : em( 640px );
+$stream-item-footer-image : rem( 28px );
 
 .stream-item {
   .stream & {
@@ -7,7 +7,7 @@ $stream-item-footer-image : rem-calc( 28px );
   }
 
   .stream.stream--list & {
-    margin-bottom: rem-calc( 32px );
+    margin-bottom: rem( 32px );
   }
 }
 
@@ -30,7 +30,7 @@ $stream-item-footer-image : rem-calc( 28px );
   line-height: 1.2;
   font-weight: 600;
   text-transform: uppercase;
-  margin-bottom: rem-calc( 12px );
+  margin-bottom: rem( 12px );
 }
 
 .stream-item__title {
@@ -73,8 +73,8 @@ $stream-item-footer-image : rem-calc( 28px );
 
   clear: both;
   color: $body-font-color;
-  padding-bottom: rem-calc( 4px );
-  margin-top: rem-calc( 16px );
+  padding-bottom: rem( 4px );
+  margin-top: rem( 16px );
   overflow: hidden;
 }
 
@@ -87,11 +87,11 @@ $stream-item-footer-image : rem-calc( 28px );
   color: $grey-62;
   float: left;
   margin-left: 0;
-  margin-right: rem-calc( 4px );
+  margin-right: rem( 4px );
   font-size: $stream-item-footer-image;
 
   .o-icon {
-    height: rem-calc( 28px );
+    height: rem( 28px );
   }
   // stylelint-disable selector-max-type
   .o-icon,
@@ -102,8 +102,8 @@ $stream-item-footer-image : rem-calc( 28px );
   // Correct the vertical centering of external links
   .o-icon--external-link {
     position: relative;
-    top: rem-calc( 4px );
-    height: rem-calc( 20px );
+    top: rem( 4px );
+    height: rem( 20px );
   }
 
   img {
@@ -144,8 +144,8 @@ $stream-item-footer-image : rem-calc( 28px );
 
 .stream-item--sponsored {
   .stream-item__source-name {
-    padding-top: rem-calc( 8px );
-    padding-bottom: rem-calc( 8px );
+    padding-top: rem( 8px );
+    padding-bottom: rem( 8px );
   }
 }
 
@@ -165,7 +165,7 @@ $stream-item-footer-image : rem-calc( 28px );
   .stream-item__author-image {
     float: none;
     margin-right: 0;
-    margin-left: rem-calc( 4px );
+    margin-left: rem( 4px );
     display: block;
 
     .o-icon--external-link {
@@ -202,8 +202,8 @@ $stream-item-footer-image : rem-calc( 28px );
 
   .stream-item__thumbnail-container {
     float: left;
-    margin-right: rem-calc( 16px );
-    margin-bottom: rem-calc( 8px );
-    width: rem-calc( 150px );
+    margin-right: rem( 16px );
+    margin-bottom: rem( 8px );
+    width: rem( 150px );
   }
 }

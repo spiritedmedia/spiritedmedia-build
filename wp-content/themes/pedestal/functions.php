@@ -14,9 +14,15 @@ use Pedestal\Posts\{
     Post,
     Slots
 };
-use Pedestal\Objects\{
-    Newsletter_Lists,
-    User
+use Pedestal\Objects\User;
+use Pedestal\Email\{
+    Email,
+    Email_Lists,
+    One_Off_Emails,
+    Breaking_News_Emails,
+    Newsletter_Emails,
+    Newsletter_Testing,
+    Follow_Updates_Emails
 };
 
 if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
@@ -221,9 +227,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
 
             if ( is_admin() ) {
-                $this->admin = Admin\Admin::get_instance();
-                $this->cluster_tools = Admin\Cluster_Tools::get_instance();
-                $this->newsletter_testing = Admin\Newsletter_Testing::get_instance();
+                $this->admin              = Admin\Admin::get_instance();
+                $this->cluster_tools      = Admin\Cluster_Tools::get_instance();
+                $this->newsletter_testing = Newsletter_Testing::get_instance();
             } else {
                 $this->frontend = Frontend::get_instance();
             }
@@ -232,8 +238,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->taxonomies        = Taxonomies::get_instance();
             $this->post_types        = Types::get_instance();
             $this->user_management   = User_Management::get_instance();
-            $this->subscriptions     = Subscriptions::get_instance();
-            $this->newsletter_lists  = Newsletter_Lists::get_instance();
             $this->shortcode_manager = Shortcode_Manager::get_instance();
             $this->adverts           = Adverts::get_instance();
             $this->slots             = Posts\Slots\Slots::get_instance();
@@ -241,6 +245,13 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->featured_posts    = Featured_Posts::get_instance();
             $this->icons             = Icons::get_instance();
             $this->scripts_styles    = Scripts_Styles::get_instance();
+
+            // Emails
+            $this->emails                = Email::get_instance();
+            $this->email_lists           = Email_Lists::get_instance();
+            $this->breaking_news_emails  = Breaking_News_Emails::get_instance();
+            $this->newsletter_emails     = Newsletter_Emails::get_instance();
+            $this->follow_updates_emails = Follow_Updates_Emails::get_instance();
 
             // Some functionality should only ever run on a live environment
             if ( 'live' === PEDESTAL_ENV ) {
@@ -646,8 +657,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'contact'                => PEDESTAL_EMAIL_CONTACT,
                 'news'                   => PEDESTAL_EMAIL_NEWS,
                 'placeholder'            => PEDESTAL_EMAIL_PLACEHOLDER,
-                'daily_newsletter_id'    => $this->newsletter_lists->get_newsletter_list_id( 'Daily Newsletter' ),
-                'breaking_newsletter_id' => $this->newsletter_lists->get_newsletter_list_id( 'Breaking News' ),
+                'daily_newsletter_id'    => $this->email_lists->get_newsletter_list_id( 'Daily Newsletter' ),
+                'breaking_newsletter_id' => $this->email_lists->get_newsletter_list_id( 'Breaking News' ),
             ];
 
             $context['site']->live_urls = [

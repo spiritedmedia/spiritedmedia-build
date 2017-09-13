@@ -3,16 +3,16 @@
 // ==========================================================================
 
 
-$section-header-p-t       : double( $base-spacing-unit ) !default;
+$section-header-p-t         : rem( 32px );
 
-$o-rule-height              : quarter( $base-spacing-unit ) !default;
-$rule-spacing-y             : quarter( $base-spacing-unit ) !default;
-$o-rule-color               : $grey-95 !default;
+$o-rule-height              : rem( 4px );
+$rule-spacing-y             : rem( 4px );
+$o-rule-color               : $grey-95;
 
-$o-rule--closure-h          : halve( $o-rule-height );
-$o-rule--closure-m-t        : ( $base-spacing-unit * 3 ) !default;
-$o-rule--closure-icon-size  : $icon-diameter--med !default;
-$o-rule--closure-sum-height : ( $o-rule--closure-h + $rule-spacing-y + $o-rule--closure-icon-size ) !default;
+$o-rule--closure-h          : $o-rule-height / 2;
+$o-rule--closure-m-t        : rem( 48px );
+$o-rule--closure-icon-size  : $icon-diameter--med;
+$o-rule--closure-sum-height : $o-rule--closure-h + $rule-spacing-y + $o-rule--closure-icon-size;
 
 
 .section-header {
@@ -37,8 +37,8 @@ hr,
   @include stdbd( top );
 
   margin: 0 auto;
-  margin-top: $half-spacing-unit;
-  margin-bottom: $half-spacing-unit;
+  margin-top: rem( 8px );
+  margin-bottom: rem( 8px );
 }
 
 
@@ -62,7 +62,7 @@ hr,
     width: ( $o-rule--closure-sum-height + $rule-spacing-y * 2 );
     height: $o-rule--closure-sum-height;
     background-color: $white;
-    margin: -( $o-rule--closure-sum-height / 2 ) auto $base-spacing-unit;
+    margin: -( $o-rule--closure-sum-height / 2 ) auto rem( 16px );
     content: '';
   }
 } // &--closure
@@ -82,9 +82,9 @@ hr,
     background-color: $primary-color;
     content: '';
     display: block;
-    width: rem-calc( 40px );
-    height: rem-calc( 4px );
-    margin-bottom: 0.5rem;
+    width: $stream-item-spacing;
+    height: rem( 4px );
+    margin-bottom: rem( 8px );
   }
 }
 

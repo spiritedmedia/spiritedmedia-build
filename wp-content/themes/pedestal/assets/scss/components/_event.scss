@@ -29,14 +29,14 @@
     @include stdbd;
 
     border-bottom: 0;
-    padding: halve( $base-spacing-unit ) $base-spacing-unit;
+    padding: rem( 8px ) rem( 16px );
     margin-bottom: 0;
   }
 
 
   &__sponsorship {
     border-top: 0;
-    padding: 0 halve( $base-spacing-unit );
+    padding: 0 rem( 8px );
   }
 
 

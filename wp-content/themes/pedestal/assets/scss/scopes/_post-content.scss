@@ -7,13 +7,13 @@
 $s-post-content-blockquote-color   : $grey-25;
 
 // Pullquote
-$s-post-content-pullquote-pos-h    : -7px;
-$s-post-content-pullquote-pos-v    : -14px;
-$s-post-content-pullquote-border-v : 2px solid $grey-70;
+$s-post-content-pullquote-pos-h    : rem( -7px );
+$s-post-content-pullquote-pos-v    : rem( -14px );
+$s-post-content-pullquote-border-v : rem( 2px ) solid $grey-70;
 
 // Lists
 $s-post-content-li-color           : $primary-color;
-$s-post-content-li-bullet-size     : 5px;
+$s-post-content-li-bullet-size     : rem( 5px );
 
 
 // stylelint-disable selector-max-type
@@ -66,12 +66,12 @@ $s-post-content-li-bullet-size     : 5px;
 
     .alignleft {
       float: left;
-      margin-right: $base-spacing-unit;
+      margin-right: rem( 16px );
     }
 
     .alignright {
       float: right;
-      margin-left: $base-spacing-unit;
+      margin-left: rem( 16px );
     }
 
     .aligncenter {
@@ -91,8 +91,8 @@ $s-post-content-li-bullet-size     : 5px;
   blockquote {
     font-style: italic;
     color: $s-post-content-blockquote-color;
-    padding: 0 0 0 $base-spacing-unit;
-    border-left: 4px solid $primary-color;
+    padding: 0 0 0 rem( 16px );
+    border-left: rem( 4px ) solid $primary-color;
 
     p {
       padding-bottom: 0;
@@ -127,11 +127,11 @@ $s-post-content-li-bullet-size     : 5px;
     border-top: $s-post-content-pullquote-border-v;
     border-bottom: $s-post-content-pullquote-border-v;
     position: relative;
-    margin-bottom: $base-spacing-unit;
+    margin-bottom: rem( 16px );
 
     &::before,
     &::after {
-      font-size: rem-calc( 64px );
+      font-size: rem( 64px );
       line-height: 0;
       padding-top: 0.4em;
       position: absolute;
@@ -155,7 +155,7 @@ $s-post-content-li-bullet-size     : 5px;
     &__content {
       border: 0;
       line-height: 1.6;
-      padding: $base-spacing-unit $base-spacing-unit 0;
+      padding: rem( 16px ) rem( 16px ) 0;
       margin-bottom: 0;
       font-size: $h5-font-size;
 
@@ -166,7 +166,7 @@ $s-post-content-li-bullet-size     : 5px;
 
 
     &__credit {
-      padding: ($base-spacing-unit / 2) ($base-spacing-unit * 2) $base-spacing-unit;
+      padding: rem( 8px ) rem( 32px ) rem( 16px );
       display: block;
       text-align: right;
       font-style: normal;
@@ -187,7 +187,7 @@ $s-post-content-li-bullet-size     : 5px;
     list-style-type: none;
 
     li {
-      padding-bottom: 0.25em;
+      padding-bottom: em( 4px );
 
       &::before {
         margin-bottom: 0.1em;
@@ -216,14 +216,13 @@ $s-post-content-li-bullet-size     : 5px;
   }
 
   ul {
-
     li {
       &::before {
         width: $s-post-content-li-bullet-size;
         height: $s-post-content-li-bullet-size;
         content: '';
         background-color: $s-post-content-li-color;
-        border-radius: 1000px;
+        border-radius: 100%;
       }
     }
   }

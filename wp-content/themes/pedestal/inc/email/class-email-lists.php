@@ -1,15 +1,19 @@
 <?php
-namespace Pedestal\Objects;
+namespace Pedestal\Email;
 
 use function Pedestal\Pedestal;
 
-use Pedestal\Objects\ActiveCampaign;
 use Timber\Timber;
+use Pedestal\Posts\Post;
+use Pedestal\Objects\ActiveCampaign;
+use Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Posts\Clusters\Cluster;
 
-class Newsletter_Lists {
+class Email_Lists {
 
     /**
      * List of Newsletter names we want to track IDs for
+     *
      * @var array
      */
     private $list_names = [
@@ -18,13 +22,29 @@ class Newsletter_Lists {
     ];
 
     /**
+     * Name of the option for storing all lists for a site
+     *
+     * @var string
+     */
+    private static $all_lists_option_name = 'activecampaign_all_lists';
+
+    /**
+     * The meta key where we store associated list IDs for a given post
+     *
+     * @var string
+     */
+    private static $list_id_meta_key = 'activecampaign-list-id';
+
+    /**
      * Name of the key to store the address ID
+     *
      * @var string
      */
     private $address_option_key = 'newsletter-address-id';
 
     /**
      * Slug of the settings page
+     *
      * @var string
      */
     private $admin_page_slug = 'pedestal-activecampaign-list-settings';
@@ -36,7 +56,7 @@ class Newsletter_Lists {
         static $instance = null;
         if ( null === $instance ) {
             $instance = new static();
-            $instance->load();
+            $instance->setup_actions();
         }
         return $instance;
     }
@@ -44,7 +64,7 @@ class Newsletter_Lists {
     /**
      * Hook into various actions
      */
-    public function load() {
+    public function setup_actions() {
         add_action( 'admin_menu', function() {
             add_submenu_page(
                 'edit.php?post_type=pedestal_newsletter',
@@ -135,6 +155,7 @@ class Newsletter_Lists {
 
     /**
      * Get a newsletter list ID from a given newsletter name
+     *
      * @param  string  $name Name of the newsletter
      * @return int     The ID
      */
@@ -157,6 +178,7 @@ class Newsletter_Lists {
 
     /**
      * Make an API request to ActiveCampaign to get the list ID
+     *
      * @param  string $name  Name of the list
      * @return int|false     List ID or false on failure
      */
@@ -172,6 +194,7 @@ class Newsletter_Lists {
 
     /**
      * Get all Newsletter names and their IDs
+     *
      * @return array $id => $name result
      */
     public function get_all_newsletters() {
@@ -186,6 +209,7 @@ class Newsletter_Lists {
     /**
      * Get the address ID from an option in the database
      * or fall back to an API request
+     *
      * @return Integer  ID of the address or 0 if not found
      */
     public function get_address_id() {
@@ -210,6 +234,7 @@ class Newsletter_Lists {
     /**
      * Fetch the addresses from the ActiveCampaign API
      * Loop over each address and match based on zip code to find the ID
+     *
      * @return integer|false The ActiveCampaign address ID
      */
     public function fetch_address_id_from_api() {
@@ -233,6 +258,7 @@ class Newsletter_Lists {
 
     /**
      * Handle saving a newsletter option to the database
+     *
      * @param  string  $newsletter_name         Unsanitized name of the Newsletter
      * @param  integer $activecampaign_list_id  List ID to store
      * @return boolean                          Success of failure of save
@@ -249,6 +275,7 @@ class Newsletter_Lists {
 
     /**
      * Handle saving an address option to the database
+     *
      * @param  integer $activecampaign_list_id  List ID to store
      * @return boolean                          Success of failure of save
      */
@@ -285,6 +312,7 @@ class Newsletter_Lists {
 
     /**
      * Sanitize an option name consistently
+     *
      * @param  string $name  Name of the List
      * @return string        Sanitized option name
      */
@@ -294,5 +322,170 @@ class Newsletter_Lists {
             return false;
         }
         return 'newsletter-id-' . $sanitized_named;
+    }
+
+    /**
+     * Get list IDs from a given cluster
+     *
+     * @param  int $cluster_id                   Post ID of the Cluster
+     * @param  bool $create_list_if_doesnt_exist Whether to create a list if it doesn't exist
+     * @return false|int List id or False if no list id found
+     */
+    public static function get_list_ids_from_cluster( $cluster_id = 0, $create_list_if_doesnt_exist = true ) {
+        $cluster_id = intval( $cluster_id );
+        if ( ! $cluster_id ) {
+            return false;
+        }
+
+        $list_id = self::get_list_id_from_meta( $cluster_id );
+        if ( $list_id ) {
+            return intval( $list_id );
+        }
+
+        // Looks like we'll need to fetch the List ID from ActiveCampaign
+        $activecampaign = new ActiveCampaign;
+        $cluster = Post::get_by_post_id( $cluster_id );
+        if ( ! Types::is_cluster( $cluster ) ) {
+            return false;
+        }
+
+        $list_name = $cluster->get_activecampaign_list_name();
+
+        // Check if list already exists
+        $resp = $activecampaign->get_list( $list_name );
+        // List not found, let's add a new list
+        if ( ! $resp && $create_list_if_doesnt_exist ) {
+            $args = [
+                'name' => $list_name,
+            ];
+            $resp = $activecampaign->add_list( $args );
+        }
+        $list_id = intval( $resp->id );
+        $cluster->add_meta( self::$list_id_meta_key, $list_id );
+        // Clear any subscriber count transients that might be set
+        delete_transient( 'activecampaign_subscriber_count_' . $list_id );
+        return $list_id;
+    }
+
+    /**
+     * Get a Cluster object from a given ActiveCampaign List ID
+     * @param  array $list_ids  One or more ActiveCampaign List IDs
+     * @return array            Array of Cluster objects
+     */
+    public static function get_clusters_from_list_ids( $list_ids = [] ) {
+        $output = [];
+        if ( is_numeric( $list_ids ) ) {
+            $list_ids = [ $list_ids ];
+        }
+        $list_ids = array_map( 'intval', $list_ids );
+        $args = [
+            'post_type' => 'any',
+            'meta_key' => self::$list_id_meta_key,
+            'meta_value' => $list_ids,
+            'fields' => 'ids',
+            'no_found_rows' => true,
+        ];
+        $meta_query = new \WP_Query( $args );
+        $post_ids = $meta_query->posts;
+        if ( empty( $post_ids ) ) {
+            return $output;
+        }
+        foreach ( $post_ids as $post_id ) {
+            $cluster = Cluster::get_by_post_id( $post_id );
+            if ( Types::is_cluster( $cluster ) ) {
+                $output[] = $cluster;
+            }
+        }
+        return $output;
+    }
+
+    /**
+     * Get an ActiveCampaign List ID stored as post_meta
+     *
+     * @param  int $post_id  Post ID to check
+     * @return string List ID
+     */
+    public static function get_list_id_from_meta( $post_id = 0 ) {
+        $post_id = absint( $post_id );
+        if ( ! $post_id ) {
+            return false;
+        }
+        return get_post_meta( $post_id, self::$list_id_meta_key, true );
+    }
+
+    /**
+     * Delete the ActiveCampaign List ID stored as post_meta
+     *
+     * @param  int $post_id  Post ID to check
+     * @return bool           False for failure. True for success.
+     */
+    public static function delete_list_id_from_meta( $post_id = 0 ) {
+        $post_id = absint( $post_id );
+        if ( ! $post_id ) {
+            return false;
+        }
+        return delete_post_meta( $post_id, self::$list_id_meta_key );
+    }
+
+    /**
+     * Remove '- <blog name>' from list name which we do to make them unique within ActiveCampaign
+     *
+     * @param  string $haystack  String to scrub
+     * @return string            Scrubbed list name
+     */
+    public static function scrub_list_name( $haystack = '' ) {
+        $needle = '- ' . PEDESTAL_BLOG_NAME;
+        $parts = explode( $needle, $haystack );
+        return trim( $parts[0] );
+    }
+
+    /**
+     * Delete the option that stores info about all of the lists from ActiveCampaign
+     */
+    public static function purge_all_lists() {
+        delete_option( self::$all_lists_option_name );
+    }
+
+    /**
+     * Fetch all lists from ActiveCampaign and cache them in an option
+     *
+     * @return Array   A set of objects about lists
+     */
+    public static function get_all_lists() {
+        $lists = get_option( self::$all_lists_option_name );
+        if ( $lists ) {
+            return $lists;
+        }
+
+        $activecampaign = new ActiveCampaign;
+        $args = [
+            'filters[name]' => '- ' . PEDESTAL_BLOG_NAME,
+        ];
+        $lists = $activecampaign->get_lists( $args );
+        if ( $lists ) {
+            foreach ( $lists as $list ) {
+                // Clean up the list names before storing
+                $list->name = self::scrub_list_name( $list->name );
+            }
+        }
+        $autoload = 'no';
+        add_option( self::$all_lists_option_name, (array) $lists, '', $autoload );
+        return $lists;
+    }
+
+    /**
+     * Filter all lists to the ones that have subscribers
+     *
+     * @return Array   A set of objets with lists that have 1 or more subscribers
+     */
+    public static function get_all_lists_with_subscribers() {
+        $lists = self::get_all_lists();
+        $output = [];
+        foreach ( $lists as $list ) {
+            if ( isset( $list->subscriber_count ) && 0 < $list->subscriber_count ) {
+                $output[] = $list;
+            }
+        }
+        return $output;
     }
 }

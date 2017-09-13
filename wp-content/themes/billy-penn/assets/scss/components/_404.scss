@@ -10,12 +10,12 @@
 /*img*/.e404-young-penn__img {}
 
 /*figcaption*/.e404-young-penn__caption {
-  margin-top: 2rem;
+  margin-top: rem( 32px );
 
   @media #{$large-up} {
     position: absolute;
-    bottom: 3rem;
-    right: -34rem;
+    bottom: rem( 48px );
+    right: rem( -550px );
   }
 
   .description,
@@ -24,7 +24,7 @@
     font-style: italic;
 
     @media #{$large-up} {
-      font-size: 0.9rem;
+      font-size: rem( 14px );
     }
   }
 

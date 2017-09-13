@@ -4,7 +4,10 @@ namespace Pedestal\Posts\Clusters;
 
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
-use Pedestal\Subscriptions;
+use Pedestal\Email\{
+    Email,
+    Email_Lists
+};
 use Pedestal\Utils\Utils;
 
 abstract class Cluster extends Post {
@@ -145,11 +148,11 @@ abstract class Cluster extends Post {
     public function get_following_users_count( $force = false ) {
         $list_id = $this->get_meta( 'activecampaign-list-id', true );
         if ( $force ) {
-            $list_id = Subscriptions::get_list_ids_from_cluster( $this->get_id() );
+            $list_id = Email_Lists::get_list_ids_from_cluster( $this->get_id() );
         }
 
         if ( $list_id ) {
-            return Subscriptions::get_subscriber_count( $list_id );
+            return Email::get_subscriber_count( $list_id );
         }
         return '-';
     }

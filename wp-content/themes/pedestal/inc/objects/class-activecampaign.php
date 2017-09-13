@@ -3,7 +3,7 @@
 namespace Pedestal\Objects;
 
 use Pedestal\Utils\Utils;
-use Pedestal\Objects\Newsletter_Lists;
+use Pedestal\Email\Email_Lists;
 
 /**
  * A way to interact with ActiveCampaign
@@ -610,7 +610,7 @@ class ActiveCampaign {
         if ( empty( $message_ids ) ) {
             return false;
         }
-        $newsletter_list = new Newsletter_Lists;
+        $email_list = new Email_Lists;
 
         // See http://www.activecampaign.com/api/example.php?call=campaign_create
         $body_args = [
@@ -622,7 +622,7 @@ class ActiveCampaign {
             'htmlunsub'              => 0,
             'textunsub'              => 1, // Text Unsubscribe link?
             'p[' . $list->id . ']'   => $list->id, // Which list will we send the campaign to?
-            'addressid'              => $newsletter_list->get_address_id(),
+            'addressid'              => $email_list->get_address_id(),
         ];
 
         // Add messages to the camapign

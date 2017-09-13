@@ -5,9 +5,9 @@
 
 .newsletter-items {
   .newsletter-item {
-    padding-bottom: $base-spacing-unit;
-    border-bottom: rem-calc( 1px ) solid $grey-90;
-    margin-bottom: $base-spacing-unit;
+    padding-bottom: rem( 16px );
+    border-bottom: rem( 1px ) solid $grey-90;
+    margin-bottom: rem( 16px );
 
     &:last-of-type {
       border-bottom: 0;
@@ -27,7 +27,7 @@
 .newsletter-item {
   .c-overview__title {
     font-size: $h4-font-size;
-    margin-bottom: $base-spacing-unit;
+    margin-bottom: rem( 16px );
   }
 
   .c-overview__description > * {

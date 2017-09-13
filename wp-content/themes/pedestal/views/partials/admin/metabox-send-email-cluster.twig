@@ -17,11 +17,8 @@
     <p>There have been no entities published since the last email notification.</p>
 {% endif %}
 
-{% if test_button %}
-    <p class="submit">
-        <input type="text" name="test-email-addresses" placeholder="Separate addresses by commas" style="width:100%">
-        {{ test_button }}
-    </p>
+{% if btn_send_test %}
+    {% include 'partials/admin/test-email-input.twig' with { btn_send_test: btn_send_test } %}
 {% endif %}
 
 

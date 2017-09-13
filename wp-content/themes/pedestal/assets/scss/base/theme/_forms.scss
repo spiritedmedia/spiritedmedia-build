@@ -16,14 +16,14 @@ $input-disabled-bg           : $grey-90;
 $input-focus-border-color    : $primary-color;
 $input-font-color            : rgba( $black, 0.75 );
 $input-placeholder-font-color: $dimmed-text-color;
-$label-margin-y              : 0.5rem;
+$label-margin-y              : rem( 8px );
 
 $input-focus-bg-color        : lighten( $input-focus-border-color, 15% );
-$form-check-input-gutter     : 1.25rem;
+$form-check-input-gutter     : rem( 20px );
 $form-feedback-valid-color   : $success-color;
 $form-feedback-invalid-color : $alert-color;
 
-$legend-padding-x            : 0.25rem;
+$legend-padding-x            : rem( 4px );
 $input-height-border         : $btn-border-width * 2;
 $input-height-inner          : ( $base-font-size * $input-btn-line-height ) + ( $input-btn-spacing-y * 2 );
 $input-height                : ( $input-height-inner + $input-height-border );
@@ -56,7 +56,7 @@ $input-height-lg             : ( $input-height-inner-lg + $input-height-border )
 
 
 fieldset {
-  padding: 1rem;
+  padding: rem( 16px );
 }
 
 label {
@@ -210,7 +210,7 @@ select.form-input--lg {
 
 .form-group__text {
   display: block;
-  margin-top: $base-spacing-unit / 4;
+  margin-top: rem( 4px );
 }
 
 // For use with horizontal and inline forms, when you need the legend text to
@@ -236,7 +236,7 @@ select.form-input--lg {
 .form-check {
   position: relative;
   display: block;
-  margin-bottom: $half-spacing-unit;
+  margin-bottom: rem( 8px );
 
   &.is-disabled {
     .form-check__label {
@@ -252,7 +252,7 @@ select.form-input--lg {
 
 .form-check__input {
   position: absolute;
-  margin-top: 0.25rem;
+  margin-top: rem( 4px );
   margin-left: -$form-check-input-gutter;
 
   &:only-child {
@@ -269,7 +269,7 @@ select.form-input--lg {
   }
 
   + .form-check--inline {
-    margin-left: 0.25rem;
+    margin-left: rem( 4px );
   }
 }
 
@@ -305,8 +305,8 @@ select.form-input--lg {
 }
 
 .invalid-feedback {
-  margin-top: 0.25rem;
-  margin-bottom: 0.5rem;
+  margin-top: rem( 4px );
+  margin-bottom: rem( 8px );
   font-size: $small-font-size;
   color: $form-feedback-invalid-color;
 }
@@ -315,8 +315,8 @@ select.form-input--lg {
   position: absolute;
   top: 100%;
   z-index: $z-index-5;
-  width: rem-calc( 250px );
-  padding: 0.5rem;
+  width: rem( 250px );
+  padding: rem( 8px );
   margin-top: 0.1rem;
   font-size: $small-font-size;
   line-height: 1;

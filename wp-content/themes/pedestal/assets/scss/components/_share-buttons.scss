@@ -3,14 +3,14 @@
 // ==========================================================================
 
 
-$share-button-twitter-margin: $base-spacing-unit * 0.25;
+$share-button-twitter-margin: rem( 4px );
 
 
 .c-share-buttons {
   overflow: auto;
   background-color: $white;
-  margin-top: $base-spacing-unit * 2;
-  margin-bottom: $base-spacing-unit * 2;
+  margin-top: rem( 32px );
+  margin-bottom: rem( 32px );
 
   .has-sticky-share-buttons & {
     width: 100%;
@@ -18,7 +18,7 @@ $share-button-twitter-margin: $base-spacing-unit * 0.25;
     bottom: 0;
     left: 0;
     z-index: $z-index-2;
-    border: rem-calc( 3px ) solid $white;
+    border: rem( 3px ) solid $white;
     border-bottom: 0;
     margin-bottom: 0;
   }
@@ -40,7 +40,7 @@ $share-button-twitter-margin: $base-spacing-unit * 0.25;
   text-align: center;
   background-color: $grey-62;
   color: $white;
-  padding: rem-calc( 12px ) 0;
+  padding: rem( 12px ) 0;
   text-transform: uppercase;
 }
 
@@ -59,8 +59,8 @@ $share-button-twitter-margin: $base-spacing-unit * 0.25;
 }
 
 .c-share-buttons__icon {
-  font-size: rem-calc( 20px );
-  margin-right: $half-spacing-unit;
+  font-size: rem( 20px );
+  margin-right: rem( 8px );
   position: relative;
   vertical-align: sub;
 }

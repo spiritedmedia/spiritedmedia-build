@@ -12,10 +12,7 @@
 
 
 $base-font-size: 16px;
-$base-spacing-unit: 10px;
-$base-line-height: $base-spacing-unit * 2;
-
-$half-spacing-unit: $base-spacing-unit / 2;
+$base-line-height: 20px;
 
 
 
@@ -40,9 +37,9 @@ $font-family-sans-serif : "Helvetica Neue", Helvetica, Arial, sans-serif;
 // 680px is a good width. Change with caution.
 $email-container-width: 680px;
 // Container width minus left and right spacing
-$email-container-width-inner: $email-container-width - ($base-spacing-unit * 2);
-$email-container-spacing-hoz: ($base-spacing-unit * 2);
-$email-stream-item-spacing-v: ($base-spacing-unit * 2);
+$email-container-width-inner: $email-container-width - 20px;
+$email-container-spacing-hoz: 20px;
+$email-stream-item-spacing-v: 20px;
 
 $email-background-color: $white;
 $email-img-background-color: #dddddd; // Cerberus default
@@ -54,6 +51,6 @@ $small-font-size: 14px;
 $email-divider-std: 1px solid $dimmed-text-color;
 $email-divider-wide: 3px solid $border-std-color;
 
-$email-slot-item-pd: $half-spacing-unit;
+$email-slot-item-pd: 5px;
 
 $email-meta-info-img-size: $base-line-height * 2;

@@ -503,9 +503,9 @@ class CLI extends \WP_CLI_Command {
      * @subcommand sync-newsletter-ids
      */
     public function sync_newsletter_ids( $args, $assoc_args ) {
-        $newsletter_lists = Newsletter_Lists::get_instance();
-        $newsletter_lists->delete_options();
-        $lists = $newsletter_lists->get_all_newsletters();
+        $email_lists = Email_Lists::get_instance();
+        $email_lists->delete_options();
+        $lists = $email_lists->get_all_newsletters();
         if ( ! $lists || ! is_array( $lists ) ) {
             WP_CLI::error( '$lists is bad! Oh No!' );
             return;

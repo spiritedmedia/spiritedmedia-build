@@ -9,14 +9,14 @@
 .subscription-confirmation-page {
   text-align: center;
   margin: 0 auto;
-  max-width: rem-calc( 580 );
+  max-width: rem( 580px );
 
   h3 {
-    margin-bottom: rem-calc( 24 );
+    margin-bottom: rem( 24px );
   }
 
   p {
-    margin-bottom: rem-calc( 8 );
+    margin-bottom: rem( 8px );
   }
 
   .success-message p {

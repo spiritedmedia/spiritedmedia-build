@@ -14,7 +14,7 @@
   margin-bottom: $main-margin-bottom;
 
   .full-width & {
-    margin-top: $base-spacing-unit * 3;
+    margin-top: rem( 48px );
   }
 }
 
@@ -186,7 +186,7 @@
 
     .has-content,
     .has-headline {
-      border-bottom: 4px solid $primary-color;
+      border-bottom: rem( 4px ) solid $primary-color;
     }
 
   }

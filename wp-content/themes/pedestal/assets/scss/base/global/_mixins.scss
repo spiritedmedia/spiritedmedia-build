@@ -148,7 +148,7 @@
 
 @mixin stdbd(
   $side: 'all',
-  $width: 1px,
+  $width: rem( 1px ),
   $color: $border-std-color,
   $neut: false
 ) {
@@ -175,5 +175,5 @@
 @mixin dash-rule {
   width: 4em;
   margin: 0 auto;
-  border-bottom: 4px solid $border-std-color;
+  border-bottom: rem( 4px ) solid $border-std-color;
 }

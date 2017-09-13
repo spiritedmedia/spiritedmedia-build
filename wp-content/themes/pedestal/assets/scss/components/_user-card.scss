@@ -18,7 +18,7 @@ $user-card-img-size: map-get-strict( sm-pedestal-img-sizes-get( thumbnail ), wid
 
 .c-user-card__img {
   display: block;
-  margin-bottom: $base-spacing-unit;
+  margin-bottom: rem( 16px );
 
   // Accommodate for all the different image sizes
   @each $size-name, $dimensions in sm-pedestal-img-sizes-get() {
@@ -64,11 +64,11 @@ $user-card-img-size: map-get-strict( sm-pedestal-img-sizes-get( thumbnail ), wid
     display: inline-block;
     vertical-align: middle;
     line-height: $base-line-height;
-    margin-bottom: $half-spacing-unit;
-    margin-right: $half-spacing-unit;
+    margin-bottom: rem( 8px );
+    margin-right: rem( 8px );
 
     .o-icon-text__icon {
-      margin-right: halve( $icon-spacing );
+      margin-right: $icon-spacing / 2;
     }
   }
 
@@ -145,7 +145,7 @@ $user-card-img-size: map-get-strict( sm-pedestal-img-sizes-get( thumbnail ), wid
 
 .c-user-card--compact {
   .c-user-card__details {
-    padding-bottom: halve( $base-spacing-unit );
+    padding-bottom: rem( 8px );
   }
 }
 
@@ -155,12 +155,12 @@ $user-card-img-size: map-get-strict( sm-pedestal-img-sizes-get( thumbnail ), wid
 
 .c-user-card--extended {
   .c-user-card__details {
-    padding-bottom: $base-spacing-unit;
+    padding-bottom: rem( 16px );
   }
 }
 
 .c-user-card__stream-header {
-  padding-top: rem-calc( 40px );
+  padding-top: rem( 40px );
 
   .c-pagination,
   .c-pagination::before,
@@ -170,7 +170,7 @@ $user-card-img-size: map-get-strict( sm-pedestal-img-sizes-get( thumbnail ), wid
   }
 
   .c-pagination {
-    margin-left: rem-calc( 4px );
+    margin-left: rem( 4px );
   }
 }
 

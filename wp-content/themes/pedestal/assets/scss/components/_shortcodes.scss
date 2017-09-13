@@ -29,7 +29,7 @@
   }
 
   .c-user-card {
-    padding: $base-spacing-unit;
+    padding: rem( 16px );
     text-align: center;
   }
 }
@@ -65,7 +65,7 @@
   margin-right: auto;
 
   // Make sure unrendered tweets have the same width as rendered tweets
-  width: 500px;
+  width: rem( 500px );
   max-width: 100%;
-  min-width: 220px;
+  min-width: rem( 220px );
 }

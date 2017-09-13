@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit629ae12bb488babc174a422013cf8a4a
+class ComposerStaticInitcca5f8367bd6128742e85c64641f5a38
 {
     public static $prefixLengthsPsr4 = array (
         'j' => 
@@ -159,12 +159,18 @@ class ComposerStaticInit629ae12bb488babc174a422013cf8a4a
         'Pedestal\\Admin\\Admin' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-admin.php',
         'Pedestal\\Admin\\Bulk_Action' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-bulk-actions.php',
         'Pedestal\\Admin\\Cluster_Tools' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-cluster-tools.php',
-        'Pedestal\\Admin\\Newsletter_Testing' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-newsletter-testing.php',
         'Pedestal\\Adverts' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-adverts.php',
         'Pedestal\\Billy_Penn' => __DIR__ . '/../..' . '/wp-content/themes/billy-penn/functions.php',
         'Pedestal\\CLI\\CLI' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/cli/class-cli.php',
         'Pedestal\\CLI\\CLI_Clusters' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/cli/class-cli-clusters.php',
         'Pedestal\\Cron_Management' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-cron-management.php',
+        'Pedestal\\Email\\Breaking_News_Emails' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-breaking-news-emails.php',
+        'Pedestal\\Email\\Email' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-email.php',
+        'Pedestal\\Email\\Email_Lists' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-email-lists.php',
+        'Pedestal\\Email\\Fieldmanager_Datasource_Email_List' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-fieldmanager-datasource-email-list.php',
+        'Pedestal\\Email\\Follow_Updates_Emails' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-follow-updates-emails.php',
+        'Pedestal\\Email\\Newsletter_Emails' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-newsletter-emails.php',
+        'Pedestal\\Email\\Newsletter_Testing' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-newsletter-testing.php',
         'Pedestal\\Featured_Posts' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-featured-posts.php',
         'Pedestal\\Feeds' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-feeds.php',
         'Pedestal\\Frontend' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-frontend.php',
@@ -172,7 +178,6 @@ class ComposerStaticInit629ae12bb488babc174a422013cf8a4a
         'Pedestal\\Objects\\ActiveCampaign' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-activecampaign.php',
         'Pedestal\\Objects\\Author' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-author.php',
         'Pedestal\\Objects\\Figure' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-figure.php',
-        'Pedestal\\Objects\\Newsletter_Lists' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-newsletter-lists.php',
         'Pedestal\\Objects\\Notifications' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-notifications.php',
         'Pedestal\\Objects\\Parsely' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-parsely.php',
         'Pedestal\\Objects\\Source' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-source.php',
@@ -228,7 +233,6 @@ class ComposerStaticInit629ae12bb488babc174a422013cf8a4a
         'Pedestal\\Shortcodes\\Script' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-script.php',
         'Pedestal\\Shortcodes\\Soundcite' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-soundcite.php',
         'Pedestal\\Shortcodes\\Twitter' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-twitter.php',
-        'Pedestal\\Subscriptions' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-subscriptions.php',
         'Pedestal\\The_Incline' => __DIR__ . '/../..' . '/wp-content/themes/the-incline/functions.php',
         'Pedestal\\User_Management' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-user-management.php',
         'Pedestal\\Utils\\Image_Ratio' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/utils/class-image-ratio.php',
@@ -718,11 +722,11 @@ class ComposerStaticInit629ae12bb488babc174a422013cf8a4a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit629ae12bb488babc174a422013cf8a4a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit629ae12bb488babc174a422013cf8a4a::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit629ae12bb488babc174a422013cf8a4a::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit629ae12bb488babc174a422013cf8a4a::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit629ae12bb488babc174a422013cf8a4a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitcca5f8367bd6128742e85c64641f5a38::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitcca5f8367bd6128742e85c64641f5a38::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitcca5f8367bd6128742e85c64641f5a38::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitcca5f8367bd6128742e85c64641f5a38::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitcca5f8367bd6128742e85c64641f5a38::$classMap;
 
         }, null, ClassLoader::class);
     }
