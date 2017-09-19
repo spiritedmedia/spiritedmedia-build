@@ -273,7 +273,7 @@ class Newsletter_Emails {
             return $translation;
         }
 
-        $new_text = 'Send Email';
+        $new_text = 'Send Newsletter';
         // If the trash is disabled we need to use a shorter label
         // 'Move to Trash' changes to 'Delete Permanently' and there is less space
         if ( ! EMPTY_TRASH_DAYS ) {
