@@ -5,6 +5,10 @@ namespace Pedestal\Admin;
 use function Pedestal\Pedestal;
 
 use Timber\Timber;
+use Pedestal\Email\{
+    Email,
+    Email_Lists
+};
 use Pedestal\Icons;
 use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
@@ -118,6 +122,13 @@ class Admin {
                 'pedestal_scheduled_posts',
                 'Scheduled Posts',
                 [ $this, 'handle_dashboard_widget_scheduled_posts' ]
+            );
+
+            // Add Email Primary List Info widget
+            wp_add_dashboard_widget(
+                'pedestal_email_primary_list_info',
+                'Email Newsletters',
+                [ $this, 'handle_dashboard_widget_primary_lists_subscriber_count' ]
             );
         });
     }
@@ -817,8 +828,28 @@ class Admin {
             'order'          => 'ASC',
         ] );
         $context = array_merge( Timber::get_context(), [
-            'items' => Post::get_posts( $future_posts_query ),
+            'items' => Post::get_posts_from_query( $future_posts_query ),
         ] );
         Timber::render( 'partials/admin/dash-widget-scheduled-posts.twig', $context );
+    }
+
+    /**
+     * Handle the display of the Email Newsletter dashboard widget
+     */
+    public function handle_dashboard_widget_primary_lists_subscriber_count() {
+        $context = [];
+        $context['items'] = [];
+        $email_lists = new Email_Lists;
+        foreach ( $email_lists->get_all_newsletters() as $list_id => $label ) {
+            $last_updated_option_key = 'activecampaign_subscriber_count_last_updated_' . $list_id;
+            $context['items'][] = [
+                'id'            => $list_id,
+                'label'         => $label,
+                'count'         => Email::get_subscriber_count( $list_id ),
+                'time_absolute' => date( 'Y-m-d H:i:s', get_option( $last_updated_option_key ) ),
+                'time_relative' => human_time_diff( get_option( $last_updated_option_key ) ),
+            ];
+        }
+        Timber::render( 'partials/admin/dash-widget-email-primary-lists-count.twig', $context );
     }
 }

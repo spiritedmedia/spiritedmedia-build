@@ -118,7 +118,7 @@ class Post {
         if ( 1 == $args['numberposts'] ) {
             return Post::get_instance( $posts[0] );
         }
-        return Post::get_posts( $query );
+        return Post::get_posts_from_query( $query );
     }
 
     /**
@@ -160,7 +160,7 @@ class Post {
      * @param  object $query A WP_Query object
      * @return array         Array of Pedestal Post objects
      */
-    public static function get_posts( $query ) {
+    public static function get_posts_from_query( $query ) {
         $ped_posts = [];
         if ( ! is_object( $query ) || ! $query instanceof \WP_Query ) {
             return $ped_posts;
@@ -172,6 +172,25 @@ class Post {
             $ped_posts[] = $post;
         }
         return $ped_posts;
+    }
+
+    /**
+     * Get an array of Pedestal Posts based on an array of IDs
+     *
+     * @param  array $ids Array of numeric post IDs
+     * @return array      Array of Pedestal Post objects
+     */
+    public static function get_posts_from_ids( $ids ) {
+        $ped_posts = [];
+        if ( ( is_array( $ids ) && ! is_numeric( $ids[0] ) ) ) {
+            return $ped_posts;
+        }
+        $query = new \WP_Query( [
+            'post_type'      => 'any',
+            'post__in'       => $ids,
+            'posts_per_page' => -1,
+        ] );
+        return Post::get_posts_from_query( $query );
     }
 
     /**

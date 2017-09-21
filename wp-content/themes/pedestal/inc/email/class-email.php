@@ -308,11 +308,21 @@ class Email {
      * @return int           The number of subscribers for the list
      */
     public static function get_subscriber_count( $list_id = 0, $force = false ) {
-        $key = 'activecampaign_subscriber_count_' . $list_id;
-        $expiration = Utils::get_fuzzy_expire_time();
+        $cluster = Email_Lists::get_clusters_from_list_ids( $list_id );
+        $_valid_cluster = ( ! empty( $cluster ) && Types::is_cluster( $cluster[0] ) );
+        $subscriber_count = false;
 
-        $subscriber_count = get_transient( $key );
-        // The transient returns false if not found but it is also possible the transient has a value of ''
+        if ( $_valid_cluster ) {
+            $cluster = $cluster[0];
+            $subscriber_count = $cluster->get_meta( 'subscriber_count' );
+        } else {
+            $option_key = 'activecampaign_subscriber_count_' . $list_id;
+            $last_updated_option_key = 'activecampaign_subscriber_count_last_updated_' . $list_id;
+            $subscriber_count = get_option( $option_key );
+        }
+
+        // The post meta / option returns false / null if not found but it is
+        // also possible it has a value of ''
         if ( false !== $subscriber_count && ! $force ) {
             if ( empty( $subscriber_count ) ) {
                 $subscriber_count = 0;
@@ -320,25 +330,61 @@ class Email {
             return $subscriber_count;
         }
 
-        // No transient found! Let's ask ActiveCampaign
+        // No stored data found! Let's ask ActiveCampaign
         $activecampaign = new ActiveCampaign;
         $list = $activecampaign->get_list( $list_id );
         if ( ! $list || ! isset( $list->subscriber_count ) ) {
-            // We have a problem so return -1
-            set_transient( $key, -1, $expiration );
-            return -1;
+            // We have a problem so set count to -1
+            $subscriber_count = -1;
+        } else {
+            $subscriber_count = $list->subscriber_count;
         }
 
-        // If the specified list ID belongs to a cluster, then save the
-        // subscriber count to post meta upon setting the transient -- we need
-        // this stored as post meta to make sortable admin columns possible
-        $cluster = Email_Lists::get_clusters_from_list_ids( $list_id );
-        if ( ! empty( $cluster ) && Types::is_cluster( $cluster[0] ) ) {
-            $cluster[0]->set_meta( 'subscriber_count', $list->subscriber_count );
+        if ( $_valid_cluster ) {
+            $cluster->set_meta( 'subscriber_count', $subscriber_count );
+            $cluster->set_meta( 'subscriber_count_last_updated', time() );
+        } else {
+            update_option( $option_key, $subscriber_count );
+            update_option( $last_updated_option_key, time() );
         }
 
-        set_transient( $key, $list->subscriber_count, $expiration );
-        return $list->subscriber_count;
+        return $subscriber_count;
+    }
+
+    /**
+     * Refresh subscriber counts for clusters and optionally primary lists
+     *
+     * @param  array|\WP_Query  $posts                 Array of IDs or \WP_Query
+     * @param  boolean          $refresh_primary_lists Update the newsletter and breaking news subscriber counts as well?
+     * @return array Associative array of cluster IDs and new subscriber counts
+     */
+    public static function refresh_subscriber_counts( $posts, $refresh_primary_lists = true ) {
+        $result = [];
+        $force = true;
+
+        if ( $posts instanceof \WP_Query ) {
+            $posts = Post::get_posts_from_query( $posts );
+        } elseif ( is_array( $posts ) && is_numeric( $posts[0] ) ) {
+            $posts = Post::get_posts_from_ids( $posts );
+        } else {
+            return;
+        }
+
+        foreach ( $posts as $ped_post ) {
+            if ( ! Types::is_cluster( $ped_post ) ) {
+                continue;
+            }
+            $result[ $ped_post->get_id() ] = $ped_post->get_following_users_count( $force );
+        }
+
+        if ( $refresh_primary_lists ) {
+            $email_lists = new Email_Lists;
+            foreach ( $email_lists->get_all_newsletters() as $id => $name ) {
+                static::get_subscriber_count( $id, $force );
+            }
+        }
+
+        return $result;
     }
 
     /**

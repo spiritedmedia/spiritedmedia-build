@@ -14,7 +14,7 @@ if ( is_singular() ) {
     $args['name'] = get_query_var( 'pagename' );
 }
 $query = new \WP_Query( $args );
-$context['items'] = Post::get_posts( $query );
+$context['items'] = Post::get_posts_from_query( $query );
 $context['is_fias_feed'] = true;
 header( 'Content-Type: ' . feed_content_type( 'rss-http' ) . '; charset=utf-8', true );
 

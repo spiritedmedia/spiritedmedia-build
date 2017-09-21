@@ -225,7 +225,7 @@ class Entity extends Post {
                 return $query->found_posts;
             }
 
-            $ped_posts = Post::get_posts( $query );
+            $ped_posts = Post::get_posts_from_query( $query );
             if ( $args['flatten'] ) {
                 return $ped_posts;
             }

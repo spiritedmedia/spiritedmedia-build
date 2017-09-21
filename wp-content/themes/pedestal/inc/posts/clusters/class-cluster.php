@@ -105,7 +105,7 @@ abstract class Cluster extends Post {
         if ( ! empty( $this->cached_stream[ $args_hash ] ) ) {
             return $this->cached_stream[ $args_hash ];
         }
-        $ped_posts = Post::get_posts( $query );
+        $ped_posts = Post::get_posts_from_query( $query );
         $this->cached_stream[ $args_hash ] = $ped_posts;
         return $this->cached_stream[ $args_hash ];
     }
@@ -142,19 +142,18 @@ abstract class Cluster extends Post {
 
     /**
      * Get the number of users following this cluster
-     * @param bool $force  Whether to make a request to ActiveCampaign to get the List ID
+     *
+     * @param bool $force  Whether to make an API request to ActiveCampaign to
+     * get the List ID and update the cached follower count in post meta
      * @return int
      */
     public function get_following_users_count( $force = false ) {
         $list_id = $this->get_meta( 'activecampaign-list-id', true );
-        if ( $force ) {
+        if ( 0 !== $list_id || $force ) {
             $list_id = Email_Lists::get_list_ids_from_cluster( $this->get_id() );
         }
-
-        if ( $list_id ) {
-            return Email::get_subscriber_count( $list_id );
-        }
-        return '-';
+        $count = Email::get_subscriber_count( $list_id, $force );
+        return $count ?: '-';
     }
 
     /**

@@ -362,8 +362,6 @@ class Email_Lists {
         }
         $list_id = intval( $resp->id );
         $cluster->add_meta( self::$list_id_meta_key, $list_id );
-        // Clear any subscriber count transients that might be set
-        delete_transient( 'activecampaign_subscriber_count_' . $list_id );
         return $list_id;
     }
 

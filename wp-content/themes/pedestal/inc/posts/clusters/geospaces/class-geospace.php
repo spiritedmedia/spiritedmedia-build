@@ -133,6 +133,6 @@ abstract class Geospace extends Cluster {
             'orderby'             => 'title',
             'order'               => 'asc',
         ] );
-        return Post::get_posts( $query );
+        return Post::get_posts_from_query( $query );
     }
 }

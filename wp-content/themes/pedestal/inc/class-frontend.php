@@ -49,8 +49,6 @@ class Frontend {
 
         add_filter( 'wp_title', [ $this, 'filter_wp_title' ] );
 
-        add_filter( 'timber/twig', [ $this, 'filter_timber_twig' ] );
-
         add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
 
         add_filter( 'template_include', [ $this, 'filter_template_include' ] );
@@ -299,32 +297,6 @@ class Frontend {
             $meta_description = get_queried_object()->description;
         }
         return $meta_description;
-    }
-
-    /**
-     * Make PHP functions available to Twig
-     */
-    public function filter_timber_twig( $twig ) {
-        $function_names = [
-            // PHP Functions
-            'addslashes',     // http://php.net/manual/en/function.addslashes.php
-            'nl2br',          // http://php.net/manual/en/function.nl2br.php
-
-            // WordPress functions
-            'antispambot',    // https://developer.wordpress.org/reference/functions/antispambot/
-            'esc_attr',       // https://developer.wordpress.org/reference/functions/esc_attr/
-            'esc_html',       // https://developer.wordpress.org/reference/functions/esc_html/
-            'esc_url',        // https://developer.wordpress.org/reference/functions/esc_url/
-            'esc_js',         // https://developer.wordpress.org/reference/functions/esc_js/
-            'esc_textarea',   // https://developer.wordpress.org/reference/functions/esc_textarea/
-            'sanitize_email', // https://developer.wordpress.org/reference/functions/sanitize_email/
-        ];
-        foreach ( $function_names as $func ) {
-            if ( function_exists( $func ) ) {
-                $twig->addFilter( new \Twig_SimpleFilter( $func, $func ) );
-            }
-        }
-        return $twig;
     }
 
     /**

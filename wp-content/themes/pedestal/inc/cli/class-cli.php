@@ -3,18 +3,21 @@
 namespace Pedestal\CLI;
 
 use function Pedestal\Pedestal;
+
 use WP_CLI;
 use joshtronic\LoremIpsum;
-use Pedestal\Utils\Utils;
+
+use Pedestal\Email\Email;
+use Pedestal\Objects\{
+    ActiveCampaign,
+    Newsletter_Lists,
+    User
+};
+use Pedestal\Posts\Post;
+use Pedestal\Posts\Slots\Slot_Item;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\User_Management;
-use Pedestal\Posts\Post;
-use Pedestal\Objects\Newsletter_Lists;
-use Pedestal\Posts\Slots\Slot_Item;
-use Pedestal\Objects\{
-    User,
-    ActiveCampaign
-};
+use Pedestal\Utils\Utils;
 
 class CLI extends \WP_CLI_Command {
 
@@ -887,6 +890,33 @@ class CLI extends \WP_CLI_Command {
 
         $contacts_to_add_count = number_format( count( $contacts_to_add ) );
         WP_CLI::line( 'Done! ' . $contacts_to_add_count . ' contacts added' );
+    }
+
+    /**
+     * Refresh the subscriber counts for one or more clusters
+     *
+     * ## OPTIONS
+     *
+     * <ids>...
+     * : Post IDs of the clusters for which you want to refresh the count
+     *
+     * [--ignore-primaries]
+     * : Whether or not to update the count for the newsletter and breaking news lists
+     *
+     * @subcommand refresh-subscribers
+     */
+    public function refresh_subscriber_count( $args, $assoc_args ) {
+        $refresh_primary_lists = true;
+        if ( isset( $assoc_args['ignore-primaries'] ) ) {
+            $refresh_primary_lists = false;
+        }
+
+        $result = Email::refresh_subscriber_counts( $args, $refresh_primary_lists );
+        if ( $refresh_primary_lists ) {
+            WP_CLI::success( 'Done! Newsletter, Breaking News, and ' . count( $result ) . ' clusters updated' );
+        } else {
+            WP_CLI::success( 'Done! ' . count( $result ) . ' clusters updated' );
+        }
     }
 }
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );

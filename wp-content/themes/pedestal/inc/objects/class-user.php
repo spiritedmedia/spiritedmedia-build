@@ -317,7 +317,7 @@ class User extends Author {
      */
     public function get_stream( $args = [] ) {
         $query = $this->get_stream_query( $args );
-        return Post::get_posts( $query );
+        return Post::get_posts_from_query( $query );
     }
 
     /**

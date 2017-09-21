@@ -111,7 +111,7 @@ class Whos_Next extends Original {
             'post_type' => self::$post_type,
         ];
         $query = new \WP_Query( $args );
-        $whosnext_posts = Post::get_posts( $query );
+        $whosnext_posts = Post::get_posts_from_query( $query );
 
         $whosnext_story = self::get_whosnext_story();
         if ( empty( $whosnext_story ) ) {

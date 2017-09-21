@@ -245,6 +245,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->featured_posts    = Featured_Posts::get_instance();
             $this->icons             = Icons::get_instance();
             $this->scripts_styles    = Scripts_Styles::get_instance();
+            $this->cron_management   = Cron_Management::get_instance();
 
             // Emails
             $this->emails                = Email::get_instance();
@@ -252,11 +253,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->breaking_news_emails  = Breaking_News_Emails::get_instance();
             $this->newsletter_emails     = Newsletter_Emails::get_instance();
             $this->follow_updates_emails = Follow_Updates_Emails::get_instance();
-
-            // Some functionality should only ever run on a live environment
-            if ( 'live' === PEDESTAL_ENV ) {
-                $this->cron_management = Cron_Management::get_instance();
-            }
 
         }
 
@@ -391,6 +387,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             add_filter( 'timber/loader/twig', [ $this, 'filter_timber_loader' ] );
 
             // Add some generic Twig funtions and filters
+            add_filter( 'timber/twig', [ $this, 'filter_timber_twig_add_basic_filters' ] );
             add_filter( 'timber/twig', function( $twig ) {
                 // Function to check if doing email and alternate strings
                 $twig->addFunction( new \Twig_SimpleFunction( 'if_email', function( $email_str, $standard_str ) {
@@ -417,6 +414,32 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                     return (object) $stats;
                 }
             }, 10, 2 );
+        }
+
+        /**
+         * Add some basic PHP and WordPress functions as Twig filters
+         */
+        public function filter_timber_twig_add_basic_filters( $twig ) {
+            $function_names = [
+                // PHP Functions
+                'addslashes',     // http://php.net/manual/en/function.addslashes.php
+                'nl2br',          // http://php.net/manual/en/function.nl2br.php
+
+                // WordPress functions
+                'antispambot',    // https://developer.wordpress.org/reference/functions/antispambot/
+                'esc_attr',       // https://developer.wordpress.org/reference/functions/esc_attr/
+                'esc_html',       // https://developer.wordpress.org/reference/functions/esc_html/
+                'esc_url',        // https://developer.wordpress.org/reference/functions/esc_url/
+                'esc_js',         // https://developer.wordpress.org/reference/functions/esc_js/
+                'esc_textarea',   // https://developer.wordpress.org/reference/functions/esc_textarea/
+                'sanitize_email', // https://developer.wordpress.org/reference/functions/sanitize_email/
+            ];
+            foreach ( $function_names as $func ) {
+                if ( function_exists( $func ) ) {
+                    $twig->addFilter( new \Twig_SimpleFilter( $func, $func ) );
+                }
+            }
+            return $twig;
         }
 
         /**
