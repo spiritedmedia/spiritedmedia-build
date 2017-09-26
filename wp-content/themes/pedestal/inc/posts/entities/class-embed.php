@@ -679,7 +679,7 @@ class Embed extends Entity {
 
         $daily_insta = $posts[0];
         if ( $daily_insta instanceof \WP_Post ) {
-            $daily_insta = Post::get_instance( $daily_insta );
+            $daily_insta = Post::get( $daily_insta );
         }
         if ( ! $daily_insta instanceof self ) {
             return '';

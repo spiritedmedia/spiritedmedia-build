@@ -130,7 +130,7 @@ class Cluster_Types extends Types {
             }
 
             $id = $post->ID;
-            $post_obj = Post::get_by_post_id( $id );
+            $post_obj = Post::get( $id );
             if (
                 Types::is_post( $post_obj ) &&
                 is_single( $id ) &&
@@ -499,7 +499,7 @@ class Cluster_Types extends Types {
      */
     public function filter_p2p_item_title( $title, $post, $ctype ) {
         if ( 'pedestal_locality' === get_post_type( $post ) ) {
-            $locality = Locality::get_by_post_id( $post->ID );
+            $locality = Locality::get( $post->ID );
             $title .= ' (' . $locality->get_type_name() . ')';
         }
         return $title;
@@ -879,7 +879,7 @@ class Cluster_Types extends Types {
      */
     public function render_meta_box_p2p_connections_geospaces_to_geospaces( $post ) {
         $geospace_id = $post->ID;
-        $geospace = Geospace::get_by_post_id( $geospace_id );
+        $geospace = Geospace::get( $geospace_id );
         $context = [
             'geospace'  => $geospace,
             'connected' => $geospace->get_connected_geospaces_passive(),

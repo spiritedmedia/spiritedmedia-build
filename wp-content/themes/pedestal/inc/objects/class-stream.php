@@ -65,7 +65,10 @@ class Stream {
         $html = '';
         foreach ( $wp_query->posts as $index => $post ) {
             $index++;
-            $ped_post = new Post( $post );
+            $ped_post = Post::get( $post );
+            if ( ! Types::is_post( $ped_post ) ) {
+                continue;
+            }
             $context = [
                 '__context'         => 'standard', // Where is this stream item going to be displayed?
                 'post'              => $post,
@@ -97,7 +100,10 @@ class Stream {
         $html = '';
         foreach ( $this->query_obj->posts as $index => $post ) {
             $index++;
-            $ped_post = new Post( $post );
+            $ped_post = Post::get( $post );
+            if ( ! Types::is_post( $ped_post ) ) {
+                continue;
+            }
             $context = [
                 '__context'    => 'list', // Where is this stream item going to be displayed?
                 'post'         => $post,

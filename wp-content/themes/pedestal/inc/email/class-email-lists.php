@@ -344,7 +344,7 @@ class Email_Lists {
 
         // Looks like we'll need to fetch the List ID from ActiveCampaign
         $activecampaign = new ActiveCampaign;
-        $cluster = Post::get_by_post_id( $cluster_id );
+        $cluster = Post::get( $cluster_id );
         if ( ! Types::is_cluster( $cluster ) ) {
             return false;
         }
@@ -389,7 +389,7 @@ class Email_Lists {
             return $output;
         }
         foreach ( $post_ids as $post_id ) {
-            $cluster = Cluster::get_by_post_id( $post_id );
+            $cluster = Cluster::get( $post_id );
             if ( Types::is_cluster( $cluster ) ) {
                 $output[] = $cluster;
             }

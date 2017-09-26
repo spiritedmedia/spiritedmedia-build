@@ -72,7 +72,7 @@ class Slot_Item extends Post {
         if ( empty( $upload ) || ! is_numeric( $upload ) ) {
             return false;
         }
-        $img = Attachment::get_by_post_id( (int) $upload );
+        $img = Attachment::get( (int) $upload );
         return $img->get_url();
     }
 

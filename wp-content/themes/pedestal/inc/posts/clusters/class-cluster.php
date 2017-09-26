@@ -179,7 +179,7 @@ abstract class Cluster extends Post {
      */
     public function get_cluster_connection_type( $rel, $post = null ) {
         if ( empty( $post ) ) {
-            $post = self::get_by_post_id( $this->get_id() );
+            $post = self::get( $this->get_id() );
         }
         return Types::get_connection_type( $rel, $post );
     }

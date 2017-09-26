@@ -138,7 +138,7 @@ class Slots {
             return;
         }
 
-        $slot_item = Slot_Item::get_by_post_id( $post_id );
+        $slot_item = Slot_Item::get( $post_id );
         if ( ! $slot_item instanceof Slot_Item ) {
             return;
         }
@@ -363,7 +363,7 @@ class Slots {
         }
 
         foreach ( $placements as $k => $placement ) {
-            $placement_obj = Placement::get_by_post_id( $placement->ID );
+            $placement_obj = Placement::get( $placement->ID );
             if ( ! $placement_obj instanceof Placement ) {
                 unset( $placements[ $k ] );
                 continue;
@@ -433,7 +433,7 @@ class Slots {
                 $post_id = $placement_selected_post;
             }
 
-            $post_obj = $post_class::get_by_post_id( $post_id );
+            $post_obj = $post_class::get( $post_id );
             if ( ! $post_obj instanceof $post_class ) {
                 continue;
             }

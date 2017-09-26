@@ -95,7 +95,7 @@ class Newsletter_Emails {
      * @param  object $post WP_Post
      */
     public function handle_meta_box( $post ) {
-        $post = Post::get_by_post_id( (int) $post->ID );
+        $post = Post::get( (int) $post->ID );
         $sent_date = $post->get_sent_date();
 
         $context = [
@@ -133,7 +133,7 @@ class Newsletter_Emails {
         if ( 'pedestal_newsletter' !== $post_type ) {
             return;
         }
-        $newsletter = Newsletter::get_by_post_id( (int) $post_id );
+        $newsletter = Newsletter::get( (int) $post_id );
         $is_test_email = false;
         $args = [];
         if ( ! empty( $_POST['pedestal-newsletter-send-test-email'] ) ) {
@@ -194,7 +194,7 @@ class Newsletter_Emails {
         $message_posts = array_merge( [ $parent_newsletter ], $message_posts->posts );
         $messages = [];
         foreach ( $message_posts as $message_post ) {
-            $newsletter = new Newsletter( $message_post );
+            $newsletter = Newsletter::get( $message_post );
             $body = Email::get_email_template( 'newsletter', 'ac', [
                 'item'       => $newsletter,
                 'email_type' => 'Daily',

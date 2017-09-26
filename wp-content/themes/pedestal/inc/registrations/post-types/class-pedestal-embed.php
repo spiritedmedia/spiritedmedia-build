@@ -35,7 +35,10 @@ class Pedestal_Embed {
             return $context;
         }
         $post = $context['post'];
-        $embed = new Embed( $post );
+        $embed = Embed::get( $post );
+        if ( ! method_exists( $embed, 'get_embed_type' ) ) {
+            return $context;
+        }
         $embed_type = $embed->get_embed_type();
         if ( 'twitter' === $embed_type ) {
             $context['description'] = $embed->get_embed_html();
@@ -46,6 +49,7 @@ class Pedestal_Embed {
                 $context['thumbnail_image'] = '<img src="' . esc_url( $data['image_url_large'] ) . '">';
             }
         }
+        $context['featured_image'] = '';
         $context['source_name']  = $embed->get_source();
         $context['source_image'] = Icons::get_icon( $embed_type );
         $context['source_link']  = $embed->get_embed_url();

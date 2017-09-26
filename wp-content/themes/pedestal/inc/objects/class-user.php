@@ -203,7 +203,7 @@ class User extends Author {
         }
         // FM Media fields are saved as strings, so type must be converted
         $id = absint( $id );
-        $attachment = Attachment::get_by_post_id( $id );
+        $attachment = Attachment::get( $id );
         if ( $attachment instanceof Attachment ) {
             return $attachment->get_html( $size );
         }

@@ -64,19 +64,28 @@ class Admin {
 
         add_action( 'save_post', function( $post_id, $post, $update ) {
             $post_type = get_post_type( $post_id );
-            switch ( $post_type ) {
+            switch ( $post_type ) :
                 case 'pedestal_embed':
-                    $embed = new Embed( $post_id );
-                    $embed->update_embed_data();
+                    $embed = Embed::get( $post_id );
+                    if ( method_exists( $embed, 'update_embed_data' ) ) {
+                        $embed->update_embed_data();
+                    }
                     break;
                 case 'pedestal_story':
-                    $story = new Story( $post_id );
-                    if ( $story->has_story_branding() && $story->has_story_bar_icon() ) {
+                    $story = Story::get( $post_id );
+                    if (
+                        Types::is_story( $story ) &&
+                        $story->has_story_branding() &&
+                        $story->has_story_bar_icon()
+                    ) {
                         $this->update_story_branding( $post_id );
                     }
                     break;
                 case 'pedestal_person':
-                    $person = new Person( $post_id );
+                    $person = Person::get( $post_id );
+                    if ( ! Types::is_cluster( $person ) ) {
+                        break;
+                    }
 
                     if ( ! $person->get_title() ) {
                         $person->set_person_title();
@@ -97,7 +106,7 @@ class Admin {
                         $person->set_name( $name );
                     }
                     break;
-            }
+            endswitch;
         }, 100, 3 );
 
         add_action( 'admin_notices', [ $this, 'action_admin_notice_maintenance_mode' ] );
@@ -153,7 +162,7 @@ class Admin {
                 $plurals = false;
                 $type = Types::get_post_type_name( $post->post_type, $plurals );
                 if ( 'pedestal_locality' === $post->post_type ) {
-                    $locality = Post::get_by_post_id( $post->ID );
+                    $locality = Post::get( $post->ID );
                     $type = $locality->get_type_name();
                 }
                 $title .= ' (' . $type . ')';
@@ -446,7 +455,7 @@ class Admin {
             return $out;
         }
 
-        $post = \Pedestal\Posts\Post::get_by_post_id( get_the_ID() );
+        $post = \Pedestal\Posts\Post::get( get_the_ID() );
         if ( ! $post ) {
             return $out;
         }
@@ -799,7 +808,7 @@ class Admin {
      * @param  int $story_id
      */
     public function update_story_branding( $story_id ) {
-        $story = Story::get_by_post_id( $story_id );
+        $story = Story::get( $story_id );
         $styles = $story->get_primary_story_branding();
         if ( $styles ) {
             $attachment_id = $story->get_icon_id();

@@ -64,7 +64,7 @@ class Scripts_Styles {
         wp_register_style( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/css/player.css', [], null );
 
         if ( is_single() && is_a( $post, 'WP_Post' ) ) {
-            $post_obj = Post::get_by_post_id( $post->ID );
+            $post_obj = Post::get( $post->ID );
             $post_published_ver = $post_obj->get_published_pedestal_ver();
 
             // Load SoundCite assets only if shortcode is present in the current post content

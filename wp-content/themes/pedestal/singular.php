@@ -6,7 +6,7 @@ use Pedestal\Posts\Post;
 use Pedestal\Objects\Stream;
 
 $p = Timber::query_post();
-$item = Post::get_by_post_id( $p->ID );
+$item = Post::get( $p->ID );
 
 $context = Timber::get_context();
 

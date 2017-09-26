@@ -125,8 +125,8 @@ class Types {
         self::$groups['slots']    = Slot_Types::get_instance();
 
         // Content Types
-        self::$content_types['pedestal_embed']     = Pedestal_Embed::get_instance();
         self::$content_types['pedestal_entity']    = Pedestal_Entity::get_instance();
+        self::$content_types['pedestal_embed']     = Pedestal_Embed::get_instance();
         self::$content_types['pedestal_event']     = Pedestal_Event::get_instance();
         self::$content_types['pedestal_factcheck'] = Pedestal_Factcheck::get_instance();
         self::$content_types['pedestal_link']      = Pedestal_Link::get_instance();
@@ -231,7 +231,7 @@ class Types {
      */
     public function action_manage_posts_custom_column( $column_name, $post_id ) {
 
-        $obj = \Pedestal\Posts\Post::get_by_post_id( $post_id );
+        $obj = \Pedestal\Posts\Post::get( $post_id );
         switch ( $column_name ) :
             case 'pedestal_external_url':
                 echo '<a href="' . esc_url( $obj->get_external_url() ) . '">' . esc_url( $obj->get_external_url() ) . '</a>';
@@ -512,7 +512,10 @@ class Types {
             return $context;
         }
         $post = $context['post'];
-        $ped_post = new Post( $post );
+        $ped_post = Post::get( $post );
+        if ( ! Types::is_post( $ped_post ) ) {
+            return $context;
+        }
         $truncate = true;
         $context['author_names'] = $ped_post->get_the_authors( $truncate );
         $context['author_image'] = $ped_post->get_author_avatar();
@@ -937,13 +940,33 @@ class Types {
     }
 
     /**
-     * Determine whether an object is one of our Post objects
+     * Determine whether an object or post type is one of our Posts
      *
-     * @param  mixed  $post_obj An object to test
-     * @return bool
+     * @param  object|string $post               An object or post type name to test
+     * @param  boolean       $include_overridden Check against the posts with custom classes?
+     * @return boolean
      */
-    public static function is_post( $post_obj ) {
-        return is_a( $post_obj, '\\Pedestal\\Posts\\Post' );
+    public static function is_post( $post, $include_overridden = false ) {
+        if (
+            is_a( $post, '\\Pedestal\\Posts\\Post' ) ||
+            ( $include_overridden && in_array( $post, Types::get_pedestal_post_types() ) )
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Determine whether an object or post type is one of our Attachments
+     *
+     * @param  object|string $post  An object to test
+     * @return boolean
+     */
+    public static function is_attachment( $post ) {
+        if ( is_a( $post, '\\Pedestal\\Posts\\Attachment' ) ) {
+            return true;
+        }
+        return false;
     }
 
     /**

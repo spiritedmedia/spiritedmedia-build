@@ -88,7 +88,7 @@ class Newsletter extends Post {
                     continue;
                 }
 
-                $post = static::get_by_post_id( $item['post'] );
+                $post = static::get( $item['post'] );
                 if ( ! Types::is_post( $post ) ) {
                     unset( $items[ $key ] );
                     continue;

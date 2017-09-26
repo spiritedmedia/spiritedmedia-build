@@ -732,7 +732,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
             $post_id = $post->ID;
             if ( in_array( Types::get_post_type( $post_id ), Types::get_pedestal_post_types() ) ) {
-                $post_obj = Post::get_by_post_id( $post_id );
+                $post_obj = Post::get( $post_id );
                 $post_obj->notify_on_publish();
             }
         }
@@ -746,7 +746,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
             $post_id = $post->ID;
             if ( in_array( Types::get_post_type( $post_id ), Types::get_pedestal_post_types() ) ) {
-                $post_obj = Post::get_by_post_id( $post_id );
+                $post_obj = Post::get( $post_id );
                 $post_obj->set_published_pedestal_ver();
             }
         }
@@ -780,7 +780,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             if ( ! $spotlight['enabled'] ) {
                 return false;
             }
-            $post = Post::get_by_post_id( $spotlight['content'] );
+            $post = Post::get( $spotlight['content'] );
             if ( empty( $post ) ) {
                 $posts = new \WP_Query( [
                     'posts_per_page'         => 1,
@@ -793,7 +793,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                     return false;
                 }
                 $post_id = $posts->posts[0]->ID;
-                $post = Post::get_by_post_id( $post_id );
+                $post = Post::get( $post_id );
             }
             // If the Spotlight post is the same as the currently requested post then bail
             if ( $post->get_id() == get_the_ID() ) {

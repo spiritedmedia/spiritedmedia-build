@@ -18,7 +18,7 @@ use \Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
 /**
  * Base class to represent a WordPress Post
  */
-class Post {
+abstract class Post {
 
     /**
      * Is the post Original?
@@ -56,39 +56,55 @@ class Post {
     }
 
     /**
-     * Get an instantiated proper object based on a post ID
+     * Get a Post family instance from a WP_Post object
      *
-     * @param int|str Integer or numeric string post ID
+     * @param  string|int|\WP_Post $post Numeric post ID or WP_Post object
+     * @return object|false
+     * - `Post`-extending class if successful
+     * - `WP_Post` if not one of our post types
+     * - false if failure
      */
-    public static function get_by_post_id( $post_id ) {
+    public static function get( $post ) {
         global $wp;
         $errors = new \WP_Error;
 
-        if ( empty( $post_id ) ) {
+        if ( is_numeric( $post ) ) {
+            $post_id = $post;
+            $wp_post = get_post( $post_id );
+        } elseif ( $post instanceof \WP_Post ) {
+            $post_id = $post->ID;
+            $wp_post = $post;
+        } else {
             return false;
         }
 
-        if ( ! is_numeric( $post_id ) ) {
-            $var_type_post_id = gettype( $post_id );
-            $errors->add( 'post_id_not_int', "Expected \$post_id as numeric integer or string, got non-numeric {$var_type_post_id}." );
-            trigger_error( $errors->get_error_message(), E_USER_ERROR );
-            return false;
+        $post_type = get_post_type( $wp_post );
+
+        $include_overridden = true;
+        if ( ! Types::is_post( $post_type, $include_overridden ) ) {
+            return $wp_post;
         }
 
         // Have we already gotten this post object?
-        if ( isset( $wp->pedestal_post_cache[ $post_id ] ) && ! empty( $wp->pedestal_post_cache[ $post_id ] ) ) {
+        if ( ! empty( $wp->pedestal_post_cache[ $post_id ] ) ) {
             return $wp->pedestal_post_cache[ $post_id ];
         }
 
-        $post = get_post( $post_id );
-        if ( ! $post ) {
-            // Cache it!
+        // If requested post type is a Locality, then use the Locality instance getter
+        if ( 'pedestal_locality' === $post_type ) {
+            return Locality::get( $wp_post );
+        }
+
+        $class = Types::get_post_type_class( $post_type );
+        if ( ! class_exists( $class ) ) {
+            $errors->add( 'post_class_nonexistant', "The requested post class {$class} does not exist." );
+            trigger_error( $errors->get_error_message(), E_USER_ERROR );
             $wp->pedestal_post_cache[ $post_id ] = false;
             return false;
         }
 
-        // Cache it!
-        $wp->pedestal_post_cache[ $post_id ] = static::get_instance( $post );
+        // Cache and return the Post object
+        $wp->pedestal_post_cache[ $post_id ] = new $class( $wp_post );
         return $wp->pedestal_post_cache[ $post_id ];
     }
 
@@ -116,42 +132,9 @@ class Post {
             return false;
         }
         if ( 1 == $args['numberposts'] ) {
-            return Post::get_instance( $posts[0] );
+            return Post::get( $posts[0] );
         }
         return Post::get_posts_from_query( $query );
-    }
-
-    /**
-     * Get a Post family instance from a WP_Post object
-     *
-     * @param  WP_Post $post WP_Post object
-     * @return object|false
-     * - `Post`-extending class if successful
-     * - `WP_Post` if not one of our post types
-     * - false if failure
-     */
-    public static function get_instance( $post ) {
-        if ( ! $post instanceof \WP_Post ) {
-            return false;
-        }
-
-        // If requested post type is a Locality, then use the Locality instance getter
-        if ( 'pedestal_locality' === get_post_type( $post ) ) {
-            return Locality::get_instance( $post );
-        }
-
-        if ( ! in_array( get_post_type( $post ), Types::get_pedestal_post_types() ) ) {
-            return $post;
-        }
-
-        $class = Types::get_post_type_class( get_post_type( $post ) );
-        if ( ! class_exists( $class ) ) {
-            $errors->add( 'post_class_nonexistant', "The requested post class {$class} does not exist." );
-            trigger_error( $errors->get_error_message(), E_USER_ERROR );
-            return false;
-        }
-
-        return new $class( $post );
     }
 
     /**
@@ -167,7 +150,7 @@ class Post {
         }
         foreach ( $query->posts as $post ) {
             if ( $post instanceof \WP_Post ) {
-                $post = Post::get_instance( $post );
+                $post = Post::get( $post );
             }
             $ped_posts[] = $post;
         }
@@ -990,8 +973,8 @@ class Post {
      */
     public function get_featured_image() {
         $id = $this->get_featured_image_id();
-        $attachment = Attachment::get_by_post_id( $id );
-        if ( Types::is_post( $attachment ) ) {
+        $attachment = Attachment::get( $id );
+        if ( Types::is_attachment( $attachment ) ) {
             return $attachment;
         }
         return false;

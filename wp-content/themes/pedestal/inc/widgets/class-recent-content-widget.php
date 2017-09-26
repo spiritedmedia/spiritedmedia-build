@@ -56,7 +56,10 @@ class Recent_Content_Widget extends \WP_Widget {
 
         $items = '';
         foreach ( $posts->posts as $index => $post ) {
-            $ped_post = new Post( $post );
+            $ped_post = Post::get( $post );
+            if ( ! Types::is_post( $ped_post ) ) {
+                continue;
+            }
             $item_context = [
                 'title'     => $ped_post->get_the_title(),
                 'permalink' => $ped_post->get_the_permalink(),

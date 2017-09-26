@@ -187,7 +187,7 @@ class Cluster_Tools {
         $target_cluster_id = $data['new']['post'];
         foreach ( $data['old']['post'] as $post ) {
             $merge_cluster_id = $post['post'];
-            $cluster = Post::get_by_post_id( $merge_cluster_id );
+            $cluster = Post::get( $merge_cluster_id );
             if ( Types::is_cluster( $cluster ) ) {
                 $merge_clusters[] = $cluster;
             } else {
@@ -199,7 +199,7 @@ class Cluster_Tools {
             }
         }
         unset( $merge_cluster_id );
-        $target_cluster = Post::get_by_post_id( $target_cluster_id );
+        $target_cluster = Post::get( $target_cluster_id );
 
         if ( ! Types::is_cluster( $target_cluster ) ) {
             $msg = sprintf( 'The selected target post with ID %d is not actually a cluster! %s',

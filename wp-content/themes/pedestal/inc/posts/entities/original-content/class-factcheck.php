@@ -103,7 +103,7 @@ class Factcheck extends Original {
      * @return obj Person
      */
     public function get_statement_speaker() {
-        $speaker = static::get_by_post_id( $this->get_statement_meta( 'speaker' ) );
+        $speaker = static::get( $this->get_statement_meta( 'speaker' ) );
         if ( $speaker instanceof Person || $speaker instanceof Org ) {
             return $speaker;
         }

@@ -37,20 +37,20 @@ class Locality extends Place {
     /**
      * Get a Locality instance from a WP_Post object
      *
-     * Returns the result of Post::get_instance() if the `$post` argument is
+     * Returns the result of Post::get() if the `$post` argument is
      * not a Locality.
      *
      * @param  WP_Post $post WP_Post object
      * @return mixed
      * - `Locality` family class if successful
-     * - Post::get_instance()
+     * - Post::get()
      */
-    public static function get_instance( $post ) {
+    public static function get( $post ) {
         // If the requested post is a Locality, then instantiate it using the
         // Locality Type class as described below. If not, then use the parent's
-        // `get_instance()` method.
+        // `get()` method.
         if ( ! get_post_type( $post ) === self::$post_type ) {
-            return parent::get_instance( $post );
+            return parent::get( $post );
         }
 
         // If there is an existing class matching the Locality Type's
@@ -70,7 +70,7 @@ class Locality extends Place {
     /**
      * Get the expected class name for the Locality Type given its ID
      *
-     * @TODO In order to be accessible to the static method `get_by_post_id()`
+     * @TODO In order to be accessible to the static method `get()`
      *     we're unable to use our single-purpose methods for getting meta and
      *     term IDs, instead bascailly rewriting them here. An ideal solution
      *     would be moving away from static methods as much as possible.

@@ -114,7 +114,7 @@ class Parsely {
         switch ( $scope ) {
             case 'post':
                 $keywords = [];
-                $post = Post::get_by_post_id( (int) $args['id'] );
+                $post = Post::get( (int) $args['id'] );
                 if ( ! is_a( $post, '\\Pedestal\\Posts\\Post' ) ) {
                     return '';
                 }

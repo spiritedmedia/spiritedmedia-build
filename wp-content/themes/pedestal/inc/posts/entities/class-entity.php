@@ -8,7 +8,7 @@ use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Posts\Post;
 use Pedestal\Posts\Clusters\Story;
 
-class Entity extends Post {
+abstract class Entity extends Post {
 
     /**
      * Primary Story

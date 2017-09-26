@@ -250,7 +250,7 @@ class Frontend {
             return;
         }
 
-        $post = Post::get_by_post_id( get_the_ID() );
+        $post = Post::get( get_the_ID() );
         $parts = parse_url( $post->get_permalink() );
         $amp_url = 'https://cdn.relaymedia.com/amp/';
         $amp_url .= $parts['host'];
@@ -271,7 +271,7 @@ class Frontend {
             return;
         }
 
-        $post = Post::get_by_post_id( get_the_ID() );
+        $post = Post::get( get_the_ID() );
         $permalink = $post->get_permalink();
         $beacon_url = add_query_arg( [
             'url' => urlencode( $permalink ),
@@ -289,7 +289,7 @@ class Frontend {
 
         $meta_description = get_bloginfo( 'description' );
         if ( is_single() ) {
-            $post = Post::get_by_post_id( get_queried_object_id() );
+            $post = Post::get( get_queried_object_id() );
             if ( Types::is_post( $post ) && $post->get_seo_description() ) {
                 $meta_description = $post->get_seo_description();
             }
@@ -331,7 +331,7 @@ class Frontend {
         }
 
         if ( is_singular() ) :
-            $post = Post::get_by_post_id( get_queried_object_id() );
+            $post = Post::get( get_queried_object_id() );
             if ( is_a( $post, '\\Pedestal\\Posts\\Post' ) ) :
                 $post_type = $post->get_post_type();
 
@@ -388,7 +388,7 @@ class Frontend {
         if ( is_home() ) {
             return PEDESTAL_CITY_NAME . ' News, Local News, Breaking News - ' . PEDESTAL_BLOG_NAME;
         } elseif ( is_singular() ) {
-            $obj = \Pedestal\Posts\Post::get_by_post_id( get_queried_object_id() );
+            $obj = \Pedestal\Posts\Post::get( get_queried_object_id() );
             if ( ! is_object( $obj ) ) {
                 return $wp_title;
             }
@@ -476,7 +476,7 @@ class Frontend {
                 $n++;
             }
 
-            $post_obj = Post::get_by_post_id( $post_id );
+            $post_obj = Post::get( $post_id );
             if ( is_a( $post_obj, '\\Pedestal\\Posts\\Post' ) && method_exists( $post_obj, 'set_footnotes_generated' ) ) {
                 $post_obj->set_footnotes_generated( $notes, $start );
             }
@@ -494,7 +494,7 @@ class Frontend {
      * Filter the footnotes field below post content to include generated notes
      */
     public function filter_the_footnotes_render( $footnotes, $post_id ) {
-        $post = Post::get_by_post_id( $post_id );
+        $post = Post::get( $post_id );
         if (
             is_a( $post, '\\Pedestal\\Posts\\Post' )
             && method_exists( $post, 'get_footnotes_generated_notes' )
@@ -530,7 +530,7 @@ class Frontend {
 
         // Single posts
         if ( is_singular() ) {
-            $obj = Post::get_by_post_id( get_queried_object_id() );
+            $obj = Post::get( get_queried_object_id() );
             $tags['og:title']          = $obj->get_facebook_open_graph_tag( 'title' );
             $tags['og:type']           = 'article';
             $tags['og:description']    = $obj->get_facebook_open_graph_tag( 'description' );
@@ -575,7 +575,7 @@ class Frontend {
 
         // Single posts
         if ( is_singular() ) {
-            $post_obj = Post::get_by_post_id( get_queried_object_id() );
+            $post_obj = Post::get( get_queried_object_id() );
             if ( Types::is_post( $post_obj ) ) {
                 $tags['twitter:title'] = $post_obj->get_twitter_card_tag( 'title' );
                 $tags['twitter:url'] = $post_obj->get_twitter_card_tag( 'url' );

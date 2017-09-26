@@ -6,7 +6,7 @@ use Pedestal\Posts\Entities\Event;
 
 $context = Timber::get_context();
 $post = Timber::query_post();
-$event = Event::get_by_post_id( $post->ID );
+$event = Event::get( $post->ID );
 $context['item'] = $event;
 
 $filename = $event->get_slug() . '.ics';

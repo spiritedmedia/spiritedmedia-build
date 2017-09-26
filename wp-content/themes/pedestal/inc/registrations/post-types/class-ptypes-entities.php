@@ -220,7 +220,7 @@ class Entity_Types extends Types {
             return;
         }
 
-        $embed = Embed::get_by_post_id( $post_id );
+        $embed = Embed::get( $post_id );
         if ( ! $embed instanceof Embed || empty( $_POST['embed_url'] ) ) {
             return;
         }
@@ -239,7 +239,7 @@ class Entity_Types extends Types {
      */
     public function action_save_post_whosnext_clusters( $post_id, $post, $update ) {
 
-        $post = Whos_Next::get_by_post_id( $post_id );
+        $post = Whos_Next::get( $post_id );
         if ( ! $post instanceof Whos_Next ) {
             return;
         }

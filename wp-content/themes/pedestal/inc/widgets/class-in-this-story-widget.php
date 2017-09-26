@@ -31,7 +31,7 @@ class In_This_Story_Widget extends \WP_Widget {
         $context = Timber::get_context();
         $permalink_filter = false;
 
-        $obj = Post::get_by_post_id( get_queried_object_id() );
+        $obj = Post::get( get_queried_object_id() );
         if ( ! Types::is_entity( $obj ) || ! $obj->has_story() ) {
             return;
         }

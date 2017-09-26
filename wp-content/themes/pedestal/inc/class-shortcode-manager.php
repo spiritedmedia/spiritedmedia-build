@@ -386,7 +386,7 @@ class Shortcode_Manager {
             $img_atts['sizes'] = '';
         }
         if ( ! empty( $attachment ) && ! empty( $size ) ) {
-            $obj = Attachment::get_by_post_id( (int) $attachment );
+            $obj = Attachment::get( (int) $attachment );
             if ( 'full' == $size ) {
                 $meta = $obj->get_metadata();
                 if ( ! empty( $meta['width'] ) && 1024 < $meta['width'] ) {
@@ -412,7 +412,7 @@ class Shortcode_Manager {
      * Add additional attributes to image caption shortcode
      */
     public function filter_img_shortcode_send_to_editor_attrs( $shortcode_attrs, $html, $attachment_id, $attachment ) {
-        $obj = Attachment::get_by_post_id( (int) $attachment_id );
+        $obj = Attachment::get( (int) $attachment_id );
         if ( ! $obj instanceof Attachment ) {
             return $shortcode_attrs;
         }
@@ -618,7 +618,7 @@ class Shortcode_Manager {
             return '';
         }
 
-        $obj = \Pedestal\Posts\Entities\Event::get_by_post_id( (int) $attrs['id'] );
+        $obj = \Pedestal\Posts\Entities\Event::get( (int) $attrs['id'] );
         if ( ! $obj || 'event' !== $obj->get_type() ) {
             return '';
         }
@@ -648,7 +648,7 @@ class Shortcode_Manager {
             'private',
         ];
 
-        $embed = Embed::get_by_post_id( (int) $attrs['id'] );
+        $embed = Embed::get( (int) $attrs['id'] );
         if ( ! $embed instanceof Embed || ! in_array( $embed->get_status(), $ok_statuses ) ) {
             return '';
         }

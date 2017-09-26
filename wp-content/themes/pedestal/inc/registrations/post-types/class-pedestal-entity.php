@@ -35,8 +35,8 @@ class Pedestal_Entity {
             return $context;
         }
 
-        $entity = new Entity( $context['post'] );
-        if ( ! $entity ) {
+        $entity = Post::get( $context['post'] );
+        if ( ! Types::is_entity( $entity ) ) {
             return $context;
         }
 

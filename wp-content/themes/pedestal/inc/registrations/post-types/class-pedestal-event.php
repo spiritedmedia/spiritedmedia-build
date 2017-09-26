@@ -49,10 +49,10 @@ class Pedestal_Event {
             return $context;
         }
         $post = $context['post'];
-        $ped_event = new Event( $post );
-
-        $context['details_table'] = $ped_event->get_details_table();
-
+        $ped_event = Event::get( $post );
+        if ( method_exists( $ped_event, 'get_details_table' ) ) {
+            $context['details_table'] = $ped_event->get_details_table();
+        }
         return $context;
     }
 }

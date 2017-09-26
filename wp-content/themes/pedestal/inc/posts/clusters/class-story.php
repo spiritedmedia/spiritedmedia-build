@@ -95,7 +95,7 @@ class Story extends Cluster {
 
             $icon = $this->get_icon_id();
             if ( ! empty( $icon ) ) {
-                $attachment = Attachment::get_by_post_id( (int) $icon );
+                $attachment = Attachment::get( (int) $icon );
                 if ( ! empty( $attachment ) ) {
                     $styles['icon'] = $attachment->get_url();
                     $styles['fallback_icon'] = str_replace( '.svg', '.png', $attachment->get_url() );

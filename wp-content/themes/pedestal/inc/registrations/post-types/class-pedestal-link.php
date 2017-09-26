@@ -35,11 +35,13 @@ class Pedestal_Link {
             return $context;
         }
         $post = $context['post'];
-        $link = new Link( $post );
-        $context['description'] = '';
-        $context['source_name']  = $link->get_source_name();
-        $context['source_image'] = Icons::get_icon( 'external-link' );
-        $context['source_link']  = $link->get_external_url();
+        $link = Link::get( $post );
+        if ( method_exists( $link, 'get_external_url' ) ) {
+            $context['description'] = '';
+            $context['source_name']  = $link->get_source_name();
+            $context['source_image'] = Icons::get_icon( 'external-link' );
+            $context['source_link']  = $link->get_external_url();
+        }
         return $context;
     }
 }

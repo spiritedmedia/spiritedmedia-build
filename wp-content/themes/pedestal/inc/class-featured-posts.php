@@ -246,9 +246,12 @@ class Featured_Posts {
         $posts = $this->get_posts();
         $stream = new Stream;
         $items = [];
-        foreach ( $posts as $index => $post ) {
+        foreach ( $posts as $index => $post ) :
             $index++;
-            $ped_post = new Post( $post );
+            $ped_post = Post::get( $post );
+            if ( ! Types::is_post( $ped_post ) ) {
+                continue;
+            }
             $context = apply_filters( 'pedestal_stream_item_context', [
                 'post'              => $post,
                 'type'              => $ped_post->get_type(),
@@ -280,7 +283,7 @@ class Featured_Posts {
             echo $stream->get_the_stream_item( $context );
             do_action( 'pedestal_after_featured_item_' . $index, $post );
             $items[] = ob_get_clean();
-        }
+        endforeach;
         return $items;
     }
 }

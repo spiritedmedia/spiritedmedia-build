@@ -73,7 +73,7 @@ class Breaking_News_Emails {
      * @param  object $post WP_Post
      */
     public function handle_meta_box( $post ) {
-        $post = Post::get_by_post_id( (int) $post->ID );
+        $post = Post::get( (int) $post->ID );
         $sent_date = $post->get_sent_date();
 
         $send_button_text = sprintf(
@@ -124,7 +124,7 @@ class Breaking_News_Emails {
                 && $breaking_news_confirm
              ) || ! empty( $_POST['pedestal-breaking-news-send-test-email'] )
         ) {
-            $post = Post::get_by_post_id( (int) $post_id );
+            $post = Post::get( (int) $post_id );
             $is_test_email = false;
             $args = [];
             if ( ! empty( $_POST['pedestal-breaking-news-send-test-email'] ) ) {
@@ -189,7 +189,7 @@ class Breaking_News_Emails {
             echo 'No breaking news emails to test with.';
             die();
         }
-        $post = Post::get_by_post_id( $breaking_news->posts[0]->ID );
+        $post = Post::get( $breaking_news->posts[0]->ID );
         echo Email::get_email_template( 'breaking-news', 'ac', [
             'item' => $post,
             'email_type' => 'Breaking News',

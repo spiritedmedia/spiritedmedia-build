@@ -68,7 +68,7 @@ class Follow_Updates_Emails {
      */
     public function handle_meta_box( $post ) {
         $post_id = $post->ID;
-        $cluster = Cluster::get_by_post_id( (int) $post_id );
+        $cluster = Cluster::get( (int) $post_id );
         if ( ! Types::is_cluster( $cluster ) ) {
             return;
         }
@@ -139,7 +139,7 @@ class Follow_Updates_Emails {
             return;
         }
 
-        $cluster = Cluster::get_by_post_id( (int) $post_id );
+        $cluster = Cluster::get( (int) $post_id );
         $is_test_email = false;
         $args = [];
         if ( ! empty( $_POST['pedestal-cluster-send-test-email'] ) ) {
@@ -205,13 +205,15 @@ class Follow_Updates_Emails {
             echo 'No published stories to test with.';
             die();
         }
-        $story = new Story( $stories->posts[0] );
-        echo Email::get_email_template( 'follow-update', 'ac', [
-            'item' => $story,
-            'entities' => $story->get_unsent_entities( true ),
-            'email_type' => $story->get_email_type(),
-            'shareable' => true,
-        ] );
+        $story = Story::get( $stories->posts[0] );
+        if ( Types::is_story( $story ) ) {
+            echo Email::get_email_template( 'follow-update', 'ac', [
+                'item'       => $story,
+                'entities'   => $story->get_unsent_entities( true ),
+                'email_type' => $story->get_email_type(),
+                'shareable'  => true,
+            ] );
+        }
         die();
     }
 }

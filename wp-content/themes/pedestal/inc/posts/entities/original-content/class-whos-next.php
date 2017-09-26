@@ -64,14 +64,14 @@ class Whos_Next extends Original {
             $_people = $item['people'];
             $item['people'] = [];
             foreach ( $_people as $person_k => $person_v ) {
-                $person = Person::get_by_post_id( $person_v['person'] );
+                $person = Person::get( $person_v['person'] );
                 if ( ! $person instanceof Person ) {
                     continue;
                 }
                 $item['people'][] = $person;
             }
 
-            $_img = Attachment::get_by_post_id( $item['img'] );
+            $_img = Attachment::get( $item['img'] );
             $item['img'] = '';
             if ( ! $_img instanceof Attachment ) {
                 continue;

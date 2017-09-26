@@ -290,7 +290,7 @@ class Email {
         if ( ! Types::is_cluster( $post_after->post_type ) ) {
             return;
         }
-        $post_after = Cluster::get_by_post_id( $post_id );
+        $post_after = Cluster::get( $post_id );
         $list_id = Email_Lists::get_list_ids_from_cluster( $post_id );
         $new_name = $post_after->get_activecampaign_list_name();
 

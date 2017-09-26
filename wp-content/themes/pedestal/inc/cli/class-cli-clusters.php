@@ -190,7 +190,7 @@ class CLI_Clusters extends \WP_CLI_Command {
         WP_CLI::line( 'Creating connections between localities and other clusters...' );
         foreach ( $connectable as $item ) :
 
-            $post = Post::get_by_post_id( $item['id'] );
+            $post = Post::get( $item['id'] );
             $post_type = $post->get_type();
             $post_title = $post->get_title();
 

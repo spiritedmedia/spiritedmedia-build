@@ -26,7 +26,7 @@ class Neighborhood extends Locality {
      * @return obj An attachment object
      */
     public function get_postcard() {
-        return Attachment::get_by_post_id( $this->get_postcard_id() ) ?: false;
+        return Attachment::get( $this->get_postcard_id() ) ?: false;
     }
 
     /**
