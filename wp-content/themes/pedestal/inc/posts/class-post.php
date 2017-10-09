@@ -3,6 +3,8 @@
 namespace Pedestal\Posts;
 
 use WP_Post;
+use Timber\Timber;
+
 use function Pedestal\Pedestal;
 use Pedestal\Icons;
 use Pedestal\Utils\Utils;
@@ -35,7 +37,7 @@ abstract class Post {
 
     protected static $post_type = 'post';
 
-    public function __construct( $post ) {
+    protected function __construct( $post ) {
         global $wp;
         if ( is_numeric( $post ) ) {
             $post = get_post( $post );
@@ -1692,6 +1694,52 @@ abstract class Post {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Get default Twig context values
+     *
+     * @return array
+     */
+    public function get_context() {
+        $context = [
+            // Note: __context needs two underscores so as not to conflict with twig context variable
+            // See standard-item.twig for descriptions of these values
+            '__context'         => 'standard',
+            'item'              => $this,
+            'post'              => $this->post,
+            'type'              => $this->get_type(),
+            'type_name'         => $this->get_type_name(),
+            'featured_image'    => $this->get_featured_image_figure_html( '1024-16x9', [
+                'classes' => 'c-main__lead-img ',
+                'linkto'  => false,
+            ] ),
+            'overline'          => '',
+            'overline_url'      => '',
+            'title'             => $this->get_the_title(),
+            'headline'          => '',
+            'permalink'         => $this->get_the_permalink(),
+            'date_time'         => $this->get_the_datetime(),
+            'machine_time'      => $this->get_post_date( 'c' ),
+            'description'       => $this->get_the_excerpt(),
+            'show_meta_info'    => true,
+            'author_names'      => '',
+            'author_image'      => '',
+            'author_link'       => '',
+            'author_bio'        => '',
+            'source_name'       => '',
+            'source_image'      => '',
+            'source_link'       => '',
+            'content_classes'   => [],
+            'content'           => $this->get_the_content(),
+            'footnotes'         => '',
+        ] + Timber::get_context();
+        if ( post_type_supports( static::$post_type, 'author' ) ) {
+            $context['author_names'] = $this->get_the_authors();
+            $context['author_image'] = $this->get_author_avatar();
+            $context['author_link']  = $this->get_author_permalink();
+        }
+        return $context;
     }
 }
 

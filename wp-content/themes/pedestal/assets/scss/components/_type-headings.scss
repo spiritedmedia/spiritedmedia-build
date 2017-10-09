@@ -29,8 +29,9 @@
 .c-heading--overline {
   &,
   .c-heading__title {
+    @include h-size( 6 );
+
     text-transform: uppercase;
-    font-size: $heading-minor-f-z;
     line-height: 1.2;
   }
 }
@@ -47,9 +48,7 @@
 }
 
 .c-heading--overline {
-  @include h-size( 5 );
-
-  font-weight: 600;
+  margin-bottom: rem( 12px );
 }
 
 .c-heading--archive {
@@ -59,6 +58,6 @@
   font-weight: 300;
 
   .c-heading__title {
-    font-weight: 600;
+    font-weight: 700;
   }
 }

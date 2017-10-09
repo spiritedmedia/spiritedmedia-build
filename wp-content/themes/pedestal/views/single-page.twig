@@ -8,7 +8,7 @@
 
 {% block content %}
 
-    <article class="c-main__content  {{ item.css_classes }}" {{ item.get_the_data_atts }} >
+    <article class="c-main__content  {{ item.css_classes|esc_attr }}" {{ item.get_the_data_atts }} >
 
         <header class="c-main__header js-main-header">
             <h2 class="c-main__title--page  c-main__title">{{ item.get_the_title }}</h2>

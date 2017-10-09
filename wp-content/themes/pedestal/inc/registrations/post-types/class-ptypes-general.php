@@ -4,16 +4,16 @@ namespace Pedestal\Registrations\Post_Types;
 
 use Pedestal\Utils\Utils;
 
-class General_Types extends Types {
+class General_Types {
 
     /**
      * Newsletter item types
      */
-    protected static $newsletter_item_types;
+    public static $newsletter_item_types;
 
-    protected $original_post_types = [];
+    public $original_post_types = [];
 
-    protected $post_types = [
+    public $post_types = [
         'pedestal_newsletter',
     ];
 
@@ -130,7 +130,7 @@ class General_Types extends Types {
     private function register_email_pretext_field() {
         $post_types = array_merge(
             [ 'pedestal_newsletter' ],
-            static::get_post_types_by_supported_feature( 'breaking' )
+            Types::get_post_types_by_supported_feature( 'breaking' )
         );
 
         $description = 'Aim for 140 characters and test it!';

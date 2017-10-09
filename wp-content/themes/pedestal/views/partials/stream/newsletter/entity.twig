@@ -1,15 +1,23 @@
+{% set title = newsletter_item.title %}
+
 <article class="{{ macros.get_stream_item_classes( 'newsletter', _context ) }} newsletter-item"
     {{ item.get_the_data_atts }}>
 
-    <div class="c-overview">
-        {% include 'partials/item-title.twig' with {
-            'title': newsletter_item.title,
-            'url': newsletter_item.url
-        } %}
+    <h1 class="newsletter-item__title">
+        {% if newsletter_item.url %}
+            <a
+                href="{{ newsletter_item.url|esc_url }}"
+                data-ga-category="{{ gaCategory|esc_attr }}"
+                data-ga-label="Title|{{ title|esc_attr }}"
+            >
+                {{ title }}
+            </a>
+        {% else %}
+            {{ title }}
+        {% endif %}
+    </h1>
 
-        <div class="c-overview__description">
-            {{ newsletter_item.description }}
-        </div>
+    <div class="newsletter-item__description">
+        {{ newsletter_item.description }}
     </div>
-
 </article>

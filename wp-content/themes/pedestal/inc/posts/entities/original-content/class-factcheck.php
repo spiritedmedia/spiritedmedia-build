@@ -2,7 +2,12 @@
 
 namespace Pedestal\Posts\Entities\Originals;
 
-use Pedestal\Registrations\Post_Types\Entity_Types;
+use Timber\Timber;
+
+use Pedestal\Registrations\Post_Types\{
+    Entity_Types,
+    Types
+};
 use Pedestal\Posts\Attachment;
 use Pedestal\Posts\Clusters\{
     Org,
@@ -322,6 +327,37 @@ class Factcheck extends Original {
      */
     private function get_factcheck_meta( $key ) {
         $key = 'factcheck_' . $key;
-        return $this->get_field( $key );
+        return $this->get_meta( $key );
+    }
+
+    /**
+     * Get the Twig context for this post
+     *
+     * @return array Twig context
+     */
+    public function get_context() {
+        $context = [
+            'statement_img'     => $this->get_statement_img(),
+            'statement_setting' => $this->get_statement_setting(),
+            'statement_date'    => $this->get_statement_date_str(),
+        ] + parent::get_context();
+
+        $context['content_classes'][] = 's-post-content';
+
+        if ( $context['statement_img'] ) {
+            $context['statement_classes'] = 'has-image';
+        }
+
+        $statement_speaker = $this->get_statement_speaker();
+        if ( Types::is_cluster( $statement_speaker ) ) {
+            $context['statement_speaker'] = $statement_speaker->get_title();
+        }
+
+        ob_start();
+        $context['content'] = Timber::render( 'partials/factchecks/content.twig', $context );
+        $context['sidebar'] = Timber::render( 'sidebar-factcheck.twig', $context );
+        ob_end_clean();
+
+        return $context;
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Pedestal\Registrations\Post_Types;
 
-use \Pedestal\Utils\Utils;
-
-use \Pedestal\Posts\Post;
+use Pedestal\Utils\Utils;
+use Pedestal\Posts\Post;
+use Pedestal\Posts\Entities\Link;
 
 /**
  * Post Types
@@ -103,10 +103,10 @@ class Types {
 
         add_filter( 'post_type_link', [ $this, 'filter_post_type_link' ], 10, 2 );
         add_filter( 'wp_unique_post_slug', [ $this, 'filter_wp_unique_post_slug' ], 10, 6 );
-        add_filter( 'pedestal_stream_item_context', [ $this, 'filter_pedestal_stream_item_context' ] );
         add_filter( 'rewrite_rules_array', [ $this, 'filter_rewrite_rules_array' ] );
         add_filter( 'query_vars', [ $this, 'filter_query_vars' ] );
         add_filter( 'template_include', [ $this, 'filter_template_include' ] );
+        add_filter( 'pedestal_stream_item_context', [ $this, 'filter_pedestal_stream_item_context' ] );
 
         foreach ( self::get_post_types() as $post_type ) {
             add_filter( "manage_{$post_type}_posts_columns", [ $this, 'filter_manage_posts_columns' ] );
@@ -125,20 +125,10 @@ class Types {
         self::$groups['slots']    = Slot_Types::get_instance();
 
         // Content Types
-        self::$content_types['pedestal_entity']    = Pedestal_Entity::get_instance();
         self::$content_types['pedestal_embed']     = Pedestal_Embed::get_instance();
         self::$content_types['pedestal_event']     = Pedestal_Event::get_instance();
         self::$content_types['pedestal_factcheck'] = Pedestal_Factcheck::get_instance();
         self::$content_types['pedestal_link']      = Pedestal_Link::get_instance();
-    }
-
-    /**
-     * Get the post type settings
-     *
-     * @return array
-     */
-    protected function get_type_settings() {
-        return $this->post_types;
     }
 
     /**
@@ -148,7 +138,7 @@ class Types {
 
         foreach ( self::$groups as $group ) :
 
-            foreach ( $group->get_type_settings() as $post_type => $settings ) :
+            foreach ( $group->post_types as $post_type => $settings ) :
 
                 // @TODO
                 // @codingStandardsIgnoreStart
@@ -397,8 +387,10 @@ class Types {
     public function filter_post_type_link( $link, $post ) {
 
         if ( 'pedestal_link' === $post->post_type ) {
-            $obj = new \Pedestal\Posts\Entities\Link( $post );
-            $link = $obj->get_external_url();
+            $obj = Link::get( $post );
+            if ( method_exists( $obj, 'get_external_url' ) ) {
+                $link = $obj->get_external_url();
+            }
         } elseif ( in_array( $post->post_type, self::get_entity_post_types() ) ) {
 
             $query = parse_url( $link, PHP_URL_QUERY );
@@ -496,23 +488,16 @@ class Types {
     }
 
     /**
-     * Set authors for stream items of certain post types
+     * Set Twig context author data for stream items supporting authors
      *
      * @param  array $context  List of properties for a stream item
      * @return array           Modified list of properties
      */
     public function filter_pedestal_stream_item_context( $context = [] ) {
-        $allowed_types = [
-            'article',
-            'factcheck',
-            'whosnext',
-            'newsletter',
-        ];
-        if ( empty( $context['type'] ) || ! in_array( $context['type'], $allowed_types ) ) {
+        if ( empty( $context['type'] ) || ! post_type_supports( 'pedestal_' . $context['type'], 'author' ) ) {
             return $context;
         }
-        $post = $context['post'];
-        $ped_post = Post::get( $post );
+        $ped_post = Post::get( $context['post'] );
         if ( ! Types::is_post( $ped_post ) ) {
             return $context;
         }
@@ -885,6 +870,22 @@ class Types {
         if (
             ( is_string( $post_token ) && in_array( $post_token, self::get_entity_post_types() ) ) ||
             ( is_object( $post_token ) && is_a( $post_token, '\\Pedestal\\Posts\\Entities\\Entity' ) )
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Determine whether a post type or object is an Original
+     *
+     * @param string|object $post_token The post type or object to check
+     * @return boolean
+     */
+    public static function is_original_content( $post_token ) {
+        if (
+            ( in_array( $post_token, self::get_original_post_types() ) ) ||
+            ( is_a( $post_token, '\\Pedestal\\Posts\\Entities\\Originals\\Original' ) )
         ) {
             return true;
         }

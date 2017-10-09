@@ -2,14 +2,18 @@
 
 namespace Pedestal\Registrations\Post_Types;
 
+use Timber\Timber;
+
 use Pedestal\Utils\Utils;
+use Pedestal\Posts\Post;
+use Pedestal\Posts\Entities\Entity;
 use Pedestal\Posts\Entities\Embed;
 use Pedestal\Posts\Entities\Originals\Whos_Next;
 use Pedestal\Posts\Clusters\Person;
 
-class Entity_Types extends Types {
+class Entity_Types {
 
-    protected $original_post_types = [];
+    public $original_post_types = [];
 
     private static $politifact_ratings = [
         'pants'        => 'Pants on Fire!',
@@ -23,7 +27,7 @@ class Entity_Types extends Types {
         'no_flip'      => 'No Flip',
     ];
 
-    protected $post_types = [
+    public $post_types = [
         'pedestal_article',
         'pedestal_embed',
         'pedestal_event',
@@ -34,15 +38,18 @@ class Entity_Types extends Types {
 
     private static $instance;
 
+    /**
+     * Get an instance of this class
+     */
     public static function get_instance() {
-
-        if ( ! isset( self::$instance ) ) {
-            self::$instance = new Entity_Types;
-            self::$instance->setup_actions();
-            self::$instance->setup_types();
+        static $instance = null;
+        if ( null === $instance ) {
+            $instance = new static();
+            $instance->setup_actions();
+            $instance->setup_filters();
+            $instance->setup_types();
         }
-        return self::$instance;
-
+        return $instance;
     }
 
     /**
@@ -52,6 +59,13 @@ class Entity_Types extends Types {
         add_action( 'init', [ $this, 'action_init_after_post_types_registered' ], 11 );
         add_action( 'save_post_pedestal_embed', [ $this, 'action_save_post_pedestal_embed' ], 10, 3 );
         add_action( 'save_post_pedestal_whosnext', [ $this, 'action_save_post_whosnext_clusters' ], 10, 3 );
+    }
+
+    /**
+     * Hook into filters
+     */
+    public function setup_filters() {
+        add_filter( 'pedestal_stream_item_context', [ $this, 'filter_pedestal_stream_item_context' ] );
     }
 
     /**
@@ -106,7 +120,6 @@ class Entity_Types extends Types {
                     $args['supports'] = [
                         'title',
                         'thumbnail',
-                        'author',
                     ];
                     $args['rewrite'] = [
                         'slug' => 'links',
@@ -122,7 +135,6 @@ class Entity_Types extends Types {
                     $args['capability_type'] = [ 'embed', 'embeds' ];
                     $args['supports'] = [
                         'title',
-                        'author',
                         'excerpt',
                         'slots',
                     ];
@@ -196,6 +208,32 @@ class Entity_Types extends Types {
 
         $this->post_types = $post_types;
 
+    }
+
+    /**
+     * Setup properties unique to this stream item
+     *
+     * @param  array $context  List of properties for a stream item
+     * @return array           Modified list of properties
+     */
+    public function filter_pedestal_stream_item_context( $context = [] ) {
+        if ( empty( $context['post'] ) ) {
+            return $context;
+        }
+
+        $entity = Post::get( $context['post'] );
+        if ( ! Types::is_entity( $entity ) ) {
+            return $context;
+        }
+
+        $story = $entity->get_primary_story();
+        if ( $story ) {
+            $context['overline'] = $story->get_the_title();
+            $context['overline_url'] = $story->get_the_permalink();
+        }
+        $context['featured_image'] = $entity->get_featured_image_html( '1024-16x9' );
+
+        return $context;
     }
 
     /**
@@ -491,7 +529,7 @@ class Entity_Types extends Types {
             'name'                => 'factcheck_rating',
             'first_empty'         => true,
             'options'             => [
-                'data' => self::$politifact_ratings,
+                'data' => static::$politifact_ratings,
             ],
         ] );
 

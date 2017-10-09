@@ -37,8 +37,10 @@ class Pedestal_Factcheck {
         if ( ! empty( $context['__context'] ) ) {
             $where_is_it_shown = $context['__context'];
         }
-        $post = $context['post'];
-        $factcheck = new Factcheck( $post );
+        $factcheck = Factcheck::get( $context['post'] );
+        if ( ! method_exists( $factcheck, 'get_statement_img' ) ) {
+            return $context;
+        }
         if ( 'featured' != $where_is_it_shown ) {
             // Don't show a featured image which is set in class-pedestal-entity.php
             $context['featured_image'] = '';

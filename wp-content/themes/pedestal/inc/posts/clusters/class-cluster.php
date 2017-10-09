@@ -273,4 +273,16 @@ abstract class Cluster extends Post {
     public function get_email_type() {
         return $this->email_type;
     }
+
+    /**
+     * Get the Twig context for this post
+     *
+     * @return array Twig context
+     */
+    public function get_context() {
+        $context = parent::get_context();
+        $context['slug'] = $this->get_slug();
+        $context['overline_follow'] = true;
+        return $context;
+    }
 }

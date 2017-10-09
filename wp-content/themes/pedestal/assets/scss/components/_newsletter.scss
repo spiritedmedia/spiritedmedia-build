@@ -5,8 +5,9 @@
 
 .newsletter-items {
   .newsletter-item {
+    @include stdbd( bottom );
+
     padding-bottom: rem( 16px );
-    border-bottom: rem( 1px ) solid $grey-90;
     margin-bottom: rem( 16px );
 
     &:last-of-type {
@@ -24,13 +25,15 @@
   }
 }
 
-.newsletter-item {
-  .c-overview__title {
-    font-size: $h4-font-size;
-    margin-bottom: rem( 16px );
-  }
+.newsletter-item__title,
+.newsletter-item__description {
+  margin-bottom: rem( 12px );
+}
 
-  .c-overview__description > * {
-    font-size: $h5-font-size;
-  }
+.newsletter-item__title {
+  @include h-size( 4 );
+}
+
+.newsletter-item__description > * {
+  @include h-size( 5 );
 }

@@ -2,6 +2,8 @@
 
 namespace Pedestal\Posts\Entities\Originals;
 
+use Timber\Timber;
+
 use Pedestal\Posts\{
     Attachment,
     Post
@@ -134,5 +136,21 @@ class Whos_Next extends Original {
         return static::get_by_post_name( 'whos-next', [
             'post_type' => 'pedestal_story',
         ] );
+    }
+
+    /**
+     * Get the Twig context for this post
+     *
+     * @return array Twig context
+     */
+    public function get_context() {
+        $context = parent::get_context();
+
+        ob_start();
+        $context['content'] = Timber::render( 'partials/whosnext/content.twig', $context );
+        $context['sidebar'] = Timber::render( 'sidebar-whosnext.twig', $context );
+        ob_end_clean();
+
+        return $context;
     }
 }

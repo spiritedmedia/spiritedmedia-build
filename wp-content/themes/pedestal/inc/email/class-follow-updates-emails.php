@@ -49,6 +49,9 @@ class Follow_Updates_Emails {
         if ( ! Types::is_cluster( $post_type ) ) {
             return;
         }
+        if ( 'publish' !== $post->post_status ) {
+            return;
+        }
         $email_type = Types::get_post_type_labels( $post_type )['singular_name'];
         $email_template = sanitize_title( $email_type );
 

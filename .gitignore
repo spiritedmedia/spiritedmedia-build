@@ -44,6 +44,9 @@
 # Style Guide
 !/styleguide/
 
+# QA
+!/qa/
+
 # Deployment
 !appspec.yml
 # !circle.yml

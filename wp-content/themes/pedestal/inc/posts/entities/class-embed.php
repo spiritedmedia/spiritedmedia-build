@@ -3,6 +3,7 @@
 namespace Pedestal\Posts\Entities;
 
 use function Pedestal\Pedestal;
+use Pedestal\Icons;
 use Pedestal\Utils\Utils;
 use Pedestal\Posts\Post;
 use Pedestal\Posts\Clusters\Story;
@@ -718,5 +719,21 @@ class Embed extends Entity {
         return static::get_by_post_name( 'instagram-of-the-day', [
             'post_type' => 'pedestal_story',
         ] );
+    }
+
+    /**
+     * Get the Twig context for this post
+     *
+     * @return array Twig context
+     */
+    public function get_context() {
+        $context = [
+            'content'        => $this->get_embed_html(),
+            'featured_image' => '',
+            'source_name'    => $this->get_source(),
+            'source_image'   => Icons::get_icon( $this->get_embed_type() ),
+            'source_link'    => $this->get_embed_url(),
+        ] + parent::get_context();
+        return $context;
     }
 }

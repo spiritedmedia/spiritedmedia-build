@@ -2,6 +2,8 @@
 
 namespace Pedestal\Posts\Entities;
 
+use \Timber\Timber;
+
 use function Pedestal\Pedestal;
 use \Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
@@ -242,5 +244,42 @@ abstract class Entity extends Post {
             return $clusters;
         }
         return false;
+    }
+
+    /**
+     * Get the Twig context for this post
+     *
+     * @return array Twig context
+     */
+    public function get_context() {
+        $context = parent::get_context();
+
+        $context['featured_image'] = $this->get_featured_image_figure_html( '1024-16x9', [
+            'classes' => 'c-main__lead-img',
+            'linkto'  => false,
+        ] );
+
+        $story = $this->get_primary_story();
+        if ( $story ) {
+            $context['overline'] = $story->get_the_title();
+            $context['overline_url'] = $story->get_the_permalink();
+        }
+
+        $cluster_list_context = [
+            'has_clusters'         => $this->has_clusters(),
+            'has_multiple_stories' => $this->has_multiple_stories(),
+            'stories'              => $this->get_clusters_with_links( 'story' ),
+            'topics'               => $this->get_clusters_with_links( 'topic' ),
+            'people'               => $this->get_clusters_with_links( 'person' ),
+            'orgs'                 => $this->get_clusters_with_links( 'org' ),
+            'places_localities'    => $this->get_clusters_with_links( [
+                'place',
+                'locality',
+            ] ),
+        ];
+        ob_start();
+        Timber::render( 'partials/cluster-list.twig', $cluster_list_context );
+        $context['cluster_list'] = ob_get_clean();
+        return $context;
     }
 }

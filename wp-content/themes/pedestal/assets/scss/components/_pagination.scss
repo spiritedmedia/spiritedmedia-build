@@ -1,9 +1,8 @@
+// Pagination
+
+
 $pagination-button-bg: $grey-80;
 
-$pagination-button-bg: $grey-80 !default;
-/**
- * Left/right pagination for stream
- */
 
 .c-pagination {
   @include clearfix;
@@ -86,7 +85,7 @@ $pagination-button-bg: $grey-80 !default;
 
 .c-pagination__text__paged,
 .c-pagination__text__total {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .c-pagination__text__paged {}
@@ -96,35 +95,26 @@ $pagination-button-bg: $grey-80 !default;
 .c-pagination__inner {}
 
 
-// @TODO
-// We use this hackish chunk of styles as a temporary solution to handling
-// pagination item styles that were previously derived from Foundation's button
-// mixins -- at some point in the "near future" we have plans to redesign
-// pagination entirely so this will go away (I hope)
 .c-pagination__item {
-  border-radius: 0;
-  border-style: solid;
-  border-width: 0;
   cursor: pointer;
-  font-family: $font-family-sans-serif;
-  font-weight: normal;
-  line-height: normal;
-  margin: 0 0 rem( 20px );
-  position: relative;
+  height: rem( 48px );
+  padding: rem( 16px ) 0;
   text-align: center;
-  text-decoration: none;
   display: inline-block;
   background-color: $grey-80;
   border-color: $white;
   color: $grey-25;
   transition: background-color 300ms ease-out;
-  margin-bottom: 0;
-  padding: rem( 16px ) 0;
 
   &:hover,
   &:focus {
     background-color: $grey-70;
     color: $white;
+  }
+
+  &,
+  > * {
+    line-height: 1;
   }
 }
 
@@ -151,8 +141,8 @@ a.c-pagination__item.is-disabled:focus {
 .c-pagination__dir {
   @include span( 1 of 2 0.01 );
 
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding-top: rem( 8px );
+  padding-bottom: rem( 8px );
 }
 
 .c-pagination__dir--prev {
@@ -166,9 +156,7 @@ a.c-pagination__item.is-disabled:focus {
 
 .c-pagination__dir__icon {
   font-size: $h3-font-size;
-  line-height: 0;
   vertical-align: middle;
-  height: rem( 28px );
 }
 
 .c-pagination__dir__label {

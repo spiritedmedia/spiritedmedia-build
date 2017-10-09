@@ -2,52 +2,64 @@
 
 {% block content %}
 
-    <section class="c-main__content  {{ item.css_classes }}"
+    <section class="c-main__content  {{ item.css_classes|esc_attr }}"
         {{ item.get_the_data_atts }} >
 
-        <header class="c-main__header js-main-header  c-overview">
+        <header class="c-main__header js-main-header  single-header">
 
-            {% if not item.is_story %}
-            <h1 class="c-overview__title  c-heading--archive">
+            {% if 'story' == type %}
+            {% include 'partials/overline-single.twig' %}
+            {% else %}
+            <h1 class="single-header__title  c-heading--archive">
                 <span class="c-heading__prefix">Posts tagged with</span>
-                <span class="c-heading__title">{{ item.get_the_title }}</span>
+                <span class="c-heading__title">{{ title }}</span>
             </h1>
             {% endif %}
 
-            {{ upper_pagination }}
-
-            {% if item.is_story %}
-                {% include 'partials/overview/overline.twig' %}
+            {% if headline %}
+                <h1 class="single-header__title">{{ headline }}</h1>
             {% endif %}
 
-            {% if item.get_headline %}
-                {% include 'partials/item-title.twig' with {
-                    title: item.get_the_headline,
-                    url: 'none'
-                } %}
-            {% endif %}
+            <div class="single-header__meta  c-meta-info--{{ item.get_type }}  c-meta-info--cluster  c-meta-info">
+                <div class="c-meta-info__modified  c-meta-info__item--stacked">
+                    <span class="c-meta-info__label">
+                        {{ __( 'Last Updated', 'pedestal' ) }}&nbsp;
+                    </span>
+                    <span class="c-meta-info__timestamp--modified  c-meta-info__timestamp">
+                        {% include 'partials/meta-info/timestamp-modified.twig' %}
+                    </span>
+                </div>
+                <div class="c-meta-info__published  c-meta-info__item--stacked">
+                    <span class="c-meta-info__label">
+                        {{ __( 'Created', 'pedestal' ) }}&nbsp;
+                    </span>
+                    <span class="c-meta-info__timestamp--published  c-meta-info__timestamp">
+                        {% include 'partials/meta-info/timestamp-published.twig' %}
+                    </span>
+                </div>
+            </div>
 
-            {% include 'partials/meta-info/meta-info-cluster.twig' %}
-
-            {% if item.has_featured_image %}
-                {% include 'partials/overview/lead-image.twig' %}
+            {% if featured_image %}
+                {{ featured_image }}
             {% endif %}
 
             {% include 'partials/share-buttons.twig' %}
 
-            {% if item.get_content %}
-                <div class="c-overview__lead-text  s-post-content">
-                    {{ item.get_the_content }}
+            {% if content %}
+                <div class="single-header__lead-text  s-post-content">
+                    {{ content }}
                 </div>
             {% endif %}
 
-            {% if item.is_story %}
+            {% if 'story' == type %}
                 {% include 'partials/follow-this-form.twig' %}
             {% endif %}
 
         </header>
 
         {% if stream %}
+            {{ upper_pagination }}
+
             <section class="stream">
                 {{ stream }}
             </section>
@@ -65,7 +77,7 @@
 {% endblock %}
 
 {% block sidebar %}
-    {% if cluster.get_slug == 'whos-next' %}
+    {% if slug == 'whos-next' %}
         {% include 'partials/whosnext/sponsor-logo.twig' ignore missing %}
         {% include 'partials/whosnext/description-widget.twig' %}
     {% endif %}

@@ -1,32 +1,32 @@
 <script>
-	(function(window, document, ga){
-		function changeElems( tagName, attr ) {
-			var elems = document.getElementsByTagName(tagName);
-			for ( var i = 0; i<elems.length; i++ ) {
-				var elem = elems[i];
-				var attrVal = elem.getAttribute(attr);
-				if ( attrVal ) {
-					// Replace a.spirited.media with the current domain
-					var newAttrVal = attrVal.replace(/a\.spirited\.media/ig, window.location.host);
-					if ( attrVal !== newAttrVal ) {
-						elem.setAttribute(attr, newAttrVal);
-					}
-				}
-			}
-		}
+    (function(window, document, ga){
+        function changeElems( tagName, attr ) {
+            var elems = document.getElementsByTagName(tagName);
+            for ( var i = 0; i<elems.length; i++ ) {
+                var elem = elems[i];
+                var attrVal = elem.getAttribute(attr);
+                if ( attrVal ) {
+                    // Replace a.spirited.media with the current domain
+                    var newAttrVal = attrVal.replace(/a\.spirited\.media/ig, window.location.host);
+                    if ( attrVal !== newAttrVal ) {
+                        elem.setAttribute(attr, newAttrVal);
+                    }
+                }
+            }
+        }
 
-		// If the <body> doesn't have the font-family set to Source Sans Pro,
-		// then we can assume the stylesheet failed to download
-		if ( -1 === window.getComputedStyle(document.body).getPropertyValue('font-family').indexOf('Sans Pro') ) {
-			changeElems( 'link', 'href' );
-			changeElems( 'img', 'srcset' );
-			changeElems( 'img', 'src' );
-			changeElems( 'script', 'src' );
+        // If the <body> doesn't have the font-family set to Source Sans Pro,
+        // then we can assume the stylesheet failed to download
+        if ( -1 === window.getComputedStyle(document.body).getPropertyValue('font-family').indexOf('Overpass') ) {
+            changeElems( 'link', 'href' );
+            changeElems( 'img', 'srcset' );
+            changeElems( 'img', 'src' );
+            changeElems( 'script', 'src' );
 
-			// Ensure Google Analytics is available
-			if ( typeof ga === 'function' ) {
-				ga('send', 'event', 'Error', '', 'CDN failed to load');
-			}
-		}
-	})(window, document, ga);
+            // Ensure Google Analytics is available
+            if ( typeof ga === 'function' ) {
+                ga('send', 'event', 'Error', '', 'CDN failed to load');
+            }
+        }
+    })(window, document, ga);
 </script>

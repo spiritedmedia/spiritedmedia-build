@@ -1,10 +1,8 @@
-{% set meta_info_classes = meta_info_classes|default( 'c-overview__meta' ) %}
-
 {% if item.get_authors_count >= 3 or narrow %}
     {% set meta_info_classes = meta_info_classes ~ '  c-meta-info--always-stacked' %}
 {% endif %}
 
-<div class="{{ meta_info_classes }}  c-meta-info--{{ item.get_type }}  c-meta-info--entity  c-meta-info">
+<div class="{{ meta_info_classes }} single-header__meta c-meta-info--{{ item.get_type }}  c-meta-info--entity-single  c-meta-info">
 
     <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
         {% include [

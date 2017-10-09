@@ -1,10 +1,21 @@
 {% set event_element = event_element|default( if_email('div', 'article')  ) %}
 
-<{{ event_element }} class="pedestal-shortcode  {{ item.css_classes }}" data-entity-type="event">
+<{{ event_element }} class="pedestal-shortcode  {{ item.css_classes|esc_attr }}" data-entity-type="event">
     <div class="c-event">
-        <div class="c-event__title">
-            {% include 'partials/item-title.twig' with {'overview': false} %}
-        </div>
+        <h1 class="c-event__title">
+            {% if item.get_the_permalink %}
+                <a
+                    href="{{ item.get_the_permalink|esc_url }}"
+                    class="c-event__title__link"
+                    data-ga-category="{{ gaCategory|esc_attr }}"
+                    data-ga-label="Title|{{ title|esc_attr }}"
+                >
+                    {{ item.get_the_title }}
+                </a>
+            {% else %}
+                {{ item.get_the_title }}
+            {% endif %}
+        </h1>
         <div class="c-event__sponsorship">
             {{ ped_slot( 'shortcode' ) }}
         </div>

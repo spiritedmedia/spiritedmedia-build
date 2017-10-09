@@ -1,0 +1,76 @@
+// Single Post Header
+
+
+.single-header {
+  .c-figure--embed {
+    margin-top: rem( 16px );
+    margin-bottom: rem( 16px );
+  }
+}
+
+
+.single-header__overline,
+.single-header__title,
+.single-header__description {
+  margin-bottom: rem( 12px );
+}
+
+.single-header__overline {}
+
+
+.single-header__sponsorship {}
+
+
+.single-header__title {
+  font-size: rem( 32px );
+  font-weight: 700;
+  letter-spacing: em( -0.2px );
+  line-height: 1;
+}
+
+
+.single-header__link {
+  @include link-dark;
+}
+
+
+.single-header__img {
+  margin-top: 0;
+  // In most cases this element will be a `figure`, but when it's an `a` element
+  // it still needs to display block
+  display: block;
+
+  // scss-lint:disable SelectorFormat
+  .rail & {
+    width: auto;
+  }
+} // __item__img
+
+
+.single-header__description {
+  &,
+  > * {
+    font-size: rem( 24px );
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  > * {
+    margin-bottom: 0;
+  }
+}
+
+
+.single-header__meta {
+  font-size: rem( 15px );
+}
+
+
+.single-header__lead-text {
+  // stylelint-disable-next-line selector-max-type
+  p {
+    font-size: $h5-font-size;
+    font-style: italic;
+    line-height: 1.6;
+  }
+}

@@ -254,7 +254,10 @@ class Admin {
 
         /* Save any credit meta data to its own post meta field */
         add_filter( 'wp_generate_attachment_metadata', function( $metadata = [], $attachment_id = 0 ) {
-            $attachment = new Attachment( $attachment_id );
+            $attachment = Attachment::get( $attachment_id );
+            if ( ! Types::is_attachment( $attachment ) ) {
+                return $metadata;
+            }
             $old_credit = $attachment->get_credit();
             if ( $old_credit ) {
                 return $metadata;
@@ -517,7 +520,10 @@ class Admin {
      * Filter attachment fields available to edit
      */
     public function filter_attachment_fields_to_edit( $fields, $post ) {
-        $attachment = new Attachment( $post );
+        $attachment = Attachment::get( $post );
+        if ( ! Types::is_attachment( $attachment ) ) {
+            return $metadata;
+        }
         $credit = $attachment->get_credit();
         $credit_link = $attachment->get_credit_link();
 

@@ -133,4 +133,18 @@ class Story extends Cluster {
     public function get_icon_id() {
         return $this->get_fm_field( 'story_branding', 'icon' ) ?: false;
     }
+
+    /**
+     * Get the Twig context for this post
+     *
+     * @return array Twig context
+     */
+    public function get_context() {
+        $context = [
+            'overline'     => $this->get_the_title(),
+            'overline_url' => $this->get_the_permalink(),
+            'headline'     => $this->get_the_headline(),
+        ] + parent::get_context();
+        return $context;
+    }
 }

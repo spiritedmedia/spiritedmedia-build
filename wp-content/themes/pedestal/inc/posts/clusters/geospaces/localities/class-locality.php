@@ -22,7 +22,7 @@ class Locality extends Place {
 
     protected $email_type = '';
 
-    public function __construct( $post ) {
+    protected function __construct( $post ) {
         global $wp;
         parent::__construct( $post );
         $this->set_locality_type_id();

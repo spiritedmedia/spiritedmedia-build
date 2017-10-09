@@ -1,0 +1,92 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block content %}
+
+    <article class="c-main__content  {{ item.css_classes|esc_attr }}"
+        {{ item.get_the_data_atts }} >
+
+        <div class="single-header__sponsorship">
+            {{ ped_slot( 'single_lead' ) }}
+        </div>
+
+        <header class="c-main__header js-main-header single-header">
+
+            {% if 'factcheck' == type %}
+            {% include 'partials/factchecks/hero.twig' %}
+            {% endif %}
+
+            {% if featured_image %}
+            <div class="experiment-unit-var-a">
+                {{ featured_image }}
+            </div>
+            {% endif %}
+
+            <div class="single-header__sponsorship">
+                {{ ped_slot( 'single_lead' ) }}
+            </div>
+
+            {% include 'partials/overline-single.twig' %}
+
+            <h1 class="single-header__title">
+                {{ title }}
+            </h1>
+
+            {% if description %}
+                <div class="single-header__description">{{ description }}</div>
+            {% endif %}
+
+            {% if featured_image %}
+            <div class="experiment-unit-var-b">
+                {{ featured_image }}
+            </div>
+            {% endif %}
+
+            {% if show_meta_info %}
+            {% include 'partials/meta-info/meta-info-entity-single.twig' %}
+            {% endif %}
+
+            {% include 'partials/share-buttons.twig' %}
+
+        </header>
+
+        <section class="c-main__body {{ content_classes }}">
+            {{ content }}
+
+            {% if event_more %}
+            <div class="c-event__more">
+                <h3 class="c-event__more__heading">Details</h3>
+                <div class="s-post-content">
+                    {{ event_more }}
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        {% if footnotes %}
+        <aside class="c-main__footnotes  js-content-footnotes">
+            {{ footnotes }}
+        </aside>
+        {% endif %}
+
+        {% include 'partials/follow-this-form.twig' %}
+
+        <footer class="c-main__footer js-main-footer o-rule--closure  o-rule">
+            {{ sponsored_item }}
+            {{ cluster_list }}
+
+            {% if 'feat_contributor' == item.get_single_author.get_primary_role %}
+            <div class="c-main__author-info">
+                {{ macros.user_card( _context, item.get_single_author ) }}
+            </div>
+            {% endif %}
+        </footer>
+
+    </article>
+{% endblock %}
+
+
+{% block sidebar %}
+    {% if sidebar %}
+        {{ sidebar }}
+    {% endif %}
+{% endblock %}

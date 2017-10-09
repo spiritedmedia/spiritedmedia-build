@@ -9,6 +9,7 @@ use Pedestal\Utils\Utils;
 use Pedestal\Objects\YouTube;
 use Pedestal\Posts\Attachment;
 use Pedestal\Posts\Entities\Embed;
+use Pedestal\Registrations\Post_Types\Types;
 
 /**
  * Figure
@@ -205,8 +206,8 @@ class Figure {
         }
 
         if ( ! empty( $atts['attachment'] ) ) {
-            $obj = new Attachment( $atts['attachment'] );
-            if ( ! $atts['omit_presentation_mode'] ) {
+            $obj = Attachment::get( $atts['attachment'] );
+            if ( Types::is_attachment( $obj ) && ! $atts['omit_presentation_mode'] ) {
                 $context['fias_presentation'] = $obj->get_fias_presentation_mode( $atts['allow_fullscreen'] );
             } else {
                 $context['fias_presentation'] = '';

@@ -12,7 +12,7 @@
 
 
 $base-font-size    : rem( 16px );
-$base-line-height  : rem( 24px );
+$base-line-height  : rem( 22px );
 
 
 
@@ -42,20 +42,18 @@ $h5-font-reduction        : 0;
 $h6-font-reduction        : 0;
 
 $paragraph-font-size      : rem( 16px );
-$paragraph-line-height    : 1.6;
+$paragraph-line-height    : rem( 22px ) / $paragraph-font-size;
 $small-font-size          : $base-font-size * 0.8;
 
 
 $header-top-margin        : 0;
 
-$paragraph-margin-bottom  : rem( 20px );
+$paragraph-margin-bottom  : rem( 16px );
 $list-side-margin         : $base-font-size / 2;
 $list-ordered-side-margin : $list-side-margin;
 $list-margin-bottom       : $paragraph-margin-bottom;
 
 $site-header-pd-v         : rem( 16px );
-
-$heading-minor-f-z        : $base-font-size;
 
 
 
@@ -133,7 +131,6 @@ $xxlarge-range       : em( 1921px );
 $main-margin-top           : rem( 16px );
 $main-margin-bottom        : rem( 32px );
 $main-header-margin-bottom : rem( 32px );
-$main-title-margin-bottom  : rem( 64px );
 $main-subtitle-font-weight : 400;
 $main-subtitle-margin-top  : rem( 20px );
 
@@ -161,9 +158,6 @@ $page-main-m-t  : rem( 48px );
 // Miscellaneous
 // ==========================================================================
 
-
-// Overviews
-$overview-thumbnail-img-size    : rem( 150px );
 
 // Border dividers
 $border-divider-spacing         : rem( 24px );

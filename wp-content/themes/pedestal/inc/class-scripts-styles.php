@@ -49,6 +49,9 @@ class Scripts_Styles {
             }
             return str_replace( ' src', ' async="async" src', $script_tag );
         }, 10, 2 );
+
+        // Load our own chosen version of jQuery
+        add_filter( 'script_loader_tag', [ $this, 'filter_script_loader_tag_reload_jquery' ], 10, 3 );
     }
 
     /**
@@ -57,7 +60,7 @@ class Scripts_Styles {
     public function action_wp_enqueue_scripts() {
         $post = get_post();
 
-        wp_register_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic|PT+Serif', [], null );
+        wp_register_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Overpass:300,300i,400,400i,700,700i', [], null );
 
         // Functionality-specific assets
         wp_register_script( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js', [], null, true );
@@ -164,5 +167,36 @@ class Scripts_Styles {
             }
         }
         return false;
+    }
+
+    /**
+     * Serve jQuery jQuery 2.x or 1.x depending on browser version
+     *
+     * @param string $script_element     <script> element to be rendered
+     * @param string $handle             script handle that was registered
+     * @param string $script_src         src sttribute of the <script>
+     * @return string                    New <script> element
+     */
+    public function filter_script_loader_tag_reload_jquery( $script_element, $handle, $script_src ) {
+        if ( 'jquery-migrate' == $handle ) {
+            return '';
+        }
+
+        if ( 'jquery-core' == $handle || 'jquery' == $handle ) {
+            $new_script_element = '';
+            // jQuery 1.x gets served to IE8 and below...
+            $new_script_element .= '<!--[if lt IE 9]>';
+            $new_script_element .= $script_element;
+            $new_script_element .= '<![endif]-->';
+            // jQuery 2.x gets served to everyone else...
+            $jquery2_path = get_template_directory_uri() . '/assets/dist/js/vendor/jquery.min.js';
+            $jquery2_src = apply_filters( 'script_loader_src', $jquery2_path );
+            $new_script_element .= '<!--[if (gte IE 9) | (!IE)]><!-->';
+            $new_script_element .= "<script type='text/javascript' src='" . $jquery2_src . "'></script>";
+            $new_script_element .= '<!--<![endif]-->';
+            return $new_script_element;
+        }
+
+        return $script_element;
     }
 }

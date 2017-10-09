@@ -12,18 +12,14 @@ article {
         <main class="c-main columns large-8 js-main" role="main">
 
             <header class="c-main__header">
-                <h1 class="c-main__title">Overviews</h1>
+                <h1 class="c-main__title">Single Post Headers</h1>
             </header>
-
-            <h2>
-                Overview: Single Article
-            </h2>
 
             <hr class="o-rule">
 
             <!-- Single Author -->
             <article class="c-main__content  " data-post-type="article" data-author-count="2" data-entity="" data-original="">
-                <header class="c-main__header  c-overview">
+                <header class="c-main__header  single-header">
                     <figure id="figure_098b1bd7_66775" class="c-figure  c-figure--img  wp-caption    c-main__lead-img" data-mode="aspect-fit">
                         <div class=" c-figure__content-wrap  column-width">
                             <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="c-figure__link" data-ga-category="Figure" data-ga-label="Linkimg">
@@ -35,16 +31,16 @@ article {
                             <cite class="c-figure__text__credit">Bill Streicher-USA TODAY Sports</cite>
                         </figcaption>
                     </figure>
-                    <div class="c-overview__sponsorship"></div>
-                    <h1 class="c-overview__title">
-                        <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="c-overview__link" data-ga-category="" data-ga-label="Title|[66771] The Philly college basketball conference tourney cheat sheet|Type: Article">
+                    <div class="single-header__sponsorship"></div>
+                    <h1 class="single-header__title">
+                        <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="single-header__link" data-ga-category="" data-ga-label="Title|[66771] The Philly college basketball conference tourney cheat sheet|Type: Article">
                             [66771] The Philly college basketball conference tourney cheat sheet
                         </a>
                     </h1>
-                    <div class="c-overview__description">
+                    <div class="single-header__description">
                         <p>There aren’t a lot of them left, but here’s an updated list of when the Philly schools are playing.</p>
                     </div>
-                    <div class="c-overview__meta  c-meta-info--article  c-meta-info--entity  c-meta-info">
+                    <div class="single-header__meta  c-meta-info--article  c-meta-info--entity-single  c-meta-info">
                         <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
                             <a href="https://staging.billypenn.com/about/dan-levy/" data-ga-category="Author" data-ga-label="Image|Dan Levy">
                                 <div class="c-avatar  c-avatar--staff">
@@ -81,7 +77,7 @@ article {
 
             <!-- Two Authors -->
             <article class="c-main__content  " data-post-type="article" data-author-count="2" data-entity="" data-original="">
-                <header class="c-main__header  c-overview">
+                <header class="c-main__header  single-header">
                     <figure id="figure_098b1bd7_66775" class="c-figure  c-figure--img  wp-caption    c-main__lead-img" data-mode="aspect-fit">
                         <div class=" c-figure__content-wrap  column-width">
                             <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="c-figure__link" data-ga-category="Figure" data-ga-label="Linkimg">
@@ -93,16 +89,16 @@ article {
                             <cite class="c-figure__text__credit">Bill Streicher-USA TODAY Sports</cite>
                         </figcaption>
                     </figure>
-                    <div class="c-overview__sponsorship"></div>
-                    <h1 class="c-overview__title">
-                        <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="c-overview__link" data-ga-category="" data-ga-label="Title|[66771] The Philly college basketball conference tourney cheat sheet|Type: Article">
+                    <div class="single-header__sponsorship"></div>
+                    <h1 class="single-header__title">
+                        <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="single-header__link" data-ga-category="" data-ga-label="Title|[66771] The Philly college basketball conference tourney cheat sheet|Type: Article">
                             [66771] The Philly college basketball conference tourney cheat sheet
                         </a>
                     </h1>
-                    <div class="c-overview__description">
+                    <div class="single-header__description">
                         <p>There aren’t a lot of them left, but here’s an updated list of when the Philly schools are playing.</p>
                     </div>
-                    <div class="c-overview__meta  c-meta-info--article  c-meta-info--entity  c-meta-info">
+                    <div class="single-header__meta  c-meta-info--article  c-meta-info--entity-single  c-meta-info">
                         <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
                             <a href="https://staging.billypenn.com/about/" data-ga-category="Author" data-ga-label="Image|Placeholder"><i class="icon icon-logo"></i></a>
                         </div>
@@ -132,7 +128,7 @@ article {
 
             <!-- Three+ Authors  -->
             <article class="c-main__content  " data-post-type="article" data-author-count="3" data-entity="" data-original="">
-                <header class="c-main__header  c-overview">
+                <header class="c-main__header  single-header">
                     <figure id="figure_098b1bd7_66775" class="c-figure  c-figure--img  wp-caption    c-main__lead-img" data-mode="aspect-fit">
                         <div class=" c-figure__content-wrap  column-width">
                             <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="c-figure__link" data-ga-category="Figure" data-ga-label="Linkimg">
@@ -143,16 +139,16 @@ article {
                             <cite class="c-figure__text__credit">Bill Streicher-USA TODAY Sports</cite>
                         </figcaption>
                     </figure>
-                    <div class="c-overview__sponsorship"></div>
-                    <h1 class="c-overview__title">
-                        <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="c-overview__link" data-ga-category="" data-ga-label="Title|[66771] The Philly college basketball conference tourney cheat sheet|Type: Article">
+                    <div class="single-header__sponsorship"></div>
+                    <h1 class="single-header__title">
+                        <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="single-header__link" data-ga-category="" data-ga-label="Title|[66771] The Philly college basketball conference tourney cheat sheet|Type: Article">
                             [66771] The Philly college basketball conference tourney cheat sheet
                         </a>
                     </h1>
-                    <div class="c-overview__description">
+                    <div class="single-header__description">
                         <p>There aren’t a lot of them left, but here’s an updated list of when the Philly schools are playing.</p>
                     </div>
-                    <div class="c-overview__meta  c-meta-info--always-stacked  c-meta-info--article  c-meta-info--entity  c-meta-info">
+                    <div class="single-header__meta  c-meta-info--always-stacked  c-meta-info--article  c-meta-info--entity-single  c-meta-info">
                         <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
                             <a href="https://staging.billypenn.com/about/" data-ga-category="Author" data-ga-label="Image|Placeholder"><i class="icon icon-logo"></i></a>
                         </div>
@@ -183,17 +179,17 @@ article {
 
             <!-- No Featured Image -->
             <article class="c-main__content  " data-post-type="article" data-author-count="2" data-entity="" data-original="">
-                <header class="c-main__header  c-overview">
-                    <div class="c-overview__sponsorship"></div>
-                    <h1 class="c-overview__title">
-                        <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="c-overview__link" data-ga-category="" data-ga-label="Title|[66771] The Philly college basketball conference tourney cheat sheet|Type: Article">
+                <header class="c-main__header  single-header">
+                    <div class="single-header__sponsorship"></div>
+                    <h1 class="single-header__title">
+                        <a href="https://staging.billypenn.com/2017/03/07/the-philly-college-basketball-conference-tourney-cheat-sheet/" class="single-header__link" data-ga-category="" data-ga-label="Title|[66771] The Philly college basketball conference tourney cheat sheet|Type: Article">
                             [66771] The Philly college basketball conference tourney cheat sheet
                         </a>
                     </h1>
-                    <div class="c-overview__description">
+                    <div class="single-header__description">
                         <p>There aren’t a lot of them left, but here’s an updated list of when the Philly schools are playing.</p>
                     </div>
-                    <div class="c-overview__meta  c-meta-info--article  c-meta-info--entity  c-meta-info">
+                    <div class="single-header__meta  c-meta-info--article  c-meta-info--entity-single  c-meta-info">
                         <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
                             <a href="https://staging.billypenn.com/about/dan-levy/" data-ga-category="Author" data-ga-label="Image|Dan Levy">
                                 <div class="c-avatar  c-avatar--staff">

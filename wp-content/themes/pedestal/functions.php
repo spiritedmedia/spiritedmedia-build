@@ -231,7 +231,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 $this->cluster_tools      = Admin\Cluster_Tools::get_instance();
                 $this->newsletter_testing = Newsletter_Testing::get_instance();
             } else {
-                $this->frontend = Frontend::get_instance();
+                $this->frontend       = Frontend::get_instance();
+                $this->scripts_styles = Scripts_Styles::get_instance();
             }
 
             $this->utilities         = Utils::get_instance();
@@ -244,7 +245,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->feeds             = Feeds::get_instance();
             $this->featured_posts    = Featured_Posts::get_instance();
             $this->icons             = Icons::get_instance();
-            $this->scripts_styles    = Scripts_Styles::get_instance();
             $this->cron_management   = Cron_Management::get_instance();
 
             // Emails

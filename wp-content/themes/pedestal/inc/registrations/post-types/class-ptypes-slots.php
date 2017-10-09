@@ -10,9 +10,9 @@ use Pedestal\Registrations\Taxonomies\Taxonomies;
 
 use Pedestal\Posts\Slots\Slots;
 
-class Slot_Types extends Types {
+class Slot_Types {
 
-    protected static $component_support = [
+    public static $component_support = [
         'stream' => 'Stream',
     ];
 
@@ -21,7 +21,7 @@ class Slot_Types extends Types {
      *
      * @var array
      */
-    protected $post_types = [
+    public $post_types = [
         'pedestal_slot_item',
         '_slot_item_placement',
     ];

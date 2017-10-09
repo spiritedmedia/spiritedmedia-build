@@ -339,20 +339,9 @@ class Frontend {
                     $context['is_cluster'] = true;
                 }
 
-                switch ( $post_type ) :
-                    case 'pedestal_story':
-                        $context['is_story'] = true;
-                        break;
-
-                    case 'pedestal_event':
-                        $context['heading'] = [];
-                        $context['heading']['details'] = esc_html__( 'Details', 'pedestal' );
-                        break;
-
-                    default:
-                        break;
-                endswitch;
-
+                if ( 'pedestal_story' == $post_type ) {
+                    $context['is_story'] = true;
+                }
             endif;
         endif;
 

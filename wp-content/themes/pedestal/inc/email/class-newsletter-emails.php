@@ -229,7 +229,7 @@ class Newsletter_Emails {
             echo 'No published newsletters to test with.';
             die();
         }
-        $newsletter = new Newsletter( $newsletters->posts[0] );
+        $newsletter = Newsletter::get( $newsletters->posts[0] );
         echo Email::get_email_template( 'newsletter', 'ac', [
             'item' => $newsletter,
             'email_type' => 'Daily',

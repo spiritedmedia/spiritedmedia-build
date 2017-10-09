@@ -4,15 +4,15 @@ namespace Pedestal\Registrations\Post_Types;
 
 use Timber\Timber;
 
+use Pedestal\Objects\Stream;
+use Pedestal\Posts\Post;
+use Pedestal\Posts\Clusters\Cluster;
+use Pedestal\Posts\Clusters\Geospaces\Geospace;
+use Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
+use Pedestal\Registrations\Taxonomies\Taxonomies;
 use Pedestal\Utils\Utils;
 
-use \Pedestal\Registrations\Taxonomies\Taxonomies;
-
-use \Pedestal\Posts\Post;
-use \Pedestal\Posts\Clusters\Geospaces\Geospace;
-use \Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
-
-class Cluster_Types extends Types {
+class Cluster_Types {
 
     /**
      * Types of geospatial relationships
@@ -31,7 +31,7 @@ class Cluster_Types extends Types {
      *
      * @var array
      */
-    protected $post_types = [
+    public $post_types = [
         'pedestal_story',
         'pedestal_topic',
         'pedestal_person',
@@ -45,14 +45,14 @@ class Cluster_Types extends Types {
      *
      * @var array
      */
-    protected $connection_types_by_post_type = [];
+    public $connection_types_by_post_type = [];
 
     /**
      * Cluster connection types
      *
      * @var array
      */
-    protected $connection_types = [];
+    public $connection_types = [];
 
     /**
      * Geospaces connection types
@@ -278,14 +278,14 @@ class Cluster_Types extends Types {
      */
     public function action_p2p_init_register_connections() {
 
-        foreach ( self::get_post_types() as $post_type ) {
+        foreach ( Types::get_post_types() as $post_type ) {
             $this->connection_types_by_post_type[ $post_type ] = [];
         }
 
         foreach ( $this->post_types as $post_type => $settings ) :
 
-            $labels = self::get_post_type_labels( $post_type );
-            $sanitized_name = self::get_post_type_name( $post_type, true, true );
+            $labels = Types::get_post_type_labels( $post_type );
+            $sanitized_name = Types::get_post_type_name( $post_type, true, true );
             $geo_fields = [
                 'rel' => [
                     'title'   => 'Relation',
@@ -298,7 +298,7 @@ class Cluster_Types extends Types {
             // Connect all clusters to entities
             $this->setup_cluster_connection_type( [
                 'name'           => 'entities_to_' . $sanitized_name,
-                'from'           => self::get_entity_post_types(),
+                'from'           => Types::get_entity_post_types(),
                 'to'             => $post_type,
                 'sortable'       => 'from',
                 'admin_box'      => [
@@ -352,7 +352,7 @@ class Cluster_Types extends Types {
                 $this->setup_cluster_connection_type( $data_connection_topics_to );
             }
 
-            if ( in_array( $post_type, self::get_geospace_post_types() ) ) {
+            if ( in_array( $post_type, Types::get_geospace_post_types() ) ) {
                 // Connect geospaces to themselves, with metadata
                 $this->setup_cluster_connection_type( [
                     'name'           => $sanitized_name . '_to_' . $sanitized_name,
@@ -450,8 +450,8 @@ class Cluster_Types extends Types {
      * Render the metabox for listing indeterminate Geospace connections
      */
     public function action_add_meta_boxes() {
-        foreach ( self::get_geospace_post_types() as $post_type ) {
-            $name = self::get_post_type_name( $post_type );
+        foreach ( Types::get_geospace_post_types() as $post_type ) {
+            $name = Types::get_post_type_name( $post_type );
             $sanitized_name = Utils::sanitize_name( $name );
             $connection_type = $sanitized_name . '_to_' . $sanitized_name;
             $metabox_id = "pedestal-metabox-p2p-connections-{$connection_type}";
@@ -731,7 +731,7 @@ class Cluster_Types extends Types {
             'children'       => $details_children,
             'serialize_data' => false,
         ] );
-        $details->add_meta_box( esc_html__( 'Geospace Details', 'pedestal' ), self::get_geospace_post_types(), 'normal', 'high' );
+        $details->add_meta_box( esc_html__( 'Geospace Details', 'pedestal' ), Types::get_geospace_post_types(), 'normal', 'high' );
     }
 
     /**
@@ -808,7 +808,7 @@ class Cluster_Types extends Types {
     private function register_cluster_fields() {
 
         $types = [];
-        foreach ( self::get_cluster_post_types() as $post_type ) {
+        foreach ( Types::get_cluster_post_types() as $post_type ) {
             if ( ! post_type_supports( $post_type, 'editor' ) ) {
                 $types[] = $post_type;
             }
@@ -853,8 +853,8 @@ class Cluster_Types extends Types {
             'tabbed'      => true,
         ] );
 
-        foreach ( self::get_cluster_post_types( false ) as $post_type ) {
-            $name = self::get_post_type_name( $post_type );
+        foreach ( Types::get_cluster_post_types( false ) as $post_type ) {
+            $name = Types::get_post_type_name( $post_type );
             $sanitized_name = Utils::sanitize_name( $name );
             $child = new \Fieldmanager_Group( esc_html__( $name, 'pedestal' ), [
                 'name' => $sanitized_name,
@@ -864,13 +864,13 @@ class Cluster_Types extends Types {
             $group_entities_to_clusters->add_child( $child );
 
             // Add non-identical clusters to some clusters
-            if ( ! self::is_story( $post_type ) ) {
+            if ( ! Types::is_story( $post_type ) ) {
                 $group_stories_to_clusters->add_child( $child );
             }
         }
 
         // Add standard Cluster boxes
-        $group_entities_to_clusters->add_meta_box( esc_html__( 'Clusters', 'pedestal' ), self::get_entity_post_types(), 'normal', 'default' );
+        $group_entities_to_clusters->add_meta_box( esc_html__( 'Clusters', 'pedestal' ), Types::get_entity_post_types(), 'normal', 'default' );
         $group_stories_to_clusters->add_meta_box( esc_html__( 'Clusters', 'pedestal' ), 'pedestal_story', 'normal', 'default' );
     }
 

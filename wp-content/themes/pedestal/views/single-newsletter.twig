@@ -2,22 +2,24 @@
 
 {% block content %}
 
-    <article class="c-newsletter  c-main__content  {{ item.css_classes }}"
+    <article class="c-newsletter  c-main__content  {{ item.css_classes|esc_attr }}"
         {{ item.get_the_data_atts }} >
 
 
-        <header class="c-overview  c-main__header js-main-header">
-            <div class="c-overview__sponsorship">
+        <header class="single-header  c-main__header js-main-header">
+            <div class="single-header__sponsorship">
                 {{ ped_slot( 'single_lead' ) }}
             </div>
 
-            {% include 'partials/overview/overline.twig' with {
-                title: 'Newsletter'
-            } %}
+            <div class="single-header__overline  c-heading--overline">
+                <h2 class="c-heading__title">Newsletter</h2>
+            </div>
 
-            {% include 'partials/item-title.twig' with { url: 'none' } %}
+            <h1 class="single-header__title">
+                {{ title }}
+            </h1>
 
-            <h2 class="c-overview__description">
+            <h2 class="single-header__description">
                 {{ item.get_newsletter_subtitle }}
             </h2>
         </header>

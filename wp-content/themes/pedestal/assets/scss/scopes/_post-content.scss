@@ -3,12 +3,8 @@
 // ==========================================================================
 
 
-// Blockquote
-$s-post-content-blockquote-color   : $grey-25;
-
 // Pullquote
 $s-post-content-pullquote-pos-h    : rem( -7px );
-$s-post-content-pullquote-pos-v    : rem( -14px );
 $s-post-content-pullquote-border-v : rem( 2px ) solid $grey-70;
 
 // Lists
@@ -89,28 +85,23 @@ $s-post-content-li-bullet-size     : rem( 5px );
 
 
   blockquote {
-    font-style: italic;
-    color: $s-post-content-blockquote-color;
-    padding: 0 0 0 rem( 16px );
     border-left: rem( 4px ) solid $primary-color;
+    font-style: italic;
+    font-weight: 300;
+    padding: 0;
+    padding-left: rem( 16px );
 
+    &,
     p {
-      padding-bottom: 0;
-      color: $s-post-content-blockquote-color;
+      color: $grey-25;
+      font-size: rem( 15px );
+      line-height: 1.33333;
     }
 
     cite {
       text-align: right;
       display: block;
     }
-
-    @media #{$medium-up} {
-      p {
-        font-size: $h6-font-size;
-        color: $s-post-content-blockquote-color;
-      }
-    }
-
   }
 
 
@@ -126,50 +117,52 @@ $s-post-content-li-bullet-size     : rem( 5px );
   .c-pullquote {
     border-top: $s-post-content-pullquote-border-v;
     border-bottom: $s-post-content-pullquote-border-v;
-    position: relative;
     margin-bottom: rem( 16px );
+    position: relative;
 
     &::before,
     &::after {
+      background-color: $white;
+      color: $primary-color;
       font-size: rem( 64px );
       line-height: 0;
       padding-top: 0.4em;
       position: absolute;
-      color: $primary-color;
-      background-color: $white;
     }
 
     &::before {
       content: '\201C';
       left: $s-post-content-pullquote-pos-h;
-      top: $s-post-content-pullquote-pos-v;
+      top: rem( -12px );
     }
 
     &::after {
+      bottom: rem( -14px );
       content: '\201D';
       right: $s-post-content-pullquote-pos-h;
-      bottom: $s-post-content-pullquote-pos-v;
     }
 
 
     &__content {
       border: 0;
-      line-height: 1.6;
-      padding: rem( 16px ) rem( 16px ) 0;
+      font-size: rem( 24px );
+      font-weight: normal;
+      line-height: rem( 26px ) / rem( 24px );
       margin-bottom: 0;
-      font-size: $h5-font-size;
-
-      @media #{$medium-up} {
-        font-size: $h4-font-size;
-      }
+      padding: rem( 16px ) rem( 16px ) 0;
     }
 
 
     &__credit {
-      padding: rem( 8px ) rem( 32px ) rem( 16px );
       display: block;
+      font-size: rem( 18px );
+      line-height: rem( 22px ) / rem( 18px );
+      padding: rem( 8px ) rem( 32px ) rem( 16px );
       text-align: right;
-      font-style: normal;
+
+      &::before {
+        content: "\2014";
+      }
     }
   }
 

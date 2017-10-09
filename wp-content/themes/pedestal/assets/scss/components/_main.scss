@@ -52,13 +52,20 @@
  */
 
 .c-main__title {
+  @include h-size( 2 );
+
+  font-weight: 400;
+
+  a {
+    @include link-dark;
+  }
 
   &--page {
-    text-align: center;
+    font-size: rem( 32px );
     font-weight: normal;
-    font-size: $h1-font-size;
-    font-family: $font-family-serif;
-    margin-bottom: $main-title-margin-bottom;
+    letter-spacing: em( -0.2px );
+    line-height: 1;
+    text-transform: uppercase;
   }
 
   &--headline {}

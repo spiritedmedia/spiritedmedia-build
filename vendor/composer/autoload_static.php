@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6c296f3ab69a516e3debe7c7e26c26d1
+class ComposerStaticInit88ef4785cbb364c024ef4255270fa3dd
 {
     public static $prefixLengthsPsr4 = array (
         'j' => 
@@ -64,6 +64,13 @@ class ComposerStaticInit6c296f3ab69a516e3debe7c7e26c26d1
             'Twig_' => 
             array (
                 0 => __DIR__ . '/..' . '/twig/twig/lib',
+            ),
+        ),
+        'S' => 
+        array (
+            'Sunra\\PhpSimple\\HtmlDomParser' => 
+            array (
+                0 => __DIR__ . '/..' . '/sunra/php-simple-html-dom-parser/Src',
             ),
         ),
         'R' => 
@@ -217,7 +224,6 @@ class ComposerStaticInit6c296f3ab69a516e3debe7c7e26c26d1
         'Pedestal\\Registrations\\Post_Types\\Entity_Types' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes-entities.php',
         'Pedestal\\Registrations\\Post_Types\\General_Types' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-ptypes-general.php',
         'Pedestal\\Registrations\\Post_Types\\Pedestal_Embed' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-pedestal-embed.php',
-        'Pedestal\\Registrations\\Post_Types\\Pedestal_Entity' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-pedestal-entity.php',
         'Pedestal\\Registrations\\Post_Types\\Pedestal_Event' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-pedestal-event.php',
         'Pedestal\\Registrations\\Post_Types\\Pedestal_Factcheck' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-pedestal-factcheck.php',
         'Pedestal\\Registrations\\Post_Types\\Pedestal_Link' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/registrations/post-types/class-pedestal-link.php',
@@ -244,6 +250,7 @@ class ComposerStaticInit6c296f3ab69a516e3debe7c7e26c26d1
         'Pedestal\\Widgets\\Recent_Video_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-recent-video-widget.php',
         'Pedestal\\Widgets\\Signup_Newsletter_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-signup-newsletter-widget.php',
         'Routes' => __DIR__ . '/..' . '/upstatement/routes/Routes.php',
+        'Sunra\\PhpSimple\\HtmlDomParser' => __DIR__ . '/..' . '/sunra/php-simple-html-dom-parser/Src/Sunra/PhpSimple/HtmlDomParser.php',
         'Symfony\\Component\\CssSelector\\CssSelectorConverter' => __DIR__ . '/..' . '/symfony/css-selector/CssSelectorConverter.php',
         'Symfony\\Component\\CssSelector\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/symfony/css-selector/Exception/ExceptionInterface.php',
         'Symfony\\Component\\CssSelector\\Exception\\ExpressionErrorException' => __DIR__ . '/..' . '/symfony/css-selector/Exception/ExpressionErrorException.php',
@@ -722,11 +729,11 @@ class ComposerStaticInit6c296f3ab69a516e3debe7c7e26c26d1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6c296f3ab69a516e3debe7c7e26c26d1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6c296f3ab69a516e3debe7c7e26c26d1::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit6c296f3ab69a516e3debe7c7e26c26d1::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6c296f3ab69a516e3debe7c7e26c26d1::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6c296f3ab69a516e3debe7c7e26c26d1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit88ef4785cbb364c024ef4255270fa3dd::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit88ef4785cbb364c024ef4255270fa3dd::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit88ef4785cbb364c024ef4255270fa3dd::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit88ef4785cbb364c024ef4255270fa3dd::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit88ef4785cbb364c024ef4255270fa3dd::$classMap;
 
         }, null, ClassLoader::class);
     }

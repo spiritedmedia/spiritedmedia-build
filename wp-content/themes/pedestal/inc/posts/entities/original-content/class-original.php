@@ -142,4 +142,17 @@ abstract class Original extends Entity {
         $url = $this->get_permalink();
         return str_replace( home_url( '/' ), $site_config['site_live_domain'], $url );
     }
+
+    /**
+     * Get the Twig context for this post
+     *
+     * @return array Twig context
+     */
+    public function get_context() {
+        $context = [
+            'content_classes' => [ 'js-original-content-body' ],
+            'footnotes'       => $this->get_the_footnotes(),
+        ] + parent::get_context();
+        return $context;
+    }
 }

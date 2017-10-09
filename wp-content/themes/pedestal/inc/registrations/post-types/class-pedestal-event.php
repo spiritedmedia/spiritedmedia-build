@@ -44,7 +44,7 @@ class Pedestal_Event {
      * @param  array $context  List of properties for a stream item
      * @return array           Modified list of properties
      */
-    public function filter_pedestal_stream_item_context( $context = [] ) {
+    public function filter_pedestal_stream_item_context( $context ) {
         if ( empty( $context['type'] ) || 'event' != $context['type'] ) {
             return $context;
         }

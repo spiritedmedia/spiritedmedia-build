@@ -100,7 +100,7 @@ $breakpoint-footer-links-columns-shrink: em( 818px );
 .site-footer__links {
   text-align: center;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
 
   @media ( min-width: $breakpoint-footer-links-columns ) {
     text-align: left;
@@ -237,7 +237,7 @@ $breakpoint-footer-links-columns-shrink: em( 818px );
 .site-footer__newsroom {
   // stylelint-disable-next-line selector-max-type
   a {
-    font-weight: 600;
+    font-weight: 700;
   }
 }
 

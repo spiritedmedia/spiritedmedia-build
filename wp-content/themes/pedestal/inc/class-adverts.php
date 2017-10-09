@@ -166,7 +166,7 @@ class Adverts {
 
         // Get an image
         if ( is_numeric( $output['image'] ) ) {
-            $attachment = new Attachment( $output['image'] );
+            $attachment = Attachment::get( $output['image'] );
             // Make sure we have a proper Attachment object
             if ( method_exists( $attachment, 'get_html' ) ) {
                 $output['featured_image'] = $attachment->get_html( 'medium-square' );

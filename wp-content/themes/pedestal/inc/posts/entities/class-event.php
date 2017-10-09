@@ -311,6 +311,9 @@ class Event extends Entity {
     /**
      * Render a table of event details
      *
+     * @TODO This method should prepare data for the template beforehand,
+     *     however that would require a slight bit of refactoring.
+     *
      * @return string  HTML markup of the event details table
      */
     public function get_details_table() {
@@ -320,5 +323,20 @@ class Event extends Entity {
         ob_start();
             Timber::render( 'partials/events/details.twig', $context );
         return ob_get_clean();
+    }
+
+    /**
+     * Get the Twig context for this post
+     *
+     * @return array Twig context
+     */
+    public function get_context() {
+        $context = [
+            'content'         => $this->get_details_table(),
+            'content_classes' => [ 'c-event' ],
+            'event_more'      => $this->get_more(),
+            'show_meta_info'  => false,
+        ] + parent::get_context();
+        return $context;
     }
 }
