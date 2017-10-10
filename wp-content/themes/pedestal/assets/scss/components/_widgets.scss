@@ -3,13 +3,24 @@
 // ==========================================================================
 
 
+// stylelint-disable selector-max-type
+
+
 .success-message {
   display: none;
 }
 
 .widget {
+  @include stdbd( bottom );
 
-  &.widget_pedestal_signup_newsletter {}
+  list-style-type: none;
+  margin-bottom: rem( 16px );
+  padding: rem( 4px );
+  padding-bottom: rem( 16px );
+
+  &:last-child {
+    border: 0;
+  }
 
   &.widget_search {
     .screen-reader-text {
@@ -17,6 +28,27 @@
     }
   }
 
+  p {
+    margin-bottom: rem( 8px );
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  li {
+    margin-top: rem( 12px );
+    margin-bottom: rem( 12px );
+
+    // stylelint-disable selector-max-compound-selectors
+    &.active {
+      &,
+      a {
+        color: $black;
+      }
+    }
+    // stylelint-enable selector-max-compound-selectors
+  }
 }
 
 .widget_pedestal_explainer {

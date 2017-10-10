@@ -1,8 +1,8 @@
-<li class="c-factcheck__logo widget has-border--bottom">
+<li class="c-factcheck__logo widget">
     <a href="http://www.politifact.com/pennsylvania/" class="c-factcheck__logo__img " data-ga-category="Factcheck" data-ga-label="Logo"></a>
 </li>
 
-<li class="widget has-border--bottom  widget_pedestal_explainer">
+<li class="widget  widget_pedestal_explainer">
 
     <p>PolitiFact Pennsylvania is a partnership of {{ site.name }} and
     PolitiFact.com, a Pulitzer Prize-winning Web site of the Tampa Bay Times, to
@@ -16,14 +16,14 @@
 </li>
 
 {% if item.get_sources %}
-<li class="c-factcheck__sources  widget has-border--bottom widget_pedestal_factcheck_sources">
+<li class="c-factcheck__sources  widget widget_pedestal_factcheck_sources">
     <h3 class="widget-title">Sources</h3>
     {{ item.get_the_sources }}
 </li>
 {% endif %}
 
 {% if item.get_editor %}
-<li class="c-factcheck__editor  widget has-border--bottom widget_pedestal_factcheck_editor">
+<li class="c-factcheck__editor  widget widget_pedestal_factcheck_editor">
     <p><strong>Edited by:</strong> {{ item.get_editor }}</p>
 </li>
 {% endif %}

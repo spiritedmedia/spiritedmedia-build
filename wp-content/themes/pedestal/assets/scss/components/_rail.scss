@@ -25,36 +25,6 @@
     }
   }
 
-  /*li*/.widget {
-    @include border-divider;
-
-    margin-bottom: $border-divider-spacing; // All widgets need this even if they don't have a border divider
-    list-style-type: none;
-    padding: rem( 4px );
-
-    p {
-      margin-bottom: rem( 8px );
-    }
-
-    ul {
-      list-style-type: none;
-    }
-
-    li {
-      margin-top: 0.75rem;
-      margin-bottom: 0.75rem;
-
-      // stylelint-disable selector-max-compound-selectors
-      &.active {
-        &,
-        a {
-          color: $black;
-        }
-      }
-      // stylelint-enable selector-max-compound-selectors
-    }
-  }
-
   ul,
   li {
     padding-left: 0;

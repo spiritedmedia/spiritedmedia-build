@@ -53,6 +53,11 @@ styleguide_header();
         <button class="btn btn--alert">Alert Color</button>
       </p>
 
+      <p>
+        <a class="btn btn--achtung" href="#">Achtung! Color</a>
+        <button class="btn btn--achtung">Achtung! Color</button>
+      </p>
+
 
     </main>
     <aside class="rail columns large-4"></aside>

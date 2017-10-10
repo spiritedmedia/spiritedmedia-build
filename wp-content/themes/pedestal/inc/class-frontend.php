@@ -2,17 +2,14 @@
 
 namespace Pedestal;
 
-use function Pedestal\Pedestal;
 
 use Timber\Timber;
 
-use \Pedestal\Utils\Utils;
-
-use \Pedestal\Registrations\Post_Types\Types;
-
-use \Pedestal\Posts\Post;
-
-use \Pedestal\Objects\User;
+use function Pedestal\Pedestal;
+use Pedestal\Objects\User;
+use Pedestal\Posts\Post;
+use Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Utils\Utils;
 
 class Frontend {
 

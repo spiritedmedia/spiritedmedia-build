@@ -159,11 +159,6 @@ $page-main-m-t  : rem( 48px );
 // ==========================================================================
 
 
-// Border dividers
-$border-divider-spacing         : rem( 24px );
-$border-divider-spacing--inline : rem( 8px );
-$border-divider-color           : $border-std-color;
-
 // Forms + Buttons
 $input-border-color             : $grey-80;
 $input-border-width             : rem( 1px );
@@ -186,7 +181,7 @@ $spinkit-size                   : rem( 32px );
 $spinkit-spinner-color          : $grey-80;
 
 // Horizontal explosion
-$hoz-explode-side               : 600rem;
+$hoz-explode-side               : rem( 9999px );
 
 // Hanging quotation mark nudge
 $nudge-punctuation              : -0.4em;

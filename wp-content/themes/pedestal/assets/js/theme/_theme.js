@@ -45,7 +45,7 @@
       var subscriptionForms = [
         '.js-follow-this-form-container',
         '#subscribe-to-newsletter-page',
-        '.widget_pedestal_signup_newsletter'
+        '.js-widget-signup-newsletter'
       ];
 
       $(subscriptionForms.join(', ')).find('form').on('submit', function(e) {
@@ -53,6 +53,7 @@
         var $el = $(this);
         var $fields = $el.find('.js-form-fields');
         var $submitBtn = $el.find('.js-form-submit');
+        var $submitText = $el.find('.js-form-submit-text');
         var $invalidFeedback = $el.find('.js-fail-message');
         var buttonWidth = $submitBtn.width();
         var actionURL = $el.attr('action');
@@ -62,19 +63,29 @@
         $submitBtn.width(buttonWidth);
         $submitBtn.css('padding-left', 0);
         $submitBtn.css('padding-right', 0);
+        $submitText.hide();
         $el.removeClass('is-failed');
         $el.addClass('is-loading');
 
         $.post(actionURL, $el.serialize(), function() {
           if ($el.find('.js-success-message').length) {
+            var $successEmail = $el.find('.js-success-message-email');
+            var emailAddress = $el.find('.js-email-input').val();
+
             $fields.hide();
             $el.removeClass('is-loading');
             $el.addClass('is-success');
+
+            // Use email address in success message for user verification
+            if (emailAddress && $successEmail.length) {
+              $successEmail.text(emailAddress).addClass('u-font-weight--bold');
+            }
           }
         }).fail(function(response) {
           var msg = response.responseText;
           $el.removeClass('is-loading');
           $el.addClass('is-failed');
+          $submitText.show();
           if ($invalidFeedback.length && msg.length) {
             $invalidFeedback.text(msg);
           } else {

@@ -9,14 +9,21 @@ $btn-transition: 300ms ease 0s;
 /// Make a button color variation
 ///
 /// @param {color} $color
-@mixin btn-color-variant( $color ) {
+/// @param {color} $border-color [$color]
+/// @param {color} $border-color-hover [$border-color]
+@mixin btn-color-variant(
+  $color,
+  $border-color: $color,
+  $border-color-hover: $color
+) {
   background-color: $color;
-  border-color: $color;
+  border-color: $border-color;
   color: text-contrast( $color );
 
   &:hover {
     background-color: $white;
-    color: $color;
+    border-color: $border-color-hover;
+    color: $body-font-color;
   }
 }
 
@@ -68,6 +75,7 @@ $btn-transition: 300ms ease 0s;
 .btn--primary   { @include btn-color-variant( $primary-color ); }
 .btn--secondary { @include btn-color-variant( $secondary-color ); }
 .btn--alert     { @include btn-color-variant( $alert-color ); }
+.btn--achtung   { @include btn-color-variant( $elektroid-yellow, $border-color: $white ); }
 
 
 //
@@ -82,6 +90,7 @@ $btn-transition: 300ms ease 0s;
 }
 
 .btn--lg {
+  border-width: rem( 3px );
   font-size: $input-btn-font-size-lg;
   line-height: 1.5;
   margin-bottom: $input-btn-spacing-y-lg;

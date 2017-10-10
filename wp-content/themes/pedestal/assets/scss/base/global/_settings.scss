@@ -48,6 +48,7 @@ $absinthe                : #c1a540;
 $latte                   : #e6e6de;
 $mustard-gas             : #b26536;
 $truth-serum             : #efeeec;
+$elektroid-yellow        : #fcd651;
 $spiritedmedia-brand     : #333333;
 
 $twitter-blue            : #4fa8e0;
@@ -98,18 +99,19 @@ $loading-default-opacity : 0.25;
 // these are only the icons that need their widths adjusted. A definitive list
 // can be found in the form of the files present in the SVG icon directory.
 $icon-widths: (
-  angle-left    : 0.375em,
-  angle-right   : 0.33928571428571425em,
-  calendar      : 0.9285714285714285em,
-  close         : 0.7857142857142857em,
-  external-link : 0.675586em, // IcoMoon set 0.975586em, may need changing on update
-  facebook      : 0.5881428571428571em,
-  instagram     : 0.8571428571428571em,
-  level-down    : 0.5730714285714286em,
-  linkedin      : 0.8571428571428571em,
-  play          : 0.7896428571428571em,
-  scribd        : 0.8571428571428571em,
-  twitter       : 0.9285714285714285em,
-  vine          : 0.8571428571428571em,
-  youtube       : 0.8571428571428571em,
+  angle-left     : 0.375em,
+  angle-right    : 0.33928571428571425em,
+  calendar       : 0.9285714285714285em,
+  close          : 0.7857142857142857em,
+  envelope-slant : 0.8571428571428571em,
+  external-link  : 0.675586em, // IcoMoon set 0.975586em, may need changing on update
+  facebook       : 0.5881428571428571em,
+  instagram      : 0.8571428571428571em,
+  level-down     : 0.5730714285714286em,
+  linkedin       : 0.8571428571428571em,
+  play           : 0.7896428571428571em,
+  scribd         : 0.8571428571428571em,
+  twitter        : 0.9285714285714285em,
+  vine           : 0.8571428571428571em,
+  youtube        : 0.8571428571428571em,
 );

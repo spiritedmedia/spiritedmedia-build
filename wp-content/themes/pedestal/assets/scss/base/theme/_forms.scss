@@ -82,6 +82,7 @@ label {
   background-color: $input-bg;
   border: $input-border-width solid $input-border-color;
   border-radius: $global-radius;
+  box-shadow: inset 0 1px 5px 0 rgba( 0, 0, 0, 0.25 );
   color: $input-font-color;
   display: block;
   font-size: $base-font-size;
@@ -318,12 +319,12 @@ select.form-input--lg {
   z-index: $z-index-5;
   width: rem( 250px );
   padding: rem( 8px );
-  margin-top: 0.1rem;
+  margin-top: rem( 2px );
   font-size: $small-font-size;
   line-height: 1;
   color: $white;
   background-color: rgba( $form-feedback-invalid-color, 0.8 );
-  border-radius: 0.2rem;
+  border-radius: rem( 3px );
 }
 
 @include form-validation-state( 'valid', $form-feedback-valid-color );

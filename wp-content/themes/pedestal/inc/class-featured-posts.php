@@ -174,10 +174,17 @@ class Featured_Posts {
         }
         // Get most recent original content
         $args = [
-            'post_type' => Types::get_original_post_types(),
-            'post_status' => 'publish',
+            'meta_query' => [
+                [
+                    'key'     => 'exclude_from_home_stream',
+                    'value'   => 1,
+                    'compare' => '!=',
+                ],
+            ],
+            'post_type'      => Types::get_original_post_types(),
+            'post_status'    => 'publish',
             'posts_per_page' => $num,
-            'fields' => 'ids',
+            'fields'         => 'ids',
         ];
         $posts = new \WP_Query( $args );
         $post_ids = $posts->posts;

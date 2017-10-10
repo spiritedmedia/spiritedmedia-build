@@ -34,6 +34,7 @@
 
 @import '../base/theme/foundation';
 @import 'susy/sass/susy';
+@import 'spinkit/scss/spinners/7-three-bounce';
 
 
 
@@ -122,6 +123,7 @@
 @import '../components/pagination';
 @import '../components/shortcodes';
 @import '../components/widgets';
+@import '../components/widget-signup-newsletter';
 @import '../components/recent-content-widget';
 @import '../components/video-widget';
 @import '../components/ads';
@@ -145,9 +147,6 @@
 @import '../utilities/utilities';
 @import '../utilities/utilities-theme';
 @import '../utilities/experiments';
-
-// Loading spinners
-@import 'spinkit/scss/spinners/7-three-bounce';
 
 
 

@@ -1,23 +1,41 @@
-<form class="signup-newsletter-widget"
+<form class="widget-signup-newsletter__form"
     action="{{ site.url }}/subscribe-to-email-list/"
     method="POST"
     data-ga-category="Submitted Form"
     data-ga-label="Newsletter Signup Widget">
 
-    <div class="js-form-fields">
-        <fieldset class="form-group">
-            {% include 'partials/email-forms/form-daily-legend.twig' %}
-            {% include 'partials/email-forms/form-daily-input-address.twig' %}
-            {% include 'partials/email-forms/form-honeypot.twig' %}
-            <div class="js-fail-message invalid-feedback"></div>
-            <button class="btn js-form-submit" type="submit">
-                {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
-            </button>
-        </fieldset>
+    {{ ped_icon( 'envelope-slant', 'widget-signup-newsletter__icon' ) }}
+
+    <div class="form-group js-form-fields">
+        <label>
+            <div class="widget-signup-newsletter__form__label">
+                Get <strong>{{ site.name }} Daily</strong><br />
+                every day in your inbox
+            </div>
+            <input type="email"
+                class="widget-signup-newsletter__email-input form-input js-email-input"
+                name="email_address"
+                placeholder="type your email address"
+                required
+            />
+        </label>
+        <input type="hidden" name="list-ids[]" value="{{ site.emails.daily_newsletter_id }}">
+        <input type="hidden" name="list-ids[]" value="{{ site.emails.breaking_newsletter_id }}">
+
+        {% include 'partials/email-forms/form-honeypot.twig' %}
+
+        <div class="js-fail-message invalid-feedback"></div>
+
+        <button class="widget-signup-newsletter__btn btn btn--lg btn--achtung btn--full-width js-form-submit" type="submit">
+            {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
+        </button>
+
+        {% if latest_newsletter %}
+        <p>Check out a <a href="{{ latest_newsletter|esc_url }}">sample newsletter</a>.</p>
+        {% endif %}
     </div>
 
-    <div class="success-message js-success-message">
+    <div class="widget-signup-newsletter__success-message success-message js-success-message">
         {% include 'partials/email-forms/form-daily-subscribed.twig' %}
     </div>
-
 </form>

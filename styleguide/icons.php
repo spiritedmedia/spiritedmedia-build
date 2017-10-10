@@ -12,7 +12,7 @@ styleguide_header();
     }
     </style>
     <div class="content-wrapper row">
-		<main class="c-main columns large-8 js-main" role="main">
+        <main class="c-main columns large-8 js-main" role="main">
             <header class="c-main__header">
                 <h1 class="c-main__title">Icons</h1>
                 <div class="c-main__excerpt">
@@ -25,36 +25,37 @@ Below is a list of the icons we use throughout the sites:</p>
                 </div>
             </header>
 
-			<?php
-				$icons = [
-                    'angle-left'    => 'Angle Left',
-                    'angle-right'   => 'Angle Right',
-                    'birthday-cake' => 'Birthday Cake',
-                    'briefcase'     => 'Briefcase',
-                    'calendar'      => 'Calendar',
-                    'close'         => 'Close / X (multiplication sign)',
-                    'envelope-o'    => 'Envelope',
-                    'external-link' => 'External Link',
-                    'facebook'      => 'Facebook',
-                    'info'          => 'Info',
-                    'instagram'     => 'Instagram',
-                    'level-down'    => 'Level Down',
-                    'linkedin'      => 'LinkedIn',
-                    'play'          => 'Play',
-                    'scribd'        => 'Scribd',
-                    'search'        => 'Search',
-					'twitter'       => 'Twitter',
-				    'vine'          => 'Vine',
-				    'youtube'       => 'YouTube',
-				];
-				foreach ( $icons as $icon => $description ) {
-					echo '<p>';
+            <?php
+                $icons = [
+                    'angle-left'     => 'Angle Left',
+                    'angle-right'    => 'Angle Right',
+                    'birthday-cake'  => 'Birthday Cake',
+                    'briefcase'      => 'Briefcase',
+                    'calendar'       => 'Calendar',
+                    'close'          => 'Close / X (multiplication sign)',
+                    'envelope-o'     => 'Envelope',
+                    'envelope-slant' => 'Envelope (Slanted)',
+                    'external-link'  => 'External Link',
+                    'facebook'       => 'Facebook',
+                    'info'           => 'Info',
+                    'instagram'      => 'Instagram',
+                    'level-down'     => 'Level Down',
+                    'linkedin'       => 'LinkedIn',
+                    'play'           => 'Play',
+                    'scribd'         => 'Scribd',
+                    'search'         => 'Search',
+                    'twitter'        => 'Twitter',
+                    'vine'           => 'Vine',
+                    'youtube'        => 'YouTube',
+                ];
+                foreach ( $icons as $icon => $description ) {
+                    echo '<p>';
                     echo '<div class="icon-example">';
                     echo styleguide_icon( $icon );
                     echo '</div>';
                     echo ' &emsp; ' . $description . ' &mdash; <code>' . $icon . '</code></p>';
-				}
-			?>
+                }
+            ?>
 
             <hr>
 
@@ -75,7 +76,7 @@ Below is a list of the icons we use throughout the sites:</p>
             </div>
 
         </main>
-		<aside class="rail columns large-4"></aside>
+        <aside class="rail columns large-4"></aside>
     </div>
     <?php
 styleguide_footer();
