@@ -142,22 +142,19 @@ $main-rail-f-z             : $small-font-size;
 
 
 //
-// Single Page
+// Miscellaneous
 // ==========================================================================
 
 
+// Single Page
 $page-bg-c      : $white;
 $page-bg-c--alt : $sea-foam-green;
 $page-main-m-t  : rem( 48px );
 
-
-
-
-
-//
-// Miscellaneous
-// ==========================================================================
-
+// Border dividers
+$border-divider-spacing         : rem( 24px );
+$border-divider-spacing--inline : rem( 8px );
+$border-divider-color           : $border-std-color;
 
 // Forms + Buttons
 $input-border-color             : $grey-80;
@@ -174,6 +171,8 @@ $input-btn-spacing-x-lg         : rem( 16px );
 $input-btn-line-height-lg       : 1.5;
 $btn-border-width               : rem( 2px );
 
+// Tables
+$table-row-padding              : rem( 8px 12px );
 
 // Spinkit loading indicator
 $spinkit-spinner-margin         : rem( 16px ) auto;

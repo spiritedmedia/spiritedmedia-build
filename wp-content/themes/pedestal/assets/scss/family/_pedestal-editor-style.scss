@@ -52,6 +52,7 @@
 @import '../base/theme/mixins';
 @import '../base/theme/type';
 @import '../base/theme/general';
+@import '../base/theme/tables';
 
 
 
@@ -93,7 +94,6 @@
 @import '../components/type-headings';
 @import '../components/figure';
 @import '../components/event';
-@import '../components/tables';
 @import '../components/meta-info';
 @import '../components/avatar';
 @import '../components/slots';

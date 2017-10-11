@@ -3,14 +3,15 @@
 // ==========================================================================
 
 
+// stylelint-disable selector-max-type
+
+
 .c-event {
   border: 0;
   margin-bottom: $paragraph-margin-bottom;
   padding-bottom: 0;
   margin-top: 0;
 
-  // @TODO Override Foundation
-  // stylelint-disable selector-max-type
   &,
   td,
   th {
@@ -53,17 +54,65 @@
 }
 
 
-.c-event__details {
-  border-bottom: 0;
-
-  .c-details-table__inner {
-    margin-bottom: 0;
-  }
-}
-
-
 .c-event__more {}
 
 .c-event__more__heading {
   margin-top: rem( 12px );
+}
+
+
+
+
+
+//
+// Details Table
+// ==========================================================================
+
+
+.c-event__details {
+  @include stdbd;
+
+  border-bottom: 0;
+}
+
+.c-event__details__inner {
+  border: 0;
+  margin-bottom: 0;
+  width: 100%;
+
+  th {
+    @include stdbd( right );
+
+    text-align: right;
+    text-transform: uppercase;
+    width: 30%;
+  }
+
+  .email-body & {
+    tr {
+      @include stdbd( bottom );
+    }
+  }
+}
+
+.c-event__details__link {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.c-event__details__link__btn {
+  @include single-transition( background-color );
+
+  background-color: $latte;
+  color: $body-font-color;
+  display: block;
+  margin-bottom: 0;
+  padding: $table-row-padding;
+  text-align: center;
+  text-transform: uppercase;
+
+  &:hover,
+  &:focus {
+    background-color: darken( $latte, 15% );
+  }
 }

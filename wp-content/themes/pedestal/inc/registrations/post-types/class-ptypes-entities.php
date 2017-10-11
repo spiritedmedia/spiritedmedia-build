@@ -603,7 +603,7 @@ class Entity_Types {
                 'people' => new \Fieldmanager_Group( esc_html__( 'Person', 'pedestal' ), [
                     'name'           => 'people',
                     'minimum_count'  => 1,
-                    'limit'          => 3,
+                    'limit'          => 6,
                     'sortable'       => true,
                     'save_empty'     => false,
                     'extra_elements' => 0,

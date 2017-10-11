@@ -3,94 +3,76 @@
 // ==========================================================================
 
 
-$c-whos-next-spacing: rem( 24px );
+.c-whos-next {}
 
+.c-whos-next__logo__img {
+  background: no-repeat top left;
+  background-image: url( $site-theme-abspath + '/assets/images/whos-next-partner.svg' );
+  background-size: contain;
+  display: block;
+  height: rem( 48px );
+}
 
-.c-whos-next {
-
-  &__logo__img {
-    background: no-repeat top left;
-    background-image: url( $site-theme-abspath + '/assets/images/whos-next-partner.svg' );
-    background-size: contain;
-    display: block;
-    height: rem( 48px );
-  }
-
-  &__items {
-    @include stdbd( top );
-  }
-
+.c-whos-next__items {
+  @include stdbd( top );
 }
 
 
 
 
 
-/*section*/.c-whos-next-item {
-  padding-top: $c-whos-next-spacing;
+.c-whos-next-item {
+  padding-top: rem( 24px );
+}
+
+.c-whos-next-item__img {
+  .c-figure {
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.c-whos-next-item__person {
+  margin-bottom: rem( 24px );
+}
+
+.c-whos-next-item__person__icon {
+  color: $dimmed-text-color;
+  width: rem( 16px );
+  text-align: center;
+  margin-right: rem( 4px );
+}
+
+.c-whos-next-item__person__name {
+  @extend %c-heading--minor;
+
+  margin-bottom: 0;
+}
+
+.c-whos-next-item__description {}
 
 
-  &__img {
-    .c-figure {
-      margin-top: 0;
-      margin-left: auto;
-      margin-right: auto;
+
+
+
+@media #{$medium-up} {
+  .c-whos-next-item__people {
+    @include block-grid(
+      $per-row: 2,
+      $spacing: rem( 24px )
+    );
+  }
+
+  .c-whos-next-item__person {
+    margin-bottom: rem( 32px );
+
+    [data-whos-next-people-count="1"] & {
+      max-width: 100%;
     }
   }
 
-
-  /*header*/&__people {}
-
-
-  &__person {
-    margin-bottom: $c-whos-next-spacing;
-    display: inline-block;
-    vertical-align: top;
-    margin-right: $c-whos-next-spacing;
-
-    @media #{$medium-up} {
-      margin-bottom: rem( 32px );
-      max-width: 45%;
-    }
-
-
-    [data-whos-next-people-count="1"] & {
-      @media #{$medium-up} {
-        max-width: 100%;
-      }
-    }
-
-
-    &__icon {
-      color: $dimmed-text-color;
-      width: rem( 16px );
-      text-align: center;
-      margin-right: rem( 4px );
-    }
-
-
-    &__text {
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-
-    /*h1*/&__name {
-      @extend %c-heading--minor;
-    }
-
-
-    &__role {}
-
-
-    &__age {}
-
-
-    &__twitter {}
-
-  } // end person
-
-
-  &__description {}
-
-} // end .c-whos-next-item
+  .c-whos-next-item__person__name {
+    margin-bottom: rem( 8px );
+  }
+}

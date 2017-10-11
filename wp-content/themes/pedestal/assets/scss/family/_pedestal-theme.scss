@@ -50,6 +50,7 @@
 @import '../base/theme/mixins';
 @import '../base/theme/type';
 @import '../base/theme/general';
+@import '../base/theme/tables';
 @import '../base/theme/forms';
 @import '../base/theme/sticky-footer';
 
@@ -101,7 +102,6 @@
 @import '../components/header';
 @import '../components/spinner';
 @import '../components/rail';
-@import '../components/tables';
 @import '../components/stream-item';
 @import '../components/featured-stream-items';
 @import '../components/single-header';

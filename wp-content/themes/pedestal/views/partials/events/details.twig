@@ -1,6 +1,6 @@
-<div class="c-event__details  c-details-table">
+<div class="c-event__details">
 
-    <table class="c-details-table__inner">
+    <table class="c-event__details__inner">
 
         {% if item.get_what %}
         <tr>
@@ -30,8 +30,18 @@
 
     </table>
 
-    {% if item.get_details_link %}
-    {{ item.get_details_link }}
+    {% if item.get_details_link_url and item.get_details_link_text %}
+    <p class="c-event__details__link">
+        <a
+            href="{{ item.get_details_link_url|esc_url }}"
+            class="c-event__details__link__btn"
+            data-ga-category="Event"
+            data-ga-label="Details|{{ item.get_details_link_text|esc_attr }}"
+            target="_blank"
+        >
+            {{ item.get_details_link_text }}
+        </a>
+    </p>
     {% endif %}
 
 </div>

@@ -162,26 +162,6 @@ class Event extends Entity {
     }
 
     /**
-     * Get the link to more info
-     *
-     * @return string
-     */
-    public function get_details_link() {
-        $url = $this->get_details_link_url();
-        $text = $this->get_details_link_text();
-        if ( $url && $text ) {
-            $out = '<p class="c-details-table__link">';
-            $out .= '<a href="' . esc_url( $url ) . '" class="c-details-table__link__btn" target="_blank"';
-            $out .= 'data-ga-category="Event" data-ga-label="Details|' . esc_attr( $text ) . '">';
-            $out .= $text;
-            $out .= '</a>';
-            $out .= '</p>';
-            return $out;
-        }
-        return '';
-    }
-
-    /**
      * Get a Google Calendar link with all of the event details
      *
      * @return string  Google Calendar URL

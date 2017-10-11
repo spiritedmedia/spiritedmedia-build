@@ -15,5 +15,6 @@ include 'include.php';
   <li><a href="images.php">Post Content: Images</a></li>
   <li><a href="post-headers.php">Post Headers</a></li>
   <li><a href="stream-items.php">Stream Items</a></li>
+  <li><a href="tables.php">Tables</a></li>
   <li><a href="utilities.php">Utilities</a></li>
 </ul>
