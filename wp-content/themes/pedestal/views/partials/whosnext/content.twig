@@ -16,8 +16,12 @@
     {% set stream = true %}
 
     {% for item in item.get_items %}
+        {% set data_count = 'data-whos-next-people-single' %}
+        {% if item.people|length > 1 %}
+            {% set data_count = 'data-whos-next-people-multiple' %}
+        {% endif %}
 
-        <section class="c-whos-next-item" data-whos-next-people-count="{{ item.people|length }}">
+        <section class="c-whos-next-item" {{ data_count }}>
             {% if item.img %}
             <div class="c-whos-next-item__img">{{ item.img }}</div>
             {% endif %}

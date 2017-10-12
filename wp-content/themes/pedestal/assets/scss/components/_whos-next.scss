@@ -57,7 +57,7 @@
 
 
 @media #{$medium-up} {
-  .c-whos-next-item__people {
+  [data-whos-next-people-multiple] .c-whos-next-item__people {
     @include block-grid(
       $per-row: 2,
       $spacing: rem( 24px )
@@ -67,7 +67,7 @@
   .c-whos-next-item__person {
     margin-bottom: rem( 32px );
 
-    [data-whos-next-people-count="1"] & {
+    [data-whos-next-people-single] & {
       max-width: 100%;
     }
   }

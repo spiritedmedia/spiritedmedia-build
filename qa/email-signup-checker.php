@@ -114,6 +114,4 @@ if ( empty( $test_email_address ) ) {
             }
         }
     }
-
-    echo '<p>Check your email for ' . $confirmations_to_check . ' signup confirmations. Click each link and make sure you see the Yippy Skippy confirmation email.</p>';
 }
