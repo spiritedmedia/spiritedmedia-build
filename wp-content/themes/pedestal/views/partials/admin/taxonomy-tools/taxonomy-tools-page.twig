@@ -1,0 +1,28 @@
+<div class="wrap">
+    <h1 class="wp-heading">{{ page_title }}</h1>
+
+    {% if message %}
+        <div class="notice notice-success fade is-dismissible">
+            <p>{{ message }}</p>
+        </div>
+    {% endif %}
+
+    {% if taxonomy_options %}
+        <form>
+            <input type="hidden" name="page" value="pedestal_taxonomy_tools">
+            <label for="taxonomy" style="display: block;">Select a Taxonomy</label>
+            <select name="taxonomy" id="taxonomy">
+            {% for slug,name in taxonomy_options %}
+                {% set selected = '' %}
+                {% if preselected_slug == slug %}
+                    {% set selected = 'selected' %}
+                {% endif %}
+                <option value="{{ slug|esc_attr }}" {{ selected }}>{{ name }}</option>
+            {% endfor %}
+            </select>
+            <p><button class="button primary-button">Go</button></p>
+        </form>
+    {% endif %}
+
+    {{ form }}
+</div>

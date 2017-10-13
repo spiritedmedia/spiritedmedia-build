@@ -1,0 +1,8 @@
+<form method="POST" id="{{ unique_id|esc_attr }}">
+	<div class="fm-page-form-wrapper">
+		<input type="hidden" name="fm-page-action" value="{{ unique_id|esc_attr }}">
+		{{ nonce_field }}
+		{{ form_body }}
+		{{ submit_button }}
+	</div>
+</form>
