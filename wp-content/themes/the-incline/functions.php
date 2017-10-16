@@ -98,6 +98,7 @@ class The_Incline extends Pedestal {
      * @return array          Filtered Timber context
      */
     public function filter_timber_context( $context ) {
+        $context = parent::handle_filter_timber_context( $context );
         $context['pages'] = [
             'about' => [
                 'statement' => [
@@ -105,7 +106,7 @@ class The_Incline extends Pedestal {
                 ],
             ],
         ];
-        return parent::handle_filter_timber_context( $context );
+        return $context;
     }
 
     /**

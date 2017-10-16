@@ -681,6 +681,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'contact'                => PEDESTAL_EMAIL_CONTACT,
                 'news'                   => PEDESTAL_EMAIL_NEWS,
                 'placeholder'            => PEDESTAL_EMAIL_PLACEHOLDER,
+                'daily_newsletter_name'  => PEDESTAL_BLOG_NAME . ' Daily',
                 'daily_newsletter_id'    => $this->email_lists->get_newsletter_list_id( 'Daily Newsletter' ),
                 'breaking_newsletter_id' => $this->email_lists->get_newsletter_list_id( 'Breaking News' ),
             ];

@@ -101,6 +101,7 @@ class Billy_Penn extends Pedestal {
      * @return array          Filtered Timber context
      */
     public function filter_timber_context( $context ) {
+        $context = parent::handle_filter_timber_context( $context );
         $context['pages'] = [
             'about' => [
                 'statement' => [
@@ -110,7 +111,8 @@ class Billy_Penn extends Pedestal {
                 ],
             ],
         ];
-        return parent::handle_filter_timber_context( $context );
+        $context['site']->emails['daily_newsletter_name'] = PEDESTAL_BLOG_NAME;
+        return $context;
     }
 
     /**
