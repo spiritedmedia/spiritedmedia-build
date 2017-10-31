@@ -12,10 +12,17 @@ var MediaController = wp.media.controller.State.extend({
 			action: 'select',
 			search: null,
 			insertCallback: this.insertCallback,
+			editor: wpActiveEditor,
 		});
 
 		this.props.on( 'change:action', this.refresh, this );
+		this.on( 'activate', this.activate, this );
 
+	},
+
+	activate: function() {
+		var $el = this.frame.$el;
+		_.defer( function() { $el.addClass( 'hide-router' ); } );
 	},
 
 	refresh: function() {
@@ -37,12 +44,13 @@ var MediaController = wp.media.controller.State.extend({
 		var shortcode      = this.props.get( 'currentShortcode' );
 		var insertCallback = this.props.get( 'insertCallback' );
 
+		this.setActiveEditor( this.props.get( 'editor' ) );
+
 		if ( shortcode && insertCallback ) {
 			insertCallback( shortcode );
 		}
 
 		this.reset();
-		this.resetState();
 		this.frame.close();
 	},
 
@@ -55,12 +63,11 @@ var MediaController = wp.media.controller.State.extend({
 		this.props.set( 'currentShortcode', null );
 		this.props.set( 'search', null );
 		this.props.set( 'insertCallback', this.insertCallback );
-	},
 
-	resetState: function() {
 		var menuItem = this.frame.menu.get().get('shortcode-ui');
 		menuItem.options.text = shortcodeUIData.strings.media_frame_title;
 		menuItem.render();
+
 		this.frame.setState( 'insert' );
 	},
 
@@ -99,6 +106,17 @@ var MediaController = wp.media.controller.State.extend({
 				this.frame.mediaController.toggleSidebar( false );
 			}.bind( this ) );
 
+			/*
+			 * Action run after an edit shortcode overlay is rendered.
+			 *
+			 * Called as `shortcode-ui.render_edit`.
+			 *
+			 * @param shortcodeModel (object)
+			 *           Reference to the shortcode model used in this overlay.
+			 */
+			var hookName = 'shortcode-ui.render_edit';
+			wp.shortcake.hooks.doAction( hookName, currentShortcode );
+
 		}.bind( this ) );
 
 	},
@@ -107,6 +125,15 @@ var MediaController = wp.media.controller.State.extend({
 		this.frame.$el.toggleClass( 'hide-menu', show );
 	},
 
+	setActiveEditor: function( editorId ) {
+		var editor = tinymce.get( editorId );
+
+		if ( editor ) {
+			tinymce.setActive( editor );
+		}
+
+		window.wpActiveEditor = editorId;
+	},
 });
 
 sui.controllers.MediaController = MediaController;

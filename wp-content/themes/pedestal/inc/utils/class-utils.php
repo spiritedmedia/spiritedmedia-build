@@ -101,21 +101,6 @@ class Utils {
     }
 
     /**
-     * Get the Unix timestamp for the New York timezone
-     *
-     * @param  int $time Timestamp to offset with timezone. Defaults to current UTC time.
-     * @return int
-     */
-    public static function get_time( $time = 0 ) {
-        if ( empty( $time ) ) {
-            $time = time();
-        }
-        $timezone = new \DateTime( 'now', new \DateTimeZone( 'America/New_York' ) );
-        $offset = $timezone->getOffset();
-        return $time + $offset;
-    }
-
-    /**
      * Get a random number for use as a time interval
      *
      * Useful for spacing apart transient expiration times to prevent them from

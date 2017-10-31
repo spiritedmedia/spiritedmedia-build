@@ -1,5 +1,4 @@
 **Ticket**: # <!-- Ignore this if not relevant -->
-**Reviewer**: @ <!-- Ignore this if not relevant -->
 
 #### Issue
 <!-- Description of the problem that this code change is solving -->
@@ -10,11 +9,17 @@
 
 
 #### Impact
-<!-- What impact will this have on the current codebase, performance, backwards compatability? -->
+<!-- What impact will this have on the current codebase, performance, backwards compatibility? -->
 
 
-#### Usage
-<!-- Are there are any usage changes, or are there new usage that we need to know about? -->
+#### Usage Changes
+<!-- Are there are any usage changes that we need to know about? If so, list them here so that we can integrate it in the release notes and developers know what usage changes are associated to your PR.
+
+Alternatively, you’re very welcome to directly edit the readme.txt file with:
+- A quick summary, including your Github handle.
+- A list of changes for Theme Developers (under the "Changes for Theme Developers" label).
+- New usage instructions, possibly with a short code example.
+-->
 
 
 #### Considerations

@@ -53,25 +53,26 @@ class The_Incline extends Pedestal {
         add_filter( 'pedestal_constants', function() {
             return [
                 // Site Details
-                'PEDESTAL_BLOG_NAME'              => 'The Incline',
-                'PEDESTAL_BLOG_DESCRIPTION'       => 'The Incline is a mobile platform for a better Pittsburgh -- the easiest way to find and follow local and breaking news in Pittsburgh.',
-                'PEDESTAL_CITY_NAME'              => 'Pittsburgh',
-                'PEDESTAL_CITY_NICKNAME'          => 'Steel City',
-                'PEDESTAL_STATE_NAME'             => 'Pennsylvania',
-                'PEDESTAL_STATE'                  => 'PA',
-                'PEDESTAL_ZIPCODE'                => '15212',
-                'PEDESTAL_BUILDING_NAME'          => 'Alloy 26',
-                'PEDESTAL_STREET_ADDRESS'         => '100 South Commons, Suite 102',
-                // 'PEDESTAL_BLOG_URL'            => 'https://medium.com/billy-penn',
-                'PEDESTAL_GOOGLE_ANALYTICS_ID'    => 'UA-77560864-1',
-                'PEDESTAL_GOOGLE_OPTIMIZE_ID'     => 'GTM-WFRTH8G',
+                'PEDESTAL_BLOG_NAME'                    => 'The Incline',
+                'PEDESTAL_BLOG_DESCRIPTION'             => 'The Incline is a mobile platform for a better Pittsburgh -- the easiest way to find and follow local and breaking news in Pittsburgh.',
+                'PEDESTAL_CITY_NAME'                    => 'Pittsburgh',
+                'PEDESTAL_CITY_NICKNAME'                => 'Steel City',
+                'PEDESTAL_STATE_NAME'                   => 'Pennsylvania',
+                'PEDESTAL_STATE'                        => 'PA',
+                'PEDESTAL_ZIPCODE'                      => '15212',
+                'PEDESTAL_BUILDING_NAME'                => 'Alloy 26',
+                'PEDESTAL_STREET_ADDRESS'               => '100 South Commons, Suite 102',
+                // 'PEDESTAL_BLOG_URL'                  => 'https://medium.com/billy-penn',
+                'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-77560864-1',
+                'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '121833937',
+                'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => 'GTM-WFRTH8G',
 
                 // Social Media
-                'PEDESTAL_TWITTER_USERNAME'       => 'theinclinepgh',
-                'PEDESTAL_INSTAGRAM_USERNAME'     => 'theinclinepgh',
-                'PEDESTAL_FACEBOOK_PAGE'          => 'https://www.facebook.com/theinclinepgh/',
-                'PEDESTAL_FACEBOOK_PAGE_ID'       => '1558758474422919',
-                'PEDESTAL_YOUTUBE_CHANNEL_ID'     => 'UC_5rdSt3WedEe2dp9nx9cIw',
+                'PEDESTAL_TWITTER_USERNAME'    => 'theinclinepgh',
+                'PEDESTAL_INSTAGRAM_USERNAME'  => 'theinclinepgh',
+                'PEDESTAL_FACEBOOK_PAGE'       => 'https://www.facebook.com/theinclinepgh/',
+                'PEDESTAL_FACEBOOK_PAGE_ID'    => '1558758474422919',
+                'PEDESTAL_YOUTUBE_CHANNEL_ID'  => 'UC_5rdSt3WedEe2dp9nx9cIw',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => 'contact@theincline.com',
@@ -83,6 +84,7 @@ class The_Incline extends Pedestal {
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#pgh-botcountry',
                 'PEDESTAL_SLACK_CHANNEL_NEWSLETTER'     => '#pgh-newsletter',
+                'PEDESTAL_SLACK_CHANNEL_CITY'           => '#pgh',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'TheInclineBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':theincline:',
             ];

@@ -30,7 +30,8 @@ $(document).ready(function(){
 			options = {
 				frame: 'post',
 				state: 'shortcode-ui',
-				title: shortcodeUIData.strings.media_frame_title
+				title: shortcodeUIData.strings.media_frame_title,
+				editor: this.dataset.editor
 			};
 
 		event.preventDefault();
@@ -42,6 +43,7 @@ $(document).ready(function(){
 
 		if ( frame ) {
 			frame.mediaController.setActionSelect();
+			frame.mediaController.props.set( 'editor', this.dataset.editor );
 			frame.open();
 		} else {
 			frame = wp.media.editor.open( editor, options );
@@ -49,11 +51,7 @@ $(document).ready(function(){
 
 		// Make sure to reset state when closed.
 		frame.once( 'close submit', function() {
-			frame.state().props.set('currentShortcode', false);
-			var menuItem = frame.menu.get().get('shortcode-ui');
-			menuItem.options.text = shortcodeUIData.strings.media_frame_title;
-			menuItem.render();
-			frame.setState( 'insert' );
+			frame.mediaController.reset();
 		} );
 
 	} );

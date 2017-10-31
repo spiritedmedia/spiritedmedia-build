@@ -151,4 +151,29 @@ class Newsletter extends Post {
             return $post[0]->get_the_permalink();
         }
     }
+
+    /**
+     * Get the permalink to yesterday's published newsletter
+     *
+     * @return string Newsletter permalink
+     */
+    public static function get_yesterdays_newsletter_link() {
+        $yesterday = strtotime( 'yesterday' );
+        $args = [
+            'year'                   => date( 'Y', $yesterday ),
+            'monthnum'               => date( 'n', $yesterday ),
+            'day'                    => date( 'j', $yesterday ),
+            'no_found_rows'          => true,
+            'post_status'            => 'publish',
+            'post_type'              => static::$post_type,
+            'posts_per_page'         => 1,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
+        ];
+        $query = new \WP_Query( $args );
+        $post = static::get_posts_from_query( $query );
+        if ( ! empty( $post[0] ) && Types::is_post( $post[0] ) ) {
+            return $post[0]->get_the_permalink();
+        }
+    }
 }

@@ -6,6 +6,11 @@ use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Registrations\Taxonomies\Taxonomies;
 use Pedestal\Posts\Entities\Embed;
+use Pedestal\Metricbot\{
+    New_Vs_Returning_Users_Metric,
+    Newsletter_Signups_By_Page_Metric,
+    Yesterdays_Email_Metric
+};
 use Pedestal\{
     Featured_Posts,
     Icons
@@ -104,22 +109,23 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'SPIRITEDMEDIA_STAGING_SITE_URL' => 'http://staging.spiritedmedia.com',
 
                 // Site Details
-                'PEDESTAL_BLOG_URL'            => '',
-                'PEDESTAL_BLOG_NAME'           => get_bloginfo( 'name' ),
-                'PEDESTAL_BLOG_DESCRIPTION'    => get_bloginfo( 'description' ),
-                'PEDESTAL_CITY_NAME'           => '',
-                'PEDESTAL_CITY_NICKNAME'       => '',
-                'PEDESTAL_STATE_NAME'          => '',
-                'PEDESTAL_STATE'               => '',
-                'PEDESTAL_ZIPCODE'             => '',
-                'PEDESTAL_BUILDING_NAME'       => '',
-                'PEDESTAL_STREET_ADDRESS'      => '',
-                'PEDESTAL_DATE_FORMAT'         => 'M d Y',
-                'PEDESTAL_TIME_FORMAT'         => 'g:i a',
-                'PEDESTAL_DATETIME_FORMAT'     => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
-                'PEDESTAL_GOOGLE_ANALYTICS_ID' => '',
-                'PEDESTAL_GOOGLE_OPTIMIZE_ID'  => '',
-                'PEDESTAL_COMSCORE_ID'         => '',
+                'PEDESTAL_BLOG_URL'                     => '',
+                'PEDESTAL_BLOG_NAME'                    => get_bloginfo( 'name' ),
+                'PEDESTAL_BLOG_DESCRIPTION'             => get_bloginfo( 'description' ),
+                'PEDESTAL_CITY_NAME'                    => '',
+                'PEDESTAL_CITY_NICKNAME'                => '',
+                'PEDESTAL_STATE_NAME'                   => '',
+                'PEDESTAL_STATE'                        => '',
+                'PEDESTAL_ZIPCODE'                      => '',
+                'PEDESTAL_BUILDING_NAME'                => '',
+                'PEDESTAL_STREET_ADDRESS'               => '',
+                'PEDESTAL_DATE_FORMAT'                  => 'M d Y',
+                'PEDESTAL_TIME_FORMAT'                  => 'g:i a',
+                'PEDESTAL_DATETIME_FORMAT'              => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
+                'PEDESTAL_GOOGLE_ANALYTICS_ID'          => '',
+                'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '',
+                'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => '',
+                'PEDESTAL_COMSCORE_ID'                  => '',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => '',
@@ -153,6 +159,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_SLACK_CHANNEL_BOTS_PRODUCT'   => '#botcountry',
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '',
                 'PEDESTAL_SLACK_CHANNEL_NEWSLETTER'     => '',
+                'PEDESTAL_SLACK_CHANNEL_CITY'           => '',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'PedestalBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => '',
             ];
@@ -247,6 +254,11 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->featured_posts    = Featured_Posts::get_instance();
             $this->icons             = Icons::get_instance();
             $this->cron_management   = Cron_Management::get_instance();
+
+            // Metrics
+            $this->new_vs_returning_users_metric     = New_Vs_Returning_Users_Metric::get_instance();
+            $this->newsletter_signups_by_page_metric = Newsletter_Signups_By_Page_Metric::get_instance();
+            $this->yesterdays_email_metric           = Yesterdays_Email_Metric::get_instance();
 
             // Emails
             $this->emails                = Email::get_instance();

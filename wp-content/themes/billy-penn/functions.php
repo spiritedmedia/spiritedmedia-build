@@ -55,26 +55,27 @@ class Billy_Penn extends Pedestal {
         add_filter( 'pedestal_constants', function() {
             return [
                 // Site Details
-                'PEDESTAL_BLOG_NAME'              => 'Billy Penn',
-                'PEDESTAL_BLOG_DESCRIPTION'       => 'Billy Penn is a mobile platform for a better Philly -- the easiest way to find and follow local and breaking news in Philadelphia.',
-                'PEDESTAL_CITY_NAME'              => 'Philadelphia',
-                'PEDESTAL_CITY_NICKNAME'          => 'Philly',
-                'PEDESTAL_STATE_NAME'             => 'Pennsylvania',
-                'PEDESTAL_STATE'                  => 'PA',
-                'PEDESTAL_ZIPCODE'                => '19102',
-                'PEDESTAL_BUILDING_NAME'          => '',
-                'PEDESTAL_STREET_ADDRESS'         => '1429 Walnut St., Suite 1201',
-                'PEDESTAL_BLOG_URL'               => 'https://medium.com/billy-penn',
-                'PEDESTAL_GOOGLE_ANALYTICS_ID'    => 'UA-54099407-1',
-                'PEDESTAL_GOOGLE_OPTIMIZE_ID'     => 'GTM-P8PWVHM',
-                'PEDESTAL_COMSCORE_ID'            => '23083389',
+                'PEDESTAL_BLOG_NAME'                    => 'Billy Penn',
+                'PEDESTAL_BLOG_DESCRIPTION'             => 'Billy Penn is a mobile platform for a better Philly -- the easiest way to find and follow local and breaking news in Philadelphia.',
+                'PEDESTAL_CITY_NAME'                    => 'Philadelphia',
+                'PEDESTAL_CITY_NICKNAME'                => 'Philly',
+                'PEDESTAL_STATE_NAME'                   => 'Pennsylvania',
+                'PEDESTAL_STATE'                        => 'PA',
+                'PEDESTAL_ZIPCODE'                      => '19102',
+                'PEDESTAL_BUILDING_NAME'                => '',
+                'PEDESTAL_STREET_ADDRESS'               => '1429 Walnut St., Suite 1201',
+                'PEDESTAL_BLOG_URL'                     => 'https://medium.com/billy-penn',
+                'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-54099407-1',
+                'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '90219011',
+                'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => 'GTM-P8PWVHM',
+                'PEDESTAL_COMSCORE_ID'                  => '23083389',
 
                 // Social Media
-                'PEDESTAL_TWITTER_USERNAME'       => 'billy_penn',
-                'PEDESTAL_INSTAGRAM_USERNAME'     => 'billy_penn',
-                'PEDESTAL_FACEBOOK_PAGE'          => 'https://www.facebook.com/billypennnews',
-                'PEDESTAL_FACEBOOK_PAGE_ID'       => '666155016815882',
-                'PEDESTAL_YOUTUBE_CHANNEL_ID'     => 'UC-wbUUytMNII9M-hF8U5IDA',
+                'PEDESTAL_TWITTER_USERNAME'    => 'billy_penn',
+                'PEDESTAL_INSTAGRAM_USERNAME'  => 'billy_penn',
+                'PEDESTAL_FACEBOOK_PAGE'       => 'https://www.facebook.com/billypennnews',
+                'PEDESTAL_FACEBOOK_PAGE_ID'    => '666155016815882',
+                'PEDESTAL_YOUTUBE_CHANNEL_ID'  => 'UC-wbUUytMNII9M-hF8U5IDA',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => 'contact@billypenn.com',
@@ -86,6 +87,7 @@ class Billy_Penn extends Pedestal {
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#phl-botcountry',
                 'PEDESTAL_SLACK_CHANNEL_NEWSLETTER'     => '#phl-newsletter',
+                'PEDESTAL_SLACK_CHANNEL_CITY'           => '#phl',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'BillyPennBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':billypenn:',
             ];

@@ -557,8 +557,8 @@ class ActiveCampaign {
      */
     public function get_campaign( $args = [] ) {
         $default_args = [
-            'ids'           => '',
-            'full'          => 1,
+            'ids'  => '',
+            'full' => 1,
         ];
         $args = wp_parse_args( $args, $default_args );
         if ( is_array( $args['ids'] ) ) {
@@ -569,6 +569,103 @@ class ActiveCampaign {
         $response = $this->get_request( $args );
         $payload = $this->cleanup_response( $response['body'] );
         return $payload;
+    }
+
+    /**
+     * Get several campaigns from one or more lists between a date range.
+     *
+     * The only way to do this in ActiveCampaign is to fetch a bunch of campaigns and filter them as needed.
+     *
+     * Default is campaigns that were sent in the last 7 days.
+     *
+     * @param  array  $args Arguments to filter the results
+     * @return array        Array of campaign objects
+     */
+    public function get_camapigns( $args = [] ) {
+        $default_args = [
+            'lists'          => [ 0 ], // One or more list IDs or names
+            'filter_by_name' => '',
+            'start_date'     => strtotime( 'now' ),
+            'end_date'       => strtotime( '7daysago' ),
+            'max_pages'      => 10, // The maximum number of requests to ActiveCampaign to perform
+        ];
+        $args = wp_parse_args( $args, $default_args );
+
+        // Make sure we have an array of IDs, not names
+        $args['list_ids'] = $this->sanitize_list_ids( $args['lists'] );
+        $args['max_pages'] = intval( $args['max_pages'] );
+        if ( ! is_numeric( $args['start_date'] ) ) {
+            $args['start_date'] = strtotime( $args['start_date'] );
+        }
+        if ( ! is_numeric( $args['end_date'] ) ) {
+            $args['end_date'] = strtotime( $args['end_date'] );
+        }
+        $start_date = intval( $args['start_date'] );
+        $end_date = intval( $args['end_date'] );
+
+        $campaign_args = [
+            'ids' => 'all',
+            'filters[sdate_since_datetime]' => date( 'Y-m-d H:i:s', $end_date ),
+            'page' => 1,
+        ];
+
+        if ( ! empty( $args['filter_by_name'] ) ) {
+            // Perform a LIKE search on the campaign names to filter and reduce the number of campaigns to sift through
+            $campaign_args['filters[name]'] = $args['filter_by_name'];
+        }
+
+        $keep_looping = true;
+        $messages = [];
+        while ( $keep_looping ) {
+            $campaigns = $this->get_campaign( $campaign_args );
+            foreach ( $campaigns as $campaign ) {
+                $campaign_list_ids = [];
+                foreach ( $campaign->lists as $item ) {
+                    $campaign_list_ids[] = intval( $item->id );
+                }
+
+                // If the campaign ID isn't in the list of list IDs then skip it
+                $matching_list_ids = array_intersect( $args['list_ids'], $campaign_list_ids );
+                if ( empty( $matching_list_ids ) ) {
+                    continue;
+                }
+
+                // If the camapign sent date is after the given start date then skip it
+                $campaign_sent_date = strtotime( $campaign->sdate );
+                if ( $campaign_sent_date > $start_date ) {
+                    continue;
+                }
+
+                // Get all of the message IDs for this campaign
+                $campaign_message_ids = [];
+                foreach ( $campaign->messages as $item ) {
+                    $campaign_message_ids[] = intval( $item->id );
+                }
+
+                $messages[] = (object) [
+                    'id'             => $campaign->id,
+                    'list_ids'       => $campaign_list_ids,
+                    'message_ids'    => $campaign_message_ids,
+                    'name'           => $campaign->name,
+                    'unsubscribes'   => intval( $campaign->unsubscribes ),
+                    'sent_to'        => intval( $campaign->total_amt ),
+                    'opens'          => intval( $campaign->opens ),
+                    'unique_opens'   => intval( $campaign->uniqueopens ),
+                    'clicks'         => intval( $campaign->linkclicks ),
+                    'unique_clicks'  => intval( $campaign->uniquelinkclicks ),
+                    'sent_date'      => $campaign->sdate,
+                    'last_open_date' => $campaign->ldate,
+                ];
+                if ( $campaign_sent_date < $end_date ) {
+                    $keep_looping = false;
+                }
+            }
+            $campaign_args['page']++;
+            if ( $campaign_args['page'] > $args['max_pages'] ) {
+                $keep_looping = false;
+            }
+        }
+        return $messages;
     }
 
     /**
@@ -697,6 +794,37 @@ class ActiveCampaign {
         $response = $this->get_request( $args );
         $payload = $this->cleanup_response( $response['body'] );
         return $payload;
+    }
+
+    /**
+     * Get a list of stats for links in a message
+     *
+     * @see http://www.activecampaign.com/api/example.php?call=campaign_report_link_list
+     * @param  integer $campaign_id The id of the campaign that the message was part of
+     * @param  integer $message_id  The id of the message to get links for
+     * @return Array                Array of objects including URL, unique clicks, total clicks
+     */
+    public function get_links_report( $campaign_id = 0, $message_id = 0 ) {
+        if ( ! $campaign_id || ! $message_id ) {
+            return [];
+        }
+        $output = [];
+        $args = [
+            'campaignid' => $campaign_id,
+            'messageid' => $message_id,
+        ];
+        $args['api_action'] = 'campaign_report_link_list';
+        $response = $this->get_request( $args );
+        $links = $this->cleanup_response( $response['body'] );
+        foreach ( $links as $link ) {
+            $output[] = (object) [
+                'url'           => $link->link,
+                'unique_clicks' => intval( $link->a_unique ),
+                'total_clicks'  => intval( $link->a_total ),
+            ];
+        }
+        $output = Utils::sort_obj_array_by_prop( $output, 'unique_clicks' );
+        return array_reverse( $output );
     }
 
     /**
