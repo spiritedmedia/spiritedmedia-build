@@ -15,12 +15,6 @@
             {% include 'partials/factchecks/hero.twig' %}
             {% endif %}
 
-            {% if featured_image %}
-            <div class="experiment-unit-var-a">
-                {{ featured_image }}
-            </div>
-            {% endif %}
-
             <div class="single-header__sponsorship">
                 {{ ped_slot( 'single_lead' ) }}
             </div>
@@ -35,11 +29,7 @@
                 <div class="single-header__description">{{ description }}</div>
             {% endif %}
 
-            {% if featured_image %}
-            <div class="experiment-unit-var-b">
-                {{ featured_image }}
-            </div>
-            {% endif %}
+            {{ featured_image }}
 
             {% if show_meta_info %}
             {% include 'partials/meta-info/meta-info-entity-single.twig' %}
@@ -70,7 +60,7 @@
 
         {% include 'partials/follow-this-form.twig' %}
 
-        <footer class="c-main__footer js-main-footer o-rule--closure  o-rule">
+        <footer class="c-main__footer js-main-footer">
             {{ sponsored_item }}
             {{ cluster_list }}
 

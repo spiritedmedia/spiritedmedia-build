@@ -1,9 +1,9 @@
-Build [#3833](https://circleci.com/gh/spiritedmedia/spiritedmedia/3833) by kingkool68 at 2017-10-31 03:14 PM UTC
+Build [#3852](https://circleci.com/gh/spiritedmedia/spiritedmedia/3852) by kingkool68 at 2017-11-01 06:12 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.3.0](https://github.com/spiritedmedia/spiritedmedia/compare/v6.3.0)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.3.1](https://github.com/spiritedmedia/spiritedmedia/compare/v6.3.1)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.2.7...v6.3.0)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.3.0...v6.3.1)
 
- - [#2339](https://github.com/spiritedmedia/spiritedmedia/pull/2339): Add Slack Bot for Reporting Metrics
- - [#2335](https://github.com/spiritedmedia/spiritedmedia/pull/2335): Increase sticky share buttons z-index
- - [#2334](https://github.com/spiritedmedia/spiritedmedia/pull/2334): Adjust SVG icon sizing and share button height for IE
+ - [#2352](https://github.com/spiritedmedia/spiritedmedia/pull/2352): Remove closure rule from single entities and newsletter
+ - [#2350](https://github.com/spiritedmedia/spiritedmedia/pull/2350): Send out Yesterdays Email Report At 12:01am Instead of 7:00am
+ - [#2351](https://github.com/spiritedmedia/spiritedmedia/pull/2351): Permanently move hed + dek above featured image

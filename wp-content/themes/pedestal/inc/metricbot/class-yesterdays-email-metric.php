@@ -40,7 +40,7 @@ class Yesterdays_Email_Metric {
      */
     public function filter_pedestal_cron_events( $events = [] ) {
         // We want this to fire at a specific time
-        $timestamp = 'tomorrow 7:00am ' . get_option( 'timezone_string' );
+        $timestamp = 'tomorrow 12:01am ' . get_option( 'timezone_string' );
         $timestamp = strtotime( $timestamp );
 
         $events['metricbot_yesterdays_email'] = [
