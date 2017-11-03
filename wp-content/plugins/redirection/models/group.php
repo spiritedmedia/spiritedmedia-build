@@ -35,9 +35,43 @@ class Red_Group {
 		global $wpdb;
 
 		$row = $wpdb->get_row( $wpdb->prepare( "SELECT {$wpdb->prefix}redirection_groups.*,COUNT( {$wpdb->prefix}redirection_items.id ) AS items,SUM( {$wpdb->prefix}redirection_items.last_count ) AS redirects FROM {$wpdb->prefix}redirection_groups LEFT JOIN {$wpdb->prefix}redirection_items ON {$wpdb->prefix}redirection_items.group_id={$wpdb->prefix}redirection_groups.id WHERE {$wpdb->prefix}redirection_groups.id=%d GROUP BY {$wpdb->prefix}redirection_groups.id", $id ) );
-		if ( $row )
+		if ( $row ) {
 			return new Red_Group( $row );
+		}
+
 		return false;
+	}
+
+	static function get_all() {
+		global $wpdb;
+
+		$data = array();
+		$rows = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}redirection_groups" );
+
+		if ( $rows ) {
+			foreach ( $rows as $row ) {
+				$group = new Red_Group( $row );
+				$data[] = $group->to_json();
+			}
+		}
+
+		return $data;
+	}
+
+	static function get_all_for_module( $module_id ) {
+		global $wpdb;
+
+		$data = array();
+		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}redirection_groups WHERE module_id=%d", $module_id ) );
+
+		if ( $rows ) {
+			foreach ( $rows as $row ) {
+				$group = new Red_Group( $row );
+				$data[] = $group->to_json();
+			}
+		}
+
+		return $data;
 	}
 
 	static function get_for_select() {
@@ -50,7 +84,7 @@ class Red_Group {
 			foreach ( $rows as $row ) {
 				$module = Red_Module::get( $row->module_id );
 				if ( $module ) {
-					$data[ $module->get_name() ][ $row->id ] = $row->name;
+					$data[ $module->get_name() ][ intval( $row->id, 10 ) ] = $row->name;
 				}
 			}
 		}
@@ -61,7 +95,7 @@ class Red_Group {
 	static function create( $name, $module_id ) {
 		global $wpdb;
 
-		$name = trim( stripslashes( $name ) );
+		$name = trim( substr( stripslashes( $name ), 0, 50 ) );
 		$module_id = intval( $module_id, 10 );
 
 		if ( $name !== '' && Red_Module::is_valid_id( $module_id ) ) {
@@ -171,8 +205,8 @@ class Red_Group {
 
 		if ( isset( $params['perPage'] ) ) {
 			$limit = intval( $params['perPage'], 10 );
-			$limit = min( 100, $limit );
-			$limit = max( 10, $limit );
+			$limit = min( RED_MAX_PER_PAGE, $limit );
+			$limit = max( 5, $limit );
 		}
 
 		if ( isset( $params['page'] ) ) {

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc8b28234d3a975733f2bc12d197ed094
+class ComposerStaticInit6f75d6df03436e79a24b218a08f334ec
 {
     public static $files = array (
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
@@ -1047,7 +1047,6 @@ class ComposerStaticInitc8b28234d3a975733f2bc12d197ed094
         'Google_Service_Appengine_NetworkUtilization' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/Appengine/NetworkUtilization.php',
         'Google_Service_Appengine_Operation' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/Appengine/Operation.php',
         'Google_Service_Appengine_OperationMetadata' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/Appengine/OperationMetadata.php',
-        'Google_Service_Appengine_OperationMetadataExperimental' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/Appengine/OperationMetadataExperimental.php',
         'Google_Service_Appengine_OperationMetadataV1' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/Appengine/OperationMetadataV1.php',
         'Google_Service_Appengine_OperationMetadataV1Alpha' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/Appengine/OperationMetadataV1Alpha.php',
         'Google_Service_Appengine_OperationMetadataV1Beta' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/Appengine/OperationMetadataV1Beta.php',
@@ -1591,6 +1590,7 @@ class ComposerStaticInitc8b28234d3a975733f2bc12d197ed094
         'Google_Service_CloudBuild_Resource_ProjectsBuilds' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudBuild/Resource/ProjectsBuilds.php',
         'Google_Service_CloudBuild_Resource_ProjectsTriggers' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudBuild/Resource/ProjectsTriggers.php',
         'Google_Service_CloudBuild_Results' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudBuild/Results.php',
+        'Google_Service_CloudBuild_RetryBuildRequest' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudBuild/RetryBuildRequest.php',
         'Google_Service_CloudBuild_Secret' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudBuild/Secret.php',
         'Google_Service_CloudBuild_Source' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudBuild/Source.php',
         'Google_Service_CloudBuild_SourceProvenance' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudBuild/SourceProvenance.php',
@@ -1846,6 +1846,9 @@ class ComposerStaticInitc8b28234d3a975733f2bc12d197ed094
         'Google_Service_CloudNaturalLanguage_AnalyzeSyntaxResponse' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudNaturalLanguage/AnalyzeSyntaxResponse.php',
         'Google_Service_CloudNaturalLanguage_AnnotateTextRequest' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudNaturalLanguage/AnnotateTextRequest.php',
         'Google_Service_CloudNaturalLanguage_AnnotateTextResponse' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudNaturalLanguage/AnnotateTextResponse.php',
+        'Google_Service_CloudNaturalLanguage_ClassificationCategory' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudNaturalLanguage/ClassificationCategory.php',
+        'Google_Service_CloudNaturalLanguage_ClassifyTextRequest' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudNaturalLanguage/ClassifyTextRequest.php',
+        'Google_Service_CloudNaturalLanguage_ClassifyTextResponse' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudNaturalLanguage/ClassifyTextResponse.php',
         'Google_Service_CloudNaturalLanguage_DependencyEdge' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudNaturalLanguage/DependencyEdge.php',
         'Google_Service_CloudNaturalLanguage_Document' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudNaturalLanguage/Document.php',
         'Google_Service_CloudNaturalLanguage_Entity' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/CloudNaturalLanguage/Entity.php',
@@ -7439,11 +7442,11 @@ class ComposerStaticInitc8b28234d3a975733f2bc12d197ed094
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc8b28234d3a975733f2bc12d197ed094::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc8b28234d3a975733f2bc12d197ed094::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitc8b28234d3a975733f2bc12d197ed094::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitc8b28234d3a975733f2bc12d197ed094::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitc8b28234d3a975733f2bc12d197ed094::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6f75d6df03436e79a24b218a08f334ec::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6f75d6df03436e79a24b218a08f334ec::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit6f75d6df03436e79a24b218a08f334ec::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit6f75d6df03436e79a24b218a08f334ec::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit6f75d6df03436e79a24b218a08f334ec::$classMap;
 
         }, null, ClassLoader::class);
     }

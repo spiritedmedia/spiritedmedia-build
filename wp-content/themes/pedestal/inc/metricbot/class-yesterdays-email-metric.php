@@ -66,7 +66,16 @@ class Yesterdays_Email_Metric {
             'max_pages' => 10,
         ];
         $emails                          = $ac->get_camapigns( $args );
-        $yesterdays_email                = $emails[1];
+        $yesterdays_email                = false;
+        $yesterday                       = date( 'Y-m-d', strtotime( 'yesterday' ) );
+        foreach ( $emails as $email ) {
+            $sent_date = $email->sent_date;
+            $sent_date = date( 'Y-m-d', strtotime( $sent_date ) );
+            if ( $sent_date === $yesterday ) {
+                $yesterdays_email = $email;
+                break;
+            }
+        }
         if (
                ! $yesterdays_email
             || ! is_object( $yesterdays_email )
@@ -79,13 +88,20 @@ class Yesterdays_Email_Metric {
         $yesterdays_campaign_report_link = 'https://spiritedmedia.activehosted.com/report/#/campaign/' . $yesterdays_email->id;
         $links                           = $ac->get_links_report( $yesterdays_email->id, $yesterdays_email->message_ids[0] );
         $link_clicks                     = [];
+
+        // Need to debug what get_site_url() is returning via the cron job
+        // Not sure why the link replacement in the foreach loop
+        // isn't working as expected
+        $error_log_statement = '!!! get_site_url() in cron = ' . get_site_url();
+        error_log( print_r( $error_log_statement, true ) );
+
         foreach ( $links as $link ) {
             if ( $link->unique_clicks <= 0 ) {
                 continue;
             }
             $link_cutoff  = 30;
             $link_text     = $link->url;
-            $link_text     = str_replace( untrailingslashit( get_site_url() ), '', $link_text );
+            $link_text     = str_replace( get_site_url(), '', $link_text );
             if ( strlen( $link->url ) > $link_cutoff ) {
                 $link_text = substr( $link_text, 0, $link_cutoff );
                 $link_text .= '...';

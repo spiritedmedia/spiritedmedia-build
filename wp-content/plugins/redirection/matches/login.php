@@ -1,7 +1,8 @@
 <?php
 
 class Login_Match extends Red_Match {
-	public $user_agent = '';
+	public $logged_in;
+	public $logged_out;
 
 	function name() {
 		return __( 'URL and login status', 'redirection' );
@@ -18,21 +19,32 @@ class Login_Match extends Red_Match {
 		);
 	}
 
-	function initialize( $url ) {
-		$this->url = array( $url, '' );
-	}
-
 	function get_target( $url, $matched_url, $regex ) {
-		if ( is_user_logged_in() === false ) {
-			$target = $this->url_loggedout;
-		} else {
-			$target = $this->url_loggedin;
+		$target = false;
+
+		if ( is_user_logged_in() && $this->logged_in !== '' ) {
+			$target = $this->logged_in;
+		} else if ( ! is_user_logged_in() && $this->logged_out !== '' ) {
+			$target = $this->logged_out;
 		}
 
-		if ( $regex ) {
-			$target = preg_replace( '@'.str_replace( '@', '\\@', $matched_url ).'@', $target, $url );
+		if ( $regex && $target ) {
+			$target = $this->get_target_regex_url( $matched_url, $target, $url );
 		}
 
 		return $target;
+	}
+
+	public function get_data() {
+		return array(
+			'logged_in' => $this->logged_in,
+			'logged_out' => $this->logged_out,
+		);
+	}
+
+	public function load( $values ) {
+		$values = unserialize( $values );
+		$this->logged_in = $values['logged_in'];
+		$this->logged_out = $values['logged_out'];
 	}
 }

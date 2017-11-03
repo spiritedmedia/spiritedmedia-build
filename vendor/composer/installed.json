@@ -864,17 +864,17 @@
     },
     {
         "name": "google/apiclient-services",
-        "version": "v0.31",
-        "version_normalized": "0.31.0.0",
+        "version": "v0.32",
+        "version_normalized": "0.32.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/google/google-api-php-client-services.git",
-            "reference": "81eded7af428ae49e1ba8ddb44689fa5995d9bb5"
+            "reference": "297db7f5557dc8beba00a4e824abcaa595382269"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/81eded7af428ae49e1ba8ddb44689fa5995d9bb5",
-            "reference": "81eded7af428ae49e1ba8ddb44689fa5995d9bb5",
+            "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/297db7f5557dc8beba00a4e824abcaa595382269",
+            "reference": "297db7f5557dc8beba00a4e824abcaa595382269",
             "shasum": ""
         },
         "require": {
@@ -883,7 +883,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.8"
         },
-        "time": "2017-10-21T00:23:31+00:00",
+        "time": "2017-10-28T00:23:44+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1752,16 +1752,16 @@
     },
     {
         "name": "wpackagist-plugin/redirection",
-        "version": "2.6.6",
-        "version_normalized": "2.6.6.0",
+        "version": "2.8.1",
+        "version_normalized": "2.8.1.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/redirection/",
-            "reference": "tags/2.6.6"
+            "reference": "tags/2.8.1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/redirection.2.6.6.zip",
+            "url": "https://downloads.wordpress.org/plugin/redirection.2.8.1.zip",
             "reference": null,
             "shasum": null
         },
@@ -1818,16 +1818,16 @@
     },
     {
         "name": "wpackagist-plugin/user-switching",
-        "version": "1.0.9",
-        "version_normalized": "1.0.9.0",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/user-switching/",
-            "reference": "tags/1.0.9"
+            "reference": "tags/1.2.0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/user-switching.1.0.9.zip",
+            "url": "https://downloads.wordpress.org/plugin/user-switching.1.2.0.zip",
             "reference": null,
             "shasum": null
         },
