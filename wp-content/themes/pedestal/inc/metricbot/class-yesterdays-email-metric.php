@@ -89,19 +89,19 @@ class Yesterdays_Email_Metric {
         $links                           = $ac->get_links_report( $yesterdays_email->id, $yesterdays_email->message_ids[0] );
         $link_clicks                     = [];
 
-        // Need to debug what get_site_url() is returning via the cron job
-        // Not sure why the link replacement in the foreach loop
-        // isn't working as expected
-        $error_log_statement = '!!! get_site_url() in cron = ' . get_site_url();
-        error_log( print_r( $error_log_statement, true ) );
-
         foreach ( $links as $link ) {
             if ( $link->unique_clicks <= 0 ) {
                 continue;
             }
             $link_cutoff  = 30;
             $link_text     = $link->url;
-            $link_text     = str_replace( get_site_url(), '', $link_text );
+            // Sometimes get_site_url() returns the wrong URL scheme for an environment
+            // but for our purposes we want to replace both http and https versions of get_site_url()
+            $neeles = [
+                set_url_scheme( get_site_url(), 'http' ),
+                set_url_scheme( get_site_url(), 'https' ),
+            ];
+            $link_text     = str_replace( $needles, '', $link_text );
             if ( strlen( $link->url ) > $link_cutoff ) {
                 $link_text = substr( $link_text, 0, $link_cutoff );
                 $link_text .= '...';
