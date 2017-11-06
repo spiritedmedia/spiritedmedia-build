@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 
   var $body = $('body');
 
-  $body.on('click keyup', '.js-sitewide-search-icon', function(e) {
+  $body.on('click keyup', '.js-sitewide-search', function(e) {
     // Key up is to detect keyboard actions on the search icon for accessibility
     // Ignore any key event other than return/enter (keycode = 13)
     if (e.type === 'keyup' && e.which !== 13) {
@@ -15,11 +15,11 @@ jQuery(document).ready(function($) {
     // tab order even though it's at the end of the markup
     var targetID = $(this).attr('for');
     var $target = $('#' + targetID);
-    $target.attr('tabindex', 1).select();
+    $target.attr('tabindex', 1).focus();
   });
 
   $('.js-search-form').on('click', '.js-search-icon-close', function(e) {
-    $body.removeClass('is-search-open');
     e.preventDefault();
+    $body.removeClass('is-search-open');
   });
 });

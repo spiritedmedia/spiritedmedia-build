@@ -1,0 +1,83 @@
+// ==========================================================================
+// The Incline // Components // SITE HEADER
+// ==========================================================================
+
+
+.site-header {
+  margin-bottom: rem( 48px );
+  position: relative;
+  z-index: $z-index-1;
+
+  &::after {
+    background: inherit;
+    bottom: rem( -8px );
+    content: '';
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    transform-origin: 0;
+    transform: skewY( 1deg );
+    z-index: -1;
+  }
+}
+
+.site-header__logo {
+  .logo {
+    width: rem( 210px );
+
+    // IE10+ height fix
+    @include ie-only {
+      // height: 1em;
+    }
+  }
+}
+
+.site-header__logo,
+.site-header__logo__link {
+  @include ie-only {
+    height: rem( 48px );
+  }
+}
+
+.site-header__logo,
+.site-header__cta {
+  text-align: center;
+
+
+}
+
+
+@media ( min-width: em( 707px ) ) {
+  @include _header-cta-inline;
+
+  .site-header__logo,
+  .site-header__cta {
+    width: auto;
+  }
+
+  .site-header__logo {
+    text-align: left;
+
+    .logo {
+      max-width: rem( 300px );
+      width: 100%;
+    }
+  }
+
+  .site-header__logo__link {
+    max-height: rem( 60px ); // Proportionate height to 300px
+  }
+
+  .site-header__cta {
+    flex: 1;
+  }
+
+  .site-header__cta__action {
+    // IE11 spacing fix
+    @include ie-only {
+      padding-left: rem( 16px );
+    }
+  }
+}

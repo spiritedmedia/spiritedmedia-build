@@ -20,7 +20,9 @@ $btn-transition: 300ms ease 0s;
   border-color: $border-color;
   color: text-contrast( $color );
 
-  &:hover {
+  &:hover,
+  &:active,
+  &:focus {
     background-color: $white;
     border-color: $border-color-hover;
     color: $body-font-color;
@@ -90,7 +92,7 @@ $btn-transition: 300ms ease 0s;
 }
 
 .btn--lg {
-  border-width: rem( 3px );
+  border-width: $btn-border-width-lg;
   font-size: $input-btn-font-size-lg;
   line-height: 1.5;
   margin-bottom: $input-btn-spacing-y-lg;

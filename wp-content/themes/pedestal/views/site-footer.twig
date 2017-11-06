@@ -1,0 +1,116 @@
+{% import _self as footer_macros %}
+
+{% macro link( title, link ) %}
+{% if title == 'Search' %}
+    <li>
+        <a href="{{ link|esc_url }}" data-ga-category="Footer Links" data-ga-label="{{ title|esc_attr }}">
+            <label for="the-search-field"
+                class="js-sitewide-search"
+                tabindex="0"
+                data-ga-category="Search Link - Footer"
+                data-ga-label="Search"
+            >
+                {{ title }}
+            </label>
+        </a>
+    </li>
+{% else %}
+    <li>
+        <a href="{{ link|esc_url }}" data-ga-category="Footer Links" data-ga-label="{{ title|esc_attr }}">
+            {{ title }}
+        </a>
+    </li>
+{% endif %}
+{% endmacro %}
+
+<footer class="site-footer" role="contentinfo">
+    <nav class="site-footer__nav">
+        <div class="row">
+
+            <ul class="site-footer__social">
+                {% set gaCategorySocial = 'Social Icon - Footer' %}
+
+                <li class="site-footer__social__item">
+                    <a
+                        href="{{ site.social.instagram_url|esc_url }}"
+                        target="_blank"
+                        class="site-footer__social__item__link"
+                        data-ga-category="{{ gaCategorySocial|esc_attr }}"
+                        data-ga-label="Instagram"
+                    >
+                        {{ ped_icon('instagram') }}
+                    </a>
+                </li>
+                <li class="site-footer__social__item">
+                    <a
+                        href="{{ site.social.twitter_url|esc_url }}"
+                        target="_blank"
+                        class="site-footer__social__item__link"
+                        data-ga-category="{{ gaCategorySocial|esc_attr }}"
+                        data-ga-label="Twitter"
+                    >
+                        {{ ped_icon('twitter') }}
+                    </a>
+                </li>
+                <li class="site-footer__social__item">
+                    <a
+                        href="{{ site.social.facebook_url|esc_url }}"
+                        target="_blank"
+                        class="site-footer__social__item__link"
+                        data-ga-category="{{ gaCategorySocial|esc_attr }}"
+                        data-ga-label="Facebook"
+                    >
+                        {{ ped_icon('facebook') }}
+                    </a>
+                </li>
+            </ul>
+
+            {% spaceless %}
+            <div class="site-footer__links--inline site-footer__links">
+                <ul class="site-footer__links__group">
+                    {% for title, link in menu %}
+                    {{ footer_macros.link( title, link ) }}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endspaceless %}
+
+            <div class="site-footer__links--columns site-footer__links">
+                <div class="row">
+                    <ul class="site-footer__links__group">
+                        {% for title, link in menu | slice(0, 2) %}
+                        {{ footer_macros.link( title, link ) }}
+                        {% endfor %}
+                    </ul>
+                    <ul class="site-footer__links__group">
+                        {% for title, link in menu | slice(2, 2) %}
+                        {{ footer_macros.link( title, link ) }}
+                        {% endfor %}
+                    </ul>
+                    <ul class="site-footer__links__group">
+                        {% for title, link in menu | slice(4, 2) %}
+                        {{ footer_macros.link( title, link ) }}
+                        {% endfor %}
+                    </ul>
+                    <ul class="site-footer__links__group">
+                        {% for title, link in menu | slice(6, 2) %}
+                        {{ footer_macros.link( title, link ) }}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="site-footer__colophon">
+        <div class="row">
+            <div class="columns small-12">
+                <span class="site-footer__newsroom">
+                    {{ ped_logo( 'logo-icon-white', 'site-footer__logo' ) }}
+                    {{ site.name }} is a <a href="https://spiritedmedia.com/">Spirited Newsroom</a>
+                </span>
+                <span class="site-footer__copyright">{{ copyright_text }}</span>
+            </div>
+        </div>
+    </div>
+</footer>

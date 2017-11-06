@@ -108,6 +108,7 @@ class The_Incline extends Pedestal {
                 ],
             ],
         ];
+        $context['site']->emails['daily_newsletter_send_time'] = '6:30 a.m.';
         return $context;
     }
 

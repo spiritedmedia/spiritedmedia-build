@@ -1,0 +1,144 @@
+// ==========================================================================
+// Pedestal // Components // MODALS
+// ==========================================================================
+
+
+/*body*/.has-modal-open {
+  .modal,
+  .modal__overlay,
+  .modal__content {
+    opacity: 1;
+  }
+
+  .modal,
+  .modal__overlay {
+    height: 100%;
+    width: 100%;
+  }
+
+  .modal {
+    // Place on top of everything else
+    z-index: $z-index-3;
+  }
+
+  .modal__overlay {
+    // Place the modal overlay between the main page and the modal dialog
+    z-index: $z-index-2;
+  }
+}
+
+.modal,
+.modal__overlay,
+.modal__content {
+  opacity: 0;
+  z-index: -1;
+}
+
+.modal,
+.modal__overlay {
+  height: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  width: 0;
+}
+
+.modal {
+  position: absolute;
+}
+
+.modal__overlay {
+  background-color: transparentize( $black, 0.6 );
+  position: fixed;
+}
+
+.modal__content {
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+
+
+  //
+  // Underline from center
+  // https://ianlunn.github.io/Hover/
+  //
+
+  &::before,
+  &::after {
+    background: $elektroid-yellow;
+    bottom: 0;
+    content: '';
+    height: rem( 8px );
+    left: 50%;
+    position: absolute;
+    right: 50%;
+    transition-duration: 300ms;
+    transition-property: left, right;
+    transition-timing-function: ease-out;
+  }
+
+  &::before {
+    left: 0;
+    right: 0;
+    z-index: $z-index-3;
+  }
+
+  &::after {
+    background: $primary-color;
+    z-index: $z-index-4;
+
+    .has-successful-form & {
+      left: 0;
+      right: 0;
+    }
+  }
+} // .modal__content
+
+.modal__close {
+  background: transparent;
+  border: 0;
+  font-size: rem( 24px );
+  position: absolute;
+  right: rem( 4px );
+  top: rem( 4px );
+}
+
+
+@media ( min-width: em( 320px ) ) {
+  .modal {
+    position: fixed;
+  }
+}
+
+
+@media ( min-width: em( 480px ) ) {
+  .modal {
+    @include _signup-newsletter-header-inline;
+  }
+}
+
+
+@media #{$medium-up} {
+  .modal {
+    // http://caniuse.com/#feat=viewport-units
+    padding-top: rem( 48px );
+    padding-top: 25vh;
+    // Since this element will overlap the overlay for positioning purposes,
+    // we need to hide it visually to make the overlay clickable
+    visibility: hidden;
+  }
+
+  .modal__content {
+    border: rem( 4px ) solid $white;
+    border-radius: rem( 4px );
+    height: auto;
+    max-width: rem( 650px );
+    visibility: visible;
+
+    &::before,
+    &::after {
+      height: 0;
+    }
+  }
+}

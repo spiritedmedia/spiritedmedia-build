@@ -1,4 +1,4 @@
-/* global ga objectFitImages ScrollDepth */
+/* global ga objectFitImages ScrollDepth PedestalModal */
 
 (function($) {
 
@@ -21,6 +21,8 @@
       this.scrollDepthTracking();
       this.honeyPotHelper();
       this.lazyLoad();
+
+      PedestalModal();
     },
 
     /**
@@ -45,7 +47,7 @@
       var subscriptionForms = [
         '.js-follow-this-form-container',
         '#subscribe-to-newsletter-page',
-        '.js-widget-signup-newsletter'
+        '.js-signup-newsletter'
       ];
 
       $(subscriptionForms.join(', ')).find('form').on('submit', function(e) {
@@ -55,6 +57,7 @@
         var $submitBtn = $el.find('.js-form-submit');
         var $submitText = $el.find('.js-form-submit-text');
         var $invalidFeedback = $el.find('.js-fail-message');
+        var $parentModal = $el.closest('.js-modal');
         var buttonWidth = $submitBtn.width();
         var actionURL = $el.attr('action');
         var actionUrlSeparator = actionURL.indexOf('?') >= 0 ? '&' : '?';
@@ -67,6 +70,10 @@
         $el.removeClass('is-failed');
         $el.addClass('is-loading');
 
+        if ($parentModal.length) {
+          $parentModal.removeClass('has-failed-form');
+        }
+
         $.post(actionURL, $el.serialize(), function() {
           if ($el.find('.js-success-message').length) {
             var $successEmail = $el.find('.js-success-message-email');
@@ -75,6 +82,10 @@
             $fields.hide();
             $el.removeClass('is-loading');
             $el.addClass('is-success');
+
+            if ($parentModal.length) {
+              $parentModal.addClass('has-successful-form');
+            }
 
             // Use email address in success message for user verification
             if (emailAddress && $successEmail.length) {
@@ -85,6 +96,9 @@
           var msg = response.responseText;
           $el.removeClass('is-loading');
           $el.addClass('is-failed');
+          if ($parentModal.length) {
+            $parentModal.addClass('has-failed-form');
+          }
           $submitText.show();
           if ($invalidFeedback.length && msg.length) {
             $invalidFeedback.text(msg);

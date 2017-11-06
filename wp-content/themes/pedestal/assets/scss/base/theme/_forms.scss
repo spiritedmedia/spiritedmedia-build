@@ -25,12 +25,29 @@ $form-feedback-invalid-color : $alert-color;
 
 $legend-padding-x            : rem( 4px );
 $input-height-border         : $btn-border-width * 2;
+$input-height-border-lg      : $btn-border-width-lg * 2 - $input-border-width * 2;
 $input-height-inner          : ( $base-font-size * $input-btn-line-height ) + ( $input-btn-spacing-y * 2 );
 $input-height                : ( $input-height-inner + $input-height-border );
 $input-height-inner-sm       : ( $small-font-size * $input-btn-line-height-sm ) + ( $input-btn-spacing-y-sm * 2 );
 $input-height-sm             : ( $input-height-inner-sm + $input-height-border );
 $input-height-inner-lg       : ( $input-btn-font-size-lg * $input-btn-line-height-lg ) + ( $input-btn-spacing-y-lg * 2 );
-$input-height-lg             : ( $input-height-inner-lg + $input-height-border );
+$input-height-lg             : ( $input-height-inner-lg + $input-height-border-lg );
+
+
+@mixin form-input-size-sm {
+  font-size: $small-font-size;
+  line-height: $input-btn-line-height-sm;
+  margin-bottom: $input-btn-spacing-y-sm;
+  padding: $input-btn-spacing-y-sm $input-btn-spacing-x-sm;
+}
+
+
+@mixin form-input-size-lg {
+  font-size: $input-btn-font-size-lg;
+  line-height: $input-btn-line-height-lg;
+  margin-bottom: $input-btn-spacing-y-lg;
+  padding: ( $input-btn-spacing-y-lg + $input-height-border-lg / 2 ) $input-btn-spacing-x-lg;
+}
 
 
 @mixin form-validation-state( $state, $color ) {
@@ -164,24 +181,18 @@ select.form-input {
 
 .form-input--sm,
 %form-input--sm {
-  font-size: $small-font-size;
-  line-height: $input-btn-line-height-sm;
-  margin-bottom: $input-btn-spacing-y-sm;
-  padding: $input-btn-spacing-y-sm $input-btn-spacing-x-sm;
+  @include form-input-size-sm;
+}
+
+.form-input--lg,
+%form-input--lg {
+  @include form-input-size-lg;
 }
 
 select.form-input--sm {
   &:not( [size] ):not( [multiple] ) {
     height: $input-height-sm;
   }
-}
-
-.form-input--lg,
-%form-input--lg {
-  font-size: $input-btn-font-size-lg;
-  line-height: $input-btn-line-height-lg;
-  margin-bottom: $input-btn-spacing-y-lg;
-  padding: $input-btn-spacing-y-lg $input-btn-spacing-x-lg;
 }
 
 select.form-input--lg {

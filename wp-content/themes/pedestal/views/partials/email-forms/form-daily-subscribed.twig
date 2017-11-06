@@ -1,8 +1,18 @@
-<p><strong>You’re all set!</strong></p>
+<div class="signup-newsletter__header">
+    <div class="signup-newsletter__icon">
+        {{ ped_icon( 'envelope-slant' ) }}
+    </div>
 
-<p><strong>{{ site.name }} Daily</strong> will land in your inbox every morning around 7 a.m.</p>
+    <p class="signup-newsletter__title">
+        <strong>You’re all set!</strong>
+    </p>
+</div>
 
-<div class="widget-signup-newsletter__success-message__details">
+<p class="signup-newsletter__subtitle">
+    <strong>{{ site.emails.daily_newsletter_name }}</strong> will land in your inbox every morning around {{ site.emails.daily_newsletter_send_time }}
+</p>
+
+<div class="signup-newsletter__success-message__details">
     <p>Check <span class="u-wrap-text js-success-message-email">your email</span>
         now and make sure our confirmation has arrived.</p>
 

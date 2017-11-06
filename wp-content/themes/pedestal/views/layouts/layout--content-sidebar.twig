@@ -12,8 +12,10 @@
         <ul class="sidebar {{ sidebar_class }}">
             {% block sidebar %}
                 {# The default sidebar if no sidebar is specified #}
-                <li class="widget widget-signup-newsletter js-widget-signup-newsletter">
-                    {% include 'widgets/signup-newsletter.twig' %}
+                <li class="widget signup-newsletter js-signup-newsletter">
+                    {% include 'partials/signup-newsletter.twig' with {
+                        gaLocation: 'Default Sidebar'
+                    } %}
                 </li>
             {% endblock %}
         </ul>

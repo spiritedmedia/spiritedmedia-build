@@ -4,8 +4,6 @@ namespace Pedestal\Widgets;
 
 use Timber\Timber;
 
-use Pedestal\Posts\Newsletter;
-
 class Signup_Newsletter_Widget extends \WP_Widget {
 
     public function __construct() {
@@ -14,7 +12,7 @@ class Signup_Newsletter_Widget extends \WP_Widget {
             'pedestal_signup_newsletter',
             esc_html__( 'Newsletter Signup', 'pedestal' ),
             [
-                'classname'   => 'widget-signup-newsletter js-widget-signup-newsletter',
+                'classname'   => 'signup-newsletter js-signup-newsletter',
                 'description' => esc_html__( 'Displays a form where users can sign up for the newsletter.', 'pedestal' ),
             ]
         );
@@ -34,8 +32,8 @@ class Signup_Newsletter_Widget extends \WP_Widget {
         }
 
         $context = Timber::get_context();
-        $context['latest_newsletter'] = Newsletter::get_latest_newsletter_link();
-        Timber::render( 'widgets/signup-newsletter.twig', $context );
+        $context['gaLocation'] = 'Widget';
+        Timber::render( 'partials/signup-newsletter.twig', $context );
 
         echo $args['after_widget'];
     }

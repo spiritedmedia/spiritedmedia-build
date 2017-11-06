@@ -1,0 +1,36 @@
+<header class="site-header" role="banner">
+    <div class="site-header__inner">
+
+        <h1 class="site-header__logo">
+            <a
+                href="{{ site.url|esc_url }}"
+                class="site-header__logo__link"
+                rel="home"
+                data-ga-category="Site Logo|Header"
+                data-ga-label=""
+            >
+                {{ ped_logo( 'logo-stacked', 'site-header__logo__img' ) }}
+                {{ ped_logo( 'logo', 'site-header__logo__img' ) }}
+                <span class="site-header__logo__text">Home</span>
+            </a>
+        </h1>
+
+        <a role="button"
+            href="{{ site.url|esc_url }}/newsletter-signup/"
+            class="site-header__cta js-modal-open"
+            data-ga-category="Email Signup Modal | Header"
+            data-ga-label="Signup"
+        >
+            <div class="site-header__cta__prompt">
+                <h2 class="site-header__cta__tagline">On top of Philly news</h2>
+                and in your inbox every morning
+            </div>
+
+            <div class="site-header__cta__action">
+                {{ ped_icon( 'envelope-slant', 'site-header__cta__icon' ) }}
+                Sign up!
+            </div>
+        </a>
+
+    </div>
+</header>

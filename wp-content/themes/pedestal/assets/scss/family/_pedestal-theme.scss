@@ -52,6 +52,7 @@
 @import '../base/theme/general';
 @import '../base/theme/tables';
 @import '../base/theme/forms';
+@import '../base/theme/animations';
 @import '../base/theme/sticky-footer';
 
 
@@ -95,11 +96,13 @@
 
 @import '../components/main';
 @import '../components/panels';
-@import '../components/site-ctas';
+@import '../components/modals';
+@import '../components/logos';
 @import '../components/type-headings';
 @import '../components/honeypot';
 @import '../components/input-groups';
-@import '../components/header';
+@import '../components/site-header';
+@import '../components/spotlight';
 @import '../components/spinner';
 @import '../components/rail';
 @import '../components/stream-item';
@@ -123,7 +126,7 @@
 @import '../components/pagination';
 @import '../components/shortcodes';
 @import '../components/widgets';
-@import '../components/widget-signup-newsletter';
+@import '../components/signup-newsletter';
 @import '../components/recent-content-widget';
 @import '../components/video-widget';
 @import '../components/ads';
@@ -131,7 +134,7 @@
 @import '../components/daily-insta';
 @import '../components/newsletter';
 @import '../components/whos-next';
-@import '../components/footer';
+@import '../components/site-footer';
 
 
 

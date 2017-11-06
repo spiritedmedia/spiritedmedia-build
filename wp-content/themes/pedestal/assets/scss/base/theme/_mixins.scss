@@ -22,6 +22,14 @@
 }
 
 
+/// Target IE10+ only
+@mixin ie-only {
+  @media all and ( -ms-high-contrast: none ), ( -ms-high-contrast: active ) {
+    @content;
+  }
+}
+
+
 
 
 
@@ -251,6 +259,40 @@
 
     &__inner {
       padding: $inner-vertical-padding $explode-width;
+    }
+  }
+}
+
+
+
+
+
+//
+// Component-specific Mixins
+// ==========================================================================
+
+
+@mixin _signup-newsletter-header-inline {
+  .signup-newsletter__header {
+    text-align: left;
+
+    > * {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .signup-newsletter__icon {
+    margin-bottom: 0;
+    margin-right: rem( 8px );
+  }
+
+  .signup-newsletter__title {
+    margin-bottom: 0;
+
+    // stylelint-disable-next-line selector-max-type
+    br {
+      display: none;
     }
   }
 }

@@ -6,10 +6,6 @@
 // stylelint-disable selector-max-type
 
 
-.success-message {
-  display: none;
-}
-
 .widget {
   @include stdbd( bottom );
 
@@ -28,16 +24,8 @@
     }
   }
 
-  p {
-    margin-bottom: rem( 8px );
-  }
-
-  ul {
-    list-style-type: none;
-  }
-
   li {
-    margin-top: rem( 12px );
+    list-style: initial;
     margin-bottom: rem( 12px );
 
     // stylelint-disable selector-max-compound-selectors
@@ -54,4 +42,38 @@
 .widget_pedestal_explainer {
   color: $dimmed-text-color;
   font-style: italic;
+}
+
+.widget_pedestal_whosnext_archive {
+  ul {
+    list-style-type: none;
+  }
+}
+
+.widget.signup-newsletter {
+  @media #{$small-only} {
+    .signup-newsletter__details {
+      @include invisible;
+    }
+  }
+
+
+  @media #{$small-only} {
+    .signup-newsletter__latest--standalone {
+      display: block;
+    }
+  }
+
+
+  @media #{$medium-only} {
+    @include _signup-newsletter-header-inline;
+  }
+
+
+  @media #{$large-up} {
+    .signup-newsletter__email-input,
+    .signup-newsletter__btn {
+      max-width: 100%;
+    }
+  }
 }

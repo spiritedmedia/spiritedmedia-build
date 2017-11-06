@@ -409,6 +409,10 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                     }
                     return $standard_str;
                 } ) );
+                // Get the current Unix epoch time in milliseconds
+                $twig->addFunction( new \Twig_SimpleFunction( 'now', function() {
+                    return round( microtime( true ) * 1000 );
+                } ) );
                 return $twig;
             }, 99 );
 
@@ -689,13 +693,19 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'zipcode' => PEDESTAL_ZIPCODE,
             ];
 
+            $context['site']->city = [
+                'name'     => PEDESTAL_CITY_NAME,
+                'nickname' => PEDESTAL_CITY_NICKNAME,
+            ];
+
             $context['site']->emails = [
-                'contact'                => PEDESTAL_EMAIL_CONTACT,
-                'news'                   => PEDESTAL_EMAIL_NEWS,
-                'placeholder'            => PEDESTAL_EMAIL_PLACEHOLDER,
-                'daily_newsletter_name'  => PEDESTAL_BLOG_NAME . ' Daily',
-                'daily_newsletter_id'    => $this->email_lists->get_newsletter_list_id( 'Daily Newsletter' ),
-                'breaking_newsletter_id' => $this->email_lists->get_newsletter_list_id( 'Breaking News' ),
+                'contact'                    => PEDESTAL_EMAIL_CONTACT,
+                'news'                       => PEDESTAL_EMAIL_NEWS,
+                'placeholder'                => PEDESTAL_EMAIL_PLACEHOLDER,
+                'daily_newsletter_name'      => PEDESTAL_BLOG_NAME . ' Daily',
+                'daily_newsletter_send_time' => '7:00 a.m.',
+                'daily_newsletter_id'        => $this->email_lists->get_newsletter_list_id( 'Daily Newsletter' ),
+                'breaking_newsletter_id'     => $this->email_lists->get_newsletter_list_id( 'Breaking News' ),
             ];
 
             $context['site']->live_urls = [

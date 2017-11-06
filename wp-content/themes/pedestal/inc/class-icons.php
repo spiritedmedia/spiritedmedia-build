@@ -108,8 +108,12 @@ class Icons {
             return;
         }
 
+        $logo_modifier_class = str_replace( 'logo-', '', $logo );
+        if ( 'logo' == $logo_modifier_class ) {
+            $logo_modifier_class = 'wide';
+        }
         $atts = [
-            'class' => $classes . ' o-icon o-icon--logo o-icon--logo--' . $logo,
+            'class' => $classes . ' logo logo--' . $logo_modifier_class,
         ];
 
         if ( Pedestal()->is_email() ) {

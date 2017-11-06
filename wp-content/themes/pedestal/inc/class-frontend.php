@@ -7,7 +7,10 @@ use Timber\Timber;
 
 use function Pedestal\Pedestal;
 use Pedestal\Objects\User;
-use Pedestal\Posts\Post;
+use Pedestal\Posts\{
+    Newsletter,
+    Post
+};
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Utils\Utils;
 
@@ -308,8 +311,10 @@ class Frontend {
             'Advertising'    => '/advertising/',
             'Terms of Use'   => '/terms-of-use/',
             'Privacy Policy' => '/privacy-policy/',
+            'Search'         => '#the-search-field',
         ];
 
+        $context['latest_newsletter'] = Newsletter::get_latest_newsletter_link();
         $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) . ' Spirited Media';
 
         if ( ! is_home() ) {

@@ -36,6 +36,7 @@
 # !.eslintrc.yml
 # !.stylelintrc.json
 # !.editorconfig
+# !.browserslistrc
 # !phpcs.ruleset.xml
 
 # Unit Tests

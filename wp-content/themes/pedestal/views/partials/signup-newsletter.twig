@@ -1,0 +1,74 @@
+{% if latest_newsletter %}
+{% set latest_newsletter_text %}
+    Check out a <a href="{{ latest_newsletter|esc_url }}">sample from today's newsletter</a>
+{% endset %}
+{% endif %}
+
+{% set id_postfix = id_postfix|default( now()|esc_attr ) %}
+{% set id_title = id_title|default( 'signup-newsletter-title-' ~ id_postfix ) %}
+{% set id_description = id_description|default( 'signup-newsletter-description-' ~ id_postfix ) %}
+{% set id_email_input = id_email_input|default( 'signup-newsletter-email-input-' ~ id_postfix ) %}
+
+{% set gaLabel = 'Newsletter Signup' %}
+{% if gaLocation %}
+{% set gaLabel = gaLabel ~ ' | ' ~ gaLocation %}
+{% endif %}
+
+<form class="signup-newsletter__form"
+    action="{{ site.url|esc_url }}/subscribe-to-email-list/"
+    method="POST"
+    data-ga-category="Submitted Form"
+    data-ga-label="{{ gaLabel|esc_attr }}">
+
+    <div class="form-group js-form-fields">
+
+        <div class="signup-newsletter__header">
+            <div class="signup-newsletter__icon">
+                {{ ped_icon( 'envelope-slant' ) }}
+            </div>
+            <div id="{{ id_title|esc_attr }}" class="signup-newsletter__title">
+                Get <strong>{{ site.emails.daily_newsletter_name }}</strong><br />
+                every day in your inbox
+            </div>
+        </div>
+
+        <ul id="{{ id_description|esc_attr }}" class="signup-newsletter__details">
+            <li tabindex="0" class="js-modal-focus">Top news highlights and can't-miss {{ site.city.nickname }} stories</li>
+            <li>Upcoming events and activities in your area for you and your family</li>
+            {% if latest_newsletter %}
+            <li>{{ latest_newsletter_text }}</li>
+            {% endif %}
+        </ul>
+
+        <label class="invisible" for="{{ id_email_input|esc_attr }}">
+            Email Address
+        </label>
+
+        <input type="email"
+            id="{{ id_email_input|esc_attr }}"
+            class="signup-newsletter__email-input form-input js-form-input js-email-input"
+            name="email_address"
+            placeholder="type your email address"
+            required
+            />
+
+        <input type="hidden" name="list-ids[]" value="{{ site.emails.daily_newsletter_id|esc_attr }}">
+        <input type="hidden" name="list-ids[]" value="{{ site.emails.breaking_newsletter_id|esc_attr }}">
+
+        {% include 'partials/email-forms/form-honeypot.twig' %}
+
+        <div class="js-fail-message invalid-feedback"></div>
+
+        <button class="signup-newsletter__btn btn btn--lg btn--achtung btn--full-width js-form-submit" type="submit">
+            {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
+        </button>
+
+        {% if latest_newsletter %}
+        <p class="signup-newsletter__latest--standalone" aria-hidden="true">{{ latest_newsletter_text }}</p>
+        {% endif %}
+    </div>
+
+    <div class="signup-newsletter__success-message success-message js-success-message">
+        {% include 'partials/email-forms/form-daily-subscribed.twig' %}
+    </div>
+</form>

@@ -53,8 +53,6 @@ $list-side-margin         : $base-font-size / 2;
 $list-ordered-side-margin : $list-side-margin;
 $list-margin-bottom       : $paragraph-margin-bottom;
 
-$site-header-pd-v         : rem( 16px );
-
 
 
 
@@ -157,6 +155,9 @@ $border-divider-spacing--inline : rem( 8px );
 $border-divider-color           : $border-std-color;
 
 // Forms + Buttons
+// ==========================================================================
+
+
 $input-border-color             : $grey-80;
 $input-border-width             : rem( 1px );
 $input-btn-font-size-lg         : $h5-font-size;
@@ -169,7 +170,18 @@ $input-btn-line-height-sm       : 1.5;
 $input-btn-spacing-y-lg         : rem( 8px );
 $input-btn-spacing-x-lg         : rem( 16px );
 $input-btn-line-height-lg       : 1.5;
+
 $btn-border-width               : rem( 2px );
+$btn-border-width-lg            : rem( 3px );
+
+
+
+
+
+//
+// Miscellaneous
+// ==========================================================================
+
 
 // Tables
 $table-row-padding              : rem( 8px 12px );

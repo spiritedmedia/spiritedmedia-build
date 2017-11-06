@@ -1,0 +1,22 @@
+// ==========================================================================
+// Pedestal // Components // LOGOS
+// ==========================================================================
+
+
+.logo {
+  display: inline-block;
+  height: auto;
+  stroke-width: 0;
+  stroke: currentColor;
+  width: auto;
+}
+
+
+.logo__group--light {
+  opacity: 0.5;
+}
+
+
+.logo--icon {
+  height: 1em;
+}

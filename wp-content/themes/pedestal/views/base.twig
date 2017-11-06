@@ -23,23 +23,56 @@
         {{ site.analytics.parsely.data }}
     </head>
     <body class="{{ body_class }} {{ layout_class }}" data-template="{{ template_name ?: 'base.twig' }}">
-        {% include 'header.twig' %}
+        <div class="site-wrap js-site">
 
-        {% if content_before %}
-        <div class="content-before">
-            {% block content_before %}
-            {% endblock %}
-        </div>
-        {% endif %}
+            {% include 'partials/header/site-header.twig' %}
 
-        <div class="content-wrapper row">
-           {% block the_body %}
-           {% endblock %}
+            {% if spotlight.enabled and spotlight.content and not is_home %}
+            <aside class="spotlight">
+                <div class="row">
+                    <div class="spotlight__inner">
+                        <strong>{{ spotlight.label }}</strong>
+                        <a
+                            href="{{ spotlight.content.get_the_permalink|esc_url }}"
+                            data-ga-category="Spotlight|{{ spotlight.label|esc_attr }}"
+                            data-ga-label="{{ spotlight.content.get_the_title|esc_attr }}"
+                        >
+                            {{ spotlight.content.get_the_title }}
+                        </a>
+                    </div>
+                </div>
+            </aside>
+            {% endif %}
 
-           {% block the_sidebar %}
-           {% endblock %}
-       </div>
+            {% include 'partials/adverts/dfp-header-300x50.twig' ignore missing %}
 
-        {% include 'footer.twig' %}
+            {% if content_before %}
+            <div class="content-before">
+                {% block content_before %}
+                {% endblock %}
+            </div>
+            {% endif %}
+
+            <div class="content-wrapper row">
+               {% block the_body %}
+               {% endblock %}
+
+               {% block the_sidebar %}
+               {% endblock %}
+            </div>
+
+            {% include 'site-footer.twig' %}
+
+        </div><!-- end .site-wrap -->
+
+        {% include 'partials/search.twig' with {'sitewide': true} %}
+        {% include 'partials/modals/signup-newsletter.twig' %}
+
+        {{function('wp_footer')}}
+
+        {% include 'partials/analytics/analytics.twig' %}
+        {% include 'partials/cdn-fallback.twig' %}
+
+
     </body>
 </html>

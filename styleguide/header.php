@@ -166,39 +166,39 @@
                     </h1>
                 </div>
 
-                <ul class="site-ctas columns small-5 medium-6">
+                <ul class="site-footer__social columns small-5 medium-6">
 
-                    <li class="site-ctas__follow-us site-ctas__item">
+                    <li class="site-footer__social__follow-us site-footer__social__item">
                     Follow Us
                     </li>
 
-                    <li class="site-ctas__social site-ctas__icon site-ctas__item">
-                        <a class="site-ctas__social__link" href="https://www.instagram.com/theinclinepgh/" target="_blank" data-ga-category="Social Icon - Header" data-ga-label="Instagram">
-                            <svg alt="instagram" role="image" class="site-ctas__icon__img o-icon  o-icon--instagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path d="M16 14c0-2.203-1.797-4-4-4s-4 1.797-4 4 1.797 4 4 4 4-1.797 4-4zm2.156 0c0 3.406-2.75 6.156-6.156 6.156S5.844 17.406 5.844 14 8.594 7.844 12 7.844s6.156 2.75 6.156 6.156zm1.688-6.406c0 .797-.641 1.437-1.437 1.437S16.97 8.39 16.97 7.594s.641-1.437 1.437-1.437 1.437.641 1.437 1.437zM12 4.156c-1.75 0-5.5-.141-7.078.484-.547.219-.953.484-1.375.906s-.688.828-.906 1.375c-.625 1.578-.484 5.328-.484 7.078s-.141 5.5.484 7.078c.219.547.484.953.906 1.375s.828.688 1.375.906c1.578.625 5.328.484 7.078.484s5.5.141 7.078-.484c.547-.219.953-.484 1.375-.906s.688-.828.906-1.375c.625-1.578.484-5.328.484-7.078s.141-5.5-.484-7.078c-.219-.547-.484-.953-.906-1.375s-.828-.688-1.375-.906C17.5 4.015 13.75 4.156 12 4.156zM24 14c0 1.656.016 3.297-.078 4.953-.094 1.922-.531 3.625-1.937 5.031s-3.109 1.844-5.031 1.937c-1.656.094-3.297.078-4.953.078s-3.297.016-4.953-.078c-1.922-.094-3.625-.531-5.031-1.937S.173 20.875.08 18.953C-.014 17.297.002 15.656.002 14s-.016-3.297.078-4.953c.094-1.922.531-3.625 1.937-5.031s3.109-1.844 5.031-1.937c1.656-.094 3.297-.078 4.953-.078s3.297-.016 4.953.078c1.922.094 3.625.531 5.031 1.937s1.844 3.109 1.937 5.031C24.016 10.703 24 12.344 24 14z"/></svg>
+                    <li class="site-footer__social__social site-footer__social__icon site-footer__social__item">
+                        <a class="site-footer__social__social__link" href="https://www.instagram.com/theinclinepgh/" target="_blank" data-ga-category="Social Icon - Header" data-ga-label="Instagram">
+                            <svg alt="instagram" role="image" class="site-footer__social__icon__img o-icon  o-icon--instagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28"><path d="M16 14c0-2.203-1.797-4-4-4s-4 1.797-4 4 1.797 4 4 4 4-1.797 4-4zm2.156 0c0 3.406-2.75 6.156-6.156 6.156S5.844 17.406 5.844 14 8.594 7.844 12 7.844s6.156 2.75 6.156 6.156zm1.688-6.406c0 .797-.641 1.437-1.437 1.437S16.97 8.39 16.97 7.594s.641-1.437 1.437-1.437 1.437.641 1.437 1.437zM12 4.156c-1.75 0-5.5-.141-7.078.484-.547.219-.953.484-1.375.906s-.688.828-.906 1.375c-.625 1.578-.484 5.328-.484 7.078s-.141 5.5.484 7.078c.219.547.484.953.906 1.375s.828.688 1.375.906c1.578.625 5.328.484 7.078.484s5.5.141 7.078-.484c.547-.219.953-.484 1.375-.906s.688-.828.906-1.375c.625-1.578.484-5.328.484-7.078s.141-5.5-.484-7.078c-.219-.547-.484-.953-.906-1.375s-.828-.688-1.375-.906C17.5 4.015 13.75 4.156 12 4.156zM24 14c0 1.656.016 3.297-.078 4.953-.094 1.922-.531 3.625-1.937 5.031s-3.109 1.844-5.031 1.937c-1.656.094-3.297.078-4.953.078s-3.297.016-4.953-.078c-1.922-.094-3.625-.531-5.031-1.937S.173 20.875.08 18.953C-.014 17.297.002 15.656.002 14s-.016-3.297.078-4.953c.094-1.922.531-3.625 1.937-5.031s3.109-1.844 5.031-1.937c1.656-.094 3.297-.078 4.953-.078s3.297-.016 4.953.078c1.922.094 3.625.531 5.031 1.937s1.844 3.109 1.937 5.031C24.016 10.703 24 12.344 24 14z"/></svg>
                         </a>
                     </li>
-                    <li class="site-ctas__social site-ctas__icon site-ctas__item">
-                        <a class="site-ctas__social__link" href="https://twitter.com/theinclinepgh" target="_blank" data-ga-category="Social Icon - Header" data-ga-label="Twitter">
-                            <svg alt="twitter" role="image" class="site-ctas__icon__img o-icon  o-icon--twitter" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 28"><path d="M25.312 6.375a10.85 10.85 0 0 1-2.531 2.609c.016.219.016.438.016.656 0 6.672-5.078 14.359-14.359 14.359-2.859 0-5.516-.828-7.75-2.266.406.047.797.063 1.219.063 2.359 0 4.531-.797 6.266-2.156a5.056 5.056 0 0 1-4.719-3.5c.313.047.625.078.953.078.453 0 .906-.063 1.328-.172a5.048 5.048 0 0 1-4.047-4.953v-.063a5.093 5.093 0 0 0 2.281.641 5.044 5.044 0 0 1-2.25-4.203c0-.938.25-1.797.688-2.547a14.344 14.344 0 0 0 10.406 5.281 5.708 5.708 0 0 1-.125-1.156 5.045 5.045 0 0 1 5.047-5.047 5.03 5.03 0 0 1 3.687 1.594 9.943 9.943 0 0 0 3.203-1.219 5.032 5.032 0 0 1-2.219 2.781c1.016-.109 2-.391 2.906-.781z"/></svg>
+                    <li class="site-footer__social__social site-footer__social__icon site-footer__social__item">
+                        <a class="site-footer__social__social__link" href="https://twitter.com/theinclinepgh" target="_blank" data-ga-category="Social Icon - Header" data-ga-label="Twitter">
+                            <svg alt="twitter" role="image" class="site-footer__social__icon__img o-icon  o-icon--twitter" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 28"><path d="M25.312 6.375a10.85 10.85 0 0 1-2.531 2.609c.016.219.016.438.016.656 0 6.672-5.078 14.359-14.359 14.359-2.859 0-5.516-.828-7.75-2.266.406.047.797.063 1.219.063 2.359 0 4.531-.797 6.266-2.156a5.056 5.056 0 0 1-4.719-3.5c.313.047.625.078.953.078.453 0 .906-.063 1.328-.172a5.048 5.048 0 0 1-4.047-4.953v-.063a5.093 5.093 0 0 0 2.281.641 5.044 5.044 0 0 1-2.25-4.203c0-.938.25-1.797.688-2.547a14.344 14.344 0 0 0 10.406 5.281 5.708 5.708 0 0 1-.125-1.156 5.045 5.045 0 0 1 5.047-5.047 5.03 5.03 0 0 1 3.687 1.594 9.943 9.943 0 0 0 3.203-1.219 5.032 5.032 0 0 1-2.219 2.781c1.016-.109 2-.391 2.906-.781z"/></svg>
                         </a>
                     </li>
-                    <li class="site-ctas__social site-ctas__icon site-ctas__item">
-                        <a class="site-ctas__social__link" href="https://www.facebook.com/theinclinepgh/" target="_blank" data-ga-category="Social Icon - Header" data-ga-label="Facebook">
-                            <svg alt="facebook" role="image" class="site-ctas__icon__img o-icon  o-icon--facebook" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 28"><path d="M14.984.187v4.125h-2.453c-1.922 0-2.281.922-2.281 2.25v2.953h4.578l-.609 4.625H10.25v11.859H5.469V14.14H1.485V9.515h3.984V6.109C5.469 2.156 7.891 0 11.422 0c1.687 0 3.141.125 3.563.187z"/></svg>
+                    <li class="site-footer__social__social site-footer__social__icon site-footer__social__item">
+                        <a class="site-footer__social__social__link" href="https://www.facebook.com/theinclinepgh/" target="_blank" data-ga-category="Social Icon - Header" data-ga-label="Facebook">
+                            <svg alt="facebook" role="image" class="site-footer__social__icon__img o-icon  o-icon--facebook" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 28"><path d="M14.984.187v4.125h-2.453c-1.922 0-2.281.922-2.281 2.25v2.953h4.578l-.609 4.625H10.25v11.859H5.469V14.14H1.485V9.515h3.984V6.109C5.469 2.156 7.891 0 11.422 0c1.687 0 3.141.125 3.563.187z"/></svg>
                         </a>
                     </li>
 
-                    <li class="site-ctas__search site-ctas__icon--standalone site-ctas__icon site-ctas__item">
+                    <li class="site-footer__social__search site-footer__social__icon--standalone site-footer__social__icon site-footer__social__item">
                         <label for="the-search-field" class="js-sitewide-search-icon" tabindex="0" data-ga-category="Search Icon - header" data-ga-label="Search">
-                            <svg alt="search" role="image" class="site-ctas__icon__img o-icon  o-icon--search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>search</title><path d="M31.008 27.231l-7.58-6.447c-.784-.705-1.622-1.029-2.299-.998a11.954 11.954 0 0 0 2.87-7.787c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12c2.972 0 5.691-1.081 7.787-2.87-.031.677.293 1.515.998 2.299l6.447 7.58c1.104 1.226 2.907 1.33 4.007.23s.997-2.903-.23-4.007zM12 20a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg>
+                            <svg alt="search" role="image" class="site-footer__social__icon__img o-icon  o-icon--search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>search</title><path d="M31.008 27.231l-7.58-6.447c-.784-.705-1.622-1.029-2.299-.998a11.954 11.954 0 0 0 2.87-7.787c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12c2.972 0 5.691-1.081 7.787-2.87-.031.677.293 1.515.998 2.299l6.447 7.58c1.104 1.226 2.907 1.33 4.007.23s.997-2.903-.23-4.007zM12 20a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg>
                         </label>
                     </li>
-                    <li class="site-ctas__about-icon site-ctas__icon--standalone site-ctas__icon site-ctas__item">
+                    <li class="site-footer__social__about-icon site-footer__social__icon--standalone site-footer__social__icon site-footer__social__item">
                         <a href="https://billypenn.com/about/" data-ga-category="Social Icon - Header" data-ga-label="About Us | Icon">
-                            <svg alt="info" role="image" class="site-ctas__icon__img o-icon  o-icon--info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>info</title><path d="M14 9.5c0-.825.675-1.5 1.5-1.5h1c.825 0 1.5.675 1.5 1.5v1c0 .825-.675 1.5-1.5 1.5h-1c-.825 0-1.5-.675-1.5-1.5v-1zM20 24h-8v-2h2v-6h-2v-2h6v8h2z"/><path d="M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.163 16-16S24.837 0 16 0zm0 29C8.82 29 3 23.18 3 16S8.82 3 16 3s13 5.82 13 13-5.82 13-13 13z"/></svg>
+                            <svg alt="info" role="image" class="site-footer__social__icon__img o-icon  o-icon--info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>info</title><path d="M14 9.5c0-.825.675-1.5 1.5-1.5h1c.825 0 1.5.675 1.5 1.5v1c0 .825-.675 1.5-1.5 1.5h-1c-.825 0-1.5-.675-1.5-1.5v-1zM20 24h-8v-2h2v-6h-2v-2h6v8h2z"/><path d="M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.163 16-16S24.837 0 16 0zm0 29C8.82 29 3 23.18 3 16S8.82 3 16 3s13 5.82 13 13-5.82 13-13 13z"/></svg>
                         </a>
                     </li>
-                    <li class="site-ctas__about-label site-ctas__item">
+                    <li class="site-footer__social__about-label site-footer__social__item">
                         <a href="https://billypenn.com/about/" data-ga-category="Social Icon - Header" data-ga-label="About Us | Label">
                             About Us
                         </a>
