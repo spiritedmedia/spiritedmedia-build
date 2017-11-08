@@ -118,6 +118,7 @@ $s-post-content-li-bullet-size     : rem( 5px );
     border-top: $s-post-content-pullquote-border-v;
     border-bottom: $s-post-content-pullquote-border-v;
     margin-bottom: rem( 16px );
+    padding-bottom: rem( 16px );
     position: relative;
 
     &::before,
@@ -157,7 +158,7 @@ $s-post-content-li-bullet-size     : rem( 5px );
       display: block;
       font-size: rem( 18px );
       line-height: rem( 22px ) / rem( 18px );
-      padding: rem( 8px ) rem( 32px ) rem( 16px );
+      padding: rem( 8px ) rem( 32px ) 0;
       text-align: right;
 
       &::before {

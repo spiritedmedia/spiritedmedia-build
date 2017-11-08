@@ -1,0 +1,74 @@
+{# Normally we would hook into a function to generate a header but one doesn't exist yet #}
+{# So for the styleguide we will just make our own #}
+
+<article class="c-main__content">
+    <header class="c-main__header js-main-header single-header">
+
+        {% if title %}
+            <h1 class="single-header__title">
+                {{ title }}
+            </h1>
+        {% endif %}
+
+        {% if description %}
+            <div class="single-header__description">
+                {{ description }}
+            </div>
+        {% endif %}
+
+        {% if feat_image_url %}
+            <figure id="figure_07a51b60_87061" aria-labelledby="figcaption_07a51b60_87061" class="c-figure  c-figure--img  wp-caption c-main__lead-img" data-mode="aspect-fit">
+                <div class=" c-figure__content-wrap  column-width">
+                    <a href="{{ permalink|esc_url }}" class="c-figure__link" data-ga-category="Figure" data-ga-label="Linkimg">
+                        <img
+                            src="{{ feat_image_url|esc_url }}"
+                            class="attachment-1024-16x9"
+                            alt="Alt text for the featured image"
+                        >
+                    </a>
+                </div>
+
+                {% if feat_image_caption %}
+                    <figcaption id="figcaption_07a51b60_87061" class="c-figure__text  wp-caption-text ">
+                        <h1 class="c-figure__text__caption">{{ feat_image_caption }}</h1>
+                        <cite class="c-figure__text__credit">{{ feat_image_credit }}</cite>
+                    </figcaption>
+                {% endif %}
+
+            </figure>
+        {% endif %}
+
+        {% if author_count > 2 %}
+            <div class="  c-meta-info--always-stacked single-header__meta c-meta-info--article  c-meta-info--entity-single  c-meta-info">
+        {% else %}
+            <div class=" single-header__meta c-meta-info--article  c-meta-info--entity-single  c-meta-info">
+        {% endif %}
+
+        <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
+            <a href="{{ author_link|esc_url }}" data-ga-category="Author" data-ga-label="Image|Placeholder">
+                {{ author_image }}
+            </a>
+        </div>
+
+        <div class="c-meta-info__stack  c-meta-info__item">
+
+            <div class="c-meta-info__name  c-meta-info__stack__item ">
+                {{ author }}
+            </div>
+
+            <div class="c-meta-info__timestamp  c-meta-info__stack__item  c-meta-info__stack__mover">
+                <time class="c-meta-info__timestamp__inner" datetime="{{ machine_time|esc_attr }}">
+                    {{ date_time }}
+                </time>
+            </div>
+        </div>
+
+        <div class="c-meta-info__timestamp  c-meta-info__item  c-meta-info__mover">
+            <time class="c-meta-info__timestamp__inner" datetime="{{ machine_time|esc_attr }}">
+                {{ date_time }}
+            </time>
+        </div>
+
+    </div>
+    </header>
+</article>

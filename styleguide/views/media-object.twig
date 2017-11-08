@@ -1,0 +1,54 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block head %}
+    {# Custom styles for this page #}
+    <style>
+      .example {
+         margin-bottom: 5em;
+      }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <h1>Media Object</h1>
+
+    <section>
+        <p><code>.o-media</code></p>
+        <div class="example">
+            <div class="o-media">
+                <img src="https://dummyimage.com/80x80" class="o-media__img">
+                <p class="o-media__body">This is a text body.</p>
+            </div>
+        </div>
+
+        <p><code>.o-media--large</code></p>
+        <div class="example">
+            <div class="o-media o-media--large">
+                <img src="https://dummyimage.com/80x80" class="o-media__img">
+                <p class="o-media__body">This is a text body.</p>
+            </div>
+        </div>
+
+        <p><code>.o-media--rev</code></p>
+        <div class="example">
+            <div class="o-media o-media--rev">
+                <img src="https://dummyimage.com/80x80" class="o-media__img">
+                <p class="o-media__body">This is a text body.</p>
+            </div>
+        </div>
+
+        <p><code>.o-media--responsive</code></p>
+        <div class="example">
+            <div class="o-media o-media--responsive">
+                <img src="https://dummyimage.com/80x80" class="o-media__img">
+                <p class="o-media__body">This is a text body.</p>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

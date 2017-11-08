@@ -1,0 +1,25 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block head %}
+    {# Custom styles for this page #}
+	<style>
+	/* Just to give them some separation */
+	article {
+	    margin-bottom: 5em;
+	}
+	</style>
+{% endblock %}
+
+
+{% block content %}
+    <h1>Post Headers</h1>
+
+	<hr class="o-rule">
+
+	{{ post_headers_html }}
+
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

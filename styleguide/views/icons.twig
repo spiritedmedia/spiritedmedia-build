@@ -1,0 +1,49 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block head %}
+    {# Custom styles for this page #}
+    <style>
+        .example {
+          margin-bottom: 5em;
+        }
+        .icon-example {
+          display: inline-block;
+          width: 1rem;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <h1>Icons</h1>
+
+    <p>We load SVG icons from a folder in Pedestal using the Twig function
+    <code>ped_icon()</code> or in PHP using <code>Icons::get_icon()</code>. Most of these are currently from <a
+    href="http://fontawesome.io/">Font Awesome</a> but we can use any custom icon.
+    Below is a list of the icons we use throughout the sites:</p>
+
+    {{ icon_list_html }}
+
+    <hr>
+
+    <p><code>.o-icon-text</code></p>
+    <div class="example">
+        <div class="o-icon-text">
+            {{ facebook_icon_html }}
+            <span class="o-icon-text__text">Icon Text</span>
+        </div>
+    </div>
+
+    <p><code>.o-icon-text--rev</code></p>
+    <div class="example">
+        <div class="o-icon-text o-icon-text--rev">
+            <span class="o-icon-text__text">Icon Text</span>
+            {{ facebook_icon_html }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}
