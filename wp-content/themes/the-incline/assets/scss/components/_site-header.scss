@@ -4,23 +4,10 @@
 
 
 .site-header {
-  margin-bottom: rem( 48px );
-  position: relative;
-  z-index: $z-index-1;
+  @include pgh-slant( 'bottom', 1deg );
 
-  &::after {
-    background: inherit;
-    bottom: rem( -8px );
-    content: '';
-    display: block;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    right: 0;
-    transform-origin: 0;
-    transform: skewY( 1deg );
-    z-index: -1;
-  }
+  margin-bottom: rem( 48px );
+  z-index: $z-index-1;
 }
 
 .site-header__logo {

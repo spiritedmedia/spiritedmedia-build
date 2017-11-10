@@ -1,0 +1,18 @@
+{% if overline %}
+
+{% set link %}
+    <a
+        href="{{ overline_url|esc_url }}"
+        class="entity-circulation__link"
+        data-ga-category="{{ 'Single ' ~ type_name|esc_attr }}"
+        data-ga-label="Want More Stories|{{ overline|esc_attr }}"
+    >
+        {{ overline }}
+    </a>
+{% endset %}
+
+<p class="entity-circulation">
+    Want some more? Explore other {{ link }} stories.
+</p>
+
+{% endif %}

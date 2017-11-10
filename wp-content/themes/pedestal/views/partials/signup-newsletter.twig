@@ -1,6 +1,8 @@
 {% if latest_newsletter %}
 {% set latest_newsletter_text %}
+{% spaceless %}
     Check out a <a href="{{ latest_newsletter|esc_url }}">sample from today's newsletter</a>
+{% endspaceless %}
 {% endset %}
 {% endif %}
 

@@ -19,7 +19,22 @@
                 {{ ped_slot( 'single_lead' ) }}
             </div>
 
-            {% include 'partials/overline-single.twig' %}
+            {% if overline %}
+                <h2 class="single-header__overline c-heading--overline">
+                    {% if overline_url %}
+                        <a
+                            href="{{ overline_url|esc_url }}"
+                            data-ga-category="{{ 'Single ' ~ type_name|esc_attr }}"
+                            data-ga-label="Overline|{{ overline|esc_attr }}"
+                        >
+                            {{ overline }}
+                        </a>
+                    {% else %}
+                        {{ overline }}
+                    {% endif %}
+                </h2>
+            {% endif %}
+
 
             <h1 class="single-header__title">
                 {{ title }}
@@ -58,10 +73,17 @@
         </aside>
         {% endif %}
 
-        {% include 'partials/follow-this-form.twig' %}
-
         <footer class="c-main__footer js-main-footer">
             {{ sponsored_item }}
+
+            {% include 'partials/entity-circulation.twig' %}
+
+            <div class="signup-newsletter js-signup-newsletter">
+                {% include 'partials/signup-newsletter.twig' with {
+                    gaLocation: 'Single ' ~ type_name|esc_attr ~ ' | Footer'
+                } %}
+            </div>
+
             {{ cluster_list }}
 
             {% if 'feat_contributor' == item.get_single_author.get_primary_role %}

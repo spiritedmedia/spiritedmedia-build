@@ -55,10 +55,7 @@
     .signup-newsletter__details {
       @include invisible;
     }
-  }
 
-
-  @media #{$small-only} {
     .signup-newsletter__latest--standalone {
       display: block;
     }

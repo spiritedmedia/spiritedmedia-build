@@ -8,7 +8,19 @@
         <header class="c-main__header js-main-header  single-header">
 
             {% if 'story' == type %}
-            {% include 'partials/overline-single.twig' %}
+            <h2 class="single-header__overline c-heading--overline">
+                {% if overline_url %}
+                    <a
+                        href="{{ overline_url|esc_url }}"
+                        data-ga-category="{{ 'Single ' ~ type_name|esc_attr }}"
+                        data-ga-label="Overline|{{ overline|esc_attr }}"
+                    >
+                        {{ overline }}
+                    </a>
+                {% else %}
+                    {{ overline }}
+                {% endif %}
+            </h2>
             {% else %}
             <h1 class="single-header__title  c-heading--archive">
                 <span class="c-heading__prefix">Posts tagged with</span>

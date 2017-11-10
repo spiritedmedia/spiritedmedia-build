@@ -1,0 +1,14 @@
+// ==========================================================================
+// The Incline // Components // NEWSLETTER SIGNUP
+// ==========================================================================
+
+
+.signup-newsletter:not( .modal__content ) {
+  @include pgh-slant( 'top', -1deg );
+
+  margin-top: rem( 48px );
+
+  .signup-newsletter__form {
+    padding-top: rem( 8px );
+  }
+}

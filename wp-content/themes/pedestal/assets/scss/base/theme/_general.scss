@@ -54,9 +54,10 @@ figure {
 
 // Adjust site wrapper for search input
 .site-wrap {
+  overflow: hidden;
   position: relative;
-  z-index: $z-index-1;
   transition: transform 0.3s ease;
+  z-index: $z-index-1;
 
   .is-search-open & {
     transform: translateY( rem( 60 ) );

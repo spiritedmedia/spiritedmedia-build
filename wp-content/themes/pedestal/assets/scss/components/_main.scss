@@ -151,8 +151,28 @@
  */
 
 .c-main__footer {
+  margin-top: rem( 32px );
+
   .stream-item--sponsored {
     margin-bottom: $stream-item-spacing;
+  }
+
+  .signup-newsletter {
+    margin-bottom: rem( 32px );
+  }
+
+  @media #{$small-only} {
+    .signup-newsletter__details {
+      @include invisible;
+    }
+
+    .signup-newsletter__latest--standalone {
+      display: block;
+    }
+  }
+
+  @media #{$medium-up} {
+    @include _signup-newsletter-header-inline;
   }
 }
 
