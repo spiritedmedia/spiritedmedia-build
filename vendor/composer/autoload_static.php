@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4fafdf291682dcaa3ea8eef56ffd0c19
+class ComposerStaticInit4bc7aca10fa0cd45c68a28d5129331a7
 {
     public static $files = array (
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
@@ -6845,8 +6845,8 @@ class ComposerStaticInit4fafdf291682dcaa3ea8eef56ffd0c19
         'Pedestal\\Feeds' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-feeds.php',
         'Pedestal\\Frontend' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-frontend.php',
         'Pedestal\\Icons' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-icons.php',
-        'Pedestal\\Metricbot\\New_Vs_Returning_Users_Metric' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/metricbot/class-new-vs-returning-visitors-metric.php',
         'Pedestal\\Metricbot\\Newsletter_Signups_By_Page_Metric' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/metricbot/class-newsletter-signups-by-page-metric.php',
+        'Pedestal\\Metricbot\\Weekly_Traffic_Metric' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/metricbot/class-weekly-traffic-metric.php',
         'Pedestal\\Metricbot\\Yesterdays_Email_Metric' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/metricbot/class-yesterdays-email-metric.php',
         'Pedestal\\Objects\\ActiveCampaign' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-activecampaign.php',
         'Pedestal\\Objects\\Author' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-author.php',
@@ -7442,11 +7442,11 @@ class ComposerStaticInit4fafdf291682dcaa3ea8eef56ffd0c19
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4fafdf291682dcaa3ea8eef56ffd0c19::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4fafdf291682dcaa3ea8eef56ffd0c19::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit4fafdf291682dcaa3ea8eef56ffd0c19::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit4fafdf291682dcaa3ea8eef56ffd0c19::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit4fafdf291682dcaa3ea8eef56ffd0c19::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4bc7aca10fa0cd45c68a28d5129331a7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4bc7aca10fa0cd45c68a28d5129331a7::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit4bc7aca10fa0cd45c68a28d5129331a7::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit4bc7aca10fa0cd45c68a28d5129331a7::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit4bc7aca10fa0cd45c68a28d5129331a7::$classMap;
 
         }, null, ClassLoader::class);
     }

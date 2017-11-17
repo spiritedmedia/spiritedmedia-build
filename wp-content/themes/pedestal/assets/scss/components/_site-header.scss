@@ -98,6 +98,9 @@ $site-header-cta-icon-padding: rem( 4px );
 
 .site-header__cta {
   vertical-align: middle;
+  // Prevent flash of color upon opening modal in Chrome
+  // https://github.com/spiritedmedia/spiritedmedia/issues/2366
+  -webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
 
   &:focus {
     outline: 0;

@@ -7,7 +7,7 @@ use Pedestal\Objects\{
 };
 use Pedestal\Utils\Utils;
 
-class New_Vs_Returning_Users_Metric {
+class Weekly_Traffic_Metric {
 
     /**
      * Get an instance of this class
@@ -41,7 +41,7 @@ class New_Vs_Returning_Users_Metric {
         $timestamp = 'monday 9:00am ' . get_option( 'timezone_string' );
         $timestamp = strtotime( $timestamp );
 
-        $events['metricbot_new_vs_returning_users'] = [
+        $events['metricbot_weekly_traffic'] = [
             'timestamp'  => $timestamp,
             'recurrence' => 'weekly',
             'callback'   => [ $this, 'send' ],
@@ -359,7 +359,7 @@ class New_Vs_Returning_Users_Metric {
             'icon_emoji'  => ':ghost:',
             'channel'     => PEDESTAL_SLACK_CHANNEL_CITY,
         ];
-
+        $slack_args = apply_filters( 'pedestal_weekly_traffic_slack_args', $slack_args );
         return $notifications->send( $message, $slack_args );
     }
 }

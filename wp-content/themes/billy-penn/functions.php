@@ -94,6 +94,12 @@ class Billy_Penn extends Pedestal {
         } );
 
         add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
+
+        // Send the Weekly Traffic Report to #phl-botcountry
+        add_filter( 'pedestal_weekly_traffic_slack_args', function( $slack_args ) {
+            $slack_args['channel'] = PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL;
+            return $slack_args;
+        });
     }
 
     /**

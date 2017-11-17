@@ -1,9 +1,9 @@
-Build [#3917](https://circleci.com/gh/spiritedmedia/spiritedmedia/3917) by montchr at 2017-11-10 04:06 PM UTC
+Build [#3952](https://circleci.com/gh/spiritedmedia/spiritedmedia/3952) by kingkool68 at 2017-11-17 05:50 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.4.3](https://github.com/spiritedmedia/spiritedmedia/compare/v6.4.3)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.4.4](https://github.com/spiritedmedia/spiritedmedia/compare/v6.4.4)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.4.2...v6.4.3)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.4.3...v6.4.4)
 
- - [#2371](https://github.com/spiritedmedia/spiritedmedia/pull/2371): Set overflow hidden on .site-wrap
- - [#2363](https://github.com/spiritedmedia/spiritedmedia/pull/2363): Replace entity follow form with newsletter signup [v2]
- - [#2365](https://github.com/spiritedmedia/spiritedmedia/pull/2365): Add slant to top side of newsletter signup component on The Incline
+ - [#2377](https://github.com/spiritedmedia/spiritedmedia/pull/2377): Send Weekly Traffic MetricBot Report To #phl-botcountry
+ - [#2378](https://github.com/spiritedmedia/spiritedmedia/pull/2378): Improve cluster connection type performance
+ - [#2375](https://github.com/spiritedmedia/spiritedmedia/pull/2375): Prevent color flash upon modal open in Chrome

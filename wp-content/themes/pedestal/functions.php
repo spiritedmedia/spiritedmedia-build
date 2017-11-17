@@ -7,7 +7,7 @@ use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Registrations\Taxonomies\Taxonomies;
 use Pedestal\Posts\Entities\Embed;
 use Pedestal\Metricbot\{
-    New_Vs_Returning_Users_Metric,
+    Weekly_Traffic_Metric,
     Newsletter_Signups_By_Page_Metric,
     Yesterdays_Email_Metric
 };
@@ -256,7 +256,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->cron_management   = Cron_Management::get_instance();
 
             // Metrics
-            $this->new_vs_returning_users_metric     = New_Vs_Returning_Users_Metric::get_instance();
+            $this->weekly_traffic_metric             = Weekly_Traffic_Metric::get_instance();
             $this->newsletter_signups_by_page_metric = Newsletter_Signups_By_Page_Metric::get_instance();
             $this->yesterdays_email_metric           = Yesterdays_Email_Metric::get_instance();
 

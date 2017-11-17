@@ -82,6 +82,9 @@ abstract class Cluster extends Post {
     /**
      * Get all connected posts
      *
+     * Note that due to the use of `Types::get_cluster_connection_types()` this
+     * can be a performance-heavy query.
+     *
      * @param  array $args
      * @return array Stream
      */
@@ -127,7 +130,6 @@ abstract class Cluster extends Post {
         $paged = get_query_var( 'paged' );
         $args['paged'] = $paged ? $paged : 1;
         $args['connected_items'] = $this->post;
-        $args['connected_type'] = Types::get_cluster_connection_types();
         return new \WP_Query( $args );
     }
 
