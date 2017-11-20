@@ -112,9 +112,5 @@ $c-slot-item-lead-pd : rem( 16px );
 [data-slot-position="site_single_lead"] {
   &.c-slot {
     padding-bottom: $c-slot-item-lead-pd;
-
-    .c-hero + & {
-      padding-top: $c-slot-item-lead-pd;
-    }
   }
 }

@@ -114,7 +114,7 @@
 
 @media ( min-width: em( 480px ) ) {
   .modal {
-    @include _signup-newsletter-header-inline;
+    @include _signup-email-header-inline;
   }
 }
 

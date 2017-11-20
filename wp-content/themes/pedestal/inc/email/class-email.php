@@ -187,7 +187,6 @@ class Email {
         $cluster_id = '';
         if ( ! empty( $_POST['cluster-id'] ) ) {
             $cluster_id = $_POST['cluster-id'];
-            $list_ids = Email_Lists::get_list_ids_from_cluster( $cluster_id );
         }
         if ( ! empty( $_POST['list-ids'] ) ) {
             $list_ids = $_POST['list-ids'];
@@ -206,8 +205,8 @@ class Email {
         // Check if $raw_lists is an empty object
         if ( empty( $raw_lists_check ) && ! empty( $cluster_id ) ) {
             Email_Lists::delete_list_id_from_meta( $cluster_id );
-            $list_ids = Email_Lists::get_list_ids_from_cluster( $cluster_id );
-            $args['ids'] = $list_ids;
+            $list_ids = Email_Lists::get_list_id_from_cluster( $cluster_id );
+            $args['ids'] = is_array( $list_ids ) ? $list_ids : [ $list_ids ];
             $raw_lists = $activecampaign->get_lists( $args );
         }
 
@@ -291,7 +290,7 @@ class Email {
             return;
         }
         $post_after = Cluster::get( $post_id );
-        $list_id = Email_Lists::get_list_ids_from_cluster( $post_id );
+        $list_id = Email_Lists::get_list_id_from_cluster( $post_id );
         $new_name = $post_after->get_activecampaign_list_name();
 
         $activecampaign = new ActiveCampaign;

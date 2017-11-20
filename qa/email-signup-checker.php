@@ -9,6 +9,11 @@ $links_to_check = [
         'email_endpoint' => 'https://billypenn.com/subscribe-to-email-list/',
     ],
     [
+        'name'           => 'Billy Penn Newsletter Signup Page',
+        'url'            => 'https://billypenn.com/newsletter-signup/',
+        'email_endpoint' => 'https://billypenn.com/subscribe-to-email-list/',
+    ],
+    [
         'name'           => 'Billy Penn Article with Story',
         'url'            => 'https://billypenn.com/2017/10/02/the-new-yards-tasting-room-could-be-open-in-6-weeks/',
         'email_endpoint' => 'https://billypenn.com/subscribe-to-email-list/',
@@ -16,6 +21,11 @@ $links_to_check = [
     [
         'name'           => 'The Incline Homepage',
         'url'            => 'https://theincline.com/',
+        'email_endpoint' => 'https://theincline.com/subscribe-to-email-list/',
+    ],
+    [
+        'name'           => 'The Incline Newsletter Signup Page',
+        'url'            => 'https://theincline.com/newsletter-signup/',
         'email_endpoint' => 'https://theincline.com/subscribe-to-email-list/',
     ],
     [
@@ -73,7 +83,7 @@ if ( empty( $test_email_address ) ) {
             $email_input_count = count( $form->find( '[name=email_address]' ) );
             $hidden_inputs = $form->find( 'input[type=hidden]' );
             foreach ( $hidden_inputs as $input ) {
-                if ( in_array( $input->name, [ 'cluster-id', 'list-ids[]' ] ) ) {
+                if ( 'list-ids[]' == $input->name ) {
                     $list_ids[ $input->name ][] = intval( $input->value );
                 }
             }
@@ -103,10 +113,6 @@ if ( empty( $test_email_address ) ) {
                 ];
                 foreach ( $list_ids as $key => $ids ) {
                     $key = str_replace( '[]', '', $key );
-                    // Cluster IDs aren't an array, list-ids are!!!
-                    if ( 'cluster-id' == $key ) {
-                        $ids = $ids[0];
-                    }
                     $args['body'][ $key ] = $ids;
                 }
                 wp_remote_post( $link['email_endpoint'], $args );

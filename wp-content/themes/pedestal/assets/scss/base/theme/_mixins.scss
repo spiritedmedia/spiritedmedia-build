@@ -238,27 +238,42 @@
 }
 
 
-/**
- * Break a component out of the bounds of its parent to span viewport width
- *
- * @param  {string} $selector:             '&'                          Selector
- * @param  {unit} $inner-vertical-padding: rem( 32px ) Interior vertical padding
- * @param  {unit} $explode-width:          $hoz-explode-side            Blast radius
- */
+/// Break a component out of the bounds of its parent to edge of viewport width
+///
+/// @param  {string} $side ['both']                         Side to explode
+/// @param  {string} $selector ['&']                        Selector
+/// @param  {string} $inner-selector ['&__inner']           Inner selector
+/// @param  {unit}   $inner-vertical-padding [rem( 32px )]  Interior vertical padding
 @mixin explode-component(
+  $side: 'both',
   $selector: '&',
-  $inner-vertical-padding: rem( 32px ),
-  $explode-width: $hoz-explode-side
+  $inner-selector: '&__inner',
+  $inner-vertical-padding: rem( 32px )
 ) {
+  $sides: ();
+
+  @if $side == 'left' or $side == 'both' {
+    $sides: append( $sides, 'left' );
+  }
+
+  @if $side == 'right' or $side == 'both' {
+    $sides: append( $sides, 'right' );
+  }
 
   #{$selector} {
-    $margin-top: -( $content-wrapper-m-t + $main-margin-top );
-    $margin-hoz: -( $explode-width );
+    position: relative;
 
-    margin: $margin-top $margin-hoz 0;
+    #{$inner-selector} {
+      padding-top: $inner-vertical-padding;
+      padding-bottom: $inner-vertical-padding;
+    }
 
-    &__inner {
-      padding: $inner-vertical-padding $explode-width;
+    @each $side in $sides {
+      margin-#{$side}: -100vw;
+
+      #{$inner-selector} {
+        padding-#{$side}: 100vw;
+      }
     }
   }
 }
@@ -272,8 +287,8 @@
 // ==========================================================================
 
 
-@mixin _signup-newsletter-header-inline {
-  .signup-newsletter__header {
+@mixin _signup-email-header-inline {
+  .signup-email__header {
     text-align: left;
 
     > * {
@@ -282,12 +297,12 @@
     }
   }
 
-  .signup-newsletter__icon {
+  .signup-email__icon {
     margin-bottom: 0;
     margin-right: rem( 8px );
   }
 
-  .signup-newsletter__title {
+  .signup-email__title {
     margin-bottom: 0;
 
     // stylelint-disable-next-line selector-max-type

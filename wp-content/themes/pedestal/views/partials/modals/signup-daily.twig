@@ -1,7 +1,7 @@
 {% set id_postfix = now() %}
-{% set id_title = 'signup-newsletter-title-' ~ id_postfix %}
-{% set id_description = 'signup-newsletter-description-' ~ id_postfix %}
-{% set id_email_input = 'signup-newsletter-email-input-' ~ id_postfix %}
+{% set id_title = 'signup-email-daily-title-' ~ id_postfix %}
+{% set id_description = 'signup-email-daily-description-' ~ id_postfix %}
+{% set id_email_input = 'signup-email-daily-email-input-' ~ id_postfix %}
 
 <div
     role="dialog"
@@ -10,8 +10,8 @@
     aria-describedby="{{ id_description|esc_attr }}"
     aria-hidden="true"
 >
-    <div class="modal__content js-modal-content signup-newsletter js-signup-newsletter is-animated">
-        {% include 'partials/signup-newsletter.twig' with {
+    <div class="modal__content js-modal-content signup-email--daily signup-email is-animated">
+        {% include 'partials/signup-daily.twig' with {
             gaLocation: 'Modal'
         } %}
 

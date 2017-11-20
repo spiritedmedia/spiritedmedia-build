@@ -3,12 +3,12 @@
 // ==========================================================================
 
 
-.signup-newsletter:not( .modal__content ) {
+.signup-email--daily:not( .modal__content ) {
   @include pgh-slant( 'top', -1deg );
 
   margin-top: rem( 48px );
 
-  .signup-newsletter__form {
+  .signup-email__form {
     padding-top: rem( 8px );
   }
 }

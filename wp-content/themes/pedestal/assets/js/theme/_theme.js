@@ -44,13 +44,7 @@
      * Handle email subscription form submission and errors
      */
     handleSubscriptionForms: function() {
-      var subscriptionForms = [
-        '.js-follow-this-form-container',
-        '#subscribe-to-newsletter-page',
-        '.js-signup-newsletter'
-      ];
-
-      $(subscriptionForms.join(', ')).find('form').on('submit', function(e) {
+      $('.js-signup-email-form').on('submit', function(e) {
         e.preventDefault();
         var $el = $(this);
         var $fields = $el.find('.js-form-fields');

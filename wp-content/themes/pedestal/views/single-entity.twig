@@ -78,8 +78,8 @@
 
             {% include 'partials/entity-circulation.twig' %}
 
-            <div class="signup-newsletter js-signup-newsletter">
-                {% include 'partials/signup-newsletter.twig' with {
+            <div class="signup-email--daily signup-email">
+                {% include 'partials/signup-daily.twig' with {
                     gaLocation: 'Single ' ~ type_name|esc_attr ~ ' | Footer'
                 } %}
             </div>

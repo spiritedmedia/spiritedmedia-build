@@ -12,7 +12,7 @@ class Signup_Newsletter_Widget extends \WP_Widget {
             'pedestal_signup_newsletter',
             esc_html__( 'Newsletter Signup', 'pedestal' ),
             [
-                'classname'   => 'signup-newsletter js-signup-newsletter',
+                'classname'   => 'signup-email--daily signup-email',
                 'description' => esc_html__( 'Displays a form where users can sign up for the newsletter.', 'pedestal' ),
             ]
         );
@@ -33,7 +33,7 @@ class Signup_Newsletter_Widget extends \WP_Widget {
 
         $context = Timber::get_context();
         $context['gaLocation'] = 'Widget';
-        Timber::render( 'partials/signup-newsletter.twig', $context );
+        Timber::render( 'partials/signup-daily.twig', $context );
 
         echo $args['after_widget'];
     }

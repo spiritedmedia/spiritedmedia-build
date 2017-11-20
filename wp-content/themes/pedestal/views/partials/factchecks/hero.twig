@@ -1,30 +1,28 @@
-<div class="c-main__hero  c-hero">
-    <div class="c-hero__inner">
-        <figure class="c-statement--factcheck  c-statement  o-media  o-media--responsive  {{ statement_classes }}">
+<figure class="c-statement--factcheck  c-statement  o-media  o-media--responsive  {{ statement_classes }}">
+    <div class="c-statement__inner">
 
-            {% if statement_img %}
-            <div class="c-statement__img  o-media__img">
-                {{ statement_img }}
-            </div>
-            {% endif %}
+        {% if statement_img %}
+        <div class="c-statement__img  o-media__img">
+            {{ statement_img }}
+        </div>
+        {% endif %}
 
-            <div class="c-statement__body  o-media__body">
-                {% include 'partials/factchecks/statement-content.twig' %}
-                <figcaption class="c-statement__speaker">
-                    {% if statement_speaker %}
-                    <cite class="c-statement__speaker__name">{{ statement_speaker }}</cite>
-                    {% endif %}
+        <div class="c-statement__body  o-media__body">
+            {% include 'partials/factchecks/statement-content.twig' %}
+            <figcaption class="c-statement__speaker">
+                {% if statement_speaker %}
+                <cite class="c-statement__speaker__name">{{ statement_speaker }}</cite>
+                {% endif %}
 
-                    {% if statement_setting %}
-                    <div class="c-statement__speaker__setting">{{ statement_setting }}</div>
-                    {% endif %}
+                {% if statement_setting %}
+                <div class="c-statement__speaker__setting">{{ statement_setting }}</div>
+                {% endif %}
 
-                    {% if statement_date %}
-                    <div class="c-statement__speaker__date">{{ statement_date }}</div>
-                    {% endif %}
-                </figcaption>
-            </div>
+                {% if statement_date %}
+                <div class="c-statement__speaker__date">{{ statement_date }}</div>
+                {% endif %}
+            </figcaption>
+        </div>
 
-        </figure>
     </div>
-</div>
+</figure>

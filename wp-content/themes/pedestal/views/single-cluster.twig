@@ -7,55 +7,16 @@
 
         <header class="c-main__header js-main-header  single-header">
 
-            {% if 'story' == type %}
-            <h2 class="single-header__overline c-heading--overline">
-                {% if overline_url %}
-                    <a
-                        href="{{ overline_url|esc_url }}"
-                        data-ga-category="{{ 'Single ' ~ type_name|esc_attr }}"
-                        data-ga-label="Overline|{{ overline|esc_attr }}"
-                    >
-                        {{ overline }}
-                    </a>
-                {% else %}
-                    {{ overline }}
-                {% endif %}
-            </h2>
-            {% else %}
             <h1 class="single-header__title  c-heading--archive">
-                <span class="c-heading__prefix">Posts tagged with</span>
+                {% if 'story' != type %}
+                    <span class="c-heading__prefix">Posts tagged with</span>
+                {% endif %}
                 <span class="c-heading__title">{{ title }}</span>
             </h1>
-            {% endif %}
 
             {% if headline %}
-                <h1 class="single-header__title">{{ headline }}</h1>
+                <h2 class="single-header__description">{{ headline }}</h2>
             {% endif %}
-
-            <div class="single-header__meta  c-meta-info--{{ item.get_type }}  c-meta-info--cluster  c-meta-info">
-                <div class="c-meta-info__modified  c-meta-info__item--stacked">
-                    <span class="c-meta-info__label">
-                        {{ __( 'Last Updated', 'pedestal' ) }}&nbsp;
-                    </span>
-                    <span class="c-meta-info__timestamp--modified  c-meta-info__timestamp">
-                        {% include 'partials/meta-info/timestamp-modified.twig' %}
-                    </span>
-                </div>
-                <div class="c-meta-info__published  c-meta-info__item--stacked">
-                    <span class="c-meta-info__label">
-                        {{ __( 'Created', 'pedestal' ) }}&nbsp;
-                    </span>
-                    <span class="c-meta-info__timestamp--published  c-meta-info__timestamp">
-                        {% include 'partials/meta-info/timestamp-published.twig' %}
-                    </span>
-                </div>
-            </div>
-
-            {% if featured_image %}
-                {{ featured_image }}
-            {% endif %}
-
-            {% include 'partials/share-buttons.twig' %}
 
             {% if content %}
                 <div class="single-header__lead-text  s-post-content">
@@ -63,8 +24,19 @@
                 </div>
             {% endif %}
 
+            <p class="single-header__meta">
+                <strong>Last Updated:</strong>
+                <time datetime="{{ item.get_modified_date( 'c' ) }}">
+                    {{ item.get_modified_date( site.date_format ) }}
+                    &nbsp;&middot;&nbsp;
+                    {{ item.get_modified_date( site.time_format ) }}
+                </time>
+            </p>
+
             {% if 'story' == type %}
-                {% include 'partials/follow-this-form.twig' %}
+            <div class="signup-email--cluster signup-email">
+                {% include 'partials/signup-cluster.twig' %}
+            </div>
             {% endif %}
 
         </header>

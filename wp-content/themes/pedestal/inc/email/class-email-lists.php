@@ -331,7 +331,7 @@ class Email_Lists {
      * @param  bool $create_list_if_doesnt_exist Whether to create a list if it doesn't exist
      * @return false|int List id or False if no list id found
      */
-    public static function get_list_ids_from_cluster( $cluster_id = 0, $create_list_if_doesnt_exist = true ) {
+    public static function get_list_id_from_cluster( $cluster_id = 0, $create_list_if_doesnt_exist = true ) {
         $cluster_id = intval( $cluster_id );
         if ( ! $cluster_id ) {
             return false;

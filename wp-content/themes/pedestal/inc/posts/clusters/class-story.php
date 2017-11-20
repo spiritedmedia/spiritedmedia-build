@@ -13,19 +13,6 @@ class Story extends Cluster {
     protected $email_type = 'story updates';
 
     /**
-     * Get CSS classes
-     *
-     * @return array
-     */
-    public function get_css_classes() {
-        $classes = parent::get_css_classes();
-        if ( $this->get_headline() ) {
-            $classes[] = 'has-headline';
-        }
-        return $classes;
-    }
-
-    /**
      * Get the filtered headline for the Story
      *
      * @return string
@@ -141,9 +128,7 @@ class Story extends Cluster {
      */
     public function get_context() {
         $context = [
-            'overline'     => $this->get_the_title(),
-            'overline_url' => $this->get_the_permalink(),
-            'headline'     => $this->get_the_headline(),
+            'headline' => $this->get_the_headline(),
         ] + parent::get_context();
         return $context;
     }

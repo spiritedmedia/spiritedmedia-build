@@ -62,7 +62,7 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_ZIPCODE'                      => '15212',
                 'PEDESTAL_BUILDING_NAME'                => 'Alloy 26',
                 'PEDESTAL_STREET_ADDRESS'               => '100 South Commons, Suite 102',
-                // 'PEDESTAL_BLOG_URL'                  => 'https://medium.com/billy-penn',
+                'PEDESTAL_BLOG_URL'                  => 'https://medium.com/billy-penn',
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-77560864-1',
                 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '121833937',
                 'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => 'GTM-WFRTH8G',

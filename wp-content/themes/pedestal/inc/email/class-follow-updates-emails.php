@@ -168,7 +168,7 @@ class Follow_Updates_Emails {
             return false;
         }
         $cluster_id = $cluster->get_id();
-        $list_id = Email_Lists::get_list_ids_from_cluster( $cluster_id );
+        $list_id = Email_Lists::get_list_id_from_cluster( $cluster_id );
         $body = Email::get_email_template( 'follow-update', 'ac', [
             'item'       => $cluster,
             'entities'   => $cluster->get_unsent_entities( true ),

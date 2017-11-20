@@ -50,26 +50,27 @@
   }
 }
 
-.widget.signup-newsletter {
+.widget.signup-email {
   @media #{$small-only} {
-    .signup-newsletter__details {
+    .signup-email__details {
       @include invisible;
     }
 
-    .signup-newsletter__latest--standalone {
+    .signup-email__latest--standalone {
       display: block;
     }
   }
 
 
   @media #{$medium-only} {
-    @include _signup-newsletter-header-inline;
+    @include _signup-email-header-inline;
   }
 
 
   @media #{$large-up} {
-    .signup-newsletter__email-input,
-    .signup-newsletter__btn {
+    .signup-email__email-input,
+    .signup-email__btn {
+      display: block;
       max-width: 100%;
     }
   }

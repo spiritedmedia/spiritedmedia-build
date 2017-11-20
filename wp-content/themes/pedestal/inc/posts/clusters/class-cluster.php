@@ -150,10 +150,7 @@ abstract class Cluster extends Post {
      * @return int
      */
     public function get_following_users_count( $force = false ) {
-        $list_id = $this->get_meta( 'activecampaign-list-id', true );
-        if ( 0 !== $list_id || $force ) {
-            $list_id = Email_Lists::get_list_ids_from_cluster( $this->get_id() );
-        }
+        $list_id = $this->get_activecampaign_list_id( $force );
         $count = Email::get_subscriber_count( $list_id, $force );
         return $count ?: '-';
     }
@@ -268,6 +265,20 @@ abstract class Cluster extends Post {
     }
 
     /**
+     * Get the ActiveCampagin list ID for this Cluster
+     *
+     * @param  boolean $force [false] Force get the list ID from AC
+     * @return int|bool               List ID on success, false on fail
+     */
+    public function get_activecampaign_list_id( $force = false ) {
+        $list_id = $this->get_meta( 'activecampaign-list-id', true );
+        if ( 0 !== $list_id || $force ) {
+            $list_id = Email_Lists::get_list_id_from_cluster( $this->get_id() );
+        }
+        return $list_id;
+    }
+
+    /**
      * Get the email type string
      *
      * @return string The contents of `$email_type`
@@ -284,7 +295,6 @@ abstract class Cluster extends Post {
     public function get_context() {
         $context = parent::get_context();
         $context['slug'] = $this->get_slug();
-        $context['overline_follow'] = true;
         return $context;
     }
 }

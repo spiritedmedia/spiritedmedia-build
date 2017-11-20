@@ -78,6 +78,19 @@ class Frontend {
                 $body_classes[] = 'js-debug-ga';
             }
 
+            if ( is_single() ) {
+                $post_type = get_post_type();
+                $body_classes[] = 'single-' . Utils::remove_name_prefix( $post_type );
+                $is_entity = Types::is_entity( $post_type );
+                $is_cluster = Types::is_cluster( $post_type );
+
+                if ( $is_cluster ) {
+                    $body_classes[] = 'single-cluster';
+                } elseif ( $is_entity ) {
+                    $body_classes[] = 'single-entity';
+                }
+            }
+
             return $body_classes;
         });
 

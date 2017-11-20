@@ -1,4 +1,7 @@
-// Single Post Header
+// ==========================================================================
+// Pedestal // Components // SINGLE POST HEADER
+// ==========================================================================
+
 
 
 .single-header {
@@ -9,13 +12,10 @@
 }
 
 
-.single-header__overline,
 .single-header__title,
 .single-header__description {
   margin-bottom: rem( 12px );
 }
-
-.single-header__overline {}
 
 
 .single-header__sponsorship {}
@@ -63,14 +63,8 @@
 
 .single-header__meta {
   font-size: rem( 15px );
-}
 
-
-.single-header__lead-text {
-  // stylelint-disable-next-line selector-max-type
-  p {
-    font-size: $h5-font-size;
-    font-style: italic;
-    line-height: 1.6;
+  .single-cluster & {
+    font-size: $small-font-size;
   }
 }

@@ -28,7 +28,6 @@ class Factcheck extends Original {
     public function css_classes_content() {
         return implode( ' ', [
             'c-factcheck',
-            'has-hero',
         ] );
     }
 

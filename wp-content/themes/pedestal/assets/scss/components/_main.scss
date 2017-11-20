@@ -26,15 +26,6 @@
 }
 
 
-/**
- * Hero
- *
- * Content-specific Hero styles
- */
-
-.c-main__hero {}
-
-
 .c-main__header {
   margin-bottom: $main-header-margin-bottom;
 }
@@ -67,8 +58,6 @@
     line-height: 1;
     text-transform: uppercase;
   }
-
-  &--headline {}
 
 }
 
@@ -157,22 +146,22 @@
     margin-bottom: $stream-item-spacing;
   }
 
-  .signup-newsletter {
+  .signup-email {
     margin-bottom: rem( 32px );
   }
 
   @media #{$small-only} {
-    .signup-newsletter__details {
+    .signup-email__details {
       @include invisible;
     }
 
-    .signup-newsletter__latest--standalone {
+    .signup-email__latest--standalone {
       display: block;
     }
   }
 
   @media #{$medium-up} {
-    @include _signup-newsletter-header-inline;
+    @include _signup-email-header-inline;
   }
 }
 
@@ -196,28 +185,3 @@
   }
 }
 // stylelint-enable selector-no-qualifying-type, selector-max-type
-
-
-
-
-
-.c-main--archive {}
-
-
-
-
-
-.c-main[data-cluster] {
-
-  .c-main__header {
-
-    .has-content,
-    .has-headline {
-      border-bottom: rem( 4px ) solid $primary-color;
-    }
-
-  }
-
-  .c-main__entities {}
-
-}

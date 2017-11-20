@@ -1,25 +1,12 @@
 {% extends 'layouts/layout--content.twig' %}
 
 {% block content %}
-<div id="subscribe-to-newsletter-page" class="subscription-confirmation-page">
-    <form action="{{ site.url }}/subscribe-to-email-list/" method="POST" data-ga-category="Submitted Form" data-ga-label="Newsletter Signup Page">
-
-        <div class="form-group js-form-fields">
-            <fieldset>
-                {% include 'partials/email-forms/form-daily-legend.twig' %}
-                {% include 'partials/email-forms/form-daily-input-address.twig' %}
-                {% include 'partials/email-forms/form-honeypot.twig' %}
-                <div class="js-fail-message invalid-feedback"></div>
-                <button type="submit" name="subscribe" class="btn btn--lg btn--full-width form-submit js-form-submit">
-                    {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
-                </button>
-            </fieldset>
-        </div>
-
-        <div class="success-message js-success-message">
-            {% include 'partials/email-forms/form-daily-subscribed.twig' %}
-            {% include 'partials/email-forms/form-button-explore.twig' %}
-        </div>
-    </form>
+<div class="signup-email--daily signup-email">
+    <div id="subscribe-to-newsletter-page" class="subscription-confirmation-page">
+        {% include 'partials/signup-daily.twig' with {
+            gaLocation: 'Page',
+            explore: true
+        } %}
+    </div>
 </div>
 {% endblock %}

@@ -12,8 +12,8 @@
         <ul class="sidebar {{ sidebar_class }}">
             {% block sidebar %}
                 {# The default sidebar if no sidebar is specified #}
-                <li class="widget signup-newsletter js-signup-newsletter">
-                    {% include 'partials/signup-newsletter.twig' with {
+                <li class="widget signup-email--daily signup-email">
+                    {% include 'partials/signup-daily.twig' with {
                         gaLocation: 'Default Sidebar'
                     } %}
                 </li>
