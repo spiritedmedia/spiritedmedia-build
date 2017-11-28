@@ -45,7 +45,6 @@ class Google_Service_AdExchangeBuyerII_Resource_BiddersAccountsFilterSets extend
    * @opt_param bool isTransient Whether the filter set is transient, or should be
    * persisted indefinitely. By default, filter sets are not transient. If
    * transient, it will be available for at least 1 hour after creation.
-   * @opt_param string accountId Account ID of the buyer.
    * @return Google_Service_AdExchangeBuyerII_FilterSet
    */
   public function create($ownerName, Google_Service_AdExchangeBuyerII_FilterSet $postBody, $optParams = array())
@@ -69,9 +68,6 @@ class Google_Service_AdExchangeBuyerII_Resource_BiddersAccountsFilterSets extend
    * - For an account-level filter set for the child seat buyer account 456
    * whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`
    * @param array $optParams Optional parameters.
-   *
-   * @opt_param string accountId Account ID of the buyer.
-   * @opt_param string filterSetId The ID of the filter set to delete.
    * @return Google_Service_AdExchangeBuyerII_Adexchangebuyer2Empty
    */
   public function delete($name, $optParams = array())
@@ -95,9 +91,6 @@ class Google_Service_AdExchangeBuyerII_Resource_BiddersAccountsFilterSets extend
    * - For an account-level filter set for the child seat buyer account 456
    * whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`
    * @param array $optParams Optional parameters.
-   *
-   * @opt_param string accountId Account ID of the buyer.
-   * @opt_param string filterSetId The ID of the filter set to get.
    * @return Google_Service_AdExchangeBuyerII_FilterSet
    */
   public function get($name, $optParams = array())
@@ -129,7 +122,6 @@ class Google_Service_AdExchangeBuyerII_Resource_BiddersAccountsFilterSets extend
    * @opt_param int pageSize Requested page size. The server may return fewer
    * results than requested. If unspecified, the server will pick an appropriate
    * default.
-   * @opt_param string accountId Account ID of the buyer.
    * @return Google_Service_AdExchangeBuyerII_ListFilterSetsResponse
    */
   public function listBiddersAccountsFilterSets($ownerName, $optParams = array())

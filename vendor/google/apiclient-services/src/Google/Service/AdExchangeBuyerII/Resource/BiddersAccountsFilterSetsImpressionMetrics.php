@@ -45,8 +45,6 @@ class Google_Service_AdExchangeBuyerII_Resource_BiddersAccountsFilterSetsImpress
    * @opt_param int pageSize Requested page size. The server may return fewer
    * results than requested. If unspecified, the server will pick an appropriate
    * default.
-   * @opt_param string accountId Account ID of the buyer.
-   * @opt_param string filterSetId The ID of the filter set to apply.
    * @opt_param string pageToken A token identifying a page of results the server
    * should return. Typically, this is the value of
    * ListImpressionMetricsResponse.nextPageToken returned from the previous call

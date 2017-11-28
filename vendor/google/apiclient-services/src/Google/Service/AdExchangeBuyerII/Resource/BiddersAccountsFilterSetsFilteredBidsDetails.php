@@ -48,8 +48,6 @@ class Google_Service_AdExchangeBuyerII_Resource_BiddersAccountsFilterSetsFiltere
    * 19, 86, and 87.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string accountId Account ID of the buyer.
-   * @opt_param string filterSetId The ID of the filter set to apply.
    * @opt_param string pageToken A token identifying a page of results the server
    * should return. Typically, this is the value of
    * ListCreativeStatusBreakdownByDetailResponse.nextPageToken returned from the

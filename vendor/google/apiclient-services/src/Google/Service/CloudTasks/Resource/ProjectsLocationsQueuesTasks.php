@@ -36,7 +36,13 @@ class Google_Service_CloudTasks_Resource_ProjectsLocationsQueuesTasks extends Go
    * PullTasksRequest.lease_duration or the lease will expire and the task will
    * become ready to be returned in a different PullTasksResponse. After the task
    * is acknowledged, it will not be returned by a later CloudTasks.PullTasks,
-   * CloudTasks.GetTask, or CloudTasks.ListTasks. (tasks.acknowledge)
+   * CloudTasks.GetTask, or CloudTasks.ListTasks.
+   *
+   * To acknowledge multiple tasks at the same time, use [HTTP
+   * batching](/storage/docs/json_api/v1/how-tos/batch) or the batching
+   * documentation for your client library, for example
+   * https://developers.google.com/api-client-library/python/guide/batch.
+   * (tasks.acknowledge)
    *
    * @param string $name Required.
    *

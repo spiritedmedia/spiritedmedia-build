@@ -77,6 +77,7 @@ class The_Incline extends Pedestal {
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => 'contact@theincline.com',
                 'PEDESTAL_EMAIL_NEWS'             => 'news@theincline.com',
+                'PEDESTAL_EMAIL_TIPS'             => 'tips@theincline.com',
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => 'billypennnews',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => 'gmail.com',
                 'PEDESTAL_EMAIL_PLACEHOLDER'      => 'the.incline@example.org',

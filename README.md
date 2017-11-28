@@ -1,9 +1,9 @@
-Build [#3963](https://circleci.com/gh/spiritedmedia/spiritedmedia/3963) by montchr at 2017-11-20 05:59 PM UTC
+Build [#3981](https://circleci.com/gh/spiritedmedia/spiritedmedia/3981) by kingkool68 at 2017-11-28 05:59 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.5.0](https://github.com/spiritedmedia/spiritedmedia/compare/v6.5.0)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.5.1](https://github.com/spiritedmedia/spiritedmedia/compare/v6.5.1)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.4.4...v6.5.0)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.5.0...v6.5.1)
 
- - [#2369](https://github.com/spiritedmedia/spiritedmedia/pull/2369): Simplify single Story and Cluster layout
- - [#2383](https://github.com/spiritedmedia/spiritedmedia/pull/2383): Uncomment the blog URL for The Incline
- - [#2382](https://github.com/spiritedmedia/spiritedmedia/pull/2382): Add some more useful post type related body classes
+ - [#2389](https://github.com/spiritedmedia/spiritedmedia/pull/2389): Setup filters to modify pm --> p.m. and am --> a.m.
+ - [#2397](https://github.com/spiritedmedia/spiritedmedia/pull/2397): Add permanent tips + feedback component to bottom of rail
+ - [#2390](https://github.com/spiritedmedia/spiritedmedia/pull/2390): Add WP-Crontrol plugin to composer

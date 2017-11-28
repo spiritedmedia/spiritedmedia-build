@@ -130,6 +130,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => '',
                 'PEDESTAL_EMAIL_NEWS'             => '',
+                'PEDESTAL_EMAIL_TIPS'             => '',
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => '',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => '',
                 'PEDESTAL_EMAIL_FROM_NAME'        => get_bloginfo( 'name' ),
@@ -701,6 +702,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $context['site']->emails = [
                 'contact'                    => PEDESTAL_EMAIL_CONTACT,
                 'news'                       => PEDESTAL_EMAIL_NEWS,
+                'tips'                       => PEDESTAL_EMAIL_TIPS,
                 'placeholder'                => PEDESTAL_EMAIL_PLACEHOLDER,
                 'daily_newsletter_name'      => PEDESTAL_BLOG_NAME . ' Daily',
                 'daily_newsletter_send_time' => '7:00 a.m.',

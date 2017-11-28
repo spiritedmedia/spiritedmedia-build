@@ -50,6 +50,20 @@
   }
 }
 
+.widget.tips-feedback {
+  background-color: $another-lightish-color;
+  padding: rem( 16px ) rem( 48px );
+  text-align: center;
+
+  a {
+    font-weight: 700;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
 .widget.signup-email {
   @media #{$small-only} {
     .signup-email__details {

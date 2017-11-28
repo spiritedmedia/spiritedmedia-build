@@ -100,7 +100,7 @@ class Event extends Entity {
             }
             $out .= ' to ' . $end;
         }
-        return $out;
+        return apply_filters( 'pedestal_event_get_when', $out );
     }
 
     /**

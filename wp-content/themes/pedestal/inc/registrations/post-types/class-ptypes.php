@@ -107,6 +107,9 @@ class Types {
         add_filter( 'query_vars', [ $this, 'filter_query_vars' ] );
         add_filter( 'template_include', [ $this, 'filter_template_include' ] );
         add_filter( 'pedestal_stream_item_context', [ $this, 'filter_pedestal_stream_item_context' ] );
+        add_filter( 'pedestal_get_post_date', [ $this, 'filter_modify_date_time_string' ] );
+        add_filter( 'pedestal_get_modified_date', [ $this, 'filter_modify_date_time_string' ] );
+        add_filter( 'pedestal_event_get_when', [ $this, 'filter_modify_date_time_string' ] );
 
         foreach ( self::get_post_types() as $post_type ) {
             add_filter( "manage_{$post_type}_posts_columns", [ $this, 'filter_manage_posts_columns' ] );
@@ -506,6 +509,17 @@ class Types {
         $context['author_image'] = $ped_post->get_author_avatar();
         $context['author_link']  = $ped_post->get_author_permalink();
         return $context;
+    }
+
+    /**
+     * Modify a given datetime string to conform to AP style
+     *
+     * @param  string $datetime Datetime to modify
+     * @return string           Modified datetime string
+     */
+    public function filter_modify_date_time_string( $datetime = '' ) {
+        $datetime = str_replace( [ 'pm', 'am' ], [ 'p.m.', 'a.m.' ], $datetime );
+        return $datetime;
     }
 
     /*

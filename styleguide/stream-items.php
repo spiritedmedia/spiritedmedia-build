@@ -13,6 +13,7 @@ $thumbnail_image = '<img src="https://dummyimage.com/600.png">';
 $single_author = '<a href="#" data-ga-category="Author" data-ga-label="Name|FirstName LastName">FirstName LastName</a>';
 $author_image = '<img src="https://dummyimage.com/150.png">';
 $date_time = date( PEDESTAL_DATE_FORMAT . ' &\m\i\d\d\o\t; ' . PEDESTAL_TIME_FORMAT );
+$date_time = apply_filters( 'pedestal_get_post_date', $date_time );
 $machine_time = date( 'c' );
 $tweet_embed = '<div class="pedestal-embed pedestal-embed-twitter"><figure id="figure_3e4ea3ba" aria-labelledby="figcaption_3e4ea3ba"  class="c-figure  c-figure--embed  wp-caption    op-interactive" ><div  class=" c-figure__content-wrap  column-width"><blockquote class="twitter-tweet"><a href="https://twitter.com/PhillyMayor/status/879396798321872897">Tweet from @PhillyMayor</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div></figure></div>';
 

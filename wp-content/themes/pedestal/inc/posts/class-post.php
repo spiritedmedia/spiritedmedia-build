@@ -712,7 +712,8 @@ abstract class Post {
      * @return string
      */
     public function get_modified_date( $format = 'U' ) {
-        return date( $format, strtotime( $this->get_field( 'post_modified' ) ) );
+        $date = date( $format, strtotime( $this->get_field( 'post_modified' ) ) );
+        return apply_filters( 'pedestal_get_modified_date', $date );
     }
 
     /**
@@ -786,7 +787,8 @@ abstract class Post {
      * @return mixed
      */
     public function get_post_date( $format = 'U' ) {
-        return date( $format, strtotime( $this->get_field( 'post_date' ) ) );
+        $date = date( $format, strtotime( $this->get_field( 'post_date' ) ) );
+        return apply_filters( 'pedestal_get_post_date', $date );
     }
 
     /**
@@ -804,7 +806,8 @@ abstract class Post {
      * @return string  Datetime of the post separated by a dot
      */
     public function get_the_datetime() {
-        return $this->get_post_date( PEDESTAL_DATE_FORMAT ) . ' &middot; ' . $this->get_post_date( PEDESTAL_TIME_FORMAT );
+        $datetime = $this->get_post_date( PEDESTAL_DATE_FORMAT ) . ' &middot; ' . $this->get_post_date( PEDESTAL_TIME_FORMAT );
+        return apply_filters( 'pedestal_get_the_datetime', $datetime );
     }
 
     /**

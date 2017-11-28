@@ -80,6 +80,7 @@ class Billy_Penn extends Pedestal {
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => 'contact@billypenn.com',
                 'PEDESTAL_EMAIL_NEWS'             => 'news@billypenn.com',
+                'PEDESTAL_EMAIL_TIPS'             => 'tips@billypenn.com',
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => 'billypennnews',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => 'gmail.com',
                 'PEDESTAL_EMAIL_PLACEHOLDER'      => 'william.penn@example.org',

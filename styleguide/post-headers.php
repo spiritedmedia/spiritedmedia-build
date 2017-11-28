@@ -10,6 +10,7 @@ $image_url = 'https://dummyimage.com/1024x16:9.png';
 $image_caption = 'This is an image caption for display under the featured image.';
 $image_credit = 'Credit/Source';
 $date_time = date( PEDESTAL_DATE_FORMAT . ' &\m\i\d\d\o\t; ' . PEDESTAL_TIME_FORMAT );
+$date_time = apply_filters( 'pedestal_get_post_date', $date_time );
 $machine_time = date( 'c' );
 
 ob_start();
