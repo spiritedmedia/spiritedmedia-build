@@ -142,43 +142,6 @@
         }
     },
     {
-        "name": "deliciousbrains/wp-amazon-web-services",
-        "version": "1.0.4",
-        "version_normalized": "1.0.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/deliciousbrains/wp-amazon-web-services.git",
-            "reference": "54b55db5176bc75f0e3f81efb71d857175a3fd1c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/deliciousbrains/wp-amazon-web-services/zipball/54b55db5176bc75f0e3f81efb71d857175a3fd1c",
-            "reference": "54b55db5176bc75f0e3f81efb71d857175a3fd1c",
-            "shasum": ""
-        },
-        "require": {
-            "composer/installers": "~1.0.6"
-        },
-        "time": "2017-11-20T15:11:49+00:00",
-        "type": "wordpress-plugin",
-        "installation-source": "dist",
-        "license": [
-            "GPLv3"
-        ],
-        "description": "Houses the Amazon Web Services (AWS) PHP libraries and manages access keys. Required by other AWS plugins.",
-        "homepage": "https://github.com/deliciousbrains/wp-amazon-web-services",
-        "keywords": [
-            "amazon",
-            "amazon-web-services",
-            "aws",
-            "plugin"
-        ],
-        "support": {
-            "source": "https://github.com/deliciousbrains/wp-amazon-web-services/tree/1.0.4",
-            "issues": "https://github.com/deliciousbrains/wp-amazon-web-services/issues"
-        }
-    },
-    {
         "name": "fusioneng/image-shortcake",
         "version": "dev-spiritedmedia",
         "version_normalized": "dev-spiritedmedia",
@@ -864,17 +827,17 @@
     },
     {
         "name": "google/apiclient-services",
-        "version": "v0.35",
-        "version_normalized": "0.35.0.0",
+        "version": "v0.36",
+        "version_normalized": "0.36.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/google/google-api-php-client-services.git",
-            "reference": "8c3926a9dafcd1bc86e5af06a1bb7e4aa931c73c"
+            "reference": "2fd7d2876fbc0174faddba3241956a1393536159"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/8c3926a9dafcd1bc86e5af06a1bb7e4aa931c73c",
-            "reference": "8c3926a9dafcd1bc86e5af06a1bb7e4aa931c73c",
+            "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/2fd7d2876fbc0174faddba3241956a1393536159",
+            "reference": "2fd7d2876fbc0174faddba3241956a1393536159",
             "shasum": ""
         },
         "require": {
@@ -883,7 +846,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.8"
         },
-        "time": "2017-11-18T00:23:16+00:00",
+        "time": "2017-11-25T00:23:12+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1062,35 +1025,6 @@
             "ipsum",
             "lorem"
         ]
-    },
-    {
-        "name": "spiritedmedia/amazon-s3-and-cloudfront-pro",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "git@github.com:spiritedmedia/amazon-s3-and-cloudfront-pro.git",
-            "reference": "3c46b3f762cdea368fdb4ea35c7548880a8682c6"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/amazon-s3-and-cloudfront-pro/zipball/3c46b3f762cdea368fdb4ea35c7548880a8682c6",
-            "reference": "3c46b3f762cdea368fdb4ea35c7548880a8682c6",
-            "shasum": ""
-        },
-        "time": "2016-12-20T23:21:39+00:00",
-        "type": "wordpress-plugin",
-        "installation-source": "source",
-        "authors": [
-            {
-                "name": "Spirited Media",
-                "email": "product@spiritedmedia.com"
-            }
-        ],
-        "support": {
-            "source": "https://github.com/spiritedmedia/amazon-s3-and-cloudfront-pro/tree/master",
-            "issues": "https://github.com/spiritedmedia/amazon-s3-and-cloudfront-pro/issues"
-        }
     },
     {
         "name": "spiritedmedia/tablepress-responsive-tables",
@@ -1663,6 +1597,50 @@
         ]
     },
     {
+        "name": "wpackagist-plugin/amazon-s3-and-cloudfront",
+        "version": "1.2.1",
+        "version_normalized": "1.2.1.0",
+        "source": {
+            "type": "svn",
+            "url": "https://plugins.svn.wordpress.org/amazon-s3-and-cloudfront/",
+            "reference": "tags/1.2.1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://downloads.wordpress.org/plugin/amazon-s3-and-cloudfront.1.2.1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "~1.0"
+        },
+        "type": "wordpress-plugin",
+        "installation-source": "dist",
+        "homepage": "https://wordpress.org/plugins/amazon-s3-and-cloudfront/"
+    },
+    {
+        "name": "wpackagist-plugin/amazon-web-services",
+        "version": "1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "svn",
+            "url": "https://plugins.svn.wordpress.org/amazon-web-services/",
+            "reference": "tags/1.0.4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://downloads.wordpress.org/plugin/amazon-web-services.1.0.4.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "composer/installers": "~1.0"
+        },
+        "type": "wordpress-plugin",
+        "installation-source": "dist",
+        "homepage": "https://wordpress.org/plugins/amazon-web-services/"
+    },
+    {
         "name": "wpackagist-plugin/bwp-google-xml-sitemaps",
         "version": "1.4.1",
         "version_normalized": "1.4.1.0",
@@ -1840,16 +1818,16 @@
     },
     {
         "name": "wpackagist-plugin/wp-crontrol",
-        "version": "1.5",
-        "version_normalized": "1.5.0.0",
+        "version": "1.6.2",
+        "version_normalized": "1.6.2.0",
         "source": {
             "type": "svn",
             "url": "https://plugins.svn.wordpress.org/wp-crontrol/",
-            "reference": "tags/1.5"
+            "reference": "tags/1.6.2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/wp-crontrol.1.5.zip",
+            "url": "https://downloads.wordpress.org/plugin/wp-crontrol.1.6.2.zip",
             "reference": null,
             "shasum": null
         },

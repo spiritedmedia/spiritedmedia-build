@@ -1,9 +1,0 @@
-{
-	"name": "spiritedmedia/amazon-s3-and-cloudfront-pro",
-	"type": "wordpress-plugin",
-	"authors": [{
-		"name": "Spirited Media",
-		"email": "product@spiritedmedia.com"
-	}],
-	"require": {}
-}

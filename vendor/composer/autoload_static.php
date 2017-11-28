@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b
+class ComposerStaticInit539166d9120133359778c3ab4b96117b
 {
     public static $files = array (
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
@@ -2741,6 +2741,7 @@ class ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b
         'Google_Service_DLP_GoogleLongrunningListOperationsResponse' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GoogleLongrunningListOperationsResponse.php',
         'Google_Service_DLP_GoogleLongrunningOperation' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GoogleLongrunningOperation.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1AnalyzeDataSourceRiskRequest' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1AnalyzeDataSourceRiskRequest.php',
+        'Google_Service_DLP_GooglePrivacyDlpV2beta1AuxiliaryTable' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1AuxiliaryTable.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1BigQueryOptions' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1BigQueryOptions.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1BigQueryTable' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1BigQueryTable.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1Bucket' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1Bucket.php',
@@ -2795,6 +2796,10 @@ class ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b
         'Google_Service_DLP_GooglePrivacyDlpV2beta1KAnonymityEquivalenceClass' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1KAnonymityEquivalenceClass.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1KAnonymityHistogramBucket' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1KAnonymityHistogramBucket.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1KAnonymityResult' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1KAnonymityResult.php',
+        'Google_Service_DLP_GooglePrivacyDlpV2beta1KMapEstimationConfig' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1KMapEstimationConfig.php',
+        'Google_Service_DLP_GooglePrivacyDlpV2beta1KMapEstimationHistogramBucket' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1KMapEstimationHistogramBucket.php',
+        'Google_Service_DLP_GooglePrivacyDlpV2beta1KMapEstimationQuasiIdValues' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1KMapEstimationQuasiIdValues.php',
+        'Google_Service_DLP_GooglePrivacyDlpV2beta1KMapEstimationResult' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1KMapEstimationResult.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1Key' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1Key.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1KindExpression' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1KindExpression.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1KmsWrappedCryptoKey' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1KmsWrappedCryptoKey.php',
@@ -2816,6 +2821,7 @@ class ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b
         'Google_Service_DLP_GooglePrivacyDlpV2beta1PrivacyMetric' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1PrivacyMetric.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1Projection' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1Projection.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1PropertyReference' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1PropertyReference.php',
+        'Google_Service_DLP_GooglePrivacyDlpV2beta1QuasiIdField' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1QuasiIdField.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1Range' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1Range.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1RecordCondition' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1RecordCondition.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1RecordKey' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1RecordKey.php',
@@ -2834,6 +2840,7 @@ class ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b
         'Google_Service_DLP_GooglePrivacyDlpV2beta1SummaryResult' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1SummaryResult.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1Table' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1Table.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1TableLocation' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1TableLocation.php',
+        'Google_Service_DLP_GooglePrivacyDlpV2beta1TaggedField' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1TaggedField.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1TimePartConfig' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1TimePartConfig.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1TransformationSummary' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1TransformationSummary.php',
         'Google_Service_DLP_GooglePrivacyDlpV2beta1TransientCryptoKey' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/DLP/GooglePrivacyDlpV2beta1TransientCryptoKey.php',
@@ -6274,6 +6281,8 @@ class ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b
         'Google_Service_TPU_Node' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/TPU/Node.php',
         'Google_Service_TPU_Operation' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/TPU/Operation.php',
         'Google_Service_TPU_OperationMetadata' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/TPU/OperationMetadata.php',
+        'Google_Service_TPU_ReimageNodeRequest' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/TPU/ReimageNodeRequest.php',
+        'Google_Service_TPU_ResetNodeRequest' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/TPU/ResetNodeRequest.php',
         'Google_Service_TPU_Resource_Projects' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/TPU/Resource/Projects.php',
         'Google_Service_TPU_Resource_ProjectsLocations' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/TPU/Resource/ProjectsLocations.php',
         'Google_Service_TPU_Resource_ProjectsLocationsNodes' => __DIR__ . '/..' . '/google/apiclient-services/src/Google/Service/TPU/Resource/ProjectsLocationsNodes.php',
@@ -7619,11 +7628,11 @@ class ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit38a73d8f9ce27573c45d1eb449ba611b::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit539166d9120133359778c3ab4b96117b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit539166d9120133359778c3ab4b96117b::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit539166d9120133359778c3ab4b96117b::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit539166d9120133359778c3ab4b96117b::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit539166d9120133359778c3ab4b96117b::$classMap;
 
         }, null, ClassLoader::class);
     }
