@@ -15,7 +15,7 @@ if ( ! get_query_var( 'paged' ) ) {
         case 'billy-penn':
             $context['stream_header_city'] = PEDESTAL_CITY_NICKNAME;
             break;
-        case 'default':
+        default:
             $context['stream_header_city'] = PEDESTAL_CITY_NAME;
     }
 }

@@ -1,7 +1,7 @@
-Build [#4098](https://circleci.com/gh/spiritedmedia/spiritedmedia/4098) by montchr at 2017-12-26 08:36 PM UTC
+Build [#4104](https://circleci.com/gh/spiritedmedia/spiritedmedia/4104) by montchr at 2017-12-26 10:03 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.3](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.3)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.4](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.4)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.2...v6.6.3)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.3...v6.6.4)
 
- - [#2421](https://github.com/spiritedmedia/spiritedmedia/pull/2421): [HOTFIX] Only show stream header on first page
+ - [#2423](https://github.com/spiritedmedia/spiritedmedia/pull/2423): [HOTFIX] `default` not `case 'default'` in stream header switch statement
