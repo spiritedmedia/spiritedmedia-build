@@ -173,9 +173,16 @@ if ( defined( 'S3_UPLOADS_BUCKET' ) ) {
             $new_str = 's3.amazonaws.com/wp-content/uploads';
         }
 
-        $dirs['url']      = str_replace( $old_str, $new_str, $dirs['url'] );
-        $dirs['baseurl']  = str_replace( $old_str, $new_str, $dirs['baseurl'] );
-        $dirs['relative'] = str_replace( $old_str, $new_str, $dirs['relative'] );
+        $keys_to_replace = [
+            'url',
+            'baseurl',
+            'relative',
+        ];
+        foreach ( $keys_to_replace as $key ) {
+            if ( ! empty( $dirs[ $key ] ) ) {
+                $dirs[ $key ] = str_replace( $old_str, $new_str, $dirs[ $key ] );
+            }
+        }
 
         return $dirs;
     }, 11 );
