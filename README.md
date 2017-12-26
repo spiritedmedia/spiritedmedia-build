@@ -1,7 +1,7 @@
-Build [#4093](https://circleci.com/gh/spiritedmedia/spiritedmedia/4093) by kingkool68 at 2017-12-26 07:43 PM UTC
+Build [#4098](https://circleci.com/gh/spiritedmedia/spiritedmedia/4098) by montchr at 2017-12-26 08:36 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.2](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.2)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.3](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.3)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.1...v6.6.2)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.2...v6.6.3)
 
- - [#2420](https://github.com/spiritedmedia/spiritedmedia/pull/2420): Hotfix: Prevent PHP Notice for Undefined upload_dir Array Key
+ - [#2421](https://github.com/spiritedmedia/spiritedmedia/pull/2421): [HOTFIX] Only show stream header on first page

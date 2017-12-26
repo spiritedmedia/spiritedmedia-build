@@ -23,11 +23,13 @@
             </section>
             {% endif %}
 
+            {% if stream_header_city %}
             <header class="stream__header">
                 <div class="stream__header__inner">
                     {% include 'partials/stream/stream-header.twig' %}
                 </div>
             </header>
+            {% endif %}
 
             <div class="stream__items">
                 {{ stream }}
