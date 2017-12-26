@@ -58,12 +58,33 @@ class Event extends Entity {
     }
 
     /**
-     * Get an event location in "venue (address)"" format
+     * Get the full 'where' for the event
+     *
+     * @return string
+     */
+    public function get_where() {
+        $where = '';
+        $venue = $this->get_venue_name();
+        $address = $this->get_address();
+        if ( $venue ) {
+            $where .= $venue;
+        }
+        if ( $venue && $address ) {
+            $where .= ' at ';
+        }
+        if ( $address ) {
+            $where .= $address;
+        }
+        return $where;
+    }
+
+    /**
+     * Get an event location in "venue (address)"" format for ICS
      *
      * @param  boolean $escape  Whether to escape the string
      * @return string           The location in "venue (address)" format"
      */
-    public function get_location( $escape = false ) {
+    public function get_ics_location( $escape = false ) {
         $venue = $this->get_venue_name();
         $address = $this->get_address();
         $location = "$venue ($address)";
@@ -174,7 +195,7 @@ class Event extends Entity {
             'text'     => $this->get_summary(),
             'dates'    => $dates,
             'details'  => $this->get_description(),
-            'location' => $this->get_location(),
+            'location' => $this->get_ics_location(),
             'output'   => 'xml',
         ];
 
@@ -289,34 +310,29 @@ class Event extends Entity {
     }
 
     /**
-     * Render a table of event details
-     *
-     * @TODO This method should prepare data for the template beforehand,
-     *     however that would require a slight bit of refactoring.
-     *
-     * @return string  HTML markup of the event details table
-     */
-    public function get_details_table() {
-        $context = Timber::get_context();
-        $context['item'] = $this;
-
-        ob_start();
-            Timber::render( 'partials/events/details.twig', $context );
-        return ob_get_clean();
-    }
-
-    /**
      * Get the Twig context for this post
      *
      * @return array Twig context
      */
     public function get_context() {
         $context = [
-            'content'         => $this->get_details_table(),
-            'content_classes' => [ 'c-event' ],
-            'event_more'      => $this->get_more(),
+            'what'            => $this->get_what(),
+            'where'           => $this->get_where(),
+            'when'            => $this->get_when(),
+            'cost'            => $this->get_cost(),
+            'cta_link'        => $this->get_details_link_url(),
+            'cta_label'       => $this->get_details_link_text(),
+            'cta_source'      => $this->get_fm_field( 'event_details', 'cta_source' ),
             'show_meta_info'  => false,
+            'content'         => '',
+            'show_header'     => true,
         ] + parent::get_context();
+        if ( is_singular( static::$post_type ) ) {
+            $context['show_header'] = false;
+        }
+        ob_start();
+            Timber::render( 'partials/event.twig', $context );
+        $context['content'] = ob_get_clean();
         return $context;
     }
 }

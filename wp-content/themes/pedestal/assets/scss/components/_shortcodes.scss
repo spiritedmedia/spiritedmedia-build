@@ -9,6 +9,11 @@
 .pedestal-shortcode {}
 
 
+.pedestal-shortcode--event {
+  margin-bottom: rem( 24px );
+}
+
+
 
 
 
@@ -49,23 +54,4 @@
   &::before {
     vertical-align: -8%;
   }
-}
-
-
-
-
-
-//
-// Twitter
-// ==========================================================================
-
-
-.twitter-tweet {
-  margin-left: auto;
-  margin-right: auto;
-
-  // Make sure unrendered tweets have the same width as rendered tweets
-  width: rem( 500px );
-  max-width: 100%;
-  min-width: rem( 220px );
 }

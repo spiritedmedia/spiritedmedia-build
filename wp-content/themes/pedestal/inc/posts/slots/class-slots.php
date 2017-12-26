@@ -71,6 +71,10 @@ class Slots {
             'site'  => [ 'single_lead', 'shortcode' ],
             'email' => [],
         ],
+        'stream' => [
+            'site' => [ 'stream_item' ],
+            'email' => [],
+        ],
     ];
 
     public static function get_instance() {

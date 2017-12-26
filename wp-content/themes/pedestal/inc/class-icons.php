@@ -11,16 +11,9 @@ class Icons {
         static $instance = null;
         if ( null === $instance ) {
             $instance = new static();
-            $instance->setup_actions();
             $instance->setup_filters();
         }
         return $instance;
-    }
-
-    private function setup_actions() {
-        add_action( 'add_attachment', [ $this, 'update_svg_fallback' ] );
-        add_action( 'edit_attachment', [ $this, 'update_svg_fallback' ] );
-        add_action( 'delete_attachment', [ $this, 'delete_svg_fallback' ] );
     }
 
     private function setup_filters() {
@@ -186,102 +179,5 @@ class Icons {
             $atts['class'] = implode( ' ', $atts['class'] );
         }
         return $atts;
-    }
-
-    /**
-     * Save a PNG fallback for SVG.
-     *
-     * @link http://eperal.com/automatically-generate-png-images-from-uploaded-svg-images-in-wordpress/
-     *
-     * @param int    $attachment_id
-     * @param string $color         Hex foreground color
-     */
-    static function save_svg_fallback( $attachment_id, $color ) {
-        $attachment_src = get_attached_file( $attachment_id );
-        $fallback_src = str_replace( '.svg','.png', $attachment_src );
-
-        // Load the re-colorized SVG into memory
-        $svg = static::recolor_svg( $attachment_id, $color );
-
-        // Create PNG from SVG
-        $im = new \Imagick();
-        $im->setBackgroundColor( new \ImagickPixel( 'transparent' ) );
-        $im->readImageBlob( $svg );
-        $im->trimImage( 0 );
-        $im->setImageFormat( 'png' );
-        $im->resizeImage( 25, 25, \Imagick::FILTER_LANCZOS, 1 );  /*Optional, if you need to resize*/
-        $im->writeImage( $fallback_src );
-        $im->clear();
-        $im->destroy();
-    }
-
-    /**
-     * Save optimized SVG
-     *
-     * @param  SVG    $svg          An SVG file loaded into memory
-     * @param  string $path         Path to save the SVG to
-     * @param  string $fallback_url URL to load as fallback image
-     */
-    static function save_svg( $svg, $path, $fallback_url ) {
-        // @codingStandardsIgnoreStart
-        $dom = new \DOMDocument();
-        $dom->loadXML( $svg );
-        $dom->createAttributeNS( 'http://www.w3.org/1999/xlink', 'xmlns:xlink' );
-        $dom->documentElement->removeAttribute( 'width' );
-        $dom->documentElement->removeAttribute( 'height' );
-        foreach ( $dom->getElementsByTagName( 'image' ) as $image ) {
-            $image->parentNode->removeChild( $image );
-        }
-        $f = $dom->createDocumentFragment();
-        $f->appendXML( "<image src='$fallback_url'></image>" );
-        $dom->documentElement->appendChild( $f );
-        file_put_contents( $path, $dom->saveXML() );
-        // @codingStandardsIgnoreEnd
-    }
-
-    /**
-     * Change the SVG fill color based on ID
-     *
-     * @param  int    $attachment_id SVG attachment ID
-     * @param  string $color         Hex color to replace with
-     * @return SVG
-     */
-    static function recolor_svg( $attachment_id, $color ) {
-        $attachment_src = get_attached_file( $attachment_id );
-        $svg = Utils::file_get_contents_with_auth( $attachment_src );
-        // The SVG must have the xml declaration.
-        // Very hacky.
-        if ( '?' != $svg[1] ) {
-            $svg = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' . $svg;
-        }
-        // Search/replace 3- or 6-character hex color code
-        return preg_replace( '/#(?:[0-9a-fA-F]{3}){1,2}\b/i', $color, $svg );
-    }
-
-    /**
-     * When an attachment is uploaded, create svg fallback.
-     *
-     * @param int $attachment_id
-     */
-    static function update_svg_fallback( $attachment_id ) {
-        $type = get_post_mime_type( $attachment_id );
-        if ( 'image/svg+xml' == $type ) {
-            static::save_svg_fallback( $attachment_id, '#ffffff' );
-        }
-    }
-
-    /**
-     * Remove PNG fallback for SVG on attatchment delete.
-     *
-     * @link http://eperal.com/automatically-generate-png-images-from-uploaded-svg-images-in-wordpress/
-     *
-     * @param int $attachment_id
-     */
-    static function delete_svg_fallback( $attachment_id ) {
-        $type = get_post_mime_type( $attachment_id );
-        if ( 'image/svg+xml' == $type ) {
-            $attachment_src = get_attached_file( $attachment_id ); // Gets path to attachment
-            unlink( str_replace( '.svg','.png', $attachment_src ) );
-        }
     }
 }

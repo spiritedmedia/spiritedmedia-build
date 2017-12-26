@@ -33,7 +33,7 @@ $grey-95                 : #f2f2f2;
 $grey-90                 : #e6e6e6; // only used as top bar background
 $grey-80                 : #cccccc; //
 $grey-70                 : #b3b3b3; //
-$grey-62                 : #9f9f9f; //
+$grey-62                 : #9e9e9e; //
 $grey-46                 : #767676; // minimum darkness for text
 $grey-40                 : #666666; // only used as link hover color
 $grey-25                 : #3f3f3f; //
@@ -45,13 +45,18 @@ $purple-phase            : #bf7dbb;
 $blood-orange            : #db7053;
 $yet-another-red         : #c73e1d; // Red call to action
 $absinthe                : #c1a540;
-$latte                   : #e6e6de;
 $mustard-gas             : #b26536;
-$truth-serum             : #efeeec;
 $elektroid-yellow        : #fcd651;
 $another-lightish-color  : #eae6e1;
 $spiritedmedia-brand     : #333333;
 
+// These colors are all too similar...
+$latte                   : #e6e6de;
+$truth-serum             : #efeeec;
+$another-lightish-color  : #eae6e1;
+$another-another-lightish-color: #ebebeb;
+
+// Brand colors
 $twitter-blue            : #4fa8e0;
 $facebook-blue           : #3b5998;
 
@@ -105,7 +110,6 @@ $icon-widths: (
   calendar       : 0.9285714285714285em,
   close          : 0.7857142857142857em,
   envelope-slant : 0.8571428571428571em,
-  external-link  : 0.675586em, // IcoMoon set 0.975586em, may need changing on update
   facebook       : 0.5881428571428571em,
   instagram      : 0.8571428571428571em,
   level-down     : 0.5730714285714286em,

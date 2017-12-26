@@ -13,6 +13,9 @@ googletag.cmd = googletag.cmd || [];
 
 // We dynamically define ad slots on the page based on the ad markup present
 googletag.cmd.push(function() {
+  // Dyanmically load the DFP ID from the data attribute of this script 
+  var DFP_ID = document.getElementById( 'dfp-load' )
+    .getAttribute( 'data-dfp-id' );
   // The ad slots we will tell Google Tag about
   var slots = [];
   (function($) {
@@ -44,7 +47,7 @@ googletag.cmd.push(function() {
         }
         sizes.push(dimensions);
       });
-      var path = '/104495818/' + slotName;
+      var path = '/' + DFP_ID + '/' + slotName;
       var id = 'div-gpt-ad-' + slotName + '-0';
       slots.push(googletag
         .defineSlot(path, sizes, id)

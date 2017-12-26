@@ -1,0 +1,123 @@
+// ==========================================================================
+// Pedestal // Components // TYPOGRAPHY
+// ==========================================================================
+
+
+
+//
+// Type Style: Headline Link
+// ==========================================================================
+
+
+.type-headline {
+  font-size: rem( 24px );
+  font-weight: 600;
+  letter-spacing: em( -0.65px );
+  line-height: 1;
+}
+
+.type-headline,
+.type-headline__link {
+  color: $body-font-color;
+}
+
+.type-headline__link {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
+@media #{$medium-up} {
+  .type-headline {
+    font-size: rem( 27px );
+    letter-spacing: rem( -0.8px );
+  }
+}
+
+
+
+
+
+//
+// Type Style: Meta Info
+// ==========================================================================
+// Font size should only be applied to text, but the link can wrap around
+// non-text elements, so we need to have two selectors here -- one for text
+// and one for the root element.
+
+
+.type-meta-info {
+  font-weight: normal;
+  line-height: 1;
+
+  // stylelint-disable selector-max-type
+  &,
+  a {
+    &,
+    &:hover,
+    &:active {
+      color: $body-font-color;
+    }
+  }
+  // stylelint-enable selector-max-type
+}
+
+.type-meta-info__text {
+  font-size: rem( 14px );
+}
+
+
+
+
+
+//
+// Headings
+// ==========================================================================
+
+
+.c-heading {}
+
+.c-heading__title {}
+
+/*a*/.c-heading__link {}
+
+
+.c-heading--minor,
+%c-heading--minor,
+.c-heading--light,
+.c-heading--overline {
+  &,
+  .c-heading__title {
+    @include h-size( 6 );
+
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+}
+
+.c-heading--minor,
+%c-heading--minor,
+.c-heading--overline {
+  font-weight: 700;
+}
+
+.c-heading--light {
+  font-weight: 400;
+  color: $dimmed-text-color;
+}
+
+.c-heading--overline {
+  margin-bottom: $overline-margin-bottom;
+}
+
+.c-heading--archive {
+  @include h-size( 3 );
+
+  color: $header-font-color;
+  font-weight: 300;
+
+  .c-heading__title {
+    font-weight: 700;
+  }
+}

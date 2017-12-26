@@ -196,7 +196,7 @@ class Adverts {
             'permalink'       => $data['url'],
             'title'           => $data['title'],
             'thumbnail_image' => $data['featured_image'],
-            'source_name'     => 'Sponsored by ' . $data['sponsored_by'],
+            'source_name'     => $data['sponsored_by'],
             'source_image'    => Icons::get_icon( 'external-link' ),
             'source_link'     => $data['url'],
         ];

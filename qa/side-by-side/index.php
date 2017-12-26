@@ -4,17 +4,17 @@ $url_groups = [
     [
         'prod'  => 'https://billypenn.com',
         'stage' => 'https://staging.billypenn.com',
-        'dev'   => 'http://billypenn.dev',
+        'dev'   => 'https://billypenn.dev',
     ],
     [
         'prod'  => 'https://theincline.com',
         'stage' => 'https://staging.theincline.com',
-        'dev'   => 'http://theincline.dev',
+        'dev'   => 'https://theincline.dev',
     ],
     [
         'prod'  => 'https://www.denverite.com',
         'stage' => 'http://dnvrite.staging.wpengine.com',
-        'dev'   => 'http://denverite.local',
+        'dev'   => 'https://denverite.dev',
     ],
 ];
 

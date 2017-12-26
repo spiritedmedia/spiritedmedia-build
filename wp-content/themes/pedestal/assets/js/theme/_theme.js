@@ -9,6 +9,9 @@
       $(document).foundation();
       $('html').removeClass('no-js').addClass('js');
 
+      // Video controls will be hidden for small screens < 480px wide
+      this.showVideoControls = ($(window).width() >= 480);
+
       // CSS object-fit polyfill
       // https://github.com/bfred-it/object-fit-images/
       objectFitImages('.js-stream-item-img img', {watchMQ: true});
@@ -24,6 +27,11 @@
 
       PedestalModal();
     },
+
+    /**
+     * Show video controls?
+     */
+    showVideoControls: true,
 
     /**
      * Bind all events
@@ -204,20 +212,33 @@
     }, // end honeyPotHelper()
 
     lazyLoad: function() {
+      const controls = this.showVideoControls ? 1 : 0;
+
       $('.content-wrapper').on('click', '.js-yt-placeholder-link', function(e) {
-        var $this = $(this);
-        var youTubeID = $this.data('youtube-id');
+        const $this = $(this);
+        const youTubeID = $this.data('youtube-id');
+
         if (!youTubeID) {
           return;
         }
-        var $parent = $this.parents('.js-yt-placeholder');
-        var iframeURL = 'https://www.youtube.com/embed/';
-        iframeURL += youTubeID + '?showinfo=0&autoplay=1';
-        var youTubeIframe = '<iframe ';
+
+        const $parent = $this.parents('.js-yt-placeholder');
+        const params = {
+          autoplay: 1,
+          cc_load_policy: 1,
+          color: 'white',
+          controls: controls,
+          showinfo: 0
+        };
+        const query = $.param(params);
+        const iframeURL = `https://www.youtube.com/embed/${youTubeID}?${query}`;
+
+        let youTubeIframe = '<iframe ';
         youTubeIframe += 'src="' + iframeURL + '" ';
         youTubeIframe += 'frameborder="0" ';
         youTubeIframe += 'allowfullscreen ';
         youTubeIframe += '/>';
+
         // Append the iFrame so it can load a little bit
         $parent.append(youTubeIframe);
         // Fadeout the play icon and link

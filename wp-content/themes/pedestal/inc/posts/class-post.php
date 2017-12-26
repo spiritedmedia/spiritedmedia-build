@@ -801,6 +801,36 @@ abstract class Post {
     }
 
     /**
+     * Get the relative date for the stream
+     *
+     * Fall back to the normal datetime string if published more than a day ago.
+     *
+     * @link https://stackoverflow.com/a/25623230
+     * @return string
+     */
+    public function get_the_relative_datetime() {
+        $now = new \DateTime;
+        $match_date = new \DateTime;
+        $match_date->setTimestamp( $this->get_post_date() );
+
+        // Reset time part, to prevent partial day comparison
+        $now->setTime( 0, 0, 0 );
+        $match_date->setTime( 0, 0, 0 );
+
+        // Extract days count in interval
+        $diff = $now->diff( $match_date );
+        $diff_days = (integer) $diff->format( '%R%a' );
+        switch ( $diff_days ) {
+            case 0:
+                return 'Today';
+            case -1:
+                return 'Yesterday';
+            default:
+                return $this->get_the_datetime();
+        }
+    }
+
+    /**
      * Get a formatted date time string
      *
      * @return string  Datetime of the post separated by a dot

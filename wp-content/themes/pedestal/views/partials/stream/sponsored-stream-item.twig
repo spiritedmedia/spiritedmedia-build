@@ -11,102 +11,91 @@
 
 <article class="stream-item stream-item--{{ type }}" {{ stream_index }}>
 
-    {% if overline %}
-        <p class="stream-item__overline c-heading--overline">
-            {% if overline_url %}
-                <a
-                    href="{{ overline_url|esc_url }}"
-                    rel="nofollow"
-                    target="_blank"
-                    class="stream-item__overline-link"
-                    data-ga-category="Sponsored"
-                    data-ga-label="Overline|{{ overline|esc_attr }}"
-                >
-                    {{ overline }}
-                </a>
-            {% else %}
-                {{ overline }}
-            {% endif %}
-        </p>
-    {% endif %}
+    <div class="stream-item__inner">
 
-    {% if thumbnail_image %}
-        <figure class="stream-item__thumbnail-container">
-            {% if permalink %}
-                <a
-                    href="{{ permalink|esc_url }}"
-                    class="stream-item__thumbnail-image-link"
-                    data-ga-category="Sponsored"
-                    data-ga-label="Image|{{ title|esc_attr }}"
-                >
+        {% if thumbnail_image %}
+            <figure class="stream-item__thumbnail-container">
+                {% if permalink %}
+                    <a
+                        href="{{ permalink|esc_url }}"
+                        class="stream-item__thumbnail-image-link"
+                        data-ga-category="Sponsored"
+                        data-ga-label="Image|{{ title|esc_attr }}"
+                    >
+                        {{ thumbnail_image }}
+                    </a>
+                {% else %}
                     {{ thumbnail_image }}
-                </a>
-            {% else %}
-                {{ thumbnail_image }}
-            {% endif %}
-        </figure>
-    {% endif %}
-
-    {% if thumbnail_image %}
-        <div class="stream-item__inner">
-    {% endif %}
-
-    <h1 class="stream-item__title">
-        {% if permalink %}
-            <a
-                href="{{ permalink|esc_url }}"
-                rel="nofollow"
-                target="_blank"
-                class="stream-item__title-link"
-                data-ga-category="Sponsored"
-                data-ga-label="Title|{{ title|esc_attr }}"
-            >
-                {{ title }}
-            </a>
-        {% else %}
-            {{ title }}
+                {% endif %}
+            </figure>
         {% endif %}
-    </h1>
 
-    {% if thumbnail_image %}
+        <div class="stream-item__body">
+
+            {% if overline %}
+                <p class="stream-item__overline c-heading--overline">
+                    {% if overline_url %}
+                        <a
+                            href="{{ overline_url|esc_url }}"
+                            rel="nofollow"
+                            target="_blank"
+                            class="stream-item__overline-link"
+                            data-ga-category="Sponsored"
+                            data-ga-label="Overline|{{ overline|esc_attr }}"
+                        >
+                            {{ overline }}
+                        </a>
+                    {% else %}
+                        {{ overline }}
+                    {% endif %}
+                </p>
+            {% endif %}
+
+            <h1 class="stream-item__title type-headline">
+                {% if permalink %}
+                    <a
+                        href="{{ permalink|esc_url }}"
+                        rel="nofollow"
+                        target="_blank"
+                        class="stream-item__title-link type-headline__link"
+                        data-ga-category="Sponsored"
+                        data-ga-label="Title|{{ title|esc_attr }}"
+                    >
+                        {{ title }}
+                    </a>
+                {% else %}
+                    {{ title }}
+                {% endif %}
+            </h1>
+
+            {% if source_image or source_name %}
+            <footer class="stream-item__footer type-meta-info">
+
+                {# Setup some attributes #}
+                {% if source_link %}
+                    {% set source_link_href = 'href="' ~ source_link|esc_url ~ '"' %}
+                {% endif %}
+
+                {% if source_name %}
+                    <div class="stream-item__footer__text type-meta-info__text">
+                        Sponsored by
+                        <a
+                            {{ source_link_href }}
+                            rel="nofollow"
+                            target="_blank"
+                            class="stream-item__source-name"
+                            data-ga-category="Source|{{ type|esc_attr }}"
+                            data-ga-label="Name|{{ source_name|esc_attr }}"
+                        >
+                            {{ source_name }}
+                        </a>
+                    </div>
+                {% endif %}
+
+            </footer>
+            {% endif %}
+
         </div>
-    {% endif %}
 
-    {% if source_image or source_name %}
-        <footer class="stream-item__footer {% if is_footer_compact %}stream-item__footer--compact{% endif %}">
-
-            {# Setup some attributes #}
-            {% if source_link %}
-                {% set source_link_href = 'href="' ~ source_link|esc_url ~ '"' %}
-            {% endif %}
-
-            {# Display stuff #}
-            {% if source_image %}
-                <a
-                    {{ source_link_href }}
-                    rel="nofollow"
-                    target="_blank"
-                    class="stream-item__source-image"
-                    data-ga-category="Source|{{ type|esc_attr }}"
-                    data-ga-label="Source Image|{{ source_name|esc_attr }}"
-                >
-                    {{ source_image }}
-                </a>
-            {% endif %}
-
-            {% if source_name %}
-                <a
-                    {{ source_link_href }}
-                    rel="nofollow"
-                    target="_blank"
-                    class="stream-item__source-name"
-                    data-ga-category="Source|{{ type|esc_attr }}"
-                    data-ga-label="Name|{{ source_name|esc_attr }}"
-                >
-                    {{ source_name }}
-                </a>
-            {% endif %}
-
-        </footer>
-    {% endif %}
+    </div>
 </article>

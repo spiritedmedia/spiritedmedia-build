@@ -209,7 +209,12 @@ class Embed extends Entity {
 
         $html = self::do_embed( $args );
         if ( ! empty( $html ) ) {
-            $html = '<div class="' . esc_attr( 'pedestal-embed pedestal-embed-' . $this->get_embed_type() ) . '">' . $html . '</div>';
+            $classes = 'embed embed--' . $this->get_embed_type();
+            $html = sprintf(
+                '<div class="%s"><div class="embed__inner">%s</div></div>',
+                esc_attr( $classes ),
+                $html
+            );
         }
         return $html;
     }

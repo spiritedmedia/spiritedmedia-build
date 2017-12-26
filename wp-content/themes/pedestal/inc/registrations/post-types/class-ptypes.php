@@ -2,6 +2,7 @@
 
 namespace Pedestal\Registrations\Post_Types;
 
+use Pedestal\Icons;
 use Pedestal\Utils\Utils;
 use Pedestal\Posts\Post;
 use Pedestal\Posts\Entities\Link;
@@ -128,6 +129,9 @@ class Types {
         self::$groups['slots']    = Slot_Types::get_instance();
 
         // Content Types
+        self::$content_types['pedestal_article']   = Pedestal_Article::get_instance();
+        self::$content_types['pedestal_factcheck'] = Pedestal_Factcheck::get_instance();
+        self::$content_types['pedestal_whosnext']  = Pedestal_Whos_Next::get_instance();
         self::$content_types['pedestal_embed']     = Pedestal_Embed::get_instance();
         self::$content_types['pedestal_event']     = Pedestal_Event::get_instance();
         self::$content_types['pedestal_factcheck'] = Pedestal_Factcheck::get_instance();
@@ -506,7 +510,8 @@ class Types {
         }
         $truncate = true;
         $context['author_names'] = $ped_post->get_the_authors( $truncate );
-        $context['author_image'] = $ped_post->get_author_avatar();
+        $icon_size = '28';
+        $context['author_image'] = Icons::get_logo( 'logo-icon', '', $icon_size );
         $context['author_link']  = $ped_post->get_author_permalink();
         return $context;
     }

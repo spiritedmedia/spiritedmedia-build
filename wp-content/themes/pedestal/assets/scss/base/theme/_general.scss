@@ -39,6 +39,12 @@ a.disabled {
 }
 
 
+/// Prevent scrolling of img alt text when an image 404s
+img {
+  overflow: hidden;
+}
+
+
 // Use cascading SVG fill color
 // https://css-tricks.com/cascading-svg-fill-color/
 svg {

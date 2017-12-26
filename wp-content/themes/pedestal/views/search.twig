@@ -6,7 +6,9 @@
 
     {% if stream %}
         <section class="stream row small-12 columns">
-            {{ stream }}
+            <div class="stream__items">
+                {{ stream }}
+            </div>
         </section>
 
         {{ pagination }}

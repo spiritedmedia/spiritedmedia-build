@@ -138,3 +138,45 @@ $filters = [
 foreach ( $filters as $filter ) {
     add_filter( $filter, 'sm_switch_to_http_for_cache_purging' );
 }
+
+/**
+ * Remove the Image Magick graphic library which seems to cause HTML errors when uploading media
+ *
+ * @var array
+ */
+add_filter( 'wp_image_editors', function( $editors = [] ) {
+    foreach ( $editors as $index => $editor ) {
+        if ( 'WP_Image_Editor_Imagick' == $editor ) {
+            unset( $editors[ $index ] );
+        }
+    }
+    return $editors;
+});
+
+/**
+ * If S3 Uploads plugin is in use then fix the path of uploaded items to S3 so
+ * it mirrors WordPress' file structure
+ * (aka <BUCKET>/uploads/ --> <BUCKET>/wp-content/uploads/)
+ */
+if ( defined( 'S3_UPLOADS_BUCKET' ) ) {
+    add_filter( 'upload_dir', function( $dirs = [] ) {
+        $old_str = S3_UPLOADS_BUCKET . '/uploads/';
+        $new_str = S3_UPLOADS_BUCKET . '/wp-content/uploads/';
+        $dirs['path']    = str_replace( $old_str, $new_str, $dirs['path'] );
+        $dirs['basedir'] = str_replace( $old_str, $new_str, $dirs['basedir'] );
+
+        if ( defined( 'S3_UPLOADS_BUCKET_URL' ) ) {
+            $old_str = S3_UPLOADS_BUCKET_URL . '/uploads/';
+            $new_str = S3_UPLOADS_BUCKET_URL . '/wp-content/uploads/';
+        } else {
+            $old_str = 's3.amazonaws.com/uploads';
+            $new_str = 's3.amazonaws.com/wp-content/uploads';
+        }
+
+        $dirs['url']      = str_replace( $old_str, $new_str, $dirs['url'] );
+        $dirs['baseurl']  = str_replace( $old_str, $new_str, $dirs['baseurl'] );
+        $dirs['relative'] = str_replace( $old_str, $new_str, $dirs['relative'] );
+
+        return $dirs;
+    }, 11 );
+}

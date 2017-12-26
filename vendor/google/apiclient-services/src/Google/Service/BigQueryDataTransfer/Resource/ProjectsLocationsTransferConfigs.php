@@ -30,9 +30,9 @@ class Google_Service_BigQueryDataTransfer_Resource_ProjectsLocationsTransferConf
    *
    * @param string $parent The BigQuery project id where the transfer
    * configuration should be created. Must be in the format
-   * /projects/{project_id}/locations/{location_id} or
-   * /projects/{project_id}/locations/- In case when '-' is specified as
-   * location_id, location is infered from the destination dataset region.
+   * /projects/{project_id}/locations/{location_id} If specified location and
+   * location of the destination bigquery dataset do not match - the request will
+   * fail.
    * @param Google_Service_BigQueryDataTransfer_TransferConfig $postBody
    * @param array $optParams Optional parameters.
    *

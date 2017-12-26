@@ -11,35 +11,21 @@ $example_url = 'http://example.com';
 $featured_image = '<img src="https://dummyimage.com/1024x576.png">';
 $thumbnail_image = '<img src="https://dummyimage.com/600.png">';
 $single_author = '<a href="#" data-ga-category="Author" data-ga-label="Name|FirstName LastName">FirstName LastName</a>';
-$author_image = '<img src="https://dummyimage.com/150.png">';
+$author_image = Icons::get_logo( 'logo-icon', '', '28' );
 $date_time = date( PEDESTAL_DATE_FORMAT . ' &\m\i\d\d\o\t; ' . PEDESTAL_TIME_FORMAT );
 $date_time = apply_filters( 'pedestal_get_post_date', $date_time );
 $machine_time = date( 'c' );
-$tweet_embed = '<div class="pedestal-embed pedestal-embed-twitter"><figure id="figure_3e4ea3ba" aria-labelledby="figcaption_3e4ea3ba"  class="c-figure  c-figure--embed  wp-caption    op-interactive" ><div  class=" c-figure__content-wrap  column-width"><blockquote class="twitter-tweet"><a href="https://twitter.com/PhillyMayor/status/879396798321872897">Tweet from @PhillyMayor</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div></figure></div>';
+$tweet_embed = do_shortcode( '[twitter url="https://twitter.com/LIL_ICEBUNNY/status/901553987610136576"]' );
+$youtube_embed = do_shortcode( '[youtube url="https://www.youtube.com/watch?v=I4agXcHLySs"]' );
+$facebook_embed = do_shortcode( '[facebook url="https://www.facebook.com/genesis.breyerporridge.1/posts/1507100369379949?pnref=story" /]' );
 
-/*
-Avaialble Options for a stream item:
+ob_start();
+?>
 
-'post' => '',
-'type' => '',
-'stream_index' => '',
-'featured_image' => '',
-'thumbnail_image' => '',
-'overline' => '',
-'overline_url' => '',
-'title' => '',
-'permalink' => '',
-'date_time' => '',
-'machine_time' => '',
-'description' => '',
-'author_names' => '',
-'author_image' => '',
-'author_link' => '',
-'source_name' => '',
-'source_image' => '',
-'source_link' => '',
-'is_footer_compact' => false,
- */
+<div class="embed embed--instagram"><div class="embed__inner"><figure id="figure_5283ed25" aria-labelledby="figcaption_5283ed25"  class="c-figure  c-figure--script  wp-caption    op-interactive" ><div  class=" c-figure__content-wrap  column-width"><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"><div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;"><div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div><p style=" margin:8px 0 0 0; padding:0 4px;"><a href="https://www.instagram.com/p/BZJ4no2HqrK/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_blank">Here I am before I participated in the Running of the Wieners today! I lost but mom said she was still proud of me!  #RunningoftheWieners #dachshund #minidachshund #sausagedog #wienerdog #doxiesonly #justdachshunds #dachshundofinstagram #dachshundoftheday #pawsomedachshunds #weenteam #ween #hotdog</a></p><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A post shared by Penguin (@pengweenie22) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2017-09-17T19:49:01+00:00">Sep 17, 2017 at 12:49pm PDT</time></p></div></blockquote><script async defer src="https://platform.instagram.com/en_US/embeds.js"></script></div><figcaption id="figcaption_5283ed25"  class="c-figure__text  wp-caption-text "><h1 class="c-figure__text__caption">At Sunday's Running of the Wieners, they're all winners</h1></figcaption></figure></div></div>
+
+<?php
+$instagram_embed = ob_get_clean();
 
 $stream_items = [
     // Standard Article
@@ -51,6 +37,7 @@ $stream_items = [
         'date_time' => $date_time,
         'machine_time' => $machine_time,
         'description' => '<p>An example of a stream item description.</p>',
+        'show_meta_info' => true,
         'author_names' => $single_author,
         'author_image' => $author_image,
         'author_link' => $example_url,
@@ -67,6 +54,7 @@ $stream_items = [
         'date_time' => $date_time,
         'machine_time' => $machine_time,
         'description' => '<p>An example of a stream item description.</p>',
+        'show_meta_info' => true,
         'author_names' => $single_author,
         'author_image' => $author_image,
         'author_link' => $example_url,
@@ -83,6 +71,7 @@ $stream_items = [
         'date_time' => $date_time,
         'machine_time' => $machine_time,
         'description' => '<p>An example of a stream item with multiple authors. We show a site icon as the author image.</p>',
+        'show_meta_info' => true,
         'author_names' => $single_author . ' and ' . $single_author,
         'author_image' => Icons::get_logo( 'logo-icon', '', 40 ),
         'author_link' => $example_url,
@@ -96,6 +85,7 @@ $stream_items = [
         'date_time' => $date_time,
         'machine_time' => $machine_time,
         'description' => '<p>I doubt this would ever happen but here is what it looks like.</p>',
+        'show_meta_info' => true,
         'author_names' => $single_author,
         'author_image' => $author_image,
         'author_link' => $example_url,
@@ -112,6 +102,7 @@ $stream_items = [
         'date_time' => $date_time,
         'machine_time' => $machine_time,
         'description' => '<p>This is the longest article title in our database at 148 characters along with the longest overline at 35 characters.</p>',
+        'show_meta_info' => true,
         'author_names' => $single_author,
         'author_image' => $author_image,
         'author_link' => $example_url,
@@ -126,6 +117,22 @@ $stream_items = [
         'date_time' => $date_time,
         'machine_time' => $machine_time,
         'description' => '<p>“If you’re stereotyping about people who are criminals...it’s that they’re insensitive to how their actions affect society,” said the artist best known for the Obama Hope image. “But people who make art are clearly trying to do something they think is pleasing to people, that creates healthy conversations.”</p>',// 308 characters
+        'show_meta_info' => true,
+        'author_names' => $single_author,
+        'author_image' => $author_image,
+        'author_link' => $example_url,
+    ],
+
+    // Standard Factcheck
+    [
+        'type' => 'factcheck',
+        'thumbnail_image' => $thumbnail_image,
+        'title' => 'A Standard Factcheck Stream Item',
+        'permalink' => 'https://billypenn.com/?p=8998',
+        'date_time' => $date_time,
+        'machine_time' => $machine_time,
+        'description' => '<p>Factchecks are the journalist\'s bread and butter.</p>',
+        'show_meta_info' => true,
         'author_names' => $single_author,
         'author_image' => $author_image,
         'author_link' => $example_url,
@@ -136,31 +143,20 @@ $stream_items = [
         'type' => 'link',
         'title' => 'An External Link to Another Site',
         'permalink' => $example_url,
+        'show_meta_info' => true,
         'date_time' => $date_time,
         'machine_time' => $machine_time,
         'source_name' => 'Name of Source',
         'source_image' => Icons::get_icon( 'external-link' ),
         'source_link' => $example_url,
-    ],
-
-	// External Link with Compact Footer
-    [
-        'type' => 'link',
-        'title' => 'An External Link to Another Site with A Compact Footer',
-        'permalink' => $example_url,
-        'date_time' => $date_time,
-        'machine_time' => $machine_time,
-        'source_name' => 'Name of Source',
-        'source_image' => Icons::get_icon( 'external-link' ),
-        'source_link' => $example_url,
-		'is_footer_compact' => true,
     ],
 
     // Instagram Embed
     [
         'type' => 'embed',
         'title' => 'An Instagram Embed',
-        'thumbnail_image' => $thumbnail_image,
+        'description' => 'A description of the embedded Instagram post that appears below.',
+        'embed_html' => $instagram_embed,
         'permalink' => $example_url,
         'date_time' => $date_time,
         'machine_time' => $machine_time,
@@ -173,7 +169,8 @@ $stream_items = [
     [
         'type' => 'embed',
         'title' => 'A Twitter Embed',
-        'description' => '<p>A description of the embedded Tweet that appears below:</p>' . $tweet_embed,
+        'description' => 'A description of the embedded Twitter post that appears below.',
+        'embed_html' => $tweet_embed,
         'permalink' => $example_url,
         'date_time' => $date_time,
         'machine_time' => $machine_time,
@@ -186,7 +183,8 @@ $stream_items = [
     [
         'type' => 'embed',
         'title' => 'A Facebook Embed',
-        'description' => '',
+        'description' => 'A description of the embedded Facebook post that appears below.',
+        'embed_html' => $facebook_embed,
         'permalink' => $example_url,
         'date_time' => $date_time,
         'machine_time' => $machine_time,
@@ -199,13 +197,13 @@ $stream_items = [
     [
         'type' => 'embed',
         'title' => 'A YouTube Embed',
-        'thumbnail_image' => $thumbnail_image,
-        'description' => '<p>A description of the YouTube video.</p>',
+        'description' => 'A description of the embedded YouTube video that appears below.',
+        'embed_html' => $youtube_embed,
         'permalink' => 'https://billypenn.com/2017/07/22/for-some-reason-penn-live-produced-a-weird-kinda-tone-deaf-video-on-the-origins-of-philadelphia/',
         'date_time' => $date_time,
         'machine_time' => $machine_time,
-        'source_name' => 'YouTube',
-        'source_image' => Icons::get_icon( 'youtube' ),
+        'show_meta_info' => true,
+        'source_name' => 'Mike Patton',
         'source_link' => 'https://www.youtube.com/watch?v=5as_X9N6Ee0',
     ],
 
@@ -217,7 +215,7 @@ $stream_items = [
         'thumbnail_image' => $thumbnail_image,
         'overline' => 'Advertisement',
         'permalink' => $example_url,
-        'source_name' => 'Sponsored by Sponsor\'s Name',
+        'source_name' => 'Sponsor\'s Name',
         'source_image' => Icons::get_icon( 'external-link' ),
         'source_link' => $example_url,
     ],

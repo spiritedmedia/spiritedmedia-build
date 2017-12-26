@@ -33,23 +33,10 @@ $dfp-mobile-ad-offset--panelled : -( $column-gutter );
 }
 
 @media #{$small-only} {
-  .dfp-stream-08-wrapper .dfp,
-  .dfp-stream-16-wrapper .dfp {
+  .stream-item--dfp .dfp {
     margin-left: $dfp-mobile-ad-offset;
     margin-right: $dfp-mobile-ad-offset;
-
-    .c-panel & {
-      margin-left: $dfp-mobile-ad-offset--panelled;
-      margin-right: $dfp-mobile-ad-offset--panelled;
-    }
   }
-}
-
-.dfp-stream-08-wrapper,
-.dfp-stream-16-wrapper {
-  @include stdbd(bottom);
-
-  padding-bottom: $stream-item-spacing;
 }
 
 .rail {

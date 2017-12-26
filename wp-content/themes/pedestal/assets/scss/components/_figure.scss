@@ -29,17 +29,22 @@
 
 
 /*figcaption*/.c-figure__text {
-  line-height: 1.2;
+  margin-top: rem( 8px );
 
+  &,
   &__caption,
   &__credit {
-    display: inline;
-
     // Override `.s-post-content` heading sizes
     &,
     .s-post-content & {
       font-size: $small-font-size;
+      line-height: 1;
     }
+  }
+
+  &__caption,
+  &__credit {
+    display: inline;
   }
 
   &__caption {

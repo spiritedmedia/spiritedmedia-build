@@ -50,8 +50,8 @@ class Pedestal_Event {
         }
         $post = $context['post'];
         $ped_event = Event::get( $post );
-        if ( method_exists( $ped_event, 'get_details_table' ) ) {
-            $context['details_table'] = $ped_event->get_details_table();
+        if ( method_exists( $ped_event, 'get_context' ) ) {
+            $context = array_merge( $context, $ped_event->get_context() );
         }
         return $context;
     }

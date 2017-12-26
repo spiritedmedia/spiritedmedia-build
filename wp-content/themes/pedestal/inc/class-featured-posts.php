@@ -259,30 +259,35 @@ class Featured_Posts {
             if ( ! Types::is_post( $ped_post ) ) {
                 continue;
             }
+            $excerpt = $ped_post->get_the_excerpt();
+            $description = PEDESTAL_STREAM_ITEM_DEK_VISIBLE ? $excerpt : '';
             $context = apply_filters( 'pedestal_stream_item_context', [
-                'post'              => $post,
-                'type'              => $ped_post->get_type(),
-                '__context'         => 'featured', // Where is this stream item going to be displayed?
-                'stream_index'      => $index,
-                'featured_image'    => '',
-                'thumbnail_image'   => '',
-                'overline'          => '',
-                'overline_url'      => '',
-                'title'             => $ped_post->get_the_title(),
-                'permalink'         => $ped_post->get_the_permalink(),
-                'date_time'         => $ped_post->get_the_datetime(),
-                'machine_time'      => $ped_post->get_post_date( 'c' ),
-                'description'       => $ped_post->get_the_excerpt(),
-                'author_names'      => '',
-                'author_image'      => '',
-                'author_link'       => '',
-                'source_name'       => '',
-                'source_image'      => '',
-                'source_link'       => '',
-                'is_footer_compact' => false,
+                'post'            => $post,
+                'type'            => $ped_post->get_type(),
+                '__context'       => 'featured', // Where is this stream item going to be displayed?
+                'primary_item'    => false,
+                'stream_index'    => $index,
+                'featured_image'  => '',
+                'thumbnail_image' => '',
+                'overline'        => '',
+                'overline_url'    => '',
+                'title'           => $ped_post->get_the_title(),
+                'permalink'       => $ped_post->get_the_permalink(),
+                'date_time'       => '',
+                'machine_time'    => '',
+                'description'     => $description,
+                'show_meta_info'  => true,
+                'author_names'    => '',
+                'author_image'    => '',
+                'author_link'     => '',
+                'source_name'     => '',
+                'source_image'    => '',
+                'source_link'     => '',
             ] );
-            if ( $index > 1 ) {
-                $context['is_footer_compact'] = true;
+
+            if ( 1 == $index ) {
+                $context['primary_item'] = true;
+                $context['description'] = $excerpt;
             }
 
             ob_start();

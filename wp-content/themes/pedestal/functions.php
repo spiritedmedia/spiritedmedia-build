@@ -109,6 +109,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'SPIRITEDMEDIA_STAGING_SITE_URL' => 'http://staging.spiritedmedia.com',
 
                 // Site Details
+                'PEDESTAL_THEME_NAME'                   => wp_get_theme()->get_stylesheet(),
                 'PEDESTAL_BLOG_URL'                     => '',
                 'PEDESTAL_BLOG_NAME'                    => get_bloginfo( 'name' ),
                 'PEDESTAL_BLOG_DESCRIPTION'             => get_bloginfo( 'description' ),
@@ -126,6 +127,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '',
                 'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => '',
                 'PEDESTAL_COMSCORE_ID'                  => '',
+                'PEDESTAL_DFP_ID'                       => '104495818',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => '',
@@ -138,8 +140,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'        => '',
-                'PEDESTAL_TWITTER_CONSUMER_KEY'    => 'v28fnuzyBOGCFxIksqC6kOixd',
-                'PEDESTAL_TWITTER_CONSUMER_SECRET' => 'IcWL0dryn9VB2SRW0U6D447GmGorvig30jWLHlXabWzIWGe0oC',
                 'PEDESTAL_INSTAGRAM_USERNAME'      => '',
                 'PEDESTAL_FACEBOOK_PAGE'           => '',
                 'PEDESTAL_FACEBOOK_PAGE_ID'        => '',
@@ -152,9 +152,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 // Branding
                 'PEDESTAL_BRAND_COLOR' => '',
 
-                // API Keys
-                'EVERYBLOCK_API_KEY' => '31f70243ea980f63a6545a6bc4bfabd3a284dfa7',
-
                 // Slack
                 'PEDESTAL_SLACK_WEBHOOK_ENDPOINT'       => 'https://hooks.slack.com/services/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',
                 'PEDESTAL_SLACK_CHANNEL_BOTS_PRODUCT'   => '#botcountry',
@@ -163,6 +160,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_SLACK_CHANNEL_CITY'           => '',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'PedestalBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => '',
+
+                // Site Features
+                'PEDESTAL_STREAM_ITEM_DEK_VISIBLE' => true,
             ];
             $constants = wp_parse_args( $constants, $defaults );
             foreach ( $constants as $constant => $value ) {
@@ -177,10 +177,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             define( 'SPIRITEDMEDIA_PEDESTAL_STAGING_DIR', SPIRITEDMEDIA_STAGING_SITE_URL . '/wp-content/themes/pedestal' );
             $twitter_share_text_max_length = 140 - strlen( ' via @' . PEDESTAL_TWITTER_USERNAME );
             define( 'PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH', $twitter_share_text_max_length );
-
-            $dev_auth_user = 'spirited';
-            $dev_auth_pass = 'media';
-            define( 'PEDESTAL_DEV_AUTH', $dev_auth_user . ':' . $dev_auth_pass );
         }
 
         /**

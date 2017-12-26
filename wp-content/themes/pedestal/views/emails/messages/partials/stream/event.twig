@@ -22,7 +22,26 @@
                     <table {{ email_table_atts }} width="100%">
                         {% for label, content in event_details %}
                             {% if content %}
-                            {% include 'emails/messages/partials/stream/event-detail.twig' %}
+
+                                <tr class="email-event__detail">
+                                    <td>
+                                        <table {{ email_table_atts }} width="100%">
+                                            <tr>
+                                                <td>
+                                                    <h2 class="email-event__detail__label email-heading--minor">
+                                                        {{ label }}
+                                                    </h2>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="email-event__detail__content">
+                                                    {{ content }}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
                             {% endif %}
                         {% endfor %}
                     </table>

@@ -1,18 +1,9 @@
 {% if stream_index %}
     {% set stream_index = 'data-stream-index="' ~ stream_index|esc_attr ~ '"' %}
 {% endif %}
-<article class="stream-item stream-item--{{ type|esc_attr }} c-event" {{ stream_index }}>
-    <h1 class="stream-item__title c-event__title">
-        {% if permalink %}
-            <a
-                href="{{ permalink|esc_url }}"
-                class="stream-item__title-link c-event__title__link"
-                data-ga-category="Stream"
-                data-ga-label="Title|{{ title|esc_attr }}|Type: Event"
-            >{{ title }}</a>
-        {% else %}
-            {{ title }}
-        {% endif %}
-    </h1>
-    {{ details_table }}
+
+{% set gaCategory = 'Stream' %}
+
+<article class="stream-item stream-item--{{ type|esc_attr }}" {{ stream_index }}>
+    {% include 'partials/event.twig' %}
 </article>

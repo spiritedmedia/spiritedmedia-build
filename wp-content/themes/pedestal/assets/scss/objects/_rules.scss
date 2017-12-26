@@ -3,37 +3,29 @@
 // ==========================================================================
 
 
-$section-header-p-t         : rem( 32px );
+$hr-height              : rem( 4px );
+$hr-spacing-y             : rem( 4px );
+$hr-color               : $grey-95;
 
-$o-rule-height              : rem( 4px );
-$rule-spacing-y             : rem( 4px );
-$o-rule-color               : $grey-95;
-
-$o-rule--closure-h          : $o-rule-height / 2;
-$o-rule--closure-m-t        : rem( 48px );
-$o-rule--closure-icon-size  : $icon-diameter--med;
-$o-rule--closure-sum-height : $o-rule--closure-h + $rule-spacing-y + $o-rule--closure-icon-size;
-
-
-.section-header {
-  position: relative;
-  padding-top: $section-header-p-t;
-}
+$hr--closure-h          : $hr-height / 2;
+$hr--closure-m-t        : rem( 48px );
+$hr--closure-icon-size  : $icon-diameter--med;
+$hr--closure-sum-height : $hr--closure-h + $hr-spacing-y + $hr--closure-icon-size;
 
 
 /// A noticeably thick horizontal rule before an element
 // stylelint-disable-next-line selector-max-type
 hr,
-.o-rule {
+.hr {
   border: 0;
-  border-top: $o-rule-height solid $o-rule-color;
+  border-top: $hr-height solid $hr-color;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 } // rule
 
 
 /// A slightly less obtrusive rule
-.o-rule--slim {
+.hr--slim {
   @include stdbd( top );
 
   margin: 0 auto;
@@ -43,9 +35,9 @@ hr,
 
 
 /// A rule with a logo centered in the middle
-.o-rule--closure {
-  margin-top: $o-rule--closure-m-t;
-  border-top-width: $o-rule--closure-h;
+.hr--closure {
+  margin-top: $hr--closure-m-t;
+  border-top-width: $hr--closure-h;
 
   &::before {
     @if global-variable-exists( site-theme-name ) {
@@ -57,41 +49,12 @@ hr,
 
     display: block;
     background-position: top center;
-    background-size: $o-rule--closure-sum-height;
+    background-size: $hr--closure-sum-height;
     background-repeat: no-repeat;
-    width: ( $o-rule--closure-sum-height + $rule-spacing-y * 2 );
-    height: $o-rule--closure-sum-height;
+    width: ( $hr--closure-sum-height + $hr-spacing-y * 2 );
+    height: $hr--closure-sum-height;
     background-color: $white;
-    margin: -( $o-rule--closure-sum-height / 2 ) auto rem( 16px );
+    margin: -( $hr--closure-sum-height / 2 ) auto rem( 16px );
     content: '';
   }
 } // &--closure
-
-
-/// Underline an element with a rule-thickness primary color bar
-.o-rule--underline {
-  display: inline-block;
-  padding-bottom: 0.2em;
-  border-bottom: $o-rule-height solid $primary-color;
-} // &--underline
-
-
-/// A small rule for accents
-.o-rule--accent {
-  &::before {
-    background-color: $primary-color;
-    content: '';
-    display: block;
-    width: $stream-item-spacing;
-    height: rem( 4px );
-    margin-bottom: rem( 8px );
-  }
-}
-
-
-/// A rule in the alert color
-.o-rule--alert {
-  &::before {
-    background-color: $alert-color;
-  }
-}

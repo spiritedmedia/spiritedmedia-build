@@ -43,10 +43,8 @@ class Admin {
      * Load code for the admin
      */
     private function load() {
-
         $this->setup_actions();
         $this->setup_filters();
-
     }
 
     /**
@@ -69,16 +67,6 @@ class Admin {
                     $embed = Embed::get( $post_id );
                     if ( method_exists( $embed, 'update_embed_data' ) ) {
                         $embed->update_embed_data();
-                    }
-                    break;
-                case 'pedestal_story':
-                    $story = Story::get( $post_id );
-                    if (
-                        Types::is_story( $story ) &&
-                        $story->has_story_branding() &&
-                        $story->has_story_bar_icon()
-                    ) {
-                        $this->update_story_branding( $post_id );
                     }
                     break;
                 case 'pedestal_person':
@@ -109,7 +97,6 @@ class Admin {
             endswitch;
         }, 100, 3 );
 
-        add_action( 'admin_notices', [ $this, 'action_admin_notice_maintenance_mode' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_excerpt_required' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_locality_type_required' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_unembeddable_url' ] );
@@ -285,9 +272,7 @@ class Admin {
      * Register Fieldmanager fields
      */
     public function action_init_after_post_types_registered() {
-
         $this->register_distribution_fields();
-        $this->register_maintenance_mode_fields();
         $this->register_spotlight_fields();
     }
 
@@ -402,17 +387,6 @@ class Admin {
         $bio_extended->add_user_form( 'Extended Bio' );
         $img->add_user_form( 'User Image' );
 
-    }
-
-    /**
-     * Display admin notice if maintenance mode is enabled
-     */
-    public function action_admin_notice_maintenance_mode() {
-        $options = get_option( 'pedestal_maintenance_mode' );
-        if ( ! empty( $options['enabled'] ) ) {
-            $msg = '<p>Maintenance mode is active. Please don\'t forget to <a href="options-general.php?page=pedestal_maintenance_mode">deactivate it</a> as soon as you are done.</p>';
-            echo '<div class="updated fade">' . $msg . '</div>';
-        }
     }
 
     /**
@@ -669,27 +643,6 @@ class Admin {
     }
 
     /**
-     * Register fields for maintenance mode
-     */
-    private function register_maintenance_mode_fields() {
-        $fm_spotlight = new \Fieldmanager_Group( false, [
-            'name'       => 'pedestal_maintenance_mode',
-            'children'   => [
-                'enabled' => new \Fieldmanager_Radios( false, [
-                    'name'              => 'enabled',
-                    'default_value'     => 0,
-                    'options'           => [
-                        1               => esc_html__( 'On', 'pedestal' ),
-                        0               => esc_html__( 'Off', 'pedestal' ),
-                    ],
-                    'sanitize'          => 'intval',
-                ] ),
-            ],
-        ] );
-        $fm_spotlight->add_submenu_page( 'options-general.php', esc_html__( 'Maintenance Mode', 'pedestal' ), esc_html__( 'Maintenance Mode', 'pedestal' ), 'manage_network' );
-    }
-
-    /**
      * Register distribution meta box fields
      */
     private function register_distribution_fields() {
@@ -805,27 +758,6 @@ class Admin {
 
         if ( current_user_can( 'manage_distribution' ) ) {
             $meta_group->add_meta_box( esc_html__( 'Distribution', 'pedestal' ), $distributable_post_types, 'advanced', 'low' );
-        }
-    }
-
-    /**
-     * Update story branding SVG and PNG icons based on color settings
-     *
-     * @param  int $story_id
-     */
-    public function update_story_branding( $story_id ) {
-        $story = Story::get( $story_id );
-        $styles = $story->get_primary_story_branding();
-        if ( $styles ) {
-            $attachment_id = $story->get_icon_id();
-            $fallback_url = str_replace( '.svg', '.png', wp_get_attachment_url( $attachment_id ) );
-
-            $color = $styles['foreground_color'];
-            $svg = Icons::recolor_svg( $attachment_id, $color );
-            $svg_path = get_attached_file( $attachment_id );
-
-            Icons::save_svg_fallback( $attachment_id, $color );
-            Icons::save_svg( $svg, $svg_path, $fallback_url );
         }
     }
 

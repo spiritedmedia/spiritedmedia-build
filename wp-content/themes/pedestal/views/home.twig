@@ -1,39 +1,37 @@
 {% extends 'layouts/layout--content-sidebar.twig' %}
 
 {% block content %}
-
-    {% if featured_stream_items %}
-        <section class="featured-stream-items">
-            {% for item in featured_stream_items %}
-                {% if loop.first %}
-                    <div class="row">
-                        <div class="featured-stream-items__primary columns">
-                            {{ item }}
-                        </div>
-                    </div>
-                {% else %}
-                    {% if loop.index == 2 %}<div class="row">{% endif %}
-                        <div class="featured-stream-items__secondary medium-6 columns">
-                            {{ item }}
-                        </div>
-                    {% if loop.index == 3 %}</div>{% endif %}
-                {% endif %}
-            {% endfor %}
-
-            <a href="{{ get_site_url }}/originals/"
-                class="btn btn--primary btn--lg btn--full-width"
-                data-ga-category="Button"
-                data-ga-label="More Original Articles">
-                More Original Articles
-            </a>
-            <hr class="o-rule o-rule--slim">
-        </section>
-
-    {% endif %}
-
     {% if stream %}
-        <section class="stream">
-            {{ stream }}
+        <section class="stream--home stream">
+            {% if featured_stream_items %}
+            <section class="stream__featured-items">
+                {% for item in featured_stream_items %}
+                    {% if loop.first %}
+                        <div class="row">
+                            <div class="stream__featured-items__primary">
+                                {{ item }}
+                            </div>
+                        </div>
+                    {% else %}
+                        {% if loop.index == 2 %}<div class="row">{% endif %}
+                            <div class="stream__featured-items__secondary">
+                                {{ item }}
+                            </div>
+                        {% if loop.index == 3 %}</div>{% endif %}
+                    {% endif %}
+                {% endfor %}
+            </section>
+            {% endif %}
+
+            <header class="stream__header">
+                <div class="stream__header__inner">
+                    {% include 'partials/stream/stream-header.twig' %}
+                </div>
+            </header>
+
+            <div class="stream__items">
+                {{ stream }}
+            </div>
         </section>
 
         {{ pagination }}

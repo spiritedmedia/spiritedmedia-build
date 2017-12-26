@@ -376,9 +376,8 @@ class CLI extends \WP_CLI_Command {
             switch_to_blog( $site->blog_id );
 
             $site_config = Pedestal()->get_site_config();
-            $current_theme = wp_get_theme()->get_stylesheet();
-            $current_theme_path = PEDESTAL_WP_THEMES_PATH . '/' . $current_theme;
-            $config['pedestal']['children'][ $current_theme ] = [
+            $current_theme_path = PEDESTAL_WP_THEMES_PATH . '/' . PEDESTAL_THEME_NAME;
+            $config['pedestal']['children'][ PEDESTAL_THEME_NAME ] = [
                 'siteName'     => $site_config['site_name'],
                 'siteURL'      => get_site_url(),
                 'siteLiveURL'  => $site_config['site_live_url'],
@@ -499,7 +498,7 @@ class CLI extends \WP_CLI_Command {
      * ## EXAMPLES
      *
      *     wp pedestal sync-newsletter-ids
-     *     wp pedestal sync-newsletter-ids --url=http://billypenn.dev
+     *     wp pedestal sync-newsletter-ids --url=https://billypenn.dev
      *
      * @see /bin/wp-multisite-sync-newsletter-ids.sh
      *
@@ -525,7 +524,7 @@ class CLI extends \WP_CLI_Command {
      * ## EXAMPLES
      *
      *     wp pedestal purge-subscribers
-     *     wp pedestal purge-subscribers --url=http://billypenn.dev
+     *     wp pedestal purge-subscribers --url=https://billypenn.dev
      *
      * @subcommand purge-subscribers
      */
@@ -643,7 +642,7 @@ class CLI extends \WP_CLI_Command {
      * ## EXAMPLES
      *
      *     wp pedestal restore-attachment-meta
-     *     wp pedestal restore-attachment-meta --url=http://billypenn.dev
+     *     wp pedestal restore-attachment-meta --url=https://billypenn.dev
      *
      * @subcommand restore-attachment-meta
      */
@@ -699,7 +698,7 @@ class CLI extends \WP_CLI_Command {
      * ## EXAMPLES
      *
      *     wp pedestal convert-credits
-     *     wp pedestal convert-credits --url=http://billypenn.dev
+     *     wp pedestal convert-credits --url=https://billypenn.dev
      *
      * @subcommand convert-credits
      */
@@ -747,7 +746,7 @@ class CLI extends \WP_CLI_Command {
      * ## EXAMPLES
      *
      *     wp pedestal normalize-exclude-from-home-stream
-     *     wp pedestal normalize-exclude-from-home-stream --url=http://billypenn.dev
+     *     wp pedestal normalize-exclude-from-home-stream --url=https://billypenn.dev
      *
      * @subcommand normalize-exclude-from-home-stream
      */
@@ -778,7 +777,7 @@ class CLI extends \WP_CLI_Command {
      * ## EXAMPLES
      *
      *     wp pedestal normalize-event-link-meta
-     *     wp pedestal normalize-event-link-meta --url=http://billypenn.dev
+     *     wp pedestal normalize-event-link-meta --url=https://billypenn.dev
      *
      * @subcommand normalize-event-link-meta
      */
@@ -816,7 +815,7 @@ class CLI extends \WP_CLI_Command {
      * ## EXAMPLES
      *
      *     wp pedestal update-all-activecampaign-list
-     *     wp pedestal update-all-activecampaign-list --url=http://billypenn.dev
+     *     wp pedestal update-all-activecampaign-list --url=https://billypenn.dev
      *
      * @subcommand update-all-activecampaign-list
      */

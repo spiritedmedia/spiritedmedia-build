@@ -1,0 +1,22 @@
+// ==========================================================================
+// The Incline // Components // EVENT
+// ==========================================================================
+
+
+$event-slant-offset: 5%;
+
+
+.event {
+
+  @include pgh-slant( top, -1deg, $event-slant-offset );
+  @include pgh-slant( bottom, -1deg, $event-slant-offset );
+
+  padding: 0;
+}
+
+
+@media #{$medium-up} {
+  .event::before {
+    top: -( $event-slant-offset * 2 );
+  }
+}

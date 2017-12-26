@@ -39,20 +39,14 @@ class Pedestal_Embed {
         if ( ! method_exists( $embed, 'get_embed_type' ) ) {
             return $context;
         }
-        $embed_type = $embed->get_embed_type();
-        if ( 'twitter' === $embed_type ) {
-            $context['description'] = $embed->get_embed_html();
-        }
-        if ( 'instagram' === $embed_type ) {
-            $data = $embed->fetch_embed_data();
-            if ( ! empty( $data['image_url_large'] ) ) {
-                $context['thumbnail_image'] = '<img src="' . esc_url( $data['image_url_large'] ) . '">';
-            }
+        $context['embed_html'] = $embed->get_embed_html();
+        if ( 'youtube' == $embed->get_embed_type() ) {
+            $context['source_name']  = $embed->get_embed_author_name();
+            $context['source_link']  = $embed->get_embed_url();
+        } else {
+            $context['show_meta_info'] = false;
         }
         $context['featured_image'] = '';
-        $context['source_name']  = $embed->get_source();
-        $context['source_image'] = Icons::get_icon( $embed_type );
-        $context['source_link']  = $embed->get_embed_url();
         return $context;
     }
 }

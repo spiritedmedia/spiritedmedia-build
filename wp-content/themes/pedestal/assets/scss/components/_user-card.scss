@@ -158,27 +158,3 @@ $user-card-img-size: map-get-strict( sm-pedestal-img-sizes-get( thumbnail ), wid
     padding-bottom: rem( 16px );
   }
 }
-
-.c-user-card__stream-header {
-  padding-top: rem( 40px );
-
-  .c-pagination,
-  .c-pagination::before,
-  .c-pagination::after,
-  .c-pagination__text {
-    display: inline;
-  }
-
-  .c-pagination {
-    margin-left: rem( 4px );
-  }
-}
-
-.c-user-card__stream-header__title {
-  display: inline;
-  font-size: $h4-font-size;
-  font-weight: normal;
-  text-transform: uppercase;
-  font-style: italic;
-  color: $grey-46;
-}

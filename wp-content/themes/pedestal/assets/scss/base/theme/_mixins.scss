@@ -240,15 +240,16 @@
 
 /// Break a component out of the bounds of its parent to edge of viewport width
 ///
-/// @param  {string} $side ['both']                         Side to explode
-/// @param  {string} $selector ['&']                        Selector
-/// @param  {string} $inner-selector ['&__inner']           Inner selector
-/// @param  {unit}   $inner-vertical-padding [rem( 32px )]  Interior vertical padding
+/// @param  {string} $side ['both']                Side to explode
+/// @param  {string} $selector ['&']               Selector
+/// @param  {string} $inner-selector ['&__inner']  Inner selector
+/// @param  {bool}   $ignore-gutter [false]        Ignore the grid gutter? By default
+///     the inner padding will include the gutter space
 @mixin explode-component(
   $side: 'both',
   $selector: '&',
   $inner-selector: '&__inner',
-  $inner-vertical-padding: rem( 32px )
+  $ignore-gutter: false
 ) {
   $sides: ();
 
@@ -263,16 +264,13 @@
   #{$selector} {
     position: relative;
 
-    #{$inner-selector} {
-      padding-top: $inner-vertical-padding;
-      padding-bottom: $inner-vertical-padding;
-    }
-
     @each $side in $sides {
       margin-#{$side}: -100vw;
 
       #{$inner-selector} {
-        padding-#{$side}: 100vw;
+        $_inner-padding: if( $ignore-gutter, calc( 100vw - #{$column-gutter / 2} ), 100vw );
+
+        padding-#{$side}: $_inner-padding;
       }
     }
   }
@@ -326,9 +324,11 @@
 /// Make sure `overflow: hidden;` isn't conflicting with this
 /// in one of the element's parents.
 ///
-/// @param  {string}  $side   Side to apply the slant upon. Should be either 'top' or 'bottom'.
-/// @param  {number}  $angle  Angle of the slant. Should be either `1deg` or `-1deg`.
-@mixin pgh-slant( $side, $angle ) {
+/// @param  {string}  $side        Side to apply the slant upon. Should be either 'top' or 'bottom'.
+/// @param  {number}  $angle       Angle of the slant. Should be either `1deg` or `-1deg`.
+/// @param  {number}  $offset [5%] Amount of distance to push the slanted element from its parent
+@mixin pgh-slant( $side, $angle, $offset: 5% ) {
+  margin-#{$side}: $offset;
   position: relative;
 
   // stylelint-disable
@@ -343,7 +343,7 @@
   // stylelint-enable
 
   &::#{$pseudo} {
-    #{$side}: rem( -8px );
+    #{$side}: -( $offset );
     background: inherit;
     content: '';
     display: block;

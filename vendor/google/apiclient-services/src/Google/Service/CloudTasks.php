@@ -290,6 +290,16 @@ class Google_Service_CloudTasks extends Google_Service
                   'type' => 'string',
                 ),
               ),
+            ),'lease' => array(
+              'path' => 'v2beta2/{+parent}/tasks:lease',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'parent' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
             ),'list' => array(
               'path' => 'v2beta2/{+parent}/tasks',
               'httpMethod' => 'GET',

@@ -1,0 +1,121 @@
+{#
+Available variables
+
+permalink - URL where this event is linking to
+title     - Headline of this event
+slot - Name of the slot used in this template
+what - What is the event?
+where - Where is the event?
+when - When is the event?
+cost - How much is the event?
+cta_link - Link to the CTA destination
+cta_label - Call to action label
+
+#}
+
+
+{% if overline %}
+    {% set overline_class = 'has-overline' %}
+    {% set overline_html %}
+        <p class="event__overline c-heading--overline">
+            {% if overline_url %}
+                <a
+                    href="{{ overline_url|esc_url }}"
+                    class="event__overline-link"
+                    data-ga-category="{{ gaCategory|esc_attr }}"
+                    data-ga-label="Overline|{{ overline|esc_attr }}"
+                >
+                    {{ overline }}
+                </a>
+            {% else %}
+                {{ overline }}
+            {% endif %}
+        </p>
+    {% endset %}
+{% endif %}
+
+
+<section class="event {{ overline_class }}">
+    <div class="event__inner">
+
+        {% if show_header %}
+        <header class="event__header">
+
+            {{ overline_html }}
+
+            <h1 class="event__title type-headline">
+                {% if permalink %}
+                    <a
+                        href="{{ permalink|esc_url }}"
+                        class="event__title__link type-headline__link"
+                        data-ga-category="{{ gaCategory|esc_attr }}"
+                        data-ga-label="Title|{{ title|esc_attr }}"
+                    >
+                        {{ title }}
+                    </a>
+                {% else %}
+                    {{ title }}
+                {% endif %}
+            </h1>
+
+            {% if slot %}
+            <div class="event__sponsorship">
+                {{ ped_slot( slot ) }}
+            </div>
+            {% endif %}
+
+        </header>
+        {% endif %}
+
+        {% if what %}
+        <p class="event__description">{{ what }}</p>
+        {% endif %}
+
+        <div class="event__details">
+
+            {% if where %}
+            <p class="event__detail">
+                <strong class="event__detail__label">Where:</strong>
+                {{ where }}
+            </p>
+            {% endif %}
+
+            {% if when %}
+            <p class="event__detail">
+                <strong class="event__detail__label">When:</strong>
+                {{ when }}
+            </p>
+            {% endif %}
+
+            {% if cost %}
+            <p class="event__detail">
+                <strong class="event__detail__label">How much:</strong>
+                {{ cost }}
+            </p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <hr class="event__hr hr" />
+
+    {% if cta_link and cta_label %}
+    <div class="event__cta event__inner">
+        <a
+            href="{{ cta_link|esc_url }}"
+            class="event__cta__link type-meta-info"
+            data-ga-category="Event"
+            data-ga-label="Details|{{ cta_label|esc_attr }}"
+            target="_blank"
+        >
+            {{ ped_icon( 'external-link', 'event__cta__icon' ) }}
+            <span class="event__cta__text type-meta-info__text">
+                {{ cta_label }}
+                {% if cta_source %}
+                    <strong>On {{ cta_source }}</strong>
+                {% endif %}
+            </span>
+        </a>
+    </div>
+    {% endif %}
+</section>

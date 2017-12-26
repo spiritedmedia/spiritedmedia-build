@@ -16,17 +16,14 @@ use Pedestal\Utils\Utils;
 
 class Frontend {
 
-    private static $instance;
-
-    public static function get_instance() {
-
-        if ( ! isset( self::$instance ) ) {
-            self::$instance = new Frontend;
-            self::$instance->check_maintenance_mode();
-            self::$instance->setup_actions();
-            self::$instance->setup_filters();
+    static function get_instance() {
+        static $instance = null;
+        if ( null === $instance ) {
+            $instance = new static();
+            $instance->setup_actions();
+            $instance->setup_filters();
         }
-        return self::$instance;
+        return $instance;
     }
 
     /**
@@ -107,32 +104,6 @@ class Frontend {
         }, 10, 4 );
 
         add_filter( 'robots_txt', [ $this, 'filter_robots_txt' ] );
-    }
-
-    /**
-     * Display maintenance mode template for non-Editors if option enabled
-     */
-    private function check_maintenance_mode() {
-        $options = get_option( 'pedestal_maintenance_mode' );
-        if ( empty( $options['enabled'] ) ) {
-            return;
-        }
-
-        // Display a message to visitors on login page when active
-        add_filter( 'login_message', function() {
-            return '<div id="login_error"><p>The site is currently in maintenance mode.</p></div>';
-        } );
-
-        if ( ! current_user_can( 'edit_posts' ) && ! in_array( $GLOBALS['pagenow'], [ 'wp-login.php', 'wp-register.php' ] ) ) {
-            $protocol = 'HTTP/1.0';
-            if ( 'HTTP/1.1' == $_SERVER['SERVER_PROTOCOL'] ) {
-                $protocol = 'HTTP/1.1';
-            }
-            header( "$protocol 503 Service Unavailable", true, 503 );
-            header( 'Retry-After: 3600' );
-            include get_template_directory() . '/templates/maintenance-mode.php';
-            exit();
-        }
     }
 
     /**

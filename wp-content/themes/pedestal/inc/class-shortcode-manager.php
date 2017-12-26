@@ -8,17 +8,16 @@ use Pedestal\Objects\{
     YouTube
 };
 use Pedestal\Posts\Attachment;
-use Pedestal\Posts\Entities\Embed;
+use Pedestal\Posts\Entities\{
+    Embed,
+    Event
+};
 
 class Shortcode_Manager {
 
     private static $instance;
 
     private $shortcodes = [
-        'section-header' => [
-            'label'          => 'Section Header',
-            'listItemImage'  => 'dashicons-editor-italic',
-        ],
         'user-card'          => false,
         'user-grid'          => false,
         'event'              => [
@@ -602,13 +601,6 @@ class Shortcode_Manager {
         return $out;
     }
 
-    /**
-     * Generate section headers
-     */
-    public function section_header( $atts, $content ) {
-        return '<div class="' . esc_attr( 'pedestal-shortcode  section-header  [ o-rule--pedal  o-rule ]' ) . '"></div>';
-    }
-
     /*
      * Do the event shortcode
      */
@@ -618,20 +610,20 @@ class Shortcode_Manager {
             return '';
         }
 
-        $obj = \Pedestal\Posts\Entities\Event::get( (int) $attrs['id'] );
-        if ( ! $obj || 'event' !== $obj->get_type() ) {
+        $ped_event = Event::get( $attrs['id'] );
+        if ( ! method_exists( $ped_event, 'get_context' ) ) {
             return '';
         }
 
-        $context = array_merge( Timber::get_context(), [
-            'item'             => $obj,
-            'datetime_format'  => PEDESTAL_DATETIME_FORMAT,
-        ] );
+        $context = array_merge( Timber::get_context(), $ped_event->get_context() );
+        $context['slot'] = 'shortcode';
 
+        $html = '<div class="pedestal-shortcode--event pedestal-shortcode">';
         ob_start();
-        $out = Timber::render( 'partials/shortcode/event.twig', $context );
-        ob_get_clean();
-        return $out;
+            Timber::render( 'partials/event.twig', $context );
+        $html .= ob_get_clean();
+        $html .= '</div>';
+        return $html;
     }
 
     /**

@@ -10,7 +10,9 @@
 
     {% if stream %}
         <section class="stream {{ extra_stream_container_classes }}">
-            {{ stream }}
+            <div class="stream__items">
+                {{ stream }}
+            </div>
         </section>
 
         {{ pagination }}

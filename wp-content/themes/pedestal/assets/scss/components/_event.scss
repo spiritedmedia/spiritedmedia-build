@@ -3,61 +3,91 @@
 // ==========================================================================
 
 
-// stylelint-disable selector-max-type
+$event-inner-spacing: rem( 20px );
 
 
-.c-event {
-  border: 0;
-  margin-bottom: $paragraph-margin-bottom;
-  padding-bottom: 0;
-  margin-top: 0;
+.event {
+  background-color: $another-another-lightish-color;
+  padding-top: $event-inner-spacing;
+  padding-bottom: $event-inner-spacing;
+}
+
+.event__inner {
+  padding-left: $event-inner-spacing;
+  padding-right: $event-inner-spacing;
+}
+
+.event__overline {
+  text-align: center;
+}
+
+.event__details {
+  padding-left: rem( 10px );
+}
+
+.event__detail__label {
+  text-transform: uppercase;
+}
+
+.event__hr {
+  border-color: $primary-color;
+  border-top-width: rem( 2px );
+  margin: 0;
+  padding-bottom: $event-inner-spacing;
+  width: 100%;
+}
+
+.event__cta {
+  text-align: center;
+}
+
+.event__cta__link {
+  align-items: center;
+  display: inline-flex;
+}
+
+.event__cta__icon {
+  $_icon-size: rem( 30px );
+
+  box-sizing: content-box;
+  font-size: $_icon-size;
+  padding-right: rem( 4px );
+  width: $_icon-size;
+}
+
+.event__cta__text {
+  flex: 1;
 
   &,
-  td,
-  th {
-    @include h-size(5);
-
-    font-weight: 400;
-    line-height: 1.3;
-  }
-
-  td {
-    font-weight: 300;
+  > * {
+    display: block;
   }
 }
 
 
-.c-event__title,
-.c-event__sponsorship {
-  @include stdbd;
+@media #{$medium-up} {
+  .event__overline,
+  .event__cta {
+    text-align: left;
+  }
 
-  border-bottom: 0;
-  padding: rem( 8px ) rem( 16px );
-  margin-bottom: 0;
-}
+  .event__details {
+    @include grid-row;
 
+    padding-left: 0;
+  }
 
-.c-event__sponsorship {
-  border-top: 0;
-  padding: 0 rem( 8px );
-}
+  .event__detail {
+    @include grid-column( 4 );
 
+    &:first-child {
+      padding-left: 0;
+    }
 
-.c-event__title {
-  @include h-size( 3 );
-
-  font-weight: 400;
-}
-
-.c-event__title__link {
-  @include link-dark;
-}
-
-
-.c-event__more {}
-
-.c-event__more__heading {
-  margin-top: rem( 12px );
+    &:last-child {
+      padding-right: 0;
+    }
+  }
 }
 
 
@@ -65,54 +95,13 @@
 
 
 //
-// Details Table
+// Single Events
 // ==========================================================================
 
 
-.c-event__details {
-  @include stdbd;
-
-  border-bottom: 0;
-}
-
-.c-event__details__inner {
-  border: 0;
-  margin-bottom: 0;
-  width: 100%;
-
-  th {
-    @include stdbd( right );
-
-    text-align: right;
-    text-transform: uppercase;
-    width: 30%;
-  }
-
-  .email-body & {
-    tr {
-      @include stdbd( bottom );
-    }
-  }
-}
-
-.c-event__details__link {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.c-event__details__link__btn {
-  @include single-transition( background-color );
-
-  background-color: $latte;
-  color: $body-font-color;
-  display: block;
-  margin-bottom: 0;
-  padding: $table-row-padding;
-  text-align: center;
-  text-transform: uppercase;
-
-  &:hover,
-  &:focus {
-    background-color: darken( $latte, 15% );
+.single-event {
+  .c-main__body {
+    // Prevent margin collapse between the event component and its parent
+    overflow: auto;
   }
 }

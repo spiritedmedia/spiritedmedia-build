@@ -7,6 +7,13 @@ use function Pedestal\Pedestal;
 use \Pedestal\Posts\Post;
 
 class Scripts_Styles {
+
+
+    /**
+     * Name of the DFP script handler
+     */
+    private $dfp_load_script_handle = 'dfp-load';
+
     /**
      * Get an instance of this class
      */
@@ -52,6 +59,9 @@ class Scripts_Styles {
 
         // Load our own chosen version of jQuery
         add_filter( 'script_loader_tag', [ $this, 'filter_script_loader_tag_reload_jquery' ], 10, 3 );
+
+        // Modify dfp-loader.js <script> element
+        add_filter( 'script_loader_tag', [ $this, 'filter_script_loader_tag_modify_dfp_loader' ], 10, 3 );
     }
 
     /**
@@ -60,7 +70,7 @@ class Scripts_Styles {
     public function action_wp_enqueue_scripts() {
         $post = get_post();
 
-        wp_register_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Overpass:300,300i,400,400i,700,700i', [], null );
+        wp_register_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Overpass:300,300i,400,400i,600,700,700i', [], null );
 
         // Functionality-specific assets
         wp_register_script( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js', [], null, true );
@@ -79,12 +89,11 @@ class Scripts_Styles {
         }
 
         // Core site assets
-        $theme_name = wp_get_theme()->get_stylesheet();
-        wp_enqueue_style( $theme_name . '-styles', get_stylesheet_directory_uri() . '/assets/dist/css/theme.css', [ 'google-fonts' ], PEDESTAL_VERSION );
+        wp_enqueue_style( PEDESTAL_THEME_NAME . '-styles', get_stylesheet_directory_uri() . '/assets/dist/css/theme.css', [ 'google-fonts' ], PEDESTAL_VERSION );
         wp_enqueue_script( 'pedestal-scripts', get_template_directory_uri() . '/assets/dist/js/theme.js', [ 'jquery' ], PEDESTAL_VERSION, true );
 
         // Advertising
-        wp_enqueue_script( 'dfp-load', get_template_directory_uri() . '/assets/dist/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
+        wp_enqueue_script( $this->dfp_load_script_handle, get_template_directory_uri() . '/assets/dist/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
         if ( isset( $_GET['show-ad-units'] ) ) {
             wp_enqueue_script( 'dfp-placeholders', get_template_directory_uri() . '/assets/dist/js/dfp-placeholders.js', [ 'jquery' ], PEDESTAL_VERSION );
         }
@@ -197,6 +206,26 @@ class Scripts_Styles {
             return $new_script_element;
         }
 
+        return $script_element;
+    }
+
+    /**
+     * Pass the DFP ID to dfp-load.js via a data attribute
+     *
+     * @param string $script_element     <script> element to be rendered
+     * @param string $handle             script handle that was registered
+     * @param string $script_src         src sttribute of the <script>
+     * @return string                    New <script> element
+     */
+    public function filter_script_loader_tag_modify_dfp_loader( $script_element, $handle, $script_src ) {
+        if ( $this->dfp_load_script_handle == $handle && defined( 'PEDESTAL_DFP_ID' ) ) {
+            $new_attrs = sprintf(
+                'id="%s" data-dfp-id="%s"',
+                esc_attr( $this->dfp_load_script_handle ),
+                esc_attr( PEDESTAL_DFP_ID )
+            );
+            $script_element = str_replace( 'src=', $new_attrs . ' src=', $script_element );
+        }
         return $script_element;
     }
 }

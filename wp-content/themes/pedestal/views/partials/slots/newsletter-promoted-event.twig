@@ -1,20 +1,2 @@
-<div class="c-event">
-    <h1 class="c-event__title">
-        {% if item.get_the_permalink %}
-            <a
-                href="{{ item.get_the_permalink|esc_url }}"
-                class="c-event__title__link"
-                data-ga-category="{{ gaCategory|esc_attr }}"
-                data-ga-label="Title|{{ title|esc_attr }}"
-            >
-                {{ item.get_the_title }}
-            </a>
-        {% else %}
-            {{ item.get_the_title }}
-        {% endif %}
-    </h1>
-    <div class="c-event__sponsorship">
-        {{ ped_slot( 'newsletter_item' ) }}
-    </div>
-    {% include 'partials/events/details.twig' %}
-</div>
+{% set slot = 'newsletter_item' %}
+{% include 'partials/event.twig' %}

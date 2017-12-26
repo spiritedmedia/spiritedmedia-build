@@ -13,7 +13,7 @@ title              - Headline of this stream item
 overline           - Text that appears above the title
 overline_link      - URL to link the overline to
 description        - Blurb/excerpt associated with this stream item
-is_footer_compact  - True/false if the stream item footer should remain compact at larger screen sizes
+embed_html         - Embed HTML
 author_names       - List of one or more author names for this stream item
 author_image       - Image associated with the author(s) of this stream item
 author_link        - URL associated with the author(s)
@@ -38,88 +38,117 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
     {% set stream_index = 'data-stream-index="' ~ stream_index|esc_attr ~ '"' %}
 {% endif %}
 
-<article class="stream-item stream-item--{{ type|esc_attr }}" {{ stream_index }}>
-    {% if thumbnail_image %}
-        <figure class="stream-item__thumbnail-container">
-            {% if permalink %}
-                <a
-                    href="{{ permalink|esc_url }}"
-                    {{ permalink_target }}
-                    class="stream-item__thumbnail-image-link"
-                    data-ga-category="{{ ga_category_stream|esc_attr }}"
-                    data-ga-label="Image|{{ title|esc_attr }}"
-                >{{ thumbnail_image }}</a>
-            {% else %}
-                {{ thumbnail_image }}
-            {% endif %}
-        </figure>
-    {% endif %}
-
-    {% if featured_image %}
-        <figure class="stream-item__featured-container">
-            {% if permalink %}
-                <a
-                    href="{{ permalink|esc_url }}"
-                    {{ permalink_target }}
-                    class="stream-item__featured-image-link"
-                    data-ga-category="{{ ga_category_stream|esc_attr }}"
-                    data-ga-label="Image|{{ title|esc_attr }}"
-                >{{ featured_image }}</a>
-            {% else %}
-                {{ featured_image }}
-            {% endif %}
-        </figure>
-    {% endif %}
-
-    {% if thumbnail_image %}
-        <div class="stream-item__inner">
-    {% endif %}
-
-    {% if overline %}
-        <p class="stream-item__overline c-heading--overline">
-            {% if overline_url %}
-                <a
-                    href="{{ overline_url|esc_url }}"
-                    class="stream-item__overline-link"
-                    data-ga-category="{{ ga_category_stream|esc_attr }}"
-                    data-ga-label="Overline|{{ overline|esc_attr }}"
-                >
-                    {{ overline }}
-                </a>
-            {% else %}
-                {{ overline }}
-            {% endif %}
-        </p>
-    {% endif %}
-
-    <h1 class="stream-item__title">
+{% if thumbnail_image %}
+    {% set thumbnail_image_html %}
+    <figure class="stream-item__thumbnail-container">
         {% if permalink %}
             <a
                 href="{{ permalink|esc_url }}"
                 {{ permalink_target }}
-                class="stream-item__title-link"
+                class="stream-item__thumbnail-image-link"
                 data-ga-category="{{ ga_category_stream|esc_attr }}"
-                data-ga-label="Title|{{ title|esc_attr }}"
+                data-ga-label="Image|{{ title|esc_attr }}"
+            >{{ thumbnail_image }}</a>
+        {% else %}
+            {{ thumbnail_image }}
+        {% endif %}
+    </figure>
+    {% endset %}
+{% endif %}
+
+{% if featured_image %}
+    {% set featured_image_html %}
+    <figure class="stream-item__featured-container">
+        {% if permalink %}
+            <a
+                href="{{ permalink|esc_url }}"
+                {{ permalink_target }}
+                class="stream-item__featured-image-link"
+                data-ga-category="{{ ga_category_stream|esc_attr }}"
+                data-ga-label="Image|{{ title|esc_attr }}"
+            >{{ featured_image }}</a>
+        {% else %}
+            {{ featured_image }}
+        {% endif %}
+    </figure>
+    {% endset %}
+{% endif %}
+
+{% if overline %}
+    {% set overline_class = 'has-overline' %}
+    {% set overline_html %}
+    <p class="stream-item__overline c-heading--overline">
+        {% if overline_url %}
+            <a
+                href="{{ overline_url|esc_url }}"
+                class="stream-item__overline-link"
+                data-ga-category="{{ ga_category_stream|esc_attr }}"
+                data-ga-label="Overline|{{ overline|esc_attr }}"
             >
-                {{ title }}
+                {{ overline }}
             </a>
         {% else %}
-            {{ title }}
+            {{ overline }}
         {% endif %}
-    </h1>
+    </p>
+    {% endset %}
+{% endif %}
 
-    {% if description %}
+
+{% set title_html %}
+    {% if permalink %}
+        <a
+            href="{{ permalink|esc_url }}"
+            {{ permalink_target }}
+            class="stream-item__title-link type-headline__link"
+            data-ga-category="{{ ga_category_stream|esc_attr }}"
+            data-ga-label="Title|{{ title|esc_attr }}"
+        >
+            {{ title }}
+        </a>
+    {% else %}
+        {{ title }}
+    {% endif %}
+{% endset %}
+
+<article class="stream-item stream-item--{{ type|esc_attr }} {{ overline_class }}" {{ stream_index }}>
+    {% if primary_item %}
+    <h1 class="stream-item__title--pre-image stream-item__title type-headline" aria-hidden="true">
+        {{ title_html }}
+    </h1>
+    {% endif %}
+
+    {% if __context == 'featured' %}
+        {{ overline_html }}
+    {% endif %}
+
+    {{ thumbnail_image_html }}
+    {{ featured_image_html }}
+
+    <div class="stream-item__body">
+
+        {% if __context != 'featured' %}
+        {{ overline_html }}
+        {% endif %}
+
+        <h1 class="stream-item__title--post-image stream-item__title type-headline">
+            {{ title_html }}
+        </h1>
+
+        {% if description %}
         <div class="stream-item__description">
             {{ description }}
         </div>
-    {% endif %}
+        {% endif %}
 
-    {% if thumbnail_image %}
+        {% if embed_html %}
+        <div class="stream-item__content">
+            {{ embed_html }}
         </div>
-    {% endif %}
+        {% endif %}
 
-    {% if source_image or source_name or author_image or author_names or date_time %}
-        <footer class="stream-item__footer {% if is_footer_compact %}stream-item__footer--compact{% endif %}">
+        {% if show_meta_info and ( source_image or source_name or author_image or author_names or date_time ) %}
+        <footer class="stream-item__footer type-meta-info">
 
             {# Setup some attributes #}
             {% if source_link %}
@@ -130,11 +159,15 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 {% set author_link_href = 'href="' ~ author_link|esc_url ~ '"' %}
             {% endif %}
 
+            {% set time_html %}
+                <time {% if machine_time %}datetime="{{ machine_time|esc_attr }}"{% endif %} class="stream-item__datetime">{{ date_time }}</time>
+            {% endset %}
+
             {# Display stuff #}
             {% if source_image %}
                 <a
                     {{ source_link_href }}
-                    class="stream-item__source-image"
+                    class="stream-item__footer__image"
                     data-ga-category="Source|{{ type|esc_attr }}"
                     data-ga-label="Source Image|{{ source_name|esc_attr }}"
                 >
@@ -142,21 +175,10 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 </a>
             {% endif %}
 
-            {% if source_name %}
-                <a
-                    {{ source_link_href }}
-                    class="stream-item__source-name"
-                    data-ga-category="Source|{{ type|esc_attr }}"
-                    data-ga-label="Name|{{ source_name|esc_attr }}"
-                >
-                    {{ source_name }}
-                </a>
-            {% endif %}
-
             {% if author_image %}
                 <a
                     {{ author_link_href }}
-                    class="stream-item__author-image"
+                    class="stream-item__footer__image"
                     data-ga-category="Author"
                     data-ga-label="Image"
                 >
@@ -164,14 +186,33 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 </a>
             {% endif %}
 
-            {% if author_names %}
-                <div class="stream-item__author-names">{{ author_names }}</div>
-            {% endif %}
+            <div class="stream-item__footer__text type-meta-info__text">
+                {% if source_name %}
+                    {{ time_html }}
 
-            {% if date_time %}
-                <time {% if machine_time %}datetime="{{ machine_time|esc_attr }}"{% endif %} class="stream-item__datetime">{{ date_time }}</time>
-            {% endif %}
+                    <span class="stream-item__datetime-separator">&nbsp;&middot;&nbsp;</span>
 
+                    <a
+                        {{ source_link_href }}
+                        class="stream-item__source-name"
+                        data-ga-category="Source|{{ type|esc_attr }}"
+                        data-ga-label="Name|{{ source_name|esc_attr }}"
+                    >
+                        via <strong>{{ source_name }}</strong>
+                    </a>
+                {% endif %}
+
+                {% if author_names %}
+                    <div class="stream-item__author-names">By <strong>{{ author_names }}</strong></div>
+
+                    {% if date_time %}
+                    <span class="stream-item__datetime-separator">&nbsp;&middot;&nbsp;</span>
+                    {{ time_html }}
+                    {% endif %}
+                {% endif %}
+            </div>
         </footer>
-    {% endif %}
+        {% endif %}
+
+    </div>
 </article>

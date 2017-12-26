@@ -151,7 +151,7 @@
 
                 <h2 class="c-user-card__title {{ user_title_classes }}" itemprop="jobTitle">{{ user_title }}</h2>
 
-                <hr class="c-user-card__rule  o-rule--slim">
+                <hr class="c-user-card__rule  hr--slim">
 
                 <div class="c-user-card__details">
 
@@ -173,17 +173,20 @@
                 {% endif %}
 
                 {% if options.stream %}
-                    <header class="c-user-card__stream-header">
-                        <h1 class="c-user-card__stream-header__title">Recent Articles</h1>
-                        {{ options.upper_pagination }}
-                        <hr class="o-rule" />
-                    </header>
-                    <section class="stream">
-                        {{ options.stream }}
+
+                    <section class="stream--author stream">
+                        <header class="stream__header">
+                            <h1 class="stream__header__title">Recent Articles</h1>
+                            {{ options.upper_pagination }}
+                            <hr class="hr" />
+                        </header>
+                        <div class="stream__items">
+                            {{ options.stream }}
+                        </div>
                     </section>
 
                     {% if options.show_closure_rule %}
-                        <footer class="o-rule--closure  o-rule"></footer>
+                        <footer class="hr--closure  hr"></footer>
                     {% endif %}
 
                     {{ options.pagination }}
@@ -207,14 +210,4 @@
         </div>
         {% endif %}
     {% endspaceless %}
-{% endmacro %}
-
-
-
-
-
-{% macro event_where( item ) %}
-    {% if item.get_venue_name %}{{ item.get_venue_name }}{% endif %}
-    {% if item.get_venue_name and item.get_address %} at {% endif %}
-    {% if item.get_address %}{{ item.get_address }}{% endif %}
 {% endmacro %}

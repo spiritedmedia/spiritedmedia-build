@@ -45,11 +45,13 @@
             {{ upper_pagination }}
 
             <section class="stream">
-                {{ stream }}
+                <div class="stream__items">
+                    {{ stream }}
+                </div>
             </section>
 
             {% if show_closure_rule %}
-                <footer class="o-rule--closure  o-rule"></footer>
+                <footer class="hr--closure  hr"></footer>
             {% endif %}
 
             {{ pagination }}

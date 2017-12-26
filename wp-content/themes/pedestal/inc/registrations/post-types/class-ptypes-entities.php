@@ -432,21 +432,15 @@ class Entity_Types {
                 'cost'        => new \Fieldmanager_Textfield( esc_html__( 'Cost', 'pedestal' ), [
                     'name'       => 'cost',
                 ] ),
-                'more'                => new \Fieldmanager_RichTextArea( esc_html__( 'More Details', 'pedestal' ), [
-                    'name'            => 'more',
-                    'description'     => esc_html__( 'These additional details will only display on the single event page.', 'pedestal' ),
-                    'editor_settings' => [
-                        'teeny'         => true,
-                        'media_buttons' => false,
-                        'editor_height' => 300,
-                    ],
-                ] ),
                 'url' => new \Fieldmanager_Link( esc_html__( 'Event URL', 'pedestal' ), [
                     'description' => esc_html__( 'If URL isn\'t set, the link will not display.', 'pedestal' ),
                 ] ),
                 'text'     => new \Fieldmanager_Textfield( esc_html__( 'Event Link Text', 'pedestal' ), [
                     'name'       => 'text',
                     'default_value' => esc_html__( 'Find out more', 'pedestal' ),
+                ] ),
+                'cta_source' => new \Fieldmanager_Textfield( esc_html__( 'Link Source Name', 'pedestal' ), [
+                    'description' => 'Where does the link go to? E.G. Facebook, TicketLeap, etc.',
                 ] ),
             ],
         ] );

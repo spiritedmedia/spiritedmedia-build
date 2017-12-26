@@ -8,7 +8,40 @@
 
 {% if item.get_the_content_rss %}
 <content:encoded><![CDATA[
-    {% include 'partials/events/details.twig' %}
+    <table>
+        {% if item.get_what %}
+        <tr>
+            <th scope="row">What</th>
+            <td>{{ item.get_what }}</td>
+        </tr>
+        {% endif %}
+
+        <tr>
+            <th scope="row">Where</th>
+            <td>
+                {{ macros.event_where( item ) }}
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">When</th>
+            <td>{{ item.get_when }}</td>
+        </tr>
+
+        <tr>
+            {% if item.get_cost %}
+            <th scope="row">How much</th>
+            <td>{{ item.get_cost }}</td>
+            {% endif %}
+        </tr>
+
+    </table>
+
+    {% if item.get_details_link_url and item.get_details_link_text %}
+    <p><a href="{{ item.get_details_link_url|esc_url }}">
+        {{ item.get_details_link_text }}
+    </a></p>
+    {% endif %}
     {{ item.get_the_content_rss }}
 ]]></content:encoded>
 {% else %}

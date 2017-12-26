@@ -3,56 +3,50 @@
 // ==========================================================================
 
 
-$c: '.c-yt-placeholder';
-
-
-#{$c} {
-  overflow: hidden;
+.yt-placeholder {
   position: relative;
   background-color: $black;
   z-index: $z-index-1;
 
-  &__link {}
-
-  &__image {
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
-    // Override `.s-post-content img`
-    &,
-    .s-post-content & {
-      height: 100%;
-    }
-  }
-
-  &__play-button {
-    top: 50%;
-    left: 50%;
-    transform: translate3d( -50%, -50%, 0 );
-    font-size: rem( 36px );
-    color: $white;
-    position: absolute;
-    background-color: $black;
-    background-color: transparentize( $black, 0.5 );
-    padding: rem( 14px ) rem( 34px );
-    border-radius: 15px;
-    transition: background-color 250ms linear;
-    z-index: $z-index-2;
-
-    .o-icon {
-      display: block;
-    }
-  }
-
-  :hover,
-  :focus {
-    #{$c}__play-button {
+  &:hover,
+  &:focus {
+    .yt-placeholder__play-button {
       background-color: $primary-color;
     }
+  }
+}
+
+.yt-placeholder__image {
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  // Override `.s-post-content img`
+  &,
+  .s-post-content & {
+    height: 100%;
+  }
+}
+
+.yt-placeholder__play-button {
+  top: 50%;
+  left: 50%;
+  transform: translate3d( -50%, -50%, 0 );
+  font-size: rem( 36px );
+  color: $white;
+  position: absolute;
+  background-color: $black;
+  background-color: transparentize( $black, 0.5 );
+  padding: rem( 14px ) rem( 34px );
+  border-radius: 15px;
+  transition: background-color 250ms linear;
+  z-index: $z-index-2;
+
+  .o-icon {
+    display: block;
   }
 }

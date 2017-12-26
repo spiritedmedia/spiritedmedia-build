@@ -1,0 +1,16 @@
+<div class="yt-placeholder__inner js-yt-placeholder">
+    <a href="{{ url|esc_url }}" target="_blank"
+        class="yt-placeholder__link js-yt-placeholder-link"
+        data-youtube-id="{{ id|esc_attr }}"
+        data-ga-category="Embed|Video"
+        data-ga-label="Load YouTube Video"
+    >
+        <img src="{{ img_src|esc_url }}"
+            srcset="{{ img_srcset|esc_attr }}"
+            class="yt-placeholder__image"
+        />
+        <span class="yt-placeholder__play-button">
+            {{ ped_icon( 'play' ) }}
+        </span>
+    </a>
+</div>

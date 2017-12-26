@@ -222,20 +222,6 @@ class Utils {
     }
 
     /**
-     * Wrapper for `file_get_contents()` using our HTTP auth credentials
-     *
-     * @param  string $path Path to the file
-     */
-    public static function file_get_contents_with_auth( $path ) {
-        $context = stream_context_create( [
-            'http' => [
-                'header' => 'Authorization: Basic ' . base64_encode( PEDESTAL_DEV_AUTH ),
-            ],
-        ] );
-        return file_get_contents( $path, false, $context );
-    }
-
-    /**
      * parse_url(), fully-compatible with protocol-less URLs and PHP 5.3
      *
      * @param string $url
