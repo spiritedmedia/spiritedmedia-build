@@ -1,6 +1,6 @@
 {% set event_details = {
     'What': item.get_what,
-    'Where': macros.event_where( item ),
+    'Where': item.get_where,
     'When': item.get_when,
     'How Much': item.get_cost
 } %}
