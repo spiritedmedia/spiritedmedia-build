@@ -13,7 +13,12 @@
 
 {% set daily_insta_meta %}
 <p class="email-daily-insta__meta">
-    {{ item.get_embed_caption }}<br>
+    {% if item.get_embed_caption %}
+        {{ item.get_embed_caption }}
+    {% else %}
+        {{ item.get_the_title }}
+    {% endif %}
+    <br>
     Photo by <a href="{{ item.get_embed_url }}" target="_blank"><strong>@{{ item.get_embed_author_name }}</strong></a>
 </p>
 {% endset %}
