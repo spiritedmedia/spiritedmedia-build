@@ -1,7 +1,7 @@
-Build [#4142](https://circleci.com/gh/spiritedmedia/spiritedmedia/4142) by kingkool68 at 2018-01-05 10:55 PM UTC
+Build [#4158](https://circleci.com/gh/spiritedmedia/spiritedmedia/4158) by montchr at 2018-01-09 09:32 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.6](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.6)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.7](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.7)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.5...v6.6.6)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.6...v6.6.7)
 
- - [#2431](https://github.com/spiritedmedia/spiritedmedia/pull/2431): Display the embed title as the Instagram of the Day caption
+ - [#2432](https://github.com/spiritedmedia/spiritedmedia/pull/2432): Add gray logo icon PNG images
