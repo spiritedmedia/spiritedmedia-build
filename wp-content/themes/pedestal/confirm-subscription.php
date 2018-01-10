@@ -3,7 +3,7 @@
 use Timber\Timber;
 use \Pedestal\Posts\Clusters;
 use \Pedestal\Objects\ActiveCampaign;
-use \Pedestal\Email\Email_Lists;
+use \Pedestal\Email\Follow_Update_Emails;
 
 $context = Timber::get_context();
 
@@ -30,7 +30,7 @@ $transient_key = 'pending_email_confirmation_' . $key;
 $data = get_transient( $transient_key );
 if ( $data ) {
     if ( isset( $data['email'] ) && isset( $data['list_ids'] ) ) {
-        $activecampaign = new ActiveCampaign;
+        $activecampaign = ActiveCampaign::get_instance();
         $result = $activecampaign->subscribe_contact( $data['email'], $data['list_ids'] );
         if ( $result ) {
             delete_transient( $transient_key );
@@ -40,7 +40,7 @@ if ( $data ) {
     }
 }
 
-$clusters = Email_Lists::get_clusters_from_list_ids( $provided_list_ids );
+$clusters = Follow_Update_Emails::get_clusters_from_list_ids( $provided_list_ids );
 if ( 1 === count( $clusters ) && 1 === count( $provided_list_ids ) ) {
     $cluster = $clusters[0];
     // Clusters only use one list ID

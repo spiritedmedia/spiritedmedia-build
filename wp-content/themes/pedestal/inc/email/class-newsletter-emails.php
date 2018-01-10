@@ -10,9 +10,11 @@ use Pedestal\Posts\{
     Newsletter
 };
 
+use Pedestal\Objects\MailChimp;
+
 use Pedestal\Email\{
     Email,
-    Email_Lists
+    Newsletter_Groups
 };
 
 class Newsletter_Emails {
@@ -35,7 +37,7 @@ class Newsletter_Emails {
      */
     public function setup_actions() {
         add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ], 10, 2 );
-        add_action( 'save_post', [ $this, 'action_save_post_send_email' ], 100 );
+        add_action( 'save_post', [ $this, 'action_save_post_maybe_send_email' ], 100 );
         add_action( 'pedestal_email_tester_newsletter', [ $this, 'action_pedestal_email_tester' ] );
         add_action( 'admin_footer', function() {
             $post = get_post();
@@ -128,7 +130,7 @@ class Newsletter_Emails {
      *
      * @param  integer $post_id ID of the post being edited
      */
-    public function action_save_post_send_email( $post_id = 0 ) {
+    public function action_save_post_maybe_send_email( $post_id = 0 ) {
         $post_type = get_post_type( $post_id );
         if ( 'pedestal_newsletter' !== $post_type ) {
             return;
@@ -151,23 +153,12 @@ class Newsletter_Emails {
             return;
         }
 
-        // If this newsletter is being sent as part of a test
-        // then set it's status to draft for ActiveCampaign
-        if ( $newsletter->get_meta( 'newsletter_is_test' ) ) {
-            $args['status'] = 0;
-        }
-
-        $result = $this->send_email_to_list( $newsletter, $args );
-        if ( $result && ! $is_test_email ) {
+        $campaign_id = $this->send_email( $newsletter, $args );
+        if ( $campaign_id && ! $is_test_email ) {
             // Set the last sent email date
             $newsletter->set_sent_flag( 'newsletter' );
             $newsletter->set_sent_date( time() );
-            if ( isset( $result->id ) ) {
-                $newsletter->set_meta( 'activecampaign_id', $result->id );
-            }
-            if ( isset( $result->message_ids ) ) {
-                $newsletter->set_meta( 'activecampaign_message_ids', $result->message_ids );
-            }
+            $newsletter->set_meta( 'mailchimp_campaign_id', $campaign_id );
         }
     }
 
@@ -178,24 +169,24 @@ class Newsletter_Emails {
      * @param  Array $args             Options
      * @return Boolean                 Did the camapign send successfully?
      */
-    public function send_email_to_list( $newsletter, $args ) {
+    public function send_email( $newsletter, $args ) {
         $newsletter_post = get_post( $newsletter->get_id() );
         $parent_newsletter = $newsletter_post;
         while ( 0 != $parent_newsletter->post_parent ) {
             $parent_newsletter = get_post( $parent_newsletter->post_parent );
         }
         $query_args = [
-            'post_type' => 'pedestal_newsletter',
-            'post_parent' => $parent_newsletter->ID,
+            'post_type'      => 'pedestal_newsletter',
+            'post_parent'    => $parent_newsletter->ID,
             'posts_per_page' => 5,
-            'post_status' => [ 'draft', 'publish', 'future' ],
+            'post_status'    => [ 'draft', 'publish', 'future' ],
         ];
         $message_posts = new \WP_Query( $query_args );
         $message_posts = array_merge( [ $parent_newsletter ], $message_posts->posts );
         $messages = [];
         foreach ( $message_posts as $message_post ) {
             $newsletter = Newsletter::get( $message_post );
-            $body = Email::get_email_template( 'newsletter', 'ac', [
+            $body = Email::get_email_template( 'newsletter', 'mc', [
                 'item'       => $newsletter,
                 'email_type' => 'Daily',
                 'shareable'  => true,
@@ -206,15 +197,14 @@ class Newsletter_Emails {
                 'subject' => $subject,
             ];
         }
-        $email_lists = Email_Lists::get_instance();
-        $daily_newsletter_id = $email_lists->get_newsletter_list_id( 'Daily Newsletter' );
         $sending_args = [
-            'messages'   => $messages,
-            'list'       => $daily_newsletter_id,
-            'email_type' => 'Daily Newsletter',
+            'messages'       => $messages,
+            'groups'         => 'Daily Newsletter',
+            'group_category' => 'Newsletters',
+            'email_type'     => 'Daily Newsletter',
         ];
         $sending_args = wp_parse_args( $sending_args, $args );
-        return Email::send_email( $sending_args );
+        return Email::send_mailchimp_email( $sending_args );
     }
 
     /**
@@ -230,23 +220,12 @@ class Newsletter_Emails {
             die();
         }
         $newsletter = Newsletter::get( $newsletters->posts[0] );
-        echo Email::get_email_template( 'newsletter', 'ac', [
-            'item' => $newsletter,
+        echo Email::get_email_template( 'newsletter', 'mc', [
+            'item'       => $newsletter,
             'email_type' => 'Daily',
-            'shareable' => true,
+            'shareable'  => true,
         ] );
         die();
-    }
-
-    /**
-     * Get the number of users subscribed to the Daily Newsletter list
-     *
-     * @return int
-     */
-    public function get_daily_newsletter_subscriber_count() {
-        $email_lists = Email_Lists::get_instance();
-        $list_id = $email_lists->get_newsletter_list_id( 'Daily Newsletter' );
-        return Email::get_subscriber_count( $list_id );
     }
 
     /**

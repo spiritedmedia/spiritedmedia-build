@@ -7,9 +7,10 @@ use function Pedestal\Pedestal;
 use WP_CLI;
 use joshtronic\LoremIpsum;
 
-use Pedestal\Email\Email;
+use Pedestal\Email\Follow_Update_Emails;
 use Pedestal\Objects\{
     ActiveCampaign,
+    MailChimp,
     Newsletter_Lists,
     User
 };
@@ -505,9 +506,9 @@ class CLI extends \WP_CLI_Command {
      * @subcommand sync-newsletter-ids
      */
     public function sync_newsletter_ids( $args, $assoc_args ) {
-        $email_lists = Email_Lists::get_instance();
-        $email_lists->delete_options();
-        $lists = $email_lists->get_all_newsletters();
+        $newsletter_groups = Newsletter_Groups::get_instance();
+        $newsletter_groups->delete_options();
+        $lists = $newsletter_groups->get_all_newsletters();
         if ( ! $lists || ! is_array( $lists ) ) {
             WP_CLI::error( '$lists is bad! Oh No!' );
             return;
@@ -820,7 +821,7 @@ class CLI extends \WP_CLI_Command {
      * @subcommand update-all-activecampaign-list
      */
     public function update_all_activecampaign_list() {
-        $ac = new ActiveCampaign;
+        $ac = ActiveCampaign::get_instance();
 
         // Get the ALL list
         $all_list_name = 'All Contacts - ' . PEDESTAL_BLOG_NAME;
@@ -899,23 +900,47 @@ class CLI extends \WP_CLI_Command {
      * <ids>...
      * : Post IDs of the clusters for which you want to refresh the count
      *
-     * [--ignore-primaries]
-     * : Whether or not to update the count for the newsletter and breaking news lists
-     *
      * @subcommand refresh-subscribers
      */
     public function refresh_subscriber_count( $args, $assoc_args ) {
-        $refresh_primary_lists = true;
-        if ( isset( $assoc_args['ignore-primaries'] ) ) {
-            $refresh_primary_lists = false;
+        $result = Follow_Update_Emails::refresh_subscriber_counts( $args );
+        WP_CLI::success( 'Done! ' . count( $result ) . ' clusters updated' );
+    }
+
+    /**
+     * Setup MailChimp for a site
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal setup-mailchimp
+     *     wp pedestal setup-mailchimp --url=https://billypenn.dev
+     *
+     * @subcommand setup-mailchimp
+     */
+    public function setup_mailchimp() {
+        $mc = MailChimp::get_instance();
+
+        // Make sure a list specific to this site is created
+        $mc->get_site_list();
+
+        $categories = [
+            'Newsletters' => [
+                'Daily Newsletter',
+                'Breaking News',
+            ],
+        ];
+        foreach ( $categories as $group_category => $groups ) {
+
+            // Make sure the group category exists
+            $mc->add_group_category( $group_category );
+
+            // Add each group to the group category
+            foreach ( $groups as $group ) {
+                $mc->add_group( $group, $group_category );
+            }
         }
 
-        $result = Email::refresh_subscriber_counts( $args, $refresh_primary_lists );
-        if ( $refresh_primary_lists ) {
-            WP_CLI::success( 'Done! Newsletter, Breaking News, and ' . count( $result ) . ' clusters updated' );
-        } else {
-            WP_CLI::success( 'Done! ' . count( $result ) . ' clusters updated' );
-        }
+        WP_CLI::success( 'Done! Verify at ' . $mc->get_admin_url( '/lists/' ) );
     }
 }
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );

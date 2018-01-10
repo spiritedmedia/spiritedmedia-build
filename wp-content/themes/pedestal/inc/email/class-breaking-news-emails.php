@@ -11,7 +11,7 @@ use Pedestal\Posts\Post;
 
 use Pedestal\Email\{
     Email,
-    Email_Lists
+    Newsletter_Groups
 };
 
 class Breaking_News_Emails {
@@ -33,7 +33,7 @@ class Breaking_News_Emails {
      */
     public function setup_actions() {
         add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ], 10, 2 );
-        add_action( 'save_post', [ $this, 'action_save_post_send_email' ], 100 );
+        add_action( 'save_post', [ $this, 'action_save_post_maybe_send_email' ], 100 );
         add_action( 'pedestal_email_tester_breaking-news', [ $this, 'action_pedestal_email_tester' ] );
     }
 
@@ -75,10 +75,11 @@ class Breaking_News_Emails {
     public function handle_meta_box( $post ) {
         $post = Post::get( (int) $post->ID );
         $sent_date = $post->get_sent_date();
+        $newsletter_groups = Newsletter_Groups::get_instance();
 
         $send_button_text = sprintf(
             'Send Breaking News To %d Subscribers',
-            $this->get_breaking_news_subscriber_count()
+            $newsletter_groups->get_subscriber_count( 'Breaking News' )
         );
 
         $context = [
@@ -118,25 +119,43 @@ class Breaking_News_Emails {
      *
      * @param  integer $post_id ID of the post being edited
      */
-    public function action_save_post_send_email( $post_id = 0 ) {
-        $breaking_news_confirm = ( ! empty( $_POST['confirm-send-email'] ) && 'SEND BREAKING NEWS' === strtoupper( $_POST['confirm-send-email'] ) );
-        if ( ( ! empty( $_POST['pedestal-breaking-news-notify-subscribers'] )
-                && $breaking_news_confirm
-             ) || ! empty( $_POST['pedestal-breaking-news-send-test-email'] )
+    public function action_save_post_maybe_send_email( $post_id = 0 ) {
+        // Determine if this is a test email
+        $is_test_email = false;
+        if ( ! empty( $_POST['pedestal-breaking-news-send-test-email'] ) ) {
+            $is_test_email = true;
+        }
+
+        // If not a test email and the send breaking news button wasn't clicked then bail
+        if (
+            ! $is_test_email
+            && empty( $_POST['pedestal-breaking-news-notify-subscribers'] )
         ) {
-            $post = Post::get( (int) $post_id );
-            $is_test_email = false;
-            $args = [];
-            if ( ! empty( $_POST['pedestal-breaking-news-send-test-email'] ) ) {
-                $is_test_email = true;
-                $args['test_email_addresses'] = Email::sanitize_test_email_addresses( $_POST['test-email-addresses'] );
-            }
-            $result = $this->send_email_to_list( $post, $args );
-            if ( $result && ! $is_test_email ) {
-                // Set the last sent email date
-                $post->set_sent_flag( 'breaking-news' );
-                $post->set_sent_date( time() );
-            }
+            return;
+        }
+
+        // If not a test email and the send breaking news confirmation isn't valid then bail
+        if (
+            ! $is_test_email
+            && (
+                empty( $_POST['confirm-send-email'] )
+                || 'SEND BREAKING NEWS' !== strtoupper( $_POST['confirm-send-email'] )
+            )
+        ) {
+            return;
+        }
+
+        $post = Post::get( (int) $post_id );
+        $args = [];
+        if ( $is_test_email ) {
+            $args['test_email_addresses'] = Email::sanitize_test_email_addresses( $_POST['test-email-addresses'] );
+        }
+        $campaign_id = $this->send_email( $post, $args );
+        if ( $campaign_id && ! $is_test_email ) {
+            // Set the last sent email date
+            $post->set_sent_flag( 'breaking-news' );
+            $post->set_sent_date( time() );
+            $post->set_meta( 'mailchimp_campaign_id', $campaign_id );
         }
     }
 
@@ -144,31 +163,29 @@ class Breaking_News_Emails {
      * Send an email campaign to breaking news subscribers
      *
      * @param  Post $post   The entity we are notifing subscribers about
-     * @param  Array $args  Options
-     * @return Boolean      Did the camapign send successfully?
+     * @param  array $args  Options
+     * @return string       MailChimp campaign id if sent successfully
      */
-    public function send_email_to_list( $post, $args ) {
-        $html = Email::get_email_template( 'breaking-news', 'ac', [
+    public function send_email( $post, $args ) {
+        $html = Email::get_email_template( 'breaking-news', 'mc', [
             'item'       => $post,
             'email_type' => 'Breaking News',
             'shareable'  => true,
         ] );
         $subject = sprintf( 'BREAKING NEWS: %s', $post->get_title() );
-        $email_lists = Email_Lists::get_instance();
-        $breaking_newsletter_id = $email_lists->get_newsletter_list_id( 'Breaking News' );
         $sending_args = [
-            'messages' => [
+            'messages'       => [
                 [
                     'html'    => $html,
                     'subject' => $subject,
                 ],
             ],
-            'name'       => $subject,
-            'list'       => $breaking_newsletter_id,
-            'email_type' => 'Breaking News',
+            'groups'         => 'Breaking News',
+            'group_category' => 'Newsletters',
+            'email_type'     => 'Breaking News',
         ];
         $sending_args = wp_parse_args( $sending_args, $args );
-        return Email::send_email( $sending_args );
+        return Email::send_mailchimp_email( $sending_args );
     }
 
     /**
@@ -190,22 +207,11 @@ class Breaking_News_Emails {
             die();
         }
         $post = Post::get( $breaking_news->posts[0]->ID );
-        echo Email::get_email_template( 'breaking-news', 'ac', [
-            'item' => $post,
+        echo Email::get_email_template( 'breaking-news', 'mc', [
+            'item'       => $post,
             'email_type' => 'Breaking News',
-            'shareable' => true,
+            'shareable'  => true,
         ] );
         die();
-    }
-
-    /**
-     * Get the number of users subscribed to the Breaking News list
-     *
-     * @return int
-     */
-    public function get_breaking_news_subscriber_count() {
-        $email_lists = Email_Lists::get_instance();
-        $list_id = $email_lists->get_newsletter_list_id( 'Breaking News' );
-        return Email::get_subscriber_count( $list_id );
     }
 }

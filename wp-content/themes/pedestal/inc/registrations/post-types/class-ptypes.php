@@ -258,7 +258,7 @@ class Types {
                 }
                 break;
             case 'pedestal_cluster_subscribers_count':
-                echo esc_html__( $obj->get_following_users_count(), 'pedestal' );
+                echo esc_html__( $obj->get_subscriber_count(), 'pedestal' );
                 break;
             case 'pedestal_cluster_unsent_entities_count':
                 $count = $obj->get_unsent_entities( [

@@ -6,7 +6,7 @@ use Pedestal\Objects\{
     Notifications
 };
 use Pedestal\Objects\ActiveCampaign;
-use Pedestal\Email\Email_Lists;
+use Pedestal\Email\Newsletter_Groups;
 use Pedestal\Posts\Newsletter;
 
 class Yesterdays_Email_Metric {
@@ -55,11 +55,11 @@ class Yesterdays_Email_Metric {
      * Compile all the data and form a message to send to Slack
      */
     public function send() {
-        $ac            = new ActiveCampaign;
-        $email_lists   = new Email_Lists;
+        $ac = ActiveCampaign::get_instance();
+        $newsletter_groups = Newsletter_Groups::get_instance();
         $notifications = new Notifications;
 
-        $newsletter_id = $email_lists->get_newsletter_list_id( 'Daily Newsletter' );
+        $newsletter_id = $newsletter_groups->get_newsletter_group_id( 'Daily Newsletter' );
         $args          = [
             'lists'     => [ $newsletter_id ],
             'end_date'  => strtotime( '7daysago' ),

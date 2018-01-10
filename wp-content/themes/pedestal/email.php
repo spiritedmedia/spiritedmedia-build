@@ -50,6 +50,9 @@ $html = ob_get_clean();
 if ( false === $debug_styles ) {
     $inliner = new CssToInlineStyles();
     $html = $inliner->convert( $html, $css );
+    // The CSS inliner escapes MailChimp tags like *|UNSUB|* to *%7CUNSUB%7C*
+    // causing MailChimp to ignore them
+    $html = str_replace( [ '*%7C', '%7C*' ], [ '*|', '|*' ], $html );
 }
 
 echo $html;

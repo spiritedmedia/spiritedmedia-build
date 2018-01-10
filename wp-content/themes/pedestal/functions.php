@@ -22,12 +22,12 @@ use Pedestal\Posts\{
 use Pedestal\Objects\User;
 use Pedestal\Email\{
     Email,
-    Email_Lists,
+    Newsletter_Groups,
     One_Off_Emails,
     Breaking_News_Emails,
     Newsletter_Emails,
     Newsletter_Testing,
-    Follow_Updates_Emails
+    Follow_Update_Emails
 };
 
 if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
@@ -234,7 +234,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 $this->admin              = Admin\Admin::get_instance();
                 $this->cluster_tools      = Admin\Cluster_Tools::get_instance();
                 $this->taxonomy_tools     = Admin\Taxonomy_Tools::get_instance();
-                $this->newsletter_testing = Newsletter_Testing::get_instance();
+                // Will be reimplemented after our move to MailChimp. See #2426
+                // $this->newsletter_testing = Newsletter_Testing::get_instance();
             } else {
                 $this->frontend       = Frontend::get_instance();
                 $this->scripts_styles = Scripts_Styles::get_instance();
@@ -255,14 +256,15 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             // Metrics
             $this->weekly_traffic_metric             = Weekly_Traffic_Metric::get_instance();
             $this->newsletter_signups_by_page_metric = Newsletter_Signups_By_Page_Metric::get_instance();
-            $this->yesterdays_email_metric           = Yesterdays_Email_Metric::get_instance();
+            // Will be reimplemented after our move to MailChimp. See #2425
+            // $this->yesterdays_email_metric           = Yesterdays_Email_Metric::get_instance();
 
             // Emails
             $this->emails                = Email::get_instance();
-            $this->email_lists           = Email_Lists::get_instance();
+            $this->newsletter_groups     = Newsletter_Groups::get_instance();
             $this->breaking_news_emails  = Breaking_News_Emails::get_instance();
             $this->newsletter_emails     = Newsletter_Emails::get_instance();
-            $this->follow_updates_emails = Follow_Updates_Emails::get_instance();
+            $this->follow_update_emails = Follow_Update_Emails::get_instance();
 
         }
 
@@ -702,8 +704,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'placeholder'                => PEDESTAL_EMAIL_PLACEHOLDER,
                 'daily_newsletter_name'      => PEDESTAL_BLOG_NAME . ' Daily',
                 'daily_newsletter_send_time' => '7:00 a.m.',
-                'daily_newsletter_id'        => $this->email_lists->get_newsletter_list_id( 'Daily Newsletter' ),
-                'breaking_newsletter_id'     => $this->email_lists->get_newsletter_list_id( 'Breaking News' ),
+                'daily_newsletter_id'        => $this->newsletter_groups->get_newsletter_group_id( 'Daily Newsletter' ),
+                'breaking_newsletter_id'     => $this->newsletter_groups->get_newsletter_group_id( 'Breaking News' ),
             ];
 
             $context['site']->live_urls = [

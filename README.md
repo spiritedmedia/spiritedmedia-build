@@ -1,7 +1,7 @@
-Build [#4164](https://circleci.com/gh/spiritedmedia/spiritedmedia/4164) by montchr at 2018-01-09 11:14 PM UTC
+Build [#4170](https://circleci.com/gh/spiritedmedia/spiritedmedia/4170) by kingkool68 at 2018-01-10 07:08 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.8](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.8)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.7.0](https://github.com/spiritedmedia/spiritedmedia/compare/v6.7.0)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.7...v6.6.8)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.6.8...v6.7.0)
 
- - [#2436](https://github.com/spiritedmedia/spiritedmedia/pull/2436): [HOTFIX] Use Daily Insta post title as caption in email
+ - [#2410](https://github.com/spiritedmedia/spiritedmedia/pull/2410): Integrate MailChimp API

@@ -2,17 +2,6 @@
 
 namespace Pedestal;
 
-use function Pedestal\Pedestal;
-
-use Pedestal\Email\{
-    Email,
-    Newsletter_Emails
-};
-use Pedestal\Utils\Utils;
-use Pedestal\Registrations\Post_Types\Types;
-use Pedestal\Objects\Notifications;
-use Pedestal\Posts\Post;
-
 class Cron_Management {
 
     /**
@@ -39,7 +28,6 @@ class Cron_Management {
      * Hook into WordPress via filters
      */
     private function setup_filters() {
-        add_filter( 'pedestal_cron_events', [ $this, 'filter_pedestal_cron_events' ] );
         add_filter( 'cron_schedules', function( $schedules = [] ) {
             if ( ! isset( $schedules['weekly'] ) ) {
                 $schedules['weekly'] = [
@@ -69,8 +57,7 @@ class Cron_Management {
             return;
         }
         foreach ( $cron_events as $hook => $event ) {
-            $hook       = sanitize_title( $hook );
-            $hook       = 'pedestal_' . $hook;
+            $hook       = 'pedestal_' . sanitize_title( $hook );
             $timestamp  = $event['timestamp'];
             $recurrence = $event['recurrence'];
             $callback   = $event['callback'];
@@ -82,37 +69,5 @@ class Cron_Management {
                 }
             } );
         }
-    }
-
-    /**
-     * Setup cron events that don't live anywhere else
-     *
-     * @param  array  $events Cron events we want to register
-     * @return array          Cron events we want to register
-     */
-    public function filter_pedestal_cron_events( $events = [] ) {
-        $events['refresh_subscriber_count'] = [
-            'timestamp'  => intval( current_time( 'U' ) ),
-            'recurrence' => 'hourly',
-            'callback'   => [ $this, 'handle_refresh_subscriber_count' ],
-        ];
-        return $events;
-    }
-
-    /**
-     * Refresh stored subscriber count for email lists
-     *
-     * Refreshes the 25 least recently updated stories and the newsletter +
-     * breaking news lists.
-     */
-    public function handle_refresh_subscriber_count() {
-        $query = new \WP_Query( [
-            'meta_key'       => 'subscriber_count_last_updated',
-            'order'          => 'ASC',
-            'orderby'        => 'meta_value_num',
-            'post_type'      => 'pedestal_story',
-            'posts_per_page' => 25,
-        ] );
-        Email::refresh_subscriber_counts( $query );
     }
 }

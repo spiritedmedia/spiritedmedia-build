@@ -9,14 +9,12 @@ use Pedestal\Posts\Clusters\{
     Story
 };
 use Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
-use Pedestal\Email\{
-    Email,
-    Email_Lists
-};
+use Pedestal\Email\Email;
 use Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Objects\ActiveCampaign;
 use Pedestal\Utils\Utils;
 
-class Follow_Updates_Emails {
+class Follow_Update_Emails {
 
     /**
      * Get an instance of this class
@@ -26,6 +24,7 @@ class Follow_Updates_Emails {
         if ( null === $instance ) {
             $instance = new static();
             $instance->setup_actions();
+            $instance->setup_filters();
         }
         return $instance;
     }
@@ -37,6 +36,14 @@ class Follow_Updates_Emails {
         add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ], 10, 2 );
         add_action( 'save_post', [ $this, 'action_save_post' ], 100 );
         add_action( 'pedestal_email_tester_follow-update-story', [ $this, 'action_pedestal_email_tester' ] );
+        add_action( 'post_updated', [ $this, 'action_post_updated_activecampaign_list' ], 10, 3 );
+    }
+
+    /**
+     * Setup various filters
+     */
+    public function setup_filters() {
+        add_filter( 'pedestal_cron_events', [ $this, 'filter_pedestal_cron_events' ] );
     }
 
     /**
@@ -105,8 +112,7 @@ class Follow_Updates_Emails {
 
         $send_button = '';
         $follower_label = 'Followers';
-        $force = true;
-        $cluster_count = $cluster->get_following_users_count( $force );
+        $cluster_count = $cluster->get_subscriber_count();
         if ( 0 == $cluster_count ) {
             $attributes['disabled'] = 'disabled';
         }
@@ -157,18 +163,17 @@ class Follow_Updates_Emails {
     }
 
     /**
-     * Send an email campaign to those following a given cluster
+     * Send an email campaign to subscribers of a given cluster
      *
-     * @param  Cluster $cluster  The cluster we are notifing followers about
-     * @param  Array $args       Options
-     * @return Boolean           Did the camapign send successfully?
+     * @param  Cluster $cluster  The cluster we are notifing subscribers about
+     * @param  array $args       Options
+     * @return boolean           Did the camapign send successfully?
      */
     public function send_email_to_list( $cluster, $args = [] ) {
         if ( ! Types::is_cluster( $cluster ) ) {
             return false;
         }
-        $cluster_id = $cluster->get_id();
-        $list_id = Email_Lists::get_list_id_from_cluster( $cluster_id );
+        $list_id = $cluster->get_activecampaign_list_id();
         $body = Email::get_email_template( 'follow-update', 'ac', [
             'item'       => $cluster,
             'entities'   => $cluster->get_unsent_entities( true ),
@@ -187,11 +192,11 @@ class Follow_Updates_Emails {
             'email_type' => 'Follow Update',
         ];
         $sending_args = wp_parse_args( $sending_args, $args );
-        $sent = Email::send_email( $sending_args );
+        $sent = Email::send_activecampaign_email( $sending_args );
         if ( $sent ) {
             $expiration = Utils::get_fuzzy_expire_time( HOUR_IN_SECONDS / 2 );
-            set_transient( 'pedestal_cluster_unsent_entities_count_' . $cluster_id, 0, $expiration );
-            update_post_meta( $cluster_id, 'unsent_entities_count', 0 );
+            set_transient( 'pedestal_cluster_unsent_entities_count_' . $cluster->get_id(), 0, $expiration );
+            $cluster->set_meta( 'unsent_entities_count', 0 );
         }
         return $sent;
     }
@@ -218,5 +223,122 @@ class Follow_Updates_Emails {
             ] );
         }
         die();
+    }
+
+    /**
+     * Rename a Cluster's ActiveCampaign list name if its title changes
+     *
+     * @param  int $post_id          ID of the post being saved
+     * @param  WP Post $post_after   Post object after update
+     * @param  WP Post $post_before  Post object before update
+     */
+    public function action_post_updated_activecampaign_list( $post_id, $post_after, $post_before ) {
+        if ( $post_after->post_title === $post_before->post_title ) {
+            return;
+        }
+
+        if ( ! Types::is_cluster( $post_after->post_type ) ) {
+            return;
+        }
+        $cluster = Cluster::get( $post_id );
+        $list_id = $cluster->get_activecampaign_list_id();
+        $new_name = $cluster->get_activecampaign_list_name();
+
+        $activecampaign = ActiveCampaign::get_instance();
+        $response = $activecampaign->edit_list( $list_id, [
+            'name' => $new_name,
+        ] );
+    }
+
+    /**
+     * Setup cron event to refresh subscriber counts
+     *
+     * @param  array  $events Cron events we want to register
+     * @return array          Cron events we want to register
+     */
+    public function filter_pedestal_cron_events( $events = [] ) {
+        $events['refresh_subscriber_count'] = [
+            'timestamp'  => date( 'U', mktime( date( 'H' ) + 1, 5, 0 ) ), // Next top of the hour + 5 minutes
+            'recurrence' => 'hourly',
+            'callback'   => [ $this, 'handle_refresh_subscriber_count' ],
+        ];
+        return $events;
+    }
+
+    /**
+     * Get a Cluster object from a given ActiveCampaign List ID
+     * @param  array $list_ids  One or more ActiveCampaign List IDs
+     * @return array            Array of Cluster objects
+     */
+    public static function get_clusters_from_list_ids( $list_ids = [] ) {
+        $output = [];
+        if ( is_numeric( $list_ids ) ) {
+            $list_ids = [ $list_ids ];
+        }
+        $list_ids = array_map( 'intval', $list_ids );
+        $args = [
+            'post_type'     => 'any',
+            'meta_key'      => 'activecampaign-list-id',
+            'meta_value'    => $list_ids,
+            'fields'        => 'ids',
+            'no_found_rows' => true,
+        ];
+        $meta_query = new \WP_Query( $args );
+        $post_ids = $meta_query->posts;
+        if ( empty( $post_ids ) ) {
+            return $output;
+        }
+        foreach ( $post_ids as $post_id ) {
+            $cluster = Cluster::get( $post_id );
+            if ( Types::is_cluster( $cluster ) ) {
+                $output[] = $cluster;
+            }
+        }
+        return $output;
+    }
+
+    /**
+     * Refresh stored subscriber count for email lists
+     *
+     * Refreshes the 25 least recently updated stories
+     */
+    public function handle_refresh_subscriber_count() {
+        $query = new \WP_Query( [
+            'meta_key'       => 'subscriber_count_last_updated',
+            'order'          => 'ASC',
+            'orderby'        => 'meta_value_num',
+            'post_type'      => 'pedestal_story',
+            'posts_per_page' => 25,
+        ] );
+        self::refresh_subscriber_counts( $query );
+    }
+
+    /**
+     * Refresh subscriber counts for clusters
+     *
+     * @param  array|\WP_Query  $posts  Array of IDs or \WP_Query
+     * @return array Associative array of cluster IDs and new subscriber counts
+     */
+    public static function refresh_subscriber_counts( $posts ) {
+        $result = [];
+
+        if ( $posts instanceof \WP_Query ) {
+            $posts = Post::get_posts_from_query( $posts );
+        } elseif ( is_array( $posts ) && is_numeric( $posts[0] ) ) {
+            $posts = Post::get_posts_from_ids( $posts );
+        } else {
+            return $result;
+        }
+
+        foreach ( $posts as $ped_post ) {
+            if ( ! Types::is_cluster( $ped_post ) ) {
+                continue;
+            }
+            // Get fresh values by deleting the current values and refetching the subscriber count
+            $ped_post->delete_subscriber_count();
+            $result[ $ped_post->get_id() ] = $ped_post->get_subscriber_count();
+        }
+
+        return $result;
     }
 }

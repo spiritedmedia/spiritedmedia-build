@@ -3,7 +3,6 @@
 namespace Pedestal\Objects;
 
 use Pedestal\Utils\Utils;
-use Pedestal\Email\Email_Lists;
 
 /**
  * A way to interact with ActiveCampaign
@@ -28,9 +27,26 @@ class ActiveCampaign {
     protected $sender_info = [];
 
     /**
+     * The option key for storing the address ID specific to this site
+     */
+    private $address_option_key = 'activecampaign-address-id';
+
+    /**
+     * Get an instance of this class
+     */
+    public static function get_instance() {
+        static $instance = null;
+        if ( null === $instance ) {
+            $instance = new static();
+            $instance->setup();
+        }
+        return $instance;
+    }
+
+    /**
      * Check that we have the proper API credentials set up
      */
-    public function __construct() {
+    public function setup() {
         if ( ! defined( 'ACTIVECAMPAIGN_URL' ) || ! defined( 'ACTIVECAMPAIGN_API_KEY' ) ) {
             wp_die( 'ActiveCampaign API credentials are missing. See <a href="https://spiritedmedia.activehosted.com/admin/main.php?action=settings#tab_api">https://spiritedmedia.activehosted.com/admin/main.php?action=settings#tab_api</a>' );
         }
@@ -50,6 +66,15 @@ class ActiveCampaign {
             $this->sender_info['sender_addr1'] = PEDESTAL_BUILDING_NAME;
             $this->sender_info['sender_addr2'] = PEDESTAL_STREET_ADDRESS;
         }
+    }
+
+    /**
+     * Get the name of the option where the address option is stored
+     *
+     * @return string The option name
+     */
+    public function get_address_option_key() {
+        return $this->address_option_key;
     }
 
     /**
@@ -707,7 +732,6 @@ class ActiveCampaign {
         if ( empty( $message_ids ) ) {
             return false;
         }
-        $email_list = new Email_Lists;
 
         // See http://www.activecampaign.com/api/example.php?call=campaign_create
         $body_args = [
@@ -719,7 +743,7 @@ class ActiveCampaign {
             'htmlunsub'              => 0,
             'textunsub'              => 1, // Text Unsubscribe link?
             'p[' . $list->id . ']'   => $list->id, // Which list will we send the campaign to?
-            'addressid'              => $email_list->get_address_id(),
+            'addressid'              => $this->get_address_id(),
         ];
 
         // Add messages to the camapign
@@ -797,6 +821,41 @@ class ActiveCampaign {
     }
 
     /**
+     * Get the ActiveCampaign address ID from an option in the database
+     * or fall back to an API request
+     *
+     * @return integer  ID of the address or 0 if not found
+     */
+    public function get_address_id() {
+        // Check if the ID was previously saved
+        $id = get_option( $this->get_address_option_key() );
+        if ( $id ) {
+            return $id;
+        }
+
+        // Check the API for the address ID
+        $addresses = $this->get_addresses();
+        foreach ( $addresses as $address ) {
+            if (
+                ! is_object( $address ) ||
+                ! isset( $address->zip ) ||
+                ! isset( $address->id )
+            ) {
+                continue;
+            }
+            // If the zip code matches then we're good!
+            if ( PEDESTAL_ZIPCODE == $address->zip ) {
+                $id = absint( $address->id );
+                update_option( $this->get_address_option_key(), $id );
+                return $id;
+            }
+        }
+
+        // Exhausted all options, 0 tells ActiveCampaign to use the default address
+        return 0;
+    }
+
+    /**
      * Get a list of stats for links in a message
      *
      * @see http://www.activecampaign.com/api/example.php?call=campaign_report_link_list
@@ -845,5 +904,17 @@ class ActiveCampaign {
             }
         }
         return $payload;
+    }
+
+    /**
+     * Remove '- <blog name>' from list name which we do to make them unique within ActiveCampaign
+     *
+     * @param  string $haystack  String to scrub
+     * @return string            Scrubbed list name
+     */
+    public function scrub_list_name( $haystack = '' ) {
+        $needle = '- ' . PEDESTAL_BLOG_NAME;
+        $parts = explode( $needle, $haystack );
+        return trim( $parts[0] );
     }
 }

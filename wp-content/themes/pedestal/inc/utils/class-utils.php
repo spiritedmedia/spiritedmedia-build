@@ -508,16 +508,12 @@ class Utils {
                 'success' => false,
             ];
         }
-
-        if ( $success ) {
-            $result = [
-                'code'    => $response_code,
-                'body'    => $response_body,
-                'success' => $success,
-            ];
-            return $result;
-        }
-        return $response;
+        $result = [
+            'code'    => $response_code,
+            'body'    => $response_body,
+            'success' => $success,
+        ];
+        return $result;
     }
 
     /**

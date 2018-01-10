@@ -4,11 +4,9 @@ namespace Pedestal\Posts\Clusters;
 
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
-use Pedestal\Email\{
-    Email,
-    Email_Lists
-};
+use Pedestal\Email\Follow_Update_Emails;
 use Pedestal\Utils\Utils;
+use Pedestal\Objects\ActiveCampaign;
 
 abstract class Cluster extends Post {
 
@@ -143,16 +141,37 @@ abstract class Cluster extends Post {
     }
 
     /**
-     * Get the number of users following this cluster
+     * Get the number of subscribers following this cluster
      *
-     * @param bool $force  Whether to make an API request to ActiveCampaign to
-     * get the List ID and update the cached follower count in post meta
      * @return int
      */
-    public function get_following_users_count( $force = false ) {
-        $list_id = $this->get_activecampaign_list_id( $force );
-        $count = Email::get_subscriber_count( $list_id, $force );
-        return $count ?: '-';
+    public function get_subscriber_count() {
+        $subscriber_count = $this->get_meta( 'subscriber_count' );
+        if ( $subscriber_count ) {
+            return intval( $subscriber_count );
+        }
+        // No stored data found! Let's ask ActiveCampaign
+        $list_id = $this->get_activecampaign_list_id();
+        $activecampaign = ActiveCampaign::get_instance();
+        $list = $activecampaign->get_list( $list_id );
+        if ( ! $list || ! isset( $list->subscriber_count ) ) {
+            // We have a problem so set count to -1
+            $subscriber_count = -1;
+        } else {
+            $subscriber_count = $list->subscriber_count;
+        }
+        $this->set_meta( 'subscriber_count', $subscriber_count );
+        $this->set_meta( 'subscriber_count_last_updated', time() );
+
+        return intval( $subscriber_count );
+    }
+
+    /**
+     * Delete the subscriber count meta values
+     */
+    public function delete_subscriber_count() {
+        $this->delete_meta( 'subscriber_count' );
+        $this->delete_meta( 'subscriber_count_last_updated' );
     }
 
     /**
@@ -267,15 +286,39 @@ abstract class Cluster extends Post {
     /**
      * Get the ActiveCampagin list ID for this Cluster
      *
-     * @param  boolean $force [false] Force get the list ID from AC
+     * @param  boolean $force [false] Force get the list ID from ActiveCampaign
      * @return int|bool               List ID on success, false on fail
      */
     public function get_activecampaign_list_id( $force = false ) {
-        $list_id = $this->get_meta( 'activecampaign-list-id', true );
-        if ( 0 !== $list_id || $force ) {
-            $list_id = Email_Lists::get_list_id_from_cluster( $this->get_id() );
+        $meta_key = 'activecampaign-list-id';
+        $list_id = $this->get_meta( $meta_key, true );
+        if ( empty( $list_id ) || $force ) {
+            // Looks like we'll need to fetch the List ID from ActiveCampaign
+            $list_name = $this->get_activecampaign_list_name();
+
+            // Check if list already exists
+            $activecampaign = ActiveCampaign::get_instance();
+            $resp = $activecampaign->get_list( $list_name );
+            // List not found, let's add a new list
+            if ( ! $resp ) {
+                $args = [
+                    'name' => $list_name,
+                ];
+                $resp = $activecampaign->add_list( $args );
+            }
+            $list_id = intval( $resp->id );
+            $this->add_meta( $meta_key, $list_id );
         }
         return $list_id;
+    }
+
+    /**
+     * Delete the ActiveCampaign List ID stored as post meta for this Cluster
+     *
+     * @return bool  False for failure. True for success.
+     */
+    public function delete_activecampaign_list_id() {
+        return $this->delete_meta( 'activecampaign-list-id' );
     }
 
     /**

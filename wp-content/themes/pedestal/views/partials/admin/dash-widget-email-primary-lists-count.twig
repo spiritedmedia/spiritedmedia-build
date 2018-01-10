@@ -10,7 +10,7 @@
     </thead>
     {% for item in items %}
         <tr>
-            <td>{{ item.label }}</td>
+            <td>{{ item.name }}</td>
             <td>{{ item.count }}</td>
             <td><abbr title="{{ item.time_absolute|esc_attr }}">{{ item.time_relative }}</abbr></td>
         </tr>

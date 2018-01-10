@@ -1,20 +1,36 @@
 <div class="wrap">
-	<h1>Newsletter List Settings</h1>
-	<form action="{{ form.action }}" method="post">
-		<table class="form-table">
-		{% for field in fields %}
-		<tr valign="top">
-			<th scope="row"><label for="{{ field.key }}">{{ field.label }}</label></th>
-			<td>
-				<input type="number" name="{{ field.name }}" value="{{ field.id }}" id="{{ field.key }}">
-			</td>
-		</tr>
-		{% endfor %}
-		</table>
-		{{ nonce_field }}
-		<p class="submit">
-			{{ primary_button }}
-			{{ secondary_button }}
-		</p>
-	</form>
+    <h1>Newsletter Group Settings</h1>
+    <p>Newsletter groups are controlled directly in the <a href="{{ mailchimp_admin_url|esc_url }}" target="blank">MailChimp admin</a>. After adding a new one hit the <strong>Sync & Save</strong> button below to sync it with WordPress.</p>
+    <form action="{{ form.action }}" method="post">
+
+        <table class="form-table">
+            {% for field in fields %}
+            <tr valign="top">
+                <th scope="row">
+                    <label for="{{ field.key|esc_attr }}">{{ field.label }}</label>
+                </th>
+                <td>
+                    <input type="text" readonly="true" value="{{ field.id|esc_attr }}" id="{{ field.key|esc_attr }}">
+                    {% if field.subscribers %}
+                        <p><em>{{ field.subscribers }} subscribers</em><p>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% if groups_left %}
+            <p>{{ groups_left }} of 60 MailChimp groups left</p>
+        {% endif %}
+
+        {% if last_fetched_from_api %}
+            <p>Last updated from the API {{ last_fetched_from_api }} ago.</p>
+        {% endif %}
+
+        {{ nonce_field }}
+
+        <p class="submit">
+            {{ primary_button }}
+        </p>
+    </form>
 </div>

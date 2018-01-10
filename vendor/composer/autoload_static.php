@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit16605a369e3eae59b96a0038b2291eff
+class ComposerStaticInit898f1f9a05ad7f084cb15faae56b944b
 {
     public static $files = array (
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
@@ -7634,10 +7634,10 @@ class ComposerStaticInit16605a369e3eae59b96a0038b2291eff
         'Pedestal\\Cron_Management' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-cron-management.php',
         'Pedestal\\Email\\Breaking_News_Emails' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-breaking-news-emails.php',
         'Pedestal\\Email\\Email' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-email.php',
-        'Pedestal\\Email\\Email_Lists' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-email-lists.php',
         'Pedestal\\Email\\Fieldmanager_Datasource_Email_List' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-fieldmanager-datasource-email-list.php',
-        'Pedestal\\Email\\Follow_Updates_Emails' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-follow-updates-emails.php',
+        'Pedestal\\Email\\Follow_Update_Emails' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-follow-update-emails.php',
         'Pedestal\\Email\\Newsletter_Emails' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-newsletter-emails.php',
+        'Pedestal\\Email\\Newsletter_Groups' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-newsletter-groups.php',
         'Pedestal\\Email\\Newsletter_Testing' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-newsletter-testing.php',
         'Pedestal\\Featured_Posts' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-featured-posts.php',
         'Pedestal\\Feeds' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-feeds.php',
@@ -7650,6 +7650,7 @@ class ComposerStaticInit16605a369e3eae59b96a0038b2291eff
         'Pedestal\\Objects\\Author' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-author.php',
         'Pedestal\\Objects\\Figure' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-figure.php',
         'Pedestal\\Objects\\Google_Analytics' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-google-analytics.php',
+        'Pedestal\\Objects\\MailChimp' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-mailchimp.php',
         'Pedestal\\Objects\\Notifications' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-notifications.php',
         'Pedestal\\Objects\\Parsely' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-parsely.php',
         'Pedestal\\Objects\\Source' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-source.php',
@@ -8242,11 +8243,11 @@ class ComposerStaticInit16605a369e3eae59b96a0038b2291eff
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit16605a369e3eae59b96a0038b2291eff::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit16605a369e3eae59b96a0038b2291eff::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit16605a369e3eae59b96a0038b2291eff::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit16605a369e3eae59b96a0038b2291eff::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit16605a369e3eae59b96a0038b2291eff::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit898f1f9a05ad7f084cb15faae56b944b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit898f1f9a05ad7f084cb15faae56b944b::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit898f1f9a05ad7f084cb15faae56b944b::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit898f1f9a05ad7f084cb15faae56b944b::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit898f1f9a05ad7f084cb15faae56b944b::$classMap;
 
         }, null, ClassLoader::class);
     }

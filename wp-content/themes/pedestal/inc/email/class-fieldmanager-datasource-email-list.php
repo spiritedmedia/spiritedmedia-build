@@ -4,7 +4,6 @@ namespace Pedestal\Email;
 use function Pedestal\Pedestal;
 
 use Pedestal\Objects\ActiveCampaign;
-use Pedestal\Email\Email_Lists;
 use \Fieldmanager_Datasource;
 
 class Fieldmanager_Datasource_Email_List extends Fieldmanager_Datasource {
@@ -17,13 +16,20 @@ class Fieldmanager_Datasource_Email_List extends Fieldmanager_Datasource {
     public $use_ajax = true;
 
     /**
+     * Name of the option for storing all lists for a site
+     *
+     * @var string
+     */
+    private static $all_lists_option_name = 'activecampaign-all-lists';
+
+    /**
      * Setup the datasource
      *
      * @param array $options Set of options
      */
     public function __construct( $options = [] ) {
         parent::__construct( $options );
-        $this->activecampaign = new ActiveCampaign;
+        $this->activecampaign = ActiveCampaign::get_instance();
     }
 
     /**
@@ -48,7 +54,7 @@ class Fieldmanager_Datasource_Email_List extends Fieldmanager_Datasource {
      */
     public function get_items( $fragment = null ) {
         // Get only lists with 1 or more subscribers
-        $lists = Email_Lists::get_all_lists_with_subscribers();
+        $lists = $this->get_all_lists_with_subscribers();
         if ( $fragment ) {
             // If the fragment is numeric we can look up the list directly
             if ( is_numeric( $fragment ) ) {
@@ -92,11 +98,60 @@ class Fieldmanager_Datasource_Email_List extends Fieldmanager_Datasource {
         }
         $name = '';
         if ( isset( $list->name ) ) {
-            $name = Email_Lists::scrub_list_name( $list->name );
+            $name = $this->activecampaign->scrub_list_name( $list->name );
         }
         if ( isset( $list->subscriber_count ) ) {
             $name .= ' (' . $list->subscriber_count . ' subs)';
         }
         return $name;
+    }
+
+    /**
+     * Delete the option that stores info about all of the lists from ActiveCampaign
+     */
+    private function purge_all_lists() {
+        delete_option( $this->$all_lists_option_name );
+    }
+
+    /**
+     * Fetch all lists from ActiveCampaign and cache them in an option
+     *
+     * @return array   A set of objects about lists
+     */
+    private function get_all_lists() {
+        $lists = get_option( $this->$all_lists_option_name );
+        if ( $lists ) {
+            return $lists;
+        }
+
+        $args = [
+            'filters[name]' => '- ' . PEDESTAL_BLOG_NAME,
+        ];
+        $lists = $this->activecampaign->get_lists( $args );
+        if ( $lists ) {
+            foreach ( $lists as $list ) {
+                // Clean up the list names before storing
+                $list->name = $this->activecampaign->scrub_list_name( $list->name );
+            }
+        }
+        $autoload = 'no';
+        add_option( $this->$all_lists_option_name, (array) $lists, '', $autoload );
+        return $lists;
+    }
+
+    /**
+     * Filter all lists to the ones that have subscribers
+     *
+     * @return array   A set of objects with lists that have 1 or more subscribers
+     */
+    private function get_all_lists_with_subscribers() {
+        $lists = $this->get_all_lists();
+        $output = [];
+        foreach ( $lists as $list ) {
+            if ( isset( $list->subscriber_count ) && 0 < $list->subscriber_count ) {
+                $output[] = $list;
+            }
+        }
+        return $output;
     }
 }

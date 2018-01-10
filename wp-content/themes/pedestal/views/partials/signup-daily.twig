@@ -17,7 +17,7 @@
 {% endif %}
 
 <form class="signup-email__form js-signup-email-form"
-    action="{{ site.url|esc_url }}/subscribe-to-email-list/"
+    action="{{ site.url|esc_url }}/subscribe-to-email-group/"
     method="POST"
     data-ga-category="Submitted Form"
     data-ga-label="{{ gaLabel|esc_attr }}">
@@ -54,8 +54,8 @@
             required
             />
 
-        <input type="hidden" name="list-ids[]" value="{{ site.emails.daily_newsletter_id|esc_attr }}">
-        <input type="hidden" name="list-ids[]" value="{{ site.emails.breaking_newsletter_id|esc_attr }}">
+        <input type="hidden" name="group-ids[]" value="{{ site.emails.daily_newsletter_id|esc_attr }}">
+        <input type="hidden" name="group-ids[]" value="{{ site.emails.breaking_newsletter_id|esc_attr }}">
 
         {% include 'partials/email-forms/form-honeypot.twig' %}
 
@@ -75,7 +75,24 @@
     </div>
 
     <div class="signup-email__success-message success-message js-success-message">
-        {% include 'partials/email-forms/form-daily-subscribed.twig' %}
+        <div class="signup-email__header">
+            <div class="signup-email__icon">
+                {{ ped_icon( 'envelope-slant' ) }}
+            </div>
+
+            <p class="signup-email__title">
+                <strong>You’re all set!</strong>
+            </p>
+        </div>
+
+        <p class="signup-email__subtitle">
+            <strong>{{ site.emails.daily_newsletter_name }}</strong> will land in your inbox every morning around {{ site.emails.daily_newsletter_send_time }}
+        </p>
+
+        <div class="signup-email__success-message__details">
+            <p>You can add <strong>{{ site.emails.news }}</strong> to your contacts to stop
+                overzealous spam filters from eating our messages.</p>
+        </div>
 
         {% if explore %}
         <a href="/" class="btn btn--lg btn--full-width">Explore {{ site.name }}</a>

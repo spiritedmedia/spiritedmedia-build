@@ -2,13 +2,18 @@
 namespace Pedestal\Email;
 
 use function Pedestal\Pedestal;
+use Timber\Timber;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Posts\{
     Post,
     Newsletter
 };
 use Pedestal\Posts\Clusters\Cluster;
-use Pedestal\Objects\ActiveCampaign;
+use Pedestal\Email\Follow_Update_Emails;
+use Pedestal\Objects\{
+    ActiveCampaign,
+    MailChimp
+};
 use Pedestal\Utils\Utils;
 
 
@@ -33,7 +38,6 @@ class Email {
     public function setup_actions() {
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'template_redirect', [ $this, 'action_template_redirect' ] );
-        add_action( 'post_updated', [ $this, 'action_post_updated_activecampaign_list' ], 10, 3 );
         add_action( 'pedestal_email_tester_all', [ $this, 'action_pedestal_email_tester_all' ] );
         add_action( 'pedestal_email_tester_subscribe-confirmation', [ $this, 'action_pedestal_email_tester_subscribe_confirmation' ] );
     }
@@ -45,6 +49,7 @@ class Email {
         add_filter( 'query_vars', function( $query_vars ) {
             $query_vars[] = 'pedestal-test-email';
             $query_vars[] = 'pedestal-subscribe-to-email-list';
+            $query_vars[] = 'pedestal-subscribe-to-email-group';
             $query_vars[] = 'pedestal-confirm-subscription';
             return $query_vars;
         });
@@ -55,6 +60,7 @@ class Email {
      */
     public function action_init_register_rewrites() {
         add_rewrite_rule( 'subscribe-to-email-list/?$', 'index.php?pedestal-subscribe-to-email-list=1', 'top' );
+        add_rewrite_rule( 'subscribe-to-email-group/?$', 'index.php?pedestal-subscribe-to-email-group=1', 'top' );
         add_rewrite_rule( 'confirm-subscription/([^/]+)/?$', 'index.php?pedestal-confirm-subscription=$matches[1]', 'top' );
         add_rewrite_rule( 'test-email/?$', 'index.php?pedestal-test-email=all', 'top' );
         add_rewrite_rule( 'test-email/([^/]+)/?$', 'index.php?pedestal-test-email=$matches[1]', 'top' );
@@ -71,6 +77,18 @@ class Email {
                 exit;
             }
             locate_template( [ 'generic-confirm-email.php' ], true );
+            exit;
+        }
+
+        if ( '1' == get_query_var( 'pedestal-subscribe-to-email-group' ) ) {
+            $this->handle_subscribe_to_email_group();
+            if ( isset( $_REQUEST['ajax-request'] ) && 1 == $_REQUEST['ajax-request'] ) {
+                // It's an AJAX request so returning a blank page is more performant here.
+                exit;
+            }
+
+            $context = Timber::get_context();
+            Timber::render( 'emails/pages/confirm-subscription.twig', $context );
             exit;
         }
 
@@ -182,7 +200,7 @@ class Email {
             exit;
         }
 
-        $activecampaign = new ActiveCampaign;
+        $activecampaign = ActiveCampaign::get_instance();
         // Get the list id
         $cluster_id = '';
         if ( ! empty( $_POST['cluster-id'] ) ) {
@@ -204,17 +222,20 @@ class Email {
         $raw_lists_check = (array) $raw_lists;
         // Check if $raw_lists is an empty object
         if ( empty( $raw_lists_check ) && ! empty( $cluster_id ) ) {
-            Email_Lists::delete_list_id_from_meta( $cluster_id );
-            $list_ids = Email_Lists::get_list_id_from_cluster( $cluster_id );
-            $args['ids'] = is_array( $list_ids ) ? $list_ids : [ $list_ids ];
-            $raw_lists = $activecampaign->get_lists( $args );
+            $cluster = Cluster::get( $cluster_id );
+            if ( Types::is_cluster( $cluster ) ) {
+                $cluster->delete_activecampaign_list_id();
+                $list_ids = $cluster->get_activecampaign_list_id();
+                $args['ids'] = is_array( $list_ids ) ? $list_ids : [ $list_ids ];
+                $raw_lists = $activecampaign->get_lists( $args );
+            }
         }
 
         // Do some name formatting
         $list_names = [];
         $list_ids = [];
         foreach ( $raw_lists as $raw_list ) {
-            $list_names[] = Email_Lists::scrub_list_name( $raw_list->name );
+            $list_names[] = $activecampaign->scrub_list_name( $raw_list->name );
             $list_ids[] = intval( $raw_list->id );
         }
         switch ( count( $list_names ) ) {
@@ -258,6 +279,39 @@ class Email {
     }
 
     /**
+     * Handles subscribing an email address to a MailChimp group
+     */
+    private function handle_subscribe_to_email_group() {
+        // Perform honeypot check to weed out bots
+        $this->handle_honeypot_check();
+
+        // Do we have all the bits of info we need?
+        if ( empty( $_REQUEST['email_address'] )
+            || empty( $_POST['group-ids'] )
+        ) {
+            status_header( 400 );
+            echo 'Missing information.';
+            exit;
+        }
+
+        $mc = MailChimp::get_instance();
+        if ( ! empty( $_POST['group-ids'] ) ) {
+            $group_ids = $_POST['group-ids'];
+        }
+        if ( ! is_array( $group_ids ) ) {
+            $group_ids = [ $group_ids ];
+        }
+
+        $email = sanitize_email( $_REQUEST['email_address'] );
+        // Subscribe the email subscriber to the groups
+        $args = [
+            'groups'         => $group_ids,
+            'group_category' => 'Newsletters',
+        ];
+        return $mc->add_contact_to_groups( $email, $args );
+    }
+
+    /**
      * Verify a $_POST request isn't from a dumb bot
      *
      * @return bool  True if the request passes the check
@@ -275,124 +329,12 @@ class Email {
     }
 
     /**
-     * Rename a Cluster's ActiveCampaign list name if its title changes
+     * Handle sending the email campaign via ActiveCampaign
      *
-     * @param  int $post_id          ID of the post being saved
-     * @param  WP Post $post_after   Post object after update
-     * @param  WP Post $post_before  Post object before update
+     * @param  array $args  Details about the campaign
+     * @return boolean      Did the camapign send successfully?
      */
-    public function action_post_updated_activecampaign_list( $post_id, $post_after, $post_before ) {
-        if ( $post_after->post_title === $post_before->post_title ) {
-            return;
-        }
-
-        if ( ! Types::is_cluster( $post_after->post_type ) ) {
-            return;
-        }
-        $post_after = Cluster::get( $post_id );
-        $list_id = Email_Lists::get_list_id_from_cluster( $post_id );
-        $new_name = $post_after->get_activecampaign_list_name();
-
-        $activecampaign = new ActiveCampaign;
-        $response = $activecampaign->edit_list( $list_id, [
-            'name' => $new_name,
-        ] );
-    }
-
-    /**
-     * Get the subscriber count for a given ActiveCampaign List ID
-     *
-     * @param  int $list_id  The ActiveCampaign List ID
-     * @param  bool $force    If True, bypasses any caching to force refresh the number
-     * @return int           The number of subscribers for the list
-     */
-    public static function get_subscriber_count( $list_id = 0, $force = false ) {
-        $cluster = Email_Lists::get_clusters_from_list_ids( $list_id );
-        $_valid_cluster = ( ! empty( $cluster ) && Types::is_cluster( $cluster[0] ) );
-        $subscriber_count = false;
-
-        if ( $_valid_cluster ) {
-            $cluster = $cluster[0];
-            $subscriber_count = $cluster->get_meta( 'subscriber_count' );
-        } else {
-            $option_key = 'activecampaign_subscriber_count_' . $list_id;
-            $last_updated_option_key = 'activecampaign_subscriber_count_last_updated_' . $list_id;
-            $subscriber_count = get_option( $option_key );
-        }
-
-        // The post meta / option returns false / null if not found but it is
-        // also possible it has a value of ''
-        if ( false !== $subscriber_count && ! $force ) {
-            if ( empty( $subscriber_count ) ) {
-                $subscriber_count = 0;
-            }
-            return $subscriber_count;
-        }
-
-        // No stored data found! Let's ask ActiveCampaign
-        $activecampaign = new ActiveCampaign;
-        $list = $activecampaign->get_list( $list_id );
-        if ( ! $list || ! isset( $list->subscriber_count ) ) {
-            // We have a problem so set count to -1
-            $subscriber_count = -1;
-        } else {
-            $subscriber_count = $list->subscriber_count;
-        }
-
-        if ( $_valid_cluster ) {
-            $cluster->set_meta( 'subscriber_count', $subscriber_count );
-            $cluster->set_meta( 'subscriber_count_last_updated', time() );
-        } else {
-            update_option( $option_key, $subscriber_count );
-            update_option( $last_updated_option_key, time() );
-        }
-
-        return $subscriber_count;
-    }
-
-    /**
-     * Refresh subscriber counts for clusters and optionally primary lists
-     *
-     * @param  array|\WP_Query  $posts                 Array of IDs or \WP_Query
-     * @param  boolean          $refresh_primary_lists Update the newsletter and breaking news subscriber counts as well?
-     * @return array Associative array of cluster IDs and new subscriber counts
-     */
-    public static function refresh_subscriber_counts( $posts, $refresh_primary_lists = true ) {
-        $result = [];
-        $force = true;
-
-        if ( $posts instanceof \WP_Query ) {
-            $posts = Post::get_posts_from_query( $posts );
-        } elseif ( is_array( $posts ) && is_numeric( $posts[0] ) ) {
-            $posts = Post::get_posts_from_ids( $posts );
-        } else {
-            return;
-        }
-
-        foreach ( $posts as $ped_post ) {
-            if ( ! Types::is_cluster( $ped_post ) ) {
-                continue;
-            }
-            $result[ $ped_post->get_id() ] = $ped_post->get_following_users_count( $force );
-        }
-
-        if ( $refresh_primary_lists ) {
-            $email_lists = new Email_Lists;
-            foreach ( $email_lists->get_all_newsletters() as $id => $name ) {
-                static::get_subscriber_count( $id, $force );
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Handle sending the email campaign
-     *
-     * @param  Array $args  Details about the campaign
-     * @return Boolean      Did the camapign send successfully?
-     */
-    public static function send_email( $args = [] ) {
+    public static function send_activecampaign_email( $args = [] ) {
         $default_args = [
             'messages'              => false,
             'name'                  => false,     // Name to describe the campaign in ActiveCampaign
@@ -433,7 +375,7 @@ class Email {
             do_action( 'pedestal_sent_test_email_campaign', $args );
             return true;
         }
-        $activecampaign = new ActiveCampaign;
+        $activecampaign = ActiveCampaign::get_instance();
         $resp = $activecampaign->send_campaign( $args );
         if ( isset( $resp->result_code ) && 1 !== $resp->result_code ) {
             return false;
@@ -443,10 +385,74 @@ class Email {
     }
 
     /**
+     * Handle sending the email campaign via MailChimp
+     *
+     * @param  array $args  Details about the campaign
+     * @return boolean      Did the camapign send successfully?
+     */
+    public static function send_mailchimp_email( $args = [] ) {
+        $default_args = [
+            'messages'              => false,
+            'groups'                => [],
+            'group_category'        => false,
+            'test_email_addresses'  => [],
+            'email_type'            => 'Unknown', // What type of email campaign is being sent? Newsletter, Breaking News, Folow Update etc.
+        ];
+        $args = wp_parse_args( $args, $default_args );
+
+        if ( ! is_array( $args['groups'] ) ) {
+            $args['groups'] = [ $args['groups'] ];
+        }
+
+        // Sanity check
+        if ( empty( $args['groups'] ) || empty( $args['group_category'] ) ) {
+            // If we don't have the group info to send the email to then we can't proceed
+            return false;
+        }
+        if ( ! $args['messages'] || ! is_array( $args['messages'] ) ) {
+            // Missing one or more key component for sending out an email, aren't we now?
+            return false;
+        }
+
+        $test_emails = $args['test_email_addresses'];
+        if ( is_string( $test_emails ) ) {
+            $test_emails = array_map( 'trim', explode( ',', $test_emails ) );
+        }
+        if ( ! empty( $test_emails ) ) {
+            // Ensure product@spiritedmedia.com gets sent the test emails for every send
+            $test_emails[] = 'product@spiritedmedia.com';
+            $to = implode( ',', $test_emails );
+            add_filter( 'wp_mail_content_type', function() {
+                return 'text/html';
+            } );
+            $args['test_email_addresses'] = $test_emails;
+            foreach ( $args['messages'] as $message ) {
+                $subject = '[TEST] ' . $message['subject'];
+                $resp = wp_mail( $to, $subject, $message['html'] );
+            }
+            do_action( 'pedestal_sent_test_email_campaign', $args );
+            return true;
+        }
+
+        $mc = MailChimp::get_instance();
+        $the_message = $args['messages'][0];
+        $mc_args = [
+            'groups'         => $args['groups'],
+            'group_category' => $args['group_category'],
+            'message'        => $the_message['html'],
+            'subject_line'   => $the_message['subject'],
+
+        ];
+        $campaign_id = $mc->send_campaign( $mc_args );
+        do_action( 'pedestal_sent_email_campaign', $args, $mc_args );
+        return $campaign_id;
+    }
+
+    /**
      * Handle sanitizing email addresses beforing sending a test email
      *
-     * @param  string|Array $addresses  Comma separated list of email addresses
-     * @return Array                    Sanitized email addresses
+     * @param  string|array $addresses  Comma separated list of email addresses
+     * @return array                    Sanitized email addresses
      */
     public static function sanitize_test_email_addresses( $addresses = '' ) {
         if ( is_string( $addresses ) ) {

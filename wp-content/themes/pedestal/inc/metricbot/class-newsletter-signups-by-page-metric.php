@@ -6,7 +6,7 @@ use Pedestal\Objects\{
     Notifications
 };
 use Pedestal\Objects\ActiveCampaign;
-use Pedestal\Email\Email_Lists;
+use Pedestal\Email\Newsletter_Groups;
 use Pedestal\Utils\Utils;
 
 class Newsletter_Signups_By_Page_Metric {
@@ -156,10 +156,10 @@ class Newsletter_Signups_By_Page_Metric {
      * @return object              Newsletter subscriber data
      */
     public function get_newsletter_subscriber_stats( $start_date = '', $end_date = '' ) {
-        $ac                = new ActiveCampaign;
-        $email_lists       = new Email_Lists;
+        $ac = ActiveCampaign::get_instance();
+        $newsletter_groups = Newsletter_Groups::get_instance();
 
-        $list_id           = $email_lists->get_newsletter_list_id( 'Daily Newsletter' );
+        $list_id           = $newsletter_groups->get_newsletter_group_id( 'Daily Newsletter' );
         $args              = [
             'lists'      => [ $list_id ],
             'start_date' => $start_date,
@@ -201,7 +201,7 @@ class Newsletter_Signups_By_Page_Metric {
             $page_paths[] = $item->{'ga:pagePath'};
         }
         $sessions         = $this->get_sessions_by_page( $start_date, $end_date, $page_paths );
-        $subscriber_stats = $this->get_newsletter_subscriber_stats( $end_date, $start_date );
+        // $subscriber_stats = $this->get_newsletter_subscriber_stats( $end_date, $start_date );
 
         $total_signups    = 0;
         $output = [];
@@ -273,6 +273,8 @@ class Newsletter_Signups_By_Page_Metric {
             $message[] = $signups . ' ' . $item->link;
         }
 
+        // Will be reimplemented after our move to MailChimp. See #2425
+        /*
         $message[] = '';
         $total     = number_format( $subscriber_stats->total );
         $trend     = $subscriber_stats->trend;
@@ -282,6 +284,7 @@ class Newsletter_Signups_By_Page_Metric {
         }
         $diff      = $subscriber_stats->diff;
         $message[] = $total . ' subscribers, ' . $trend . ' ' . $diff . ' from last week' . $punct;
+        */
 
         $message = implode( "\n", $message );
         $slack_args = [
