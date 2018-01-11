@@ -171,6 +171,7 @@ class Cluster_Types {
                     $args['menu_icon'] = 'dashicons-book';
                     $args['supports'] = [
                         'title',
+                        'thumbnail',
                         'editor',
                         'excerpt',
                     ];
@@ -187,6 +188,7 @@ class Cluster_Types {
                     $args['menu_icon'] = 'dashicons-pressthis';
                     $args['supports'] = [
                         'title',
+                        'thumbnail',
                     ];
                     $args['rewrite'] = [
                         'slug' => 'topics',
@@ -202,6 +204,7 @@ class Cluster_Types {
                     $args['menu_icon'] = 'dashicons-id-alt';
                     $args['supports'] = [
                         'title',
+                        'thumbnail',
                     ];
                     $args['rewrite'] = [
                         'slug' => 'people',
@@ -217,6 +220,7 @@ class Cluster_Types {
                     $args['menu_icon'] = 'dashicons-admin-multisite';
                     $args['supports'] = [
                         'title',
+                        'thumbnail',
                     ];
                     $args['rewrite'] = [
                         'slug' => 'organizations',
@@ -232,6 +236,7 @@ class Cluster_Types {
                     $args['menu_icon'] = 'dashicons-location';
                     $args['supports'] = [
                         'title',
+                        'thumbnail',
                     ];
                     $args['rewrite'] = [
                         'slug' => 'places',
@@ -247,6 +252,7 @@ class Cluster_Types {
                     $args['menu_icon'] = 'dashicons-location-alt';
                     $args['supports'] = [
                         'title',
+                        'thumbnail',
                         'editor',
                         'excerpt',
                     ];
