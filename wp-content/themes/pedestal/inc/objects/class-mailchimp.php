@@ -253,8 +253,10 @@ class MailChimp {
      * @return object List object
      */
     public function get_site_list() {
-        if ( ! empty( $this->site_list ) ) {
-            return $this->site_list;
+        $option_name = 'mailchimp_site_list';
+        $list = get_option( $option_name );
+        if ( $list ) {
+            return $list;
         }
         $list = $this->get_list( PEDESTAL_BLOG_NAME );
         if ( ! $list ) {
@@ -263,7 +265,8 @@ class MailChimp {
             ];
             $list = $this->add_list( $args );
         }
-        $this->site_list = $list;
+        $autoload = false;
+        add_option( $option_name, $list, '', $autoload );
         return $list;
     }
 
