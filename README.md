@@ -1,7 +1,7 @@
-Build [#4223](https://circleci.com/gh/spiritedmedia/spiritedmedia/4223) by kingkool68 at 2018-01-18 04:32 PM UTC
+Build [#4241](https://circleci.com/gh/spiritedmedia/spiritedmedia/4241) by kingkool68 at 2018-01-30 08:04 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.7.2](https://github.com/spiritedmedia/spiritedmedia/compare/v6.7.2)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.7.3](https://github.com/spiritedmedia/spiritedmedia/compare/v6.7.3)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.7.1...v6.7.2)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.7.2...v6.7.3)
 
- - [#2441](https://github.com/spiritedmedia/spiritedmedia/pull/2441): Prevent Duplicate MailChimp Site Lists from Being Created
+ - [#2454](https://github.com/spiritedmedia/spiritedmedia/pull/2454): Add Distribute Meta Box to Pages

@@ -748,6 +748,7 @@ class Admin {
             'public'   => true,
             '_builtin' => false,
         ] );
+        $distributable_post_types['page'] = 'page';
 
         if ( current_user_can( 'manage_distribution' ) ) {
             $meta_group->add_meta_box( esc_html__( 'Distribution', 'pedestal' ), $distributable_post_types, 'advanced', 'low' );
