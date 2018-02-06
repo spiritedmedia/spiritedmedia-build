@@ -4,9 +4,19 @@
 
 
 .signup-email--daily:not( .modal__content ) {
-  @include pgh-slant( 'top', -1deg );
+  @include angle-edge(
+    $angle: 1,
+    $angle-position-y: top
+  );
 
   margin-top: rem( 48px );
+
+  @media #{$large-up} {
+    @include angle-edge(
+      $angle: 0.5,
+      $angle-position-y: top
+    );
+  }
 
   .signup-email__form {
     padding-top: rem( 8px );

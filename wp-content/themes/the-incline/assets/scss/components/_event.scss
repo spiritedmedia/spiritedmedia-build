@@ -3,20 +3,25 @@
 // ==========================================================================
 
 
-$event-slant-offset: 5%;
-
-
 .event {
+  @include angle-edge(
+    $angle: 1,
+    $angle-position-y: both,
+    $angle-position-x: left,
+    $angle-position-bottom-x: right
+  );
 
-  @include pgh-slant( top, -1deg, $event-slant-offset );
-  @include pgh-slant( bottom, -1deg, $event-slant-offset );
+  padding-top: 10vw;
 
-  padding: 0;
-}
+  &.has-overline {
+    padding-top: rem( 32px );
+  }
 
-
-@media #{$medium-up} {
-  .event::before {
-    top: -( $event-slant-offset * 2 );
+  @media screen and ( min-width: em( 500px ) ) {
+    &,
+    &.has-overline {
+      padding-top: rem( 48px );
+      padding-bottom: 1vw;
+    }
   }
 }

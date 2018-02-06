@@ -1,0 +1,86 @@
+// ==========================================================================
+// Pedestal // Base // Theme // Mixins // ANGLED EDGES
+// ==========================================================================
+
+/// Add a consistent angled edge to a full width element
+///
+/// @link https://github.com/NigelOToole/angled-edges
+/// @link https://kilianvalkhof.com/2017/design/sloped-edges-with-consistent-angle-in-css/
+///
+/// @param {number} $angle - The angle in degrees: 1 - 45
+/// @param {string} $angle-position-y - The Y position of the angle: top | bottom | both
+/// @param {string} $angle-position-x ['left'] - The X position of the angle: left | right
+/// @param {string} $angle-position-bottom-x [''] - The X position of the bottom
+///   angle if using 'both' for $angle-position-y: left | right
+/// @param {unit} $padding [28px] - Amount of padding on each affected side, in pixels.
+///   Set to false or null to omit padding altogether.
+/// @param {boolean} $fallback [true] - Create a fallback for older browsers
+/// @param {color} $fallback-color [$white] - Fallback color for older browsers
+@mixin angle-edge(
+  $angle,
+  $angle-position-y,
+  $angle-position-x: 'left',
+  $angle-position-bottom-x: '',
+  $padding: 28px
+) {
+  position: relative;
+  overflow: hidden;
+
+  // Convert degrees to VW
+  //
+  // 45deg => 100vw using this technique
+  @if $angle < 46 {
+    $angle: round( $angle * 2.222 );
+  } @else {
+    $angle: 0;
+    @error 'Invalid angle, it must be >0 and <45';
+  }
+
+  @if $angle-position-bottom-x == '' {
+    $angle-position-bottom-x: $angle-position-x;
+  }
+
+  $angle-calc-top: calc( 0% + #{$angle}vw );
+  $angle-calc-bottom: calc( 100% - #{$angle}vw );
+
+  $clip-path-top: 0 0, 100% 0;
+  $clip-path-bottom: 100% 100%, 0 100%;
+
+  $padding: if( $padding, ( ($padding / 10px) * 1vw ), false );
+
+  @if $angle-position-y == 'top' or $angle-position-y == 'both' {
+    @if $padding {
+      padding-top: $padding;
+    }
+
+    @if $angle-position-x == 'left' {
+      $clip-path-top: 0 $angle-calc-top, 100% 0;
+    }
+
+    @if $angle-position-x == 'right' {
+      $clip-path-top: 0 0, 100% $angle-calc-top;
+    }
+  }
+
+  @if $angle-position-y == 'bottom' or $angle-position-y == 'both' {
+    @if $padding {
+      padding-bottom: $padding;
+    }
+
+    @if $angle-position-y == 'both' and $angle-position-x != $angle-position-bottom-x {
+      $angle-position-x: $angle-position-bottom-x;
+    }
+
+    @if $angle-position-x == 'left' {
+      $clip-path-bottom: 100% 100%, 0 $angle-calc-bottom;
+    }
+
+    @if $angle-position-x == 'right' {
+      $clip-path-bottom: 100% $angle-calc-bottom, 0 100%;
+    }
+  }
+
+  $clip-path: polygon( $clip-path-top, $clip-path-bottom );
+
+  clip-path: $clip-path;
+}

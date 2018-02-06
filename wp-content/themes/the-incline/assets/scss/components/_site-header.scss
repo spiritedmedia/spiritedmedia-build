@@ -4,7 +4,11 @@
 
 
 .site-header {
-  @include pgh-slant( 'bottom', 1deg );
+  @include angle-edge(
+    $angle: 1,
+    $angle-position-y: bottom,
+    $angle-position-x: left
+  );
 
   margin-bottom: rem( 48px );
   z-index: $z-index-1;

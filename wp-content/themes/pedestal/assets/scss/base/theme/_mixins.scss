@@ -3,6 +3,9 @@
 // ==========================================================================
 
 
+@import 'mixin-angle-edge';
+
+
 /// Add a glowing effect to a block element state
 ///
 /// @param {string} $selector - Used for selector state. Default: focus, Options: hover, active, visited
@@ -307,52 +310,5 @@
     br {
       display: none;
     }
-  }
-}
-
-
-
-
-
-//
-// Site-specific Mixins: The Incline
-// ==========================================================================
-
-
-/// Slanted side to a component
-///
-/// Make sure `overflow: hidden;` isn't conflicting with this
-/// in one of the element's parents.
-///
-/// @param  {string}  $side        Side to apply the slant upon. Should be either 'top' or 'bottom'.
-/// @param  {number}  $angle       Angle of the slant. Should be either `1deg` or `-1deg`.
-/// @param  {number}  $offset [5%] Amount of distance to push the slanted element from its parent
-@mixin pgh-slant( $side, $angle, $offset: 5% ) {
-  margin-#{$side}: $offset;
-  position: relative;
-
-  // stylelint-disable
-  $pseudo: null;
-  @if $side == 'bottom' {
-    $pseudo: 'after';
-  } @elseif $side == 'top' {
-    $pseudo: 'before';
-  } @else {
-    @error '`$side` should be either `top` or `bottom`! Instead it\'s `#{$side}`';
-  }
-  // stylelint-enable
-
-  &::#{$pseudo} {
-    #{$side}: -( $offset );
-    background: inherit;
-    content: '';
-    display: block;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    right: 0;
-    transform-origin: 0;
-    transform: skewY( $angle );
-    z-index: -1;
   }
 }
