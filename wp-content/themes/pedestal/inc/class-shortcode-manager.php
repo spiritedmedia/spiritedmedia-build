@@ -18,16 +18,30 @@ class Shortcode_Manager {
     private static $instance;
 
     private $shortcodes = [
-        'user-card'          => false,
-        'user-grid'          => false,
-        'event'              => [
-            'label'          => 'Event',
-            'listItemImage'  => 'dashicons-calendar-alt',
-            'attrs'          => [
-                'label'      => 'Event ID',
-                'attr'       => 'id',
-                'type'       => 'text',
+        'brand-heading'      => [
+            'inner_content'  => [
+                'label'      => 'Content',
             ],
+            'label'          => 'Brand Heading',
+            'description'    => 'A section heading featuring the mini site logo next to some text.',
+            'listItemImage'  => 'dashicons-list-view',
+        ],
+        'checklist'          => [],
+        'cta-button'         => [
+            'attrs'          => [
+                'label'      => 'URL',
+                'attr'       => 'url',
+                'type'       => 'url',
+            ],
+            'inner_content'  => [
+                'label'      => 'Button Text',
+            ],
+            'label'          => 'Call to Action Button',
+            'listItemImage'  => 'dashicons-lightbulb',
+        ],
+        'donate-form'        => [
+            'label'          => 'Donation Form',
+            'listItemImage'  => 'dashicons-money',
         ],
         'embed'              => [
             'label'          => 'Embed',
@@ -38,6 +52,17 @@ class Shortcode_Manager {
                 'type'       => 'text',
             ],
         ],
+        'event'              => [
+            'label'          => 'Event',
+            'listItemImage'  => 'dashicons-calendar-alt',
+            'attrs'          => [
+                'label'      => 'Event ID',
+                'attr'       => 'id',
+                'type'       => 'text',
+            ],
+        ],
+        'user-card'          => [],
+        'user-grid'          => [],
     ];
 
     public static function get_instance() {
@@ -555,7 +580,11 @@ class Shortcode_Manager {
     }
 
     /**
-     * Do the user-grid shortcode
+     * Insert a grid of users
+     *
+     * Attributes:
+     *
+     * - `ids` : Comma-separated list of user IDs in the desired order
      */
     public function user_grid( $atts, $content ) {
 
@@ -602,7 +631,11 @@ class Shortcode_Manager {
     }
 
     /*
-     * Do the event shortcode
+     * Insert one of our Event post types
+     *
+     * Attributes:
+     *
+     * - `id` : Post ID of the Event
      */
     public function event( $attrs, $content ) {
 
@@ -627,7 +660,11 @@ class Shortcode_Manager {
     }
 
     /**
-     * Do the embed shortcode
+     * Insert one of our Embed post types
+     *
+     * Attributes:
+     *
+     * - `id` : Post ID of the Embed
      */
     public function embed( $attrs, $content ) {
 
@@ -662,5 +699,75 @@ class Shortcode_Manager {
         $out = Timber::render( $files, $context );
         ob_get_clean();
         return $out;
+    }
+
+    /**
+     * Do the donation form
+     */
+    public function donate_form( $attrs, $content ) {
+        $stripe_logo = get_template_directory() . '/assets/images/membership/stripe-logo-white.svg';
+        $stripe_logo = file_get_contents( $stripe_logo );
+        $context = [
+            'nrh_endpoint_domain'    => 'https://vosd-stripe-test.herokuapp.com',
+            'nrh_property'           => PEDESTAL_NRH_PROPERTY,
+            'submit_text'            => 'Support ' . PEDESTAL_BLOG_NAME,
+            'stripe_logo'            => $stripe_logo,
+        ];
+        $context = apply_filters( 'pedestal_donate_form_context', $context );
+
+        ob_start();
+        $out = Timber::render( 'partials/shortcode/donate-form.twig', $context );
+        return ob_get_clean();
+    }
+
+    /**
+     * Create a CTA button
+     *
+     * Attributes:
+     *
+     * - `url` : Specify the URL to link the button to
+     */
+    public function cta_button( $attrs, $content = '' ) {
+        $context = wp_parse_args( $attrs, [
+            'url' => '',
+        ] );
+        $context['content'] = $content;
+        ob_start();
+        $out = Timber::render( 'partials/shortcode/cta-button.twig', $context );
+        return ob_get_clean();
+    }
+
+    /**
+     * Make a `<ul>` into a checklist
+     *
+     * Wrap this around a valid `<ul>` and each `<li>` will be preceded by a
+     * checkmark.
+     *
+     * Other shortcodes will be rendered within this one.
+     */
+    public function checklist( $attrs, $content = '' ) {
+        $context = [
+            'content' => $content,
+        ];
+        ob_start();
+        $out = Timber::render( 'partials/shortcode/checklist.twig', $context );
+        return do_shortcode( ob_get_clean() );
+    }
+
+    /**
+     * Create a heading preceded by a small site logo
+     *
+     * Attributes:
+     *
+     * - `el` : Specify the element of the heading
+     */
+    public function brand_heading( $attrs, $content = '' ) {
+        $context = wp_parse_args( $attrs, [
+            'el' => 'h2',
+        ] );
+        $context['content'] = $content;
+        ob_start();
+        $out = Timber::render( 'partials/shortcode/brand-heading.twig', $context );
+        return ob_get_clean();
     }
 }

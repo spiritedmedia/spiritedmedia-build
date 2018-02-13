@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="fb:pages" content="{{ site.social.facebook_page_id }}" />
         <link rel="pingback" href="{{site.pingback_url}}" />
-        {% include 'partials/site-specific/header-js.twig' ignore missing %}
+        {% include 'partials/header/header-js.twig' ignore missing %}
         {% include 'partials/analytics/analytics-ga.twig' %}
 
         {{function('wp_head')}}
@@ -25,9 +25,13 @@
     <body class="{{ body_class }} {{ layout_class }}" data-template="{{ template_name ?: 'base.twig' }}">
         <div class="site-wrap js-site">
 
+            {% if not is_page_donate %}
+            {% include 'partials/header/member-bar.twig' %}
+            {% endif %}
+
             {% include 'partials/header/site-header.twig' %}
 
-            {% if spotlight.enabled and spotlight.content and not is_home %}
+            {% if spotlight.enabled and spotlight.content and not is_home and not is_page %}
             <aside class="spotlight">
                 <div class="row">
                     <div class="spotlight__inner">
@@ -46,14 +50,7 @@
 
             {% include 'partials/adverts/dfp-header-300x50.twig' ignore missing %}
 
-            {% if content_before %}
-            <div class="content-before">
-                {% block content_before %}
-                {% endblock %}
-            </div>
-            {% endif %}
-
-            <div class="content-wrapper row">
+            <div class="content-wrapper">
                {% block the_body %}
                {% endblock %}
 

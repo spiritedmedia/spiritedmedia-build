@@ -163,6 +163,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
                 // Site Features
                 'PEDESTAL_STREAM_ITEM_DEK_VISIBLE' => true,
+
+                // Membership
+                'PEDESTAL_NRH_PROPERTY' => '',
             ];
             $constants = wp_parse_args( $constants, $defaults );
             foreach ( $constants as $constant => $value ) {

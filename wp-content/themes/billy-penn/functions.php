@@ -91,6 +91,9 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_SLACK_CHANNEL_CITY'           => '#phl',
                 'PEDESTAL_SLACK_BOT_NAME'               => 'BillyPennBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':billypenn:',
+
+                // Membership
+                'PEDESTAL_NRH_PROPERTY' => 'billypenn',
             ];
         } );
 
@@ -101,6 +104,12 @@ class Billy_Penn extends Pedestal {
             $slack_args['channel'] = PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL;
             return $slack_args;
         });
+
+        // Configure donate form
+        add_filter( 'pedestal_donate_form_context', function( $context ) {
+            $context['submit_text'] = 'Take my money!';
+            return $context;
+        } );
     }
 
     /**
@@ -120,6 +129,7 @@ class Billy_Penn extends Pedestal {
                 ],
             ],
         ];
+        $context['member_bar_text'] = 'Love this city as much as we do? Become a Billy Penn member today.';
         $context['site']->emails['daily_newsletter_name'] = PEDESTAL_BLOG_NAME;
         return $context;
     }

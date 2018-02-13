@@ -1,0 +1,28 @@
+// ==========================================================================
+// The Incline // Components // DONATE FORM
+// ==========================================================================
+
+
+.donate-form {
+  @include angle-edge(
+    $angle: 1,
+    $angle-position-y: both,
+    $angle-position-bottom-x: right,
+    $padding: false
+  );
+
+  padding: rem( 32px ) 0;
+
+  @media #{$small-only} {
+    @include angle-edge(
+      $angle: 2,
+      $angle-position-y: both,
+      $angle-position-bottom-x: right,
+      $padding: false
+    );
+  }
+
+  @media #{$large-up} {
+    padding: rem( 48px ) 0;
+  }
+}

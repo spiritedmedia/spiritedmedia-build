@@ -22,8 +22,14 @@ body {
 
 
 .content-wrapper {
+  @include grid-row;
+
   margin-top: $content-wrapper-m-t;
   margin-bottom: $content-wrapper-m-b;
+
+  .page & {
+    max-width: rem( 865px );
+  }
 }
 
 .rail {

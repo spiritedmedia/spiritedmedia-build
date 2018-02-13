@@ -338,10 +338,13 @@ class Frontend {
             ];
         }
 
+        $context['is_page_donate'] = is_page( 'support-our-work' ) ?: false;
+
         // Load some WP conditional functions as Timber context variables
         $conditionals = [
             'is_home',
             'is_single',
+            'is_page',
             'is_search',
             'is_feed',
             'is_archive',

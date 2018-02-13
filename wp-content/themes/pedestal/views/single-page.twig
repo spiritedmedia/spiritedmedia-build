@@ -1,11 +1,5 @@
 {% extends 'layouts/layout--content.twig' %}
 
-{% set content_before = true %}
-
-{% block content_before %}
-    {% include 'partials/pages/statement.twig' %}
-{% endblock %}
-
 {% block content %}
 
     <article class="c-main__content  {{ item.css_classes|esc_attr }}" {{ item.get_the_data_atts }} >

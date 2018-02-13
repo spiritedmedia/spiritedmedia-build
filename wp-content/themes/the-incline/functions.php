@@ -91,6 +91,9 @@ class The_Incline extends Pedestal {
 
                 // Site Features
                 'PEDESTAL_STREAM_ITEM_DEK_VISIBLE' => false,
+
+                // Membership
+                'PEDESTAL_NRH_PROPERTY' => 'theincline',
             ];
         } );
 
@@ -113,6 +116,7 @@ class The_Incline extends Pedestal {
             ],
         ];
         $context['site']->emails['daily_newsletter_send_time'] = '6:30 a.m.';
+        $context['member_bar_text'] = 'Expect the best for Pittsburgh. Become a member of <em>The Incline</em> today.';
         return $context;
     }
 

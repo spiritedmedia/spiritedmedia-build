@@ -11,11 +11,6 @@
 
 /*main*/.c-main {
   margin-top: $main-margin-top;
-  margin-bottom: $main-margin-bottom;
-
-  .full-width & {
-    margin-top: rem( 48px );
-  }
 }
 
 
@@ -28,6 +23,10 @@
 
 .c-main__header {
   margin-bottom: $main-header-margin-bottom;
+
+  .page & {
+    margin-bottom: $main-header-margin-bottom / 2;
+  }
 }
 
 
@@ -50,15 +49,11 @@
   a {
     @include link-dark;
   }
+}
 
-  &--page {
-    font-size: rem( 32px );
-    font-weight: normal;
-    letter-spacing: em( -0.2px );
-    line-height: 1;
-    text-transform: uppercase;
-  }
-
+.c-main__title--page {
+  font-weight: 700;
+  margin-bottom: 0;
 }
 
 

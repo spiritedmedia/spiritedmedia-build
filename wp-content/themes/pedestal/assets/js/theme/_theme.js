@@ -1,4 +1,4 @@
-/* global ga objectFitImages ScrollDepth PedestalModal */
+/* global ga objectFitImages ScrollDepth PedestalModal DonateForm */
 
 (function($) {
 
@@ -26,6 +26,7 @@
       this.lazyLoad();
 
       PedestalModal();
+      DonateForm();
     },
 
     /**

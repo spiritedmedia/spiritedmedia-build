@@ -193,7 +193,7 @@ $s-post-content-li-bullet-size     : rem( 5px );
 
   }
 
-  ol {
+  > ol {
     counter-reset: ordered-list;
 
     > li {
@@ -209,7 +209,7 @@ $s-post-content-li-bullet-size     : rem( 5px );
     }
   }
 
-  ul {
+  > ul {
     li {
       &::before {
         width: $s-post-content-li-bullet-size;
@@ -218,6 +218,126 @@ $s-post-content-li-bullet-size     : rem( 5px );
         background-color: $s-post-content-li-color;
         border-radius: 100%;
       }
+    }
+  }
+
+
+
+
+
+  // ==========================================================================
+  // SHORTCODES
+  // ==========================================================================
+
+
+  .pedestal-shortcode {}
+
+
+  // `[pedestal-event]`
+  .pedestal-shortcode--event {
+    margin-bottom: rem( 24px );
+  }
+
+
+  // `[pedestal-cta-button]`
+  .pedestal-shortcode--cta-btn {
+    text-align: center;
+
+    > * {
+      display: inline-block;
+    }
+  }
+
+
+  // `[pedestal-checklist]`
+  //
+  // stylelint-disable selector-max-compound-selectors
+  .pedestal-shortcode--checklist {
+    ul li::before {
+      color: $primary-color;
+      content: '\002714'; // ✔
+    }
+  }
+  // stylelint-enable selector-max-compound-selectors
+
+
+
+
+
+  //
+  // User Grid
+  // ==========================================================================
+  // `[pedestal-user-grid]`
+
+
+  .user-grid {
+    @include block-grid( $per-row: 1, $include-spacing: false, $base-style: true );
+
+    @media #{$medium-up} {
+      @include block-grid( $per-row: 2, $include-spacing: false, $base-style: false );
+    }
+
+    @media #{$large-up} {
+      @include block-grid( $per-row: 3, $include-spacing: false, $base-style: false );
+    }
+
+    .c-user-card {
+      padding: rem( 16px );
+      text-align: center;
+    }
+  }
+
+
+
+
+
+  //
+  // SoundCite
+  // ==========================================================================
+
+
+  .soundcite-loaded {
+    display: inline;
+
+    &::before {
+      vertical-align: -8%;
+    }
+  }
+
+
+
+
+
+  //
+  // Brand Headings
+  // ==========================================================================
+
+
+  .brand-heading {}
+
+  .brand-heading__logo,
+  .brand-heading__text {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .brand-heading__logo {
+    height: rem( 30px );
+    width: rem( 30px );
+    margin-right: rem( 5px );
+  }
+
+  .brand-heading__text {
+    font-size: $h4-font-size;
+    line-height: rem( 34px );
+    margin-bottom: 0;
+    padding-top: rem( 4px );
+  }
+
+
+  @media screen and ( min-width: $brand-heading-breakpoint ) {
+    .brand-heading__logo {
+      margin-right: rem( 8px );
     }
   }
 

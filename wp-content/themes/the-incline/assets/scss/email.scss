@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // The Incline // Emails
  *
- * Version: 6.7.4
+ * Version: 6.8.0
  *
  * Copyright ( c ) 2016 Spirited Media
  */
@@ -11,23 +11,9 @@
 $site-theme-name: 'the-incline';
 
 
-// ==========================================================================
-// Pedestal // * The Incline * // SETUP
-//
 // Set up the child theme functions and variables
-// ==========================================================================
-
-
 @import 'setup-child';
 @import 'base/global/settings';
 
-
-
-
-
-// ==========================================================================
-// PEDESTAL
-// ==========================================================================
-
-
+// Site email styles
 @import 'pedestal-email';

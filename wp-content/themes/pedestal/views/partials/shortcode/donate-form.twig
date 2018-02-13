@@ -1,0 +1,71 @@
+<form
+    action="{{ nrh_endpoint_domain|esc_url }}/memberform"
+    class="donate-form pedestal-shortcode js-donate-form"
+    data-nrh-endpoint-domain="{{ nrh_endpoint_domain|esc_url }}"
+    data-ga-category="Submitted Form"
+    data-ga-label="Donate | {{ submit_text|esc_attr }}"
+>
+    <div class="donate-form__inner-wrap">
+        <fieldset class="donate-form__inner">
+
+            <p class="donate-form__intro">I would like to give:</p>
+
+            <input name="org_id" value="{{ nrh_property|esc_attr }}" type="hidden">
+            <input name="property" value="{{ nrh_property|esc_attr }}" type="hidden">
+
+            <label class="donate-form__amount">
+                <div class="donate-form__amount__label-text">
+                    amount to donate
+                </div>
+                <span class="donate-form__amount__prefix">$</span>
+                <input type="number"
+                    class="donate-form__amount__input js-donate-form-amount"
+                    name="amount"
+                    value="15"
+                />
+            </label>
+
+            <fieldset class="donate-form__frequency">
+                <label class="donate-form__frequency-option">
+                    <input type="radio" checked
+                        class="donate-form__frequency-option__input js-donate-form-frequency"
+                        name="installmentPeriod"
+                        value="monthly"
+                    />
+                    Monthly
+                </label>
+                <label class="donate-form__frequency-option">
+                    <input type="radio"
+                        class="donate-form__frequency-option__input js-donate-form-frequency"
+                        name="installmentPeriod"
+                        value="yearly"
+                    />
+                    Yearly
+                </label>
+                <label class="donate-form__frequency-option">
+                    <input type="radio"
+                        class="donate-form__frequency-option__input js-donate-form-frequency"
+                        name="installmentPeriod"
+                        value="once"
+                    />
+                    Today only
+                </label>
+            </fieldset>
+
+            <div class="donate-form__submit">
+                <button type="submit" class="donate-form__submit__button btn--cta btn--pill btn--no-border">
+                    {{ submit_text }}
+                </button>
+
+                <div class="donate-form__secured-by">
+                    <span class="donate-form__secured-by__lock">{{ ped_icon('lock') }}</span>
+                    <span class="donate-form__secured-by__text">Secured by</span>
+                    <div class="donate-form__stripe-logo">
+                        {{ stripe_logo }}
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+    </div>
+</form>

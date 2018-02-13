@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Billy Penn // Theme
  *
- * Version: 6.7.4
+ * Version: 6.8.0
  *
  * Copyright ( c ) 2016 Spirited Media
  */
@@ -11,32 +11,14 @@
 $site-theme-name: 'billy-penn';
 
 
-// ==========================================================================
-// Pedestal // * Billy Penn * // SETUP
-//
 // Set up the child theme functions and variables
-// ==========================================================================
-
-
 @import 'setup-child';
 @import 'base/global/settings';
 
-
-
-
-
-// ==========================================================================
-// PEDESTAL
-// ==========================================================================
-
-
+// Set up Pedestal theme styles
 @import 'pedestal-theme';
 
-
-// ==========================================================================
-// Billy Penn // COMPONENTS
-// ==========================================================================
-
-
+// Child theme styles
 @import 'components/404';
 @import 'components/site-header';
+@import 'components/buttons';

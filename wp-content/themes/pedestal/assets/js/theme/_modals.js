@@ -1,3 +1,4 @@
+/* global PedUtils */
 /* exported PedestalModal */
 
 /**
@@ -36,6 +37,14 @@ function PedestalModal() {
   $openModalBtn.on('click', open);
   $closeModalBtn.on('click', close);
   $overlay.on('click', close);
+
+  // Open the modal if the user is directed to a URL containing `#subscribe`...
+  const subscribeURL = window.location.href.indexOf('#subscribe');
+  if (subscribeURL !== -1) open();
+  // ...or if the window hash changes
+  window.addEventListener('hashchange', () => {
+    if (location.hash === '#subscribe') open();
+  });
 
   // Prevent mobile keyboard overlap
   $modalInput.on('focus', () => {
@@ -86,7 +95,7 @@ function PedestalModal() {
     $modal.removeAttr('aria-hidden');
     $site.attr('aria-hidden', 'true');
 
-    e.preventDefault();
+    if (e !== undefined) e.preventDefault();
   }
 
   /**
@@ -111,6 +120,9 @@ function PedestalModal() {
     // Untrap screen reader focus
     $modal.attr('aria-hidden', 'true');
     $site.removeAttr('aria-hidden');
+
+    // Remove the location hash if present
+    if (location.hash === '#subscribe') PedUtils.removeHash();
 
     // Restore focus to the triggering element
     $openModalBtn.focus();
