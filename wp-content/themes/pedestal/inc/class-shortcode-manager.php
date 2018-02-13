@@ -708,7 +708,7 @@ class Shortcode_Manager {
         $stripe_logo = get_template_directory() . '/assets/images/membership/stripe-logo-white.svg';
         $stripe_logo = file_get_contents( $stripe_logo );
         $context = [
-            'nrh_endpoint_domain'    => 'https://vosd-stripe-test.herokuapp.com',
+            'nrh_endpoint_domain'    => 'https://checkout.fundjournalism.org',
             'nrh_property'           => PEDESTAL_NRH_PROPERTY,
             'submit_text'            => 'Support ' . PEDESTAL_BLOG_NAME,
             'stripe_logo'            => $stripe_logo,
