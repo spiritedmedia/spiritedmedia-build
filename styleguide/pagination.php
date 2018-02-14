@@ -92,5 +92,11 @@ $the_paginations[] = $stream->get_pagination(
     ]
 );
 
+// Load More Stories button
+$the_paginations[] = $stream->get_load_more_button();
+$the_paginations[] = $stream->get_load_more_button([
+    'text' => 'Load more other stuff',
+]);
+
 $context['pagination'] = implode( '<p>&nbsp;</p>', $the_paginations);
 Timber::render( 'views/pagination.twig', $context );

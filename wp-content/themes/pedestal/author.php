@@ -19,9 +19,7 @@ if ( $author_id ) {
     if ( $author_stream->is_last_page() ) {
         $context['show_closure_rule'] = true;
     }
-    $context['pagination'] = $author_stream->get_pagination( [
-        'show_text' => true,
-    ] );
+    $context['pagination'] = $author_stream->get_load_more_button();
     $context['upper_pagination'] = $author_stream->get_pagination( [
         'show_text' => true,
         'show_nav' => false,

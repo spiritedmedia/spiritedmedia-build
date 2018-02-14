@@ -13,8 +13,15 @@ if ( $stream->is_stream_list() ) {
 } else {
     $context['stream'] = $stream->get_the_stream();
 }
-$context['pagination'] = $stream->get_pagination( [
-    'show_text' => false,
-] );
+
+$button_text = '';
+if ( is_post_type_archive() ) {
+    if ( isset( get_queried_object()->labels->name ) ) {
+        $button_text = 'More ' . strtolower( get_queried_object()->labels->name );
+    }
+}
+$context['pagination'] = $stream->get_load_more_button([
+    'text' => $button_text,
+]);
 
 Timber::render( 'archive.twig', $context );

@@ -363,6 +363,34 @@ class Stream {
     }
 
     /**
+     * Get rendered "load more" button
+     *
+     * @param  array  $args      Args to override the button
+     * @param  array  $data_args Args to modify the data used to generate the pagination
+     * @return string            Rendered HTML of load more pagination button
+     */
+    public function get_load_more_button( $args = [], $data_args = [] ) {
+        $pagination = $this->get_pagination_data( $data_args );
+        if ( $pagination->total_pages <= 1 ) {
+            return;
+        }
+
+        $defaults = [
+            'url'  => $pagination->next_url,
+            'text' => 'More stories',
+        ];
+        $context = wp_parse_args( $args, $defaults );
+
+        if ( empty( $context['url'] ) ) {
+            return;
+        }
+
+        ob_start();
+        Timber::render( 'partials/pagination-load-more.twig', $context );
+        return ob_get_clean();
+    }
+
+    /**
      * Conditional for checking if the stream should be a list
      * @return boolean [description]
      */

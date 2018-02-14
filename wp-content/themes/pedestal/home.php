@@ -20,9 +20,7 @@ if ( ! get_query_var( 'paged' ) ) {
     }
 }
 $context['stream'] = $stream->get_the_stream();
-$context['pagination'] = $stream->get_pagination( [
-    'show_text' => false,
-] );
+$context['pagination'] = $stream->get_load_more_button();
 
 if ( is_active_sidebar( 'sidebar-stream' ) ) {
     $context['sidebar'] = Timber::get_widgets( 'sidebar-stream' );

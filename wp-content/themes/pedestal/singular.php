@@ -40,9 +40,7 @@ if ( Types::is_post( $item ) ) :
             $context['show_closure_rule'] = true;
         }
 
-        $context['pagination'] = $cluster_stream->get_pagination( [
-            'show_text' => true,
-        ] );
+        $context['pagination'] = $cluster_stream->get_load_more_button();
 
         if ( ! $cluster_stream->is_first_page() ) {
             $context['upper_pagination'] = $cluster_stream->get_pagination( [
