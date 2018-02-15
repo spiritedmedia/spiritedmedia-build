@@ -296,16 +296,18 @@
     $sides: append( $sides, 'right' );
   }
 
+  $side-gutter: $column-gutter / 2;
+  $margin: if( $ignore-gutter, calc( #{-100vw} - #{$side-gutter} ), -100vw );
+  $padding: if( $ignore-gutter, calc( 100vw - #{$side-gutter} ), 100vw );
+
   #{$selector} {
     position: relative;
 
     @each $side in $sides {
-      margin-#{$side}: -100vw;
+      margin-#{$side}: $margin;
 
       #{$inner-selector} {
-        $_inner-padding: if( $ignore-gutter, calc( 100vw - #{$column-gutter / 2} ), 100vw );
-
-        padding-#{$side}: $_inner-padding;
+        padding-#{$side}: $padding;
       }
     }
   }

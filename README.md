@@ -1,7 +1,7 @@
-Build [#4315](https://circleci.com/gh/spiritedmedia/spiritedmedia/4315) by kingkool68 at 2018-02-14 03:41 PM UTC
+Build [#4322](https://circleci.com/gh/spiritedmedia/spiritedmedia/4322) by montchr at 2018-02-15 05:19 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.0](https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.0)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.1](https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.1)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.8.1...v6.9.0)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.0...v6.9.1)
 
- - [#2456](https://github.com/spiritedmedia/spiritedmedia/pull/2456): Simplify Pagination with a Load More Stories Button
+ - [#2470](https://github.com/spiritedmedia/spiritedmedia/pull/2470): Handle gutterless usage of explode-component mixin correctly
