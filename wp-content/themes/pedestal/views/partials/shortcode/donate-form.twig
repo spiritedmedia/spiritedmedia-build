@@ -13,6 +13,10 @@
             <input name="org_id" value="{{ nrh_property|esc_attr }}" type="hidden">
             <input name="property" value="{{ nrh_property|esc_attr }}" type="hidden">
 
+            {% if campaign %}
+            <input name="campaign" value="{{ campaign|esc_attr }}" type="hidden">
+            {% endif %}
+
             <label class="donate-form__amount">
                 <div class="donate-form__amount__label-text">
                     amount to donate

@@ -708,10 +708,11 @@ class Shortcode_Manager {
         $stripe_logo = get_template_directory() . '/assets/images/membership/stripe-logo-white.svg';
         $stripe_logo = file_get_contents( $stripe_logo );
         $context = [
-            'nrh_endpoint_domain'    => 'https://checkout.fundjournalism.org',
-            'nrh_property'           => PEDESTAL_NRH_PROPERTY,
-            'submit_text'            => 'Support ' . PEDESTAL_BLOG_NAME,
-            'stripe_logo'            => $stripe_logo,
+            'nrh_endpoint_domain' => 'https://checkout.fundjournalism.org',
+            'nrh_property'        => PEDESTAL_NRH_PROPERTY,
+            'campaign'            => $_GET['campaign'] ?? '',
+            'submit_text'         => 'Support ' . PEDESTAL_BLOG_NAME,
+            'stripe_logo'         => $stripe_logo,
         ];
         $context = apply_filters( 'pedestal_donate_form_context', $context );
 

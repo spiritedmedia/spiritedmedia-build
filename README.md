@@ -1,7 +1,7 @@
-Build [#4322](https://circleci.com/gh/spiritedmedia/spiritedmedia/4322) by montchr at 2018-02-15 05:19 PM UTC
+Build [#4331](https://circleci.com/gh/spiritedmedia/spiritedmedia/4331) by montchr at 2018-02-21 08:04 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.1](https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.1)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.2](https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.2)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.0...v6.9.1)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.1...v6.9.2)
 
- - [#2470](https://github.com/spiritedmedia/spiritedmedia/pull/2470): Handle gutterless usage of explode-component mixin correctly
+ - [#2483](https://github.com/spiritedmedia/spiritedmedia/pull/2483): Submit `campaign` URL argument value to NRH if provided
