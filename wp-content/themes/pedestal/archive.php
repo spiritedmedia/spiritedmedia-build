@@ -14,7 +14,10 @@ if ( $stream->is_stream_list() ) {
     $context['stream'] = $stream->get_the_stream();
 }
 
-$button_text = '';
+$button_text = 'More stories';
+if ( is_archive() && 'originals' == get_query_var( 'pedestal_originals' ) ) {
+    $button_text = 'More originals';
+}
 if ( is_post_type_archive() ) {
     if ( isset( get_queried_object()->labels->name ) ) {
         $button_text = 'More ' . strtolower( get_queried_object()->labels->name );
