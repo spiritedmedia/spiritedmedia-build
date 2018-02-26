@@ -19,7 +19,8 @@ function DonateForm() {
     $form.on('change', '.js-donate-form-frequency', function() {
       let endpointPath;
 
-      if ($(this).val() === 'once') {
+      // Handle different action URLs for one-time vs. recurring donations
+      if ($(this).val() === '') {
         endpointPath = '/donateform';
       } else {
         endpointPath = '/memberform';
@@ -37,12 +38,12 @@ function DonateForm() {
     $form.on('change', '.js-donate-form-frequency', function() {
       const $amountInput = $form.find('.js-donate-form-amount');
       const currentPeriod = $(this).val();
-      const oldAmount = $amountInput.val();
+      const oldAmount = parseInt($amountInput.val());
       let newAmount = oldAmount;
 
       if (
-        (currentPeriod === 'yearly' && prevPeriod !== 'once') ||
-        (currentPeriod === 'once' && prevPeriod !== 'yearly')
+        (currentPeriod === 'yearly' && prevPeriod !== '') ||
+        (currentPeriod === '' && prevPeriod !== 'yearly')
       ) {
         newAmount = oldAmount * 12;
       } else if (currentPeriod === 'monthly') {
