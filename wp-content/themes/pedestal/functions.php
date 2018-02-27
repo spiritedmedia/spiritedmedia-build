@@ -468,7 +468,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                     'id'    => $id,
                     'sizes' => $sizes,
                 ];
-                return \Timber\Timber::render( 'partials/adverts/dfp-unit.twig', $context );
+                ob_start();
+                \Timber\Timber::render( 'partials/adverts/dfp-unit.twig', $context );
+                return ob_get_clean();
             } ) );
 
             return $twig;
