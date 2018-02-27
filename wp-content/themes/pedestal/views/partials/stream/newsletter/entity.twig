@@ -1,6 +1,11 @@
 {% set title = newsletter_item.title %}
+{% set stream = true %}
 
-<article class="{{ macros.get_stream_item_classes( 'newsletter', _context ) }} newsletter-item"
+{% if item.css_classes %}
+    {% set classes = item.css_classes ~ '  ' ~ classes %}
+{% endif %}
+
+<article class="{{ classes }} newsletter-item"
     {{ item.get_the_data_atts }}>
 
     <h1 class="newsletter-item__title">

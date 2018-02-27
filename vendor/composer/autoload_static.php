@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
+class ComposerStaticInitee83c650c302a0ed39d35f9b541e3962
 {
     public static $files = array (
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
@@ -12,6 +12,7 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'b067bc7112e384b61c701452d53a14a8' => __DIR__ . '/..' . '/mtdowling/jmespath.php/src/JmesPath.php',
         '8a9dc1de0ca7e01f3e08231539562f61' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/functions.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
     );
 
@@ -32,6 +33,7 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\CssSelector\\' => 30,
         ),
         'P' => 
@@ -89,6 +91,10 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
             0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
         'Symfony\\Component\\CssSelector\\' => 
         array (
@@ -7788,6 +7794,7 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         'Symfony\\Component\\CssSelector\\XPath\\Translator' => __DIR__ . '/..' . '/symfony/css-selector/XPath/Translator.php',
         'Symfony\\Component\\CssSelector\\XPath\\TranslatorInterface' => __DIR__ . '/..' . '/symfony/css-selector/XPath/TranslatorInterface.php',
         'Symfony\\Component\\CssSelector\\XPath\\XPathExpr' => __DIR__ . '/..' . '/symfony/css-selector/XPath/XPathExpr.php',
+        'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
         'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Processor.php',
@@ -7854,6 +7861,7 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         'Twig\\Error\\RuntimeError' => __DIR__ . '/..' . '/twig/twig/src/Error/RuntimeError.php',
         'Twig\\Error\\SyntaxError' => __DIR__ . '/..' . '/twig/twig/src/Error/SyntaxError.php',
         'Twig\\ExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser.php',
+        'Twig\\ExtensionSet' => __DIR__ . '/..' . '/twig/twig/src/ExtensionSet.php',
         'Twig\\Extension\\AbstractExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/AbstractExtension.php',
         'Twig\\Extension\\CoreExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/CoreExtension.php',
         'Twig\\Extension\\DebugExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/DebugExtension.php',
@@ -8015,13 +8023,11 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         'Twig\\TwigTest' => __DIR__ . '/..' . '/twig/twig/src/TwigTest.php',
         'Twig\\Util\\DeprecationCollector' => __DIR__ . '/..' . '/twig/twig/src/Util/DeprecationCollector.php',
         'Twig\\Util\\TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/src/Util/TemplateDirIterator.php',
-        'Twig_Autoloader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Autoloader.php',
         'Twig_BaseNodeVisitor' => __DIR__ . '/..' . '/twig/twig/lib/Twig/BaseNodeVisitor.php',
         'Twig_CacheInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/CacheInterface.php',
         'Twig_Cache_Filesystem' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Cache/Filesystem.php',
         'Twig_Cache_Null' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Cache/Null.php',
         'Twig_Compiler' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Compiler.php',
-        'Twig_CompilerInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/CompilerInterface.php',
         'Twig_ContainerRuntimeLoader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/ContainerRuntimeLoader.php',
         'Twig_Environment' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Environment.php',
         'Twig_Error' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Error.php',
@@ -8032,6 +8038,7 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         'Twig_ExpressionParser' => __DIR__ . '/..' . '/twig/twig/lib/Twig/ExpressionParser.php',
         'Twig_Extension' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Extension.php',
         'Twig_ExtensionInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/ExtensionInterface.php',
+        'Twig_ExtensionSet' => __DIR__ . '/..' . '/twig/twig/lib/Twig/ExtensionSet.php',
         'Twig_Extension_Core' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Extension/Core.php',
         'Twig_Extension_Debug' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Extension/Debug.php',
         'Twig_Extension_Escaper' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Extension/Escaper.php',
@@ -8045,28 +8052,15 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         'Twig_FactoryRuntimeLoader' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FactoryRuntimeLoader.php',
         'Twig_FileExtensionEscapingStrategy' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FileExtensionEscapingStrategy.php',
         'Twig_Filter' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Filter.php',
-        'Twig_FilterCallableInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FilterCallableInterface.php',
-        'Twig_FilterInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FilterInterface.php',
-        'Twig_Filter_Function' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Filter/Function.php',
-        'Twig_Filter_Method' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Filter/Method.php',
-        'Twig_Filter_Node' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Filter/Node.php',
         'Twig_Function' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Function.php',
-        'Twig_FunctionCallableInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FunctionCallableInterface.php',
-        'Twig_FunctionInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/FunctionInterface.php',
-        'Twig_Function_Function' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Function/Function.php',
-        'Twig_Function_Method' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Function/Method.php',
-        'Twig_Function_Node' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Function/Node.php',
         'Twig_Lexer' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Lexer.php',
-        'Twig_LexerInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/LexerInterface.php',
         'Twig_LoaderInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/LoaderInterface.php',
         'Twig_Loader_Array' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Loader/Array.php',
         'Twig_Loader_Chain' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Loader/Chain.php',
         'Twig_Loader_Filesystem' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Loader/Filesystem.php',
-        'Twig_Loader_String' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Loader/String.php',
         'Twig_Markup' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Markup.php',
         'Twig_Node' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node.php',
         'Twig_NodeCaptureInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/NodeCaptureInterface.php',
-        'Twig_NodeInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/NodeInterface.php',
         'Twig_NodeOutputInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/NodeOutputInterface.php',
         'Twig_NodeTraverser' => __DIR__ . '/..' . '/twig/twig/lib/Twig/NodeTraverser.php',
         'Twig_NodeVisitorInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/NodeVisitorInterface.php',
@@ -8114,7 +8108,6 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         'Twig_Node_Expression_Call' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Expression/Call.php',
         'Twig_Node_Expression_Conditional' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Expression/Conditional.php',
         'Twig_Node_Expression_Constant' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Expression/Constant.php',
-        'Twig_Node_Expression_ExtensionReference' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Expression/ExtensionReference.php',
         'Twig_Node_Expression_Filter' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Expression/Filter.php',
         'Twig_Node_Expression_Filter_Default' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Expression/Filter/Default.php',
         'Twig_Node_Expression_Function' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Expression/Function.php',
@@ -8148,12 +8141,10 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         'Twig_Node_Sandbox' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Sandbox.php',
         'Twig_Node_SandboxedPrint' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/SandboxedPrint.php',
         'Twig_Node_Set' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Set.php',
-        'Twig_Node_SetTemp' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/SetTemp.php',
         'Twig_Node_Spaceless' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Spaceless.php',
         'Twig_Node_Text' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/Text.php',
         'Twig_Node_With' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Node/With.php',
         'Twig_Parser' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Parser.php',
-        'Twig_ParserInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/ParserInterface.php',
         'Twig_Profiler_Dumper_Base' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Profiler/Dumper/Base.php',
         'Twig_Profiler_Dumper_Blackfire' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Profiler/Dumper/Blackfire.php',
         'Twig_Profiler_Dumper_Html' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Profiler/Dumper/Html.php',
@@ -8177,20 +8168,12 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
         'Twig_Source' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Source.php',
         'Twig_SourceContextLoaderInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/SourceContextLoaderInterface.php',
         'Twig_Template' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Template.php',
-        'Twig_TemplateInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TemplateInterface.php',
         'Twig_TemplateWrapper' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TemplateWrapper.php',
         'Twig_Test' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Test.php',
-        'Twig_TestCallableInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TestCallableInterface.php',
-        'Twig_TestInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TestInterface.php',
-        'Twig_Test_Function' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Test/Function.php',
         'Twig_Test_IntegrationTestCase' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Test/IntegrationTestCase.php',
-        'Twig_Test_Method' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Test/Method.php',
-        'Twig_Test_Node' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Test/Node.php',
         'Twig_Test_NodeTestCase' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Test/NodeTestCase.php',
         'Twig_Token' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Token.php',
         'Twig_TokenParser' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenParser.php',
-        'Twig_TokenParserBroker' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenParserBroker.php',
-        'Twig_TokenParserBrokerInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenParserBrokerInterface.php',
         'Twig_TokenParserInterface' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenParserInterface.php',
         'Twig_TokenParser_AutoEscape' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenParser/AutoEscape.php',
         'Twig_TokenParser_Block' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenParser/Block.php',
@@ -8243,11 +8226,11 @@ class ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit2f8bb02bd67fd8d878e40c55a3a19031::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitee83c650c302a0ed39d35f9b541e3962::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitee83c650c302a0ed39d35f9b541e3962::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitee83c650c302a0ed39d35f9b541e3962::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitee83c650c302a0ed39d35f9b541e3962::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitee83c650c302a0ed39d35f9b541e3962::$classMap;
 
         }, null, ClassLoader::class);
     }

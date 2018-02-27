@@ -398,25 +398,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 add_filter( 'stylesheet_directory_uri', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
             }
 
-            // Filter Twig as Timber loads it
-            add_filter( 'timber/loader/twig', [ $this, 'filter_timber_loader' ] );
-
-            // Add some generic Twig funtions and filters
+            // Add some Twig functions and filters
             add_filter( 'timber/twig', [ $this, 'filter_timber_twig_add_basic_filters' ] );
-            add_filter( 'timber/twig', function( $twig ) {
-                // Function to check if doing email and alternate strings
-                $twig->addFunction( new \Twig_SimpleFunction( 'if_email', function( $email_str, $standard_str ) {
-                    if ( $this->is_email() ) {
-                        return $email_str;
-                    }
-                    return $standard_str;
-                } ) );
-                // Get the current Unix epoch time in milliseconds
-                $twig->addFunction( new \Twig_SimpleFunction( 'now', function() {
-                    return round( microtime( true ) * 1000 );
-                } ) );
-                return $twig;
-            }, 99 );
+            add_filter( 'timber/twig', [ $this, 'filter_timber_twig_add_functions' ], 99 );
 
             // Since we don't have comments, skip running the query to count all of the comments on every load
             add_filter( 'wp_count_comments', function( $count, $post_id ) {
@@ -458,6 +442,35 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                     $twig->addFilter( new \Twig_SimpleFilter( $func, $func ) );
                 }
             }
+            return $twig;
+        }
+
+        /**
+         * Add some functions to Twig
+         */
+        public function filter_timber_twig_add_functions( $twig ) {
+            // Function to check if doing email and alternate strings
+            $twig->addFunction( new \Twig_SimpleFunction( 'if_email', function( $email_str, $standard_str ) {
+                if ( $this->is_email() ) {
+                    return $email_str;
+                }
+                return $standard_str;
+            } ) );
+
+            // Get the current Unix epoch time in milliseconds
+            $twig->addFunction( new \Twig_SimpleFunction( 'now', function() {
+                return round( microtime( true ) * 1000 );
+            } ) );
+
+            // Render a DFP unit
+            $twig->addFunction( new \Twig_SimpleFunction( 'dfp_unit', function( $id, $sizes ) {
+                $context = [
+                    'id'    => $id,
+                    'sizes' => $sizes,
+                ];
+                return \Timber\Timber::render( 'partials/adverts/dfp-unit.twig', $context );
+            } ) );
+
             return $twig;
         }
 
@@ -650,14 +663,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 return str_replace( get_site_url(), $this->cdn_url, $url );
             }
             return $url;
-        }
-
-        /**
-         * Filter Timber's Twig loader
-         */
-        public function filter_timber_loader( $loader ) {
-            $loader->addGlobal( 'macros', $loader->loadTemplate( 'macros/macros.twig' ) );
-            return $loader;
         }
 
         /**

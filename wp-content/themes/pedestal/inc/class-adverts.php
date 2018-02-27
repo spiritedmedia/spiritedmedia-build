@@ -129,7 +129,7 @@ class Adverts {
             'sizes' => $sizes,
         ];
         ob_start();
-        Timber::render( 'partials/adverts/dfp-ad-unit.twig', $ad_context );
+        Timber::render( 'partials/adverts/dfp-unit.twig', $ad_context );
         return ob_get_clean();
     }
 

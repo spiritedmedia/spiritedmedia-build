@@ -1,4 +1,10 @@
-<article class="{{ macros.get_stream_item_classes( 'newsletter', _context ) }} newsletter-item newsletter-item--event"
+{% set stream = true %}
+
+{% if item.css_classes %}
+    {% set classes = item.css_classes ~ '  ' ~ classes %}
+{% endif %}
+
+<article class="{{ classes }} newsletter-item newsletter-item--event"
     {{ item.get_the_data_atts }}>
 
     {% set slot = 'newsletter_item' %}

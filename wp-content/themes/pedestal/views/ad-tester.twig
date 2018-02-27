@@ -2,9 +2,7 @@
 
 {% block content %}
 
-	{% if ad_name and ad_sizes %}
-		{{ macros.dfp_unit( ad_name, ad_sizes ) }}
-	{% endif %}
+    {{ dfp_unit( ad_name, ad_sizes ) }}
 
 	<form method="get">
 		<label for="ad-name">Ad unit name</label>
