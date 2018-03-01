@@ -75,3 +75,10 @@ figure {
     transform: translateY( rem( 60 ) );
   }
 }
+
+@media print {
+  .content-wrapper {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

@@ -160,6 +160,12 @@
   }
 }
 
+@media print {
+  .c-main__footer {
+    display: none;
+  }
+}
+
 
 /**
  * Footnote Text

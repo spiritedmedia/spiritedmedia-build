@@ -42,10 +42,16 @@ $breakpoint-footer-links-columns: em( 840px );
   // stylelint-enable selector-max-type
 }
 
-.site-footer__nav {
-  @media ( min-width: $breakpoint-footer-links-columns ) {
+@media ( min-width: $breakpoint-footer-links-columns ) {
+  .site-footer__nav {
     padding-top: rem( 32px );
     padding-bottom: rem( 32px );
+  }
+}
+
+@media print {
+  .site-footer__nav {
+    display: none;
   }
 }
 

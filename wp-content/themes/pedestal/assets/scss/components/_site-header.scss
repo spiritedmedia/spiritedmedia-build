@@ -88,7 +88,12 @@ $site-header-cta-icon-padding: rem( 4px );
 }
 
 
-
+@media print {
+  // Don't display the URL for the logo link
+  .site-header__logo__link[href]::after {
+    content: "";
+  }
+}
 
 
 //
@@ -134,4 +139,10 @@ $site-header-cta-icon-padding: rem( 4px );
 .site-header__cta__icon {
   font-size: rem( 48px );
   padding-right: $site-header-cta-icon-padding;
+}
+
+@media print {
+  .site-header__cta {
+    display: none;
+  }
 }

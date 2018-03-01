@@ -66,6 +66,16 @@
   }
 }
 
+@media print {
+  // stylelint-disable-next-line selector-max-type
+  .c-main__lead-img a[href]::after {
+    line-height: 1.333;
+  }
+
+  .c-figure__link[href]::after {
+    content: "";
+  }
+}
 
 
 

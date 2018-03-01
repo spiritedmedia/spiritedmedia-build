@@ -60,3 +60,9 @@ $_inner-height: rem( 40px );
     margin-right: rem( 20px );
   }
 }
+
+@media print {
+  .member-bar {
+    display: none;
+  }
+}

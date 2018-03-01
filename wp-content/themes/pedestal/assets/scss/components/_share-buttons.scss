@@ -65,3 +65,9 @@ $share-button-twitter-margin: rem( 4px );
   position: relative;
   vertical-align: sub;
 }
+
+@media print {
+  .c-share-buttons {
+    display: none;
+  }
+}

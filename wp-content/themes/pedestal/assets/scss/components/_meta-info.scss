@@ -97,10 +97,6 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
   font-size: $c-meta-info-icon-size;
 }
 
-
-.c-meta-info__name {}
-
-
 .c-meta-info__label {
   font-weight: 700;
 }
@@ -125,6 +121,15 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
 }
 
 
+@media print {
+  .c-meta-info__img {
+    display: none;
+  }
+  // stylelint-disable-next-line selector-max-type
+  .c-meta-info__name a[href]::after {
+    content: "";
+  }
+}
 
 
 

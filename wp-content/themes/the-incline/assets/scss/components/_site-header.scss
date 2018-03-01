@@ -72,3 +72,9 @@
     }
   }
 }
+
+@media print {
+  .site-header {
+    margin-bottom: 0;
+  }
+}
