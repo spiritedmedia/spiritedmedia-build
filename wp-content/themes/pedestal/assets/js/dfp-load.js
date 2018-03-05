@@ -13,9 +13,9 @@ googletag.cmd = googletag.cmd || [];
 
 // We dynamically define ad slots on the page based on the ad markup present
 googletag.cmd.push(function() {
-  // Dyanmically load the DFP ID from the data attribute of this script 
-  var DFP_ID = document.getElementById( 'dfp-load' )
-    .getAttribute( 'data-dfp-id' );
+  // Dynamically load the DFP ID from the data attribute of this script
+  var DFP_ID = document.getElementById('dfp-load')
+    .getAttribute('data-dfp-id');
   // The ad slots we will tell Google Tag about
   var slots = [];
   (function($) {
@@ -60,12 +60,37 @@ googletag.cmd.push(function() {
   googletag.pubads().enableSingleRequest();
   googletag.pubads().collapseEmptyDivs(true);
 
+  /**
+   * Get the ID of the ad unit so it can be selected in the DOM and manipulated
+   *
+   * @param  {object} slot Slot object returned from the slotRenderEnded
+   *                       event listener
+   * @return {stirng}      HTML ID of the slot
+   */
+  function getGoogleDFPUnitID(slot) {
+    if (typeof slot !== 'object') {
+      return;
+    }
+    for (var prop in slot) {
+      var item = slot[prop];
+      if (typeof item == 'object' && item) {
+        for (var childProp in item) {
+          if (
+            typeof item[childProp] == 'string' &&
+            item[childProp].indexOf('div-') > -1
+          ) {
+            return item[childProp];
+          }
+        }
+      }
+    }
+    return false;
+  }
   // Add 'ADVERTISEMENT' disclaimer text after all DFP units
   googletag.pubads().addEventListener('slotRenderEnded', function(e) {
-    var id, div, html;
+    var div, html;
     if (false === e.isEmpty) {
-      // e.slot.C should be like /104495818/BP_Header_300x50_M
-      id = 'google_ads_iframe_' + e.slot.C + '_0__container__';
+      var id = getGoogleDFPUnitID(e.slot);
       div = document.getElementById(id);
       html = '<div class="dfp-disclaimer">ADVERTISEMENT</div>';
       div.insertAdjacentHTML('beforeend', html);

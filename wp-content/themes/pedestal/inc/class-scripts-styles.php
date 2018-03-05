@@ -50,7 +50,7 @@ class Scripts_Styles {
         // 3rd party hosted JavaScript should have async set so they don't block
         // our JavaScript from functioning if 3rd party scripts fail to load.
         add_filter( 'script_loader_tag', function( $script_tag = '', $handle = '' ) {
-            $whitelisted_handles = [ 'soundcite', 'relay-links' ];
+            $whitelisted_handles = [ 'soundcite', 'instagram-embed' ];
             if ( ! in_array( $handle, $whitelisted_handles ) ) {
                 return $script_tag;
             }
@@ -97,9 +97,6 @@ class Scripts_Styles {
         if ( isset( $_GET['show-ad-units'] ) ) {
             wp_enqueue_script( 'dfp-placeholders', get_template_directory_uri() . '/assets/dist/js/dfp-placeholders.js', [ 'jquery' ], PEDESTAL_VERSION );
         }
-
-        // Relay Links from Relay Media
-        wp_enqueue_script( 'relay-links', 'https://static.relaymedia.com/embed/relay-links.js', [], null, true );
 
         wp_register_script( 'pedestal-footnotes', get_template_directory_uri() . '/assets/dist/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, true );
     }

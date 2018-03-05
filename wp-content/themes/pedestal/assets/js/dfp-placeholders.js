@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
   // Get the theme color from the page to be used for the placeholder ads
   var themeColor = $('meta[name="theme-color"]').attr('content');
   themeColor = themeColor.replace('#', '');
-  if ( ! themeColor ) {
+  if (!themeColor) {
     themeColor = 'ccc';
   }
 
@@ -14,7 +14,7 @@ jQuery(document).ready(function($) {
       var adSizes = $ad.data('dfp-sizes').split(',');
       var adName = $ad.data('dfp-name');
       var newHTML = '';
-      for ( var i = 0; i < adSizes.length; i++ ) {
+      for (var i = 0; i < adSizes.length; i++) {
         var adSize = adSizes[i];
         var adWidth = adSize.split('x')[0];
         var adHeight = adSize.split('x')[1];
@@ -22,12 +22,12 @@ jQuery(document).ready(function($) {
         var imgHTML = `<img src="${dummyImg}">`;
 
         var displayVal = 'none';
-        if ( i === 0 ) {
+        if (i === 0) {
           displayVal = 'block;';
         }
 
         var counterText = '';
-        if ( adSizes.length > 1 ) {
+        if (adSizes.length > 1) {
           counterText = (i + 1) + '/' + adSizes.length;
         }
 
@@ -64,17 +64,17 @@ jQuery(document).ready(function($) {
         newHTML += $placeholder[0].outerHTML;
       }
       // Need show() to override inline display: none; set by DFP script
-      $ad.html( newHTML ).show();
+      $ad.html(newHTML).show();
     }).on('click', '.js-dfp-placeholder', function(e) {
       e.preventDefault();
       var $this = $(this);
       var $children = $this.parents('.js-dfp').children();
       var numOfSizes = $children.length;
-      if ( numOfSizes < 2 ) {
+      if (numOfSizes < 2) {
         return;
       }
       var nextIndex = $this.parent().index() + 1;
-      if ( nextIndex > numOfSizes - 1 ) {
+      if (nextIndex > numOfSizes - 1) {
         nextIndex = 0;
       }
       $children.hide();

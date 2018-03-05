@@ -133,7 +133,7 @@
      */
     makeHierarchicalTermsFilterable: function() {
       var $boxes = $('.categorydiv');
-      if ( $boxes.length < 1 ) {
+      if ($boxes.length < 1) {
         return;
       }
 
@@ -150,16 +150,16 @@
 
       // Create our filter input element
       var $filterInputElement = $('<input type="search" />')
-        .addClass( filterClass )
-        .css( 'width', '100%' );
+        .addClass(filterClass)
+        .css('width', '100%');
 
       $boxes.each(function(index, box) {
         var $box = $(box);
-        if ( $box.find('.categorychecklist li').length < 10 ) {
+        if ($box.find('.categorychecklist li').length < 10) {
           return;
         }
         var boxTitle = $box.parent().siblings('.hndle').text();
-        $filterInputElement.attr( 'placeholder', 'Filter ' + boxTitle );
+        $filterInputElement.attr('placeholder', 'Filter ' + boxTitle);
         $box.prepend($filterInputElement);
       });
 
@@ -170,7 +170,7 @@
         .on('keyup', filterSelector, function() {
           var $this = $(this);
           var $checklists = $this.parent().find('.categorychecklist li');
-          if( $this.val().length < 2 ) {
+          if($this.val().length < 2) {
             $checklists.show();
           } else {
             $checklists
@@ -197,9 +197,9 @@
           var $this = $(this);
           // Without a small delay the keyup event
           // thinks there are more than 0 characters
-          setTimeout( function() {
+          setTimeout(function() {
             $this.trigger('keyup');
-          }, 100, $this );
+          }, 100, $this);
         });
     }
   };

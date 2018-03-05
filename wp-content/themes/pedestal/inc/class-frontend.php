@@ -33,10 +33,6 @@ class Frontend {
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts' ] );
         add_action( 'wp_head', [ $this, 'action_wp_head_meta_tags' ] );
         add_action( 'wp_head', [ $this, 'action_add_comscore_tracking_pixel' ] );
-
-        // RelayMedia's AMP version requries these
-        add_action( 'wp_head', [ $this, 'action_wp_head_amp_link' ] );
-        add_action( 'wp_footer', [ $this, 'action_wp_footer_amp_beacon_pixel' ] );
     }
 
     /**
@@ -222,46 +218,6 @@ class Frontend {
             );
         }
 
-    }
-
-    /**
-     * Add <link> to <head> specifying URL to AMP version of article
-     *
-     * @link https://github.com/spiritedmedia/spiritedmedia/issues/1443
-     */
-    public function action_wp_head_amp_link() {
-        if ( ! is_singular( Types::get_original_post_types() ) ) {
-            return;
-        }
-
-        $post = Post::get( get_the_ID() );
-        $parts = parse_url( $post->get_permalink() );
-        $amp_url = 'https://cdn.relaymedia.com/amp/';
-        $amp_url .= $parts['host'];
-        $amp_url .= $parts['path'];
-
-        echo '<link rel="amphtml" href="' . esc_url( $amp_url ) . '">' . PHP_EOL;
-    }
-
-    /**
-     * Add Relay Media AMP "beacon pixel" to the footer
-     *
-     * Ping Relay Media so they can cache the AMP version of an article.
-     *
-     * @link https://github.com/spiritedmedia/spiritedmedia/issues/1443
-     */
-    public function action_wp_footer_amp_beacon_pixel() {
-        if ( ! is_singular( Types::get_original_post_types() ) ) {
-            return;
-        }
-
-        $post = Post::get( get_the_ID() );
-        $permalink = $post->get_permalink();
-        $beacon_url = add_query_arg( [
-            'url' => urlencode( $permalink ),
-        ], 'https://cdn.relaymedia.com/ping' );
-
-        echo '<img src="' . esc_url( $beacon_url ) . '" width="1" height="1" style="display: block;">' . PHP_EOL;
     }
 
     /**

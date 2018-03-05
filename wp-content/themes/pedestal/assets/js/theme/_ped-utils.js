@@ -23,14 +23,14 @@ class PedUtils {
       var args = arguments;
       var later = function() {
         timeout = null;
-        if ( !immediate ) {
+        if (!immediate) {
           func.apply(context, args);
         }
       };
       var callNow = immediate && !timeout;
       clearTimeout(timeout);
       timeout = setTimeout(later, wait || 200);
-      if ( callNow ) {
+      if (callNow) {
         func.apply(context, args);
       }
     };

@@ -379,17 +379,19 @@ class Entity_Types {
         ] );
         $caption->add_meta_box( esc_html__( 'Embed Caption', 'pedestal' ), [ 'pedestal_embed' ], 'normal', 'high' );
 
-        $daily_insta_description = esc_html__( "If you'd like this Instagram Embed to
-        be featured as Instagram of the Day, set the date here. To cancel, just
-        clear the contents of the date field.", 'pedestal' );
-        $daily_insta = new \Fieldmanager_Datepicker( false, [
-            'name'        => 'daily_insta_date',
-            'description' => $daily_insta_description,
-            'js_opts'     => [
-                'firstDay' => 0,
-            ],
-        ] );
-        $daily_insta->add_meta_box( esc_html__( 'Instagram of the Day', 'pedestal' ), [ 'pedestal_embed' ], 'normal', 'high' );
+        if ( PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY ) {
+            $daily_insta_description = esc_html__( "If you'd like this Instagram Embed to
+            be featured as Instagram of the Day, set the date here. To cancel, just
+            clear the contents of the date field.", 'pedestal' );
+            $daily_insta = new \Fieldmanager_Datepicker( false, [
+                'name'        => 'daily_insta_date',
+                'description' => $daily_insta_description,
+                'js_opts'     => [
+                    'firstDay' => 0,
+                ],
+            ] );
+            $daily_insta->add_meta_box( esc_html__( 'Instagram of the Day', 'pedestal' ), [ 'pedestal_embed' ], 'normal', 'high' );
+        }
 
     }
 

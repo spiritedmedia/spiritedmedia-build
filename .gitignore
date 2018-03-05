@@ -33,7 +33,7 @@
 # !config/
 
 # Coding Standards
-# !.eslintrc.yml
+# !.eslintrc.json
 # !.stylelintrc.json
 # !.editorconfig
 # !.browserslistrc

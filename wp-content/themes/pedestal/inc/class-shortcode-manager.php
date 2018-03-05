@@ -99,6 +99,7 @@ class Shortcode_Manager {
      */
     private function setup_shortcake_bakery_filters() {
         add_filter( 'shortcake_bakery_shortcode_callback', [ $this, 'filter_shortcake_bakery_shortcode_callback' ], 10, 4 );
+        add_filter( 'shortcake_bakery_shortcode_callback', [ $this, 'filter_shortcake_bakery_shortcode_callback_instagram_script' ], 10, 2 );
         add_filter( 'shortcake_bakery_shortcode_classes', [ $this, 'filter_shortcake_bakery_shortcode_classes' ], 10, 1 );
         add_filter( 'shortcake_bakery_shortcode_ui_args', [ $this, 'filter_shortcake_bakery_shortcode_ui_args' ], 10, 1 );
         add_filter( 'shortcake_bakery_whitelisted_script_domains', function( $domains ) {
@@ -391,6 +392,26 @@ class Shortcode_Manager {
 
         $figure = new \Pedestal\Objects\Figure( $embed_type, $output, $figure_atts );
         return $figure->get_html();
+    }
+
+    /**
+     * Enqueue the Instagram embed.js only one time on the page no matter how many
+     * Instagram embeds are on the page.
+     *
+     * @param  string $output        The output to modify
+     * @param  string $shortcode_tag The shortcode tag being called
+     * @return string                Modified output
+     */
+    public function filter_shortcake_bakery_shortcode_callback_instagram_script( $output, $shortcode_tag ) {
+        if ( 'instagram' != $shortcode_tag ) {
+            return $output;
+        }
+        $output = str_replace( '<script async defer src="https://www.instagram.com/embed.js"></script>', '', $output );
+        $deps = [];
+        $ver = null;
+        $in_footer = true;
+        wp_enqueue_script( 'instagram-embed', 'https://www.instagram.com/embed.js', $deps, $ver, $in_footer );
+        return $output;
     }
 
     /**

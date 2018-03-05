@@ -162,7 +162,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_SLACK_BOT_EMOJI'              => '',
 
                 // Site Features
-                'PEDESTAL_STREAM_ITEM_DEK_VISIBLE' => true,
+                'PEDESTAL_STREAM_ITEM_DEK_VISIBLE'      => true,
+                'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY'  => true,
 
                 // Membership
                 'PEDESTAL_NRH_PROPERTY' => '',
@@ -591,7 +592,10 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             register_widget( '\Pedestal\Widgets\In_This_Story_Widget' );
             register_widget( '\Pedestal\Widgets\Recent_Content_Widget' );
             register_widget( '\Pedestal\Widgets\Recent_Video_Widget' );
-            register_widget( '\Pedestal\Widgets\Daily_Insta_Widget' );
+
+            if ( PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY ) {
+                register_widget( '\Pedestal\Widgets\Daily_Insta_Widget' );
+            }
 
             // Our DFP widgets
             register_widget( '\Pedestal\Widgets\DFP\Rail_Right_Widget' );
