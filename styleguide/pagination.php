@@ -10,93 +10,37 @@ $fake_query->max_num_pages = 999;
 $stream = new Stream( $fake_query );
 
 $the_paginations = [];
-$the_paginations[] = $stream->get_pagination(
-    [
-        'show_text' => true,
-        'show_nav' => true,
-    ],
-    [
-        'current_page' => 1,
-    ]
-);
-
-$the_paginations[] = $stream->get_pagination(
-    [
-        'show_text' => true,
-        'show_nav' => true,
-    ],
-    [
-        'current_page' => 5,
-    ]
-);
-
-$the_paginations[] = $stream->get_pagination(
-    [
-        'show_text' => true,
-        'show_nav' => true,
-    ],
-    [
-        'current_page' => 100,
-    ]
-);
-
-$the_paginations[] = $stream->get_pagination(
-    [
-        'show_text' => true,
-        'show_nav' => true,
-    ],
-    [
-        'current_page' => 995,
-    ]
-);
-
-$the_paginations[] = $stream->get_pagination(
-    [
-        'show_text' => true,
-        'show_nav' => true,
-    ],
-    [
-        'current_page' => 998,
-    ]
-);
-
-$the_paginations[] = $stream->get_pagination(
-    [
-        'show_text' => true,
-        'show_nav' => true,
-    ],
-    [
-        'current_page' => 999,
-    ]
-);
 
 // No navigation, just the text version
-$the_paginations[] = $stream->get_pagination(
-    [
-        'show_text' => true,
-        'show_nav' => false,
+$the_paginations[] = [
+    'content' => $stream->get_pagination(
+        [
+            'show_text' => true,
+            'show_nav' => false,
+        ],
+        [
+            'current_page' => 1,
+        ]
+    ),
+    'usage' => [
+        'Author profile streams',
+        'Single cluster streams',
     ],
-    [
-        'current_page' => 1,
-    ]
-);
-
-// No text, just the navigation
-$the_paginations[] = $stream->get_pagination(
-    [
-        'show_text' => false,
-        'show_nav' => true,
-    ],
-    [
-        'current_page' => 1,
-    ]
-);
+];
 
 // Load More Stories button
-$the_paginations[] = $stream->get_load_more_button();
-$the_paginations[] = $stream->get_load_more_button([
-    'text' => 'Load more other stuff',
-]);
+$the_paginations[] = [
+    'content' => $stream->get_load_more_button(),
+    'usage' => [
+        'Every stream',
+    ],
+];
+$the_paginations[] = [
+    'content' => $stream->get_load_more_button( [
+        'text' => 'Load more other stuff',
+    ] ),
+    'description' => 'This button-style pagination can have customizable text.',
+];
 
-$context['pagination'] = implode( '<p>&nbsp;</p>', $the_paginations);
+$context['the_paginations'] = $the_paginations;
 Timber::render( 'views/pagination.twig', $context );

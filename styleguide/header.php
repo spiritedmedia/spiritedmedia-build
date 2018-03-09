@@ -145,6 +145,11 @@
       "headline": "Billy Penn"
     }
   </script>
+
+    <link rel="stylesheet" href="/styleguide/src/highlightjs/styles/github.css">
+    <script src="/styleguide/src/highlightjs/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
   <style>
       h4, h5 {
           margin-top: 3rem;

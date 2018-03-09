@@ -4,15 +4,15 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitfac9cf797058a9967370e611266ac435
+class ComposerStaticInit15e2bb612033da18c660716cfa8e178c
 {
     public static $files = array (
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'b067bc7112e384b61c701452d53a14a8' => __DIR__ . '/..' . '/mtdowling/jmespath.php/src/JmesPath.php',
         '8a9dc1de0ca7e01f3e08231539562f61' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/functions.php',
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
     );
 
@@ -176,6 +176,13 @@ class ComposerStaticInitfac9cf797058a9967370e611266ac435
                 0 => __DIR__ . '/..' . '/upstatement/routes',
             ),
         ),
+        'P' => 
+        array (
+            'Parsedown' => 
+            array (
+                0 => __DIR__ . '/..' . '/erusev/parsedown',
+            ),
+        ),
         'G' => 
         array (
             'Google_Service_' => 
@@ -187,10 +194,25 @@ class ComposerStaticInitfac9cf797058a9967370e611266ac435
                 0 => __DIR__ . '/..' . '/google/apiclient/src',
             ),
         ),
+        'A' => 
+        array (
+            'Aptoma' => 
+            array (
+                0 => __DIR__ . '/..' . '/aptoma/twig-markdown/src',
+            ),
+        ),
     );
 
     public static $classMap = array (
         'AltoRouter' => __DIR__ . '/..' . '/altorouter/altorouter/AltoRouter.php',
+        'Aptoma\\Twig\\Extension\\MarkdownEngineInterface' => __DIR__ . '/..' . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownEngineInterface.php',
+        'Aptoma\\Twig\\Extension\\MarkdownEngine\\GitHubMarkdownEngine' => __DIR__ . '/..' . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownEngine/GitHubMarkdownEngine.php',
+        'Aptoma\\Twig\\Extension\\MarkdownEngine\\MichelfMarkdownEngine' => __DIR__ . '/..' . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownEngine/MichelfMarkdownEngine.php',
+        'Aptoma\\Twig\\Extension\\MarkdownEngine\\PHPLeagueCommonMarkEngine' => __DIR__ . '/..' . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownEngine/PHPLeagueCommonMarkEngine.php',
+        'Aptoma\\Twig\\Extension\\MarkdownEngine\\ParsedownEngine' => __DIR__ . '/..' . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownEngine/ParsedownEngine.php',
+        'Aptoma\\Twig\\Extension\\MarkdownExtension' => __DIR__ . '/..' . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownExtension.php',
+        'Aptoma\\Twig\\Node\\MarkdownNode' => __DIR__ . '/..' . '/aptoma/twig-markdown/src/Aptoma/Twig/Node/MarkdownNode.php',
+        'Aptoma\\Twig\\TokenParser\\MarkdownTokenParser' => __DIR__ . '/..' . '/aptoma/twig-markdown/src/Aptoma/Twig/TokenParser/MarkdownTokenParser.php',
         'Asm89\\Twig\\CacheExtension\\CacheProviderInterface' => __DIR__ . '/..' . '/asm89/twig-cache-extension/lib/Asm89/Twig/CacheExtension/CacheProviderInterface.php',
         'Asm89\\Twig\\CacheExtension\\CacheProvider\\DoctrineCacheAdapter' => __DIR__ . '/..' . '/asm89/twig-cache-extension/lib/Asm89/Twig/CacheExtension/CacheProvider/DoctrineCacheAdapter.php',
         'Asm89\\Twig\\CacheExtension\\CacheProvider\\PsrCacheAdapter' => __DIR__ . '/..' . '/asm89/twig-cache-extension/lib/Asm89/Twig/CacheExtension/CacheProvider/PsrCacheAdapter.php',
@@ -7629,6 +7651,7 @@ class ComposerStaticInitfac9cf797058a9967370e611266ac435
         'Monolog\\Processor\\UidProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/UidProcessor.php',
         'Monolog\\Processor\\WebProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/WebProcessor.php',
         'Monolog\\Registry' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Registry.php',
+        'Parsedown' => __DIR__ . '/..' . '/erusev/parsedown/Parsedown.php',
         'Pedestal\\Admin\\Admin' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-admin.php',
         'Pedestal\\Admin\\Bulk_Action' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-bulk-actions.php',
         'Pedestal\\Admin\\Cluster_Tools' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-cluster-tools.php',
@@ -8226,11 +8249,11 @@ class ComposerStaticInitfac9cf797058a9967370e611266ac435
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitfac9cf797058a9967370e611266ac435::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitfac9cf797058a9967370e611266ac435::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitfac9cf797058a9967370e611266ac435::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitfac9cf797058a9967370e611266ac435::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitfac9cf797058a9967370e611266ac435::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit15e2bb612033da18c660716cfa8e178c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit15e2bb612033da18c660716cfa8e178c::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit15e2bb612033da18c660716cfa8e178c::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit15e2bb612033da18c660716cfa8e178c::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit15e2bb612033da18c660716cfa8e178c::$classMap;
 
         }, null, ClassLoader::class);
     }

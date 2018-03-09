@@ -1,57 +1,187 @@
 {% extends 'layouts/layout--content-sidebar.twig' %}
 
 {% block content %}
-    <h1>Buttons</h1>
+{% markdown %}
 
-    <p>
-      <a class="btn" href="#">Button</a>
-      <button class="btn">Button</button>
-    </p>
+# Buttons
 
-    <h5>Size Examples</h5>
+## Basic Examples
 
-    <!-- Small Button Example -->
-    <p>
-      <a class="btn btn--sm" href="#">Small Button</a>
-      <button class="btn btn--sm">Small Button</button>
-    </p>
-
-    <!-- Large Button Example -->
-    <p>
-      <a class="btn btn--lg" href="#">Large Button</a>
-      <button class="btn btn--lg">Large Button</button>
-    </p>
-
-    <!-- Full Width Button Example -->
-    <p>
-      <a class="btn btn--full-width" href="#">Full Width Button</a>
-    </p>
-
-    <p>
-      <button class="btn btn--full-width">Full Width Button</button>
-    </p>
+{% set basic_examples %}
+<p>
+    <a class="btn" href="#">Link Element as Button</a>
+    <button class="btn">Button element as button</button>
+</p>
+{% endset %}
 
 
-    <h5>Color Examples</h5>
-    <p>
-      <a class="btn btn--primary" href="#">Primary Color</a>
-      <button class="btn btn--primary">Primary Color</button>
-    </p>
+{{ basic_examples }}
 
-    <p>
-      <a class="btn btn--secondary" href="#">Secondary Color</a>
-      <button class="btn btn--secondary">Secondary Color</button>
-    </p>
+```html
+{{ basic_examples }}
+```
 
-    <p>
-      <a class="btn btn--alert" href="#">Alert Color</a>
-      <button class="btn btn--alert">Alert Color</button>
-    </p>
+### Live Usage (as of 2018-02-22)
 
-    <p>
-      <a class="btn btn--achtung" href="#">Achtung! Color</a>
-      <button class="btn btn--achtung">Achtung! Color</button>
-    </p>
+- Member bar
+- Search form submit icon
+- CTA button shortcode `[pedestal-cta-button]`
+- Donate form
+- Cluster Follow Update signup form
+- Newsletter signup forms
+
+
+
+
+
+## Size Examples
+
+{% set size_examples %}
+<!-- Small Button Example -->
+<p>
+    <a class="btn btn--sm" href="#">Small Button</a>
+    <button class="btn btn--sm">Small Button</button>
+</p>
+
+<!-- Large Button Example -->
+<p>
+    <a class="btn btn--lg" href="#">Large Button</a>
+    <button class="btn btn--lg">Large Button</button>
+</p>
+
+<!-- Full Width Button Example -->
+<p>
+    <a class="btn btn--full-width" href="#">Full Width Button</a>
+    <button class="btn btn--full-width">Full Width Button</button>
+</p>
+
+<!-- Full Width + Small -->
+<p>
+    <a class="btn btn--sm btn--full-width" href="#">Full Width Small Button</a>
+    <button class="btn btn--sm btn--full-width">Full Width Small Button</button>
+</p>
+
+<!-- Full Width + Large -->
+<p>
+    <a class="btn btn--lg btn--full-width" href="#">Full Width Large Button</a>
+    <button class="btn btn--lg btn--full-width">Full Width Large Button</button>
+</p>
+
+{% endset %}
+
+{{ size_examples }}
+
+```html
+{{ size_examples }}
+```
+
+
+### Live Usage (as of 2018-02-22)
+
+- 🚫 Small
+- ✅ Large
+    - Cluster Follow Update signup form
+    - Newsletter signup forms
+- ✅ Full Width (+ Large)
+    - Cluster Follow Update signup form
+    - Newsletter signup forms
+- 🚫 Full Width + Small
+
+
+
+
+
+## Color Examples
+
+{% set color_examples %}
+<p>
+    <a class="btn btn--primary" href="#">Primary Color</a>
+    <button class="btn btn--primary">Primary Color</button>
+</p>
+
+<p>
+    <a class="btn btn--secondary" href="#">Secondary Color</a>
+    <button class="btn btn--secondary">Secondary Color</button>
+</p>
+
+<p>
+    <a class="btn btn--alert" href="#">Alert Color</a>
+    <button class="btn btn--alert">Alert Color</button>
+</p>
+
+<p>
+    <a class="btn btn--achtung" href="#">Achtung! Color</a>
+    <button class="btn btn--achtung">Achtung! Color</button>
+</p>
+{% endset %}
+
+{{ color_examples }}
+
+```html
+{{ color_examples }}
+```
+
+
+### Live Usage (as of 2018-02-22)
+
+- 🚫 Primary Color
+- 🚫 Secondary Color
+- 🚫 Alert Color
+- ✅ Achtung Color
+    - Cluster Follow Update signup form
+    - Newsletter signup forms
+
+
+
+
+
+## Misc. Examples
+
+{% set misc_examples %}
+<!-- No Border -->
+<p>
+    <a class="btn btn--no-border" href="#">No Border</a>
+    <button class="btn btn--no-border">No Border</button>
+</p>
+
+<!-- CTA Button -->
+<p>
+    <a class="btn btn--cta" href="#">CTA Button</a>
+    <button class="btn btn--cta">CTA Button</button>
+</p>
+
+<!-- Pill-shaped Button -->
+<p>
+    <a class="btn btn--pill" href="#">Pill-shaped Button</a>
+    <button class="btn btn--pill">Pill-shaped Button</button>
+</p>
+
+{% endset %}
+
+{{ misc_examples }}
+
+```html
+{{ misc_examples }}
+```
+
+
+### Live Usage (as of 2018-02-22)
+
+- ✅ No Border
+    - Donate form
+    - Member bar
+    - Search icon
+- ✅ CTA Button
+    - Donate form
+    - **Shortcode**: `[pedestal-cta-button]`
+        - Known usage on About and Membership pages
+- ✅ Pill Button
+    - Donate form
+    - Member bar
+    - **Shortcode**: `[pedestal-cta-button]`
+
+
+{% endmarkdown %}
 {% endblock %}
 
 {% block sidebar %}

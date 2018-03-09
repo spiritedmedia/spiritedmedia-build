@@ -12,11 +12,25 @@
 
 
 {% block content %}
-    <h1>Post Headers</h1>
+{% markdown %}
 
-	<hr class="hr">
+# Post Headers
 
-	{{ post_headers_html }}
+We're missing a few examples here.
+
+- Events
+- Clusters
+- Embeds
+- Single author without a profile image
+
+This would probably also be a good place for factcheck statements since they
+appear in the post header area.
+
+---
+
+{% endmarkdown %}
+
+{{ post_headers_html }}
 
 {% endblock %}
 

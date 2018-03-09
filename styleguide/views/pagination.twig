@@ -2,7 +2,29 @@
 
 {% block content %}
 	<h1>Pagination</h1>
-	{{ pagination }}
+
+    {% for pagination in the_paginations %}
+        {{ pagination.content }}
+
+        {% if pagination.description %}
+            <p>{{ pagination.description }}</p>
+        {% endif %}
+
+        {% if pagination.usage is defined %}
+            <h4>Live Usage</h4>
+            {% if pagination.usage %}
+                <ul>
+                    {% for example in pagination.usage %}
+                    <li>{{ example }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+            🚫 **This pagination style isn't used in production!**
+            {% endif %}
+        {% endif %}
+
+        <hr>
+    {% endfor %}
 {% endblock %}
 
 {% block sidebar %}

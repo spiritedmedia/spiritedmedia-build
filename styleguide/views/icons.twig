@@ -1,47 +1,55 @@
 {% extends 'layouts/layout--content-sidebar.twig' %}
 
 {% block head %}
-    {# Custom styles for this page #}
-    <style>
-        .example {
-          margin-bottom: 5em;
-        }
-        .icon-example {
-          display: inline-block;
-          width: 1rem;
-        }
-    </style>
+{# Custom styles for this page #}
+<style>
+    .example {
+        margin-bottom: 5em;
+    }
+    .icon-example {
+        display: inline-block;
+        width: 1rem;
+    }
+</style>
 {% endblock %}
 
 
 {% block content %}
-    <h1>Icons</h1>
+{% markdown %}
 
-    <p>We load SVG icons from a folder in Pedestal using the Twig function
-    <code>ped_icon()</code> or in PHP using <code>Icons::get_icon()</code>. Most of these are currently from <a
-    href="http://fontawesome.io/">Font Awesome</a> but we can use any custom icon.
-    Below is a list of the icons we use throughout the sites:</p>
+# Icons
 
-    {{ icon_list_html }}
+We load SVG icons from a folder in Pedestal using the Twig function `ped_icon()`
+or in PHP using `Icons::get_icon()`. Most of these are currently from [Font
+Awesome](https://fontawesome.io/) but we can use any custom icon. Below is a
+list of the icons we use throughout the sites:
 
-    <hr>
+{{ icon_list_html }}
 
-    <p><code>.o-icon-text</code></p>
-    <div class="example">
-        <div class="o-icon-text">
-            {{ facebook_icon_html }}
-            <span class="o-icon-text__text">Icon Text</span>
-        </div>
-    </div>
+---
 
-    <p><code>.o-icon-text--rev</code></p>
-    <div class="example">
-        <div class="o-icon-text o-icon-text--rev">
-            <span class="o-icon-text__text">Icon Text</span>
-            {{ facebook_icon_html }}
-        </div>
-    </div>
+## Icon + text
 
+{% set icon_text %}
+<p class="o-icon-text">
+    {{ facebook_icon_html }}
+    <span class="o-icon-text__text">Icon Text</span>
+</p>
+
+<!-- Reversed icon text -->
+<p class="o-icon-text o-icon-text--rev">
+    <span class="o-icon-text__text">Icon Text</span>
+    {{ facebook_icon_html }}
+</p>
+{% endset %}
+
+{{ icon_text }}
+
+```html
+{{ icon_text }}
+```
+
+{% endmarkdown %}
 {% endblock %}
 
 {% block sidebar %}

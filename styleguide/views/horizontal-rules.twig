@@ -1,29 +1,81 @@
 {% extends 'layouts/layout--content-sidebar.twig' %}
 
 {% block head %}
-    {# Custom styles for this page #}
-    <style>
-        hr {
-          margin-bottom: 3.5em;
-        }
-    </style>
+{# Custom styles for this page #}
+<style>
+    hr {
+        margin-bottom: 3.5em;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-    <h1>Horizontal Rules</h1>
+{% markdown %}
 
-    <p>Generic, no classes or styling</p>
-    <hr>
+# Horizontal Rules
 
-    <p><code>.hr</code> A noticeably thick horizontal rule before an element</p>
-    <hr class="hr">
+## Generic
 
-    <p><code>.hr--slim</code> A slightly less obtrusive rule</p>
-    <hr class="hr hr--slim">
+A noticeably thick horizontal rule before an element
 
-    <p><code>.hr--closure</code> A rule with a logo centered in the middle</p>
-    <hr class="hr hr--closure">
+{% set generic %}
+<hr>
+<hr class="hr">
+{% endset %}
 
+```html
+{{ generic }}
+```
+
+{{ generic }}
+
+
+### Live Usage (as of 2018-02-23)
+
+- Post content
+- User card
+- Events
+
+
+
+
+## Slim
+
+🚫 **Not currently in use.**
+
+A slightly less obtrusive rule
+
+{% set slim %}
+<hr class="hr--slim">
+{% endset %}
+
+{{ slim }}
+
+```html
+{{ slim }}
+```
+
+
+## Closure
+
+A rule with a logo centered in the middle
+
+{% set closure %}
+<hr class="hr--closure">
+{% endset %}
+
+{{ closure }}
+
+```html
+{{ closure }}
+```
+
+### Live Usage (as of 2018-02-23)
+
+- User card
+- Cluster stream (end)
+
+{% endmarkdown %}
 {% endblock %}
 
 {% block sidebar %}

@@ -1,0 +1,155 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block head %}
+<style>
+    .brand-heading__text {
+        margin-top: 0;
+    }
+</style>
+{% endblock head %}
+
+{% block content %}
+
+<h1>Post Elements</h1>
+
+<div class="s-post-content">
+{% markdown %}
+
+Authors can add these components to any post content field.
+
+
+
+## Pullquotes
+
+```
+{{ pullquote_with_credit_markup }}
+```
+
+{{ pullquote_with_credit }}
+
+Etiam et facilisis mi. Aenean est libero, rutrum eu sem vitae, molestie
+porttitor ipsum. Proin eget metus egestas, fringilla lectus ac, tempor arcu.
+Fusce fringilla dictum dignissim. In hac habitasse platea dictumst. Nunc luctus
+neque quam, ac pharetra risus consequat in. Cras sed dui nulla. Etiam
+scelerisque, neque sit amet consectetur semper, metus ligula convallis eros, non
+laoreet dolor neque sed mi. Phasellus laoreet, nisl vitae scelerisque laoreet,
+eros nulla ullamcorper lorem, eu ornare tellus arcu sit amet leo. Nulla nec
+faucibus nulla. Aliquam lorem sem, euismod eu nisi consequat, accumsan bibendum
+est. Quisque vehicula id urna sed ornare. Donec vulputate, risus id varius
+faucibus, justo augue scelerisque mauris, in efficitur urna nunc eu felis.
+Curabitur neque diam, posuere vitae mauris nec, porttitor elementum nunc. Donec
+vitae consectetur erat, vel efficitur tellus. Nulla id orci viverra, euismod
+orci et, scelerisque metus.
+
+```
+{{ pullquote_without_credit_markup }}
+```
+
+{{ pullquote_without_credit }}
+
+Etiam et facilisis mi. Aenean est libero, rutrum eu sem vitae, molestie
+porttitor ipsum. Proin eget metus egestas, fringilla lectus ac, tempor arcu.
+Fusce fringilla dictum dignissim. In hac habitasse platea dictumst. Nunc luctus
+neque quam, ac pharetra risus consequat in. Cras sed dui nulla. Etiam
+scelerisque, neque sit amet consectetur semper, metus ligula convallis eros, non
+laoreet dolor neque sed mi. Phasellus laoreet, nisl vitae scelerisque laoreet,
+eros nulla ullamcorper lorem, eu ornare tellus arcu sit amet leo. Nulla nec
+faucibus nulla. Aliquam lorem sem, euismod eu nisi consequat, accumsan bibendum
+est. Quisque vehicula id urna sed ornare. Donec vulputate, risus id varius
+faucibus, justo augue scelerisque mauris, in efficitur urna nunc eu felis.
+Curabitur neque diam, posuere vitae mauris nec, porttitor elementum nunc. Donec
+vitae consectetur erat, vel efficitur tellus. Nulla id orci viverra, euismod
+orci et, scelerisque metus.
+
+
+### Live Usage (as of 2018-02-26)
+
+- Billy Penn: ["The North Philly Aztecs will honor their coach’s legacy in the Pop Warner Super Bowl"](https://staging.billypenn.com/2017/11/29/the-north-philly-aztecs-will-honor-their-coachs-legacy-in-the-pop-warner-super-bowl/)
+- The Incline: ["Le’Veon Bell is back in a big way"](https://staging.theincline.com/2017/10/15/leveon-bell-is-back-in-a-big-way/)
+
+
+
+
+## Brand Headings
+
+{% set brand_heading %}
+[pedestal-brand-heading]Heading Content[/pedestal-brand-heading]
+[pedestal-brand-heading el="h3"]Heading Content as h3[/pedestal-brand-heading]
+{% endset %}
+
+{{ function( 'do_shortcode', brand_heading ) }}
+
+```
+{{ brand_heading }}
+```
+
+### Live Usage (as of 2018-02-26)
+
+- Membership perks page
+
+
+
+
+## CTA Button
+
+{% set cta_btn %}
+[pedestal-cta-button url="https://spiritedmedia.com/"]Button text[/pedestal-cta-button]
+{% endset %}
+
+{{ function( 'do_shortcode', cta_btn ) }}
+
+```
+{{ cta_btn }}
+```
+
+### Live Usage (as of 2018-02-26)
+
+- Membership perks page
+- About page
+
+
+
+
+## Checklist
+
+{% set checklist %}
+[pedestal-checklist]
+<ul>
+ 	<li><b>Member Updates </b>— A quarterly review of what we’ve been up to, what’s next, and easy ways to get involved.</li>
+ 	<li><b>Philly Pic</b> — A high-quality Philly skyline photo (with the Billy Penn logo in the corner) that you can use as a desktop background, FB or Twitter header pic, or however you see fit (updated annually).</li>
+</ul>
+[/pedestal-checklist]
+{% endset %}
+
+{{ function( 'do_shortcode', checklist ) }}
+
+```
+{{ checklist }}
+```
+
+### Live Usage (as of 2018-02-26)
+
+- Membership perks page
+
+
+
+
+## Other Post Elements
+
+Currently, the following post elements are not covered in the styleguide:
+
+- Events
+- Post footnotes
+- Soundcite embeds
+- TablePress
+- Third-party embeds
+- Image comparison
+
+
+{% endmarkdown %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

@@ -15,7 +15,7 @@ $links_to_check = [
     ],
     [
         'name' => 'Billy Penn Story',
-        'url' => 'https://billypenn.com/stories/muslim-travel-ban/',
+        'url' => 'https://billypenn.com/stories/septa-key/',
         'expected' => 12,
     ],
     [
@@ -52,16 +52,25 @@ $links_to_check = [
     color: red;
 }
 </style>
-<p>Count the number of DFP ad positions and compare it to the expected number of ad positions. Check to make sure the ad script (dfp-load.js) is loaded.</p>
-<?php
 
+<p>This series of tests counts the number of DFP ad positions for each test and compares it to the expected number
+of ad positions.</p>
+
+<p>We also check that the ad script (dfp-load.js) is loaded.</p>
+
+<p>There should be <strong><?php echo count( $links_to_check ); ?> total checks</strong> below. If there are not, then report to the product team.</p>
+
+<ol>
+<?php
 foreach ( $links_to_check as $link ) {
     $html = HtmlDomParser::file_get_html( $link['url'] );
     $script_found = count( $html->find( 'script[src*=dfp-load.js]' ) );
     $found_ads = count( $html->find( '.js-dfp' ) );
     if ( $found_ads === $link['expected'] && 1 === $script_found ) {
-        echo '<p class="pass">PASS: <a href="' . $link['url'] . '" target="_blank">' . $link['name'] . '</a></p>';
+        echo '<li class="pass">PASS: <a href="' . $link['url'] . '" target="_blank">' . $link['name'] . '</a></li>';
     } else {
-        echo '<p class="fail">FAIL: <a href="' . $link['url'] . '" target="_blank">' . $link['name'] . '</a> Found ' . $found_ads . ' ads out of ' . $link['expected'] . ' expected! dfp-load.js found: ' . $script_found . '</p>';
+        echo '<li class="fail">FAIL: <a href="' . $link['url'] . '" target="_blank">' . $link['name'] . '</a> Found ' . $found_ads . ' ads out of ' . $link['expected'] . ' expected! dfp-load.js found: ' . $script_found . '</li>';
     }
 }
+?>
+</ol>

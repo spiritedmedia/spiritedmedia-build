@@ -9,6 +9,8 @@ return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Sunra\\PhpSimple\\HtmlDomParser' => array($vendorDir . '/sunra/php-simple-html-dom-parser/Src'),
     'Routes' => array($vendorDir . '/upstatement/routes'),
+    'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Google_Service_' => array($vendorDir . '/google/apiclient-services/src'),
     'Google_' => array($vendorDir . '/google/apiclient/src'),
+    'Aptoma' => array($vendorDir . '/aptoma/twig-markdown/src'),
 );

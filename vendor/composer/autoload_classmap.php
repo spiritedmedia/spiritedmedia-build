@@ -7,6 +7,14 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AltoRouter' => $vendorDir . '/altorouter/altorouter/AltoRouter.php',
+    'Aptoma\\Twig\\Extension\\MarkdownEngineInterface' => $vendorDir . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownEngineInterface.php',
+    'Aptoma\\Twig\\Extension\\MarkdownEngine\\GitHubMarkdownEngine' => $vendorDir . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownEngine/GitHubMarkdownEngine.php',
+    'Aptoma\\Twig\\Extension\\MarkdownEngine\\MichelfMarkdownEngine' => $vendorDir . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownEngine/MichelfMarkdownEngine.php',
+    'Aptoma\\Twig\\Extension\\MarkdownEngine\\PHPLeagueCommonMarkEngine' => $vendorDir . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownEngine/PHPLeagueCommonMarkEngine.php',
+    'Aptoma\\Twig\\Extension\\MarkdownEngine\\ParsedownEngine' => $vendorDir . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownEngine/ParsedownEngine.php',
+    'Aptoma\\Twig\\Extension\\MarkdownExtension' => $vendorDir . '/aptoma/twig-markdown/src/Aptoma/Twig/Extension/MarkdownExtension.php',
+    'Aptoma\\Twig\\Node\\MarkdownNode' => $vendorDir . '/aptoma/twig-markdown/src/Aptoma/Twig/Node/MarkdownNode.php',
+    'Aptoma\\Twig\\TokenParser\\MarkdownTokenParser' => $vendorDir . '/aptoma/twig-markdown/src/Aptoma/Twig/TokenParser/MarkdownTokenParser.php',
     'Asm89\\Twig\\CacheExtension\\CacheProviderInterface' => $vendorDir . '/asm89/twig-cache-extension/lib/Asm89/Twig/CacheExtension/CacheProviderInterface.php',
     'Asm89\\Twig\\CacheExtension\\CacheProvider\\DoctrineCacheAdapter' => $vendorDir . '/asm89/twig-cache-extension/lib/Asm89/Twig/CacheExtension/CacheProvider/DoctrineCacheAdapter.php',
     'Asm89\\Twig\\CacheExtension\\CacheProvider\\PsrCacheAdapter' => $vendorDir . '/asm89/twig-cache-extension/lib/Asm89/Twig/CacheExtension/CacheProvider/PsrCacheAdapter.php',
@@ -7445,6 +7453,7 @@ return array(
     'Monolog\\Processor\\UidProcessor' => $vendorDir . '/monolog/monolog/src/Monolog/Processor/UidProcessor.php',
     'Monolog\\Processor\\WebProcessor' => $vendorDir . '/monolog/monolog/src/Monolog/Processor/WebProcessor.php',
     'Monolog\\Registry' => $vendorDir . '/monolog/monolog/src/Monolog/Registry.php',
+    'Parsedown' => $vendorDir . '/erusev/parsedown/Parsedown.php',
     'Pedestal\\Admin\\Admin' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-admin.php',
     'Pedestal\\Admin\\Bulk_Action' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-bulk-actions.php',
     'Pedestal\\Admin\\Cluster_Tools' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-cluster-tools.php',

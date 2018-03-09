@@ -26,8 +26,11 @@ Visit the [ad checker](https://billypenn.com/qa/ad-checker.php).  This tool will
 |---|
 
 ## Do our newsletter signups work?
+
+**Currently these tests are broken.** You'll need to signup for the newsletter manually for now.
+
 ### Setup
-Get a temporary email address by visiting [10 Minute Mail](https://10minutemail.com/). Copy the address, and keep this tab open.
+Get a temporary email address by visiting [Nada Mail](https://getnada.com/). Copy the address, and keep this tab open.
 
 ### First, a visual check.
 Visit this [story about weird yoga](https://theincline.com/2017/10/09/i-tried-all-of-pittsburghs-weird-yoga-classes-and-it-changed-my-life/). You should see a newsletter subscription prompt, like this:
@@ -40,7 +43,7 @@ Enter your temporary email address and click “Sign up”. You should see a con
 |<img src="img/newsletters-visual-check-2.png" alt="" width="1088">|
 |---|
 
-Go back to your 10 Minute Mail tab and wait. You should see a confirmation email shortly, like this:
+Go back to your Nada Mail tab and wait. You should see a confirmation email shortly, like this:
 
 |<img src="img/newsletters-visual-check-3.png" alt="" width="1030">|
 |---|
@@ -56,7 +59,7 @@ Visit the [email signup checker](https://billypenn.com/qa/email-signup-checker.p
 |<img src="img/newsletters-automated-check-1.png" alt="" width="475">|
 |---|
 
-Go back to your 10 Minute Mail tab and wait a couple minutes. You should see six more subscription confirmations, like this:
+Go back to your Nada Mail tab and wait a couple minutes. You should see six more subscription confirmations, like this:
 
 |<img src="img/newsletters-automated-check-2.png" alt="" width="1022">|
 |---|

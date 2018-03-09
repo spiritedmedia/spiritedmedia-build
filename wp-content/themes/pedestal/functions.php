@@ -2,6 +2,10 @@
 
 namespace Pedestal;
 
+use Aptoma\Twig\Extension\MarkdownEngine;
+use Aptoma\Twig\Extension\MarkdownExtension;
+use Aptoma\Twig\TokenParser\MarkdownTokenParser;
+
 use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Registrations\Taxonomies\Taxonomies;
@@ -401,6 +405,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             // Add some Twig functions and filters
             add_filter( 'timber/twig', [ $this, 'filter_timber_twig_add_basic_filters' ] );
+            add_filter( 'timber/twig', [ $this, 'filter_timber_twig_add_markdown_support' ] );
             add_filter( 'timber/twig', [ $this, 'filter_timber_twig_add_functions' ], 99 );
 
             // Since we don't have comments, skip running the query to count all of the comments on every load
@@ -474,6 +479,16 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 return ob_get_clean();
             } ) );
 
+            return $twig;
+        }
+
+        /**
+         * Add Markdown support to Twig templates
+         */
+        public function filter_timber_twig_add_markdown_support( $twig ) {
+            $engine = new MarkdownEngine\ParsedownEngine();
+            $twig->addExtension( new MarkdownExtension( $engine ) );
+            $twig->addTokenParser( new MarkdownTokenParser( $engine ) );
             return $twig;
         }
 
