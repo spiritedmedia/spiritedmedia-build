@@ -3,6 +3,7 @@
 namespace Pedestal\Objects;
 
 use function Pedestal\Pedestal;
+use Pedestal\Icons;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\User_Management;
 use Pedestal\Posts\{
@@ -131,23 +132,16 @@ class User extends Author {
      * Get the avatar for the Author
      *
      * @param array|int $size
+     * @param array     $img_atts Optional image HTML attributes
      * @return string|HTML|bool
      */
-    public function get_avatar( $size ) {
-        $img = $this->get_image_html( $size );
+    public function get_avatar( $size, $img_atts = [] ) {
+        $img = $this->get_image_html( $size, $img_atts );
         $role = $this->get_public_role();
         $role_class = 'c-avatar--' . $role['name'];
         $output = '<div class="c-avatar  ' . $role_class . '">';
-
-        if ( $img ) {
-            $output .= '<div class="c-avatar__img">';
-            $output .= $img;
-        } else {
-             // Do nothing else because the fallback image is handled with CSS
-             // SVG/PNG background images
-             $output .= '<div class="c-avatar__img  c-avatar__img--fallback">';
-        }
-
+        $output .= '<div class="c-avatar__img">';
+        $output .= $img ?: Icons::get_logo( 'logo-icon', '', '28' );
         $output .= '</div>';
         $output .= '</div>';
         return $output;
@@ -191,23 +185,21 @@ class User extends Author {
     /**
      * Get the user image
      *
+     * @param string $size
+     * @param array $img_atts Optional image attributes
      * @return html
      */
-    public function get_image_html( $size = 'full' ) {
+    public function get_image_html( $size = 'full', $img_atts = [] ) {
         global $wpdb;
         $meta_name = $wpdb->prefix . 'user_img';
-        $id = $this->get_meta( $meta_name );
-        if ( ! $id ) {
-            $meta_name = 'user_img';
-            $id = $this->get_meta( $meta_name );
-        }
-        // FM Media fields are saved as strings, so type must be converted
-        $id = absint( $id );
+        $id = $this->get_meta( $meta_name ) ?: $this->get_meta( 'user_img' );
         $attachment = Attachment::get( $id );
-        if ( $attachment instanceof Attachment ) {
-            return $attachment->get_html( $size );
+        if ( ! $attachment instanceof Attachment ) {
+            return false;
         }
-        return false;
+        $img_atts = wp_parse_args( $img_atts, [] );
+
+        return $attachment->get_html( $size, $img_atts );
     }
 
     /**

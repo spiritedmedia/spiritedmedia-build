@@ -102,6 +102,12 @@ class Frontend {
         add_filter( 'robots_txt', [ $this, 'filter_robots_txt' ] );
     }
 
+
+    //
+    // Actions
+    // =========================================================================
+
+
     /**
      * Modify the main query
      */
@@ -220,23 +226,26 @@ class Frontend {
 
     }
 
-    /**
-     * Get meta description for current page
-     *
-     * @return string
-     */
-    public function get_current_meta_description() {
-
-        $meta_description = get_bloginfo( 'description' );
-        if ( is_single() ) {
-            $post = Post::get( get_queried_object_id() );
-            if ( Types::is_post( $post ) && $post->get_seo_description() ) {
-                $meta_description = $post->get_seo_description();
-            }
-        } elseif ( ( is_tax() || is_author() ) && get_queried_object()->description ) {
-            $meta_description = get_queried_object()->description;
+    public function action_add_comscore_tracking_pixel() {
+        if ( ! defined( 'PEDESTAL_COMSCORE_ID' ) || ! PEDESTAL_COMSCORE_ID ) {
+            return;
         }
-        return $meta_description;
+        Timber::render( 'partials/analytics/comscore.twig', [
+            'comscore_id' => PEDESTAL_COMSCORE_ID,
+        ] );
+    }
+
+
+    //
+    // Filters
+    // =========================================================================
+
+
+    public function filter_robots_txt( $txt ) {
+        ob_start();
+        Timber::render( 'partials/robots-txt.twig', [] );
+        $txt .= ob_get_clean();
+        return $txt;
     }
 
     /**
@@ -447,6 +456,31 @@ class Frontend {
         return $footnotes;
     }
 
+
+    //
+    // General Methods
+    // =========================================================================
+
+
+    /**
+     * Get meta description for current page
+     *
+     * @return string
+     */
+    public function get_current_meta_description() {
+
+        $meta_description = get_bloginfo( 'description' );
+        if ( is_single() ) {
+            $post = Post::get( get_queried_object_id() );
+            if ( Types::is_post( $post ) && $post->get_seo_description() ) {
+                $meta_description = $post->get_seo_description();
+            }
+        } elseif ( ( is_tax() || is_author() ) && get_queried_object()->description ) {
+            $meta_description = get_queried_object()->description;
+        }
+        return $meta_description;
+    }
+
     /**
      * Get the Facebook Open Graph meta tags for this page
      */
@@ -483,13 +517,6 @@ class Frontend {
 
         return $tags;
 
-    }
-
-    public function filter_robots_txt( $txt ) {
-        ob_start();
-        Timber::render( 'partials/robots-txt.twig', [] );
-        $txt .= ob_get_clean();
-        return $txt;
     }
 
     /**
@@ -569,14 +596,5 @@ class Frontend {
         }
 
         return $title;
-    }
-
-    public function action_add_comscore_tracking_pixel() {
-        if ( ! defined( 'PEDESTAL_COMSCORE_ID' ) || ! PEDESTAL_COMSCORE_ID ) {
-            return;
-        }
-        Timber::render( 'partials/analytics/comscore.twig', [
-            'comscore_id' => PEDESTAL_COMSCORE_ID,
-        ] );
     }
 }

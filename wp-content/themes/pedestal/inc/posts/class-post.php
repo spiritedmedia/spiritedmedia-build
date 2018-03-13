@@ -7,7 +7,10 @@ use Timber\Timber;
 
 use function Pedestal\Pedestal;
 use Pedestal\Icons;
-use Pedestal\Utils\Utils;
+use Pedestal\Utils\{
+    Image_Ratio,
+    Utils
+};
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Objects\{
     Figure,
@@ -547,9 +550,10 @@ abstract class Post {
      * If there is more than one author or if the author has no avatar defined
      * then this will default to the site logo icon.
      *
-     * @return string|html
+     * @param int $size [28] Image size
+     * @return string Image HTML
      */
-    public function get_meta_info_img( $size = 'thumbnail' ) {
+    public function get_meta_info_img( $size = 28 ) {
         $authors = $this->get_authors();
 
         $link_classes = '';
@@ -561,7 +565,13 @@ abstract class Post {
             if ( Pedestal()->is_email() ) {
                 $content = $this->get_single_author()->get_image_html( $size );
             } else {
-                $content = $this->get_single_author()->get_avatar( $size );
+                $content = $this->get_single_author()->get_avatar( $size, [
+                    'sizes' => '28px',
+                    'srcset' => [
+                        'ratio'  => 1,
+                        'widths' => 28,
+                    ],
+                ] );
             }
             return sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Image|%s" class="%s">%s</a>',
                 esc_url( $this->get_single_author()->get_permalink() ),
@@ -942,13 +952,12 @@ abstract class Post {
      * Get the featured image url for the given featured image id
      *
      * @param string $size
-     * @param array $args
      * @return string|false
      */
-    public function get_featured_image_url( $size = 'full', $args = [] ) {
+    public function get_featured_image_url( $size = 'full' ) {
         $attachment = $this->get_featured_image();
         if ( $attachment ) {
-            return $attachment->get_url( $size, $args );
+            return $attachment->get_url( $size );
         } else {
             return '';
         }
@@ -965,6 +974,8 @@ abstract class Post {
         $defaults = [
             'url'                    => $this->get_permalink(),
             'omit_presentation_mode' => true,
+            'img_sizes'              => [],
+            'img_srcset'             => [],
         ];
 
         $attachment = $this->get_featured_image();
@@ -978,12 +989,16 @@ abstract class Post {
             ];
         }
 
-        $size = $size ?: '1024-16x9';
-        if ( is_feed( 'fias' ) ) {
-            $size = 'max-4-3';
-        }
-        $content = $this->get_featured_image_html( $size );
         $args = wp_parse_args( $args, $defaults );
+
+        $size = $size ?: '1024-16x9';
+        $size = is_feed( 'fias' ) ? 'max-4-3' : $size;
+
+        $img_atts = [
+            'sizes'  => $args['img_sizes'] ?? '',
+            'srcset' => $args['img_srcset'] ?? '',
+        ];
+        $content = $this->get_featured_image_html( $size, $img_atts );
         return Attachment::get_img_caption_html( $content, $args );
     }
 
@@ -1732,9 +1747,10 @@ abstract class Post {
     /**
      * Get default Twig context values
      *
+     * @param array Existing context to filter
      * @return array
      */
-    public function get_context() {
+    public function get_context( $context ) {
         $context = [
             // Note: __context needs two underscores so as not to conflict with twig context variable
             // See standard-item.twig for descriptions of these values
@@ -1743,10 +1759,6 @@ abstract class Post {
             'post'              => $this->post,
             'type'              => $this->get_type(),
             'type_name'         => $this->get_type_name(),
-            'featured_image'    => $this->get_featured_image_figure_html( '1024-16x9', [
-                'classes' => 'c-main__lead-img ',
-                'linkto'  => false,
-            ] ),
             'overline'          => '',
             'overline_url'      => '',
             'title'             => $this->get_the_title(),
@@ -1766,7 +1778,17 @@ abstract class Post {
             'content_classes'   => [],
             'content'           => $this->get_the_content(),
             'footnotes'         => '',
-        ] + Timber::get_context();
+        ] + $context;
+
+        $ratio = new Image_Ratio;
+        $featured_image_size = $ratio->calc_unknown_dimension( 994 ) ?: '1024-16x9';
+        $context['featured_image'] = $this->get_featured_image_figure_html( $featured_image_size, [
+            'classes'    => 'c-main__lead-img ',
+            'linkto'     => false,
+            'img_sizes'  => $context['featured_image_sizes'] ?? '',
+            'img_srcset' => $context['featured_image_srcset'] ?? '',
+        ] );
+
         if ( post_type_supports( static::$post_type, 'author' ) ) {
             $context['author_names'] = $this->get_the_authors();
             $context['author_image'] = $this->get_author_avatar();

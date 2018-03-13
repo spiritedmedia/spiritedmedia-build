@@ -669,7 +669,7 @@ class Shortcode_Manager {
             return '';
         }
 
-        $context = array_merge( Timber::get_context(), $ped_event->get_context() );
+        $context = $ped_event->get_context( Timber::get_context() );
         $context['slot'] = 'shortcode';
 
         $html = '<div class="pedestal-shortcode--event pedestal-shortcode">';

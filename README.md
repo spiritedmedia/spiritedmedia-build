@@ -1,7 +1,9 @@
-Build [#4452](https://circleci.com/gh/spiritedmedia/spiritedmedia/4452) by kingkool68 at 2018-03-09 05:45 PM UTC
+Build [#4473](https://circleci.com/gh/spiritedmedia/spiritedmedia/4473) by montchr at 2018-03-13 06:07 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.12](https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.12)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.10.0](https://github.com/spiritedmedia/spiritedmedia/compare/v6.10.0)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.11...v6.9.12)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.9.12...v6.10.0)
 
- - [#2521](https://github.com/spiritedmedia/spiritedmedia/pull/2521): Remove the One Time Command To Restore Dead Billy Pen Stories
+ - [#2472](https://github.com/spiritedmedia/spiritedmedia/pull/2472): Handle responsive images sizes and srcset attributes based on the image's visual context
+ - [#2524](https://github.com/spiritedmedia/spiritedmedia/pull/2524): Remove redundant logo-default-avatar files
+ - [#2522](https://github.com/spiritedmedia/spiritedmedia/pull/2522): Update GitHub pull request template

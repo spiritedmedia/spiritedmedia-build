@@ -67,8 +67,13 @@ class Recent_Content_Widget extends \WP_Widget {
                 'thumbnail' => false,
             ];
             if ( $instance['show_thumbs'] ) {
-                $feat_image = $ped_post->get_featured_image_html( 'thumbnail', [
+                $feat_image = $ped_post->get_featured_image_html( 48, [
                     'class' => 'o-media__img recent-content-widget__thumbnail',
+                    'sizes' => '48px',
+                    'srcset' => [
+                        'ratio'  => 1,
+                        'widths' => 48,
+                    ],
                 ] );
 
                 // If no featured image, use a placeholder graphic

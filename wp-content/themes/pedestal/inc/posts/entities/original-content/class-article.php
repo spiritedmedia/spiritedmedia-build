@@ -11,10 +11,11 @@ class Article extends Original {
     /**
      * Get the Twig context for this post
      *
+     * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context() {
-        $context = parent::get_context();
+    public function get_context( $context ) {
+        $context = parent::get_context( $context );
         $context['content_classes'][] = 's-post-content';
         return $context;
     }

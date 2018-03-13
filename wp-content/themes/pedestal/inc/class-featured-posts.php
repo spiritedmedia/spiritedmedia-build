@@ -261,29 +261,53 @@ class Featured_Posts {
             }
             $excerpt = $ped_post->get_the_excerpt();
             $description = PEDESTAL_STREAM_ITEM_DEK_VISIBLE ? $excerpt : '';
-            $context = apply_filters( 'pedestal_stream_item_context', [
-                'post'            => $post,
-                'type'            => $ped_post->get_type(),
-                '__context'       => 'featured', // Where is this stream item going to be displayed?
-                'primary_item'    => false,
-                'stream_index'    => $index,
-                'featured_image'  => '',
-                'thumbnail_image' => '',
-                'overline'        => '',
-                'overline_url'    => '',
-                'title'           => $ped_post->get_the_title(),
-                'permalink'       => $ped_post->get_the_permalink(),
-                'date_time'       => '',
-                'machine_time'    => '',
-                'description'     => $description,
-                'show_meta_info'  => true,
-                'author_names'    => '',
-                'author_image'    => '',
-                'author_link'     => '',
-                'source_name'     => '',
-                'source_image'    => '',
-                'source_link'     => '',
-            ] );
+
+            $default_context = [
+                'post'                     => $post,
+                'type'                     => $ped_post->get_type(),
+                // Where is this stream item going to be displayed?
+                '__context'                => 'featured',
+                'primary_item'             => false,
+                'stream_index'             => $index,
+                'featured_image'           => '',
+                'featured_image_src_width' => 584,
+                'featured_image_sizes'     => [
+                    '(max-width: 584px) 100vw',
+                    '(min-width: 1025px) 308px',
+                    '44vw',
+                ],
+                'featured_image_srcset' => [
+                    'ratio'  => 16 / 9,
+                    'widths' => [ 308, 320, 480, 640, 800, 1024 ],
+                ],
+                'thumbnail_image'       => '',
+                'thumbnail_image_sizes' => [],
+                'overline'              => '',
+                'overline_url'          => '',
+                'title'                 => $ped_post->get_the_title(),
+                'permalink'             => $ped_post->get_the_permalink(),
+                'date_time'             => '',
+                'machine_time'          => '',
+                'description'           => $description,
+                'show_meta_info'        => true,
+                'author_names'          => '',
+                'author_image'          => '',
+                'author_link'           => '',
+                'source_name'           => '',
+                'source_image'          => '',
+                'source_link'           => '',
+            ];
+
+            if ( 1 == $index ) {
+                $default_context['featured_image_src_width'] = 942;
+                $default_context['featured_image_sizes'] = [
+                    '(max-width: 584px) 100vw',
+                    '(min-width: 1025px) 640px',
+                    '92vw',
+                ];
+            }
+
+            $context = apply_filters( 'pedestal_stream_item_context', $default_context );
 
             if ( 1 == $index ) {
                 $context['primary_item'] = true;

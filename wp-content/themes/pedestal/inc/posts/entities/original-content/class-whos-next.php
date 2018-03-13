@@ -141,10 +141,11 @@ class Whos_Next extends Original {
     /**
      * Get the Twig context for this post
      *
+     * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context() {
-        $context = parent::get_context();
+    public function get_context( $context ) {
+        $context = parent::get_context( $context );
 
         ob_start();
         $context['content'] = Timber::render( 'partials/whosnext/content.twig', $context );

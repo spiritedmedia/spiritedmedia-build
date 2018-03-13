@@ -332,14 +332,15 @@ class Factcheck extends Original {
     /**
      * Get the Twig context for this post
      *
+     * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context() {
+    public function get_context( $context ) {
         $context = [
             'statement_img'     => $this->get_statement_img(),
             'statement_setting' => $this->get_statement_setting(),
             'statement_date'    => $this->get_statement_date_str(),
-        ] + parent::get_context();
+        ] + parent::get_context( $context );
 
         $context['content_classes'][] = 's-post-content';
 

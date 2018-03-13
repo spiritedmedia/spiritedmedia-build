@@ -26,6 +26,16 @@ if ( Types::is_post( $item ) ) :
     if ( $item->is_entity() ) {
         $templates[] = 'single-entity.twig';
         $context['cluster'] = $item->get_primary_story();
+        $context['featured_image_sizes'] = [
+            '(max-width: 640px) 95vw',
+            '(max-width: 1024px) 97vw',
+            '(min-width: 1025px) 676px',
+            '96vw',
+        ];
+        $context['featured_image_srcset'] = [
+            'ratio'  => 16 / 9,
+            'widths' => [ 320, 480, 640, 676, 700, 800, 1024 ],
+        ];
         if ( is_active_sidebar( 'sidebar-entity' ) ) {
             $context['sidebar'] = Timber::get_widgets( 'sidebar-entity' );
         }
@@ -62,7 +72,7 @@ if ( Types::is_post( $item ) ) :
     }
 
     // Load Post context after everything else so it takes priority
-    $context = $item->get_context() + $context;
+    $context = $item->get_context( $context );
 
     // Do some post-processing
     if ( isset( $context['content_classes'] ) && is_array( $context['content_classes'] ) ) {

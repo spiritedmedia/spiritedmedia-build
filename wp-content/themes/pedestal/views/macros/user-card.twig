@@ -1,6 +1,8 @@
 {% macro user_card( context, user, options ) %}
     {% set defaults = {
         'img_size': 'thumbnail',
+        'img_sizes': false,
+        'img_srcset': false,
         'twitter': true,
         'format': 'compact',
         'float': true,
@@ -26,18 +28,6 @@
         {% set valid_format = true %}
     {% endif %}
 
-    {# Valid image sizes #}
-    {% set valid_img_size = false %}
-    {% set img_sizes = [
-        'thumbnail',
-        'medium',
-        'medium-square',
-        'large'
-    ] %}
-    {% if options.img_size in img_sizes %}
-        {% set valid_img_size = true %}
-    {% endif %}
-
 
     {% set block_classes = '' %}
     {% set inner_classes = '' %}
@@ -47,7 +37,7 @@
     {% set bio_element = 'p' %}
 
 
-    {% if user.get_email and valid_format and valid_img_size %}
+    {% if user.get_email and valid_format %}
         {% set type = options.format %}
         {% set name_element = 'h4' %}
 
@@ -58,7 +48,10 @@
 
         {% set img_size = options.img_size %}
         {% set img_classes = 'c-user-card__img  img--' ~ img_size ~ '  ' ~ img_classes %}
-        {% set img = user.get_avatar( img_size ) %}
+        {% set img = user.get_avatar( img_size, {
+            sizes: options.img_sizes,
+            srcset: options.img_srcset
+        } ) %}
 
         {% set pagination = false %}
         {% set is_first_page = user.get_stream.is_first_page %}

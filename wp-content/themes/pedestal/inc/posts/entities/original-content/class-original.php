@@ -146,13 +146,14 @@ abstract class Original extends Entity {
     /**
      * Get the Twig context for this post
      *
+     * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context() {
+    public function get_context( $context ) {
         $context = [
             'content_classes' => [ 'js-original-content-body' ],
             'footnotes'       => $this->get_the_footnotes(),
-        ] + parent::get_context();
+        ] + parent::get_context( $context );
         return $context;
     }
 }

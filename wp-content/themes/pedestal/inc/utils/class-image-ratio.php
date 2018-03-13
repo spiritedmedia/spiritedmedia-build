@@ -4,9 +4,20 @@ namespace Pedestal\Utils;
 
 class Image_Ratio {
 
+    /**
+     * Ratio width and height
+     *
+     * @var array
+     */
     private $ratio;
 
-    public function __construct( $ratio_w, $ratio_h ) {
+    /**
+     * [constructor]
+     *
+     * @param integer $ratio_w Ratio width
+     * @param integer $ratio_h Ratio height
+     */
+    public function __construct( int $ratio_w = 16, int $ratio_h = 9 ) {
         $this->ratio = [ $ratio_w, $ratio_h ];
     }
 
@@ -33,5 +44,44 @@ class Image_Ratio {
         }
 
         return $inverse ? [ $new_size, $img_h ] : [ $img_w, $new_size ];
+    }
+
+    /**
+     * Get a size array fitted to a ratio where one of the dimensions is unknown
+     *
+     * @param array|int $old_dimensions Array of width and height where one of
+     *      the dimensions evaluates to false e.g. [ $width, false ]. A single
+     *      integer will be evaluated as a width.
+     * @return array|false Width and height array
+     */
+    public function calc_unknown_dimension( $old_dimensions ) {
+        if ( is_numeric( $old_dimensions ) ) {
+            $old_dimensions = [ $old_dimensions, null ];
+        }
+        list( $old_width, $old_height ) = $old_dimensions;
+        $aspect_ratio = $this->ratio[0] / $this->ratio[1];
+        if ( $aspect_ratio < 1 ) {
+            return false;
+        }
+
+        if ( $old_width && is_numeric( $old_width ) ) {
+            if ( $old_height ) {
+                return false;
+            }
+            $width = $old_width;
+            $height = $old_width / $aspect_ratio;
+        }
+        if ( $old_height && is_numeric( $old_height ) ) {
+            if ( $old_width ) {
+                return false;
+            }
+            $height = $old_height;
+            $width = $old_height * $aspect_ratio;
+        }
+
+        $round_dimensions = function( $dimension ) {
+            return round( $dimension, 0, PHP_ROUND_HALF_DOWN );
+        };
+        return array_map( $round_dimensions, [ $width, $height ] );
     }
 }

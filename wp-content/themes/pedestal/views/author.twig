@@ -6,6 +6,8 @@
     {{ macros.user_card( _context, user, {
         'format': 'extended',
         'img_size': 'medium-square',
+        'img_sizes': '(max-width: 1024px) 150px, 300px',
+        'img_srcset': [ 150, 300 ],
         'posts': false,
         'stream': stream,
         'pagination': pagination,

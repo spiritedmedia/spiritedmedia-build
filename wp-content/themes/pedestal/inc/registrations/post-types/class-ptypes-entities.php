@@ -4,8 +4,14 @@ namespace Pedestal\Registrations\Post_Types;
 
 use Timber\Timber;
 
-use Pedestal\Utils\Utils;
-use Pedestal\Posts\Post;
+use Pedestal\Utils\{
+    Image_Ratio,
+    Utils
+};
+use Pedestal\Posts\{
+    Attachment,
+    Post
+};
 use Pedestal\Posts\Entities\Entity;
 use Pedestal\Posts\Entities\Embed;
 use Pedestal\Posts\Entities\Originals\Whos_Next;
@@ -231,7 +237,14 @@ class Entity_Types {
             $context['overline'] = $story->get_the_title();
             $context['overline_url'] = $story->get_the_permalink();
         }
-        $context['featured_image'] = $entity->get_featured_image_html( '1024-16x9' );
+
+        $ratio = new Image_Ratio;
+        $featured_image_size = $ratio->calc_unknown_dimension( $context['featured_image_src_width'] );
+        $featured_image_size = $featured_image_size ?: '1024-16x9';
+        $context['featured_image'] = $entity->get_featured_image_html( $featured_image_size, [
+            'sizes'  => $context['featured_image_sizes'] ?? '',
+            'srcset' => $context['featured_image_srcset'] ?? '',
+        ] );
 
         return $context;
     }

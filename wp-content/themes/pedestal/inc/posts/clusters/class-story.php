@@ -52,12 +52,13 @@ class Story extends Cluster {
     /**
      * Get the Twig context for this post
      *
+     * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context() {
+    public function get_context( $context ) {
         $context = [
             'headline' => $this->get_the_headline(),
-        ] + parent::get_context();
+        ] + parent::get_context( $context );
         return $context;
     }
 }

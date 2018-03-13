@@ -17,11 +17,10 @@ class Attachment extends Post {
      * Get the URL to the attachment for a given size
      *
      * @param string $size
-     * @param array $args
      * @return string|false
      */
-    public function get_url( $size = 'full', $args = [] ) {
-        $img_data = $this->get_src( $size, $args );
+    public function get_url( $size = 'full' ) {
+        $img_data = $this->get_src( $size );
         if ( $img_data ) {
             return $img_data[0];
         }
@@ -29,16 +28,42 @@ class Attachment extends Post {
     }
 
     /**
-     * Get the standard WP $src array
+     * Get a standard WP $src array
      *
-     * @param string $size
+     * If a full-sized image is requested, then get the URL to the original
+     * image without any additional query args. Tachyon adds an additional `fit`
+     * query arg.
+     *
+     * If a number or array of width and height is passed as `$size`, use a
+     * `resize` URL argument. Otherwise Tachyon's `fit` arg will provide an
+     * uncropped image.
+     *
+     * @param string|array|int $size ['full'] Image size name, an array of width
+     *      and height (in that order), or a single dimension to set both width
+     *      and height (resulting in a square image)
      * @return array|false
      */
-    private function get_src( $size ) {
+    private function get_src( $size = 'full' ) {
         if ( is_numeric( $size ) ) {
             $size = [ $size, $size ];
         }
-        return wp_get_attachment_image_src( $this->get_id(), $size );
+        $src = wp_get_attachment_image_src( $this->get_id(), $size );
+
+        if ( is_array( $size ) || 'full' === $size ) {
+            // Get the original URL without query args
+            $url_parts = explode( '?', $src[0] );
+            $src_url = $url_parts[0];
+
+            if ( is_array( $size ) ) {
+                list( $new_width, $new_height ) = $size;
+                $src_url = add_query_arg( 'resize', "{$new_width},{$new_height}", $src_url );
+                $src[1] = $new_width;
+                $src[2] = $new_height;
+            }
+
+            $src[0] = $src_url;
+        }
+        return $src;
     }
 
     /**
@@ -60,29 +85,32 @@ class Attachment extends Post {
      * @return string|HTML
      */
     public static function get_img_caption_html( $content, $atts = [] ) {
-        $atts = wp_parse_args( $atts, [
-            'attachment'  => 0,
-            'caption'     => '',
-            'align'       => '',
-            'url'         => '',
-            'href'        => '',
-            'credit'      => '',
-            'credit_link' => '',
-            'classes'     => '',
-        ] );
+        $atts = wp_parse_args(
+            $atts, [
+                'attachment'  => 0,
+                'caption'     => '',
+                'align'       => '',
+                'url'         => '',
+                'href'        => '',
+                'credit'      => '',
+                'credit_link' => '',
+                'classes'     => '',
+            ]
+        );
         $figure = new Figure( 'img', $content, $atts );
         return $figure->get_html();
     }
 
     /**
      * Get the HTML to represent this attachment
-     * Internalized version of wp_get_attachment_image() so we can use our ::get_src() method
+     *
+     * Internalized version of wp_get_attachment_image() so we can use our
+     * `Attachment::get_src()` method
      *
      * @return string
      */
     public function get_html( $size = 'full', $args = [] ) {
-        $size = $this->maybe_tweak_image_size( $size );
-        $image = $this->get_src( $size, $args );
+        $image = $this->get_src( $size );
         if ( ! $image ) {
             return '';
         }
@@ -120,6 +148,42 @@ class Attachment extends Post {
             $default_attr['sizes'] = wp_get_attachment_image_sizes( $id, $size );
             $default_attr['srcset'] = wp_get_attachment_image_srcset( $id, $size );
         }
+
+        if ( empty( $args['sizes'] ) ) {
+            unset( $args['sizes'] );
+        } else {
+            $sizes = $args['sizes'];
+            if ( is_array( $sizes ) ) {
+                $sizes = implode( ', ', $sizes );
+            }
+
+            if ( is_string( $sizes ) ) {
+                $args['sizes'] = $sizes;
+            } else {
+                unset( $args['sizes'] );
+            }
+        }
+
+        if ( ! function_exists( 'tachyon_url' ) || empty( $args['srcset'] ) ) {
+            unset( $args['srcset'] );
+        } else {
+            if ( is_array( $args['srcset'] ) ) {
+                // Accept either a flat array of widths, or a multidimensional
+                // array containing a ratio float and an array of widths
+                $ratio = $args['srcset']['ratio'] ?? null;
+                $widths = $args['srcset']['widths'] ?? null;
+                if ( ! $ratio && ! $widths ) {
+                    $widths = $args['srcset'];
+                }
+                if ( is_numeric( $widths ) ) {
+                    $widths = [ $widths ];
+                }
+                $args['srcset'] = $this->get_srcset_string( $widths, $ratio );
+            } else {
+                unset( $args['srcset'] );
+            }
+        }
+
         $attrs = wp_parse_args( $args, $default_attr );
 
         return self::get_img_html( $attrs );
@@ -225,86 +289,38 @@ class Attachment extends Post {
     }
 
     /**
-     * Gracefully fall back to the appropriate image size name if the attachment
-     * doesn't have the image size being requested. This helps srcset work better while
-     * maintaining desired aspect ratios
+     * Get a `srcset` attribute string from an array of widths
      *
-     * @param  string $size Name of image size
-     * @return string       The modified image size
+     * @param array $widths Flat array of numeric widths
+     * @param integer $aspect_ratio [0] Image aspect ratio specified as a float
+     * @return string
      */
-    public function maybe_tweak_image_size( $size = '' ) {
-        global $_wp_additional_image_sizes;
-
-        // No $size, so bail
-        if ( ! $size ) {
+    protected function get_srcset_string( $widths, $aspect_ratio = 0 ) {
+        if ( ! $widths ) {
             return '';
         }
 
-        // The requested $size isn't one of our custom sizes so bail
-        if ( empty( $_wp_additional_image_sizes[ $size ] ) ) {
-            return $size;
-        }
+        list( $orig_url, $orig_width, $orig_height ) = $this->get_src();
+        $aspect_ratio = $aspect_ratio ?: $orig_width / $orig_height;
 
-        $meta = $this->get_metadata();
-        // If we don't have image meta data for a particular size
-        // then fill it in with dummy values to prevent a PHP warning
-        if ( empty( $meta['sizes'][ $size ] ) ) {
-            $meta['sizes'][ $size ] = [
-                'width' => 0,
-                'height' => 0,
-                'crop' => false,
-            ];
-        }
-        $size_meta = $meta['sizes'][ $size ];
-        $current_width = $size_meta['width'];
-        $size_attributes = $_wp_additional_image_sizes[ $size ];
-        $desired_width = $size_attributes['width'];
-        $desired_aspect_ratio = round( $size_attributes['width'] / $size_attributes['height'], 4 );
-        $maintain_aspect_ratio = $size_attributes['crop'];
-
-        // If we have a match there is nothing left to do...
-        if ( $current_width == $desired_width ) {
-            return $size;
-        }
-
-        // Keep track of widths as we cycle through the custom image sizes
-        $biggest_width = 0;
-        foreach ( $_wp_additional_image_sizes as $size_name => $size_props ) {
-            // If we don't have meta data for the current image size then skip to the next size
-            if ( empty( $meta['sizes'][ $size_name ] ) ) {
+        $srcset = [];
+        foreach ( $widths as $key => $width ) :
+            if ( ! is_numeric( $width ) || ! is_numeric( $key ) ) {
                 continue;
             }
-            $meta_props = $meta['sizes'][ $size_name ];
 
-            if ( $maintain_aspect_ratio ) {
-                // Can't divide by zero so move on...
-                if ( $size_props['height'] <= 0 || $meta_props['height'] <= 0 ) {
-                    continue;
-                }
+            for ( $multiplier = 1; $multiplier < 4; $multiplier++ ) {
+                $current_width = floor( $width * $multiplier );
+                $current_height = floor( $current_width / $aspect_ratio );
 
-                // Check if the current size aspect ratio matches the
-                // desired aspect ratio
-                $size_aspect_ratio = round( $size_props['width'] / $size_props['height'], 4 );
-                if ( $size_aspect_ratio != $desired_aspect_ratio ) {
-                    continue;
-                }
-
-                // Check if the image meta data aspect ratio matches the
-                // desired aspect ratio
-                $meta_aspect_ratio = round( $meta_props['width'] / $meta_props['height'], 4 );
-                if ( $meta_aspect_ratio != $size_aspect_ratio ) {
-                    continue;
+                if ( $current_width <= $orig_width && $current_height <= $orig_height ) {
+                    // Prevent duplicates in a performant way by assigning as key
+                    $key = add_query_arg( 'resize', "{$current_width},{$current_height}", $orig_url ) . " {$current_width}w";
+                    $srcset[ $key ] = '';
                 }
             }
+        endforeach;
 
-            // If the meta data width is bigger than our $biggest_width then
-            // we have a new image size to use
-            if ( $meta_props['width'] > $biggest_width ) {
-                $biggest_width = $meta_props['width'];
-                $size = $size_name;
-            }
-        }
-
-        return $size;
+        return implode( ', ', array_keys( $srcset ) );
     }
 }

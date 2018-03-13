@@ -45,10 +45,10 @@ class Neighborhood extends Locality {
      * @param  array  $args
      * @return string
      */
-    public function get_postcard_url( $size = 'full', $args = [] ) {
+    public function get_postcard_url( $size = 'full' ) {
         $attachment = $this->get_postcard();
         if ( $attachment ) {
-            return $attachment->get_url( $size, $args );
+            return $attachment->get_url( $size );
         } else {
             return '';
         }

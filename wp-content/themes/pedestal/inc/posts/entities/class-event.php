@@ -312,9 +312,10 @@ class Event extends Entity {
     /**
      * Get the Twig context for this post
      *
+     * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context() {
+    public function get_context( $context ) {
         $context = [
             'what'            => $this->get_what(),
             'where'           => $this->get_where(),
@@ -326,7 +327,7 @@ class Event extends Entity {
             'show_meta_info'  => false,
             'content'         => '',
             'show_header'     => true,
-        ] + parent::get_context();
+        ] + parent::get_context( $context );
         if ( is_singular( static::$post_type ) ) {
             $context['show_header'] = false;
         }

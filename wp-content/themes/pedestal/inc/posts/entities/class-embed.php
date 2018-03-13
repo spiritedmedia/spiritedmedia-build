@@ -154,10 +154,9 @@ class Embed extends Entity {
      * Get the featured image url
      *
      * @param string $size
-     * @param array $args
      * @return string|false
      */
-    public function get_featured_image_url( $size = 'full', $args = [] ) {
+    public function get_featured_image_url( $size = 'full' ) {
 
         $image_url = '';
         $embed_data = $this->get_embed_data();
@@ -729,16 +728,17 @@ class Embed extends Entity {
     /**
      * Get the Twig context for this post
      *
+     * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context() {
+    public function get_context( $context ) {
         $context = [
             'content'        => $this->get_embed_html(),
             'featured_image' => '',
             'source_name'    => $this->get_source(),
             'source_image'   => Icons::get_icon( $this->get_embed_type() ),
             'source_link'    => $this->get_embed_url(),
-        ] + parent::get_context();
+        ] + parent::get_context( $context );
         return $context;
     }
 }

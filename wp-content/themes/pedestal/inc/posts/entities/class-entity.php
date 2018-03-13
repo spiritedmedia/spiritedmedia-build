@@ -249,15 +249,11 @@ abstract class Entity extends Post {
     /**
      * Get the Twig context for this post
      *
+     * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context() {
-        $context = parent::get_context();
-
-        $context['featured_image'] = $this->get_featured_image_figure_html( '1024-16x9', [
-            'classes' => 'c-main__lead-img',
-            'linkto'  => false,
-        ] );
+    public function get_context( $context ) {
+        $context = parent::get_context( $context );
 
         $story = $this->get_primary_story();
         if ( $story ) {

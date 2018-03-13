@@ -49,6 +49,7 @@ class Utils {
      * Get image size data
      *
      * @param string $size Size name
+     * @return array|false
      */
     public static function get_image_sizes( $size = '' ) {
 
