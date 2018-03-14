@@ -14,7 +14,7 @@ class Article extends Original {
      * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context( $context ) {
+    public function get_context( $context = [] ) {
         $context = parent::get_context( $context );
         $context['content_classes'][] = 's-post-content';
         return $context;

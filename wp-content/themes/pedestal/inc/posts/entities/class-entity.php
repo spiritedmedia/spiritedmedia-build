@@ -252,7 +252,7 @@ abstract class Entity extends Post {
      * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context( $context ) {
+    public function get_context( $context = [] ) {
         $context = parent::get_context( $context );
 
         $story = $this->get_primary_story();

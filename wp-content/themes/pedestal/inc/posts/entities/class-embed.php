@@ -731,7 +731,7 @@ class Embed extends Entity {
      * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context( $context ) {
+    public function get_context( $context = [] ) {
         $context = [
             'content'        => $this->get_embed_html(),
             'featured_image' => '',

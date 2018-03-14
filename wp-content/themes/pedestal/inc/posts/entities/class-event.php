@@ -315,7 +315,7 @@ class Event extends Entity {
      * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context( $context ) {
+    public function get_context( $context = [] ) {
         $context = [
             'what'            => $this->get_what(),
             'where'           => $this->get_where(),

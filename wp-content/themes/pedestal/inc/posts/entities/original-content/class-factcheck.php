@@ -335,7 +335,7 @@ class Factcheck extends Original {
      * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context( $context ) {
+    public function get_context( $context = [] ) {
         $context = [
             'statement_img'     => $this->get_statement_img(),
             'statement_setting' => $this->get_statement_setting(),

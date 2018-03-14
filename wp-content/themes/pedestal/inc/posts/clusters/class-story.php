@@ -55,7 +55,7 @@ class Story extends Cluster {
      * @param array Existing context to filter
      * @return array Twig context
      */
-    public function get_context( $context ) {
+    public function get_context( $context = [] ) {
         $context = [
             'headline' => $this->get_the_headline(),
         ] + parent::get_context( $context );
