@@ -9,12 +9,15 @@ use Pedestal\Posts\Clusters\{
     Story
 };
 use Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
-use Pedestal\Email\Email;
+use Pedestal\Email\{
+    Email,
+    Email_Groups
+};
 use Pedestal\Registrations\Post_Types\Types;
-use Pedestal\Objects\ActiveCampaign;
 use Pedestal\Utils\Utils;
+use Pedestal\Objects\MailChimp;
 
-class Follow_Update_Emails {
+class Follow_Updates {
 
     /**
      * Get an instance of this class
@@ -24,7 +27,6 @@ class Follow_Update_Emails {
         if ( null === $instance ) {
             $instance = new static();
             $instance->setup_actions();
-            $instance->setup_filters();
         }
         return $instance;
     }
@@ -34,16 +36,10 @@ class Follow_Update_Emails {
      */
     public function setup_actions() {
         add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ], 10, 2 );
-        add_action( 'save_post', [ $this, 'action_save_post' ], 100 );
+        add_action( 'save_post', [ $this, 'action_save_post_maybe_create_group' ], 10, 3 );
+        add_action( 'save_post', [ $this, 'action_save_post_maybe_send_email' ], 100 );
         add_action( 'pedestal_email_tester_follow-update-story', [ $this, 'action_pedestal_email_tester' ] );
-        add_action( 'post_updated', [ $this, 'action_post_updated_activecampaign_list' ], 10, 3 );
-    }
-
-    /**
-     * Setup various filters
-     */
-    public function setup_filters() {
-        add_filter( 'pedestal_cron_events', [ $this, 'filter_pedestal_cron_events' ] );
+        add_action( 'post_updated', [ $this, 'action_post_updated_rename_mailchimp_group' ], 10, 3 );
     }
 
     /**
@@ -53,7 +49,7 @@ class Follow_Update_Emails {
      * @param WP_Post $post      A WordPress post object
      */
     public function action_add_meta_boxes( $post_type, $post ) {
-        if ( ! Types::is_cluster( $post_type ) ) {
+        if ( ! Types::is_followable_post_type( $post_type ) ) {
             return;
         }
         if ( 'publish' !== $post->post_status ) {
@@ -139,11 +135,44 @@ class Follow_Update_Emails {
     }
 
     /**
+     * Maybe create a new MailChimp group when a post is saved?
+     *
+     * @param  integer $post_id ID of the post being saved
+     * @param  WP_Post  $post    WP_Post object being saved
+     * @param  boolean $update  Whether the post being saved is an update or not
+     */
+    public function action_save_post_maybe_create_group( $post_id = 0, $post, $update = false ) {
+        if ( 'publish' != $post->post_status ) {
+            return;
+        }
+        if ( ! Types::is_followable_post_type( $post->post_type ) ) {
+            return;
+        }
+
+        $cluster = Cluster::get( $post_id );
+        $group = $cluster->get_mailchimp_group();
+        // We already have a group, all is well
+        if ( is_object( $group ) ) {
+            return;
+        }
+
+        $mc = MailChimp::get_instance();
+        $group_name = $cluster->get_title();
+        $group_category = $cluster->get_mailchimp_group_category();
+        $mc->add_group( $group_name, $group_category );
+
+        // Flush the local group category cache
+        $email_groups = Email_Groups::get_instance();
+        $email_groups->delete_option( $group_category );
+        $email_groups->get_groups( $group_category );
+    }
+
+    /**
      * Action to check if we should send a follow update email
      *
      * @param  integer $post_id ID of the post being edited
      */
-    public function action_save_post( $post_id = 0 ) {
+    public function action_save_post_maybe_send_email( $post_id = 0 ) {
         if ( empty( $_POST['pedestal-cluster-notify-subscribers'] ) && empty( $_POST['pedestal-cluster-send-test-email'] ) ) {
             return;
         }
@@ -155,7 +184,7 @@ class Follow_Update_Emails {
             $is_test_email = true;
             $args['test_email_addresses'] = Email::sanitize_test_email_addresses( $_POST['test-email-addresses'] );
         }
-        $result = $this->send_email_to_list( $cluster, $args );
+        $result = $this->send_email_to_group( $cluster, $args );
         if ( $result && ! $is_test_email ) {
             // Set the last sent email date
             $cluster->set_last_email_notification_date();
@@ -169,30 +198,35 @@ class Follow_Update_Emails {
      * @param  array $args       Options
      * @return boolean           Did the camapign send successfully?
      */
-    public function send_email_to_list( $cluster, $args = [] ) {
+    public function send_email_to_group( $cluster, $args = [] ) {
         if ( ! Types::is_cluster( $cluster ) ) {
             return false;
         }
-        $list_id = $cluster->get_activecampaign_list_id();
-        $body = Email::get_email_template( 'follow-update', 'ac', [
+        $entities = $cluster->get_unsent_entities( true );
+        if ( empty( $entities ) ) {
+            // Nothing to send
+            return false;
+        }
+        $body = Email::get_email_template( 'follow-update', 'mc', [
             'item'       => $cluster,
-            'entities'   => $cluster->get_unsent_entities( true ),
+            'entities'   => $entities,
             'email_type' => $cluster->get_email_type(),
             'shareable'  => true,
         ] );
         $subject = sprintf( 'Update: %s', $cluster->get_title() );
         $sending_args = [
-            'messages'   => [
+            'messages'       => [
                 [
                     'html'    => $body,
                     'subject' => $subject,
                 ],
             ],
-            'list'       => $list_id,
-            'email_type' => 'Follow Update',
+            'groups'         => [ $cluster->get_mailchimp_group_id() ],
+            'group_category' => $cluster->get_mailchimp_group_category(),
+            'email_type'     => 'Follow Update',
         ];
         $sending_args = wp_parse_args( $sending_args, $args );
-        $sent = Email::send_activecampaign_email( $sending_args );
+        $sent = Email::send_mailchimp_email( $sending_args );
         if ( $sent ) {
             $expiration = Utils::get_fuzzy_expire_time( HOUR_IN_SECONDS / 2 );
             set_transient( 'pedestal_cluster_unsent_entities_count_' . $cluster->get_id(), 0, $expiration );
@@ -214,131 +248,42 @@ class Follow_Update_Emails {
             die();
         }
         $story = Story::get( $stories->posts[0] );
-        if ( Types::is_story( $story ) ) {
-            echo Email::get_email_template( 'follow-update', 'ac', [
-                'item'       => $story,
-                'entities'   => $story->get_unsent_entities( true ),
-                'email_type' => $story->get_email_type(),
-                'shareable'  => true,
-            ] );
+        if ( ! Types::is_story( $story ) ) {
+            echo 'Invalid story ID.';
+            die();
         }
+        $subject = sprintf( 'Update: %s', $story->get_title() );
+        echo Email::get_email_template( 'follow-update', 'mc', [
+            'item'       => $story,
+            'subject'    => $subject,
+            'entities'   => $story->get_unsent_entities( true ),
+            'email_type' => $story->get_email_type(),
+            'shareable'  => true,
+        ] );
         die();
     }
 
     /**
-     * Rename a Cluster's ActiveCampaign list name if its title changes
+     * Rename a Cluster's MailChimp group name if its title changes
      *
      * @param  int $post_id          ID of the post being saved
      * @param  WP Post $post_after   Post object after update
      * @param  WP Post $post_before  Post object before update
      */
-    public function action_post_updated_activecampaign_list( $post_id, $post_after, $post_before ) {
+    public function action_post_updated_rename_mailchimp_group( $post_id, $post_after, $post_before ) {
         if ( $post_after->post_title === $post_before->post_title ) {
             return;
         }
 
-        if ( ! Types::is_cluster( $post_after->post_type ) ) {
+        if ( ! Types::is_followable_post_type( $post_after->post_type ) ) {
             return;
         }
+
         $cluster = Cluster::get( $post_id );
-        $list_id = $cluster->get_activecampaign_list_id();
-        $new_name = $cluster->get_activecampaign_list_name();
-
-        $activecampaign = ActiveCampaign::get_instance();
-        $response = $activecampaign->edit_list( $list_id, [
-            'name' => $new_name,
-        ] );
-    }
-
-    /**
-     * Setup cron event to refresh subscriber counts
-     *
-     * @param  array  $events Cron events we want to register
-     * @return array          Cron events we want to register
-     */
-    public function filter_pedestal_cron_events( $events = [] ) {
-        $events['refresh_subscriber_count'] = [
-            'timestamp'  => date( 'U', mktime( date( 'H' ) + 1, 5, 0 ) ), // Next top of the hour + 5 minutes
-            'recurrence' => 'hourly',
-            'callback'   => [ $this, 'handle_refresh_subscriber_count' ],
-        ];
-        return $events;
-    }
-
-    /**
-     * Get a Cluster object from a given ActiveCampaign List ID
-     * @param  array $list_ids  One or more ActiveCampaign List IDs
-     * @return array            Array of Cluster objects
-     */
-    public static function get_clusters_from_list_ids( $list_ids = [] ) {
-        $output = [];
-        if ( is_numeric( $list_ids ) ) {
-            $list_ids = [ $list_ids ];
-        }
-        $list_ids = array_map( 'intval', $list_ids );
-        $args = [
-            'post_type'     => 'any',
-            'meta_key'      => 'activecampaign-list-id',
-            'meta_value'    => $list_ids,
-            'fields'        => 'ids',
-            'no_found_rows' => true,
-        ];
-        $meta_query = new \WP_Query( $args );
-        $post_ids = $meta_query->posts;
-        if ( empty( $post_ids ) ) {
-            return $output;
-        }
-        foreach ( $post_ids as $post_id ) {
-            $cluster = Cluster::get( $post_id );
-            if ( Types::is_cluster( $cluster ) ) {
-                $output[] = $cluster;
-            }
-        }
-        return $output;
-    }
-
-    /**
-     * Refresh stored subscriber count for email lists
-     *
-     * Refreshes the 25 least recently updated stories
-     */
-    public function handle_refresh_subscriber_count() {
-        $query = new \WP_Query( [
-            'meta_key'       => 'subscriber_count_last_updated',
-            'order'          => 'ASC',
-            'orderby'        => 'meta_value_num',
-            'post_type'      => 'pedestal_story',
-            'posts_per_page' => 25,
-        ] );
-        self::refresh_subscriber_counts( $query );
-    }
-
-    /**
-     * Refresh subscriber counts for clusters
-     *
-     * @param  array|\WP_Query  $posts  Array of IDs or \WP_Query
-     * @return array Associative array of cluster IDs and new subscriber counts
-     */
-    public static function refresh_subscriber_counts( $posts ) {
-        $result = [];
-
-        if ( $posts instanceof \WP_Query ) {
-            $posts = Post::get_posts_from_query( $posts );
-        } elseif ( is_array( $posts ) && is_numeric( $posts[0] ) ) {
-            $posts = Post::get_posts_from_ids( $posts );
-        } else {
-            return $result;
-        }
-
-        foreach ( $posts as $ped_post ) {
-            if ( ! Types::is_cluster( $ped_post ) ) {
-                continue;
-            }
-            // Get fresh values by deleting the current values and refetching the subscriber count
-            $ped_post->delete_subscriber_count();
-            $result[ $ped_post->get_id() ] = $ped_post->get_subscriber_count();
-        }
-
-        return $result;
+        $mc = MailChimp::get_instance();
+        $new_name = $post_after->post_title;
+        $old_name = $post_before->post_title;
+        $group_category = $cluster->get_mailchimp_group_category();
+        $mc->edit_group_name( $new_name, $old_name, $group_category );
     }
 }

@@ -174,6 +174,8 @@ class Cluster_Types {
                         'thumbnail',
                         'editor',
                         'excerpt',
+                        'mailchimp-integration',
+                        'follow-updates',
                     ];
                     $args['rewrite'] = [
                         'slug' => 'stories',

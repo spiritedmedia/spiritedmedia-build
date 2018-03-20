@@ -61,6 +61,7 @@ class General_Types {
                     $args['supports'] = [
                         'title',
                         'slots',
+                        'mailchimp-integration',
                     ];
                     $args['capabilities'] = [
                         'read'                   => 'read',

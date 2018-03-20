@@ -1,7 +1,7 @@
-Build [#4478](https://circleci.com/gh/spiritedmedia/spiritedmedia/4478) by kingkool68 at 2018-03-14 01:28 PM UTC
+Build [#4541](https://circleci.com/gh/spiritedmedia/spiritedmedia/4541) by kingkool68 at 2018-03-20 04:27 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.10.1](https://github.com/spiritedmedia/spiritedmedia/compare/v6.10.1)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.11.0](https://github.com/spiritedmedia/spiritedmedia/compare/v6.11.0)
 ## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.10.0...v6.10.1)
+[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.10.1...v6.11.0)
 
- - [#2529](https://github.com/spiritedmedia/spiritedmedia/pull/2529): HOTFIX: Newsletter Permalinks Causing Fatal Internal Server 500 Error
+ - [#2450](https://github.com/spiritedmedia/spiritedmedia/pull/2450): Send Follow Update Emails Through MailChimp + Scheduled Follow Update Emails

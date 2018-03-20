@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit176d7d6062a56b496a36f548d11c165a
+class ComposerStaticInitb70be2a00ba31c9034c3576bf4cb4c9a
 {
     public static $files = array (
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
@@ -7663,11 +7663,11 @@ class ComposerStaticInit176d7d6062a56b496a36f548d11c165a
         'Pedestal\\Cron_Management' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-cron-management.php',
         'Pedestal\\Email\\Breaking_News_Emails' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-breaking-news-emails.php',
         'Pedestal\\Email\\Email' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-email.php',
-        'Pedestal\\Email\\Fieldmanager_Datasource_Email_List' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-fieldmanager-datasource-email-list.php',
-        'Pedestal\\Email\\Follow_Update_Emails' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-follow-update-emails.php',
+        'Pedestal\\Email\\Email_Groups' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-email-groups.php',
+        'Pedestal\\Email\\Follow_Updates' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-follow-updates.php',
         'Pedestal\\Email\\Newsletter_Emails' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-newsletter-emails.php',
-        'Pedestal\\Email\\Newsletter_Groups' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-newsletter-groups.php',
         'Pedestal\\Email\\Newsletter_Testing' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-newsletter-testing.php',
+        'Pedestal\\Email\\Schedule_Follow_Updates' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/email/class-schedule-follow-updates.php',
         'Pedestal\\Featured_Posts' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-featured-posts.php',
         'Pedestal\\Feeds' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-feeds.php',
         'Pedestal\\Frontend' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-frontend.php',
@@ -7675,7 +7675,6 @@ class ComposerStaticInit176d7d6062a56b496a36f548d11c165a
         'Pedestal\\Metricbot\\Newsletter_Signups_By_Page_Metric' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/metricbot/class-newsletter-signups-by-page-metric.php',
         'Pedestal\\Metricbot\\Weekly_Traffic_Metric' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/metricbot/class-weekly-traffic-metric.php',
         'Pedestal\\Metricbot\\Yesterdays_Email_Metric' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/metricbot/class-yesterdays-email-metric.php',
-        'Pedestal\\Objects\\ActiveCampaign' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-activecampaign.php',
         'Pedestal\\Objects\\Author' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-author.php',
         'Pedestal\\Objects\\Figure' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-figure.php',
         'Pedestal\\Objects\\Google_Analytics' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-google-analytics.php',
@@ -8249,11 +8248,11 @@ class ComposerStaticInit176d7d6062a56b496a36f548d11c165a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit176d7d6062a56b496a36f548d11c165a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit176d7d6062a56b496a36f548d11c165a::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit176d7d6062a56b496a36f548d11c165a::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit176d7d6062a56b496a36f548d11c165a::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit176d7d6062a56b496a36f548d11c165a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb70be2a00ba31c9034c3576bf4cb4c9a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb70be2a00ba31c9034c3576bf4cb4c9a::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitb70be2a00ba31c9034c3576bf4cb4c9a::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitb70be2a00ba31c9034c3576bf4cb4c9a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitb70be2a00ba31c9034c3576bf4cb4c9a::$classMap;
 
         }, null, ClassLoader::class);
     }

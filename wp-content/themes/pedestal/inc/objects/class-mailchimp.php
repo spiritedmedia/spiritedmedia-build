@@ -621,11 +621,17 @@ class MailChimp {
         }
         $group_category_id = $group_category->id;
         $endpoint = "/lists/$list_id/interest-categories/$group_category_id/interests";
-        $resp = $this->get_request( $endpoint );
+        $args = [
+            'count' => 60,
+        ];
+        $resp = $this->get_request( $endpoint, $args );
         if ( ! is_object( $resp ) || ! isset( $resp->interests ) ) {
             return $output;
         }
         foreach ( $resp->interests as $interest ) {
+            if ( is_object( $interest ) && isset( $interest->{'_links'} ) ) {
+                unset( $interest->{'_links'} );
+            }
             $output[] = $interest;
         }
         return $output;

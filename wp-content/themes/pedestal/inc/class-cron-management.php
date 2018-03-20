@@ -35,6 +35,13 @@ class Cron_Management {
                     'display'  => 'Every Week',
                 ];
             }
+
+            if ( ! isset( $schedules['quarter-hourly'] ) ) {
+                $schedules['quarter-hourly'] = [
+                    'interval' => 15 * MINUTE_IN_SECONDS,
+                    'display'  => 'Every 15 Minutes',
+                ];
+            }
             return $schedules;
         }, 10, 1 );
     }
@@ -69,5 +76,19 @@ class Cron_Management {
                 }
             } );
         }
+    }
+
+    /**
+     * Rounds a time up to the nearest interval
+     * Example: 2:35pm would round up to 3:00pm
+     *
+     * @param  string  $time     The time to roundup in any strtotime() compatible format
+     * @param  integer $interval Number of minutes to round to 60 = top of the hour, 30 = half hour etc.
+     * @return integer           Rounded Unix time in seconds
+     */
+    public function round_time_up( $time = '', $interval = 60 ) {
+        $time = strtotime( $time );
+        $round = $interval * 60;
+        return ceil( $time / $round ) * $round;
     }
 }

@@ -7,9 +7,7 @@ use function Pedestal\Pedestal;
 use WP_CLI;
 use joshtronic\LoremIpsum;
 
-use Pedestal\Email\Follow_Update_Emails;
 use Pedestal\Objects\{
-    ActiveCampaign,
     MailChimp,
     Newsletter_Lists,
     User
@@ -494,113 +492,6 @@ class CLI extends \WP_CLI_Command {
     }
 
     /**
-     * Syncs newsletter IDs with ActiveCampaign
-     *
-     * ## EXAMPLES
-     *
-     *     wp pedestal sync-newsletter-ids
-     *     wp pedestal sync-newsletter-ids --url=https://billypenn.dev
-     *
-     * @see /bin/wp-multisite-sync-newsletter-ids.sh
-     *
-     * @subcommand sync-newsletter-ids
-     */
-    public function sync_newsletter_ids( $args, $assoc_args ) {
-        $newsletter_groups = Newsletter_Groups::get_instance();
-        $newsletter_groups->delete_options();
-        $lists = $newsletter_groups->get_all_newsletters();
-        if ( ! $lists || ! is_array( $lists ) ) {
-            WP_CLI::error( '$lists is bad! Oh No!' );
-            return;
-        }
-        foreach ( $lists as $id => $name ) {
-            WP_CLI::line( '  - ' . $name . ': ' . $id );
-        }
-        WP_CLI::success( 'Done!' );
-    }
-
-    /**
-     * Delete all subscribers. We don't need them in our DB anymore.
-     *
-     * ## EXAMPLES
-     *
-     *     wp pedestal purge-subscribers
-     *     wp pedestal purge-subscribers --url=https://billypenn.dev
-     *
-     * @subcommand purge-subscribers
-     */
-    public function purge_subscribers( $args, $assoc_args ) {
-        global $wpdb;
-
-        // Keep track of timings
-        $time_start = microtime( true );
-
-        // Get the IDs of all the subscriber users
-        $args = [
-            'number' => 9999,
-            'fields' => 'ID',
-            'role' => 'subscriber',
-        ];
-        $user_query = new \WP_User_Query( $args );
-        if ( ! empty( $user_query->results ) ) :
-            $user_ids_to_delete = [];
-
-            // Remove Users that are authors of 1 or more posts
-            foreach ( $user_query->results as $index => $id ) {
-                // Use a SQL query because it is more efficient and we don't need to worry about post types
-                $user_post_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->posts WHERE `post_author` = '%d'", [ $id ] ) );
-                if ( 0 == $user_post_count ) {
-                    $user_ids_to_delete[] = $id;
-                }
-            }
-            $total_subscribers = count( $user_ids_to_delete );
-            $removed_users = 0;
-            $deleted_users = 0;
-            $loop_count = 1;
-
-            // Process all of the subscribers who aren't authors of any post
-            foreach ( $user_ids_to_delete as $id ) {
-                $id = intval( $id );
-
-                // Remove the user from the site
-                wp_delete_user( $id );
-                $removed_users++;
-
-                // Check if the user belongs to any sites in the multiste network
-                $sites = get_blogs_of_user( $id );
-                if ( empty( $sites ) ) {
-                    // Remove the user from the Multisite instance
-                    wpmu_delete_user( $id );
-                    $deleted_users++;
-                }
-                $loop_count++;
-
-                // Display some progress so we know its working
-                if ( 0 === $loop_count % 100 ) {
-                    $percentage_complete = number_format( ( $loop_count / $total_subscribers ) * 100, 2 );
-                    $time_format = 'seconds';
-                    $current_time = ( microtime( true ) - $time_start ); // seconds
-                    if ( $current_time > 59 ) {
-                        $time_format = 'minutes';
-                        $current_time = $current_time / 60;
-                    }
-                    $current_time = number_format( $current_time, 1 );
-                    WP_CLI::line( 'Progress: ' . $percentage_complete . '%, ' . number_format( $loop_count ) . ' processed (' . $current_time . ' ' . $time_format . ')' );
-                }
-            }
-        endif;
-
-        // Stats
-        WP_CLI::success( 'Removed ' . number_format( $removed_users ) . ' users' );
-        WP_CLI::success( 'Deleted ' . number_format( $deleted_users ) . ' users' );
-
-        // All done. How long did it take?
-        $time_end = microtime( true );
-        $total_time = round( $time_end - $time_start, 1 );
-        WP_CLI::line( 'Finished in ' . $total_time . ' seconds' );
-    }
-
-    /**
      * Migrate users to new roles
      *
      * @subcommand migrate-roles
@@ -811,104 +702,9 @@ class CLI extends \WP_CLI_Command {
     }
 
     /**
-     * Add contacts subscribed to any of the site's email lists to the ALL list
-     *
-     * ## EXAMPLES
-     *
-     *     wp pedestal update-all-activecampaign-list
-     *     wp pedestal update-all-activecampaign-list --url=https://billypenn.dev
-     *
-     * @subcommand update-all-activecampaign-list
-     */
-    public function update_all_activecampaign_list() {
-        $ac = ActiveCampaign::get_instance();
-
-        // Get the ALL list
-        $all_list_name = 'All Contacts - ' . PEDESTAL_BLOG_NAME;
-        $all_list = $ac->get_list_by_name( $all_list_name );
-        if ( ! $all_list ) {
-            $all_list = $ac->add_list([
-                'name' => $all_list_name,
-            ]);
-        }
-        if ( ! $all_list ) {
-            WP_CLI::error( 'Problem getting the ALL list, ' . $all_list_name );
-            return false;
-        }
-        $all_list_id = $all_list->id;
-
-        // Get all of the site's lists
-        $lists = (array) $ac->get_lists([
-            'filters[name]' => '- ' . PEDESTAL_BLOG_NAME,
-        ]);
-        $total_lists = count( $lists );
-        $active_list_ids = [];
-        foreach ( $lists as $list ) {
-            if ( $list->subscriber_count > 0 && $list->id != $all_list_id ) {
-                // WP_CLI::line( $list->id . ' | ' . $list->name . ' | ' . $list->subscriber_count );
-                $active_list_ids[] = $list->id;
-            }
-        }
-        WP_CLI::line( count( $active_list_ids ) . ' / ' . $total_lists . ' lists have subscribers.' );
-
-        // Get all of the contacts who aren't on the ALL list already
-        $contacts_to_add = [];
-        $page = 1;
-        $keep_going = true;
-        while ( $keep_going ) {
-            $contacts = (array) $ac->get_contacts([
-                'full' => 1,
-                'filters[listid]' => implode( ',', $active_list_ids ),
-                'filters[status]' => '1',
-                'page' => $page,
-            ]);
-
-            if ( empty( $contacts ) ) {
-                $keep_going = false;
-                break;
-            } else {
-                foreach ( $contacts as $contact ) {
-                    $subscribed_lists = (array) $contact->lists;
-                    $already_subscribed = false;
-                    foreach ( $subscribed_lists as $list ) {
-                        if ( $list->listid == $all_list_id ) {
-                            $already_subscribed = true;
-                            break;
-                        }
-                    }
-                    if ( ! $already_subscribed ) {
-                        $contacts_to_add[] = $contact->email;
-                        $ac->subscribe_contact( $contact->email, $all_list_id );
-                    }
-                }
-            }
-
-            $contacts_to_add_count = number_format( count( $contacts_to_add ) );
-            WP_CLI::line( 'Page ' . $page . ' | ' . $contacts_to_add_count . ' contacts added' );
-            $page++;
-        }
-
-        $contacts_to_add_count = number_format( count( $contacts_to_add ) );
-        WP_CLI::line( 'Done! ' . $contacts_to_add_count . ' contacts added' );
-    }
-
-    /**
-     * Refresh the subscriber counts for one or more clusters
-     *
-     * ## OPTIONS
-     *
-     * <ids>...
-     * : Post IDs of the clusters for which you want to refresh the count
-     *
-     * @subcommand refresh-subscribers
-     */
-    public function refresh_subscriber_count( $args, $assoc_args ) {
-        $result = Follow_Update_Emails::refresh_subscriber_counts( $args );
-        WP_CLI::success( 'Done! ' . count( $result ) . ' clusters updated' );
-    }
-
-    /**
      * Setup MailChimp for a site
+     *
+     * Group cateogry names use the plural version of the post_type name.
      *
      * ## EXAMPLES
      *
@@ -923,11 +719,26 @@ class CLI extends \WP_CLI_Command {
         // Make sure a list specific to this site is created
         $mc->get_site_list();
 
-        $categories = [
-            'Newsletters' => [
-                'Daily Newsletter',
-                'Breaking News',
-            ],
+        $categories = [];
+        $post_types = Types::get_mailchimp_integrated_post_types();
+        foreach ( $post_types as $post_type ) {
+            $plural_name = Types::get_post_type_name( $post_type );
+            $post_titles = [];
+            $args = [
+                'post_type'      => $post_type,
+                'posts_per_page' => -1,
+                'post_status'    => 'publish',
+            ];
+            $posts = new \WP_Query( $args );
+            foreach ( $posts->posts as $post ) {
+                $post_titles[] = $post->post_title;
+            }
+            $categories[ $plural_name ] = $post_titles;
+        }
+
+        $categories['Newsletters'] = [
+            'Daily Newsletter',
+            'Breaking News',
         ];
         foreach ( $categories as $group_category => $groups ) {
 

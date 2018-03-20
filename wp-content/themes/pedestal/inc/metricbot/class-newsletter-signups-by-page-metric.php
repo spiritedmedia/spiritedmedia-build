@@ -5,7 +5,6 @@ use Pedestal\Objects\{
     Google_Analytics,
     Notifications
 };
-use Pedestal\Objects\ActiveCampaign;
 use Pedestal\Email\Newsletter_Groups;
 use Pedestal\Utils\Utils;
 

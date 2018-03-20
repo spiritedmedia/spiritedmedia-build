@@ -56,6 +56,7 @@
 
         <input type="hidden" name="group-ids[]" value="{{ site.emails.daily_newsletter_id|esc_attr }}">
         <input type="hidden" name="group-ids[]" value="{{ site.emails.breaking_newsletter_id|esc_attr }}">
+        <input type="hidden" name="group-category" value="Newsletters">
 
         {% include 'partials/email-forms/form-honeypot.twig' %}
 

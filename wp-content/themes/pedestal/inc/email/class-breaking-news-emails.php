@@ -11,7 +11,7 @@ use Pedestal\Posts\Post;
 
 use Pedestal\Email\{
     Email,
-    Newsletter_Groups
+    Email_Groups
 };
 
 class Breaking_News_Emails {
@@ -75,11 +75,11 @@ class Breaking_News_Emails {
     public function handle_meta_box( $post ) {
         $post = Post::get( (int) $post->ID );
         $sent_date = $post->get_sent_date();
-        $newsletter_groups = Newsletter_Groups::get_instance();
+        $email_groups = Email_Groups::get_instance();
 
         $send_button_text = sprintf(
             'Send Breaking News To %d Subscribers',
-            $newsletter_groups->get_subscriber_count( 'Breaking News' )
+            $email_groups->get_subscriber_count( 'Breaking News', 'Newsletters' )
         );
 
         $context = [
@@ -193,7 +193,7 @@ class Breaking_News_Emails {
      */
     public function action_pedestal_email_tester() {
         $breaking_news = new \WP_Query( [
-            'post_type'      => Types::get_emailable_post_types(),
+            'post_type'      => Types::get_post_types_by_supported_feature( 'breaking' ),
             'meta_query'     => [
                 [
                     'key'   => 'sent_email',

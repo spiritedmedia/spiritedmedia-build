@@ -2,13 +2,13 @@
 /*!*
  * Pedestal // Admin
  *
- * Version: 6.10.1
+ * Version: 6.11.0
  *
  * Copyright ( c ) 2016 Spirited Media
  */
 
 
-/* stylelint-disable */
+/* stylelint-disable selector-max-type, selector-max-id */
 
 
 @import 'sassy-lists/dist/SassyLists';
@@ -23,12 +23,13 @@
 }
 
 .fm-enabled-wrapper .fm-option {
-    display: inline-block;
-    margin-right: 15px;
+  display: inline-block;
+  margin-right: 15px;
 }
 
 // Fix the weird intentional negative margins for tabbed groups
 .fm-tabbed-vertical {
+  // stylelint-disable-next-line declaration-no-important
   margin: 0 !important;
 }
 
@@ -38,9 +39,9 @@
 
 // Improve distinction between repeating FM fields
 .fm-slot_item_placement_rules {
-   margin-bottom: 3em;
-   padding-bottom: 3em;
-   border-bottom: 0.1em solid #ccc;
+  margin-bottom: 3em;
+  padding-bottom: 3em;
+  border-bottom: 0.1em solid #cccccc;
 }
 
 // Resize Embed Caption text area field
@@ -63,11 +64,11 @@ body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right .tablenav,
 .user-description-wrap,
 // Hide Instagram of the Day metabox by default
 #fm_meta_box_daily_insta_date {
-    display: none;
+  display: none;
 }
 
 body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right {
-    width: 100%;
+  width: 100%;
 }
 
 body.tools_page_pedestal_cluster_tools {
@@ -92,18 +93,14 @@ body.tools_page_pedestal_cluster_tools {
 
 
 //
-// Metaboxes
+// Posts to Posts Metaboxes
 // ==========================================================================
 
-
-/**
- * Posts to Posts
- */
 
 .p2p-box {
   .p2p-tab-create-post,
   .p2p-tab-search {
-    background-color: white;
+    background-color: #ffffff;
   }
 }
 
@@ -111,10 +108,41 @@ body.tools_page_pedestal_cluster_tools {
 //
 // Custom TinyMCE buttons
 // ==========================================================================
+
+
 i.mce-i-insert-post-element::before {
-    font-family: 'dashicons';
-    font-size: 120%;
-    content: '\f176'; // Cloud dashicon https://developer.wordpress.org/resource/dashicons/#cloud
+  font-family: 'dashicons';
+  font-size: 120%;
+  content: '\f176'; // Cloud dashicon https://developer.wordpress.org/resource/dashicons/#cloud
+}
+
+
+//
+// Schedule Follow Updates Metabox
+// ==========================================================================
+
+
+.pedestal-schedule-follow-updates-metabox {
+  .frequency-label {
+    display: block;
+    padding: 3px 0;
+  }
+
+  .additional-options {
+    padding-left: 35px;
+
+    label {
+      display: block;
+      margin: 5px 0 15px;
+
+      // stylelint-disable-next-line selector-max-compound-selectors
+      > * {
+        display: block;
+        margin-top: 3px;
+        width: 100%;
+      }
+    }
+  }
 }
 
 

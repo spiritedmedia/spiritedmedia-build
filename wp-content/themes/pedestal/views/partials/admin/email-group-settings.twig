@@ -1,6 +1,6 @@
 <div class="wrap">
-    <h1>Newsletter Group Settings</h1>
-    <p>Newsletter groups are controlled directly in the <a href="{{ mailchimp_admin_url|esc_url }}" target="blank">MailChimp admin</a>. After adding a new one hit the <strong>Sync & Save</strong> button below to sync it with WordPress.</p>
+    <h1>{{ singular_name }} Email Group Settings</h1>
+    <p>{{ singular_name }} email groups are controlled directly in the <a href="{{ mailchimp_admin_url|esc_url }}" target="blank">MailChimp admin</a>. After adding a new one hit the <strong>Sync & Save</strong> button below to sync it with WordPress.</p>
     <form action="{{ form.action }}" method="post">
 
         <table class="form-table">
@@ -19,7 +19,7 @@
             {% endfor %}
         </table>
 
-        {% if groups_left %}
+        {% if groups_left or groups_left == 0 %}
             <p>{{ groups_left }} of 60 MailChimp groups left</p>
         {% endif %}
 
@@ -28,7 +28,7 @@
         {% endif %}
 
         {{ nonce_field }}
-
+        <input type="hidden" name="post_type" value="{{ post_type|esc_attr }}">
         <p class="submit">
             {{ primary_button }}
         </p>

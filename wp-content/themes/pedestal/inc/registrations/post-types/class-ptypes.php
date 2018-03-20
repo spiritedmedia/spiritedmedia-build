@@ -326,17 +326,17 @@ class Types {
     public function filter_manage_posts_columns( $columns ) {
 
         $new_columns = [];
-
+        $post_type = get_current_screen()->post_type;
         foreach ( $columns as $key => $label ) :
             $new_columns[ $key ] = $label;
 
             // Link columns
-            if ( 'pedestal_link' == get_current_screen()->post_type && 'title' == $key ) {
+            if ( 'pedestal_link' == $post_type && 'title' == $key ) {
                 $new_columns['pedestal_external_url'] = esc_html__( 'External URL', 'pedestal' );
             }
 
             // Event columns
-            if ( 'pedestal_event' == get_current_screen()->post_type ) {
+            if ( 'pedestal_event' == $post_type ) {
                 if ( 'title' == $key ) {
                     $new_columns['pedestal_event_start_time'] = esc_html__( 'Start Time', 'pedestal' );
                     $new_columns['pedestal_event_end_time'] = esc_html__( 'End Time', 'pedestal' );
@@ -348,7 +348,7 @@ class Types {
             }
 
             // Entity columns
-            if ( self::is_entity( get_current_screen()->post_type ) ) {
+            if ( self::is_entity( $post_type ) ) {
                 if ( 'coauthors' === $key ) {
                     $new_columns['pedestal_entity_story_connections'] = esc_html__( 'Stories', 'pedestal' );
                     $new_columns['pedestal_entity_cluster_connections'] = esc_html__( 'Clusters', 'pedestal' );
@@ -356,7 +356,10 @@ class Types {
             }
 
             // Cluster columns
-            if ( in_array( get_current_screen()->post_type, self::get_cluster_post_types() ) ) {
+            if (
+                in_array( $post_type, self::get_cluster_post_types() )
+                && self::is_followable_post_type( $post_type )
+            ) {
                 if ( 'title' === $key ) {
                     $new_columns['pedestal_cluster_subscribers_count'] = '№ of Subscribers';
                     $new_columns['pedestal_cluster_unsent_entities_count'] = '№ of Unsent Entities';
@@ -376,7 +379,6 @@ class Types {
      */
     public function filter_manage_posts_sortable_columns( $columns ) {
         $sortable = [
-            'pedestal_cluster_subscribers_count',
             'pedestal_cluster_unsent_entities_count',
         ];
         foreach ( $sortable as $column_name ) {
@@ -817,6 +819,50 @@ class Types {
     }
 
     /**
+     * Get all post types that support "follow updates"
+     *
+     * @return array List of post types
+     */
+    public static function get_followable_post_types() {
+        return self::get_post_types_by_supported_feature( 'follow-updates' );
+    }
+
+    /**
+     * Conditional to check if a post type supports "follow updates"
+     *
+     * @param  string  $post_type The post type slug to check
+     * @return boolean            True if post type is followable
+     */
+    public static function is_followable_post_type( $post_type = '' ) {
+        if ( ! in_array( $post_type, self::get_followable_post_types() ) ) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get all post types that support "mailchimp-integration"
+     *
+     * @return array List of post types
+     */
+    public static function get_mailchimp_integrated_post_types() {
+        return self::get_post_types_by_supported_feature( 'mailchimp-integration' );
+    }
+
+    /**
+     * Conditional to check if a post type supports "mailchimp-integration"
+     *
+     * @param  string  $post_type The post type slug to check
+     * @return boolean            True if post type has MailChimp integration
+     */
+    public static function is_mailchimp_integrated_post_type( $post_type = '' ) {
+        if ( ! in_array( $post_type, self::get_mailchimp_integrated_post_types() ) ) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Get all the Geospace post types
      *
      * @param bool $sort  Sort alphabetically or not?
@@ -998,24 +1044,6 @@ class Types {
         $general_types = self::$groups['general']->original_post_types;
         $entity_types = self::$groups['entities']->original_post_types;
         $types = array_merge( $general_types, $entity_types );
-        if ( $sort ) {
-            sort( $types );
-        }
-        return $types;
-    }
-
-    /**
-     * Get the emailable post types
-     *
-     * @param  bool $sort Sort alphabetically or not?
-     * @return array
-     */
-    public static function get_emailable_post_types( $sort = true ) {
-        $types = array_merge(
-            [ 'pedestal_newsletter' ],
-            self::get_cluster_post_types(),
-            self::get_post_types_by_supported_feature( 'breaking' )
-        );
         if ( $sort ) {
             sort( $types );
         }

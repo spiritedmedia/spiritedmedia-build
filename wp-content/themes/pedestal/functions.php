@@ -26,12 +26,13 @@ use Pedestal\Posts\{
 use Pedestal\Objects\User;
 use Pedestal\Email\{
     Email,
-    Newsletter_Groups,
+    Email_Groups,
     One_Off_Emails,
     Breaking_News_Emails,
     Newsletter_Emails,
     Newsletter_Testing,
-    Follow_Update_Emails
+    Follow_Updates,
+    Schedule_Follow_Updates
 };
 
 if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
@@ -268,11 +269,12 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             // $this->yesterdays_email_metric           = Yesterdays_Email_Metric::get_instance();
 
             // Emails
-            $this->emails                = Email::get_instance();
-            $this->newsletter_groups     = Newsletter_Groups::get_instance();
-            $this->breaking_news_emails  = Breaking_News_Emails::get_instance();
-            $this->newsletter_emails     = Newsletter_Emails::get_instance();
-            $this->follow_update_emails = Follow_Update_Emails::get_instance();
+            $this->emails                  = Email::get_instance();
+            $this->email_groups            = Email_Groups::get_instance();
+            $this->breaking_news_emails    = Breaking_News_Emails::get_instance();
+            $this->newsletter_emails       = Newsletter_Emails::get_instance();
+            $this->follow_updates          = Follow_Updates::get_instance();
+            $this->schedule_follow_updates = Schedule_Follow_Updates::get_instance();
 
         }
 
@@ -477,6 +479,21 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 ob_start();
                 \Timber\Timber::render( 'partials/adverts/dfp-unit.twig', $context );
                 return ob_get_clean();
+            } ) );
+
+            // Add WordPress' checked() function to Twig
+            $twig->addFunction( new \Twig_SimpleFunction( 'checked', function( $checked, $current = true ) {
+                return checked( $checked, $current );
+            } ) );
+
+            // Add WordPress' selected() function to Twig
+            $twig->addFunction( new \Twig_SimpleFunction( 'selected', function( $selected, $current = true ) {
+                return selected( $selected, $current );
+            } ) );
+
+            // Add WordPress' disabled() function to Twig
+            $twig->addFunction( new \Twig_SimpleFunction( 'disabled', function( $disabled, $current = true ) {
+                return disabled( $disabled, $current );
             } ) );
 
             return $twig;
@@ -733,8 +750,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'placeholder'                => PEDESTAL_EMAIL_PLACEHOLDER,
                 'daily_newsletter_name'      => PEDESTAL_BLOG_NAME . ' Daily',
                 'daily_newsletter_send_time' => '7:00 a.m.',
-                'daily_newsletter_id'        => $this->newsletter_groups->get_newsletter_group_id( 'Daily Newsletter' ),
-                'breaking_newsletter_id'     => $this->newsletter_groups->get_newsletter_group_id( 'Breaking News' ),
+                'daily_newsletter_id'        => $this->email_groups->get_newsletter_group_id( 'Daily Newsletter' ),
+                'breaking_newsletter_id'     => $this->email_groups->get_newsletter_group_id( 'Breaking News' ),
             ];
 
             $context['site']->live_urls = [

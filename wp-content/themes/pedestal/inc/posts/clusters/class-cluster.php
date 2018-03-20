@@ -4,9 +4,12 @@ namespace Pedestal\Posts\Clusters;
 
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
-use Pedestal\Email\Follow_Update_Emails;
+use Pedestal\Email\{
+    Email_Groups,
+    Follow_Updates
+};
 use Pedestal\Utils\Utils;
-use Pedestal\Objects\ActiveCampaign;
+use Pedestal\Objects\MailChimp;
 
 abstract class Cluster extends Post {
 
@@ -146,32 +149,9 @@ abstract class Cluster extends Post {
      * @return int
      */
     public function get_subscriber_count() {
-        $subscriber_count = $this->get_meta( 'subscriber_count' );
-        if ( $subscriber_count ) {
-            return intval( $subscriber_count );
-        }
-        // No stored data found! Let's ask ActiveCampaign
-        $list_id = $this->get_activecampaign_list_id();
-        $activecampaign = ActiveCampaign::get_instance();
-        $list = $activecampaign->get_list( $list_id );
-        if ( ! $list || ! isset( $list->subscriber_count ) ) {
-            // We have a problem so set count to -1
-            $subscriber_count = -1;
-        } else {
-            $subscriber_count = $list->subscriber_count;
-        }
-        $this->set_meta( 'subscriber_count', $subscriber_count );
-        $this->set_meta( 'subscriber_count_last_updated', time() );
-
-        return intval( $subscriber_count );
-    }
-
-    /**
-     * Delete the subscriber count meta values
-     */
-    public function delete_subscriber_count() {
-        $this->delete_meta( 'subscriber_count' );
-        $this->delete_meta( 'subscriber_count_last_updated' );
+        $email_groups = Email_Groups::get_instance();
+        $group_category = $this->get_mailchimp_group_category();
+        return $email_groups->get_subscriber_count( $this->get_title(), $group_category );
     }
 
     /**
@@ -275,50 +255,39 @@ abstract class Cluster extends Post {
     }
 
     /**
-     * Get the ActiveCampaign list name for this Cluster
+     * Get MailChimp group data for this cluster
      *
-     * @return string
+     * @return Object|false MailChimp Group object or false if not found
      */
-    public function get_activecampaign_list_name() {
-        return $this->get_title() . ' - ' . PEDESTAL_BLOG_NAME . ' - ' . $this->get_type_name();
-    }
-
-    /**
-     * Get the ActiveCampagin list ID for this Cluster
-     *
-     * @param  boolean $force [false] Force get the list ID from ActiveCampaign
-     * @return int|bool               List ID on success, false on fail
-     */
-    public function get_activecampaign_list_id( $force = false ) {
-        $meta_key = 'activecampaign-list-id';
-        $list_id = $this->get_meta( $meta_key, true );
-        if ( empty( $list_id ) || $force ) {
-            // Looks like we'll need to fetch the List ID from ActiveCampaign
-            $list_name = $this->get_activecampaign_list_name();
-
-            // Check if list already exists
-            $activecampaign = ActiveCampaign::get_instance();
-            $resp = $activecampaign->get_list( $list_name );
-            // List not found, let's add a new list
-            if ( ! $resp ) {
-                $args = [
-                    'name' => $list_name,
-                ];
-                $resp = $activecampaign->add_list( $args );
-            }
-            $list_id = intval( $resp->id );
-            $this->add_meta( $meta_key, $list_id );
+    public function get_mailchimp_group() {
+        if ( ! Types::is_followable_post_type( $this->get_post_type() ) ) {
+            return false;
         }
-        return $list_id;
+        $email_groups = Email_Groups::get_instance();
+        return $email_groups->get_group( $this->get_title(), $this->get_mailchimp_group_category() );
     }
 
     /**
-     * Delete the ActiveCampaign List ID stored as post meta for this Cluster
+     * Get a MailChimp group id for this cluster
      *
-     * @return bool  False for failure. True for success.
+     * @return string|false MailChimp group id or false if not found
      */
-    public function delete_activecampaign_list_id() {
-        return $this->delete_meta( 'activecampaign-list-id' );
+    public function get_mailchimp_group_id() {
+        $group = $this->get_mailchimp_group();
+        if ( is_object( $group ) && isset( $group->id ) ) {
+            return $group->id;
+        }
+        return false;
+    }
+
+    /**
+     * Get the MailChimp group category name for this cluster
+     * (plural name of the post type)
+     *
+     * @return string The MailChimp group category name
+     */
+    public function get_mailchimp_group_category() {
+        return $this->get_type_name_plural();
     }
 
     /**

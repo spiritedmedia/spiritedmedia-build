@@ -1,0 +1,101 @@
+{% set radio_name = radio_name|default('pedestal-schedule-follow-updates') %}
+
+<fieldset class="pedestal-schedule-follow-updates-metabox">
+    <label class="frequency-label">
+        <input
+            type="radio"
+            name="{{ radio_name|esc_attr }}"
+            value="none"
+            {{ checked( frequency, 'none' ) }}
+        > None
+    </label>
+    <div class="additional-options">
+
+    </div>
+
+    <label class="frequency-label">
+        <input
+            type="radio"
+            name="{{ radio_name|esc_attr }}"
+            value="weekly"
+            {{ checked( frequency, 'weekly' ) }}
+        > Weekly
+    </label>
+    <div class="additional-options">
+        <label>
+            Day of the Week
+            <select name="{{ radio_name|esc_attr }}-weekly-day">
+                {% for day in days_of_week %}
+                    {% set the_day = day|capitalize %}
+                    <option {{ selected( weekly_day, the_day ) }}>{{ the_day }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label>
+            Time of Day
+            <input type="time" name="{{ radio_name|esc_attr }}-weekly-time" value="{{ weekly_time|esc_attr }}">
+        </label>
+    </div>
+
+    <label class="frequency-label">
+        <input
+            type="radio"
+            name="{{ radio_name|esc_attr }}"
+            value="daily"
+            {{ checked( frequency, 'daily' ) }}
+        > Daily
+    </label>
+    <div class="additional-options">
+        <label>
+            Time of Day
+            <input type="time" name="{{ radio_name|esc_attr }}-daily-time" value="{{ daily_time|esc_attr }}">
+        </label>
+    </div>
+
+    <label class="frequency-label">
+        <input
+            type="radio"
+            name="{{ radio_name|esc_attr }}"
+            value="hourly"
+            {{ checked( frequency, 'hourly' ) }}
+        > Hourly
+    </label>
+    <div class="additional-options">
+        <label>
+            Minutes Past the Hour (00 - 59)
+            <input type="number" min="0" max="59" size="2" maxlength="2" name="{{ radio_name|esc_attr }}-hourly-minutes" value="{{ hourly_minutes|esc_attr }}">
+        </label>
+    </div>
+    {{ nonce_field }}
+
+    {% if next_send_date %}
+        <p>Next update will be sent on<br>
+        {{ next_send_date }}.</p>
+    {% endif %}
+</fieldset>
+
+<script>
+jQuery(document).ready(function($) {
+    $metabox = $('.pedestal-schedule-follow-updates-metabox');
+    $selectedAdditionalOptions =
+        $metabox
+            .find('input[type="radio"]:checked')
+            .parent()
+            .next('.additional-options');
+    $metabox
+        .on( 'click', 'input[type="radio"]', function() {
+            $thisAdditionalOptions = $(this).parent().next('.additional-options');
+            if ( $thisAdditionalOptions.css( 'display' ) != 'none' ) {
+                return;
+            }
+            $metabox.find('.additional-options').slideUp();
+            $thisAdditionalOptions.slideDown();
+        })
+        // Hide all additional options except those that are associated
+        // with a checked radio button
+        .find('.additional-options')
+            .not($selectedAdditionalOptions)
+            .hide();
+});
+</script>
