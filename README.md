@@ -1,7 +1,3 @@
-Build [#4541](https://circleci.com/gh/spiritedmedia/spiritedmedia/4541) by kingkool68 at 2018-03-20 04:27 PM UTC
+Build [#4592](https://circleci.com/gh/spiritedmedia/spiritedmedia/4592) by kingkool68 at 2018-04-04 04:15 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.11.0](https://github.com/spiritedmedia/spiritedmedia/compare/v6.11.0)
-## Change log
-[Full Changelog](https://github.com/spiritedmedia/spiritedmedia/compare/v6.10.1...v6.11.0)
-
- - [#2450](https://github.com/spiritedmedia/spiritedmedia/pull/2450): Send Follow Update Emails Through MailChimp + Scheduled Follow Update Emails
+[https://github.com/spiritedmedia/spiritedmedia/compare/9e52dcd2018f...0ed4b42c28e2](https://github.com/spiritedmedia/spiritedmedia/compare/9e52dcd2018f...0ed4b42c28e2)
