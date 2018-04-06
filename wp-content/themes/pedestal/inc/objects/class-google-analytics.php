@@ -257,8 +257,10 @@ class Google_Analytics {
         // @codingStandardsIgnoreStart
         $header_data = $report->columnHeader;
         // @codingStandardsIgnoreEnd
-        foreach ( $header_data->dimensions as $dimension ) {
-            $headers[] = $dimension;
+        if ( $header_data->dimensions ) {
+            foreach ( $header_data->dimensions as $dimension ) {
+                $headers[] = $dimension;
+            }
         }
 
         $metric_header_offset = count( $header_data->dimensions );
@@ -271,15 +273,19 @@ class Google_Analytics {
         foreach ( $rows as $row ) {
             $new_data = [];
 
-            foreach ( $row->dimensions as $index => $val ) {
-                $key              = $headers[ $index ];
-                $new_data[ $key ] = $val;
+            if ( $row->dimensions ) {
+                foreach ( $row->dimensions as $index => $val ) {
+                    $key              = $headers[ $index ];
+                    $new_data[ $key ] = $val;
+                }
             }
 
-            foreach ( $row->metrics as $index => $metric ) {
-                $offset           = $index + $metric_header_offset;
-                $key              = $headers[ $offset ];
-                $new_data[ $key ] = intval( $metric->values[0] );
+            if ( $row->metrics ) {
+                foreach ( $row->metrics as $index => $metric ) {
+                    $offset           = $index + $metric_header_offset;
+                    $key              = $headers[ $offset ];
+                    $new_data[ $key ] = intval( $metric->values[0] );
+                }
             }
 
             $output[] = (object) $new_data;

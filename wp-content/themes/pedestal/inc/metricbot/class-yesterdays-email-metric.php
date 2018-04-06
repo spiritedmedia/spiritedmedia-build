@@ -1,12 +1,13 @@
 <?php
-namespace Pedestal\Metricbot;
+namespace Pedestal\MetricBot;
 
 use Pedestal\Objects\{
+    MailChimp,
     Google_Analytics,
     Notifications
 };
-use Pedestal\Objects\ActiveCampaign;
 use Pedestal\Email\Newsletter_Groups;
+use Pedestal\Utils\Utils;
 use Pedestal\Posts\Newsletter;
 
 class Yesterdays_Email_Metric {
@@ -51,89 +52,135 @@ class Yesterdays_Email_Metric {
         return $events;
     }
 
-    /**
-     * Compile all the data and form a message to send to Slack
-     */
-    public function send() {
-        $ac = ActiveCampaign::get_instance();
-        $newsletter_groups = Newsletter_Groups::get_instance();
-        $notifications = new Notifications;
-
-        $newsletter_id = $newsletter_groups->get_newsletter_group_id( 'Daily Newsletter' );
-        $args          = [
-            'lists'     => [ $newsletter_id ],
-            'end_date'  => strtotime( '7daysago' ),
-            'max_pages' => 10,
+    public function get_data() {
+        $mc = MailChimp::get_instance();
+        $since_send_time = new \DateTime( '1dayAgo' );
+        $campaign_args = [
+            'since_send_time' => $since_send_time->format( 'c' ),
+            'sort_field'      => 'send_time',
+            'sort_dir'        => 'DESC',
+            'count'           => 100,
         ];
-        $emails                          = $ac->get_camapigns( $args );
-        $yesterdays_email                = false;
-        $yesterday                       = date( 'Y-m-d', strtotime( 'yesterday' ) );
-        foreach ( $emails as $email ) {
-            $sent_date = $email->sent_date;
-            $sent_date = date( 'Y-m-d', strtotime( $sent_date ) );
-            if ( $sent_date === $yesterday ) {
-                $yesterdays_email = $email;
-                break;
+        $group_name = 'Daily Newsletter';
+        $group_category = 'Newsletters';
+        $raw_campaigns = $mc->get_campaigns_by_group(
+            $group_name,
+            $group_category,
+            $campaign_args
+        );
+        $campaigns = [];
+        foreach ( $raw_campaigns as $campaign ) {
+            $report_url = $mc->get_admin_url( '/reports/summary?id=' . $campaign->web_id );
+            $raw_link_clicks = $mc->get_campaign_link_clicks( $campaign->id, [
+                'count' => 100,
+            ] );
+
+            // Need to de-dupe and normalize the link clicks
+            $link_clicks = [];
+            foreach ( $raw_link_clicks as $link ) {
+                // Discard ?utm query strings to normalize URLs
+                $de_duped_url = explode( '?utm', $link->url )[0];
+                if ( empty( $link_clicks[ $de_duped_url ] ) ) {
+                    $link_clicks[ $de_duped_url ] = (object) [
+                        'url'           => $de_duped_url,
+                        'total_clicks'  => 0,
+                        'unique_clicks' => 0,
+                        'campaign_id'   => $campaign->id,
+                    ];
+                }
+                $link_clicks[ $de_duped_url ]->total_clicks += $link->total_clicks;
+                $link_clicks[ $de_duped_url ]->unique_clicks += $link->unique_clicks;
             }
+
+            // Convert associative array into index so they can be sorted
+            $link_clicks = array_values( $link_clicks );
+            $link_clicks = Utils::sort_obj_array_by_prop( $link_clicks, 'unique_clicks' );
+            // Sort in descending order
+            $link_clicks = array_reverse( $link_clicks );
+
+            $unsubscribes = $mc->get_campaign_unsubscribes( $campaign->id );
+
+            $campaigns[] = (object) [
+                'report_url'        => $report_url,
+                'send_time'         => $campaign->send_time,
+                'sent_to'           => $campaign->emails_sent,
+                'recipient_count'   => $campaign->recipients->recipient_count,
+                'subject'           => $campaign->settings->subject_line,
+                'opens'             => $campaign->report_summary->opens,
+                'unique_opens'      => $campaign->report_summary->unique_opens,
+                'clicks'            => $campaign->report_summary->clicks,
+                'subscriber_clicks' => $campaign->report_summary->subscriber_clicks,
+                'click_rate'        => $campaign->report_summary->click_rate,
+                'link_clicks'       => $link_clicks,
+                'unsubscribes'      => $unsubscribes,
+            ];
         }
-        if (
-               ! $yesterdays_email
-            || ! is_object( $yesterdays_email )
-            || ! isset( $yesterdays_email->unique_opens )
-        ) {
+        return $campaigns;
+    }
+
+    public function get_message() {
+        $data = $this->get_data();
+        if ( ! is_array( $data ) || ! isset( $data[0] ) ) {
             return false;
         }
-        $yesterdays_open_rate            = ( $yesterdays_email->unique_opens / $yesterdays_email->sent_to ) * 100;
-        $yesterdays_click_through        = ( $yesterdays_email->clicks / $yesterdays_email->sent_to ) * 100;
-        $yesterdays_campaign_report_link = 'https://spiritedmedia.activehosted.com/report/#/campaign/' . $yesterdays_email->id;
-        $links                           = $ac->get_links_report( $yesterdays_email->id, $yesterdays_email->message_ids[0] );
-        $link_clicks                     = [];
+        $campaign = $data[0];
 
-        foreach ( $links as $link ) {
-            if ( $link->unique_clicks <= 0 ) {
-                continue;
-            }
-            $link_cutoff  = 30;
-            $link_text     = $link->url;
-            // Sometimes get_site_url() returns the wrong URL scheme for an environment
-            // but for our purposes we want to replace both http and https versions of get_site_url()
-            $neeles = [
-                set_url_scheme( get_site_url(), 'http' ),
-                set_url_scheme( get_site_url(), 'https' ),
-            ];
-            $link_text     = str_replace( $needles, '', $link_text );
-            if ( strlen( $link->url ) > $link_cutoff ) {
+        $open_rate = $campaign->unique_opens / $campaign->recipient_count * 100;
+        $click_rate = $campaign->click_rate * 100;
+        $link_clicks = array_slice( $campaign->link_clicks, 0, 10 );
+
+        $newsletter_link = Newsletter::get_yesterdays_newsletter_link();
+        $label = 'yesterday\'s newsletter';
+        if ( $newsletter_link ) {
+            $label = '<' . $newsletter_link . '|' . $label . '>';
+        }
+        $message = [
+            'Here\'s how ' . $label . ' performed!',
+            '',
+            number_format( $campaign->sent_to ) . ' recipients',
+            round( $open_rate, 1 ) . '% opened the email',
+            round( $click_rate, 1 ) . '% clicked a link',
+            number_format( count( $campaign->unsubscribes ) ) . ' unsubscribed',
+            '',
+            'The top ' . count( $link_clicks ) . ' links clicked',
+        ];
+
+        $link_cutoff = 30;
+        // Sometimes get_site_url() returns the wrong URL scheme for an environment
+        // but for our purposes we want to replace both http and https versions of get_site_url()
+        $needles = [
+            set_url_scheme( get_site_url(), 'http' ),
+            set_url_scheme( get_site_url(), 'https' ),
+        ];
+        foreach ( $link_clicks as $link ) {
+            $link_url = $link->url;
+            // Trim off UTM query parameters
+            $link_url = explode( '?utm', $link_url )[0];
+
+            $link_text = $link_url;
+            $link_text = str_replace( $needles, '', $link_text );
+            if ( strlen( $link_url ) > $link_cutoff ) {
                 $link_text = substr( $link_text, 0, $link_cutoff );
                 $link_text .= '...';
             }
 
-            $link_url      = '<' . $link->url . '|' . $link_text . '>';
-            $link_clicks[] = $link->unique_clicks . ' ' . $link_url;
-        }
-        $link_clicks     = array_slice( $link_clicks, 0, 10 );
-        $newsletter_link = Newsletter::get_yesterdays_newsletter_link();
-        $label           = 'yesterday\'s newsletter';
-        if ( $newsletter_link ) {
-            $label = '<' . $newsletter_link . '|' . $label . '>';
-        }
-
-        $message = [
-            'Here\'s how ' . $label . ' performed!',
-            '',
-            number_format( $yesterdays_email->sent_to ) . ' recipients',
-            round( $yesterdays_open_rate, 2 ) . '% opened the email',
-            round( $yesterdays_click_through, 2 ) . '% clicked a link',
-            number_format( $yesterdays_email->unsubscribes ) . ' unsubscribed',
-            '',
-            'The top ' . count( $link_clicks ) . ' links clicked',
-        ];
-        foreach ( $link_clicks as $link ) {
-            $message[] = $link;
+            $message[] = $link->unique_clicks . ' <' . $link_url . '|' . $link_text . '>';
         }
         $message[] = '';
-        $message[] = '(Full report in <' . $yesterdays_campaign_report_link . '|Active Campaign>)';
+        $message[] = '(Full report in <' . $campaign->report_url . '|MailChimp>)';
 
-        $message = implode( "\n", $message );
+        return implode( "\n", $message );
+    }
+
+    /**
+     * Compile all the data and form a message to send to Slack
+     */
+    public function send() {
+        $notifications = new Notifications;
+        $message = $this->get_message();
+        if ( ! $message ) {
+            return;
+        }
         $slack_args = [
             'username'    => 'Spirit',
             'icon_emoji'  => ':ghost:',

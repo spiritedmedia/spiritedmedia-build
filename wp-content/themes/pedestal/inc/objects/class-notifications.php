@@ -11,7 +11,7 @@ class Notifications {
      */
     public function send( $msg, $args ) {
         // Prevent test environments from firing off to Slack
-        if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
+        if ( defined( 'WP_ENV' ) && 'development' == WP_ENV && ! isset( $args['force_send'] ) ) {
             // If you really need to test this locally, comment out the following statement
             return;
         }

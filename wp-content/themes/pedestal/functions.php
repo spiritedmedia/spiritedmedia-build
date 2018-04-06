@@ -10,7 +10,8 @@ use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Registrations\Taxonomies\Taxonomies;
 use Pedestal\Posts\Entities\Embed;
-use Pedestal\Metricbot\{
+use Pedestal\MetricBot\{
+    MetricBots,
     Weekly_Traffic_Metric,
     Newsletter_Signups_By_Page_Metric,
     Yesterdays_Email_Metric
@@ -263,10 +264,10 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->cron_management   = Cron_Management::get_instance();
 
             // Metrics
+            $this->metricbots                        = MetricBots::get_instance();
             $this->weekly_traffic_metric             = Weekly_Traffic_Metric::get_instance();
             $this->newsletter_signups_by_page_metric = Newsletter_Signups_By_Page_Metric::get_instance();
-            // Will be reimplemented after our move to MailChimp. See #2425
-            // $this->yesterdays_email_metric           = Yesterdays_Email_Metric::get_instance();
+            $this->yesterdays_email_metric           = Yesterdays_Email_Metric::get_instance();
 
             // Emails
             $this->emails                  = Email::get_instance();

@@ -820,6 +820,62 @@ class MailChimp {
     */
 
     /**
+     * Get campaigns
+     *
+     * @see http://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/
+     * @param  array  $args Campaign args
+     * @return array        Array of campaign objects
+     */
+    public function get_campaigns( $args = [] ) {
+        $defaults = [
+            'list_id' => $this->get_site_list_id(),
+            'status'  => 'sent',
+        ];
+        $args = wp_parse_args( $args, $defaults );
+        $endpoint = '/campaigns';
+        $output = $this->get_request( $endpoint, $args );
+        if ( isset( $output->campaigns ) ) {
+            return $output->campaigns;
+        }
+        return [];
+    }
+
+    /**
+     * Get campaigns sent to a certain group
+     *
+     * @see http://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/
+     * @param  string $group          Group name or ID
+     * @param  string $group_category Category the group belongs to
+     * @param  array  $args           Args to send to get_campaigns()
+     * @return array                  Array of campaign objects
+     */
+    public function get_campaigns_by_group( $group = '', $group_category = '', $args = [] ) {
+        $campaigns = [];
+        $group = $this->get_group( $group, $group_category );
+        if ( ! $group || ! isset( $group->id ) ) {
+            return $campaigns;
+        }
+        $all_campaigns = $this->get_campaigns( $args );
+        foreach ( $all_campaigns as $campaign ) {
+            $in_group = false;
+            $conditions = $campaign->recipients->segment_opts->conditions;
+            foreach ( $conditions as $condition ) {
+                if ( is_array( $condition->value ) && in_array( $group->id, $condition->value ) ) {
+                    $in_group = true;
+                }
+            }
+            if ( $in_group ) {
+                // Remove the _link element
+                if ( isset( $campaign->{'_links'} ) ) {
+                    unset( $campaign->{'_links'} );
+                }
+                $campaigns[] = $campaign;
+            }
+        }
+        return $campaigns;
+    }
+
+    /**
      * Create a campaign
      *
      * @see http://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/
@@ -967,6 +1023,48 @@ class MailChimp {
         $endpoint = "/campaigns/$campaign_id/actions/send";
         $sent = $this->post_request( $endpoint );
         return $campaign_id;
+    }
+
+    /**
+     * Get a report of link clicks for a given campaign
+     *
+     * @see http://developer.mailchimp.com/documentation/mailchimp/reference/reports/click-details/
+     * @param  string $campaign_id Id of the campaign to get link stats for
+     * @param  array  $args        Args to modify the response
+     * @return array               Array of link objects
+     */
+    public function get_campaign_link_clicks( $campaign_id = '', $args = [] ) {
+        $endpoint = "/reports/$campaign_id/click-details";
+        $defaults = [
+            'count' => 25,
+        ];
+        $args = wp_parse_args( $args, $defaults );
+        $data = $this->get_request( $endpoint, $args );
+        if ( isset( $data->urls_clicked ) ) {
+            return $data->urls_clicked;
+        }
+        return [];
+    }
+
+    /**
+     * Get a report of unsubscribes for a given campaign
+     *
+     * @see http://developer.mailchimp.com/documentation/mailchimp/reference/reports/unsubscribed/
+     * @param  string $campaign_id Id of the campaign to get unsubscribe stats for
+     * @param  array  $args        Args to modify the response
+     * @return array               Array of subscriber objects
+     */
+    public function get_campaign_unsubscribes( $campaign_id = '', $args = [] ) {
+        $endpoint = "/reports/$campaign_id/unsubscribed";
+        $defaults = [
+            'count' => 100,
+        ];
+        $args = wp_parse_args( $args, $defaults );
+        $data = $this->get_request( $endpoint, $args );
+        if ( isset( $data->unsubscribes ) ) {
+            return $data->unsubscribes;
+        }
+        return [];
     }
 
     /**

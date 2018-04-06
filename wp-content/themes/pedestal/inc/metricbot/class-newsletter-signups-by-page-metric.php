@@ -1,7 +1,8 @@
 <?php
-namespace Pedestal\Metricbot;
+namespace Pedestal\MetricBot;
 
 use Pedestal\Objects\{
+    MailChimp,
     Google_Analytics,
     Notifications
 };
@@ -68,8 +69,8 @@ class Newsletter_Signups_By_Page_Metric {
         $dimension_filter_args = [
             [
                 'name'        => 'ga:eventLabel',
-                'operator'    => 'EXACT',
-                'expressions' => [ 'Newsletter Signup Widget', 'Newsletter Signup Page' ],
+                'operator'    => 'BEGINS_WITH',
+                'expressions' => [ 'Newsletter Signup' ],
             ],
         ];
         $dimension_filter_clause = $ga->get_dimension_filters( $dimension_filter_args );
@@ -155,24 +156,53 @@ class Newsletter_Signups_By_Page_Metric {
      * @return object              Newsletter subscriber data
      */
     public function get_newsletter_subscriber_stats( $start_date = '', $end_date = '' ) {
-        $ac = ActiveCampaign::get_instance();
-        $newsletter_groups = Newsletter_Groups::get_instance();
-
-        $list_id           = $newsletter_groups->get_newsletter_group_id( 'Daily Newsletter' );
-        $args              = [
-            'lists'      => [ $list_id ],
-            'start_date' => $start_date,
-            'end_date'   => $end_date,
-            'max_pages'  => 10,
+        $mc = MailChimp::get_instance();
+        $since_send_time = new \DateTime( $start_date );
+        $campaign_args = [
+            'since_send_time' => $since_send_time->format( 'c' ),
+            'sort_field'      => 'send_time',
+            'sort_dir'        => 'DESC',
+            'count'           => 100,
         ];
-        $emails            = $ac->get_camapigns( $args );
-        $emails_reversed   = array_reverse( $emails );
-        $latest_email      = $emails[0];
-        $last_email        = $emails_reversed[0];
+        $group_name = 'Daily Newsletter';
+        $group_category = 'Newsletters';
+        $raw_campaigns = $mc->get_campaigns_by_group(
+            $group_name,
+            $group_category,
+            $campaign_args
+        );
+        $campaigns = [];
+        foreach ( $raw_campaigns as $campaign ) {
+            $report_url = $mc->get_admin_url( '/reports/summary?id=' . $campaign->web_id );
 
-        $total_subscribers = intval( $latest_email->sent_to );
-        $diff              = $total_subscribers - intval( $last_email->sent_to );
-        $trend             = 'up';
+            $campaigns[] = (object) [
+                'report_url'        => $report_url,
+                'send_time'         => $campaign->send_time,
+                'sent_to'           => $campaign->emails_sent,
+                'recipient_count'   => $campaign->recipients->recipient_count,
+                'subject'           => $campaign->settings->subject_line,
+                'opens'             => $campaign->report_summary->opens,
+                'unique_opens'      => $campaign->report_summary->unique_opens,
+                'clicks'            => $campaign->report_summary->clicks,
+                'subscriber_clicks' => $campaign->report_summary->subscriber_clicks,
+                'click_rate'        => $campaign->report_summary->click_rate,
+            ];
+        }
+        if ( empty( $campaigns[0] ) ) {
+            return (object) [
+                'total'     => 0,
+                'trend'     => 'down',
+                'diff'      => 0,
+                'campaigns' => [],
+            ];
+        }
+        $campaigns_reversed = array_reverse( $campaigns );
+        $latest_campaign    = $campaigns[0];
+        $last_campaign      = $campaigns_reversed[0];
+
+        $total_subscribers  = intval( $latest_campaign->sent_to );
+        $diff               = $total_subscribers - intval( $last_campaign->sent_to );
+        $trend              = 'up';
 
         if ( $diff < 0 ) {
             $trend = 'down';
@@ -180,27 +210,20 @@ class Newsletter_Signups_By_Page_Metric {
         }
 
         return (object) [
-            'total' => intval( $latest_email->sent_to ),
-            'trend' => $trend,
-            'diff'  => $diff,
+            'total'     => $total_subscribers,
+            'trend'     => $trend,
+            'diff'      => $diff,
+            'campaigns' => $campaigns,
         ];
     }
 
-    /**
-     * Compile all the data and form a message to send to Slack
-     */
-    public function send() {
-        $notifications = new Notifications;
-
-        $start_date       = '7daysAgo';
-        $end_date         = 'yesterday';
+    public function get_data( $start_date = '7daysAgo', $end_date = 'yesterday' ) {
         $ga_data          = $this->get_newsletter_signups_by_page_data( $start_date, $end_date );
         $page_paths       = [];
         foreach ( $ga_data as $item ) {
             $page_paths[] = $item->{'ga:pagePath'};
         }
         $sessions         = $this->get_sessions_by_page( $start_date, $end_date, $page_paths );
-        // $subscriber_stats = $this->get_newsletter_subscriber_stats( $end_date, $start_date );
 
         $total_signups    = 0;
         $output = [];
@@ -246,9 +269,18 @@ class Newsletter_Signups_By_Page_Metric {
                 'conversion' => round( $conversion ),
             ];
         }
+        return $output;
+    }
 
+    public function get_message() {
+        $start_date            = '7daysAgo';
+        $end_date              = 'yesterday';
+
+        $output                = $this->get_data( $start_date, $end_date );
         $output_by_signups     = array_reverse( Utils::sort_obj_array_by_prop( $output, 'signups' ) );
         $output_by_conversions = array_reverse( Utils::sort_obj_array_by_prop( $output, 'conversion' ) );
+        $subscriber_stats      = $this->get_newsletter_subscriber_stats( $start_date, $end_date );
+
         $message = [
             'Here\'s how we did this week at building our subscriber list!',
             '',
@@ -272,8 +304,6 @@ class Newsletter_Signups_By_Page_Metric {
             $message[] = $signups . ' ' . $item->link;
         }
 
-        // Will be reimplemented after our move to MailChimp. See #2425
-        /*
         $message[] = '';
         $total     = number_format( $subscriber_stats->total );
         $trend     = $subscriber_stats->trend;
@@ -283,9 +313,19 @@ class Newsletter_Signups_By_Page_Metric {
         }
         $diff      = $subscriber_stats->diff;
         $message[] = $total . ' subscribers, ' . $trend . ' ' . $diff . ' from last week' . $punct;
-        */
 
-        $message = implode( "\n", $message );
+        return implode( "\n", $message );
+    }
+
+    /**
+     * Compile all the data and form a message to send to Slack
+     */
+    public function send() {
+        $notifications = new Notifications;
+        $message = $this->get_message();
+        if ( ! $message ) {
+            return;
+        }
         $slack_args = [
             'username'    => 'Spirit',
             'icon_emoji'  => ':ghost:',

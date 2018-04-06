@@ -1,0 +1,32 @@
+<div class="wrap">
+    <h1>Test MetricBots</h1>
+    <form action="tools.php" method="get">
+        <select name="bot">
+            <option value="-1">- Select Metricbot -</option>
+            {% for bot,label in bots %}
+                <option value="{{ bot|esc_attr }}" {{ selected( bot, selected_bot ) }}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <p>
+            <label>
+                Name of public channel to send test to:<br>
+                <input type="text" name="slack-channel" value="{{ slack_channel|esc_attr }}">
+            </label>
+        </p>
+        {{ nonce_field }}
+        <input type="hidden" name="page" value="{{ page|esc_attr }}">
+        <p class="submit">
+            {{ primary_button }}
+        </p>
+    </form>
+
+    {% if message %}
+        <h2>Message:</h2>
+        <xmp>{{ message }}</xmp>
+    {% endif %}
+
+    {% if data %}
+        <h2>Raw Data:</h2>
+        <xmp>{{ dump( data ) }}</xmp>
+    {% endif %}
+</div>
