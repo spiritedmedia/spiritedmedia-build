@@ -215,3 +215,21 @@ $overline-margin-bottom    : rem( 8px );
 
 // Brand Headings
 $brand-heading-breakpoint: em( 675px );
+
+// Figures
+$figure-caption-color: $body-font-color !default;
+
+// Lists
+$list-side-margin:           em( 8px );
+$list-ordered-side-margin:   $list-side-margin;
+$list-unordered-side-margin: em( 16px );
+$list-item-margin-bottom:    em( 4px );
+$list-counter-color:         $primary-color !default;
+$list-bullet-size:           rem( 5px );
+$list-unordered-bullet-type: circle !default;
+
+// Site Footer
+$site-footer-links-color: $grey-95 !default;
+$site-footer-links-color-hover: $primary-color !default;
+$site-footer-links-letter-spacing: 0 !default;
+$site-footer-links-line-height: 1.25 !default;

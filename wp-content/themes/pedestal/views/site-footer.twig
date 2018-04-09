@@ -25,8 +25,7 @@
 
 <footer class="site-footer" role="contentinfo">
     <nav class="site-footer__nav">
-        <div class="row">
-
+        <div class="site-footer__container">
             <ul class="site-footer__social">
                 {% set gaCategorySocial = 'Social Icon - Footer' %}
 
@@ -66,39 +65,12 @@
             </ul>
 
             {% spaceless %}
-            <div class="site-footer__links--inline site-footer__links">
-                <ul class="site-footer__links__group">
-                    {% for title, link in menu %}
-                    {{ footer_macros.link( title, link ) }}
-                    {% endfor %}
-                </ul>
-            </div>
+            <ul class="site-footer__links">
+                {% for title, link in menu %}
+                {{ footer_macros.link( title, link ) }}
+                {% endfor %}
+            </ul>
             {% endspaceless %}
-
-            <div class="site-footer__links--columns site-footer__links">
-                <div class="row">
-                    <ul class="site-footer__links__group">
-                        {% for title, link in menu | slice(0, 2) %}
-                        {{ footer_macros.link( title, link ) }}
-                        {% endfor %}
-                    </ul>
-                    <ul class="site-footer__links__group">
-                        {% for title, link in menu | slice(2, 2) %}
-                        {{ footer_macros.link( title, link ) }}
-                        {% endfor %}
-                    </ul>
-                    <ul class="site-footer__links__group">
-                        {% for title, link in menu | slice(4, 2) %}
-                        {{ footer_macros.link( title, link ) }}
-                        {% endfor %}
-                    </ul>
-                    <ul class="site-footer__links__group">
-                        {% for title, link in menu | slice(6, 2) %}
-                        {{ footer_macros.link( title, link ) }}
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
         </div>
     </nav>
 
