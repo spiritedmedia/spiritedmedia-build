@@ -707,15 +707,6 @@ abstract class Post {
     }
 
     /**
-     * Get the share link for the post
-     *
-     * @return string
-     */
-    public function get_share_link() {
-        return wp_get_shortlink( $this->get_id(), 'post' );
-    }
-
-    /**
      * Get the modified date for the post
      *
      * @param string $format
@@ -1312,7 +1303,7 @@ abstract class Post {
      * @return string
      */
     public function get_facebook_share_link() {
-        return 'https://www.facebook.com/sharer/sharer.php?u=' . rawurldecode( $this->get_share_link() );
+        return 'https://www.facebook.com/sharer/sharer.php?u=' . rawurldecode( $this->get_permalink() );
     }
 
     /**
@@ -1321,7 +1312,7 @@ abstract class Post {
      * @return string
      */
     public function get_twitter_share_link() {
-        $share_link = rawurldecode( $this->get_share_link() );
+        $share_link = rawurldecode( $this->get_permalink() );
         $text = rawurlencode( $this->get_twitter_share_text() );
         $twitter_args = [
             'url'        => $share_link,
@@ -1337,7 +1328,7 @@ abstract class Post {
      * @return string
      */
     public function get_linkedin_share_link() {
-        $share_link = rawurldecode( $this->get_share_link() );
+        $share_link = rawurldecode( $this->get_permalink() );
         $title = rawurldecode( $this->get_linkedin_title() );
         $source = rawurlencode( get_bloginfo( 'name' ) );
         $summary = rawurlencode( $this->get_linkedin_summary() );

@@ -185,7 +185,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             // The following constants require other constants to be set first.
             define( 'SPIRITEDMEDIA_PEDESTAL_LIVE_DIR', SPIRITEDMEDIA_LIVE_SITE_URL . '/wp-content/themes/pedestal' );
             define( 'SPIRITEDMEDIA_PEDESTAL_STAGING_DIR', SPIRITEDMEDIA_STAGING_SITE_URL . '/wp-content/themes/pedestal' );
-            $twitter_share_text_max_length = 140 - strlen( ' via @' . PEDESTAL_TWITTER_USERNAME );
+            $twitter_share_text_max_length = 280 - strlen( ' via @' . PEDESTAL_TWITTER_USERNAME );
             define( 'PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH', $twitter_share_text_max_length );
         }
 
