@@ -50,8 +50,11 @@
 
 # Deployment
 !appspec.yml
-# !circle.yml
+# !.circleci/
 !health-check.php
+
+# Cron
+!multisite-cron.php
 
 # Markdown
 !README.md
