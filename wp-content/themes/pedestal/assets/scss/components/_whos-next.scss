@@ -14,7 +14,7 @@
 }
 
 .c-whos-next__items {
-  @include stdbd( top );
+  border-top: $border-standard;
 }
 
 

@@ -7,8 +7,7 @@
 
 
 .spotlight {
-  @include stdbd( bottom );
-
+  border-bottom: $border-standard;
   background-color: $white;
 
   strong {

@@ -8,8 +8,8 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
 
 .c-meta-info {
   @include clearfix;
-  @include stdbd(bottom);
 
+  border-bottom: $border-standard;
   padding-bottom: rem( 4px );
   color: $body-font-color;
   font-size: $small-font-size;
@@ -161,12 +161,11 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
 
 
 .c-meta-info--entity-single {
-  @include stdbd(top);
-
   clear: both;
+  margin-top: rem( 16px );
+  border-top: $border-standard;
   padding-top: rem( 8px );
   padding-bottom: rem( 8px );
-  margin-top: rem( 16px );
 
   // If less than three authors, display normal medium layout
   &.c-meta-info--authors-few {}

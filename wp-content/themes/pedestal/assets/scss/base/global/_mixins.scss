@@ -145,33 +145,6 @@
 // Borders
 // ==========================================================================
 
-
-@mixin stdbd(
-  $side: 'all',
-  $width: rem( 1px ),
-  $color: $border-std-color,
-  $neut: false
-) {
-
-  $valid-sides: 'top' 'right' 'bottom' 'left' 'all';
-
-  @if not sl-contain( $valid-sides, $side ) {
-    @error 'Invalid border side argument specified in mixin `stdbd`';
-  }
-
-  @if 'all' == $side {
-    border: $width $color solid;
-  } @else {
-    @if $neut {
-      border: 0;
-    }
-
-    border-#{$side}: $width $color solid;
-  }
-
-}
-
-
 @mixin dash-rule {
   width: 4em;
   margin: 0 auto;

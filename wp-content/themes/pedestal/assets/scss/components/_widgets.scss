@@ -7,12 +7,11 @@
 
 
 .widget {
-  @include stdbd( bottom );
-
-  list-style-type: none;
   margin-bottom: rem( 16px );
+  border-bottom: $border-standard;
   padding: rem( 4px );
   padding-bottom: rem( 16px );
+  list-style-type: none;
 
   &:last-child {
     border: 0;

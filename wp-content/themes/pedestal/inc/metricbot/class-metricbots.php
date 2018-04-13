@@ -39,7 +39,7 @@ class MetricBots {
     public function action_admin_menu() {
         $page_title = 'MetricBots Tester Page';
         $menu_title = 'Test MetricBots';
-        $capability = 'update_plugins';
+        $capability = 'manage_options';
         add_submenu_page( 'tools.php', $page_title, $menu_title, $capability, $this->menu_slug, [ $this, 'render_metricbot_test_page' ] );
     }
 

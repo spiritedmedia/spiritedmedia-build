@@ -26,11 +26,8 @@ hr,
 
 /// A slightly less obtrusive rule
 .hr--slim {
-  @include stdbd( top );
-
-  margin: 0 auto;
-  margin-top: rem( 8px );
-  margin-bottom: rem( 8px );
+  margin: rem( 8px ) auto;
+  border-top: $border-standard;
 }
 
 

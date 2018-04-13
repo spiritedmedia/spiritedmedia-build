@@ -5,10 +5,9 @@
 
 .newsletter-items {
   .newsletter-item {
-    @include stdbd( bottom );
-
-    padding-bottom: rem( 16px );
     margin-bottom: rem( 16px );
+    border-bottom: $border-standard;
+    padding-bottom: rem( 16px );
 
     &:last-of-type {
       border-bottom: 0;

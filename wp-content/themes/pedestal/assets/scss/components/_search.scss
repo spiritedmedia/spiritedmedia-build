@@ -75,19 +75,15 @@
 }
 
 .c-search__field {
-  @include stdbd(
-    $side: 'bottom',
-    $color: $grey-80,
-    $neut: true
-  );
-
-  box-shadow: none;
   height: auto;
-  font-size: $h4-font-size;
+  margin-bottom: rem( 16px );
+  box-shadow: none;
+  border: 0;
+  border-bottom: 1px solid $grey-80;
   padding: rem( 8px );
   padding-left: rem( 40 ); // input icon width
+  font-size: $h4-font-size;
   color: $grey-25;
-  margin-bottom: rem( 16px );
 
   &,
   &:focus {

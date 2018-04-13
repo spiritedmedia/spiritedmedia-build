@@ -11,8 +11,8 @@
 
 .c-panel {
   @include radius;
-  @include stdbd;
 
+  border: $border-standard;
   background-color: $c-panel-bg;
 }
 
