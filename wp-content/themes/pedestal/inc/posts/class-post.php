@@ -546,9 +546,11 @@ abstract class Post {
     /**
      * Get the image for the meta info component
      *
-     * If the post has a single author, the author's avatar image will be used.
-     * If there is more than one author or if the author has no avatar defined
-     * then this will default to the site logo icon.
+     * If the post has a single author with an image uploaded, the author's
+     * avatar image will be used.
+     *
+     * If there is more than one author or if the author has no avatar uploaded
+     * then the site logo icon will be used.
      *
      * @param int $size [28] Image size
      * @return string Image HTML
@@ -562,53 +564,26 @@ abstract class Post {
         }
 
         if ( 1 == count( $authors ) ) {
-            if ( Pedestal()->is_email() ) {
-                $content = $this->get_single_author()->get_image_html( $size );
-            } else {
-                $content = $this->get_single_author()->get_avatar( $size, [
-                    'sizes' => '28px',
-                    'srcset' => [
-                        'ratio'  => 1,
-                        'widths' => 28,
-                    ],
-                ] );
-            }
-            return sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Image|%s" class="%s">%s</a>',
+            $img = $this->get_single_author()->get_avatar( $size, [
+                'sizes' => '28px',
+                'srcset' => [
+                    'ratio'  => 1,
+                    'widths' => $size,
+                ],
+            ] );
+            return sprintf(
+                '<a href="%s" data-ga-category="Author" data-ga-label="Image|%s" class="%s">%s</a>',
                 esc_url( $this->get_single_author()->get_permalink() ),
                 esc_attr( $this->get_single_author()->get_display_name() ),
                 $link_classes,
-                $content
+                $img
             );
-        } elseif ( 1 < count( $authors ) ) {
-            $html  = '<a href="' . esc_url( home_url( '/about/' ) ) . '" data-ga-category="Author" data-ga-label="Image|Placeholder">';
-            $html .= Icons::get_logo( 'logo-icon', 'c-meta-info__img__icon', 40 );
-            $html .= '</a>';
-            return $html;
         }
 
-        return false;
-    }
-
-    /**
-     * Get an author avatar at a specified size
-     * If more than one author is set a logo icon will be returned
-     *
-     * @param  string $size  Size of the image to use
-     * @return string        HTML markup of the image or SVG of the logo
-     */
-    public function get_author_avatar( $size = 'thumbnail' ) {
-        $authors = $this->get_authors();
-        $num_of_authors = count( $authors );
-        if ( 1 == $num_of_authors ) {
-            return $this->get_single_author()->get_image_html( $size );
-        }
-
-        if ( 1 < $num_of_authors ) {
-            $icon_size = 40;
-            return Icons::get_logo( 'logo-icon', '', $icon_size );
-        }
-
-        return;
+        $html  = '<a href="' . esc_url( home_url( '/about/' ) ) . '" data-ga-category="Author" data-ga-label="Image|Placeholder">';
+        $html .= Icons::get_logo( 'logo-icon' );
+        $html .= '</a>';
+        return $html;
     }
 
     /**
@@ -1782,7 +1757,7 @@ abstract class Post {
 
         if ( post_type_supports( static::$post_type, 'author' ) ) {
             $context['author_names'] = $this->get_the_authors();
-            $context['author_image'] = $this->get_author_avatar();
+            $context['author_image'] = $this->get_meta_info_img();
             $context['author_link']  = $this->get_author_permalink();
         }
         return $context;

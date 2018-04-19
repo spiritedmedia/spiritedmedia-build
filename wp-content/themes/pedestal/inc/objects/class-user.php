@@ -129,22 +129,41 @@ class User extends Author {
     }
 
     /**
-     * Get the avatar for the Author
+     * Get the user's avatar
      *
      * @param array|int $size
      * @param array     $img_atts Optional image HTML attributes
-     * @return string|HTML|bool
+     * @param boolean   $fallback [true] Display the fallback icon?
+     * @return string|false Image HTML or logo icon SVG or false if fallback disabled
      */
-    public function get_avatar( $size, $img_atts = [] ) {
-        $img = $this->get_image_html( $size, $img_atts );
+    public function get_avatar( $size, $img_atts = [], $fallback = true ) {
+        $attachment = $this->get_image_attachment();
+
+        if ( ! $attachment ) {
+            return $fallback ? Icons::get_logo( 'logo-icon' ) : false;
+        }
+
+        $img = $attachment->get_html( $size, $img_atts );
+
         $role = $this->get_public_role();
         $role_class = 'c-avatar--' . $role['name'];
         $output = '<div class="c-avatar  ' . $role_class . '">';
         $output .= '<div class="c-avatar__img">';
-        $output .= $img ?: Icons::get_logo( 'logo-icon', '', '28' );
+        $output .= $img;
         $output .= '</div>';
         $output .= '</div>';
         return $output;
+    }
+
+    /**
+     * Get the user's uploaded image
+     *
+     * @return \Pedestal\Posts\Attachment|false
+     */
+    protected function get_image_attachment() {
+        global $wpdb;
+        $meta_name = $wpdb->prefix . 'user_img';
+        return Attachment::get( $this->get_meta( $meta_name ) );
     }
 
     /**
@@ -180,26 +199,6 @@ class User extends Author {
      */
     public function get_short_bio() {
         return $this->get_meta( 'user_bio_short' );
-    }
-
-    /**
-     * Get the user image
-     *
-     * @param string $size
-     * @param array $img_atts Optional image attributes
-     * @return html
-     */
-    public function get_image_html( $size = 'full', $img_atts = [] ) {
-        global $wpdb;
-        $meta_name = $wpdb->prefix . 'user_img';
-        $id = $this->get_meta( $meta_name ) ?: $this->get_meta( 'user_img' );
-        $attachment = Attachment::get( $id );
-        if ( ! $attachment instanceof Attachment ) {
-            return false;
-        }
-        $img_atts = wp_parse_args( $img_atts, [] );
-
-        return $attachment->get_html( $size, $img_atts );
     }
 
     /**

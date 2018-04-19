@@ -753,5 +753,52 @@ class CLI extends \WP_CLI_Command {
 
         WP_CLI::success( 'Done! Verify at ' . $mc->get_admin_url( '/lists/' ) );
     }
+
+    /**
+     * Migrate legacy `user_img` fields to per-site fields
+     *
+     * @link https://github.com/spiritedmedia/spiritedmedia/pull/1627
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal migrate-user-img
+     *     wp pedestal migrate-user-img --url=https://billypenn.dev
+     *
+     * @subcommand migrate-user-img
+     */
+    public function migrate_user_img() {
+        global $wpdb;
+        $user_img_key = $wpdb->prefix . 'user_img';
+
+        $skipped_count = 0;
+        $migrated_count = 0;
+        $no_image_count = 0;
+        $users = get_users( [
+            'fields' => [ 'ID' ],
+        ] );
+        foreach ( $users as $user ) {
+            $user_id = $user->ID;
+            $site_user_img = get_user_meta( $user_id, $user_img_key, true );
+            if ( $site_user_img ) {
+                $skipped_count++;
+                WP_CLI::line( "User {$user_id} already has a user image in the proper format. Skipping..." );
+                continue;
+            }
+            $global_user_img = get_user_meta( $user_id, 'user_img', true );
+            if ( $global_user_img ) {
+                update_user_meta( $user_id, $user_img_key, $global_user_img );
+                delete_user_meta( $user_id, 'user_img' );
+                $migrated_count++;
+                WP_CLI::line( "User {$user_id}'s legacy user image was migrated to the proper format!" );
+                continue;
+            }
+            $no_image_count++;
+            WP_CLI::line( "User {$user_id} doesn't have an image uploaded anywhere." );
+        }
+        WP_CLI::success( $skipped_count . ' users already had images in the proper format and were skipped.' );
+        WP_CLI::success( $no_image_count . ' users didn\'t have an old or new image defined, so they were skipped too.' );
+        WP_CLI::success( $migrated_count . ' users had images in the old format and were migrated to the new format!' );
+        WP_CLI::success( 'Done!' );
+    }
 }
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );

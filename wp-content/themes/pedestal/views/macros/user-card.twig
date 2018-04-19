@@ -51,7 +51,7 @@
         {% set img = user.get_avatar( img_size, {
             sizes: options.img_sizes,
             srcset: options.img_srcset
-        } ) %}
+        }, false ) %}
 
         {% set pagination = false %}
         {% set is_first_page = user.get_stream.is_first_page %}

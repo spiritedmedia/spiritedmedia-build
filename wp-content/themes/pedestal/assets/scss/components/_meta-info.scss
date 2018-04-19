@@ -91,7 +91,8 @@ $c-meta-info-icon-size--email  : $icon-diameter--xs;
   }
 } // end .c-meta-info__img
 
-.c-meta-info__img__icon {
+.c-meta-info__img__icon,
+.c-meta-info__img .logo--icon {
   display: inline-block;
   vertical-align: middle;
   font-size: $c-meta-info-icon-size;
