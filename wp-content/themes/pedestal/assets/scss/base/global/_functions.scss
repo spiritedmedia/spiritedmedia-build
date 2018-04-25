@@ -73,7 +73,7 @@
 /// @require {function} rem
 /// @see {function} rem
 @function em( $values, $base-value: $rem-base ) {
-  $rem-values: rem( $values, $base-value: $rem-base );
+  $rem-values: rem( $values, $base-value );
 
   $max: length( $rem-values );
 

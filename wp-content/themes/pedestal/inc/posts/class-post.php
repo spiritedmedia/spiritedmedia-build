@@ -234,12 +234,6 @@ abstract class Post {
      * Set up the Post's HTML data attributes
      */
     protected function set_data_atts() {
-        $author_role = '';
-        $author = $this->get_single_author();
-        if ( method_exists( $author, 'get_public_role' ) ) {
-            $public_role = $author->get_public_role();
-            $author_role = $public_role['name'];
-        }
         $this->data_attributes = [
             'post-type'    => $this->get_type(),
             'author-count' => $this->get_authors_count(),

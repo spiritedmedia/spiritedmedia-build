@@ -145,9 +145,7 @@ class User extends Author {
 
         $img = $attachment->get_html( $size, $img_atts );
 
-        $role = $this->get_public_role();
-        $role_class = 'c-avatar--' . $role['name'];
-        $output = '<div class="c-avatar  ' . $role_class . '">';
+        $output = '<div class="c-avatar">';
         $output .= '<div class="c-avatar__img">';
         $output .= $img;
         $output .= '</div>';
@@ -169,14 +167,15 @@ class User extends Author {
     /**
      * Get the user's title position
      *
-     * @return string
+     * @return string User title field, or public role, or empty string
      */
     public function get_title() {
         $title_field = $this->get_meta( 'user_title' );
         if ( $title_field ) {
             return $title_field;
         }
-        return $this->get_public_role_label();
+        $role = $this->get_public_role();
+        return $role['label'] ?? '';
     }
 
     /**
@@ -328,41 +327,26 @@ class User extends Author {
     }
 
     /**
-     * Get the user's public role label
-     *
-     * @return string
-     */
-    public function get_public_role_label() {
-        $role = $this->get_public_role();
-        return $role['label'];
-    }
-
-    /**
      * Get the user's public role
      *
-     * We don't want to expose whether someone is Administrator or Editor, so
-     * instead we just call them staff.
+     * We don't want to expose whether someone is Administrator or Editor.
+     *
+     * This method is close to being deprecated as it currently only provides a
+     * public role for Featured Contributors, a deprecated role and editorial
+     * series.
      *
      * @return array Array of name and label of public role
      */
     public function get_public_role() {
-        $public_role = [];
+        $public_role = [
+            'name' => '',
+            'label' => '',
+        ];
         $role = $this->get_primary_role();
-
-        switch ( $role ) {
-            case 'feat_contributor':
-                $public_role['name'] = 'contributor';
-                $public_role['label'] = 'Featured Contributor';
-                break;
-
-            default:
-                // Default to staff role because we don't have a special
-                // treatment set up for everybody else that's not a FC
-                $public_role['name'] = 'staff';
-                $public_role['label'] = 'Staff Writer';
-                break;
+        if ( 'feat_contributor' == $role ) {
+            $public_role['name'] = 'contributor';
+            $public_role['label'] = 'Featured Contributor';
         }
-
         return $public_role;
     }
 

@@ -124,7 +124,9 @@
                     </a>
                 </h1>
 
+                {% if user_title %}
                 <h2 class="c-user-card__title {{ user_title_classes }}" itemprop="jobTitle">{{ user_title }}</h2>
+                {% endif %}
 
                 <hr class="c-user-card__rule  hr--slim">
 
