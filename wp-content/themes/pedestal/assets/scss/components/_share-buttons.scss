@@ -3,10 +3,20 @@
 // ==========================================================================
 
 
-$share-button-twitter-margin: rem( 4px );
+$share-button-gutter: rem( 4px );
 
 
-.c-share-buttons {
+@mixin _share-button-background( $color ) {
+  background-color: $color;
+
+  &:hover,
+  &:active {
+    background-color: rgba( $color, 0.8 );
+  }
+}
+
+
+.share-buttons {
   overflow: auto;
   background-color: $white;
   margin-top: rem( 32px );
@@ -24,50 +34,59 @@ $share-button-twitter-margin: rem( 4px );
   }
 }
 
-.c-share-buttons__inner {
+.share-buttons__inner {
   margin: 0 auto;
   max-width: $row-width;
 }
 
-.c-share-buttons__item {
+.share-buttons__item {
   list-style: none;
   float: left;
   width: 33.3333%;
 }
 
-.c-share-buttons__link {
+.share-buttons__link {
   display: block;
-  text-align: center;
-  background-color: $grey-62;
-  color: $white;
+  min-height: 44px;
   padding: rem( 12px ) 0;
+  text-align: center;
+  font-size: rem( 15px );
+  font-weight: 700;
   text-transform: uppercase;
-  min-height: 50px;
-}
+  letter-spacing: em( 1px );
 
-.c-share-buttons__link--facebook {
-  background-color: $facebook-blue;
-
-  .c-share-buttons__icon {
-    font-size: $base-font-size;
+  &,
+  &:hover,
+  &:active,
+  &:focus {
+    color: $white;
   }
 }
 
-.c-share-buttons__link--twitter {
-  margin-left: $share-button-twitter-margin;
-  margin-right: $share-button-twitter-margin;
-  background-color: $twitter-blue;
+.share-buttons__link--facebook {
+  @include _share-button-background( $facebook-blue );
 }
 
-.c-share-buttons__icon {
-  font-size: rem( 20px );
-  margin-right: rem( 8px );
+.share-buttons__link--twitter {
+  @include _share-button-background( $twitter-blue );
+
+  margin-left: $share-button-gutter;
+  margin-right: $share-button-gutter;
+}
+
+.share-buttons__link--email {
+  @include _share-button-background( $grey-62 );
+}
+
+.share-buttons__icon {
+  font-size: rem( 18px );
+  margin-right: rem( 4px );
   position: relative;
   vertical-align: sub;
 }
 
 @media print {
-  .c-share-buttons {
+  .share-buttons {
     display: none;
   }
 }

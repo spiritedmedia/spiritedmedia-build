@@ -31,6 +31,14 @@ $icons = [
         'label' => 'Calendar',
         'usage' => [],
     ],
+    'caret-down' => [
+        'label' => 'Caret (Down)',
+        'usage' => [],
+    ],
+    'caret-up' => [
+        'label' => 'Caret (Up)',
+        'usage' => [],
+    ],
     'close' => [
         'label' => 'Close / X (multiplication sign)',
         'usage' => [
@@ -38,10 +46,19 @@ $icons = [
             'Search form',
         ],
     ],
-    'envelope-o' => [
+    'envelope' => [
         'label' => 'Envelope',
+        'usage' => [],
+    ],
+    'envelope-o' => [
+        'label' => 'Envelope (Outline)',
         'usage' => [
             'User card (author profile + author grid + featured contributor bio)',
+        ],
+    ],
+    'envelope-open' => [
+        'label' => 'Envelope (Open)',
+        'usage' => [
             'Email share button',
         ],
     ],
@@ -64,8 +81,13 @@ $icons = [
         'label' => 'Facebook',
         'usage' => [
             'Embeds in stream and single post templates',
-            'Social share button',
             'Site footer',
+        ],
+    ],
+    'facebook-square'       => [
+        'label' => 'Facebook (Square)',
+        'usage' => [
+            'Social share button',
         ],
     ],
     'info' => [
@@ -98,6 +120,10 @@ $icons = [
             'Donation form',
         ],
     ],
+    'phone-square' => [
+        'label' => 'Phone (Square)',
+        'usage' => [],
+    ],
     'play' => [
         'label' => 'Play',
         'usage' => [
@@ -128,8 +154,13 @@ $icons = [
             'Embeds in stream and single post templates',
             "Who's Next single posts",
             'User card (author profile + author grid + featured contributor bio)',
-            'Social share button',
             'Site footer',
+        ],
+    ],
+    'twitter-square' => [
+        'label' => 'Twitter (Square)',
+        'usage' => [
+            'Social share button',
         ],
     ],
     'vine' => [

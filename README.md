@@ -1,8 +1,8 @@
-Build [#4745](https://circleci.com/gh/spiritedmedia/spiritedmedia/4745) by montchr at 2018-04-25 02:20 PM UTC
+Build [#4762](https://circleci.com/gh/spiritedmedia/spiritedmedia/4762) by montchr at 2018-04-25 05:37 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.12.8](https://github.com/spiritedmedia/spiritedmedia/compare/v6.12.8)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.12.9](https://github.com/spiritedmedia/spiritedmedia/compare/v6.12.9)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v6.12.7...v6.12.8)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v6.12.8...v6.12.9)
 
- - [#2567](git@github.com:spiritedmedia/spiritedmedia.git/pull/2567): Hide user's "position title" from user card if field is not set
- - [#2569](git@github.com:spiritedmedia/spiritedmedia.git/pull/2569): Let $base-value in em() override the default
+ - [#2551](git@github.com:spiritedmedia/spiritedmedia.git/pull/2551): Update share button styles and icons
+ - [#2570](git@github.com:spiritedmedia/spiritedmedia.git/pull/2570): Allow accessing styleguide on development and staging without authentication

@@ -1,7 +1,8 @@
 <?php
 require( '../wp-load.php' );
 
-if ( ! is_user_logged_in() ) {
+$dev_environment = defined( 'WP_ENV' ) && 'development' === WP_ENV;
+if ( ! $dev_environment && ! is_user_logged_in() ) {
     auth_redirect();
 }
 
