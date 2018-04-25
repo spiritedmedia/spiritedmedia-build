@@ -944,7 +944,7 @@ class MailChimp {
             $args['groups'] = [ $args['groups'] ];
         }
 
-        $segment_opts = '';
+        $segment_opts = [];
         if ( ! empty( $args['groups'] ) && ! empty( $args['group_category'] ) ) {
             $group_ids = [];
             foreach ( $args['groups'] as $group ) {
@@ -1004,9 +1004,13 @@ class MailChimp {
                 'text_clicks' => $args['text_clicks'],
             ],
         ];
-        if ( ! empty( $segment_opts ) ) {
-            $campaign_args['recipients']['segment_opts'] = $segment_opts;
+
+        if ( empty( $segment_opts ) ) {
+            // No segment arguments were set and we don't want to send
+            // the campaign to the entire list
+            return false;
         }
+        $campaign_args['recipients']['segment_opts'] = $segment_opts;
         $campaign = $this->create_campaign( $campaign_args );
         if ( ! is_object( $campaign ) || ! isset( $campaign->id ) ) {
             // Something went wrong!
