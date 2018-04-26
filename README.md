@@ -1,8 +1,8 @@
-Build [#4768](https://circleci.com/gh/spiritedmedia/spiritedmedia/4768) by kingkool68 at 2018-04-25 06:20 PM UTC
+Build [#4781](https://circleci.com/gh/spiritedmedia/spiritedmedia/4781) by montchr at 2018-04-26 04:39 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.12.10](https://github.com/spiritedmedia/spiritedmedia/compare/v6.12.10)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.12.11](https://github.com/spiritedmedia/spiritedmedia/compare/v6.12.11)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v6.12.9...v6.12.10)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v6.12.10...v6.12.11)
 
- - [#2575](git@github.com:spiritedmedia/spiritedmedia.git/pull/2575): Make Sure Follow Update Emails Don't Get Sent to the Entire List
- - [#2574](git@github.com:spiritedmedia/spiritedmedia.git/pull/2574): Remove the mistakenly-committed Denverite Sass settings from master
+ - [#2578](git@github.com:spiritedmedia/spiritedmedia.git/pull/2578): Let the newsletter signup page function as a normal page template
+ - [#2576](git@github.com:spiritedmedia/spiritedmedia.git/pull/2576): Remove IcoMoon configuration + Credit Font Awesome

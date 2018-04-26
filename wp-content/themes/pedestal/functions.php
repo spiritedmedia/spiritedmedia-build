@@ -608,10 +608,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * Register custom rewrite rules
          */
         public function action_init_register_rewrites() {
-
-            add_rewrite_rule( 'newsletter-signup/?$', 'index.php?newsletter-signup=1', 'top' );
             add_rewrite_endpoint( 'ics', EP_PERMALINK );
-
         }
 
         /**

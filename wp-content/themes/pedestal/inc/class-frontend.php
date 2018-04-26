@@ -352,13 +352,6 @@ class Frontend {
     public function filter_template_include( $template ) {
         global $wp, $wp_query;
 
-        $request = rtrim( $wp->request, '/' );
-        switch ( $request ) {
-            case 'newsletter-signup':
-                $template = get_template_directory() . '/page-' . $request . '.php';
-                break;
-        }
-
         if ( is_singular( 'pedestal_event' ) && isset( $wp_query->query_vars['ics'] ) ) {
             $template = get_template_directory() . '/single-pedestal_event-ics.php';
         }
