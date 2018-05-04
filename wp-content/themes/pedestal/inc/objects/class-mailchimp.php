@@ -920,7 +920,7 @@ class MailChimp {
             'title'            => '',
             'from_name'        => PEDESTAL_BLOG_NAME,
             'reply_to'         => PEDESTAL_EMAIL_CONTACT,
-            'use_conversation' => true,
+            'use_conversation' => false,
             'to_name'          => '',
             'authenticate'     => true,
             'auto_footer'      => false,
