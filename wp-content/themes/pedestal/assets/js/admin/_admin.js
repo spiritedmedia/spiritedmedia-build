@@ -1,4 +1,4 @@
-/* global fm */
+/* global fm, tinyMCE */
 
 (function($) {
 
@@ -48,9 +48,10 @@
       // Expand and remove the + Create Connection links #uglyButItWorks™
       setTimeout(function() { $('.p2p-toggle-tabs a').click().hide(); }, 1500);
 
-      this.reorderExcerptBox();
       this.toggleIOTDEmbedField();
       this.makeHierarchicalTermsFilterable();
+      this.setupSummaryButtons();
+      this.disableDraggingDistributionMetaboxes();
     },
 
     /**
@@ -90,20 +91,6 @@
           $box.closest('.postbox').remove();
         }
       }
-    },
-
-    reorderExcerptBox: function() {
-      var $excerpt = $('#postexcerpt');
-      // Hide the metabox description claiming that the excerpt is optional.
-      $excerpt.find('p').hide();
-      // Move and restyle the excerpt metabox
-      $excerpt.insertAfter('#titlediv').css('margin-top', 20);
-      // Set-up a one-time focus event to remove the editor-focus event added
-      // by wp-admin/js/post.js
-      // We want to be able to tab from the title field to the excerpt
-      $('#title').one('focus', function() {
-        $(this).off('.editor-focus');
-      });
     },
 
     /**
@@ -201,6 +188,67 @@
             $this.trigger('keyup');
           }, 100, $this);
         });
+    },
+
+    /**
+     * Set up the buttons for the Summary field
+     *
+     * We load the TinyMCE summary field editor instance separately within each
+     * button's event listener. If we load it outside of these event listeners
+     * then TinyMCE will not have loaded the editors yet, and we won't be able
+     * to call `setContent()`.
+     */
+    setupSummaryButtons: function() {
+      const summaryID = 'fm-homepage_settings-0-summary-0';
+      const $btnSubhead = $('.js-pedestal-summary-copy-subhead');
+      const $btnGraf = $('.js-pedestal-summary-copy-first-graf');
+
+      // Copy the subhead to the summary field
+      $btnSubhead.on('click', function() {
+        const subhead = $('textarea#excerpt').val();
+        if ('' === subhead) {
+          return;
+        }
+        const summary = tinyMCE.get(summaryID);
+        summary.setContent(subhead);
+      });
+
+      // Copy the first paragraph in the main content field to the summary field
+      $btnGraf.on('click', function() {
+        const contentHTML = tinyMCE.get('content').getContent();
+
+        // We only want the grafs that don't contain shortcodes
+        const $normalGrafs = $(contentHTML).filter('p').not(function() {
+          // Using this old pattern from Shortcake v0.5.0 instead of the WP core
+          // pattern as Shortcake uses in current versions because there's no
+          // simple method for getting a catch-all shortcode pattern like this
+          //
+          // See https://github.com/wp-shortcake/shortcake/blob/v0.5.0/js/src/utils/shortcode-view-constructor.js#L135
+          const regexp = /\[([^\s\]]+)([^\]]+)?\]([^[]*)?(\[\/(\S+?)\])?/;
+          return this.innerHTML.match(regexp);
+        });
+
+        if (0 >= $normalGrafs.length) {
+          return;
+        }
+
+        const graf = $normalGrafs.first().html();
+        const summary = tinyMCE.get(summaryID);
+        summary.setContent(graf);
+      });
+    },
+
+    /**
+     * Disable dragging of the post metaboxes in the Distribution section
+     */
+    disableDraggingDistributionMetaboxes: function() {
+      const $distSection = $('#distribution-sortables');
+
+      $distSection.sortable({
+        disabled: true
+      });
+
+      $distSection.find('.postbox .hndle').css('cursor', 'pointer');
     }
   };
 

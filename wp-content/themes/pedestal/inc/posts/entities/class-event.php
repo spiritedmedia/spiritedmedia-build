@@ -192,7 +192,7 @@ class Event extends Entity {
         $dates = $this->get_dtstart() . '/' . $this->get_dtend();
         $params = [
             'action'   => 'TEMPLATE',
-            'text'     => $this->get_summary(),
+            'text'     => $this->get_ics_title(),
             'dates'    => $dates,
             'details'  => $this->get_description(),
             'location' => $this->get_ics_location(),
@@ -251,16 +251,12 @@ class Event extends Entity {
     }
 
     /**
-     * Get a summary for the event (that is, the event name.)
+     * Get an ICS-safe title
      *
      * @return string
      */
-    public function get_summary( $escape = false ) {
-        $summary = $this->get_title();
-        if ( $escape ) {
-            $summary = $this->to_ics_string( $summary );
-        }
-        return $summary;
+    public function get_ics_title() {
+        return $this->to_ics_string( $this->get_title() );
     }
 
     /**

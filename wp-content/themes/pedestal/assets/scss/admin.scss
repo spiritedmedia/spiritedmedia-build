@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Admin
  *
- * Version: 6.12.12
+ * Version: 6.13.0
  *
  * Copyright ( c ) 2018 Spirited Media
  *
@@ -16,6 +16,21 @@
 
 @import 'sassy-lists/dist/SassyLists';
 
+@import 'admin/fieldmanager-group-tabs';
+
+
+@mixin clearfix {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+.clearfix {
+  @include clearfix;
+}
+
 
 .fm-headline-wrapper {
   input {
@@ -23,6 +38,23 @@
     width: 100%;
     font-size: 1.7em;
   }
+}
+
+// Add space between slug box below the title, but only when it's visible
+#edit-slug-box a {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+// Match the subhead description text style to the Fieldmanager description text
+// style `.fm-item-description`
+#subhead .inside p {
+  font-style: italic;
+  line-height: 1.4;
+  display: block;
+  clear: both;
+  margin: 4px 0 0;
+  color: #999;
 }
 
 .fm-enabled-wrapper .fm-option {
@@ -47,8 +79,14 @@
   border-bottom: 0.1em solid #cccccc;
 }
 
-// Resize Embed Caption text area field
-#fm-embed_caption-0 {
+// Resize some text area fields
+//
+// - Embed Caption
+// - Email Preview Text
+// - Post Summary
+#fm-embed_caption-0,
+#fm-email_preview_text-0,
+#fm-homepage_settings-0-summary-0 {
   width: 100%;
   height: 4em;
 }
@@ -91,8 +129,65 @@ body.tools_page_pedestal_cluster_tools {
   font-size: 90%;
 }
 
+#distribution-sortables {
+  padding-top: 10px;
+}
 
+// Manage buttons from above the Summary field
+.fm-summary {
+  .wp-media-buttons {
+    float: right;
+    margin-bottom: 4px;
+  }
 
+  .insert-media,
+  .insert-embed,
+  .shortcake-add-post-element {
+    display: none;
+  }
+
+  .wp-editor-wrap {
+    margin-top: -36px;
+  }
+}
+
+// Clean up the Exclude from Home Stream fields
+.fm-exclude_from_home_stream {
+  padding-top: 0;
+
+  .fm-option {
+    display: inline-block;
+    margin-right: 16px;
+  }
+
+  .fm-element {
+    margin-right: 0;
+  }
+}
+
+.fm-pedestal_distribution {
+  @media screen and ( min-width: 1240px ) {
+    .fm-group-inner {
+      @include clearfix;
+    }
+
+    .fm-group-description {
+      clear: both;
+    }
+
+    .fm-title-wrapper,
+    .fm-description-wrapper {
+      float: left;
+      width: 50%;
+      margin-right: 10px;
+    }
+
+    .fm-image-wrapper {
+      float: right;
+      width: 45%;
+    }
+  }
+}
 
 
 //

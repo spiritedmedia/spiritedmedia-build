@@ -177,8 +177,7 @@ class Featured_Posts {
             'meta_query' => [
                 [
                     'key'     => 'exclude_from_home_stream',
-                    'value'   => 1,
-                    'compare' => '!=',
+                    'value'   => 'show',
                 ],
             ],
             'post_type'      => Types::get_original_post_types(),
@@ -259,8 +258,6 @@ class Featured_Posts {
             if ( ! Types::is_post( $ped_post ) ) {
                 continue;
             }
-            $excerpt = $ped_post->get_the_excerpt();
-            $description = PEDESTAL_STREAM_ITEM_DEK_VISIBLE ? $excerpt : '';
 
             $default_context = [
                 'post'                     => $post,
@@ -288,7 +285,7 @@ class Featured_Posts {
                 'permalink'             => $ped_post->get_the_permalink(),
                 'date_time'             => '',
                 'machine_time'          => '',
-                'description'           => $description,
+                'description'           => $ped_post->get_summary(),
                 'show_meta_info'        => true,
                 'author_names'          => '',
                 'author_image'          => '',
@@ -307,11 +304,10 @@ class Featured_Posts {
                 ];
             }
 
-            $context = apply_filters( 'pedestal_stream_item_context', $default_context );
+            $context = apply_filters( 'pedestal_stream_item_context', $default_context, $ped_post );
 
             if ( 1 == $index ) {
                 $context['primary_item'] = true;
-                $context['description'] = $excerpt;
             }
 
             ob_start();

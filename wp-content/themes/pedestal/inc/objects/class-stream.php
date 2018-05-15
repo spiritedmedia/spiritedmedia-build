@@ -72,7 +72,6 @@ class Stream {
             if ( ! Types::is_post( $ped_post ) ) {
                 continue;
             }
-            $description = PEDESTAL_STREAM_ITEM_DEK_VISIBLE ? $ped_post->get_the_excerpt() : '';
             $context = [
                 '__context'         => 'standard', // Where is this stream item going to be displayed?
                 'post'              => $post,
@@ -82,10 +81,10 @@ class Stream {
                 'permalink'         => $ped_post->get_the_permalink(),
                 'date_time'         => $ped_post->get_the_relative_datetime(),
                 'machine_time'      => $ped_post->get_post_date( 'c' ),
-                'description'       => $description,
+                'description'       => $ped_post->get_summary(),
                 'show_meta_info'    => true,
             ] + $this->get_default_stream_item_context();
-            $context = apply_filters( 'pedestal_stream_item_context', $context );
+            $context = apply_filters( 'pedestal_stream_item_context', $context, $ped_post );
 
             ob_start();
             do_action( 'pedestal_before_stream_item_' . $index, $post );

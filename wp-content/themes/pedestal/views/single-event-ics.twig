@@ -5,7 +5,7 @@ BEGIN:VEVENT
 STATUS:CONFIRMED
 DTSTART:{{ item.get_dtstart() }}
 DTEND:{{ item.get_dtend() }}
-SUMMARY:{{ item.get_summary(true) }}
+SUMMARY:{{ item.get_ics_title(true) }}
 DESCRIPTION:{{ item.get_description(true) }}
 LOCATION:{{ item.get_ics_location(true) }}
 END:VEVENT

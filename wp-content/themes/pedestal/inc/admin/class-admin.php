@@ -54,11 +54,22 @@ class Admin {
 
         // Needs to happen after post types are registered
         add_action( 'init', [ $this, 'action_init_after_post_types_registered' ], 11 );
-        add_action( 'admin_enqueue_scripts', [ $this, 'action_admin_enqueue_scripts' ] );
+        add_action( 'admin_enqueue_scripts', [ $this, 'action_admin_enqueue_scripts' ], 11 );
         add_action( 'admin_head', [ $this, 'action_admin_head' ] );
         add_action( 'admin_menu', [ $this, 'action_admin_menu_late' ], 100 );
 
         add_action( 'fm_user', [ $this, 'action_user_fields' ] );
+
+        // Move some builtin metaboxes around
+        add_action( 'do_meta_boxes', [ $this, 'action_do_meta_boxes_move_publish' ], 100 );
+        add_action( 'do_meta_boxes', [ $this, 'action_do_meta_boxes_move_excerpt_below_title' ], 100 );
+        add_action( 'do_meta_boxes', [ $this, 'action_do_meta_boxes_move_featured_image' ], 100 );
+
+        // Set up the `after_title` metabox context
+        add_action( 'edit_form_after_title', function() {
+            global $post, $wp_meta_boxes;
+            do_meta_boxes( get_current_screen(), 'after_title', $post );
+        } );
 
         add_action( 'save_post', function( $post_id, $post, $update ) {
             $post_type = get_post_type( $post_id );
@@ -97,7 +108,6 @@ class Admin {
             endswitch;
         }, 100, 3 );
 
-        add_action( 'admin_notices', [ $this, 'action_admin_notice_excerpt_required' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_locality_type_required' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_unembeddable_url' ] );
         add_action( 'admin_notices', [ $this, 'action_admin_notice_slot_item_defaults_missing' ] );
@@ -120,6 +130,13 @@ class Admin {
                 [ $this, 'handle_dashboard_widget_scheduled_posts' ]
             );
         });
+
+        add_action( 'edit_form_advanced', function( $post ) {
+            echo '<h1 class="wp-heading-inline">Distribution</h1>';
+            do_meta_boxes( null, 'distribution', $post );
+        } );
+
+        add_action( 'media_buttons', [ $this, 'action_media_buttons_summary_field' ] );
     }
 
     /**
@@ -259,12 +276,26 @@ class Admin {
 
             return $metadata;
         }, 10, 2 );
+
+        // Change new post title placeholder text
+        add_filter( 'enter_title_here', function() {
+            return 'Headline';
+        } );
+
+        // Customize the excerpt field description
+        add_filter( 'gettext', function( $translation, $original ) {
+            if ( false !== strpos( $original, 'Excerpts are optional hand-crafted summaries of your' ) ) {
+                return 'Optional short sentence supporting the headline; help readers make a decision about continuing to read the full article.';
+            }
+            return $translation;
+        }, 10, 2 );
     }
 
     /**
      * Register Fieldmanager fields
      */
     public function action_init_after_post_types_registered() {
+        $this->register_post_homepage_settings_fields();
         $this->register_distribution_fields();
         $this->register_spotlight_fields();
     }
@@ -333,6 +364,9 @@ class Admin {
     public function action_admin_enqueue_scripts() {
         wp_enqueue_style( 'pedestal-admin', get_template_directory_uri() . '/assets/dist/css/admin.css', [], PEDESTAL_VERSION );
         wp_enqueue_script( 'pedestal-admin', get_template_directory_uri() . '/assets/dist/js/admin.js', [], PEDESTAL_VERSION );
+
+        // Dequeue Fieldmanager group tabs CSS so we can load our own
+        wp_dequeue_style( 'fm_group_tabs_css' );
     }
 
     /**
@@ -383,14 +417,6 @@ class Admin {
     }
 
     /**
-     * Display admin notice if the post excerpt is missing
-     */
-    public function action_admin_notice_excerpt_required() {
-        $message = 'Excerpt is required to publish an article.';
-        self::handle_admin_notice_error( 'excerpt_required', $message );
-    }
-
-    /**
      * Display admin notice if the Locality Type is not set
      */
     public function action_admin_notice_locality_type_required() {
@@ -416,6 +442,94 @@ class Admin {
     }
 
     /**
+     * Add media buttons to the Summary field
+     *
+     * 1. Copy Subhead to Summary field
+     * 2. Copy First Paragraph to Summary field
+     *
+     * @param string $editor_id
+     */
+    public function action_media_buttons_summary_field( $editor_id ) {
+        $summary_id = 'fm-homepage_settings-0-summary-0';
+        if ( $editor_id === $summary_id ) {
+            printf(
+                '<button type="button" class="button js-pedestal-summary-copy-subhead" data-editor="%s">' .
+                '<span class="wp-media-buttons-icon dashicons dashicons-admin-page"></span> %s' .
+                '</button>',
+                esc_attr( $editor_id ),
+                'Copy Subhead'
+            );
+            printf(
+                '<button type="button" class="button js-pedestal-summary-copy-first-graf" data-editor="%s">' .
+                '<span class="wp-media-buttons-icon dashicons dashicons-admin-page"></span> %s' .
+                '</button>',
+                esc_attr( $editor_id ),
+                'Copy First Paragraph'
+            );
+        }
+    }
+
+    /**
+     * Move Publish metabox to the high position before any others
+     *
+     * This action must be added before any other action that moves metaboxes to
+     * the high position in the side context.
+     */
+    public function action_do_meta_boxes_move_publish() {
+        foreach ( get_post_types() as $post_type ) {
+            remove_meta_box( 'submitdiv', $post_type, 'side' );
+        }
+        add_meta_box(
+            'submitdiv',
+            'Publish',
+            'post_submit_meta_box',
+            get_post_types(),
+            'side',
+            'high'
+        );
+    }
+
+    /**
+     * Re-position the post excerpt metabox to just below the title
+     */
+    public function action_do_meta_boxes_move_excerpt_below_title() {
+        $supports_excerpt = Types::get_post_types_by_supported_feature( 'excerpt' );
+        foreach ( $supports_excerpt as $post_type ) {
+            remove_meta_box( 'postexcerpt', $post_type, 'normal' );
+        }
+        add_meta_box(
+            'subhead',
+            'Subhead (optional)',
+            'post_excerpt_meta_box',
+            $supports_excerpt,
+            'after_title',
+            'high'
+        );
+    }
+
+    /**
+     * Move the featured image metabox to just below the publish metabox
+     *
+     * N.B. the publish metabox must be moved to the `high` position before this
+     * action is added or else the featured image metabox will appear before the
+     * publish metabox.
+     */
+    public function action_do_meta_boxes_move_featured_image() {
+        $supports_feat_image = Types::get_post_types_by_supported_feature( 'thumbnail' );
+        foreach ( $supports_feat_image as $post_type ) {
+            remove_meta_box( 'postimagediv', $post_type, 'side' );
+        }
+        add_meta_box(
+            'postimagediv',
+            'Featured Image',
+            'post_thumbnail_meta_box',
+            $supports_feat_image,
+            'side',
+            'high'
+        );
+    }
+
+    /**
      * Filter markup to include placeholders specific to this post
      */
     public function filter_fm_element_markup_start( $out, $fm ) {
@@ -436,21 +550,26 @@ class Admin {
 
         if ( $parent ) {
 
-            if ( 'facebook' === $parent->name ) {
-                $placeholders = [
-                    'title'        => $post->get_default_facebook_open_graph_tag( 'title' ),
-                    'description'  => $post->get_default_facebook_open_graph_tag( 'description' ),
-                ];
-            } elseif ( 'twitter' === $parent->name ) {
-                $placeholders = [
-                    'title'        => $post->get_default_twitter_card_tag( 'title' ),
-                    'description'  => $post->get_default_twitter_card_tag( 'description' ),
-                ];
-            } elseif ( 'seo' === $parent->name ) {
-                $placeholders = [
-                    'title'        => $post->get_default_seo_title(),
-                    'description'  => $post->get_default_seo_description(),
-                ];
+            switch ( $parent->name ) {
+                case 'twitter':
+                    $placeholders = [
+                        'title'        => $post->get_twitter_card_tag( 'title' ),
+                        'description'  => $post->get_twitter_card_tag( 'description' ),
+                    ];
+                    break;
+                case 'facebook':
+                    $placeholders = [
+                        'title'        => $post->get_facebook_open_graph_tag( 'title' ),
+                        'description'  => $post->get_facebook_open_graph_tag( 'description' ),
+                    ];
+                    break;
+                case 'linkedin':
+                case 'seo':
+                    $placeholders = [
+                        'title'        => $post->get_default_seo_title(),
+                        'description'  => $post->get_default_seo_description(),
+                    ];
+                    break;
             }
 
             if ( isset( $placeholders[ $fm->name ] ) ) {
@@ -577,12 +696,6 @@ class Admin {
                 break;
         }
 
-        // Require excerpt for all original content post types
-        if ( in_array( $data['post_type'], Types::get_original_post_types() )
-            && empty( $data['post_excerpt'] ) ) {
-            $redirect_arg = 'excerpt_required';
-        }
-
         $redirect_post_location_statuses = [ 'future', 'publish' ];
         if ( ! empty( $redirect_arg ) && in_array( $data['post_status'], $redirect_post_location_statuses ) ) {
             add_filter( 'redirect_post_location', function( $location ) use ( $redirect_arg ) {
@@ -636,85 +749,119 @@ class Admin {
     }
 
     /**
-     * Register distribution meta box fields
+     * Register fields to manage a post's appearance on the homepage
+     */
+    private function register_post_homepage_settings_fields() {
+        $homepage_settings_group = new \Fieldmanager_Group( '', [
+            'name'           => 'homepage_settings',
+            'serialize_data' => false,
+            'add_to_prefix'  => false,
+        ] );
+
+        $summary_field = new \Fieldmanager_RichTextArea( 'Summary (optional)', [
+            'name' => 'summary',
+            'description' => 'Optional short paragraph(s) capturing the article in a nutshell; help readers get caught up on the news at-a-glance.',
+            'editor_settings' => [
+                'teeny'     => true,
+                'quicktags' => false,
+            ],
+            // Hack to hide all buttons (empty array gets overridden)
+            'buttons_1' => [ 'none' ],
+        ] );
+
+        $exclude_field = new \Fieldmanager_Radios( [
+            'name' => 'exclude_from_home_stream',
+            'default_value' => 'show',
+            'options' => [
+                'show' => 'Show on homepage stream',
+                'hide' => 'Hide from homepage stream',
+            ],
+        ] );
+
+        $homepage_settings_group->add_child( $summary_field );
+        $homepage_settings_group->add_child( $exclude_field );
+
+        if ( current_user_can( 'manage_distribution' ) ) {
+            $homepage_settings_group->add_meta_box(
+                esc_html__( 'Homepage', 'pedestal' ),
+                Types::get_entity_post_types(),
+                'distribution',
+                'default'
+            );
+        }
+    }
+
+    /**
+     * Register fields to manage a post's social media appearance and SEO
      */
     private function register_distribution_fields() {
-
-        /**
-         * Distribution settings
-         */
-        $meta_group = new \Fieldmanager_Group( '', [
+        $distribution_group = new \Fieldmanager_Group( '', [
             'name'        => 'pedestal_distribution',
             'tabbed'      => true,
         ] );
 
-        // Can't use $fm_group->add_child(): https://github.com/alleyinteractive/wordpress-fieldmanager/pull/172
-        $meta_group->children['twitter'] = new \Fieldmanager_Group( esc_html__( 'Twitter', 'pedestal' ), [
+        $twitter_group = new \Fieldmanager_Group( esc_html__( 'Twitter', 'pedestal' ), [
             'name'                    => 'twitter',
             'children'                => [
-                'share_text'          => new \Fieldmanager_TextArea( esc_html__( 'Share Text', 'pedestal' ), [
-                    'description'     => esc_html__( 'What text would you like the user to include in their tweet? (Defaults to title and shortlink)', 'pedestal' ),
-                    'attributes'      => [
-                        'style'           => 'width:100%',
-                    ],
-                ] ),
-                'title'               => new \Fieldmanager_TextField( esc_html__( 'Title', 'pedestal' ), [
-                    'description'     => esc_html__( 'Title should be concise and will be truncated at 70 characters.', 'pedestal' ),
+                'title'               => new \Fieldmanager_TextField( esc_html__( 'Alt Headline', 'pedestal' ), [
+                    'description'     => esc_html__( 'Title truncates after 70 characters', 'pedestal' ),
                     'attributes'      => [
                         'style'           => 'width:100%',
                         'maxlength'       => 70,
                     ],
                 ] ),
-                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Description', 'pedestal' ), [
-                    'description'     => esc_html__( 'Description text will be truncated at the word to 200 characters.', 'pedestal' ),
+                'image'               => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
+                    'description'     => esc_html__( 'Twitter minimum size is 120x120 pixels', 'pedestal' ),
+                    'button_label'    => esc_html__( 'Select Alternate Image', 'pedestal' ),
+                    'modal_button_label' => esc_html__( 'Select image', 'pedestal' ),
+                    'modal_title'     => esc_html__( 'Choose image', 'pedestal' ),
+                ] ),
+                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
+                    'description'     => esc_html__( 'Description text will be truncated at 200 characters.', 'pedestal' ),
                     'attributes'      => [
                         'style'           => 'width:100%',
                         'maxlength'       => 200,
                         'rows'            => 3,
                     ],
                 ] ),
-                'image'               => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
-                    'description'     => esc_html__( 'Override the featured image with an image specific to Twitter. The image must be a minimum size of 120x120px. Images larger than 120x120px will be resized and cropped square based on its longest dimension.', 'pedestal' ),
-                    'button_label'    => esc_html__( 'Select an image', 'pedestal' ),
-                    'modal_button_label' => esc_html__( 'Select image', 'pedestal' ),
-                    'modal_title'     => esc_html__( 'Choose image', 'pedestal' ),
-                ] ),
             ],
         ] );
-        $meta_group->children['facebook'] = new \Fieldmanager_Group( esc_html__( 'Facebook Open Graph', 'pedestal' ), [
+
+        $facebook_group = new \Fieldmanager_Group( esc_html__( 'Facebook', 'pedestal' ), [
             'name'                    => 'facebook',
             'children'                => [
-                'title'               => new \Fieldmanager_TextField( esc_html__( 'Title', 'pedestal' ), [
+                'title'               => new \Fieldmanager_TextField( esc_html__( 'Alt Headline', 'pedestal' ), [
                     'description'     => esc_html__( 'The title of your article, excluding any branding.', 'pedestal' ),
                     'attributes'      => [
                         'style'           => 'width:100%',
                     ],
                 ] ),
-                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Description', 'pedestal' ), [
+                'image'               => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
+                    'description'     => esc_html__( 'Override the featured image with an image specific to Facebook. We suggest that you use an image of at least 1200x630 pixels.', 'pedestal' ),
+                    'button_label'    => esc_html__( 'Select Alternate Image', 'pedestal' ),
+                    'modal_button_label' => esc_html__( 'Select image', 'pedestal' ),
+                    'modal_title'     => esc_html__( 'Choose image', 'pedestal' ),
+                ] ),
+                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
                     'description'     => esc_html__( 'A detailed description of the piece of content, usually between 2 and 4 sentences.', 'pedestal' ),
                     'attributes'      => [
                         'style'           => 'width:100%',
                         'rows'            => 4,
                     ],
                 ] ),
-                'image'               => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
-                    'description'     => esc_html__( 'Override the featured image with an image specific to Facebook. We suggest that you use an image of at least 1200x630 pixels.', 'pedestal' ),
-                    'button_label'    => esc_html__( 'Select an image', 'pedestal' ),
-                    'modal_button_label' => esc_html__( 'Select image', 'pedestal' ),
-                    'modal_title'     => esc_html__( 'Choose image', 'pedestal' ),
-                ] ),
             ],
         ] );
-        $meta_group->children['linkedin'] = new \Fieldmanager_Group( esc_html__( 'LinkedIn', 'pedestal' ), [
+
+        $linkedin_group = new \Fieldmanager_Group( esc_html__( 'LinkedIn', 'pedestal' ), [
             'name'                    => 'linkedin',
             'children'                => [
-                'title'               => new \Fieldmanager_TextField( esc_html__( 'Title', 'pedestal' ), [
+                'title'               => new \Fieldmanager_TextField( esc_html__( 'Alt Headline', 'pedestal' ), [
                     'description'     => esc_html__( 'The title of your article, excluding any branding. Max 200 characters.', 'pedestal' ),
                     'attributes'      => [
                         'style'           => 'width:100%',
                     ],
                 ] ),
-                'summary'         => new \Fieldmanager_TextArea( esc_html__( 'Summary', 'pedestal' ), [
+                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
                     'description'     => esc_html__( 'A detailed description of the piece of content, usually between 2 and 4 sentences. Longer titles will be truncated gracefully with ellipses.', 'pedestal' ),
                     'attributes'      => [
                         'style'           => 'width:100%',
@@ -724,17 +871,17 @@ class Admin {
             ],
         ] );
 
-        $seo_group = new \Fieldmanager_Group( esc_html__( 'SEO', 'pedestal' ), [
+        $seo_group = new \Fieldmanager_Group( esc_html__( 'Google Search', 'pedestal' ), [
             'name'        => 'seo',
             'children'                => [
-                'title'          => new \Fieldmanager_TextField( esc_html__( 'Title', 'pedestal' ), [
+                'title'          => new \Fieldmanager_TextField( esc_html__( 'Alt Headline', 'pedestal' ), [
                     'description'     => esc_html__( 'Suggested length of up to 60 characters.', 'pedestal' ),
                     'attributes'      => [
                         'style'           => 'width:100%',
                     ],
                 ] ),
-                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Description', 'pedestal' ), [
-                    'description'     => esc_html__( 'Suggested length of up to 150 characters. Defaults to excerpt.', 'pedestal' ),
+                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
+                    'description'     => esc_html__( 'Suggested length of up to 150 characters. Defaults to summary or subhead.', 'pedestal' ),
                     'attributes'      => [
                         'style'           => 'width:100%',
                         'rows'            => 2,
@@ -742,7 +889,11 @@ class Admin {
                 ] ),
             ],
         ] );
-        $meta_group->children['seo'] = $seo_group;
+
+        $distribution_group->add_child( $twitter_group );
+        $distribution_group->add_child( $facebook_group );
+        $distribution_group->add_child( $linkedin_group );
+        $distribution_group->add_child( $seo_group );
 
         $distributable_post_types = get_post_types( [
             'public'   => true,
@@ -751,7 +902,12 @@ class Admin {
         $distributable_post_types['page'] = 'page';
 
         if ( current_user_can( 'manage_distribution' ) ) {
-            $meta_group->add_meta_box( esc_html__( 'Distribution', 'pedestal' ), $distributable_post_types, 'advanced', 'low' );
+            $distribution_group->add_meta_box(
+                esc_html__( 'Social Media & Search Engines', 'pedestal' ),
+                $distributable_post_types,
+                'distribution',
+                'default'
+            );
         }
     }
 

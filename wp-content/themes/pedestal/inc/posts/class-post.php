@@ -339,6 +339,21 @@ abstract class Post {
     }
 
     /**
+     * Get the post summary
+     *
+     * The summary is used in the home stream and as a default for social media
+     * distribution.
+     *
+     * @return string|false
+     */
+    public function get_summary() {
+        $summary = $this->get_meta( 'summary' );
+        // Because this is a rich text field, we need to reverse `wpautop()`
+        $summary = $summary ? Utils::reverse_wpautop( $summary ) : false;
+        return $summary;
+    }
+
+    /**
      * Get the filtered excerpt for the post
      *
      * @return string
@@ -1033,14 +1048,9 @@ abstract class Post {
      * @return string
      */
     public function get_default_seo_description( $len = 150 ) {
-
-        $description = $this->get_field( 'post_excerpt' );
+        $description = $this->get_summary() ?: $this->get_excerpt();
         if ( $this instanceof Newsletter ) {
             $description = $this->get_newsletter_subtitle();
-        }
-        if ( ! $description ) {
-            $content = $this->get_field( 'post_content' );
-            $description = Utils::str_limit( $content, $len );
         }
         if ( ! $description ) {
             return false;
@@ -1055,15 +1065,21 @@ abstract class Post {
      * @return string
      */
     public function get_facebook_open_graph_tag( $tag_name ) {
+        $val = '';
 
-        switch ( $tag_name ) {
-
+        switch ( $tag_name ) :
             case 'title':
                 $val = $this->get_fm_field( 'pedestal_distribution', 'facebook', 'title' );
+                if ( ! $val ) {
+                    $val = $this->get_title();
+                }
                 break;
 
             case 'description':
                 $val = $this->get_fm_field( 'pedestal_distribution', 'facebook', 'description' );
+                if ( ! $val ) {
+                    $val = $this->get_default_seo_description( 300 );
+                }
                 break;
 
             case 'url':
@@ -1076,6 +1092,8 @@ abstract class Post {
                 $val = '';
                 if ( $src ) {
                     $val = $src[0];
+                } else {
+                    $val = $this->get_featured_image_url( 'facebook-open-graph' );
                 }
                 break;
 
@@ -1091,52 +1109,9 @@ abstract class Post {
 
             default:
                 break;
-        }// End switch().
-
-        if ( ! empty( $val ) ) {
-            return $val;
-        } else {
-            return $this->get_default_facebook_open_graph_tag( $tag_name );
-        }
-
-    }
-
-    /**
-     * Get the default Facebook Open Graph tag for this post
-     *
-     * @param string $tag_name
-     * @return string
-     */
-    public function get_default_facebook_open_graph_tag( $tag_name ) {
-
-        switch ( $tag_name ) {
-
-            case 'title':
-                $val = $this->get_title();
-                break;
-
-            case 'description':
-                $val = $this->get_default_seo_description( 300 );
-                if ( ! $val ) {
-                    $val = get_bloginfo( 'description' );
-                }
-                break;
-
-            case 'url':
-                $val = $this->get_permalink();
-                break;
-
-            case 'image':
-                $val = $this->get_featured_image_url( 'facebook-open-graph' );
-                break;
-
-            default:
-                $val = '';
-                break;
-        }
+        endswitch;
 
         return $val;
-
     }
 
     /**
@@ -1146,75 +1121,34 @@ abstract class Post {
      * @return string
      */
     public function get_twitter_card_tag( $tag_name ) {
-        $val = '';
-
         switch ( $tag_name ) {
-
             case 'title':
                 $title = $this->get_fm_field( 'pedestal_distribution', 'twitter', 'title' );
-                $val = Utils::str_limit( $title, 70 );
-                break;
+                if ( ! $title ) {
+                    $title = $this->get_title();
+                }
+                return Utils::str_limit( $title, 70 );
 
             case 'description':
                 $description = $this->get_fm_field( 'pedestal_distribution', 'twitter', 'description' );
-                $val = Utils::str_limit( $description, 200 );
-                break;
+                if ( ! $description ) {
+                    $description = $this->get_default_seo_description( 70 );
+                }
+                return Utils::str_limit( $description, 200 );
 
             case 'url':
-                $val = $this->get_permalink();
-                break;
+                return $this->get_permalink();
 
             case 'image':
                 $image_id = $this->get_fm_field( 'pedestal_distribution', 'twitter', 'image' );
                 $src = wp_get_attachment_image_src( $image_id, 'twitter-card' );
                 if ( $src ) {
-                    $val = $src[0];
+                    return $src[0];
+                } else {
+                    return $this->get_featured_image_url( 'twitter-card' );
                 }
-                break;
         }
-
-        if ( empty( $val ) ) {
-            return $this->get_default_twitter_card_tag( $tag_name );
-        }
-
-        return $val;
-    }
-
-    /**
-     * Get the default Twitter card tag for this post
-     *
-     * @param string $tag_name
-     * @return string
-     */
-    public function get_default_twitter_card_tag( $tag_name ) {
-
-        switch ( $tag_name ) {
-
-            case 'title':
-                $title = $this->get_title();
-                $val = Utils::str_limit( $title, 70 );
-                break;
-
-            case 'description':
-                $description = $this->get_excerpt();
-                $val = Utils::str_limit( $description, 70 );
-                break;
-
-            case 'url':
-                $val = $this->get_permalink();
-                break;
-
-            case 'image':
-                $val = $this->get_featured_image_url( 'twitter-card' );
-                break;
-
-            default:
-                $val = '';
-                break;
-        }
-
-        return $val;
-
+        return '';
     }
 
     /**
@@ -1223,32 +1157,24 @@ abstract class Post {
      * @return string
      */
     public function get_twitter_share_text() {
-
-        $share_text = $this->get_fm_field( 'pedestal_distribution', 'twitter', 'share_text' );
-        if ( empty( $share_text ) ) {
-            $share_text = $this->get_title();
-        }
-
+        $share_text = $this->get_twitter_card_tag( 'title' );
         if ( strlen( $share_text ) > PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH ) {
             $share_text = substr( $share_text, 0, PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH );
         }
-
         return $share_text;
     }
 
     /**
-     * Get the summary text to use when a user shares a link on LinkedIn
+     * Get the description text to use when a user shares a link on LinkedIn
      *
      * @return string
      */
-    public function get_linkedin_summary() {
-
-        $summary = $this->get_fm_field( 'pedestal_distribution', 'linkedin', 'summary' );
-        if ( empty( $summary ) ) {
-            $summary = '';
+    public function get_linkedin_description() {
+        $description = $this->get_fm_field( 'pedestal_distribution', 'linkedin', 'description' );
+        if ( ! $description ) {
+            $description = $this->get_default_seo_description();
         }
-
-        return $summary;
+        return $description;
     }
 
     /**
@@ -1257,12 +1183,10 @@ abstract class Post {
      * @return string
      */
     public function get_linkedin_title() {
-
         $title = $this->get_fm_field( 'pedestal_distribution', 'linkedin', 'title' );
-        if ( empty( $title ) ) {
+        if ( ! $title ) {
             $title = $this->get_title();
         }
-
         return $title;
     }
 
@@ -1300,13 +1224,13 @@ abstract class Post {
         $share_link = rawurldecode( $this->get_permalink() );
         $title = rawurldecode( $this->get_linkedin_title() );
         $source = rawurlencode( get_bloginfo( 'name' ) );
-        $summary = rawurlencode( $this->get_linkedin_summary() );
+        $description = rawurlencode( $this->get_linkedin_description() );
         $linkedin_args = [
             'mini'    => 'true',
             'url'     => $share_link,
             'title'   => $title,
             'source'  => $source,
-            'summary' => $summary,
+            'summary' => $description,
         ];
         return add_query_arg( $linkedin_args, 'http://www.linkedin.com/shareArticle' );
     }

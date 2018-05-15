@@ -42,6 +42,11 @@ if ( Types::is_post( $item ) ) :
     }
 
     if ( $item->is_cluster() ) {
+        add_filter( 'pedestal_stream_item_context', function( $context, $ped_post ) {
+            // Use the excerpt/subhead in cluster streams instead of the summary
+            $context['description'] = $ped_post->get_the_excerpt();
+            return $context;
+        }, 10, 2 );
         $templates[] = 'single-cluster.twig';
         $cluster_stream = new Stream( $item->get_entities_query() );
         $context['stream'] = $cluster_stream->get_the_stream();

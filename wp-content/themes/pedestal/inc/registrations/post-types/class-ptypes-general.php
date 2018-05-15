@@ -135,15 +135,20 @@ class General_Types {
         );
 
         $description = 'Aim for 140 characters and test it!';
-        $field = new \Fieldmanager_Textfield( false, [
+        $field = new \Fieldmanager_Textarea( false, [
             'name'        => 'email_preview_text',
             'description' => $description,
             'attributes' => [
                 'placeholder' => '(Optional)',
-                'size' => 100,
+                'width' => '100%',
             ],
         ] );
-        $field->add_meta_box( esc_html( 'Email Preview Text' ), $post_types, 'normal', 'high' );
+        $field->add_meta_box(
+            'Email Preview Text',
+            $post_types,
+            'side',
+            'low'
+        );
     }
 
     /**

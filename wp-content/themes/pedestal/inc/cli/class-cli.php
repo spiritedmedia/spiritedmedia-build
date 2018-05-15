@@ -633,37 +633,6 @@ class CLI extends \WP_CLI_Command {
     }
 
     /**
-     * Normalize exclude_from_home_stream meta data
-     *
-     * ## EXAMPLES
-     *
-     *     wp pedestal normalize-exclude-from-home-stream
-     *     wp pedestal normalize-exclude-from-home-stream --url=https://billypenn.dev
-     *
-     * @subcommand normalize-exclude-from-home-stream
-     */
-    public function normalize_exclude_from_home_stream() {
-        $args = [
-            'post_type' => Types::get_entity_post_types(),
-            'posts_per_page' => -1,
-            'meta_query' => [
-                [
-                    'key'     => 'exclude_from_home_stream',
-                    'value'   => '',
-                    'compare' => 'NOT EXISTS',
-                ],
-            ],
-        ];
-        $posts = new \WP_Query( $args );
-        WP_CLI::line( count( $posts->posts ) . ' found' );
-        foreach ( $posts->posts as $post ) {
-            update_post_meta( $post->ID, 'exclude_from_home_stream', '' );
-        }
-
-        WP_CLI::success( 'Done' );
-    }
-
-    /**
      * Normalize event_link meta data
      *
      * ## EXAMPLES
@@ -798,6 +767,135 @@ class CLI extends \WP_CLI_Command {
         WP_CLI::success( $skipped_count . ' users already had images in the proper format and were skipped.' );
         WP_CLI::success( $no_image_count . ' users didn\'t have an old or new image defined, so they were skipped too.' );
         WP_CLI::success( $migrated_count . ' users had images in the old format and were migrated to the new format!' );
+        WP_CLI::success( 'Done!' );
+    }
+
+    /**
+     * Clear the stored metabox settings for all users
+     *
+     * This only needs to be run on a single site as it affects global tables.
+     *
+     * - Clear order data
+     * - Clear expanded/collapsed state
+     * - Set up some boxes to be collapsed by default until changed by a user
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal reset-metabox-state
+     *
+     * @subcommand reset-metabox-state
+     */
+    public function reset_metabox_state() {
+        global $wpdb;
+
+        WP_CLI::line( 'Clearing metabox order data...' );
+        $wpdb->query( $wpdb->prepare(
+            'DELETE from %s WHERE %s LIKE %s',
+            'wp_usermeta',
+            'meta_key',
+            '%meta-box-order%'
+        ) );
+
+        WP_CLI::line( 'Clearing metabox expanded/collapsed state...' );
+        $wpdb->query( $wpdb->prepare(
+            'DELETE from %s WHERE %s LIKE %s',
+            'wp_usermeta',
+            'meta_key',
+            '%closedpostboxes%'
+        ) );
+
+        WP_CLI::line( 'Setting up collapsed metaboxes defaults for every user...' );
+        $user_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->users}" );
+        foreach ( $user_ids as $user_id ) {
+            $user = new User( $user_id );
+            if ( ! $user instanceof User ) {
+                WP_CLI::warning( "Unable to instantiate User object for user {$user_id}! Continuing..." );
+                continue;
+            }
+            $user->setup_default_collapsed_metaboxes();
+            WP_CLI::log( "Set up collapsed metaboxes defaults for user {$user_id}." );
+        }
+
+        WP_CLI::success( 'Done!' );
+    }
+
+    /**
+     * Migrate some post meta for admin UI update
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal update-admin-ui-post-meta
+     *     wp pedestal update-admin-ui-post-meta --url=https://billypenn.com/
+     *
+     * @subcommand update-admin-ui-post-meta
+     */
+    public function update_admin_ui_post_meta() {
+        global $wpdb;
+
+        $args = [
+            'post_type'              => get_post_types(),
+            'posts_per_page'         => -1,
+            'fields'                 => 'ids',
+            'no_found_rows'          => true,
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false,
+        ];
+        $post_ids = new \WP_Query( $args );
+        $post_ids = $post_ids->posts;
+        $total_posts = count( $post_ids );
+        $current_count = 0;
+
+        WP_CLI::line( "Copying excerpt to summary field for {$total_posts} posts..." );
+        foreach ( $post_ids as $post_id ) {
+            $current_count++;
+            $progress_str = "[{$current_count}/{$total_posts}]";
+            $post = get_post( $post_id );
+
+            $excerpt = $post->post_excerpt;
+            if ( $excerpt ) {
+                update_post_meta( $post_id, 'summary', $excerpt );
+                WP_CLI::log( "{$progress_str} Copied existing excerpt to summary field for post {$post->ID}." );
+            }
+        }
+        WP_CLI::success( 'Done copying excerpt to summary field.' );
+
+        $hide_from_home_stream = $wpdb->get_results( $wpdb->prepare( "
+            SELECT meta_id, meta_value
+            FROM $wpdb->postmeta
+            WHERE meta_key = 'exclude_from_home_stream'
+                AND meta_value = 1
+        " ) );
+        foreach ( $hide_from_home_stream as $row ) {
+            $wpdb->update(
+                $wpdb->postmeta,
+                [
+                    'meta_value' => 'hide',
+                ],
+                [
+                    'meta_id' => $row->meta_id,
+                ]
+            );
+        }
+
+        $show_in_home_stream = $wpdb->get_results( $wpdb->prepare( "
+            SELECT meta_id, meta_value
+            FROM $wpdb->postmeta
+            WHERE meta_key = 'exclude_from_home_stream'
+                AND meta_value != 'hide'
+        " ) );
+        foreach ( $show_in_home_stream as $row ) {
+            $wpdb->update(
+                $wpdb->postmeta,
+                [
+                    'meta_value' => 'show',
+                ],
+                [
+                    'meta_id' => $row->meta_id,
+                ]
+            );
+        }
+
+        WP_CLI::success( 'Migrated `exclude_from_home_stream` post meta to string keys.' );
         WP_CLI::success( 'Done!' );
     }
 }

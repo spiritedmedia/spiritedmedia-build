@@ -434,4 +434,24 @@ class User extends Author {
     protected function set_meta( $key, $value ) {
         update_user_meta( $this->get_id(), $key, $value );
     }
+
+    /**
+     * Setup the metaboxes closed by default for this user
+     *
+     * These metaboxes are currently collapsed by default:
+     *
+     * - Footnotes
+     * - Authors
+     */
+    public function setup_default_collapsed_metaboxes() {
+        $collapsed_metabox_ids = [
+            'fm_meta_box_footnotes',
+            'coauthorsdiv',
+        ];
+        foreach ( get_post_types() as $post_type ) {
+            $option_name = 'closedpostboxes_' . $post_type;
+            $global = true;
+            update_user_option( $this->get_id(), $option_name, $collapsed_metabox_ids, $global );
+        }
+    }
 }

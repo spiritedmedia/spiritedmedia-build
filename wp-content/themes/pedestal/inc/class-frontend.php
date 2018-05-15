@@ -121,8 +121,7 @@ class Frontend {
             $meta_query = [
                 [
                     'key'     => 'exclude_from_home_stream',
-                    'value'   => 1,
-                    'compare' => '!=',
+                    'value'   => 'show',
                 ],
             ];
             $query->set( 'meta_query', $meta_query );
@@ -461,17 +460,15 @@ class Frontend {
      * @return string
      */
     public function get_current_meta_description() {
-
-        $meta_description = get_bloginfo( 'description' );
         if ( is_single() ) {
             $post = Post::get( get_queried_object_id() );
-            if ( Types::is_post( $post ) && $post->get_seo_description() ) {
-                $meta_description = $post->get_seo_description();
+            if ( Types::is_post( $post ) ) {
+                return $post->get_seo_description();
             }
         } elseif ( ( is_tax() || is_author() ) && get_queried_object()->description ) {
-            $meta_description = get_queried_object()->description;
+            return get_queried_object()->description;
         }
-        return $meta_description;
+        return get_bloginfo( 'description' );
     }
 
     /**

@@ -89,9 +89,6 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_SLACK_BOT_NAME'               => 'TheInclineBot',
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':theincline:',
 
-                // Site Features
-                'PEDESTAL_STREAM_ITEM_DEK_VISIBLE' => false,
-
                 // Membership
                 'PEDESTAL_NRH_PROPERTY' => 'theincline',
             ];

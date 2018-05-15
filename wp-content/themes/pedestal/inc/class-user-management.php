@@ -98,6 +98,7 @@ class User_Management {
         add_action( 'load-users.php', [ $this, 'action_load_users_setup_roles' ] );
         add_action( 'profile_update', [ $this, 'action_profile_update' ], 10, 1 );
 
+        add_action( 'user_register', [ $this, 'action_user_register_setup_metaboxes' ] );
     }
 
     /**
@@ -353,6 +354,20 @@ class User_Management {
 
         add_rewrite_tag( '%author_role%', $tag_pattern );
         $wp_rewrite->author_base = '%author_role%';
+    }
+
+    /**
+     * Setup the default collapsed metaboxes upon user creation
+     *
+     * @uses \Pedestal\Objects\User::setup_default_collapsed_metaboxes()
+     * @param int $user_id
+     */
+    public function action_user_register_setup_metaboxes( $user_id ) {
+        $user = new User( $user_id );
+        if ( ! $user instanceof User ) {
+            return;
+        }
+        $user->setup_default_collapsed_metaboxes();
     }
 
     /**

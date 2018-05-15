@@ -1,24 +1,27 @@
 [
     {
         "name": "alleyinteractive/wordpress-fieldmanager",
-        "version": "dev-spiritedmedia",
-        "version_normalized": "dev-spiritedmedia",
+        "version": "dev-spiritedmedia-upstream-468-fm-ui-update",
+        "version_normalized": "dev-spiritedmedia-upstream-468-fm-ui-update",
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/wordpress-fieldmanager.git",
-            "reference": "3603463f6a463a3192430e9a4ff03ec07ca09f34"
+            "reference": "99668aba293587441fa4b43e4b61b5901ce7a981"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/wordpress-fieldmanager/zipball/3603463f6a463a3192430e9a4ff03ec07ca09f34",
-            "reference": "3603463f6a463a3192430e9a4ff03ec07ca09f34",
+            "url": "https://api.github.com/repos/spiritedmedia/wordpress-fieldmanager/zipball/99668aba293587441fa4b43e4b61b5901ce7a981",
+            "reference": "99668aba293587441fa4b43e4b61b5901ce7a981",
             "shasum": ""
+        },
+        "require": {
+            "composer/installers": "~1.0"
         },
         "require-dev": {
             "squizlabs/php_codesniffer": "2.*",
             "wp-coding-standards/wpcs": "dev-master"
         },
-        "time": "2017-01-04T16:04:50+00:00",
+        "time": "2018-05-11T14:29:43+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -35,8 +38,12 @@
                 "email": "noreply@alleyinteractive.com"
             }
         ],
+        "keywords": [
+            "plugin",
+            "wordpress"
+        ],
         "support": {
-            "source": "https://github.com/spiritedmedia/wordpress-fieldmanager/tree/spiritedmedia"
+            "source": "https://github.com/spiritedmedia/wordpress-fieldmanager/tree/spiritedmedia-upstream-468-fm-ui-update"
         }
     },
     {
@@ -1036,7 +1043,7 @@
             "url": "git@github.com:humanmade/tachyon-plugin.git",
             "reference": "master"
         },
-        "time": "2018-02-23T20:40:02+00:00",
+        "time": "2018-03-16T01:27:39+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source"
     },

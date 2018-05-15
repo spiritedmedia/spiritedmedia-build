@@ -168,7 +168,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_SLACK_BOT_EMOJI'              => '',
 
                 // Site Features
-                'PEDESTAL_STREAM_ITEM_DEK_VISIBLE'      => true,
                 'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY'  => true,
 
                 // Membership

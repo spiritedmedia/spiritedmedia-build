@@ -254,7 +254,6 @@ class Entity_Types {
      */
     public function action_init_after_post_types_registered() {
         $this->register_entity_fields();
-        $this->register_article_fields();
         $this->register_embed_fields();
         $this->register_event_fields();
         $this->register_link_fields();
@@ -334,23 +333,6 @@ class Entity_Types {
      * Register fields for all entities
      */
     private function register_entity_fields() {
-        // Replaces deprecated `hidden_in_stream` post meta
-        $exclude = new \Fieldmanager_Select( [
-            'name' => 'exclude_from_home_stream',
-            'options' => [
-                'data' => [
-                    false => 'False',
-                    true => 'True',
-                ],
-            ],
-        ] );
-        $exclude->add_meta_box( 'Exclude from Home Stream', Types::get_entity_post_types(), 'side', 'low' );
-    }
-
-    /**
-     * Register fields for Articles
-     */
-    private function register_article_fields() {
         $footnotes = new \Fieldmanager_RichTextArea( [
             'name'     => 'footnotes',
             'label'    => false,

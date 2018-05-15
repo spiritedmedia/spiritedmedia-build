@@ -1,35 +1,42 @@
 <?php
+/**
+ * Class file for Fieldmanager_Media
+ *
+ * @package Fieldmanager
+ */
 
 /**
  * A field to select an attachment via the WordPress Media Manager.
  *
  * This field submits the selected attachment as an attachment ID (post ID).
- *
- * @package Fieldmanager_Field
  */
 class Fieldmanager_Media extends Fieldmanager_Field {
 
 	/**
+	 * Override field_class.
+	 *
 	 * @var string
-	 * Override field_class
 	 */
 	public $field_class = 'media';
 
 	/**
+	 * Button Label.
+	 *
 	 * @var string
-	 * Button Label
 	 */
 	public $button_label;
 
 	/**
+	 * Button label in the media modal popup.
+	 *
 	 * @var string
-	 * Button label in the media modal popup
 	 */
 	public $modal_button_label;
 
 	/**
+	 * Title of the media modal popup.
+	 *
 	 * @var string
-	 * Title of the media modal popup
 	 */
 	public $modal_title;
 
@@ -55,37 +62,41 @@ class Fieldmanager_Media extends Fieldmanager_Field {
 	public $remove_media_label;
 
 	/**
+	 * Class to attach to thumbnail media display.
+	 *
 	 * @var string
-	 * Class to attach to thumbnail media display
 	 */
 	public $thumbnail_class = 'thumbnail';
 
 	/**
+	 * Which size a preview image should be. e.g. "thumbnail", "large", or some
+	 * size created with add_image_size.
+	 *
 	 * @var string
-	 * Which size a preview image should be.
-	 * Should be a string (e.g. "thumbnail", "large", or some size created with add_image_size)
-	 * You can use an array here
 	 */
 	public $preview_size = 'thumbnail';
 
 	/**
-	 * @var string
 	 * What mime types are available to choose from.
 	 * Valid options are "all" or a partial or full mimetype (e.g. "image" or
 	 * "application/pdf").
+	 *
+	 * @var string
 	 */
 	public $mime_type = 'all';
 
 	/**
-	 * @var boolean
-	 * Static variable so we only load media JS once
+	 * Static variable so we only load media JS once.
+	 *
+	 * @var bool
 	 */
 	public static $has_registered_media = false;
 
 	/**
-	 * Construct default attributes
-	 * @param string $label
-	 * @param array $options
+	 * Construct default attributes.
+	 *
+	 * @param string $label   The form label.
+	 * @param array  $options The form options.
 	 */
 	public function __construct( $label = '', $options = array() ) {
 		$this->button_label         = __( 'Attach a File', 'fieldmanager' );
@@ -121,31 +132,90 @@ class Fieldmanager_Media extends Fieldmanager_Field {
 	}
 
 	/**
-	 * Presave; ensure that the value is an absolute integer
+	 * Presave; ensure that the value is an absolute integer.
+	 *
+	 * @param  int   $value         The new value.
+	 * @param  array $current_value The current value.
+	 * @return int The sanitized value.
 	 */
 	public function presave( $value, $current_value = array() ) {
-		if ( $value == 0 || !is_numeric( $value ) ) {
-			return NULL;
+		if ( 0 == $value || ! is_numeric( $value ) ) {
+			return null;
 		}
 		return absint( $value );
 	}
 
 	/**
-	 * Form element
-	 * @param mixed $value
-	 * @return string HTML
+	 * Form element.
+	 *
+	 * @param mixed $value The current value.
+	 * @return string HTML string.
 	 */
 	public function form_element( $value = array() ) {
 		if ( is_numeric( $value ) && $value > 0 ) {
 			$attachment = get_post( $value );
-			if ( strpos( $attachment->post_mime_type, 'image/' ) === 0 ) {
-				$preview = esc_html( $this->selected_image_label ) . '<br />';
-				$preview .= '<a href="#">' . wp_get_attachment_image( $value, $this->preview_size, false, array( 'class' => $this->thumbnail_class ) ) . '</a>';
-			} else {
-				$preview = esc_html( $this->selected_file_label ) . '&nbsp;';
-				$preview .= wp_get_attachment_link( $value, $this->preview_size, True, True, $attachment->post_title );
+			// Open the preview wrapper.
+			$preview = '<div class="media-file-preview">';
+			$file_label = ''; // The uploaded file label - image or file.
+			$dashicon_class = '';
+
+			if ( $attachment->post_mime_type ) {
+				$preview .= '<a href="#">';
+				$image_type = strpos( $attachment->post_mime_type, 'image/' );
+
+				if ( strpos( $attachment->post_mime_type, 'audio/' ) === 0 ) {
+					$dashicon_class = 'dashicons-media-audio';
+				} elseif ( strpos( $attachment->post_mime_type, 'video/' ) === 0 ) {
+					$dashicon_class = 'dashicons-media-video';
+				} else {
+					$dashicon_class = 'dashicons-media-document';
+				}
+
+				$dashicon_class = apply_filters( 'fieldmanager_media_preview_icon', $dashicon_class, $attachment->post_mime_type );
+
+				// If the preview is an image display the image, otherwise use a media icon.
+				if ( false === $image_type ) {
+					$file_label = $this->selected_file_label;
+					if ( '' !== $dashicon_class ) {
+						$preview .= "<span class='dashicons {$dashicon_class}'></span>";
+					}
+				} elseif ( 0 === $image_type ) {
+					$file_label = $this->selected_image_label;
+					$preview .= wp_get_attachment_image(
+						$value,
+						$this->preview_size,
+						false,
+						array(
+							'class' => $this->thumbnail_class,
+						)
+					);
+				}
+
+				$preview .= '</a>';
 			}
-			$preview .= sprintf( '<br /><a href="#" class="fm-media-remove fm-delete">%s</a>', esc_html( $this->remove_media_label ) );
+
+			$preview .= sprintf( '<div class="fm-file-detail">%1$s<h4>%2$s</h4><span class="fm-file-type">%3$s</span></div>',
+				esc_html( $file_label ),
+				wp_get_attachment_link( $value, $this->preview_size, true, true, $attachment->post_title ),
+				esc_html( $attachment->post_mime_type )
+			);
+
+			$button_string = '<a href="#" class="%1$s"><span class="screen-reader-text">%2$s</span></a>';
+
+			$preview .= sprintf(
+				$button_string,
+				esc_attr( 'fm-media-edit' ),
+				esc_html__( 'edit', 'fieldmanager' )
+			);
+
+			$preview .= sprintf(
+				$button_string,
+				esc_attr( 'fm-media-remove fm-delete fmjs-remove' ),
+				esc_html( $this->remove_media_label )
+			);
+
+			$preview .= '</div>';
+
 			$preview = apply_filters( 'fieldmanager_media_preview', $preview, $value, $attachment );
 		} else {
 			$preview = '';
