@@ -1157,7 +1157,7 @@ abstract class Post {
      * @return string
      */
     public function get_twitter_share_text() {
-        $share_text = $this->get_twitter_card_tag( 'title' );
+        $share_text = $this->get_title();
         if ( strlen( $share_text ) > PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH ) {
             $share_text = substr( $share_text, 0, PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH );
         }
