@@ -59,14 +59,11 @@ $c-slot-item-lead-pd : rem( 16px );
 // * Shortcode Position -- All Scopes
 // * Newsletter Item Position -- All Scopes
 // * Component Position -- All Scopes
+// * Stream Entity Position -- Site Scope
 [data-slot-position*="shortcode"],
 [data-slot-position*="newsletter_item"],
-[data-slot-position*="component"] {
-  .c-slot__item {
-    padding-bottom: $c-slot-item-pd;
-    padding-left: $c-slot-item-pd;
-  }
-
+[data-slot-position*="component"],
+[data-slot-position="site_stream_entity"] {
   .c-slot__img {
     // stylelint-disable-next-line selector-max-type
     img {
@@ -75,10 +72,23 @@ $c-slot-item-lead-pd : rem( 16px );
   }
 }
 
+// * Shortcode Position -- All Scopes
+// * Newsletter Item Position -- All Scopes
+// * Component Position -- All Scopes
+[data-slot-position*="shortcode"],
+[data-slot-position*="newsletter_item"],
+[data-slot-position*="component"] {
+  .c-slot__item {
+    padding-bottom: $c-slot-item-pd;
+    padding-left: $c-slot-item-pd;
+  }
+}
 
 // * Lead Position -- All Scopes
+// * Stream Entity Position -- Site Scope
 // * Component Position -- All Scopes
 [data-slot-position*="lead"],
+[data-slot-position="site_stream_entity"],
 [data-slot-position*="component"] {
   &.c-slot {
     text-align: center;
@@ -103,14 +113,20 @@ $c-slot-item-lead-pd : rem( 16px );
   }
 }
 
-
 // Lead Position -- Email Scope
 [data-slot-position="email_lead"] {}
-
 
 // Single Lead Position -- Site Scope
 [data-slot-position="site_single_lead"] {
   &.c-slot {
     padding-bottom: $c-slot-item-lead-pd;
+  }
+}
+
+// * Stream Entity Position -- Site Scope
+[data-slot-position="site_stream_entity"] {
+  &.c-slot {
+    padding-top: rem( 12px );
+    padding-bottom: rem( 16px );
   }
 }

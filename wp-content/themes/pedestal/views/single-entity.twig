@@ -6,10 +6,6 @@
     <article class="c-main__content  {{ item.css_classes|esc_attr }}"
         {{ item.get_the_data_atts }} >
 
-        <div class="single-header__sponsorship">
-            {{ ped_slot( 'single_lead' ) }}
-        </div>
-
         <header class="c-main__header js-main-header single-header">
 
             {% if 'factcheck' == type %}

@@ -52,6 +52,7 @@ class Slots {
                 'shortcode',
                 'newsletter_item',
                 'newsletter_promoted_event',
+                'stream_entity',
             ],
             'email' => [
                 'shortcode',

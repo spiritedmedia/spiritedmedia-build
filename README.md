@@ -1,7 +1,7 @@
-Build [#4855](https://circleci.com/gh/spiritedmedia/spiritedmedia/4855) by montchr at 2018-05-15 12:58 AM UTC
+Build [#4893](https://circleci.com/gh/spiritedmedia/spiritedmedia/4893) by kingkool68 at 2018-05-17 04:47 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v6.13.0](https://github.com/spiritedmedia/spiritedmedia/compare/v6.13.0)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v6.13.1](https://github.com/spiritedmedia/spiritedmedia/compare/v6.13.1)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v6.12.12...v6.13.0)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v6.13.0...v6.13.1)
 
- - [#2591](git@github.com:spiritedmedia/spiritedmedia.git/pull/2591): Post Admin UI Improvements
+ - [#2629](git@github.com:spiritedmedia/spiritedmedia.git/pull/2629): [HOTFIX] Fix Sponsored Entities + Show Sponsorship in Event Stream Items

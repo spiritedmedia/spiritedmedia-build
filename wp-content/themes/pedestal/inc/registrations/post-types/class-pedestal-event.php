@@ -53,6 +53,7 @@ class Pedestal_Event {
         if ( method_exists( $ped_event, 'get_context' ) ) {
             $context = $ped_event->get_context( $context );
         }
+        $context['slot'] = 'stream_entity';
         return $context;
     }
 }
