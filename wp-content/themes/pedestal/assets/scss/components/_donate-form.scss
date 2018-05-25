@@ -7,24 +7,16 @@
   background-color: $primary-color;
   color: text-contrast();
   margin-bottom: rem( 40px );
-  padding: rem( 20px ) 0;
+  padding: rem( 32px ) 0;
 }
 
-.donate-form__inner {
+.donate-form__inner,
+.donate-form__fields,
+.donate-form__submit {
   max-width: rem( 300px );
   margin: 0 auto;
   padding: 0;
   border: 0;
-}
-
-// Qualified selector to override post content scope
-//
-// stylelint-disable-next-line selector-max-type
-h1.donate-form__intro {
-  color: text-contrast();
-  font-size: rem( 16px );
-  font-weight: normal;
-  margin-bottom: rem( 20px );
 }
 
 .donate-form__amount,
@@ -34,15 +26,32 @@ h1.donate-form__intro {
 
 
 //
-// Amount Field
+// Amount Field + Label
 //
 // 1. Hide spin box from number input
 // 2. Handle prefix+input sizing (simplified from `.input-group`)
 // 3. Handle inconsistent input sizing across browsers
 
 .donate-form__amount {
-  width: rem( 100px );
-  margin-right: rem( 20px );
+  margin-bottom: rem( 16px );
+}
+
+.donate-form__amount__label {
+  color: text-contrast();
+  font-size: rem( 16px );
+  font-weight: normal;
+}
+
+.donate-form__amount__input-group,
+.donate-form__amount__prefix,
+.donate-form__amount__input {
+  /* 2 */
+  display: flex;
+  position: relative;
+}
+
+.donate-form__amount__input-group {
+  width: rem( 160px );
   padding: 0; /* 3 */
   border: rem( 1px ) solid $grey-25;
   background-color: $white;
@@ -52,36 +61,24 @@ h1.donate-form__intro {
   }
 }
 
-.donate-form__amount,
-.donate-form__amount__prefix,
-.donate-form__amount__input {
-  /* 2 */
-  display: flex;
-  position: relative;
-}
-
 .donate-form__amount__prefix,
 .donate-form__amount__input {
   align-items: center; /* 2 */
-  line-height: 1;
-  font-size: rem( 28px );
+  font-size: rem( 16px );
+  line-height: 2.5;
 }
 
 .donate-form__amount__prefix {
   padding-left: rem( 5px ); /* 3 */
+  color: $primary-color;
 
   @include firefox-only {
     padding-left: 0; /* 3 */
   }
-}
 
-.donate-form__amount__label-text {
-  @include invisible;
-}
-
-.donate-form__amount__prefix {
-  color: $grey-62;
-  font-weight: 700;
+  @include ie-only {
+    height: rem( 32px ); /* 3 */
+  }
 }
 
 .donate-form__amount__input {
@@ -91,12 +88,15 @@ h1.donate-form__intro {
   position: relative;
   padding: 0;
 
+  @include ie-only {
+    height: rem( 40px ); /* 3 */
+  }
+
   border: 0;
   background-color: #ffffff;
   color: $body-font-color;
-  text-align: center;
   appearance: textfield; /* 1 */
-
+  font-style: italic;
 
   /* 1 */
   &::-webkit-outer-spin-button,
@@ -104,8 +104,6 @@ h1.donate-form__intro {
     appearance: none;
   }
 }
-
-
 
 
 //
@@ -120,12 +118,17 @@ h1.donate-form__intro {
 .donate-form__frequency-option {
   color: text-contrast();
   display: block;
-  margin-bottom: rem( 4px );
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .donate-form__frequency-option__input {
   height: rem( 18px );
   width: rem( 18px );
+  display: inline-block;
+  vertical-align: middle;
 }
 
 
@@ -138,7 +141,7 @@ h1.donate-form__intro {
 }
 
 .donate-form__submit__button {
-  margin-top: rem( 20px );
+  margin-top: rem( 24px );
   margin-bottom: rem( 10px );
   width: 100%;
 }
@@ -187,11 +190,26 @@ h1.donate-form__intro {
 }
 
 
-
-
-
 @media #{$small-only} {
   .donate-form {
     @include explode-component( $inner-selector: '&__inner-wrap' );
+  }
+}
+
+
+@media #{$medium-up} {
+  .donate-form__inner,
+  .donate-form__fields {
+    max-width: rem( 500px );
+  }
+
+  .donate-form__fields {
+    display: flex;
+    justify-content: center;
+  }
+
+  .donate-form__amount {
+    float: none;
+    margin-right: rem( 32px );
   }
 }

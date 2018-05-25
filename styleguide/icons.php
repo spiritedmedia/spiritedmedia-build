@@ -46,6 +46,12 @@ $icons = [
             'Search form',
         ],
     ],
+    'dollar-sign' => [
+        'label' => 'Dollar Sign',
+        'usage' => [
+            'Donate form',
+        ],
+    ],
     'envelope' => [
         'label' => 'Envelope',
         'usage' => [],

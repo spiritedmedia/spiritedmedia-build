@@ -8,53 +8,60 @@
     <div class="donate-form__inner-wrap">
         <fieldset class="donate-form__inner">
 
-            <p class="donate-form__intro">I would like to give:</p>
+            <div class="donate-form__fields">
+                <input name="org_id" value="{{ nrh_property|esc_attr }}" type="hidden">
+                <input name="property" value="{{ nrh_property|esc_attr }}" type="hidden">
 
-            <input name="org_id" value="{{ nrh_property|esc_attr }}" type="hidden">
-            <input name="property" value="{{ nrh_property|esc_attr }}" type="hidden">
+                {% if campaign %}
+                <input name="campaign" value="{{ campaign|esc_attr }}" type="hidden">
+                {% endif %}
 
-            {% if campaign %}
-            <input name="campaign" value="{{ campaign|esc_attr }}" type="hidden">
-            {% endif %}
-
-            <label class="donate-form__amount">
-                <div class="donate-form__amount__label-text">
-                    amount to donate
+                <div class="donate-form__amount">
+                    <label class="donate-form__amount__label" for="donate-form-amount-input">
+                        I would like to give
+                    </label>
+                    <div class="donate-form__amount__input-group">
+                        <span class="donate-form__amount__prefix">
+                            {{ ped_icon('dollar-sign') }}
+                        </span>
+                        <input type="number"
+                            id="donate-form-amount-input"
+                            class="donate-form__amount__input js-donate-form-amount"
+                            name="amount"
+                            value="15"
+                        />
+                    </div>
                 </div>
-                <span class="donate-form__amount__prefix">$</span>
-                <input type="number"
-                    class="donate-form__amount__input js-donate-form-amount"
-                    name="amount"
-                    value="15"
-                />
-            </label>
 
-            <fieldset class="donate-form__frequency">
-                <label class="donate-form__frequency-option">
-                    <input type="radio" checked
-                        class="donate-form__frequency-option__input js-donate-form-frequency"
-                        name="installmentPeriod"
-                        value="monthly"
-                    />
-                    Monthly
-                </label>
-                <label class="donate-form__frequency-option">
-                    <input type="radio"
-                        class="donate-form__frequency-option__input js-donate-form-frequency"
-                        name="installmentPeriod"
-                        value="yearly"
-                    />
-                    Yearly
-                </label>
-                <label class="donate-form__frequency-option">
-                    <input type="radio"
-                        class="donate-form__frequency-option__input js-donate-form-frequency"
-                        name="installmentPeriod"
-                        value=""
-                    />
-                    Today only
-                </label>
-            </fieldset>
+                <fieldset class="donate-form__frequency">
+                    <label class="donate-form__frequency-option">
+                        <input type="radio" checked
+                            class="donate-form__frequency-option__input js-donate-form-frequency"
+                            name="installmentPeriod"
+                            value="monthly"
+                        />
+                        Monthly (this helps us most!)
+                    </label>
+                    <label class="donate-form__frequency-option">
+                        <input type="radio"
+                            class="donate-form__frequency-option__input js-donate-form-frequency"
+                            name="installmentPeriod"
+                            value="yearly"
+                        />
+                        Yearly
+                    </label>
+                    <label class="donate-form__frequency-option">
+                        <input type="radio"
+                            class="donate-form__frequency-option__input js-donate-form-frequency"
+                            name="installmentPeriod"
+                            value=""
+                        />
+                        Today only
+                    </label>
+                </fieldset>
+            </div>
+
+
 
             <div class="donate-form__submit">
                 <button type="submit" class="donate-form__submit__button btn--cta btn--pill btn--no-border">
