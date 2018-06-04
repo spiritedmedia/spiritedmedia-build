@@ -1,0 +1,98 @@
+<p>
+    <label for="{{ title_id|esc_attr }}">Title</label>
+    <input class="widefat" id="{{ title_id|esc_attr }}"
+        name="{{ title_name|esc_attr }}"
+        type="text"
+        value="{{ title|esc_attr }}"
+    >
+</p>
+
+<p>
+    <label for="{{ title_link_id|esc_attr }}">Title Link (optional)</label>
+    <input class="widefat" id="{{ title_link_id|esc_attr }}"
+        name="{{ title_link_name|esc_attr }}"
+        type="url"
+        value="{{ title_link|esc_url }}"
+    >
+</p>
+
+<p>
+    <label for="{{ types_id|esc_attr }}">Content Type</label>
+    <select
+        name="{{ types_name|esc_attr }}"
+        id="{{ types_id|esc_attr }}"
+        class="widefat"
+    >
+        {% for key, label in types %}
+            <option value="{{ key|esc_attr }}" {{ selected( key, selected_type ) }}>
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+</p>
+
+<fieldset>
+    <label>Content Filter</label>
+    <p class="widefat">
+        <label>
+            <input
+                type="radio"
+                name="recent-content-widget-content-filter"
+                class="js-recent-content-widget-filter-trigger"
+                value="0"
+                {{ checked( has_cluster_filter, false ) }}
+            >
+            No filter (show all)
+        </label>
+    </p>
+    <p class="widefat">
+        <label>
+            <input
+                type="radio"
+                name="recent-content-widget-content-filter"
+                class="js-recent-content-widget-filter-trigger"
+                value="1"
+                {{ checked( has_cluster_filter ) }}
+            > Filter by cluster
+        </label>
+    </p>
+
+    {% set hidden_styles = 'style="display: none;"' %}
+    {% if has_cluster_filter %}
+        {% set hidden_styles = '' %}
+    {% endif %}
+
+    <ul {{ hidden_styles }} class="js-recent-content-widget-clusters">
+        {{ selected_clusters }}
+    </ul>
+
+    <p {{ hidden_styles }} class="js-recent-content-widget-filter">
+        <input type="text" class="js-cluster-autocomplete widefat">
+        <br>
+        <em>Type cluster name to see suggestions</em>
+    </p>
+</fieldset>
+
+<p>
+    <label for="{{ number_id|esc_attr }}">Number of items to show</label>
+    <input id="{{ number_id|esc_attr }}"
+        name="{{ number_name|esc_attr }}"
+        type="text"
+        value="{{ number|esc_attr }}"
+        size="3"
+    >
+</p>
+
+<p>
+    <input
+        class="widefat"
+        id="{{ show_thumbs_id|esc_attr }}"
+        name="{{ show_thumbs_name|esc_attr }}"
+        type="checkbox"
+        value="show_thumbs"
+        {{ checked( show_thumbs ) }}
+    >
+    <label for="{{ show_thumbs_id|esc_attr }}">Display image thumbnails</label>
+</p>
+
+<input type="hidden" value="{{ base_field_name|esc_attr }}" class="js-base-field-name">

@@ -1,0 +1,16 @@
+<li>
+    <a
+        href="#"
+        class="js-recent-content-widget-remove-cluster"
+        title="Remove cluster filter"
+        style="text-decoration: none;"
+    >
+    x
+    </a>
+    {{ title }} ({{ type }})
+    <input
+        type="hidden"
+        name="recent-content-widget-clusters[]"
+        value="{{ post_id|esc_attr }}"
+    >
+</li>

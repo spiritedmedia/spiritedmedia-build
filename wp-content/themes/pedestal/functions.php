@@ -583,7 +583,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             add_editor_style( $editor_stylesheets );
 
             $sidebars = [
-                'stream'      => esc_html__( 'Stream', 'pedestal' ),
+                'homepage'      => esc_html__( 'Homepage', 'pedestal' ),
                 'story'       => esc_html__( 'Story', 'pedestal' ),
                 'entity'      => esc_html__( 'Entity', 'pedestal' ),
             ];

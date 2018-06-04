@@ -8,6 +8,9 @@ use \Pedestal\Posts\Post;
 
 class Recent_Content_Widget extends \WP_Widget {
 
+    /**
+     * Setup the widget
+     */
     public function __construct() {
         $widget_options = [
             'description' => esc_html( 'The most recent stories or articles.' ),
@@ -16,8 +19,24 @@ class Recent_Content_Widget extends \WP_Widget {
             esc_html( 'Recent Content' ),
             $widget_options
         );
+
+        wp_enqueue_script(
+            'recent-content-widget',
+            get_template_directory_uri() . '/assets/dist/js/recent-content-widget-admin.js',
+            [ 'jquery-ui-autocomplete' ],
+            false,
+            true
+        );
+
+        add_action( 'wp_ajax_recent-content-widget-cluster-autocomplete', [ $this, 'handle_ajax' ] );
     }
 
+    /**
+     * Handes the display of the widget
+     *
+     * @param  array $args     Arguments to modify the widget
+     * @param  array $instance Saved data for this widget instance
+     */
     public function widget( $args, $instance ) {
         $post_types = [];
         switch ( $instance['type'] ) {
@@ -39,7 +58,7 @@ class Recent_Content_Widget extends \WP_Widget {
             return;
         }
 
-        $posts = new \WP_Query( [
+        $query_args = [
             'posts_per_page'         => intval( $instance['number'] ),
             'paged'                  => 1,
             'post_status'            => 'publish',
@@ -48,7 +67,14 @@ class Recent_Content_Widget extends \WP_Widget {
             'no_found_rows'          => true,
             'update_post_meta_cache' => false,
             'update_post_term_cache' => false,
-        ] );
+        ];
+
+        if ( ! empty( $instance['clusters'] ) && is_array( $instance['clusters'] ) ) {
+            $query_args['connected_items'] = $instance['clusters'];
+            $query_args['connected_type'] = Types::get_cluster_connection_types( $post_types );
+        }
+
+        $posts = new \WP_Query( $query_args );
 
         if ( empty( $posts->posts ) ) {
             return false;
@@ -83,7 +109,7 @@ class Recent_Content_Widget extends \WP_Widget {
                 $item_context['thumbnail'] = $feat_image;
             }
             ob_start();
-                Timber::render( 'widgets/recent-content-item.twig', $item_context );
+                Timber::render( 'widgets/recent-content-widget/recent-content-item.twig', $item_context );
             $items .= ob_get_clean();
         }
 
@@ -96,9 +122,14 @@ class Recent_Content_Widget extends \WP_Widget {
             'title_link'    => esc_url( $instance['title_link'] ),
             'items'         => $items,
         ];
-        Timber::render( 'widgets/recent-content.twig', $widget_context );
+        Timber::render( 'widgets/recent-content-widget/recent-content-widget.twig', $widget_context );
     }
 
+    /**
+     * Render the admin form for populating widget data
+     *
+     * @param  array $instance Saved data for this widget instance
+     */
     public function form( $instance ) {
 
         $instance = wp_parse_args( $instance, [
@@ -107,6 +138,7 @@ class Recent_Content_Widget extends \WP_Widget {
             'number'      => 10,
             'show_thumbs' => true,
             'type'        => 'original',
+            'clusters'    => [],
         ] );
 
         $types = [
@@ -126,78 +158,135 @@ class Recent_Content_Widget extends \WP_Widget {
             $v = $this->get_field_name( $k );
         } );
 
-        ?>
+        $has_cluster_filter = false;
+        $selected_clusters = '';
+        if ( ! empty( $instance['clusters'] ) ) {
+            $has_cluster_filter = true;
+            foreach ( $instance['clusters'] as $cluster_id ) {
+                $selected_clusters .= $this->get_selected_cluster_item( $cluster_id );
+            }
+        }
 
-        <p>
-            <label for="<?php echo esc_attr( $field_ids['title'] ); ?>">
-                <?php echo esc_html( 'Title' ); ?>
-            </label>
-            <input class="widefat" id="<?php echo esc_attr( $field_ids['title'] ); ?>"
-                name="<?php echo esc_attr( $field_names['title'] ); ?>"
-                type="text"
-                value="<?php echo esc_attr( $instance['title'] ); ?>"
-            />
-        </p>
+        $widget_context = [
+            'title'              => $instance['title'],
+            'title_id'           => $field_ids['title'],
+            'title_name'         => $field_names['title'],
 
-        <p>
-            <label for="<?php echo esc_attr( $field_ids['title_link'] ); ?>">
-                <?php echo esc_html( 'Title Link' ); ?>
-            </label>
-            <input class="widefat" id="<?php echo esc_attr( $field_ids['title_link'] ); ?>"
-                name="<?php echo esc_attr( $field_names['title_link'] ); ?>"
-                type="url"
-                value="<?php echo esc_attr( $instance['title_link'] ); ?>"
-            />
-        </p>
+            'title_link'         => $instance['title_link'],
+            'title_link_id'      => $field_ids['title_link'],
+            'title_link_name'    => $field_names['title_link'],
 
-        <p>
-            <label for="<?php echo esc_attr( $field_ids['number'] ); ?>">
-                <?php echo esc_html( 'Number of posts to show' ); ?>
-            </label>
-            <input id="<?php echo esc_attr( $field_ids['number'] ); ?>"
-                name="<?php echo esc_attr( $field_names['number'] ); ?>"
-                type="text"
-                value="<?php echo (int) $instance['number']; ?>"
-                size="3"
-            />
-        </p>
+            'types'              => $types,
+            'selected_type'      => $instance['type'],
+            'types_id'           => $field_ids['type'],
+            'types_name'         => $field_names['type'],
 
-        <p>
-            <label for="<?php echo esc_attr( $field_ids['show_thumbs'] ); ?>">
-                <?php echo esc_html( 'Display thumbnails?' ); ?>
-            </label>
-            <input class="widefat" id="<?php echo esc_attr( $field_ids['show_thumbs'] ); ?>"
-                name="<?php echo esc_attr( $field_names['show_thumbs'] ); ?>"
-                type="checkbox"
-                value="show_thumbs"
-                <?php checked( (bool) $instance['show_thumbs'], true ); ?>
-            />
-        </p>
+            'selected_clusters'  => $selected_clusters,
+            'has_cluster_filter' => $has_cluster_filter,
 
-        <p>
-            <label for="<?php echo esc_attr( $field_ids['type'] ); ?>">
-                <?php echo esc_html( 'Type of content' ); ?>
-            </label>
-            <select name="<?php echo esc_attr( $field_names['type'] ); ?>" id="<?php echo esc_attr( $field_ids['type'] ); ?>">
-                <?php foreach ( $types as $key => $label ) : ?>
-                <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $instance['type'] ); ?>>
-                    <?php echo esc_html( $label ); ?>
-                </option>
-                <?php endforeach; ?>
-            </select>
-        </p>
+            'number'             => $instance['number'],
+            'number_id'          => $field_ids['number'],
+            'number_name'        => $field_names['number'],
 
-        <?php
-
+            'show_thumbs'        => (bool) $instance['show_thumbs'],
+            'show_thumbs_id'     => $field_ids['show_thumbs'],
+            'show_thumbs_name'   => $field_names['show_thumbs'],
+        ];
+        Timber::render( 'widgets/recent-content-widget/admin-widget-form.twig', $widget_context );
     }
 
-    public function update( $new_instance, $old_instance ) {
-        $instance = $old_instance;
+    /**
+     * Logic for saving data when the widget is updated
+     *
+     * @param  array $new_instance New widget data
+     * @param  array $instance     Old widget data
+     * @return array               Update widget data to be saved to the database
+     */
+    public function update( $new_instance, $instance ) {
         $instance['title'] = sanitize_text_field( $new_instance['title'] );
         $instance['title_link'] = esc_url_raw( $new_instance['title_link'] );
         $instance['number'] = (int) $new_instance['number'];
         $instance['show_thumbs'] = $new_instance['show_thumbs'];
         $instance['type'] = sanitize_key( $new_instance['type'] );
+
+        $instance['clusters'] = [];
+        if ( ! empty( $_REQUEST['recent-content-widget-clusters'] ) ) {
+            $clusters = $_REQUEST['recent-content-widget-clusters'];
+            foreach ( $clusters as $id ) {
+                if ( is_numeric( $id ) ) {
+                    $instance['clusters'][] = intval( $id );
+                }
+            }
+        }
+        $instance['clusters'] = array_unique( $instance['clusters'] );
+
         return $instance;
+    }
+
+    /**
+     * Handle the AJAX request from the autocomplete field
+     *
+     */
+    public function handle_ajax() {
+        if ( empty( $_REQUEST['action'] || empty( $_REQUEST['term'] ) ) ) {
+            wp_send_json_error( [], 500 );
+        }
+
+        $query = new \WP_Query([
+            'post_type'      => Types::get_cluster_post_types(),
+            'post_status'    => 'publish',
+            'posts_per_page' => 10,
+            's'              => sanitize_text_field( $_REQUEST['term'] ),
+        ]);
+
+        $output = [];
+        foreach ( $query->posts as $post ) {
+            $ped_post = Post::get( $post );
+            if ( ! Types::is_post( $ped_post ) ) {
+                continue;
+            }
+            $label = $ped_post->get_the_title();
+            $label .= ' (' . $ped_post->get_type_name() . ')';
+
+            $output[] = (object) [
+                'label'         => $label,
+                'title'         => $ped_post->get_the_title(),
+                'type'          => $ped_post->get_type_name(),
+                'post_id'       => $ped_post->get_id(),
+                'selected_item' => $this->get_selected_cluster_item( $ped_post ),
+            ];
+        }
+        wp_send_json_success( $output );
+        die();
+    }
+
+    /**
+     * Render the markup for a selected cluster item
+     *
+     * Used server side when the widget is first loaded and
+     * passed to the AJAX request where JavaScript inserts the markup
+     * straight into the DOM
+     *
+     * @param  integer|object $ped_post Cluster Post object or ID
+     * @return string                   Rendered markup
+     */
+    public function get_selected_cluster_item( $ped_post = 0 ) {
+        if ( ! Types::is_cluster( $ped_post ) ) {
+            $ped_post = Post::get( $ped_post );
+            if ( ! Types::is_cluster( $ped_post ) ) {
+                return;
+            }
+        }
+
+        $context = [
+            'title'      => $ped_post->get_the_title(),
+            'type'       => $ped_post->get_type_name(),
+            'post_id'    => $ped_post->get_id(),
+            'field_name' => $this->get_field_name( 'clusters' ) . '[]',
+        ];
+
+        ob_start();
+        Timber::render( 'widgets/recent-content-widget/selected-cluster-item.twig', $context );
+        return ob_get_clean();
     }
 }

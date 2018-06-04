@@ -64,8 +64,8 @@ if ( Types::is_post( $item ) ) :
             ] );
         }
 
-        if ( is_active_sidebar( 'sidebar-stream' ) ) {
-            $context['sidebar'] = Timber::get_widgets( 'sidebar-stream' );
+        if ( is_active_sidebar( 'sidebar-homepage' ) ) {
+            $context['sidebar'] = Timber::get_widgets( 'sidebar-homepage' );
         }
     }
 
