@@ -1,12 +1,15 @@
 {% if member_bar_text %}
+
+{% set member_bar_button_text = member_bar_button_text|default( 'Support Our Work' ) %}
+
 <div class="member-bar">
     <p class="member-bar__text">{{ member_bar_text }}</p>
     <a href="{{ site.url|esc_url }}/support-our-work/"
         class="member-bar__button btn--pill btn--no-border btn"
         data-ga-category="Member Bar"
-        data-ga-label="Support Our Work"
+        data-ga-label="{{ member_bar_button_text }}"
     >
-        Support Our Work
+        {{ member_bar_button_text }}
     </a>
 </div>
 {% endif %}
