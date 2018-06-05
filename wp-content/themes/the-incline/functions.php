@@ -115,6 +115,7 @@ class The_Incline extends Pedestal {
         $context['site']->emails['daily_newsletter_send_time'] = '6:30 a.m.';
         $context['member_bar_text'] = '☀️ Show your love for <em>The Incline.</em> Support our spring member drive. ☀️';
         $context['member_bar_button_text'] = 'Join Today';
+        $context['member_bar_button_url'] = get_site_url() . '/support-our-work/?campaign=7011I000000VQHA';
         return $context;
     }
 
