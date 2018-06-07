@@ -13,13 +13,6 @@ use Pedestal\Posts\Entities\Link;
 class Types {
 
     /**
-     * Instance
-     *
-     * @var object
-     */
-    private static $instance;
-
-    /**
      * Post type settings
      *
      * @var array
@@ -72,16 +65,17 @@ class Types {
     public static $content_types = [];
 
     /**
-     * Set up the instance
+     * Get an instance of this class
      */
     public static function get_instance() {
-        if ( ! isset( self::$instance ) ) {
-            self::$instance = new Types;
-            self::$instance->setup_types();
-            self::$instance->setup_actions();
-            self::$instance->setup_filters();
+        static $instance = null;
+        if ( null === $instance ) {
+            $instance = new static();
+            $instance->setup_types();
+            $instance->setup_actions();
+            $instance->setup_filters();
         }
-        return self::$instance;
+        return $instance;
     }
 
     /**
@@ -558,12 +552,12 @@ class Types {
     /**
      * Modify which template is loaded for a given request
      *
-     * @param  string $include Path to a PHP template
+     * @param  string $template Path to a PHP template
      * @return string          Possibly modified template path
      */
-    public function filter_template_include( $include ) {
+    public function filter_template_include( $template = '' ) {
         if ( ! get_query_var( 'pedestal_originals' ) ) {
-            return $include;
+            return $template;
         }
         return locate_template( [ 'archive.php', 'index.php' ] );
     }

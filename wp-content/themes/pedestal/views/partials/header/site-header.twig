@@ -1,0 +1,142 @@
+<header class="site-header--with-nav" role="banner">
+    <div class="site-header--with-nav__inner">
+        <a
+            href="{{ site_url|esc_url }}"
+            class="site-header--with-nav__logo-link"
+            rel="home"
+            data-ga-category="Site Logo|Header"
+            data-ga-label=""
+        >
+            {{ ped_logo( 'logo', 'site-header--with-nav__logo' ) }}
+            <span class="invisible">Home</span>
+        </a>
+
+        <a
+            href="{{ site_url|esc_url }}/navigation/"
+            class="site-header--with-nav__menu-trigger js-modal-trigger"
+            data-modal-target="#site-header--with-nav-modal-menu"
+        >
+            {{ ped_icon( 'bars', 'site-header--with-nav__hamburger' ) }}
+            <span class="invisible">Menu</span>
+        </a>
+
+        <form
+            method="get"
+            action="{{ site_url|esc_url }}"
+            id="site-header-search-modal"
+            class="site-header--with-nav__search-modal"
+        >
+
+            <label class="form-label u-text-color-white" for="site-header--search-field">Search {{ domain_name }}</label>
+            <div class="input-group-v2">
+                {{ ped_icon( 'search', 'input-group-v2__addon' ) }}
+                <input
+                    type="search"
+                    name="s"
+                    id="site-header--search-field"
+                    class="input-group-v2__input form-input js-site-header--search-field"
+                    placeholder="enter your search term"
+                    value="{{ search_query|esc_attr }}"
+                >
+            </div>
+            <button class="btn-v2--oval--light site-header--with-nav__search-button">Search</button>
+        </form>
+
+        <section
+            id="site-header--with-nav-modal-menu"
+            class="site-header--with-nav__modal-menu"
+        >
+            <div class="site-nav--primary__outer">
+                <nav class="site-nav site-nav--primary">
+                    <ul class="site-nav__list site-nav--primary__list">
+                        {% for item in primary_nav %}
+
+                            {% if item.slug == 'search' %}
+                                {% set additional_classes = 'js-modal-trigger' %}
+                                {% set additional_attributes = 'data-modal-target="#site-header-search-modal"' %}
+                            {% endif %}
+
+                            <li class="site-nav__item site-nav--primary__item">
+                                <a
+                                    href="{{ item.url|esc_url }}"
+                                    class="site-nav__link site-nav--primary__link {{ additional_classes }}"
+                                    {{ additional_attributes }}
+
+                                >
+                                    <div class="site-nav--primary__group">
+                                        {% if item.icon %}
+                                            {{ ped_icon( item.icon, 'site-nav__icon site-nav--primary__icon' ) }}
+                                        {% endif %}
+                                        <span class="site-nav--primary__text--{{ item.slug|esc_attr }}">
+                                            {{ item.title }}
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+
+            <nav class="site-nav--secondary">
+                <ul class="site-nav__list site-nav--secondary__list">
+                    {% for class, item in secondary_nav %}
+                    <li class="site-nav__item site-nav--secondary__item">
+                        <a href="{{ item.url|esc_url }}" class="site-nav__link site-nav--secondary__link {{ class|esc_attr }}">
+                            {% if item.icon %}
+                                {{ ped_icon( item.icon, 'site-nav__icon site-nav--secondary__icon' ) }}
+                            {% endif %}
+                            {{ item.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+
+            <div class="site-header--with-nav__marketing">
+                <ul class="site-header--with-nav__social">
+                    {% set gaCategorySocial = 'Social Icon - Header' %}
+                    {% set socialIconClass = 'site-header--with-nav__social-icon' %}
+
+                    <li class="site-header--with-nav__social-item">
+                        <a
+                            href="{{ twitter_url|esc_url }}"
+                            target="_blank"
+                            class="site-header--with-nav__social-link"
+                            data-ga-category="{{ gaCategorySocial|esc_attr }}"
+                            data-ga-label="Twitter"
+                        >
+                            {{ ped_icon('twitter', socialIconClass) }}
+                        </a>
+                    </li>
+                    <li class="site-header--with-nav__social-item">
+                        <a
+                            href="{{ facebook_url|esc_url }}"
+                            target="_blank"
+                            class="site-header--with-nav__social-link"
+                            data-ga-category="{{ gaCategorySocial|esc_attr }}"
+                            data-ga-label="Facebook"
+                        >
+                            {{ ped_icon('facebook', socialIconClass) }}
+                        </a>
+                    </li>
+                    <li class="site-header--with-nav__social-item">
+                        <a
+                            href="{{ instagram_url|esc_url }}"
+                            target="_blank"
+                            class="site-header--with-nav__social-link"
+                            data-ga-category="{{ gaCategorySocial|esc_attr }}"
+                            data-ga-label="Instagram"
+                        >
+                            {{ ped_icon('instagram', socialIconClass) }}
+                        </a>
+                    </li>
+                </ul>
+
+                {% if tagline %}
+                <p class="site-header--with-nav__tagline">{{ tagline }}</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+</header>

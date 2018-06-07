@@ -11,7 +11,7 @@ $_inner-height: rem( 40px );
 
 .member-bar {
   padding: rem( 10px ) $column-gutter / 2;
-  background-color: $grey-25;
+  background-color: $member-bar-background-color;
   text-align: center;
 }
 

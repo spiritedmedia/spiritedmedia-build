@@ -2,9 +2,14 @@
 
 {% block content %}
 
-    {% if archive_title %}
+    {% if archive_title or archive_description %}
     <header class="c-main__header js-main-header">
-        <h1 class="c-main__title">{{ archive_title }}</h1>
+        {% if archive_title %}
+            <h1 class="c-main__title">{{ archive_title }}</h1>
+        {% endif %}
+        {% if archive_description %}
+            <h2 class="c-main__description">{{ archive_description }}</h2>
+        {% endif %}
     </header>
     {% endif %}
 

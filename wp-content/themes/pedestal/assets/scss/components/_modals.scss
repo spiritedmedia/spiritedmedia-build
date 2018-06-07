@@ -1,144 +1,96 @@
-// ==========================================================================
-// Pedestal // Components // MODALS
-// ==========================================================================
-
-
-/*body*/.has-modal-open {
-  .modal,
+.no-js,
+.has-closed-modal {
   .modal__overlay,
-  .modal__content {
-    opacity: 1;
-  }
-
-  .modal,
-  .modal__overlay {
-    height: 100%;
-    width: 100%;
-  }
-
-  .modal {
-    // Place on top of everything else
-    z-index: $z-index-3;
-  }
-
-  .modal__overlay {
-    // Place the modal overlay between the main page and the modal dialog
-    z-index: $z-index-2;
+  .modal__frame {
+    display: none;
+    z-index: -1;
   }
 }
 
-.modal,
-.modal__overlay,
-.modal__content {
-  opacity: 0;
-  z-index: -1;
-}
-
-.modal,
-.modal__overlay {
-  height: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
-  top: 0;
-  width: 0;
-}
-
-.modal {
-  position: absolute;
-}
-
-.modal__overlay {
-  background-color: transparentize( $black, 0.6 );
+// The admin bar should display fixed alongside the modal so it doesn't
+// awkwardly disappear when scrolling
+//
+// stylelint-disable-next-line selector-max-id
+.has-open-modal #wpadminbar {
   position: fixed;
 }
 
+.modal__overlay,
+.modal__frame {
+  background-color: $modal-overlay-background-color-fallback;
+  background-color: $modal-overlay-background-color;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+  z-index: $z-index-3;
+}
+
+.modal__frame {
+  background-color: $modal-background-color;
+  overflow-y: auto;
+
+  // Place on top of the overlay
+  z-index: $z-index-3 + 1;
+
+  .admin-bar & {
+    top: rem( 60px );
+  }
+}
+
 .modal__content {
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
+  padding: $modal-padding;
+  background-color: $modal-background-color;
 
-
-  //
-  // Underline from center
-  // https://ianlunn.github.io/Hover/
-  //
-
-  &::before,
-  &::after {
-    background: $elektroid-yellow;
-    bottom: 0;
-    content: '';
-    height: rem( 8px );
-    left: 50%;
-    position: absolute;
-    right: 50%;
-    transition-duration: 300ms;
-    transition-property: left, right;
-    transition-timing-function: ease-out;
+  &:focus {
+    outline: none;
   }
+}
 
-  &::before {
-    left: 0;
-    right: 0;
-    z-index: $z-index-3;
-  }
-
-  &::after {
-    background: $primary-color;
-    z-index: $z-index-4;
-
-    .has-successful-form & {
-      left: 0;
-      right: 0;
-    }
-  }
-} // .modal__content
-
-.modal__close {
-  background: transparent;
+.modal__close-button {
+  color: $white;
+  background-color: transparent;
+  font-size: rem( 30px );
   border: 0;
-  font-size: rem( 24px );
+  height: rem( 40px ); // For IE11 alignment
+
   position: absolute;
-  right: rem( 4px );
-  top: rem( 4px );
+  right: 0;
+  top: 0;
+
+  z-index: $z-index-1;
 }
 
-
-@media ( min-width: em( 320px ) ) {
-  .modal {
-    position: fixed;
+// Variatons of the modal background color
+.modal--header-nav-modal {
+  &.modal__frame,
+  .modal__content {
+    background-color: $primary-color;
   }
 }
 
-
-@media ( min-width: em( 480px ) ) {
-  .modal {
-    @include _signup-email-header-inline;
-  }
-}
-
-
-@media #{$medium-up} {
-  .modal {
-    // http://caniuse.com/#feat=viewport-units
-    padding-top: rem( 48px );
-    padding-top: 25vh;
-    // Since this element will overlap the overlay for positioning purposes,
-    // we need to hide it visually to make the overlay clickable
-    visibility: hidden;
+@media ( min-width: em( 760px ) ) {
+  .modal__frame {
+    background-color: transparent;
+    margin: 0 auto;
+    max-width: rem( 700px );
+    max-height: rem( 460px );
+    top: rem( 32px );
+    width: 100%; // IE 10 needs this set to center the frame
   }
 
   .modal__content {
-    border: rem( 4px ) solid $white;
     border-radius: rem( 4px );
-    height: auto;
-    max-width: rem( 650px );
-    visibility: visible;
+    min-height: $modal-content-min-height;
+    position: relative;
+  }
+}
 
-    &::before,
-    &::after {
-      height: 0;
-    }
+@media ( max-width: em( 782px ) ) {
+  .admin-bar .modal__frame {
+    top: $wp-admin-bar-height-mobile;
   }
 }

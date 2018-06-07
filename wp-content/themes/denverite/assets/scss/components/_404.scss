@@ -1,0 +1,35 @@
+// ==========================================================================
+// Denverite // Components // 404 PAGE
+// ==========================================================================
+
+
+/*figure*/.e404-young-penn {
+  position: relative;
+}
+
+/*img*/.e404-young-penn__img {}
+
+/*figcaption*/.e404-young-penn__caption {
+  margin-top: rem( 32px );
+
+  @media #{$large-up} {
+    position: absolute;
+    bottom: rem( 48px );
+    right: rem( -550px );
+  }
+
+  .description,
+  .source {
+    font-weight: bold;
+    font-style: italic;
+
+    @media #{$large-up} {
+      font-size: rem( 14px );
+    }
+  }
+
+  .description {}
+
+  .source {}
+
+}

@@ -1,47 +1,10 @@
-<div class="c-pagination">
-
+<div class="pagination">
     {% if show_text %}
-        <p class="c-pagination__text">
-            Page <strong class="c-pagination__text__paged">{{ current_page }}</strong> of <strong class="c-pagination__text__total">{{ total_pages }}</strong>
+        <p class="pagination__text">
+            Page
+            <strong class="pagination__text__paged">{{ current_page }}</strong>
+            of
+            <strong class="pagination__text__total">{{ total_pages }}</strong>
         </p>
-    {% endif %}
-
-    {% if show_nav %}
-        <div class="c-pagination--{{ range_fraction }}">
-            <a
-                {% if prev_url %}
-                    href="{{ prev_url }}"
-                {% endif %}
-                class="c-pagination__dir--prev c-pagination__dir c-pagination__item js-pagination-item {% if not prev_url %}is-disabled js-is-disabled{% endif %}"
-                data-ga-category="Pagination"
-                data-ga-label="Previous"
-            >
-                {{ prev_text }}
-            </a>
-
-            {% for link in links %}
-                <a
-                    {% if not link.is_current %}
-                        href="{{ link.url }}"
-                    {% endif %}
-                    class="c-pagination__num c-pagination__item {% if link.is_current %}is-disabled{% endif %}"
-                    data-ga-category="Pagination"
-                    data-ga-label="Number|{{ link.num|e( 'html_attr' ) }}"
-                >
-                    {{ link.num }}
-                </a>
-            {% endfor %}
-
-            <a
-                {% if next_url %}
-                    href="{{ next_url }}"
-                {% endif %}
-                class="c-pagination__dir--next  c-pagination__dir  c-pagination__item js-pagination-item {% if not next_url %}is-disabled js-is-disabled{% endif %}"
-                data-ga-category="Pagination"
-                data-ga-label="Next"
-            >
-                {{ next_text }}
-            </a>
-        </div>
     {% endif %}
 </div>

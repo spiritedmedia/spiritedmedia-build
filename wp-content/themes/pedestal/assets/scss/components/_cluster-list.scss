@@ -1,0 +1,23 @@
+// ==========================================================================
+// Pedestal // Components // CLUSTER LIST
+// ==========================================================================
+
+
+.cluster-list {}
+
+.cluster-list__heading {
+  font-family: $cluster-list-heading-font-family;
+  font-size: $body-font-size;
+  font-weight: 700;
+  line-height: $cluster-list-heading-line-height;
+  text-transform: $cluster-list-heading-text-transform;
+  color: $cluster-list-heading-color;
+}
+
+.cluster-list__clusters {
+  @if $enable-emboldened-link-underlines {
+    a {
+      @extend %link-underline;
+    }
+  }
+}

@@ -90,6 +90,7 @@ wp-content/themes/*
 !wp-content/themes/pedestal/
 !wp-content/themes/billy-penn/
 !wp-content/themes/the-incline/
+!wp-content/themes/denverite/
 
 # Ignore theme development tools and dependencies
 wp-content/themes/**/node_modules/

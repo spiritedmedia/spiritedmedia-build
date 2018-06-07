@@ -1,8 +1,10 @@
-<a
-    href="{{ url|esc_url }}"
-    class="pagination--load-more"
-    data-ga-category="Pagination"
-    data-ga-label="{{ text|esc_attr }}"
->
-    {{ text }}
-</a>
+<div class="pagination">
+    <a
+        href="{{ url|esc_url }}"
+        class="pagination__load-more btn--achtung--outline btn--lg"
+        data-ga-category="Pagination"
+        data-ga-label="{{ text|esc_attr }}"
+    >
+        {{ text }}
+    </a>
+</div>

@@ -323,100 +323,6 @@ class CLI extends \WP_CLI_Command {
     }
 
     /**
-     * Generate site-wide config.json file
-     *
-     * @subcommand generate-config
-     */
-    public function generate_config_file( $args, $assoc_args ) {
-        if ( 'pedestal' !== wp_get_theme()->get_template() ) {
-            WP_CLI::error( 'Pedestal is not the current theme template!' );
-        }
-
-        $pedestal_family = [];
-        foreach ( wp_get_themes() as $theme ) {
-            if ( 'pedestal' === $theme->get_template() ) {
-                $pedestal_family[] = $theme->get_stylesheet();
-            }
-        }
-
-        $image_sizes = [];
-        $desired_image_sizes = [ 'thumbnail', 'medium', 'large', 'medium-square' ];
-        foreach ( Utils::get_image_sizes() as $name => $details ) {
-            if ( in_array( $name, $desired_image_sizes ) ) {
-                unset( $details['crop'] );
-                $image_sizes[ $name ] = $details;
-            }
-        }
-
-        $config = [
-            'wp' => [
-                'themesPath' => PEDESTAL_WP_THEMES_PATH,
-            ],
-            'pedestal' => [
-                'URI'        => get_template_directory_uri(),
-                'liveURI'    => SPIRITEDMEDIA_PEDESTAL_LIVE_DIR,
-                'stagingURI' => SPIRITEDMEDIA_PEDESTAL_STAGING_DIR,
-                'path'       => PEDESTAL_WP_THEMES_PATH . '/pedestal',
-                'family'     => $pedestal_family,
-                'imageSizes' => $image_sizes,
-                // Varying icon colors for email
-                'iconColors' => [
-                    '#9f9f9f',
-                ],
-                'children'   => [],
-            ],
-        ];
-
-        // Set up some site-specific settings
-        $sites = get_sites( [
-            'site__not_in' => '1',
-        ] );
-        foreach ( $sites as $site ) {
-            switch_to_blog( $site->blog_id );
-
-            $site_config = Pedestal()->get_site_config();
-            $current_theme_path = PEDESTAL_WP_THEMES_PATH . '/' . PEDESTAL_THEME_NAME;
-            $config['pedestal']['children'][ PEDESTAL_THEME_NAME ] = [
-                'siteName'     => $site_config['site_name'],
-                'siteURL'      => get_site_url(),
-                'siteLiveURL'  => $site_config['site_live_url'],
-                'themeURI'     => get_stylesheet_directory_uri(),
-                'themePath'    => $current_theme_path,
-                'themeLiveURL' => $site_config['site_live_url'] . $current_theme_path,
-                'brandColor'   => $site_config['site_branding_color'],
-            ];
-
-            restore_current_blog();
-        }
-
-        file_put_contents( ABSPATH . 'config/config.json', json_encode( $config, JSON_PRETTY_PRINT ) );
-        WP_CLI::success( 'Generated config.json file.' );
-
-        $sassy_config = $config;
-
-        // Wrap string array values in single quotes for compatability with Sass
-        // https://github.com/Updater/node-sass-json-importer#importing-strings
-        //
-        // If the string begins with a `#` character, indicating it's a hex
-        // value, don't double wrap it in quotes because Sass needs to treat it
-        // as a color
-        array_walk_recursive( $sassy_config, function( &$value, $key ) {
-            if ( is_string( $value ) && '#' !== substr( $value, 0, 1 ) ) {
-                $value = "'" . $value . "'";
-            }
-        } );
-
-        // Prefix first-level Sassy keys with `spiritedmedia`
-        foreach ( $sassy_config as $key => $value ) {
-            unset( $sassy_config[ $key ] );
-            $sassy_config[ 'spiritedmedia-' . $key ] = $value;
-        }
-
-        file_put_contents( ABSPATH . 'config/config-sassy.json', json_encode( $sassy_config, JSON_PRETTY_PRINT ) );
-        WP_CLI::success( 'Generated config-sassy.json file.' );
-    }
-
-    /**
      * Update Amazon S3 meta data for media items
      *
      * The WP Offload S3 plugin we use requires the presence of this meta data
@@ -724,6 +630,538 @@ class CLI extends \WP_CLI_Command {
     }
 
     /**
+     * Migrate Denverite users to Pedestal
+     *
+     * ## EXAMPLES
+     *
+     *    wp pedestal denverite-user-migration --url=https://denverite.dev
+     *
+     * @subcommand denverite-user-migration
+     */
+    public function denverite_user_migration( $args, $assoc_args ) {
+        global $wpdb;
+        $original_user_table = 'wp_iq43vv_users_original';
+        $original_usermeta_table = 'wp_iq43vv_usermeta_original';
+
+        // Does the site have denverite in the URL somewhere? Otherwise we could be in a world of hurt
+        if ( ! strpos( strtolower( get_site_url() ), 'denverite' ) ) {
+            WP_CLI::error( 'Not a denverite site: ' . get_site_url() );
+        }
+
+        // Check to make sure the tables we are expecting actually exist
+        $found_user_table = $wpdb->get_row( "SELECT * FROM $original_user_table", ARRAY_A ); // phpcs:ignore
+        if ( empty( $found_user_table ) ) {
+            WP_CLI::error( 'Missing or empty user table from Denverite (' . $original_user_table . ')' );
+        }
+        $found_usermeta_table = $wpdb->get_row( "SELECT * FROM $original_usermeta_table", ARRAY_A ); // phpcs:ignore
+        if ( empty( $found_user_table ) ) {
+            WP_CLI::error( 'Missing or empty usermeta table from Denverite (' . $original_usermeta_table . ')' );
+        }
+
+        $old_users = $wpdb->get_results( "SELECT * FROM $original_user_table" ); // phpcs:ignore
+        foreach ( $old_users as $old_user ) {
+            $old_id = absint( $old_user->ID );
+            if ( 0 === $old_id ) {
+                WP_CLI::line( 'A user was skipped due to a bad user id.' );
+                continue;
+            }
+            $user_data = [
+                'user_pass'       => '',
+                'user_login'      => $old_user->user_login,
+                'user_nicename'   => $old_user->user_nicename,
+                'user_email'      => $old_user->user_email,
+                'user_url'        => $old_user->user_url,
+                'user_registered' => $old_user->user_registered,
+                'display_name'    => $old_user->display_name,
+                'role'            => 'reporter',
+            ];
+            $new_id = wp_insert_user( $user_data );
+            if ( is_wp_error( $new_id ) ) {
+                if ( 'existing_user_login' == $new_id->get_error_code() ) {
+                    $existing_user = get_user_by( 'email', $old_user->user_email );
+                    $new_id = $existing_user->ID;
+                } else {
+                    WP_CLI::error( 'Error inserting new user: ' . $new_id->get_error_message() );
+                }
+            }
+            $old_meta_rows = $wpdb->get_results( $wpdb->prepare(
+                "SELECT `meta_key`, `meta_value` FROM $original_usermeta_table WHERE `user_id` = %d", // phpcs:ignore
+                [ $old_id ]
+            ) );
+
+            $whitelisted_meta_keys = [
+                'nickname',
+                'first_name',
+                'last_name',
+                'rich_editing',
+                'comment_shortcuts',
+                'admin_color',
+                'show_admin_bar_front',
+                'show_welcome_panel',
+            ];
+
+            // Maps ( Denverite keys => Pedestal keys )
+            $meta_keys_to_transform = [
+                'twitter'               => 'twitter_username',
+                'facebook'              => 'facebook_profile',
+                'description'           => 'user_bio_extended',
+                'wp_iq43vv_user_avatar' => 'wp_4_user_img', // Map attachment ID to use as author avatar
+            ];
+            foreach ( $old_meta_rows as $old ) {
+                if ( in_array( $old->meta_key, $whitelisted_meta_keys ) ) {
+                    update_user_meta( $new_id, $old->meta_key, $old->meta_value );
+                }
+
+                if ( isset( $meta_keys_to_transform[ $old->meta_key ] ) ) {
+                    $new_key = $meta_keys_to_transform[ $old->meta_key ];
+                    $value = $old->meta_value;
+                    if ( 'user_bio_extended' == $new_key ) {
+                        $value = wpautop( $value );
+                    }
+                    update_user_meta( $new_id, $new_key, $value );
+                }
+            }
+
+            // Set Denverite as the users primary site
+            update_user_meta( $new_id, 'primary_blog', '4' );
+            update_user_meta( $new_id, 'public_email', $old_user->user_email );
+
+            // Update old post_author values
+            $wpdb->update(
+                $wpdb->posts,
+                [
+                    'post_author' => $new_id,
+                ],
+                [
+                    'post_author' => $old_id,
+                ],
+                [
+                    '%d',
+                ],
+                [
+                    '%d',
+                ]
+            );
+
+            WP_CLI::success( $old_user->display_name . ' was migrated' );
+        }
+
+        WP_CLI::line( 'All done!' );
+    }
+
+    /**
+     * Cleanup old Denverite shortcodes
+     *
+     * ## EXAMPLES
+     *
+     *    wp pedestal denverite-cleanup-shortcodes --url=https://denverite.dev
+     *
+     * @subcommand denverite-cleanup-shortcodes
+     */
+    public function denverite_cleanup_shortcodes( $args, $assoc_args ) {
+        global $wpdb;
+
+        // [irp]
+        $like = '%' . $wpdb->esc_like( '[irp' ) . '%';
+        $posts = $wpdb->get_results( $wpdb->prepare(
+            "SELECT * FROM `{$wpdb->posts}` WHERE `post_content` LIKE %s",
+            [
+                $like,
+            ]
+        ) );
+        WP_CLI::line( 'Stripping [irp] from ' . count( $posts ) . ' posts' );
+        foreach ( $posts as $post ) {
+            $new_content = preg_replace( '/\[irp.+\](\s+)?/im', '', $post->post_content );
+            $new_content = preg_replace( '/\[irp\]/im', '', $new_content );
+            $new_post = [
+                'ID' => $post->ID,
+                'post_content' => trim( $new_content ),
+            ];
+            wp_update_post( $new_post );
+            // var_dump( $new_post );
+            WP_CLI::line( get_permalink( $post ) );
+        }
+
+        // [denverite_inline_post]
+        $like = '%' . $wpdb->esc_like( '[denverite_inline_post' ) . '%';
+        $posts = $wpdb->get_results( $wpdb->prepare(
+            "SELECT * FROM `{$wpdb->posts}` WHERE `post_content` LIKE %s",
+            [
+                $like,
+            ]
+        ) );
+        WP_CLI::line( 'Stripping [denverite_inline_post] from ' . count( $posts ) . ' posts' );
+        foreach ( $posts as $post ) {
+
+            // If the post is published, store the posts attribute value as post meta in case we ever need it in the future
+            if ( 'publish' == $post->post_status ) {
+                preg_match_all( '/\[denverite_inline_post(.+)\]/i', $post->post_content, $matches );
+                if ( ! empty( $matches[1] ) ) {
+                    $meta_ids = [];
+                    foreach ( $matches[1] as $attr ) {
+                        $meta_id = str_replace( [ 'posts=', '"' ], '', $attr );
+                        $meta_id = trim( $meta_id );
+                        $meta_id = intval( $meta_id );
+                        $meta_ids[] = $meta_id;
+                    }
+                    if ( ! empty( $meta_ids ) ) {
+                        $meta_ids_str = implode( ',', $meta_ids );
+                        update_post_meta( $post->ID, 'denverite_inline_post', $meta_ids_str );
+                    }
+                }
+            }
+
+            // Strip the shortcode
+            $new_content = preg_replace( '/\[denverite_inline_post.+\](\s+)?/im', '', $post->post_content );
+            $new_post = [
+                'ID' => $post->ID,
+                'post_content' => trim( $new_content ),
+            ];
+            wp_update_post( $new_post );
+            // var_dump( $new_post );
+            WP_CLI::line( get_permalink( $post ) );
+        }
+    }
+
+    /**
+     * If no featured image is specified, find the first image in the post and make that the featured image
+     *
+     * ## EXAMPLES
+     *
+     *    wp pedestal denverite-add-featured-images --url=https://denverite.dev
+     *
+     * @subcommand denverite-add-featured-images
+     */
+    public function denverite_add_featured_images( $args, $assoc_args ) {
+        $args = [
+            'post_type'      => [ 'pedestal_article' ],
+            'posts_per_page' => -1,
+            'post_status'    => 'publish',
+            'meta_query' => [
+                [
+                    'key'     => '_thumbnail_id',
+                    'value'   => '',
+                    'compare' => 'NOT EXISTS',
+                ],
+            ],
+        ];
+        $posts = new \WP_Query( $args );
+        WP_CLI::line( number_format( $posts->found_posts ) . ' posts need featured images' );
+        foreach ( $posts->posts as $post ) {
+            // Make sure a featured image isn't already set
+            $attachment_id = get_post_meta( $post->ID, '_thumbnail_id', true );
+            if ( $attachment_id ) {
+                continue;
+            }
+
+            preg_match_all( '/\[img(.+)\]/i', $post->post_content, $matches );
+            if ( ! empty( $matches[1] ) ) {
+                foreach ( $matches[1] as $attr ) {
+                    $attachment_id = false;
+                    preg_match( '/attachment="(\d+)/i', $attr, $parts );
+                    if ( ! empty( $parts[1] ) ) {
+                        $attachment_id = $parts[1];
+                        $attachment_id = trim( $attachment_id );
+                        $attachment_id = intval( $attachment_id );
+
+                        // Make sure the attachment isn't a gif, which is probably animated
+                        $url = wp_get_attachment_url( $attachment_id );
+                        $filetype = wp_check_filetype( $url );
+                        if ( 'gif' != $filetype['ext'] ) {
+                            update_post_meta( $post->ID, '_thumbnail_id', $attachment_id );
+
+                            // Strip the shortcode
+                            $shortcode_to_replace = '[img' . $attr . ']';
+                            $delimiter = '/';
+                            $regex = '/' . preg_quote( $shortcode_to_replace, $delimiter ) . '(\s+)?/i';
+                            $new_content = preg_replace( $regex, '', $post->post_content );
+                            $new_post = [
+                                'ID'           => $post->ID,
+                                'post_content' => trim( $new_content ),
+                            ];
+                            wp_update_post( $new_post );
+                            WP_CLI::success( get_permalink( $post ) );
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        WP_CLI::line( 'All done!' );
+    }
+
+    /**
+     * Convert tags and their associations to clusters
+     *
+     * ## EXAMPLES
+     *
+     *    wp pedestal denverite-migrate-tags-to-clusters --url=https://denverite.dev
+     *
+     * @subcommand denverite-migrate-tags-to-clusters
+     */
+    public function denverite_migrate_tags_to_clusters( $args, $assoc_args ) {
+        // Rename tag data
+        $rename = [
+            // old => new
+            'aca'                           => 'ACA',
+            'Besty DeVos'                   => 'Betsy DeVos',
+            'betsy devos'                   => 'Betsy Devos',
+            'colfax week'                   => 'Colfax Week',
+            'dnc'                           => 'DNC',
+            'Dufford &amp; Brown'           => 'Dufford & Brown',
+            'dunbar kitchen &amp; taphouse' => 'Dunbar Kitchen & Taphouse',
+            'lgbtq'                         => 'LGBTQ',
+            'mayor michael hancock'         => 'Michael Hancock',
+            'nhl'                           => 'NHL',
+            'tbt'                           => 'TBT',
+            'VISIT DENVER'                  => 'Visit Denver',
+        ];
+
+        // Tags that should be merged
+        $merge = [
+            // Target tag => Tag(s) that will be merged into the target
+            '#denvergotoplessday' => 'denver go topless day',
+            'Donald Trump'        => 'Trump',
+            'elections'           => 'election',
+            'Hillary Clinton'     => [
+                'Clinton',
+                'Hillary',
+                'Hillary Clinton Denver visit',
+                'Hillary Clinton emails',
+            ],
+            'hobbies'            => 'hobby',
+            'Republicans'        => 'republicansr',
+            'Betsy Devos'        => [
+                'betsy devos',
+                'Besty DeVos',
+            ],
+        ];
+
+        // Reformat the data so we can better identify if a tag is going to be replaced
+        $to_be_replaced = [];
+        foreach ( $merge as $item ) {
+            if ( is_array( $item ) ) {
+                foreach ( $item as $thing ) {
+                    $to_be_replaced[] = $thing;
+                }
+            } else {
+                $to_be_replaced[] = $item;
+            }
+        }
+        $to_be_replaced = array_unique( $to_be_replaced );
+
+        // Get the Uncategorized locality type term
+        $locality_type_term = get_term_by( 'name', 'Uncategorized', 'pedestal_locality_type' );
+        // If it doesn't exist then insert it
+        if ( ! $locality_type_term ) {
+            $inserted = wp_insert_term( 'Uncategorized', 'pedestal_locality_type' );
+            if ( is_wp_error( $inserted ) ) {
+                WP_CLI::line( 'Problem inserting Locality Type term' );
+                WP_CLI::line( $inserted->get_error_message() );
+                return;
+            }
+            $locality_type_term = get_term( $inserted['term_id'], 'pedestal_locality_type' );
+        }
+
+        // Download the CSV of data so we don't need to worry about storing it anywhere
+        // See https://stackoverflow.com/a/33727897/1119655
+        $spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1gyH1Py7KuBn2s-bJTnhSaiHEAJlx9PlTubCLVqG2q8k/gviz/tq?tqx=out:csv&sheet=denverite-tags-frequency-20180219';
+        $filename = wp_tempnam( $spreadsheet_url );
+        wp_remote_get( $spreadsheet_url, [
+            'timeout'  => 15,
+            'stream'   => true,
+            'filename' => $filename,
+        ] );
+
+        // Get the total number of rows in a memory efficent way
+        // See https://stackoverflow.com/a/43075929/1119655
+        $file = new \SplFileObject( $filename, 'r' );
+        $file->seek( PHP_INT_MAX );
+        $total_rows = $file->key() + 1;
+
+        // Open the csv
+        $file_handle = fopen( $filename, 'r' );
+        $count = 0;
+        // phpcs:ignore
+        while ( false !== ( $row = fgetcsv( $file_handle, 0, ',') ) ) {
+            $count++;
+            $tag_name = $row[1];
+            $slug     = $row[2];
+            $url      = $row[3];
+            $cluster  = $row[4];
+
+            // Skip processing tags that will be replaced
+            if ( in_array( $tag_name, $to_be_replaced ) ) {
+                continue;
+            }
+
+            $args = [
+                'post_type'      => 'any',
+                'post_status'    => 'public',
+                'fields'         => 'ids',
+                'posts_per_page' => 999,
+                'tax_query' => [
+                    [
+                        'taxonomy' => 'post_tag',
+                        'field'    => 'slug',
+                        'terms'    => $slug,
+                    ],
+                ],
+            ];
+
+            // If a tag has other tags that wil lbe merged into it
+            // get those post IDs as well
+            if ( isset( $merge[ $tag_name ] ) ) {
+                $additional_tags = $merge[ $tag_name ];
+                // Make sure we're always dealing with an array of values
+                if ( ! is_array( $additional_tags ) ) {
+                    $additional_tags = [ $additional_tags ];
+                }
+
+                foreach ( $additional_tags as $additional_tag ) {
+                    $args['tax_query'][] = [
+                        'taxonomy' => 'post_tag',
+                        'field'    => 'name',
+                        'terms'    => $additional_tag,
+                    ];
+                }
+                $args['tax_query']['relation'] = 'OR';
+            }
+
+            $query = new \WP_Query( $args );
+            $post_ids = $query->posts;
+
+            if ( empty( $post_ids ) ) {
+                WP_CLI::line( $count . ') ' . $tag_name . ' is empty!' );
+                continue;
+            }
+
+            // Rename the tag name if applicable
+            if ( isset( $rename[ $tag_name ] ) ) {
+                $tag_name = $rename[ $tag_name ];
+            }
+
+            $cluster_obj = get_page_by_title( $tag_name, 'OBJECT', Types::get_cluster_post_types() );
+
+            // If cluster doesn't exist yet create it
+            if ( ! $cluster_obj ) {
+
+                // Post type wil lbe Topics by default
+                $post_type = 'pedestal_topic';
+                switch ( $cluster ) {
+                    case 'Stories':
+                        $post_type = 'pedestal_story';
+                        break;
+
+                    case 'People':
+                        $post_type = 'pedestal_person';
+                        break;
+
+                    case 'Organizations':
+                        $post_type = 'pedestal_org';
+                        break;
+
+                    case 'Places':
+                        $post_type = 'pedestal_place';
+                        break;
+
+                    case 'Localities':
+                        $post_type = 'pedestal_locality';
+                        break;
+                }
+
+                if ( ! $post_type ) {
+                    WP_CLI::warning( $count . ') "' . $tag_name . '": failed to identify post type' );
+                    WP_CLI::warning( '$cluster: ' . $cluster );
+                    WP_CLI::warning( '-----------------------' );
+                    continue;
+                }
+
+                $new_cluster_args = [
+                    'post_title'  => $tag_name,
+                    'post_type'   => $post_type,
+                    'post_status' => 'publish',
+                    'post_name'   => $slug,
+                    'guid'        => $url,
+                ];
+                $new_cluster_id = wp_insert_post( $new_cluster_args );
+                if ( is_wp_error( $new_cluster_id ) ) {
+                    $message = $new_cluster_id->get_error_message();
+                    WP_CLI::warning( $count . ') "' . $tag_name . '": failed to insert cluster' );
+                    WP_CLI::warning( $message );
+                    WP_CLI::warning( '-----------------------' );
+                    continue;
+                }
+                $cluster_obj = get_post( $new_cluster_id );
+
+                // Set the locality type
+                if ( 'pedestal_locality' == $post_type ) {
+                    wp_set_object_terms( $new_cluster_id, $locality_type_term->term_id, 'pedestal_locality_type' );
+                    update_post_meta( $new_cluster_id, 'locality_type', $locality_type_term->term_id );
+
+                }
+            }
+
+            // Associate posts with cluster
+            $connection_type = Types::get_connection_type( 'entity', $cluster_obj );
+            $p2p = p2p_type( $connection_type );
+            if ( ! $p2p ) {
+                WP_CLI::warning( 'Bad connection type: ' . $connection_type );
+            }
+
+            if ( $p2p ) :
+                foreach ( $post_ids as $id ) {
+                    $connection_id = $p2p->connect( $id, $cluster_obj->ID );
+                    if ( is_wp_error( $connection_id ) ) {
+                        // $message = $connection_id->get_error_message();
+                        // WP_CLI::warning( 'Failed to connect ' . $id . ' to ' . $tag_name );
+                        // WP_CLI::warning( $message );
+                        // WP_CLI::warning( '-----------------------' );
+                    }
+                }
+            endif;
+
+            // Display our progress periodically so we know things are working
+            $percent_complete = $count / $total_rows * 100;
+            $percent_complete = round( $percent_complete, 1 );
+            if ( 0 == $count % 500 ) {
+                WP_CLI::line( $percent_complete . '% done, ' . $count . '/' . $total_rows );
+            }
+        }
+    }
+
+    /**
+     * Set exclude_from_home_stream post_meta values
+     *
+     * ## EXAMPLES
+     *
+     *    wp pedestal denverite-setup-homestream-exclusions --url=https://denverite.dev
+     *
+     * @subcommand denverite-setup-homestream-exclusions
+     */
+    public function denverite_setup_homestream_exclusions( $args, $assoc_args ) {
+        $args = [
+            'post_type'      => [ 'pedestal_article' ],
+            'posts_per_page' => -1,
+            'post_status'    => 'publish',
+            'fields'         => 'ids',
+            'meta_query' => [
+                [
+                    'key'     => 'exclude_from_home_stream',
+                    'value'   => '',
+                    'compare' => 'NOT EXISTS',
+                ],
+            ],
+        ];
+        $posts = new \WP_Query( $args );
+        foreach ( $posts->posts as $post_id ) {
+            update_post_meta( $post_id, 'exclude_from_home_stream', 'show' );
+        }
+
+        WP_CLI::success( 'Done!' );
+    }
+
+    /**
      * Migrate legacy `user_img` fields to per-site fields
      *
      * @link https://github.com/spiritedmedia/spiritedmedia/pull/1627
@@ -781,7 +1219,7 @@ class CLI extends \WP_CLI_Command {
      *
      * ## EXAMPLES
      *
-     *     wp pedestal reset-metabox-state
+     *     wp pedestal reset-metabox-state --url=https://denverite.com/
      *
      * @subcommand reset-metabox-state
      */
@@ -790,17 +1228,13 @@ class CLI extends \WP_CLI_Command {
 
         WP_CLI::line( 'Clearing metabox order data...' );
         $wpdb->query( $wpdb->prepare(
-            'DELETE from %s WHERE %s LIKE %s',
-            'wp_usermeta',
-            'meta_key',
+            'DELETE from wp_usermeta WHERE meta_key LIKE %s',
             '%meta-box-order%'
         ) );
 
-        WP_CLI::line( 'Clearing metabox expanded/collapsed state...' );
+        WP_CLI::line( 'Clearing metabox visibility state...' );
         $wpdb->query( $wpdb->prepare(
-            'DELETE from %s WHERE %s LIKE %s',
-            'wp_usermeta',
-            'meta_key',
+            'DELETE from wp_usermeta WHERE meta_key LIKE %s',
             '%closedpostboxes%'
         ) );
 
@@ -816,6 +1250,47 @@ class CLI extends \WP_CLI_Command {
             WP_CLI::log( "Set up collapsed metaboxes defaults for user {$user_id}." );
         }
 
+        WP_CLI::success( 'Done!' );
+    }
+
+    /**
+     * Copy excerpt to summary
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal copy-excerpt-to-summary
+     *     wp pedestal copy-excerpt-to-summary --url=https://billypenn.com/
+     *
+     * @subcommand copy-excerpt-to-summary
+     */
+    public function excerpt_to_summary() {
+        global $wpdb;
+
+        $args = [
+            'post_type'              => get_post_types(),
+            'posts_per_page'         => -1,
+            'fields'                 => 'ids',
+            'no_found_rows'          => true,
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false,
+        ];
+        $post_ids = new \WP_Query( $args );
+        $post_ids = $post_ids->posts;
+        $total_posts = count( $post_ids );
+        $current_count = 0;
+
+        WP_CLI::line( "Copying excerpt to summary field for {$total_posts} posts..." );
+        foreach ( $post_ids as $post_id ) {
+            $current_count++;
+            $progress_str = "[{$current_count}/{$total_posts}]";
+            $post = get_post( $post_id );
+
+            $excerpt = $post->post_excerpt;
+            if ( $excerpt ) {
+                update_post_meta( $post_id, 'summary', $excerpt );
+                WP_CLI::log( "{$progress_str} Copied existing excerpt to summary field for post {$post->ID}." );
+            }
+        }
         WP_CLI::success( 'Done!' );
     }
 

@@ -1,0 +1,104 @@
+{% if latest_newsletter %}
+{% set latest_newsletter_text %}
+{% spaceless %}
+    Check out a <a href="{{ latest_newsletter|esc_url }}">sample from today's newsletter</a>
+{% endspaceless %}
+{% endset %}
+{% endif %}
+
+{% set id_postfix = id_postfix|default( now()|esc_attr ) %}
+{% set id_title = id_title|default( 'signup-email-daily-title-' ~ id_postfix ) %}
+{% set id_description = id_description|default( 'signup-email-daily-description-' ~ id_postfix ) %}
+{% set id_email_input = id_email_input|default( 'signup-email-daily-email-input-' ~ id_postfix ) %}
+
+{% set email_input %}
+<input type="email"
+    id="{{ id_email_input|esc_attr }}"
+    class="signup-email__email-input input-group-v2__input form-input js-email-input {{ input_class }}"
+    name="email_address"
+    placeholder="enter your email address"
+    required
+/>
+{% endset %}
+
+{% set gaLabel = 'Newsletter Signup' %}
+{% if gaLocation %}
+{% set gaLabel = gaLabel ~ ' | ' ~ gaLocation %}
+{% endif %}
+
+<form class="signup-email__form js-signup-email-form"
+    action="{{ site.url|esc_url }}/subscribe-to-email-group/"
+    method="POST"
+    data-ga-category="Submitted Form"
+    data-ga-label="{{ gaLabel|esc_attr }}">
+
+    <div class="form-group js-form-fields">
+
+        <div class="signup-email__header">
+            <div class="signup-email__icon">
+                {% block icon %}
+                {% endblock icon %}
+            </div>
+            <h2 id="{{ id_title|esc_attr }}" class="signup-email__title">
+                {% block title %}
+                {% endblock title %}
+            </h2>
+        </div>
+
+        {% block details %}
+        {% endblock details %}
+
+        {% block email_input %}
+            <div class="signup-email__input-group">
+                <label class="invisible" for="{{ id_email_input|esc_attr }}">
+                    Email Address
+                </label>
+                {{ email_input }}
+            </div>
+        {% endblock email_input %}
+
+        <input type="hidden" name="group-ids[]" value="{{ site.emails.daily_newsletter_id|esc_attr }}">
+        <input type="hidden" name="group-ids[]" value="{{ site.emails.breaking_newsletter_id|esc_attr }}">
+        <input type="hidden" name="group-category" value="Newsletters">
+
+        {% include 'partials/email-forms/form-honeypot.twig' %}
+
+        <div class="js-fail-message invalid-feedback"></div>
+
+        {% block submit_button %}
+        {% endblock submit_button %}
+
+        {% if latest_newsletter %}
+        <p class="signup-email__latest--standalone" aria-hidden="true">{{ latest_newsletter_text }}</p>
+        {% endif %}
+
+        {% if help_text %}
+        <p class="signup-email__help-text">{{ help_text }}</p>
+        {% endif %}
+    </div>
+
+    <div class="signup-email__success-message success-message js-success-message">
+        <div class="signup-email__header">
+            <div class="signup-email__icon">
+                {{ ped_icon( 'check' ) }}
+            </div>
+
+            <p class="signup-email__title">
+                <strong>You’re all set!</strong>
+            </p>
+        </div>
+
+        <p class="signup-email__subtitle">
+            <strong>{{ site.emails.daily_newsletter_name }}</strong> will land in your inbox every morning around {{ site.emails.daily_newsletter_send_time }}
+        </p>
+
+        <div class="signup-email__success-message__details">
+            <p>You can add <strong>{{ site.emails.news }}</strong> to your contacts to stop
+                overzealous spam filters from eating our messages.</p>
+        </div>
+
+        {% if explore %}
+        <a href="/" class="btn btn--lg btn--full-width">Explore {{ site.name }}</a>
+        {% endif %}
+    </div>
+</form>

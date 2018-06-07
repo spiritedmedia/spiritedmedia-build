@@ -18,13 +18,42 @@
   @return $num / ( $num * 0 + 1 );
 }
 
+/// Convert rems or ems to pixels
+///
+/// See documentation for `rem()`
+///
+/// @param {number|list} $values - Values to convert to px, can be up to 4
+/// @param {number}      $base-value [$rem-base] - Base calculation off this unit
+@function _convert-to-px( $values, $base-value: $rem-base ) {
+  $max: length( $values );
+
+  @if $max == 1 {
+    @return strip-unit( nth( $values, 1 ) ) * $base-value;
+  }
+
+  $px-values: ();
+  @for $i from 1 through $max {
+    $px-values: append( $px-values, strip-unit( nth( $values, $i ) ) * $base-value );
+  }
+  @return $px-values;
+}
+
 /// Helper function for rem()
 ///
-/// Does calculation for individual unit conversion
+/// Does calculation for individual unit conversion.
+///
+/// If a rem unit is passed as $value, return that value. This currently does
+/// not support em units as $value or $base-value.
 ///
 /// @param {number} $value - Single pixel value to convert to rem
 /// @param {number} $base-value [$rem-base] - Base rem calculation off this unit
 @function _convert-to-rem( $value, $base-value: $rem-base ) {
+  @if 'rem' == unit( $value ) {
+    @return $value;
+  }
+  @if 'rem' == unit( $base-value ) {
+    $base-value: _convert-to-px( $base-value );
+  }
   $value: strip-unit( $value ) / strip-unit( $base-value ) * 1rem;
   // stylelint-disable-next-line length-zero-no-unit
   @if ( $value == 0rem ) {
@@ -142,6 +171,23 @@
   $threshold: 65%
 ) {
   @return if( lightness( $bg ) > $threshold, $text-dark, $text-light );
+}
+
+/// Encode a hex color for use in a SVG string
+///
+/// Does not work with colors containing alpha.
+///
+/// @link https://gist.github.com/keeperofkeys/45b14189f49017171a3d48f12c6ccf69
+/// @param color $color
+/// @return string|color Encoded color string if successful,
+///     otherwise return the original parameter
+@function encode-color( $color ) {
+  @if type-of( $color ) == 'color' and $color != transparent {
+    $hex: str-slice( ie-hex-str( $color ), 4 );
+    $color: unquote( "#{$hex}" );
+    $color: '%23' + $color;
+  }
+  @return $color;
 }
 
 

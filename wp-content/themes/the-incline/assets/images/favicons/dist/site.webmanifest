@@ -1,0 +1,19 @@
+{
+    "name": "The Incline",
+    "short_name": "The Incline",
+    "icons": [
+        {
+            "src": "/wp-content/themes/the-incline/assets/images/favicons/dist/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/wp-content/themes/the-incline/assets/images/favicons/dist/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#f05329",
+    "background_color": "#f05329",
+    "display": "standalone"
+}

@@ -1,7 +1,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/wp-content/themes/spirited-media/assets/images/favicons/dist/apple-touch-icon.png">
-<link rel="icon" type="image/png" href="/wp-content/themes/spirited-media/assets/images/favicons/dist/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/wp-content/themes/spirited-media/assets/images/favicons/dist/favicon-16x16.png" sizes="16x16">
-<link rel="manifest" href="/wp-content/themes/spirited-media/assets/images/favicons/dist/manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="/wp-content/themes/spirited-media/assets/images/favicons/dist/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/wp-content/themes/spirited-media/assets/images/favicons/dist/favicon-16x16.png">
+<link rel="manifest" href="/wp-content/themes/spirited-media/assets/images/favicons/dist/site.webmanifest">
 <link rel="mask-icon" href="/wp-content/themes/spirited-media/assets/images/favicons/dist/safari-pinned-tab.svg" color="#ffffff">
 <link rel="shortcut icon" href="/wp-content/themes/spirited-media/assets/images/favicons/dist/favicon.ico">
 <meta name="msapplication-TileColor" content="#ffffff">

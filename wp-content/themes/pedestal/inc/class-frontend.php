@@ -63,7 +63,7 @@ class Frontend {
                 $body_classes[] = 'full-width';
             }
 
-            if ( is_search() ) {
+            if ( is_search() && ! PEDESTAL_ENABLE_HEADER_NAVIGATION ) {
                 $body_classes[] = 'is-search-open';
             }
 
@@ -121,7 +121,8 @@ class Frontend {
             $meta_query = [
                 [
                     'key'     => 'exclude_from_home_stream',
-                    'value'   => 'show',
+                    'value'   => 'hide',
+                    'compare' => '!=',
                 ],
             ];
             $query->set( 'meta_query', $meta_query );
@@ -145,7 +146,6 @@ class Frontend {
         } elseif ( $query->is_archive() && ! $query->is_author() ) {
             if (
                 $query->is_post_type_archive( Types::get_cluster_post_types() )
-                || $query->is_tax()
             ) {
                 $query->set( 'posts_per_page', 50 );
                 $query->set( 'orderby', 'title' );
@@ -251,7 +251,38 @@ class Frontend {
      * Filter Timber's default context value
      */
     public function filter_timber_context( $context ) {
-        $context['menu'] = [
+        $footer_social_icons = [
+            [
+                'url'      => $context['site']->social['instagram_url'],
+                'icon'     => 'instagram',
+                'sr_label' => '@' . PEDESTAL_INSTAGRAM_USERNAME . ' on Instagram',
+                'ga_label' => 'Instagram',
+            ],
+            [
+                'url'      => $context['site']->social['facebook_url'],
+                'icon'     => 'facebook',
+                'sr_label' => PEDESTAL_BLOG_NAME . ' on Facebook',
+                'ga_label' => 'Facebook',
+            ],
+            [
+                'url'      => $context['site']->social['twitter_url'],
+                'icon'     => 'twitter',
+                'sr_label' => '@' . PEDESTAL_TWITTER_USERNAME . ' on Twitter',
+                'ga_label' => 'Twitter',
+            ],
+        ];
+        if ( PEDESTAL_ENABLE_FOOTER_EMAIL_ICON ) {
+            $email_icon = [
+                'url'      => 'mailto:' . PEDESTAL_EMAIL_TIPS,
+                'icon'     => 'envelope',
+                'sr_label' => 'Get in touch!',
+                'ga_label' => 'Email',
+            ];
+            array_unshift( $footer_social_icons, $email_icon );
+        }
+        $context['footer_social_icons'] = $footer_social_icons;
+
+        $context['footer_menu'] = apply_filters( 'pedestal_footer_menu', [
             'About Us'       => '/about/',
             'Blog'           => PEDESTAL_BLOG_URL,
             'Jobs'           => '/jobs/',
@@ -259,8 +290,8 @@ class Frontend {
             'Advertising'    => '/advertising/',
             'Terms of Use'   => '/terms-of-use/',
             'Privacy Policy' => '/privacy-policy/',
-            'Search'         => '#the-search-field',
-        ];
+            'Search'         => '/search/',
+        ] );
 
         $context['latest_newsletter'] = Newsletter::get_latest_newsletter_link();
         $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) . ' Spirited Media';
@@ -347,8 +378,11 @@ class Frontend {
 
     /**
      * Filter template include to load our template
+     *
+     * @param  string $template Path to a PHP template
+     * @return string          Possibly modified template path
      */
-    public function filter_template_include( $template ) {
+    public function filter_template_include( $template = '' ) {
         global $wp, $wp_query;
 
         if ( is_singular( 'pedestal_event' ) && isset( $wp_query->query_vars['ics'] ) ) {
@@ -556,35 +590,40 @@ class Frontend {
      */
     public static function get_archive_title() {
         if ( is_category() ) {
-            $title = single_cat_title( '', false );
+            return single_cat_title( '', false );
         } elseif ( is_tag() ) {
-            $title = sprintf( __( 'Tag: %s' ), single_tag_title( '', false ) );
+            return sprintf( __( 'Tag: %s' ), single_tag_title( '', false ) );
         } elseif ( is_author() ) {
-            $title = sprintf( __( '%s' ), get_the_author() );
+            return sprintf( __( '%s' ), get_the_author() );
         } elseif ( is_year() ) {
-            $title = sprintf( __( 'Year: %s' ), get_the_date( _x( 'Y', 'yearly archives date format' ) ) );
+            return sprintf( __( 'Year: %s' ), get_the_date( _x( 'Y', 'yearly archives date format' ) ) );
         } elseif ( is_month() ) {
-            $title = sprintf( __( 'Month: %s' ), get_the_date( _x( 'F Y', 'monthly archives date format' ) ) );
+            return sprintf( __( 'Month: %s' ), get_the_date( _x( 'F Y', 'monthly archives date format' ) ) );
         } elseif ( is_day() ) {
-            $title = sprintf( __( 'Day: %s' ), get_the_date( _x( 'F j, Y', 'daily archives date format' ) ) );
+            return sprintf( __( 'Day: %s' ), get_the_date( _x( 'F j, Y', 'daily archives date format' ) ) );
         } elseif ( is_post_type_archive() ) {
-            $title = post_type_archive_title( '', false );
+            return post_type_archive_title( '', false );
         } elseif ( is_tax() ) {
-            $singular_name = '';
+            $taxonomy_singular_name = '';
+            $term_title = single_term_title( '', false );
             if ( isset( get_queried_object()->taxonomy ) ) {
                 $tax = get_taxonomy( get_queried_object()->taxonomy );
+                if ( 'pedestal_category' === $tax->name ) {
+                    return $term_title;
+                }
                 if ( isset( $tax->labels->singular_name ) ) {
-                    $singular_name = $tax->labels->singular_name;
+                    $taxonomy_singular_name = $tax->labels->singular_name;
                 }
             }
-            /* translators: 1: Taxonomy singular name, 2: Current taxonomy term */
-            $title = sprintf( __( '%1$s: %2$s' ), $singular_name, single_term_title( '', false ) );
+            return sprintf(
+                __( '%1$s: %2$s' ),
+                $taxonomy_singular_name,
+                $term_title
+            );
         } elseif ( is_archive() && 'originals' == get_query_var( 'pedestal_originals' ) ) {
-            $title = __( 'Originals' );
+            return __( 'Originals' );
         } else {
-            $title = __( 'Archives' );
+            return __( 'Archives' );
         }
-
-        return $title;
     }
 }

@@ -1,0 +1,13 @@
+{% for term in terms %}
+    <fieldset>
+        <label>
+            <input
+                type="radio"
+                value="{{ term.name|esc_attr }}"
+                name="tax_input[{{ taxonomy|esc_attr }}]"
+                {{ checked( term.term_id, selected_term.term_id ) }}
+            >
+            {{ term.name }}
+        </label>
+    </fieldset>
+{% endfor %}

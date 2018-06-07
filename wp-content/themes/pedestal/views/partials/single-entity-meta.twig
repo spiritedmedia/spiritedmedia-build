@@ -1,0 +1,96 @@
+{% if item.get_authors_count >= 3 or narrow %}
+    {% set meta_info_classes = meta_info_classes ~ '  single-entity-meta--always-stacked' %}
+{% endif %}
+
+{% set img_link_url = item.get_the_permalink %}
+
+{% set source_name %}
+    {% include 'partials/byline.twig' %}
+{% endset %}
+
+{% set timestamp %}
+    <time class="single-entity-meta__timestamp__inner" datetime="{{ item.get_post_date( 'c' ) }}">
+        {{ item.get_post_date( site.date_format ) }}
+        &nbsp;&middot;&nbsp;
+        {{ item.get_post_date( site.time_format ) }}
+    </time>
+{% endset %}
+
+{% if item.get_type == 'link' %}
+
+    {% set img_ga_label = item.get_source.get_name ~ '|' ~ item.get_source.get_name %}
+    {% set source_name %}
+        <a href="{{ item.get_the_permalink }}"
+            data-ga-category="Source|Link"
+            data-ga-label="Name|{{ item.get_source.get_name }}">
+            {{ item.get_source.get_name }}
+        </a>
+    {% endset %}
+
+{% elseif item.get_type == 'event' %}
+
+    {% set img_ga_label = item.get_source_icon_name %}
+    {% set source_name %}
+        <a href="{{ item.get_the_permalink }}"
+            data-ga-category="Source|Event"
+            data-ga-label="Name|event">
+            {{ __( 'Event', 'pedestal' ) }}
+        </a>
+    {% endset %}
+    {% set timestamp %}
+        <ul class="single-entity-meta__timestamp__inner">
+            <li class="single-entity-meta__label  single-entity-meta__timestamp__item">
+              {{ __( 'Posted', 'pedestal' ) }}
+            </li>
+            <li class="single-entity-meta__date  single-entity-meta__timestamp__item">
+              {{ item.get_post_date( site.date_format ) }}
+            </li>
+            <li class="single-entity-meta__time  single-entity-meta__timestamp__item">
+              &nbsp; &middot; &nbsp; {{ item.get_post_date( site.time_format ) }}
+            </li>
+        </ul>
+    {% endset %}
+
+{% elseif item.get_type == 'embed' %}
+
+    {% set img_link_url = item.get_embed_url %}
+    {% set img_ga_label = item.get_source_icon_name ~ '|' ~ item.get_source %}
+    {% set source_name %}
+        <a href="{{ item.get_embed_url }}" data-ga-category="Source|Embed" data-ga-label="Name|{{ item.get_source }}">
+            {{ item.get_source }}
+        </a>
+    {% endset %}
+
+{% endif %}
+
+<div class="{{ meta_info_classes }} single-header__meta single-entity-meta--{{ item.get_type }} single-entity-meta">
+
+    <div class="single-entity-meta__img--standalone  single-entity-meta__img  single-entity-meta__item">
+        {% if img_ga_label %}
+            <a href="{{ img_link_url }}"
+                data-ga-category="Source|{{ item.get_post_type_name( is_single ) }}"
+                data-ga-label="Icon|{{ img_ga_label }}">
+
+                {{ ped_icon( item.get_source_icon_name, 'single-entity-meta__img__icon', icon_color ) }}
+
+            </a>
+        {% else %}
+            {{ item.get_meta_info_img }}
+        {% endif %}
+    </div>
+
+    <div class="single-entity-meta__stack  single-entity-meta__item">
+            <div class="single-entity-meta__name single-entity-meta__stack__item">
+                {{ source_name }}
+            </div>
+
+            <div class="single-entity-meta__timestamp single-entity-meta__stack__item single-entity-meta__stack__mover">
+                {{ timestamp }}
+            </div>
+    </div>
+
+    <div class="single-entity-meta__timestamp  single-entity-meta__item  single-entity-meta__mover">
+        {{ timestamp }}
+    </div>
+
+</div>

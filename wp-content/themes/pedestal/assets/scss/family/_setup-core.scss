@@ -14,9 +14,10 @@ $pedestal-social-icons-abspath : $pedestal-abspath + '/assets/images/social';
 
 // This allows us to test some assets live on the QA site
 $qa-test                       : false !default;
-$pedestal-live-uri             : map-get-strict( $spiritedmedia-pedestal, liveURI );
+$_pedestal-path                : map-get-strict( $spiritedmedia-pedestal, path );
+$pedestal-live-uri             : 'https://spiritedmedia.com/' + $_pedestal-path;
 @if $qa-test {
-  $pedestal-live-uri : map-get-strict( $spiritedmedia-pedestal, stagingURI );
+  $pedestal-live-uri           : 'https://staging.spiritedmedia.com/' + $_pedestal-path;
 }
 
 // This is the default html and body font-size for the base rem value. We need

@@ -1,0 +1,45 @@
+{% extends 'forms/signup-daily.twig' %}
+
+{% set latest_newsletter = false %}
+
+
+{% block icon %}
+{{ ped_icon( 'coffee' ) }}
+{% endblock icon %}
+
+
+{% block title 'Denverite goes great with mornings' %}
+
+
+{% block details %}
+<p id="{{ id_description|esc_attr }}" class="signup-email__details">
+    If you’re here, you care about Denver. Our quick, newsy (and
+    sometimes a little funny) morning newsletter is for people like
+    you, by people like you.
+</p>
+{% endblock details %}
+
+
+{% block submit_button %}
+<button class="signup-email__btn btn-v2--oval js-form-submit" type="submit">
+    {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
+</button>
+{% endblock submit_button %}
+
+
+{% block email_input %}
+<div class="signup-email__input-group input-group-v2">
+    <label for="{{ id_email_input|esc_attr }}" class="invisible">
+        Email Address
+    </label>
+    {{ ped_icon( 'envelope-o', 'signup-email__input-icon input-group-v2__addon' ) }}
+    {{ email_input }}
+</div>
+{% endblock email_input %}
+
+
+
+
+
+
+

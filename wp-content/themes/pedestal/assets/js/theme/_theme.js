@@ -1,4 +1,4 @@
-/* global ga objectFitImages ScrollDepth PedestalModal DonateForm */
+/* global ga objectFitImages ScrollDepth DonateForm Modal PedUtils */
 
 (function($) {
 
@@ -24,8 +24,8 @@
       this.scrollDepthTracking();
       this.honeyPotHelper();
       this.lazyLoad();
+      this.setupModals();
 
-      PedestalModal();
       DonateForm();
     },
 
@@ -247,6 +247,95 @@
           $this.remove();
         });
         e.preventDefault();
+      });
+    },
+
+    /**
+     * A helper for creating modals purely from markup.
+     * All you need is to add the class `.js-modal-trigger`
+     * and a data attribute pointing to the target element for the modal
+     *
+     * @example
+     * <button class="js-modal-trigger" data-modal-target="#foo">
+     *   Show Modal
+     * </button>
+     * <div id="foo">My modal content</div>
+     */
+    setupModals: function() {
+      $('.js-modal-trigger').each(function(index, elem) {
+        var $elem = $(elem);
+        var target = $elem.data('modal-target');
+        if (!target) {
+          return;
+        }
+
+        var callback = false;
+        if (target == '#modal-signup-email-form') {
+          // #subscribe is used on membership pages to
+          // trigger the email newsletter signup modal
+          // See https://billypenn.com/membership/
+          callback = function() {
+            var modal = this;
+            // Open the modal if the user is directed to
+            // a URL containing `#subscribe`...
+            var subscribeURL = window.location.href.indexOf('#subscribe');
+            if (subscribeURL !== -1) {
+              modal.open();
+            }
+
+            // ...or if the window hash changes
+            window.addEventListener('hashchange', function() {
+              if (location.hash === '#subscribe') {
+                modal.open();
+              }
+            });
+          };
+        }
+
+        var theModal = new Modal({
+          target: target
+        }, callback);
+
+        if (target == '#modal-signup-email-form') {
+          theModal.on('modal:close', function() {
+            // Remove the location hash if present
+            if (location.hash === '#subscribe') {
+              PedUtils.removeHash();
+            }
+          });
+        }
+
+        if (target == '#site-header--with-nav-modal-menu') {
+          // Add/remove a class to .modal__frame for styling purposes
+          var $modalFrame = $('.js-modal__frame');
+
+          theModal.on('modal:open', function() {
+            $modalFrame.addClass('modal--header-nav-modal');
+          });
+
+          theModal.on('modal:close', function() {
+            $modalFrame.removeClass('modal--header-nav-modal');
+          });
+        }
+
+        // When search modal is opened set focus to the search field
+        if (target == '#site-header-search-modal') {
+          theModal.on('modal:opened', function() {
+            var $theField = $('.js-site-header--search-field');
+            var oldVal = $theField.val();
+            // Focus the caret at the end of the text field
+            $theField
+              .val('')
+              .val(oldVal)
+              .focus();
+          });
+        }
+
+        $elem.on('click', theModal, function(e) {
+          var modal = e.data;
+          modal.open();
+          e.preventDefault();
+        });
       });
     }
   };

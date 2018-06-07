@@ -342,7 +342,7 @@ class Factcheck extends Original {
             'statement_date'    => $this->get_statement_date_str(),
         ] + parent::get_context( $context );
 
-        $context['content_classes'][] = 's-post-content';
+        $context['content_classes'][] = 's-content';
 
         if ( $context['statement_img'] ) {
             $context['statement_classes'] = 'has-image';

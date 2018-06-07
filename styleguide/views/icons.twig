@@ -3,12 +3,25 @@
 {% block head %}
 {# Custom styles for this page #}
 <style>
-    .example {
-        margin-bottom: 5em;
+    table {
+        font-family: sans-serif;
+    }
+    th {
+        text-align: left;
     }
     .icon-example {
-        display: inline-block;
-        width: 1rem;
+        font-size: 36px;
+        width: 60px;
+    }
+    .usage-item {
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+    .usage-column {
+        display: none;
+    }
+    .show-usage-column .usage-column {
+        display: table-cell;
     }
 </style>
 {% endblock %}
@@ -24,8 +37,46 @@ or in PHP using `Icons::get_icon()`. Most of these are currently from [Font
 Awesome](https://fontawesome.io/) but we can use any custom icon. Below is a
 list of the icons we use throughout the sites:
 
-{{ icon_list_html }}
+{% endmarkdown %}
 
+<p>
+    <label class="form-label">
+        <input type="checkbox" class="js-toggle-usage-column">
+        <strong>Show usage column?</strong>
+    </label>
+    <script>
+        (function($) {
+            $('.js-toggle-usage-column').on('change', function() {
+                $('.js-main').toggleClass('show-usage-column');
+            });
+        }(jQuery));
+    </script>
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Icon Name</th>
+            <th class="usage-column">Usage</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for icon_name, details in icons  %}
+        <tr>
+            <td class="icon-example">{{ ped_icon( icon_name ) }}</td>
+            <td><code>{{ icon_name }}</code></td>
+            <td class="usage-column">
+                {% for item in details.usage %}
+                    <p class="usage-item">{{ item }}</p>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% markdown %}
 ---
 
 ## Icon + text

@@ -1,0 +1,103 @@
+@function _replace-svg-color( $color ) {
+  $color: encode-color( $color );
+  @return "data:image/svg+xml;charset=UTF-8,%3csvg preserveAspectRatio='none' viewBox='0 0 275 60' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdesc%3eArrow Shape%3c/desc%3e%3cdefs%3e%3c/defs%3e%3cg id='button-promo' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='button-arrow' fill='#{$color}'%3e%3cpolygon id='shape-copy' transform='translate(137.500000, 30.500000) rotate(90.000000) translate(-137.500000, -30.500000) ' points='107.5 -82 137.486328 -107 167.5 -82 167.5 168 137.5 155.5 107.5 168'%3e%3c/polygon%3e%3c/g%3e%3c/g%3e%3c/svg%3e ";
+}
+
+
+%_btn-v2 {
+  display: inline-block;
+  min-width: rem( 260px );
+  height: rem( 44px );
+  line-height: rem( 44px );
+  padding-left: rem( 32px );
+  padding-right: rem( 32px );
+
+  font-family: $font-family-sans-serif;
+  font-weight: 600;
+  font-size: rem( 16px );
+  letter-spacing: em( 1px );
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+
+  background-color: $primary-color;
+  color: $white;
+
+  // stylelint-disable-next-line selector-max-type
+  &:hover,
+  &:focus {
+    color: $white;
+    opacity: 0.8;
+  }
+}
+
+
+%_btn-v2--light {
+  background-color: $white;
+  color: $primary-color;
+
+  &:hover,
+  &:focus {
+    color: $primary-color;
+  }
+}
+
+
+.btn-v2 {
+  @extend %_btn-v2;
+
+  border-radius: rem( 12px );
+}
+
+.btn-v2--secondary {
+  @extend %_btn-v2;
+
+  background-color: $secondary-color;
+  border-radius: rem( 12px );
+  color: $white;
+
+  &:hover,
+  &:focus {
+    color: $white;
+  }
+}
+
+.btn-v2--light {
+  @extend %_btn-v2;
+  @extend %_btn-v2--light;
+
+  border-radius: rem( 12px );
+}
+
+.btn-v2--oval {
+  @extend %_btn-v2;
+
+  border-radius: rem( 50px );
+}
+
+.btn-v2--oval--light {
+  @extend %_btn-v2;
+  @extend %_btn-v2--light;
+
+  border-radius: rem( 50px );
+}
+
+
+//
+// Promo Buttons
+// ==========================================================================
+
+.btn-v2--promo {
+  @extend %_btn-v2;
+
+  // stylelint-disable-next-line function-url-quotes
+  background: url( _replace-svg-color( $primary-color ) );
+}
+
+.btn-v2--promo--accent {
+  @extend %_btn-v2;
+  @extend %_btn-v2--light;
+
+  // stylelint-disable-next-line function-url-quotes
+  background: url( _replace-svg-color( $accent-color ) );
+}

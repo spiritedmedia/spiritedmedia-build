@@ -21,6 +21,24 @@ $event-inner-spacing: rem( 20px );
   text-align: center;
 }
 
+.event__title,
+.event__title__link {
+  color: $body-font-color;
+}
+
+.event__title {
+  font-size: rem( 24px );
+  font-weight: 600;
+  letter-spacing: em( -0.65px );
+  line-height: 1;
+}
+
+.event__title__link {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .event__details {
   padding-left: rem( 10px );
 }
@@ -42,8 +60,12 @@ $event-inner-spacing: rem( 20px );
 }
 
 .event__cta__link {
-  align-items: center;
+  @include link-dark;
+
   display: inline-flex;
+  align-items: center;
+  font-weight: normal;
+  line-height: 1;
 }
 
 .event__cta__icon {
@@ -57,6 +79,7 @@ $event-inner-spacing: rem( 20px );
 
 .event__cta__text {
   flex: 1;
+  font-size: rem( 14px );
 
   &,
   > * {
@@ -69,6 +92,11 @@ $event-inner-spacing: rem( 20px );
   .event__overline,
   .event__cta {
     text-align: left;
+  }
+
+  .event__title {
+    font-size: rem( 27px );
+    letter-spacing: rem( -0.8px );
   }
 
   .event__details {

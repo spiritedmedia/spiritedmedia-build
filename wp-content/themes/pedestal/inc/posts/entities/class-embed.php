@@ -550,6 +550,19 @@ class Embed extends Entity {
     }
 
     /**
+     * Get an Instagram username from a URL
+     *
+     * @param string $url URL to an Instagram post or user profile
+     * @return string
+     */
+    public static function get_instagram_username_from_url( $url ) {
+        $handle = str_ireplace( 'https://www.instagram.com/', '', $url );
+        // Strip whitespace characters and / from both ends of the string
+        $handle = trim( $handle, " \t\n\r\0\x0B\/" );
+        return $handle;
+    }
+
+    /**
      * Get the Embed's YouTube ID
      *
      * @return string

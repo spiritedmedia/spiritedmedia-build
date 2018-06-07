@@ -17,18 +17,19 @@ class General_Types {
         'pedestal_newsletter',
     ];
 
-    private static $instance;
-
+    /**
+     * Get an instance of this class
+     */
     public static function get_instance() {
-
-        if ( ! isset( self::$instance ) ) {
-            self::$instance = new General_Types;
-            self::$instance->setup_types();
-            self::$instance->setup_item_types();
-            self::$instance->setup_actions();
+        static $instance = null;
+        if ( null === $instance ) {
+            $instance = new static();
+            $instance->setup_types();
+            $instance->setup_item_types();
+            $instance->setup_actions();
+            $instance->setup_filters();
         }
-        return self::$instance;
-
+        return $instance;
     }
 
     /**
@@ -118,11 +119,31 @@ class General_Types {
     }
 
     /**
+     * Hook into filters
+     */
+    public function setup_filters() {
+        add_filter( 'template_include', [ $this, 'filter_template_include' ] );
+    }
+
+    /**
      * Register fields
      */
     public function action_init_after_post_types_registered() {
         $this->register_email_pretext_field();
         $this->register_newsletter_fields();
+    }
+
+    /**
+     * Filter template include to load the single newsletter template
+     *
+     * @param  string $template Path to a PHP template
+     * @return string          Possibly modified template path
+     */
+    public function filter_template_include( $template = '' ) {
+        if ( get_query_var( 'pedestal_newsletter' ) ) {
+            $template = locate_template( [ 'single-newsletter.php', 'singular.php' ] );
+        }
+        return $template;
     }
 
     /**

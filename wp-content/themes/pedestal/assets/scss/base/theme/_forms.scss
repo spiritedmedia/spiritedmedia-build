@@ -1,8 +1,3 @@
-// ==========================================================================
-// Pedestal // Base // Theme // FORMS
-// ==========================================================================
-
-
 /*
 stylelint-disable
   selector-max-type,
@@ -10,381 +5,346 @@ stylelint-disable
 */
 
 
-$input-bg                    : $white;
-$input-border-style          : solid;
-$input-disabled-bg           : $grey-90;
-$input-focus-border-color    : $primary-color;
-$input-font-color            : rgba( $black, 0.75 );
-$input-placeholder-font-color: $dimmed-text-color;
-$label-margin-y              : rem( 8px );
-
-$input-focus-bg-color        : lighten( $input-focus-border-color, 15% );
-$form-check-input-gutter     : rem( 20px );
-$form-feedback-valid-color   : $success-color;
-$form-feedback-invalid-color : $alert-color;
-
-$legend-padding-x            : rem( 4px );
-$input-height-border         : $btn-border-width * 2;
-$input-height-border-lg      : $btn-border-width-lg * 2 - $input-border-width * 2;
-$input-height-inner          : ( $base-font-size * $input-btn-line-height ) + ( $input-btn-spacing-y * 2 );
-$input-height                : ( $input-height-inner + $input-height-border );
-$input-height-inner-sm       : ( $small-font-size * $input-btn-line-height-sm ) + ( $input-btn-spacing-y-sm * 2 );
-$input-height-sm             : ( $input-height-inner-sm + $input-height-border );
-$input-height-inner-lg       : ( $input-btn-font-size-lg * $input-btn-line-height-lg ) + ( $input-btn-spacing-y-lg * 2 );
-$input-height-lg             : ( $input-height-inner-lg + $input-height-border-lg );
+@if not sm-theme-supports( formsV2 ) {
 
 
-@mixin form-input-size-sm {
-  font-size: $small-font-size;
-  line-height: $input-btn-line-height-sm;
-  margin-bottom: $input-btn-spacing-y-sm;
-  padding: $input-btn-spacing-y-sm $input-btn-spacing-x-sm;
-}
+  $input-border-style:           solid;
+  $input-disabled-bg:            $grey-90;
+  $input-focus-border-color:     $primary-color;
+  $input-placeholder-font-color: $dimmed-text-color;
+  $label-margin-y:               rem( 8px );
+  $input-focus-bg-color:         lighten( $input-focus-border-color, 15% );
+  $form-check-input-gutter:      rem( 20px );
+  $legend-padding-x:             rem( 4px );
+  $input-height-border-lg:       $btn-border-width-lg * 2 - $input-border-width * 2;
 
 
-@mixin form-input-size-lg {
-  font-size: $input-btn-font-size-lg;
-  line-height: $input-btn-line-height-lg;
-  margin-bottom: $input-btn-spacing-y-lg;
-  padding: ( $input-btn-spacing-y-lg + $input-height-border-lg / 2 ) $input-btn-spacing-x-lg;
-}
+  @mixin form-input-size-sm {
+    font-size: $small-font-size;
+    line-height: $input-line-height-sm;
+    margin-bottom: $input-spacing-y-sm;
+    padding: $input-spacing-y-sm $input-spacing-x-sm;
+  }
 
 
-@mixin form-validation-state( $state, $color ) {
-  .form-input {
-    .was-validated &:#{$state},
-    &.is-#{$state} {
-      border-color: $color;
+  @mixin form-input-size-lg {
+    font-size: $input-font-size-lg;
+    line-height: $input-line-height-lg;
+    margin-bottom: $input-spacing-y-lg;
+    padding: ( $input-spacing-y-lg + $input-height-border-lg / 2 ) $input-spacing-x-lg;
+  }
 
-      &:focus {
-        box-shadow: 0 0 0 0.2rem rgba( $color, 0.25 );
-      }
 
-      ~ .invalid-feedback,
-      ~ .invalid-tooltip {
-        display: block;
-      }
+  fieldset {
+    padding: rem( 16px );
+    border: 0;
+
+    &.row {
+      padding: 0;
     }
   }
-}
 
+  .form-label {
+    display: inline-block;
+    margin-bottom: $label-margin-y;
+    max-width: $input-max-width;
+    line-height: $input-label-line-height;
+    font-family: $input-label-font-family;
+    color: $input-label-color;
+    cursor: pointer;
 
+    &:not( .form-check__label ) {
+      font-weight: $input-label-font-weight;
+    }
 
+    > .form-input,
+    > .input-group {
+      margin-top: $label-margin-y;
+    }
 
-
-fieldset {
-  padding: rem( 16px );
-}
-
-label {
-  display: inline-block;
-  margin-bottom: $label-margin-y;
-  width: 100%;
-  cursor: pointer;
-
-  > .form-input,
-  > .input-group {
-    margin-top: $label-margin-y;
-  }
-
-  > .form-input {
-    &:last-child {
+    > .form-input:last-child {
       margin-bottom: 0;
     }
   }
-}
 
+  .form-input {
+    display: block;
+    width: $input-width;
+    max-width: $input-max-width;
+    border: $input-border-width solid $input-border-color;
+    border-radius: $input-border-radius;
+    margin-bottom: $input-spacing-y;
+    padding: $input-spacing-y $input-spacing-x;
 
-.form-input {
-  background-color: $input-bg;
-  border: $input-border-width solid $input-border-color;
-  border-radius: $global-radius;
-  box-shadow: inset 0 1px 5px 0 rgba( 0, 0, 0, 0.25 );
-  color: $input-font-color;
-  display: block;
-  font-size: $base-font-size;
-  font-weight: 300;
-  line-height: $input-btn-line-height;
-  margin-bottom: $input-btn-spacing-y;
-  padding: $input-btn-spacing-y $input-btn-spacing-x;
-  transition:
-    border-color ease-in-out 150ms,
-    box-shadow ease-in-out 150ms;
-  width: 100%;
-
-  // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214.
-  background-image: none;
-  background-clip: padding-box;
-
-  // Unstyle the caret on `<select>`s in IE10+.
-  &::-ms-expand {
-    background-color: transparent;
-    border: 0;
-  }
-
-  &:focus {
-    color: $input-font-color;
-    border-color: $input-focus-border-color;
-    outline: none;
-  }
-
-  // Placeholder
-  &::placeholder {
-    color: $input-placeholder-font-color;
-    // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
-    opacity: 1;
-  }
-
-  // Disabled and read-only inputs
-  //
-  // HTML5 says that inputs under a fieldset > legend:first-child won't be
-  // disabled if the fieldset is disabled. Due to implementation difficulty, we
-  // don't honor that edge case; we style them as disabled anyway.
-  &:disabled,
-  &[readonly] {
-    background-color: $input-disabled-bg;
-    // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
-    opacity: 1;
-  }
-} // .form-input
-
-select.form-input {
-  &:not( [size] ):not( [multiple] ) {
-    height: $input-height;
-  }
-
-  // Suppress the nested default white text on blue background highlight given to
-  // the selected option text when the (still closed) <select> receives focus
-  // in IE and (under certain conditions) Edge, as it looks bad and cannot be made to
-  // match the appearance of the native widget.
-  // See https://github.com/twbs/bootstrap/issues/19398.
-  &:focus::-ms-value {
-    color: $input-font-color;
+    box-shadow: $input-box-shadow;
     background-color: $input-bg;
-  }
-}
 
-// Make file inputs better match text inputs by forcing them to new lines.
-.form-input--file,
-.form-input--range {
-  display: block;
-}
+    line-height: $input-line-height;
+    color: $input-font-color;
+    caret-color: $input-caret-color;
+    font-family: $input-font-family;
+    font-size: $base-font-size;
+    font-weight: 300;
+    font-style: $input-font-style;
 
+    transition:
+      border-color ease-in-out 150ms,
+      box-shadow ease-in-out 150ms;
 
-// Form input sizing
-//
-// Build on `.form-input` with modifier classes to decrease or increase the
-// height and font-size of form inputs.
-//
-// The `.form-group-* form-input` variations are sadly duplicated to avoid the
-// issue documented in https://github.com/twbs/bootstrap/issues/15074.
+    // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214.
+    background-image: none;
+    background-clip: padding-box;
 
-.form-input--sm,
-%form-input--sm {
-  @include form-input-size-sm;
-}
+    // Unstyle the caret on `<select>`s in IE10+.
+    &::-ms-expand {
+      background-color: transparent;
+      border: 0;
+    }
 
-.form-input--lg,
-%form-input--lg {
-  @include form-input-size-lg;
-}
+    &:focus {
+      color: $input-font-color;
+      border-color: $input-focus-border-color;
+      outline: none;
+    }
 
-select.form-input--sm {
-  &:not( [size] ):not( [multiple] ) {
-    height: $input-height-sm;
-  }
-}
+    // Placeholder
+    &::placeholder {
+      color: $input-placeholder-font-color;
+      // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
+      opacity: 1;
+    }
 
-select.form-input--lg {
-  &:not( [size] ):not( [multiple] ) {
-    height: $input-height-lg;
-  }
-}
+    // Disabled and read-only inputs
+    //
+    // HTML5 says that inputs under a fieldset > legend:first-child won't be
+    // disabled if the fieldset is disabled. Due to implementation difficulty, we
+    // don't honor that edge case; we style them as disabled anyway.
+    &:disabled,
+    &[readonly] {
+      background-color: $input-disabled-bg;
+      // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+      opacity: 1;
+    }
+  } // .form-input
 
+  select.form-input {
+    &:not( [size] ):not( [multiple] ) {
+      height: $base-font-size * $input-line-height + $input-spacing-y * 2 + $input-border-width * 2;
+    }
 
-
-
-
-//
-// Form groups
-// ==========================================================================
-// Designed to help with the organization and spacing of vertical forms. For
-// horizontal forms, use the predefined grid classes.
-
-
-.form-group {}
-
-.form-group__legend {
-  font-weight: 700;
-  margin: 0;
-  margin-left: -( $legend-padding-x );
-  padding: 0 $legend-padding-x;
-}
-
-.form-group__text {
-  display: block;
-  margin-top: rem( 4px );
-}
-
-// For use with horizontal and inline forms, when you need the legend text to
-// be the same size as regular labels, and to align with the form inputs.
-// .col-form-legend {
-//   padding-top: $input-btn-spacing-y;
-//   padding-bottom: $input-btn-spacing-y;
-//   margin-bottom: 0;
-//   font-size: $font-size-base;
-// }
-
-
-
-
-
-//
-// Checkboxes and radios
-// ==========================================================================
-// Indent the labels to position radios/checkboxes as hanging inputs.
-
-
-
-.form-check {
-  position: relative;
-  display: block;
-  margin-bottom: rem( 8px );
-
-  &.is-disabled {
-    .form-check__label {
-      color: $dimmed-text-color;
+    // Suppress the nested default white text on blue background highlight given to
+    // the selected option text when the (still closed) <select> receives focus
+    // in IE and (under certain conditions) Edge, as it looks bad and cannot be made to
+    // match the appearance of the native widget.
+    // See https://github.com/twbs/bootstrap/issues/19398.
+    &:focus::-ms-value {
+      color: $input-font-color;
+      background-color: $input-bg;
     }
   }
-}
 
-.form-check__label {
-  padding-left: $form-check-input-gutter;
-  margin-bottom: 0; // Override default `<label>` bottom margin
-}
-
-.form-check__input {
-  position: absolute;
-  margin-top: rem( 4px );
-  margin-left: -$form-check-input-gutter;
-
-  &:only-child {
-    position: static;
+  // Make file inputs better match text inputs by forcing them to new lines.
+  .form-input--file,
+  .form-input--range {
+    display: block;
   }
-}
 
-// Radios and checkboxes on same line
-.form-check--inline {
-  display: inline-block;
+
+  // Form input sizing
+  //
+  // Build on `.form-input` with modifier classes to decrease or increase the
+  // height and font-size of form inputs.
+  //
+  // The `.form-group-* form-input` variations are sadly duplicated to avoid the
+  // issue documented in https://github.com/twbs/bootstrap/issues/15074.
+
+  .form-input--sm,
+  %form-input--sm {
+    @include form-input-size-sm;
+  }
+
+  .form-input--lg,
+  %form-input--lg {
+    @include form-input-size-lg;
+  }
+
+  select.form-input--sm {
+    &:not( [size] ):not( [multiple] ) {
+      height: $small-font-size * $input-line-height-sm + $input-spacing-y-sm * 2 + $input-border-width * 2;
+    }
+  }
+
+  select.form-input--lg {
+    &:not( [size] ):not( [multiple] ) {
+      height: $input-font-size-lg * $input-line-height-lg + $input-spacing-y-lg * 2 + $input-height-border-lg;
+    }
+  }
+
+
+  //
+  // Form groups
+  // ==========================================================================
+  // Designed to help with the organization and spacing of vertical forms. For
+  // horizontal forms, use the predefined grid classes.
+
+  .form-group {
+    margin-bottom: $paragraph-margin-bottom;
+  }
+
+  .form-group__legend {
+    line-height: $input-label-line-height;
+    font-family: $input-label-font-family;
+    font-weight: $input-label-font-weight;
+    color: $input-label-color;
+  }
+
+  .form-group__text {
+    display: block;
+    margin-top: rem( 4px );
+  }
+
+  // For use with horizontal and inline forms, when you need the legend text to
+  // be the same size as regular labels, and to align with the form inputs.
+  .column-form-legend {
+    padding-top: $input-spacing-y;
+    padding-bottom: $input-spacing-y;
+    margin-bottom: 0;
+    font-size: $base-font-size;
+  }
+
+
+  //
+  // Checkboxes and radios
+  // ==========================================================================
+  // Indent the labels to position radios/checkboxes as hanging inputs.
+
+  .form-check {
+    position: relative;
+    display: block;
+    margin-bottom: rem( 8px );
+
+    &.is-disabled {
+      .form-check__label {
+        color: $dimmed-text-color;
+      }
+    }
+  }
 
   .form-check__label {
-    vertical-align: middle;
+    padding-left: $form-check-input-gutter;
+    margin-bottom: 0; // Override default `.form-label` bottom margin
   }
 
-  + .form-check--inline {
-    margin-left: rem( 4px );
+  .form-check__input {
+    position: absolute;
+    margin-top: rem( 4px );
+    margin-left: -$form-check-input-gutter;
+
+    &:only-child {
+      position: static;
+    }
   }
-}
 
+  // Radios and checkboxes on same line
+  .form-check--inline {
+    display: inline-block;
 
+    .form-check__label {
+      vertical-align: middle;
+    }
 
-
-
-//
-// Validation
-// ==========================================================================
-// Provide feedback to users when form field values are valid or invalid. Works
-// primarily for client-side validation via scoped `:invalid` and `:valid`
-// pseudo-classes but also includes `.is-invalid` and `.is-valid` classes for
-// server side validation.
-
-
-.invalid-feedback,
-.invalid-tooltip,
-.form-error-message {
-  display: none;
-
-  .is-failed & {
-    display: block;
+    + .form-check--inline {
+      margin-left: rem( 4px );
+    }
   }
-}
 
-.success-message {
-  display: none;
 
-  .is-success & {
-    display: block;
+  //
+  // Labels
+  // ===========================================================================
+  // For use with horizontal and inline forms, when you need the label text to
+  // align with the form inputs.
+
+  %column-form-label {
+    margin-bottom: 0; // Override the `.form-label` default
+    text-align: right;
   }
+
+  .column-form-label,
+  .form-label.columns,
+  .form-group__legend.columns {
+    @extend %column-form-label;
+
+    padding-top: $input-spacing-y - $input-border-width * 2;
+    padding-bottom: $input-spacing-y - $input-border-width * 2;
+  }
+
+  .column-form-label--lg {
+    @extend %column-form-label;
+
+    padding-top: $input-spacing-y-lg - $input-border-width * 2;
+    padding-bottom: $input-spacing-y-lg - $input-border-width * 2;
+    font-size: $input-font-size-lg;
+  }
+
+  .column-form-label--sm {
+    @extend %column-form-label;
+
+    padding-top: $input-spacing-y-sm - $input-border-width * 2;
+    padding-bottom: $input-spacing-y-sm - $input-border-width * 2;
+    font-size: $small-font-size;
+  }
+
+
+  //
+  // Validation
+  // ==========================================================================
+
+  .invalid-feedback,
+  .invalid-tooltip,
+  .form-error-message {
+    display: none;
+
+    .is-failed & {
+      display: block;
+    }
+  }
+
+  .success-message {
+    display: none;
+
+    .is-success & {
+      display: block;
+    }
+  }
+
+  .invalid-feedback {
+    margin-top: rem( 4px );
+    margin-bottom: rem( 8px );
+    font-size: $small-font-size;
+    color: $alert-color;
+  }
+
+
+  // Readonly inputs as plain text
+  //
+  // Apply class to a readonly input to make it appear like regular plain
+  // text (without any border, background color, focus indicator)
+
+  // .form-input--plaintext {
+  //   padding-top: $input-spacing-y;
+  //   padding-bottom: $input-spacing-y;
+  //   margin-bottom: 0; // match inputs if this class comes on inputs with default margins
+  //   line-height: $input-line-height;
+  //   border: solid transparent;
+  //   border-width: $input-border-width 0;
+  //
+  //   &.form-input--sm,
+  //   &.form-input--lg {
+  //     padding-right: 0;
+  //     padding-left: 0;
+  //   }
+  // }
+
+
 }
-
-.invalid-feedback {
-  margin-top: rem( 4px );
-  margin-bottom: rem( 8px );
-  font-size: $small-font-size;
-  color: $form-feedback-invalid-color;
-}
-
-.invalid-tooltip {
-  position: absolute;
-  top: 100%;
-  z-index: $z-index-5;
-  width: rem( 250px );
-  padding: rem( 8px );
-  margin-top: rem( 2px );
-  font-size: $small-font-size;
-  line-height: 1;
-  color: $white;
-  background-color: rgba( $form-feedback-invalid-color, 0.8 );
-  border-radius: rem( 3px );
-}
-
-@include form-validation-state( 'valid', $form-feedback-valid-color );
-@include form-validation-state( 'invalid', $form-feedback-invalid-color );
-
-
-
-
-
-//
-// Labels
-//
-// For use with horizontal and inline forms, when you need the label text to
-// align with the form inputs.
-// .col-form-label {
-//   padding-top: calc(#{$input-btn-spacing-y} - #{$input-btn-border-width} * 2);
-//   padding-bottom: calc(#{$input-btn-spacing-y} - #{$input-btn-border-width} * 2);
-//   margin-bottom: 0; // Override the `<label>` default
-// }
-//
-// .col-form-label-lg {
-//   padding-top: calc(#{$input-btn-spacing-y-lg} - #{$input-btn-border-width} * 2);
-//   padding-bottom: calc(#{$input-btn-spacing-y-lg} - #{$input-btn-border-width} * 2);
-//   font-size: $input-btn-font-size-lg;
-// }
-//
-// .col-form-label-sm {
-//   padding-top: calc(#{$input-btn-spacing-y-sm} - #{$input-btn-border-width} * 2);
-//   padding-bottom: calc(#{$input-btn-spacing-y-sm} - #{$input-btn-border-width} * 2);
-//   font-size: $small-font-size;
-// }
-
-
-// Readonly inputs as plain text
-//
-// Apply class to a readonly input to make it appear like regular plain
-// text (without any border, background color, focus indicator)
-
-// .form-input--plaintext {
-//   padding-top: $input-btn-spacing-y;
-//   padding-bottom: $input-btn-spacing-y;
-//   margin-bottom: 0; // match inputs if this class comes on inputs with default margins
-//   line-height: $input-btn-line-height;
-//   border: solid transparent;
-//   border-width: $input-btn-border-width 0;
-//
-//   &.form-input--sm,
-//   &.form-input--lg {
-//     padding-right: 0;
-//     padding-left: 0;
-//   }
-// }

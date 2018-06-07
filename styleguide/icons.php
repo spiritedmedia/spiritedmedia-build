@@ -15,6 +15,10 @@ $icons = [
         'label' => 'Angle Right',
         'usage' => [],
     ],
+    'bars' => [
+        'label' => 'Bars',
+        'usage' => [],
+    ],
     'birthday-cake' => [
         'label' => 'Birthday Cake',
         'usage' => [
@@ -31,6 +35,10 @@ $icons = [
         'label' => 'Calendar',
         'usage' => [],
     ],
+    'calendar-alt' => [
+        'label' => 'Calendar Alt',
+        'usage' => [],
+    ],
     'caret-down' => [
         'label' => 'Caret (Down)',
         'usage' => [],
@@ -39,12 +47,28 @@ $icons = [
         'label' => 'Caret (Up)',
         'usage' => [],
     ],
+    'check' => [
+        'label' => 'Check',
+        'usage' => [
+            'Newsletter signup prompt',
+        ],
+    ],
     'close' => [
         'label' => 'Close / X (multiplication sign)',
         'usage' => [
             'Signup daily modal',
             'Search form',
         ],
+    ],
+    'coffee' => [
+        'label' => 'Coffee',
+        'usage' => [
+            'Daily email signup widget (Denverite)',
+        ],
+    ],
+    'comment' => [
+        'label' => 'Comment',
+        'usage' => [],
     ],
     'dollar-sign' => [
         'label' => 'Dollar Sign',
@@ -67,6 +91,10 @@ $icons = [
         'usage' => [
             'Email share button',
         ],
+    ],
+    'envelope-open' => [
+        'label' => 'Envelope (Open) v2',
+        'usage' => [],
     ],
     'envelope-slant' => [
         'label' => 'Envelope (Slanted)',
@@ -96,6 +124,20 @@ $icons = [
             'Social share button',
         ],
     ],
+    'hand-spock' => [
+        'label' => 'The Hand of Spock',
+        'usage' => [
+            'Newsletter signup prompt (Denverite only)',
+        ],
+    ],
+    'heart' => [
+        'label' => 'Heart',
+        'usage' => [],
+    ],
+    'home' => [
+        'label' => 'Home',
+        'usage' => [],
+    ],
     'info' => [
         'label' => 'Info',
         'usage' => [],
@@ -114,6 +156,12 @@ $icons = [
             'Footnotes',
         ],
     ],
+    'link' => [
+        'label' => 'Link',
+        'usage' => [
+            'Message Spot',
+        ],
+    ],
     'linkedin' => [
         'label' => 'LinkedIn',
         'usage' => [
@@ -125,6 +173,10 @@ $icons = [
         'usage' => [
             'Donation form',
         ],
+    ],
+    'newspaper' => [
+        'label' => 'Newspaper',
+        'usage' => [],
     ],
     'phone-square' => [
         'label' => 'Phone (Square)',
@@ -154,6 +206,16 @@ $icons = [
             'Embeds in stream and single post templates',
         ],
     ],
+    'star' => [
+        'label' => 'Star',
+        'usage' => [],
+    ],
+    'times-circle' => [
+        'label' => 'Times Circle',
+        'usage' => [
+            'Modal close',
+        ],
+    ],
     'twitter' => [
         'label' => 'Twitter',
         'usage' => [
@@ -169,6 +231,14 @@ $icons = [
             'Social share button',
         ],
     ],
+    'university' => [
+        'label' => 'University',
+        'usage' => [],
+    ],
+    'utensils' => [
+        'label' => 'Utensils',
+        'usage' => [],
+    ],
     'vine' => [
         'label' => 'Vine',
         'usage' => [
@@ -182,17 +252,7 @@ $icons = [
         ],
     ],
 ];
-foreach ( $icons as $icon => $details ) {
-    ob_start();
-        Timber::render( 'views/partials/icons-example.twig', [
-            'icon'      => Icons::get_icon( $icon, 'o-icon-text__icon' ),
-            'icon_name' => $icon,
-            'label'     => $details['label'],
-            'usage'     => $details['usage'],
-        ] );
-    $context['icon_list_html'] .= ob_get_clean();
-}
-
+$context['icons'] = $icons;
 $context['facebook_icon_html'] = Icons::get_icon( 'facebook', 'o-icon-text__icon' );
 
 Timber::render( 'views/icons.twig', $context );

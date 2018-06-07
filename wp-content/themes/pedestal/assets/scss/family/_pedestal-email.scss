@@ -259,7 +259,7 @@
 
 .email-text-main__btn {}
 
-.email-text-main__meta-info {}
+.email-text-main__entity-meta {}
 
 
 
@@ -432,10 +432,10 @@
 
 
 //
-// Meta Info
+// Entity Meta Info
 // ==========================================================================
 
-.email-meta-info {
+.email-entity-meta {
   margin: 0 !important;
   max-width: $email-container-width-inner;
 
@@ -445,12 +445,12 @@
   }
 }
 
-.email-meta-info__item {
+.email-entity-meta__item {
   vertical-align: middle;
 }
 
-.email-meta-info__img {
-  width: $email-meta-info-img-size;
+.email-entity-meta__img {
+  width: $email-entity-meta-img-size;
 
   &,
   img {
@@ -466,14 +466,14 @@
     &,
     img {
       display: block !important;
-      width: $email-meta-info-img-size !important;
+      width: $email-entity-meta-img-size !important;
       border-radius: 999px;
     }
   }
 
 }
 
-.email-meta-info__text {
+.email-entity-meta__text {
   max-width: 80%;
 
   &,
@@ -483,19 +483,19 @@
   }
 }
 
-.email-meta-info__source-name,
-.email-meta-info__timestamp {
+.email-entity-meta__source-name,
+.email-entity-meta__timestamp {
   @include email-body-type;
 
   font-size: $small-font-size;
   text-transform: uppercase;
 }
 
-.email-meta-info__source-name {
+.email-entity-meta__source-name {
   line-height: 1;
 }
 
-.email-meta-info__timestamp {}
+.email-entity-meta__timestamp {}
 
 
 

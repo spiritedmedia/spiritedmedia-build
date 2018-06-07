@@ -1,0 +1,146 @@
+{% set show_bio = show_bio|default( true ) %}
+
+{% set bio = user.get_short_bio %}
+{% if 'grid' == format %}
+    {% set show_bio = false %}
+{% elseif 'extended' == format and user.get_extended_bio %}
+    {% set bio = user.get_extended_bio %}
+{% endif %}
+
+{% set show_avatar_fallback = true %}
+{% if 'extended' == format %}
+    {% set show_avatar_fallback = false %}
+{% else %}
+    {% set stream = false %}
+{% endif %}
+
+{% set user_name = user.get_display_name %}
+{% set user_image = user.get_avatar( img_size, {
+    sizes: '(max-width: 1024px) 150px, 300px',
+    srcset: [ 150, 300 ]
+}, show_avatar_fallback ) %}
+{% set author_url = user.get_permalink %}
+{% set user_title = user.get_title %}
+{% set email = user.get_public_email|sanitize_email %}
+{% set twitter_handle = user.get_twitter_username %}
+{% set instagram_handle = user.get_instagram_username %}
+{% set phone_number = user.get_phone_number %}
+{% set phone_number_parens = user.get_phone_number( true ) %}
+
+<section class="user-card  user-card--{{ format }}" itemscope itemtype="http://schema.org/Person">
+
+    {% if user_image %}
+    <a href="{{ author_url|esc_url }}"
+        class="user-card__img"
+        data-ga-category="User"
+        data-ga-label="Image|Author URL|{{ user_name|esc_attr }}"
+    >
+        {{ user_image }}
+    </a>
+    {% endif %}
+
+    <div class="user-card__body">
+
+        <h1 class="user-card__name">
+            <a href="{{ author_url|esc_url }}"
+                itemprop="author_url"
+                data-ga-category="User"
+                data-ga-label="Name|Author URL|{{ user_name|esc_attr }}"
+            >
+                <span itemprop="name">{{ user_name }}</span>
+            </a>
+        </h1>
+
+        {% if user_title %}
+        <h2 class="user-card__title" itemprop="jobTitle">
+            {{ user_title }}
+        </h2>
+        {% endif %}
+
+        <hr class="user-card__rule hr--slim">
+
+        <div class="user-card__contact">
+            <a href="mailto:{{ email }}"
+                class="user-card__email user-card__contact__item"
+                data-ga-category="User"
+                data-ga-label="Email|{{ email }}|{{ name|esc_attr }}"
+            >
+                {{ ped_icon( 'envelope', 'user-card__contact__icon' ) }}
+                <span class="user-card__contact__text" itemprop="email">{{ email }}</span>
+            </a>
+
+            {% if twitter_handle %}
+                {% set twitter_url = 'https://twitter.com/' ~ twitter_handle %}
+                {% spaceless %}
+                <a href="{{ twitter_url|esc_url }}"
+                    class="user-card__twitter user-card__contact__item"
+                    data-ga-category="User"
+                    data-ga-label="Twitter|@{{ twitter_handle|esc_attr }}|{{ name|esc_attr }}"
+                >
+                    {{ ped_icon( 'twitter', 'user-card__contact__icon' ) }}
+                    <span class="user-card__twitter__handle user-card__contact__text">
+                        @{{ twitter_handle }}
+                    </span>
+                </a>
+                {% endspaceless %}
+            {% endif %}
+
+            {% if instagram_handle %}
+                {% set instagram_url = 'https://instagram.com/' ~ instagram_handle %}
+                {% spaceless %}
+                <a href="{{ instagram_url|esc_url }}"
+                    class="user-card__instagram user-card__contact__item"
+                    data-ga-category="User"
+                    data-ga-label="Instagram|@{{ instagram_handle|esc_attr }}|{{ name|esc_attr }}"
+                >
+                    {{ ped_icon( 'instagram', 'user-card__contact__icon' ) }}
+                    <span class="user-card__instagram__handle user-card__contact__text">
+                        @{{ instagram_handle }}
+                    </span>
+                </a>
+                {% endspaceless %}
+            {% endif %}
+
+            {% if phone_number %}
+                {% spaceless %}
+                <a href="tel:+1-{{ phone_number }}"
+                    class="user-card__phone-number user-card__contact__item"
+                    data-ga-category="User"
+                    data-ga-label="Phone|{{ phone_number|esc_attr }}|{{ name|esc_attr }}"
+                >
+                    {{ ped_icon( 'phone-square', 'user-card__contact__icon' ) }}
+                    <span class="user-card__contact__text">{{ phone_number_parens }}</span>
+                </a>
+                {% endspaceless %}
+            {% endif %}
+        </div>
+
+        {% if show_bio and bio %}
+        <p class="user-card__bio" itemprop="description">
+            {{ bio }}
+        </p>
+        {% endif %}
+
+        {% if stream %}
+            <section class="stream--author stream">
+                <header class="stream__header">
+                    <h1 class="stream__header__title">Recent Articles</h1>
+                    {{ upper_pagination }}
+                    <hr />
+                </header>
+
+                <div class="stream__items">
+                    {{ stream }}
+                </div>
+
+                {% if show_closure_rule %}
+                <footer class="hr--closure  hr"></footer>
+                {% endif %}
+            </section>
+
+            {{ pagination }}
+        {% endif %}
+
+    </div>
+
+</section>

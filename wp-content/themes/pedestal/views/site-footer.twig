@@ -2,18 +2,7 @@
 
 {% macro link( title, link ) %}
 {% if title == 'Search' %}
-    <li>
-        <a href="{{ link|esc_url }}" data-ga-category="Footer Links" data-ga-label="{{ title|esc_attr }}">
-            <label for="the-search-field"
-                class="js-sitewide-search"
-                tabindex="0"
-                data-ga-category="Search Link - Footer"
-                data-ga-label="Search"
-            >
-                {{ title }}
-            </label>
-        </a>
-    </li>
+    {% include 'partials/site-footer-search-link.twig' ignore missing %}
 {% else %}
     <li>
         <a href="{{ link|esc_url }}" data-ga-category="Footer Links" data-ga-label="{{ title|esc_attr }}">
@@ -29,44 +18,26 @@
             <ul class="site-footer__social">
                 {% set gaCategorySocial = 'Social Icon - Footer' %}
 
+                {% for item in footer_social_icons %}
                 <li class="site-footer__social__item">
                     <a
-                        href="{{ site.social.instagram_url|esc_url }}"
+                        href="{{ item.url|esc_url }}"
                         target="_blank"
-                        class="site-footer__social__item__link"
-                        data-ga-category="{{ gaCategorySocial|esc_attr }}"
-                        data-ga-label="Instagram"
+                        class="site-footer__social__link"
+                        data-ga-category="Social Icon - Footer"
+                        data-ga-label="{{ item.ga_label }}"
                     >
-                        {{ ped_icon('instagram') }}
+                        {{ ped_icon( item.icon ) }}
+                        <span class="invisible">{{ item.sr_label }}</span>
                     </a>
                 </li>
-                <li class="site-footer__social__item">
-                    <a
-                        href="{{ site.social.twitter_url|esc_url }}"
-                        target="_blank"
-                        class="site-footer__social__item__link"
-                        data-ga-category="{{ gaCategorySocial|esc_attr }}"
-                        data-ga-label="Twitter"
-                    >
-                        {{ ped_icon('twitter') }}
-                    </a>
-                </li>
-                <li class="site-footer__social__item">
-                    <a
-                        href="{{ site.social.facebook_url|esc_url }}"
-                        target="_blank"
-                        class="site-footer__social__item__link"
-                        data-ga-category="{{ gaCategorySocial|esc_attr }}"
-                        data-ga-label="Facebook"
-                    >
-                        {{ ped_icon('facebook') }}
-                    </a>
-                </li>
+                {% endfor %}
+
             </ul>
 
             {% spaceless %}
             <ul class="site-footer__links">
-                {% for title, link in menu %}
+                {% for title, link in footer_menu %}
                 {{ footer_macros.link( title, link ) }}
                 {% endfor %}
             </ul>
@@ -78,7 +49,7 @@
         <div class="row">
             <div class="columns small-12">
                 <span class="site-footer__newsroom">
-                    {{ ped_logo( 'logo-icon-white', 'site-footer__logo' ) }}
+                    {{ ped_logo( 'logo-icon', 'logo--icon--light site-footer__logo' ) }}
                     {{ site.name }} is a <a href="https://spiritedmedia.com/">Spirited Newsroom</a>
                 </span>
                 <span class="site-footer__copyright">{{ copyright_text }}</span>

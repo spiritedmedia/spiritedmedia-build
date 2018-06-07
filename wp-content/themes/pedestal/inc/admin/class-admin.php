@@ -55,7 +55,6 @@ class Admin {
         // Needs to happen after post types are registered
         add_action( 'init', [ $this, 'action_init_after_post_types_registered' ], 11 );
         add_action( 'admin_enqueue_scripts', [ $this, 'action_admin_enqueue_scripts' ], 11 );
-        add_action( 'admin_head', [ $this, 'action_admin_head' ] );
         add_action( 'admin_menu', [ $this, 'action_admin_menu_late' ], 100 );
 
         add_action( 'fm_user', [ $this, 'action_user_fields' ] );
@@ -185,12 +184,14 @@ class Admin {
         } );
 
         add_filter( 'user_contactmethods', function( $methods ) {
+            $methods['phone_number'] = esc_html__( 'Phone Number', 'pedestal' );
             // If the User's public email address needs to be different than the
             // address registered to their account, then this field can be used
             // to override.
             $methods['public_email'] = esc_html__( 'Public Email', 'pedestal' );
             $methods['twitter_username'] = esc_html__( 'Twitter Username', 'pedestal' );
             $methods['facebook_profile'] = esc_html__( 'Facebook Profile', 'pedestal' );
+            $methods['instagram_username'] = esc_html__( 'Instagram Username', 'pedestal' );
             return $methods;
         });
 
@@ -298,38 +299,6 @@ class Admin {
         $this->register_post_homepage_settings_fields();
         $this->register_distribution_fields();
         $this->register_spotlight_fields();
-    }
-
-    /**
-     * What to do in the admin head
-     */
-    public function action_admin_head() {
-        global $wp_meta_boxes;
-
-        $screen = get_current_screen();
-        if ( 'nav-menus' == $screen->id ) {
-            $valid_meta_boxes = [
-                'add-page',
-                'add-custom-links',
-                'add-post-type-pedestal_story',
-            ];
-
-            foreach ( $wp_meta_boxes['nav-menus']['side']['core'] as $key => $data ) {
-                if ( ! in_array( $key, $valid_meta_boxes ) ) {
-                    unset( $wp_meta_boxes['nav-menus']['side']['core'][ $key ] );
-                }
-            }
-
-            foreach ( $wp_meta_boxes['nav-menus']['side']['default'] as $key => $data ) {
-                if ( ! in_array( $key, $valid_meta_boxes ) ) {
-                    unset( $wp_meta_boxes['nav-menus']['side']['default'][ $key ] );
-                }
-            }
-
-            add_filter( 'hidden_meta_boxes', '__return_empty_array' );
-
-        }
-
     }
 
     /**
@@ -582,12 +551,15 @@ class Admin {
 
     /**
      * Set up TinyMCE
+     *
+     * @link https://developer.wordpress.org/reference/hooks/tiny_mce_before_init/
+     * @param array $settings An array with TinyMCE config
      */
-    public function filter_tiny_mce_before_init( $arr ) {
+    public function filter_tiny_mce_before_init( $settings ) {
         $post_id = get_queried_object_id();
         if ( 'pedestal_newsletter' !== get_post_type( $post_id ) ) {
             // Limit suggested formats
-            $arr['block_formats'] = 'Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3';
+            $settings['block_formats'] = 'Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3';
         }
 
         // Set-up custom CSS classes to add to the Formats dropwdown
@@ -598,8 +570,12 @@ class Admin {
                 'classes' => 'u-text-color-primary',
             ],
         ];
-        $arr['style_formats'] = json_encode( $style_formats );
-        return $arr;
+        $settings['style_formats'] = json_encode( $style_formats );
+
+        // Add classes to the editor body element
+        $settings['body_class'] .= ' s-content';
+
+        return $settings;
     }
 
     /**

@@ -1,24 +1,299 @@
-// ==========================================================================
-// The Incline // Components // NEWSLETTER SIGNUP
-// ==========================================================================
+.signup-email {
+  .c-main__footer & {
+    margin-bottom: rem( 32px );
+  }
+}
+
+.signup-email__form {
+  padding: rem( 16px );
+  // Set this as the initial text alignment to keep the
+  // email input and submit button aligned center
+  text-align: center;
+}
+
+.signup-email__title,
+.signup-email__icon,
+.signup-email__input-group,
+.signup-email__btn {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.signup-email__title,
+.signup-email__subtitle {
+  font-size: rem( 16px );
+  line-height: 1.25;
+}
+
+.signup-email__icon {
+  color: $white;
+  font-size: rem( 48px );
+  line-height: 0;
+  margin-bottom: rem( 8px );
+}
+
+.signup-email__subtitle {
+  text-align: left;
+}
+
+// stylelint-disable selector-max-type
+.signup-email__details,
+.signup-email__success-message__details p {
+  margin-bottom: rem( 8px );
+  text-align: left;
+}
+// stylelint-enable selector-max-type
+
+// stylelint-disable selector-max-type
+.signup-email__details {
+  font-size: rem( 14px );
+  list-style-position: inside;
+
+  li {
+    margin-bottom: 0;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+}
+// stylelint-enable selector-max-type
+
+.signup-email__input-group,
+.signup-email__email-input {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.signup-email__input-group {
+  margin-top: rem( 16px );
+  text-align: center;
+}
+
+.signup-email__email-input {
+  width: 100%;
+  text-align: center;
+
+  // Hide placeholder text on focus
+  &:focus::placeholder {
+    color: transparent;
+  }
+}
+
+.signup-email__btn {
+  font-weight: 700;
+  text-transform: none;
+}
+
+// stylelint-disable-next-line selector-max-type
+.signup-email__success-message p {
+  line-height: 1.4;
+}
+
+.signup-email__help-text {
+  text-align: center;
+}
 
 
-.signup-email--daily:not( .modal__content ) {
-  @include angle-edge(
-    $angle: 1,
-    $angle-position-y: top
-  );
-
-  margin-top: rem( 48px );
-
-  @media #{$large-up} {
-    @include angle-edge(
-      $angle: 0.5,
-      $angle-position-y: top
-    );
+@media #{$small-only} {
+  .signup-email__details {
+    .c-main__footer &,
+    .widget & {
+      @include invisible;
+    }
   }
 
+  .signup-email__latest--standalone {
+    .widget &,
+    .c-main__footer & {
+      display: block;
+    }
+  }
+}
+
+
+@media ( min-width: em( 420px ) ) {
+  .signup-email__input-group,
+  .signup-email__btn {
+    width: 80%;
+  }
+}
+
+
+@media ( min-width: em( 520px ) ) {
+  .signup-email__input-group,
+  .signup-email__btn {
+    width: 70%;
+  }
+}
+
+
+@media #{$medium-up} {
   .signup-email__form {
-    padding-top: rem( 8px );
+    text-align: left;
+  }
+
+  .signup-email__header {
+    .signup-email--daily & {
+      text-align: left;
+    }
+  }
+
+  .signup-email__icon,
+  .signup-email__title {
+    width: auto;
+    margin-right: rem( 8px );
+  }
+
+  .signup-email__title {
+    // stylelint-disable-next-line selector-max-type
+    br {
+      display: none;
+    }
+  }
+
+  .signup-email__input-group,
+  .signup-email__btn {
+    width: 45%;
+    text-align: center;
+  }
+
+  .signup-email__input-group {
+    margin-right: 1%;
+    margin-top: 0;
+  }
+}
+
+
+@media #{$large-up} {
+  .signup-email__header {
+    .widget & {
+      text-align: center;
+    }
+  }
+
+  .signup-email__icon,
+  .signup-email__title {
+    .widget & {
+      width: 100%;
+      margin-right: 0;
+
+      // stylelint-disable-next-line selector-max-type
+      br { display: block; }
+    }
+  }
+
+  .signup-email__input-group,
+  .signup-email__btn {
+    .widget & {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+
+//
+// Daily Newsletter + Breaking News Signup
+// ==========================================================================
+
+
+.signup-email--daily {
+  background-image: linear-gradient( $elektroid-yellow, $white );
+  border-bottom: 0;
+
+  .signup-email__header,
+  .signup-email__title,
+  .signup-email__subtitle {
+    margin-bottom: rem( 12px );
+  }
+
+  .signup-email__latest--standalone {
+    display: none;
+  }
+
+  &:not( .signup-email--modal ) {
+    @include angle-edge(
+      $angle: 1,
+      $angle-position-y: top
+    );
+
+    margin-top: rem( 48px );
+    background-image: linear-gradient( $elektroid-yellow, $white );
+    border-bottom: 0;
+
+    .signup-email__latest--standalone {
+      display: none;
+    }
+
+    @media #{$large-up} {
+      @include angle-edge(
+        $angle: 0.5,
+        $angle-position-y: top
+      );
+    }
+
+    .signup-email__form {
+      padding-top: rem( 8px );
+    }
+  }
+} // end .signup-email--daily
+
+
+//
+// Follow Cluster Signup
+// ==========================================================================
+
+.signup-email--cluster {
+  background-color: $grey-95;
+  margin-bottom: rem( 16px );
+
+  .signup-email__form {
+    padding: rem( 32px );
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+
+  @media #{$medium-up} {
+    .signup-email__form {
+      text-align: center;
+    }
+
+    .signup-email__header,
+    .signup-email__title,
+    .signup-email__subtitle {
+      margin-bottom: rem( 8px );
+    }
+
+    .subscription-confirmation-page & {
+      @include explode-component( $inner-selector: '.signup-email__form' );
+    }
+  }
+
+
+  @media #{$medium-down} {
+    @include explode-component( $inner-selector: '.signup-email__form' );
+  }
+
+
+  @media #{$large-up} {
+    @include explode-component( $side: 'left', $inner-selector: '.signup-email__form' );
+  }
+} // end .signup-email--cluster
+
+
+//
+// Email signup in modal
+// ==========================================================================
+
+.signup-email--modal {
+  display: none;
+
+  .modal__content & {
+    display: block;
   }
 }

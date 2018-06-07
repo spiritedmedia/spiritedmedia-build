@@ -1,0 +1,19 @@
+{
+    "name": "Denverite",
+    "short_name": "Denverite",
+    "icons": [
+        {
+            "src": "/wp-content/themes/denverite/assets/images/favicons/dist/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/wp-content/themes/denverite/assets/images/favicons/dist/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#210c42",
+    "background_color": "#210c42",
+    "display": "standalone"
+}

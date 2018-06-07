@@ -77,9 +77,11 @@
 .c-search__field {
   height: auto;
   margin-bottom: rem( 16px );
+  width: 100%;
   box-shadow: none;
   border: 0;
   border-bottom: 1px solid $grey-80;
+  border-radius: 0;
   padding: rem( 8px );
   padding-left: rem( 40 ); // input icon width
   font-size: $h4-font-size;

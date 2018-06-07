@@ -21,6 +21,7 @@ $share-button-gutter: rem( 4px );
   background-color: $white;
   margin-top: rem( 32px );
   margin-bottom: rem( 32px );
+  font-family: $font-family-sans-serif;
 
   .has-sticky-share-buttons & {
     width: 100%;

@@ -3,7 +3,7 @@
 // ==========================================================================
 
 
-
+@import 'colors';
 
 
 //
@@ -25,68 +25,33 @@ $anchor-text-decoration-hover: none;
 // Colors / Opacity
 // ==========================================================================
 
-
-$black                   : #000000;
-$white                   : #ffffff;
-
-$grey-95                 : #f2f2f2;
-$grey-90                 : #e6e6e6; // only used as top bar background
-$grey-80                 : #cccccc; //
-$grey-70                 : #b3b3b3; //
-$grey-62                 : #9e9e9e; //
-$grey-46                 : #767676; // minimum darkness for text
-$grey-40                 : #666666; // only used as link hover color
-$grey-25                 : #3f3f3f; //
-
-$sea-foam-green          : #e5f2f6;
-$prussian-blue           : #122b3a;
-$dark-prussian-blue      : #122027;
-$purple-phase            : #bf7dbb;
-$blood-orange            : #db7053;
-$yet-another-red         : #c73e1d; // Red call to action
-$absinthe                : #c1a540;
-$mustard-gas             : #b26536;
-$elektroid-yellow        : #fcd651;
-$another-lightish-color  : #eae6e1;
-$spiritedmedia-brand     : #333333;
-
-// These colors are all too similar...
-$latte                   : #e6e6de;
-$truth-serum             : #efeeec;
-$another-lightish-color  : #eae6e1;
-$another-another-lightish-color: #ebebeb;
-
-// Brand colors
-$twitter-blue            : #4fa8e0;
-$facebook-blue           : #3b5998;
-
-
 // We need to set these two commonly-used defaults which should be overridden in
 // the child themes
-$primary-color           : $spiritedmedia-brand !default;
-$secondary-color         : lighten( $spiritedmedia-brand, 10% ) !default;
+$primary-color:           #333333 !default;
+$secondary-color:         lighten( #333333, 10% ) !default;
 
-$success-color           : #43ac6a; // From Foundation
-$alert-color             : $yet-another-red;
+$accent-color:            $elektroid-yellow !default;
+$success-color:           #43ac6a; // From Foundation
+$alert-color:             $yet-another-red;
 
-$body-bg                 : $white !default;
-$body-font-color         : $grey-25;
-$c-panel-bg              : $white !default;
-$anchor-font-color       : $primary-color;
-$anchor-font-color-hover : $black !default;
-$border-std-color        : $grey-90 !default;
-$header-font-color       : $body-font-color !default;
+$body-bg:                 $white !default;
+$body-font-color:         $grey-25 !default;
+$c-panel-bg:              $white !default;
+$anchor-font-color:       $primary-color;
+$anchor-font-color-hover: $black !default;
+$border-std-color:        $grey-90 !default;
+$header-font-color:       $body-font-color !default;
 
 // WCAG 2.0 guidelines require a text contrast ratio of at least 4.5:1 (#767676)
 // for AA and 7:1 for AAA (#595959).
-// https://www.w3.org/TR/WCAG20/#visual-audio-contrast
-$dimmed-text-color       : $grey-46 !default;
+// https:                 //www.w3.org/TR/WCAG20/#visual-audio-contrast
+$dimmed-text-color:       $grey-46 !default;
 
 // User role colors
-$user-staff-color        : $primary-color !default;
-$user-contributor-color  : $mustard-gas !default;
+$user-staff-color:        $primary-color !default;
+$user-contributor-color:  $mustard-gas !default;
 
-$loading-default-opacity : 0.25;
+$loading-default-opacity: 0.25;
 
 
 

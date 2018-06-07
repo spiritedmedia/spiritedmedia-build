@@ -8,7 +8,7 @@
 <body style="background-color: #fff;">
 
 <div class="content-wrapper">
-<main class="c-main columns s-post-content">
+<main class="c-main columns s-content">
 
 {% markdown %}
 
@@ -25,18 +25,22 @@ address the issue.
 
 ## Core Components
 
-- [Buttons](buttons.php)
-- [Forms](forms.php)
+- [Buttons](buttons.php) / [Buttons V2](buttons-v2.php)
+- [Forms](forms.php) / [Forms V2](forms-v2.php)
+- [Headers](headers.php)
 - [Horizontal Rules](horizontal-rules.php)
 - [Icons](icons.php)
 - [Input Groups (Form Input + Button)](input-groups.php)
+- [Modals](modals.php)
 - [Pagination](pagination.php)
 - [Post Content: Common HTML](common-html.php)
 - [Post Content: Post Elements](post-elements.php)
 - [Post Content: Images](images.php)
 - [Post Headers](post-headers.php)
+- [Single Entity: Cluster List](single-entity-cluster-list.php)
 - [Stream Items](stream-items.php)
 - [Tables](tables.php)
+- [User Card / User Grid](user-card.php)
 
 Also present on each page are:
 
@@ -69,11 +73,7 @@ the sites.
 - Recent content widget
 - Slots / sponsored posts / sponsored stream items / sponsored newsletters /
   sponsored events
-- Author profile page + stream
 - Recent video widget
-- User card (deprecated) — similar to author profiles, appears below an
-  article's content for Featured Contributors – we no longer use Featured
-  Contributors so this component is no longer visible on new posts
 
 
 {% endmarkdown %}

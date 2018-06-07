@@ -5,10 +5,7 @@
 // ==========================================================================
 
 .c-footnotes {
-  &__item {
-    font-size: rem( 14px );
-    font-weight: 300;
-  }
+  &__item { @include de-emphasized; }
 
   &__return {
     &__icon {

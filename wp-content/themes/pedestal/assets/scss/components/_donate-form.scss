@@ -1,8 +1,3 @@
-// ==========================================================================
-// Pedestal // Components // DONATE FORM
-// ==========================================================================
-
-
 .donate-form {
   background-color: $primary-color;
   color: text-contrast();
@@ -19,15 +14,30 @@
   border: 0;
 }
 
-.donate-form__amount,
-.donate-form__frequency {
-  float: left;
+
+@media #{$small-only} {
+  .donate-form {
+    @include explode-component( $inner-selector: '&__inner-wrap' );
+  }
+}
+
+
+@media #{$medium-up} {
+  .donate-form__inner,
+  .donate-form__fields {
+    max-width: rem( 500px );
+  }
+
+  .donate-form__fields {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 
 //
 // Amount Field + Label
-//
+// ==========================================================================
 // 1. Hide spin box from number input
 // 2. Handle prefix+input sizing (simplified from `.input-group`)
 // 3. Handle inconsistent input sizing across browsers
@@ -36,24 +46,17 @@
   margin-bottom: rem( 16px );
 }
 
-.donate-form__amount__label {
+.donate-form__amount__label,
+.donate-form__frequency-option .form-radio__label {
   color: text-contrast();
   font-size: rem( 16px );
   font-weight: normal;
 }
 
-.donate-form__amount__input-group,
-.donate-form__amount__prefix,
-.donate-form__amount__input {
-  /* 2 */
-  display: flex;
-  position: relative;
-}
-
 .donate-form__amount__input-group {
   width: rem( 160px );
+  display: block;
   padding: 0; /* 3 */
-  border: rem( 1px ) solid $grey-25;
   background-color: $white;
 
   @include firefox-only {
@@ -63,52 +66,107 @@
 
 .donate-form__amount__prefix,
 .donate-form__amount__input {
-  align-items: center; /* 2 */
   font-size: rem( 16px );
   line-height: 2.5;
 }
 
-.donate-form__amount__prefix {
-  padding-left: rem( 5px ); /* 3 */
-  color: $primary-color;
-
-  @include firefox-only {
-    padding-left: 0; /* 3 */
-  }
-
-  @include ie-only {
-    height: rem( 32px ); /* 3 */
-  }
-}
-
 .donate-form__amount__input {
-  flex: 1 1 auto; /* 2 */
-  width: 1%; /* 2 */
-  max-width: 75%;
-  position: relative;
-  padding: 0;
-
-  @include ie-only {
-    height: rem( 40px ); /* 3 */
-  }
-
+  max-width: 100%;
   border: 0;
-  background-color: #ffffff;
-  color: $body-font-color;
+  background: $white;
   appearance: textfield; /* 1 */
   font-style: italic;
+  color: $body-font-color;
 
   /* 1 */
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     appearance: none;
   }
+
+  @include ie-only {
+    height: rem( 40px ); /* 3 */
+  }
+}
+
+
+@media #{$medium-up} {
+  .donate-form__amount {
+    float: none;
+    margin-right: rem( 32px );
+  }
+}
+
+
+@if sm-theme-supports( formsV2 ) {
+
+  .donate-form__amount__input-group {
+    margin-top: rem( 4px );
+  }
+
+  .donate-form__amount__prefix {
+    @include ie-only {
+      height: rem( 24px ); /* 3 */
+    }
+  }
+
+} @else {
+
+  //
+  // Sites supporting forms v1 can't use `.input-group-v2` so we need to handle
+  // things differently...
+  //
+
+  .donate-form__amount__input-group,
+  .donate-form__amount__prefix,
+  .donate-form__amount__input {
+    /* 2 */
+    display: flex;
+    position: relative;
+  }
+
+  .donate-form__amount__input-group {
+    border: rem( 1px ) solid $grey-25;
+  }
+
+  .donate-form__amount__prefix,
+  .donate-form__amount__input {
+    align-items: center; /* 2 */
+  }
+
+  .donate-form__amount__prefix {
+    padding-left: rem( 5px ); /* 3 */
+    color: $primary-color;
+
+    @include firefox-only {
+      padding-left: 0; /* 3 */
+    }
+
+    @include ie-only {
+      height: rem( 32px ); /* 3 */
+    }
+  }
+
+  .donate-form__amount__input {
+    flex: 1 1 auto; /* 2 */
+    width: 1%; /* 2 */
+    position: relative;
+    padding: 0;
+
+    &:focus {
+      // Disable the outline because the input group styles here force the
+      // outline to cut off just before the icon. It's better to disable the
+      // outline entirely until we migrate everything to use the newer input
+      // group styles.
+      outline: none;
+    }
+  }
 }
 
 
 //
 // Donation frequency radio inputs
-//
+// ==========================================================================
 
 .donate-form__frequency {
   border: 0;
@@ -134,7 +192,7 @@
 
 //
 // Submit wrapper + button
-//
+// ==========================================================================
 
 .donate-form__submit {
   max-width: rem( 275px );
@@ -149,7 +207,7 @@
 
 //
 // Secured by Stripe
-//
+// ==========================================================================
 
 .donate-form__secured-by {
   font-size: rem( 16px );
@@ -186,30 +244,5 @@
   svg {
     height: rem( 24px );
     width: rem( 50px );
-  }
-}
-
-
-@media #{$small-only} {
-  .donate-form {
-    @include explode-component( $inner-selector: '&__inner-wrap' );
-  }
-}
-
-
-@media #{$medium-up} {
-  .donate-form__inner,
-  .donate-form__fields {
-    max-width: rem( 500px );
-  }
-
-  .donate-form__fields {
-    display: flex;
-    justify-content: center;
-  }
-
-  .donate-form__amount {
-    float: none;
-    margin-right: rem( 32px );
   }
 }

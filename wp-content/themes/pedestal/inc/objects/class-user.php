@@ -249,6 +249,33 @@ class User extends Author {
     }
 
     /**
+     * Get the Instagram username for the user
+     *
+     * @return string
+     */
+    public function get_instagram_username() {
+        return ltrim( $this->get_meta( 'instagram_username' ), '@' );
+    }
+
+    /**
+     * Get the phone number for the user
+     *
+     * The value of `phone_number` should include the 3-digit area code and the
+     * 7-digit number. The value of `phone_number` can include punctuation or
+     * omit it but that doesn't matter because the number will be formatted when
+     * calling this method.
+     *
+     * @link https://stackoverflow.com/a/10741461
+     * @param boolean $parens [false] Format with parentheses around the area code?
+     * @return string Phone number in `123-456-7890` or `(123) 456-7890` format
+     */
+    public function get_phone_number( $parens = false ) {
+        $number = $this->get_meta( 'phone_number' );
+        $replace = $parens ? '($1) $2-$3' : '$1-$2-$3';
+        return preg_replace( '~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', $replace, $number );
+    }
+
+    /**
      * Get the user's role for use in the permalink
      *
      * @return string

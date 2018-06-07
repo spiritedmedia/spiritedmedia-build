@@ -1,0 +1,33 @@
+{% extends 'layouts/layout--content.twig' %}
+
+{% import _self as nav_macros %}
+
+{% macro li( items ) %}
+    {% for class, item in items %}
+    <li class="navigation-fallback__item">
+        <a href="{{ item.url|esc_url }}" class="navigation-fallback__link {{ class|esc_attr }}">
+            {% if item.icon %}
+                {{ ped_icon( item.icon, 'navigation-fallback__icon' ) }}
+            {% endif %}
+
+            {{ item.title }}
+        </a>
+    </li>
+    {% endfor %}
+{% endmacro %}
+
+{% block content %}
+
+{% if primary_nav %}
+<ul>
+    {{ nav_macros.li( primary_nav ) }}
+</ul>
+{% endif %}
+
+{% if secondary_nav %}
+<ul>
+    {{ nav_macros.li( secondary_nav ) }}
+</ul>
+{% endif %}
+
+{% endblock %}

@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // The Incline // Editor Style
  *
- * Version: 6.13.8
+ * Version: 7.0.0
  *
  * Copyright ( c ) 2018 Spirited Media
  *
@@ -16,11 +16,11 @@ $site-theme-name: 'the-incline';
 
 // Set up the child theme functions and variables
 @import 'setup-child';
-@import 'base/global/settings';
+@import 'base/settings';
 
 // Set up Pedestal editor styles
 @import 'pedestal-editor-style';
 
 // Child theme editor styles
-@import 'components/buttons';
-@import 'scopes/post-content';
+@import 'base/buttons';
+@import 'scopes/content';

@@ -1,69 +1,13 @@
-{% if item.is_entity and item.has_story %}
-    {% set cluster = item.get_primary_story %}
-{% elseif item.is_cluster %}
-    {% set cluster = item %}
-{% endif %}
+{% extends 'forms/signup-cluster.twig' %}
 
-{% set id_email_input = 'signup-email-cluster-email-input-' ~ now() %}
-{% set subscription_title = subscription_title|default( cluster.get_the_title ) %}
-{% set cluster_id = cluster_id|default( cluster.get_id ) %}
-{% set cluster_group_id = cluster_group_id|default( cluster.get_mailchimp_group_id ) %}
-{% set cluster_group_category = cluster_group_category|default( cluster.get_mailchimp_group_category ) %}
 
-{% set gaLabel = 'Follow Cluster|' ~ cluster.get_type_name ~ '|' ~ subscription_title %}
-{% if gaLocation %}
-{% set gaLabel = gaLabel ~ ' | ' ~ gaLocation %}
-{% endif %}
+{% block title %}
+Get email notifications whenever we write about <strong>{{ subscription_title }}</strong>
+{% endblock title %}
 
-{% if ( cluster or is_cluster ) and cluster_group_id %}
 
-<form method="POST" action="{{ site.url|esc_url }}/subscribe-to-email-group/"
-    class="signup-email__form js-signup-email-form"
-    data-ga-category="Submitted Form"
-    data-ga-label="{{ gaLabel|esc_attr }}"
->
-
-    <div class="form-group js-form-fields">
-        <div class="signup-email__header">
-            <div class="signup-email__title">
-                Get email notifications whenever we write about <strong>{{ subscription_title }}</strong>
-            </div>
-        </div>
-
-        <label class="invisible" for="{{ id_email_input|esc_attr }}">
-            Email Address
-        </label>
-
-        <input type="email"
-            id="{{ id_email_input|esc_attr }}"
-            class="signup-email__email-input form-input js-form-input js-email-input"
-            name="email_address"
-            placeholder="type your email address"
-            required
-        />
-
-        <input type="hidden" name="cluster-id" value="{{ cluster_id|esc_attr }}" />
-        <input type="hidden" name="group-ids[]" value="{{ cluster_group_id|esc_attr }}" />
-        <input type="hidden" name="group-category" value="{{ cluster_group_category|esc_attr }}" />
-
-        {% include 'partials/email-forms/form-honeypot.twig' %}
-
-        <div class="js-fail-message invalid-feedback"></div>
-
-        <button class="signup-email__btn btn btn--lg btn--achtung btn--full-width js-form-submit" type="submit">
-            {% include 'partials/email-forms/form-submit-signup-inner.twig' with {text: 'Follow This'} only %}
-        </button>
-
-        {% if help_text %}
-        <p class="signup-email__help-text">{{ help_text }}</p>
-        {% endif %}
-    </div>
-
-    <div class="signup-email__success-message success-message js-success-message">
-        <div class="signup-email__success-message__details">
-            <p>Thank you. You can unsubscribe anytime from a link at the bottom of every email.</p>
-        </div>
-    </div>
-</form>
-
-{% endif %}
+{% block submit_button %}
+<button class="signup-email__btn btn--lg btn--achtung btn--full-width js-form-submit" type="submit">
+    {% include 'partials/email-forms/form-submit-signup-inner.twig' with {text: 'Follow This'} only %}
+</button>
+{% endblock submit_button %}

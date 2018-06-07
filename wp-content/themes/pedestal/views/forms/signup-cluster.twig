@@ -1,0 +1,74 @@
+{% if item.is_entity and item.has_story %}
+    {% set cluster = item.get_primary_story %}
+{% elseif item.is_cluster %}
+    {% set cluster = item %}
+{% endif %}
+
+{% set id_email_input = 'signup-email-cluster-email-input-' ~ now() %}
+{% set subscription_title = subscription_title|default( cluster.get_the_title ) %}
+
+{% set email_input %}
+<input type="email"
+    id="{{ id_email_input|esc_attr }}"
+    class="signup-email__email-input input-group-v2__input form-input js-email-input"
+    name="email_address"
+    placeholder="enter your email address"
+    required
+/>
+{% endset %}
+
+{% set gaLabel = 'Follow Cluster|' ~ cluster.get_type_name ~ '|' ~ subscription_title %}
+{% if gaLocation %}
+{% set gaLabel = gaLabel ~ ' | ' ~ gaLocation %}
+{% endif %}
+
+<form method="POST" action="{{ site.url|esc_url }}/subscribe-to-email-group/"
+    class="signup-email__form js-signup-email-form"
+    data-ga-category="Submitted Form"
+    data-ga-label="{{ gaLabel|esc_attr }}"
+>
+
+    <div class="form-group js-form-fields">
+        <div class="signup-email__header">
+            <div class="signup-email__title">
+                {% block title %}
+                {% endblock title %}
+            </div>
+        </div>
+
+        <label class="invisible" for="{{ id_email_input|esc_attr }}">
+            Email Address
+        </label>
+
+        {% block email_input %}
+        <div class="signup-email__input-group">
+            <label class="invisible" for="{{ id_email_input|esc_attr }}">
+                Email Address
+            </label>
+            {{ email_input }}
+        </div>
+        {% endblock email_input %}
+
+        <input type="hidden" name="cluster-id" value="{{ cluster_id|esc_attr }}" />
+        <input type="hidden" name="group-ids[]" value="{{ cluster_group_id|esc_attr }}" />
+        <input type="hidden" name="group-category" value="{{ cluster_group_category|esc_attr }}" />
+
+        {% include 'partials/email-forms/form-honeypot.twig' %}
+
+        <div class="js-fail-message invalid-feedback"></div>
+
+        {% block submit_button %}
+        {% endblock submit_button %}
+
+        {% if help_text %}
+        <p class="signup-email__help-text">{{ help_text }}</p>
+        {% endif %}
+    </div>
+
+    <div class="signup-email__success-message success-message js-success-message">
+        <div class="signup-email__success-message__details">
+            <p><strong>Thank you.</strong></p>
+            <p>You can unsubscribe anytime from a link at the bottom of every email.</p>
+        </div>
+    </div>
+</form>

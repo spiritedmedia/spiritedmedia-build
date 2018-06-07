@@ -1,25 +1,19 @@
-// ==========================================================================
-// Pedestal // Base // MAIN CONTENT
-//
-// Main encloses the majority of the view. It should always be applied to the
-// `main` element.
+// Main encloses the majority of the view. It should only be applied to the
+// `c-main` element.
 //
 // For styling purposes, consider it just a step more specific than the
 // body classes.
-// ==========================================================================
 
 
-/*main*/.c-main {
+.c-main {
   margin-top: $main-margin-top;
 }
-
 
 .c-main__content {
   @include clearfix;
 
   position: relative;
 }
-
 
 .c-main__header {
   margin-bottom: $main-header-margin-bottom;
@@ -29,22 +23,9 @@
   }
 }
 
-
-/**
- * Story Title
- */
-
-.c-main__overline {}
-
-
-/**
- * Title
- */
-
 .c-main__title {
-  @include h-size( 2 );
-
-  font-weight: 400;
+  font-size: $main-title-font-size;
+  font-weight: $main-title-font-weight;
 
   a {
     @include link-dark;
@@ -56,83 +37,12 @@
   margin-bottom: 0;
 }
 
-
-/**
- * Subtitle
- */
-
-.c-main__subtitle {
-  font-size: $h4-font-size;
-  font-weight: $main-subtitle-font-weight;
-  color: $dimmed-text-color;
+.c-main__description {
+  font-size: $main-description-font-size;
+  font-weight: $main-description-font-weight;
+  color: $main-description-text-color;
+  line-height: 1.33333;
 }
-
-
-/**
- * Data
- *
- * E.G. Tables and export for Events.
- */
-
-.c-main__data {}
-
-
-/**
- * Lead/Featured Image
- */
-
-.c-main__lead-img {}
-
-
-/**
- * Sponsor
- *
- * E.G. 'Powered by'
- */
-
-.c-main__sponsor {}
-
-
-/**
- * Content Meta
- */
-
-.c-main__meta {}
-
-
-/**
- * Excerpt
- */
-
-.c-main__excerpt {
-  color: $dimmed-text-color;
-}
-
-
-/**
- * Generic Heading
- */
-
-/*h**/.c-main__heading {}
-
-
-/**
- * Entity Container
- */
-
-.c-main__entities {}
-
-
-/**
- * Body Text
- */
-
-.c-main__body {}
-
-
-/**
- * Footer
- */
 
 .c-main__footer {
   margin-top: rem( 32px );
@@ -140,49 +50,32 @@
   .stream-item--sponsored {
     margin-bottom: $stream-item-spacing;
   }
+}
 
-  .signup-email {
-    margin-bottom: rem( 32px );
-  }
+// stylelint-disable selector-max-type
+.c-main__footnotes {
+  &,
+  p {
+    @include de-emphasized;
 
-  @media #{$small-only} {
-    .signup-email__details {
-      @include invisible;
+    @if $enable-italic-footnotes {
+      font-style: italic;
+      color: $dimmed-text-color;
+
+      // Since footnotes are already italic, when adding 'italics' to footnotes,
+      // they should be normal text
+      em,
+      i {
+        font-style: normal;
+      }
     }
-
-    .signup-email__latest--standalone {
-      display: block;
-    }
-  }
-
-  @media #{$medium-up} {
-    @include _signup-email-header-inline;
   }
 }
+// stylelint-enable selector-max-type
+
 
 @media print {
   .c-main__footer {
     display: none;
   }
 }
-
-
-/**
- * Footnote Text
- */
-
-// stylelint-disable selector-no-qualifying-type, selector-max-type
-/*aside*/.c-main__footnotes {
-  font-style: italic;
-  color: $dimmed-text-color;
-
-  &__list {}
-
-  // Since footnotes are already italic, when adding 'italics' to footnotes,
-  // they should be normal text
-  em,
-  i {
-    font-style: normal;
-  }
-}
-// stylelint-enable selector-no-qualifying-type, selector-max-type

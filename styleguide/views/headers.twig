@@ -1,0 +1,127 @@
+{% extends 'layouts/layout--content.twig' %}
+
+{% block head %}
+{# Custom styles for this page #}
+<style>
+    .site-header,
+    .site-header-v2 {
+        margin-bottom: 3.5em;
+    }
+</style>
+{% endblock %}
+
+{% block after_header %}
+    <header class="site-header-v2" role="banner">
+        <div class="site-header-v2__inner">
+            <a
+                href="{{ site.url|esc_url }}"
+                class="site-header-v2__logo-link"
+                rel="home"
+                data-ga-category="Site Logo|Header"
+                data-ga-label=""
+            >
+                {{ ped_logo( 'logo', 'site-header-v2__logo' ) }}
+                <span class="invisible">Home</span>
+            </a>
+
+            <a
+                href="#/navigation/"
+                class="site-header-v2__menu-trigger js-modal-trigger"
+                data-modal-target="#site-header-v2-modal-menu"
+            >
+                {{ ped_icon( 'bars', 'site-header-v2__hamburger' ) }}
+                <span class="invisible">Menu</span>
+            </a>
+
+            <section
+                id="site-header-v2-modal-menu"
+                class="site-header-v2__modal-menu"
+            >
+                <div class="site-header-v2__primary-nav-outer">
+                    <nav class="site-header-v2__primary-nav">
+                        <ul class="site-header-v2__primary-nav-list">
+                            {% for class, item in primary_nav %}
+                            <li class="site-header-v2__primary-nav-item">
+                                <a href="#" class="site-header-v2__primary-nav-link">
+                                    <div class="site-header-v2__primary-nav-group">
+                                        {% if item.icon %}
+                                            {{ ped_icon( item.icon, 'site-header-v2__primary-nav-icon' ) }}
+                                        {% endif %}
+                                        <span class="site-header-v2__primary-nav-text site-header-v2__primary-nav-text--{{ class|esc_attr }}">
+                                            {{ item.label }}
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+
+                <nav class="site-header-v2__secondary-nav">
+                    <ul class="site-header-v2__secondary-nav-list">
+                        {% for class, item in secondary_nav %}
+                        <li class="site-header-v2__secondary-nav-item">
+                            <a href="#" class="site-header-v2__secondary-nav-link {{ class|esc_attr }}">
+                                <div class="site-header-v2__secondary-nav-group">
+                                    {% if item.icon %}
+                                        {{ ped_icon( item.icon, 'site-header-v2__secondary-nav-icon' ) }}
+                                    {% endif %}
+                                    <span class="site-header-v2__secondary-nav-text site-header-v2__primary-nav-text--{{ class|esc_attr }}">
+                                        {{ item.label }}
+                                    </span>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+
+                <div class="site-header-v2__marketing">
+                    <ul class="site-header-v2__social">
+                        {% set gaCategorySocial = 'Social Icon - Header' %}
+                        {% set socialIconClass = 'site-header-v2__social-icon' %}
+
+                        <li class="site-header-v2__social-item">
+                            <a
+                                href="{{ site.social.twitter_url|esc_url }}"
+                                target="_blank"
+                                class="site-header-v2__social-link"
+                                data-ga-category="{{ gaCategorySocial|esc_attr }}"
+                                data-ga-label="Twitter"
+                            >
+                                {{ ped_icon('twitter', socialIconClass) }}
+                            </a>
+                        </li>
+                        <li class="site-header-v2__social-item">
+                            <a
+                                href="{{ site.social.facebook_url|esc_url }}"
+                                target="_blank"
+                                class="site-header-v2__social-link"
+                                data-ga-category="{{ gaCategorySocial|esc_attr }}"
+                                data-ga-label="Facebook"
+                            >
+                                {{ ped_icon('facebook', socialIconClass) }}
+                            </a>
+                        </li>
+                        <li class="site-header-v2__social-item">
+                            <a
+                                href="{{ site.social.instagram_url|esc_url }}"
+                                target="_blank"
+                                class="site-header-v2__social-link"
+                                data-ga-category="{{ gaCategorySocial|esc_attr }}"
+                                data-ga-label="Instagram"
+                            >
+                                {{ ped_icon('instagram', socialIconClass) }}
+                            </a>
+                        </li>
+                    </ul>
+
+                    {% if site.branding.tagline %}
+                    <p class="site-header-v2__tagline">{{ site.branding.tagline }}</p>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+    </header>
+{% endblock %}

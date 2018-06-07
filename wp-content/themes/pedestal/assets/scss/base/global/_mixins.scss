@@ -78,11 +78,10 @@
 
 /// Darken some links arbitrarily
 @mixin link-dark {
-  color: $body-font-color;
-
+  &,
   &:hover,
   &:active {
-    color: $grey-40;
+    color: $body-font-color;
   }
 }
 
@@ -103,7 +102,7 @@
 
   @if $post-content {
     li::before {
-      // Must be !important to override `.s-post-content` styles
+      // Must be !important to override `.s-content` styles
       width: 0 !important;
       height: 0 !important;
     }

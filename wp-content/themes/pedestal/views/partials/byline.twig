@@ -1,0 +1,6 @@
+{% if by_author %}By{% endif %}
+{% if is_single and not is_cluster %}
+    {{ item.get_the_authors }}
+{% else %}
+    {{ item.get_the_authors_truncated }}
+{% endif %}

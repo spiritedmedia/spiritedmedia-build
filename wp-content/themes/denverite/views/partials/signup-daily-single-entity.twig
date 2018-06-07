@@ -1,0 +1,22 @@
+{% extends 'partials/signup-daily.twig' %}
+
+{% set latest_newsletter = false %}
+
+
+{% block icon %}
+{{ ped_icon( 'hand-spock' ) }}
+{% endblock icon %}
+
+
+{% block title 'Hi! You’re like us!' %}
+
+
+{% block details %}
+<p id="{{ id_description|esc_attr }}" class="signup-email__details">
+    Looks like you’re the type of person who reads to the ends of
+    articles! Well, <em>true believer</em>, you might really like our morning
+    newsletter. It’s quick, free and gets you up to speed on the
+    important and delightful things happening right here in Denver.
+</p>
+{% endblock details %}
+

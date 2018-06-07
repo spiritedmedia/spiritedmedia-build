@@ -3,25 +3,20 @@
 // ==========================================================================
 
 
-$footer-nav-bg: $grey-25;
-$footer-logo-size: rem( 32px );
-$footer-breakpoint: em( 840px );
-
-
 .site-footer {
   clear: both;
   margin-top: rem( 16px );
   border-top: rem( 1px ) solid $border-std-color;
-  border-bottom: rem( 5px ) solid $primary-color;
+  border-bottom: rem( 5px ) solid $site-footer-border-bottom-color;
 
-  @media ( min-width: $footer-breakpoint ) {
+  @media ( min-width: $site-footer-breakpoint ) {
     border: none;
   }
 }
 
 .site-footer__nav,
 .site-footer__colophon {
-  background-color: $footer-nav-bg;
+  background-color: $site-footer-nav-bg;
 }
 
 .site-footer__links,
@@ -34,7 +29,7 @@ $footer-breakpoint: em( 840px );
   // stylelint-enable selector-max-type
 }
 
-@media ( min-width: $footer-breakpoint ) {
+@media ( min-width: $site-footer-breakpoint ) {
   .site-footer__nav {
     padding-top: rem( 32px );
     padding-bottom: rem( 32px );
@@ -78,26 +73,28 @@ $footer-breakpoint: em( 840px );
 }
 
 .site-footer__social__item,
-.site-footer__social__item__link {
+.site-footer__social__link {
   align-items: center;
   display: inline-flex;
   justify-content: center;
 }
 
-.site-footer__social__item {
+.site-footer__social__item:not( :first-child ) {
   margin-left: $site-cta-icon-spacing * 2;
 }
 
-.site-footer__social__item__link {
-  background-color: $grey-70;
+.site-footer__social__link {
+  background-color: $site-footer-social-link-bg-color--bp-sm;
   border-radius: 50%;
   height: $icon-diameter;
   padding: 0;
   width: $icon-diameter;
 
   &,
-  &:hover {
-    color: $white;
+  &:hover,
+  &:active,
+  &:focus {
+    color: $site-footer-social-link-color--bp-sm;
   }
 }
 
@@ -109,7 +106,7 @@ $footer-breakpoint: em( 840px );
 }
 
 
-@media ( min-width: $footer-breakpoint ) {
+@media ( min-width: $site-footer-breakpoint ) {
   .site-footer__social {
     @include grid-column(
       $columns: 3,
@@ -117,14 +114,22 @@ $footer-breakpoint: em( 840px );
     );
 
     text-align: right;
-    background-color: $footer-nav-bg;
+    background-color: $site-footer-nav-bg;
     padding-top: 0;
     padding-bottom: 0;
+    // Override Foundation grid gutter to make icons fit
+    padding-left: 0;
   }
 
-  .site-footer__social__item__link {
+  .site-footer__social__link {
     background-color: $grey-95;
-    color: $footer-nav-bg;
+
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      color: $site-footer-nav-bg;
+    }
   }
 }
 
@@ -140,19 +145,17 @@ $footer-breakpoint: em( 840px );
 .site-footer__links {
   @include no-bullet;
   @include grid-column( 12 );
-  @media ( min-width: $footer-breakpoint ) {
-    @include grid-column(
-      $columns: 9,
-      $pull: 3
-    );
-  }
 
+  margin-bottom: 0;
   padding-top: rem( 20px );
-  padding-bottom: rem( 32px );
+  padding-bottom: rem( 24px );
   text-align: center;
   text-transform: uppercase;
-  font-weight: 700;
-  margin-bottom: 0;
+  font-family: $site-footer-links-font-family;
+  font-weight: $site-footer-links-font-weight;
+  font-size: $site-footer-links-font-size;
+  line-height: $site-footer-links-line-height;
+  letter-spacing: $site-footer-links-letter-spacing;
 
   li {
     display: inline-block;
@@ -162,7 +165,7 @@ $footer-breakpoint: em( 840px );
       content: '·';
       padding-left: rem( 4px );
       padding-right: rem( 4px );
-      color: $primary-color;
+      color: $site-footer-links-separator-color;
     }
 
     &:first-child {
@@ -179,11 +182,11 @@ $footer-breakpoint: em( 840px );
     }
 
     a {
-      color: $white;
-
+      &,
+      &:active,
       &:hover,
       &:focus {
-        color: $primary-color;
+        color: $grey-95;
       }
     }
   }
@@ -191,11 +194,17 @@ $footer-breakpoint: em( 840px );
   label {
     margin-bottom: 0;
     width: auto;
+    cursor: pointer;
   }
 }
 
-@media ( min-width: $footer-breakpoint ) {
+@media ( min-width: $site-footer-breakpoint ) {
   .site-footer__links {
+    @include grid-column(
+      $columns: 9,
+      $pull: 3
+    );
+
     text-align: left;
     padding-top: 0;
     padding-bottom: 0;
@@ -212,30 +221,26 @@ $footer-breakpoint: em( 840px );
 
 
 .site-footer__colophon {
-  text-align: center;
-  font-size: $small-font-size;
-  font-weight: 300;
   padding: 0;
   padding-bottom: rem( 16px );
+  text-align: center;
+  font-size: $site-footer-colophon-font-size;
+  font-weight: 300;
+  letter-spacing: $site-footer-colophon-letter-spacing;
 
   // stylelint-disable selector-max-type
   &,
-  a {
+  a,
+  a:hover,
+  a:active {
     color: $white;
   }
   // stylelint-enable selector-max-type
 
-  @media ( min-width: $footer-breakpoint ) {
+  @media ( min-width: $site-footer-breakpoint ) {
     text-align: left;
     padding-top: rem( 16px );
-    background-color: $primary-color;
-
-    // stylelint-disable selector-max-type
-    a:hover,
-    a:active {
-      color: $body-font-color;
-    }
-    // stylelint-enable selector-max-type
+    background-color: $site-footer-colophon-background-color;
 
     > .columns {
       padding-left: 0;
@@ -247,15 +252,18 @@ $footer-breakpoint: em( 840px );
 .site-footer__newsroom,
 .site-footer__copyright {
   display: block;
+  line-height: $site-footer-colophon-line-height;
 
-  @media ( min-width: $footer-breakpoint ) {
+  @media ( min-width: $site-footer-breakpoint ) {
     display: inline-block;
     vertical-align: middle;
-    line-height: $footer-logo-size;
+    line-height: $site-footer-logo-size;
   }
 }
 
 .site-footer__newsroom {
+  font-style: $site-footer-newsroom-font-style;
+
   // stylelint-disable-next-line selector-max-type
   a {
     font-weight: 700;
@@ -263,21 +271,18 @@ $footer-breakpoint: em( 840px );
 }
 
 .site-footer__copyright {
-  @media ( min-width: $footer-breakpoint ) {
+  @media ( min-width: $site-footer-breakpoint ) {
     float: right;
   }
 }
 
-@if global-variable-exists( site-theme-name ) {
-  .site-footer__logo {
-    @include iconize( $site-theme-logo-abspath + '/logo-icon-white', $footer-logo-size );
+.site-footer__logo {
+  margin: 0 auto;
+  margin-bottom: rem( 16px );
+  font-size: $site-footer-logo-size;
 
-    margin: 0 auto;
-    margin-bottom: rem( 16px );
-
-    @media ( min-width: $footer-breakpoint ) {
-      margin-right: rem( 10px );
-      margin-bottom: 0;
-    }
+  @media ( min-width: $site-footer-breakpoint ) {
+    margin-right: rem( 10px );
+    margin-bottom: 0;
   }
 }

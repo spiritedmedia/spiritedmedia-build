@@ -100,7 +100,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
         <a
             href="{{ permalink|esc_url }}"
             {{ permalink_target }}
-            class="stream-item__title-link type-headline__link"
+            class="stream-item__title-link"
             data-ga-category="{{ ga_category_stream|esc_attr }}"
             data-ga-label="Title|{{ title|esc_attr }}"
         >
@@ -113,7 +113,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
 
 <article class="stream-item stream-item--{{ type|esc_attr }} {{ overline_class }}" {{ stream_index }}>
     {% if primary_item %}
-    <h1 class="stream-item__title--pre-image stream-item__title type-headline" aria-hidden="true">
+    <h1 class="stream-item__title--pre-image stream-item__title" aria-hidden="true">
         {{ title_html }}
     </h1>
     {% endif %}
@@ -131,7 +131,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
         {{ overline_html }}
         {% endif %}
 
-        <h1 class="stream-item__title--post-image stream-item__title type-headline">
+        <h1 class="stream-item__title--post-image stream-item__title">
             {{ title_html }}
         </h1>
 
@@ -148,7 +148,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
         {% endif %}
 
         {% if show_meta_info and ( source_image or source_name or author_image or author_names or date_time ) %}
-        <footer class="stream-item__footer type-meta-info">
+        <footer class="stream-item__footer">
 
             {# Setup some attributes #}
             {% if source_link %}
@@ -186,7 +186,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 </a>
             {% endif %}
 
-            <div class="stream-item__footer__text type-meta-info__text">
+            <div class="stream-item__footer__text">
                 {% if source_name %}
                     {{ time_html }}
 

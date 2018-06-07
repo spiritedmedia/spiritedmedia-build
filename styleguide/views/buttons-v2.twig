@@ -1,0 +1,64 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block head %}
+{# Custom styles for this page #}
+<style>
+    p {
+      margin-bottom: 3rem;
+    }
+
+    p a {
+        margin-right: 1.5rem;
+    }
+
+    .dark-background {
+        padding: 1.5rem;
+        background-color: #333;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>Buttons V2</h1>
+
+    <p>
+        <a class="btn-v2" href="#">Button</a>
+        <button class="btn-v2">Button</button>
+    </p>
+
+    <p>
+        <a class="btn-v2--secondary" href="#">Button</a>
+        <button class="btn-v2--secondary">Button</button>
+    </p>
+
+    <p>
+        <a class="btn-v2--promo" href="#">Promo CTA Button</a>
+        <button class="btn-v2--promo">Promo CTA Button</button>
+    </p>
+
+    <p>
+        <a class="btn-v2--oval" href="#">Oval-shaped Button</a>
+        <button class="btn-v2--oval">Oval-shaped Button</button>
+    </p>
+
+    <div class="dark-background">
+        <p>
+            <a class="btn-v2--light" href="#">Button</a>
+            <button class="btn-v2--light">Button</button>
+        </p>
+
+        <p>
+            <a class="btn-v2--promo--accent" href="#">Promo CTA Button (Accent Color)</a>
+            <button class="btn-v2--promo--accent">Promo CTA Button (Accent Color)</button>
+        </p>
+
+        <p>
+            <a class="btn-v2--oval--light" href="#">Oval-shaped Button</a>
+            <button class="btn-v2--oval--light">Oval-shaped Button</button>
+        </p>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

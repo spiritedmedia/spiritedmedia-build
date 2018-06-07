@@ -1,0 +1,102 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block head %}
+{# Custom styles for this page #}
+<style>
+    h1 {
+      padding-top: 36px;
+    }
+
+    .example {
+      padding: 16px 8px;
+      margin-bottom: 16px;
+    }
+
+    .dark-background {
+      background-color: #4A4A4A;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Forms V2</h1>
+    <p>
+        For now these styles need to co-exist with the
+        <a href="forms.php">original form styles</a> still used by Billy Penn
+        and The Incline. Eventually we will redesign the other sites and can
+        replace the original form styles with these updated styles. To use the
+        new form styles on a site set the PHP constant
+        <code>PEDESTAL_ENABLE_FORMS_V2</code> to <code>true</code>. The v1
+        styles will be excluded from the site's generated stylesheet and the v2
+        styles will be used instead.
+    </p>
+
+    <form>
+        <h1>Styled <code>Radio</code> Buttons</h1>
+        <div class="example">
+            <div class="form-radio" for="radio-1-1">
+                <input type="radio" name="styled-radio-example" value="1" id="radio-1-1" class="form-radio__input">
+                <label class="form-radio__label" for="radio-1-1">Unchecked Radio Button</label>
+            </div>
+            <div class="radio" for="radio-1-2">
+                <input type="radio" name="styled-radio-example" value="2" id="radio-1-2" class="form-radio__input" checked>
+                <label class="form-radio__label" for="radio-1-2">Checked Radio Button</label>
+            </div>
+        </div>
+
+        <h1>Normal <code>Radio</code> Buttons</h1>
+        <div class="example">
+            <label class="form-label implicit">
+                <input type="radio" name="normal-radio-example" value="1" id="radio-2-1">
+                Unchecked Radio Button
+            </label>
+            <label class="form-label implicit">
+                <input type="radio" name="normal-radio-example" value="2" id="radio-2-2" checked>
+                Checked Radio Button
+            </label>
+        </div>
+
+        {% for count, input_type in input_types %}
+
+            <h1><code>{{ input_type }}</code> Input Types</h1>
+            <div class="example">
+                <input type="{{ input_type|esc_attr }}" class="form-input" placeholder="Placeholder">
+            </div>
+
+            <div class="example">
+                <label class="form-label">Optional Label</label>
+                <input type="{{ input_type|esc_attr }}" class="form-input" placeholder="Placeholder">
+            </div>
+
+            <div class="example">
+                <label for="example-3-{{ count|esc_attr }}" class="form-label">
+                    Optional Label
+                </label>
+                <div class="input-group-v2">
+                    <label for="example-3-{{ count|esc_attr }}" class="invisible">
+                        Optional Label
+                    </label>
+                    {{ ped_icon( 'search', 'input-group-v2__addon' ) }}
+                    <input
+                        type="{{ input_type|esc_attr }}"
+                        class="form-input input-group-v2__input"
+                        placeholder="Placeholder"
+                        id="example-3-{{ count|esc_attr }}"
+                        />
+                </div>
+
+            </div>
+
+            <div class="example dark-background">
+                <label class="form-label u-text-color-white">Optional Label</label>
+                <input type="{{ input_type|esc_attr }}" class="form-input" placeholder="Placeholder">
+            </div>
+        {% endfor %}
+    </form>
+
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

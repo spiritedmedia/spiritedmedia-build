@@ -16,9 +16,14 @@
   overflow: hidden;
 
   .widget-title {
-    @extend %c-heading--minor;
-
+    font-family: $font-family-sans-serif;
+    font-size: $widget-title-font-size;
+    color: $widget-title-color;
+    text-transform: uppercase;
+    line-height: $widget-title-line-height;
     margin-top: rem( 32px );
+    font-weight: 700;
+    letter-spacing: em( 0.3px, $widget-title-font-size );
 
     &:first-child {
       margin-top: 0;

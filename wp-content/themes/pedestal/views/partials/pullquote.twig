@@ -7,13 +7,13 @@
 {# Use WP alignment helper class #}
 {% set align = 'align' ~ align %}
 
-<aside class="c-pullquote  {{ align }}">
-    <blockquote class="c-pullquote__content" {{ cite_attr }}>
+<aside class="pullquote  {{ align }}">
+    <blockquote class="pullquote__content" {{ cite_attr }}>
         {{ content }}
     </blockquote>
 
     {% if credit %}
-    <cite class="c-pullquote__credit">
+    <cite class="pullquote__credit">
 
         {% if credit_link %}
         <a href="{{ credit_link }}" target="_blank" data-ga-category="Pullquote" data-ga-label="Credit">

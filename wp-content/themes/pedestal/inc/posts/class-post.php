@@ -553,7 +553,7 @@ abstract class Post {
     }
 
     /**
-     * Get the image for the meta info component
+     * Get the image for the entity meta info component
      *
      * If the post has a single author with an image uploaded, the author's
      * avatar image will be used.

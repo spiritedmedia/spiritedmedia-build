@@ -1,5 +1,4 @@
 {% extends 'layouts/layout--content-sidebar.twig' %}
-{% import 'macros/user-card.twig' as macros %}
 
 {% block content %}
 
@@ -44,7 +43,7 @@
             {{ featured_image }}
 
             {% if show_meta_info %}
-            {% include 'partials/meta-info/meta-info-entity-single.twig' %}
+            {% include 'partials/single-entity-meta.twig' %}
             {% endif %}
 
             {% include 'partials/share-buttons.twig' %}
@@ -56,7 +55,7 @@
         </section>
 
         {% if footnotes %}
-        <aside class="c-main__footnotes  js-content-footnotes">
+        <aside class="c-main__footnotes s-content js-content-footnotes">
             {{ footnotes }}
         </aside>
         {% endif %}
@@ -67,8 +66,12 @@
             {% include 'partials/entity-circulation.twig' %}
 
             <div class="signup-email--daily signup-email">
-                {% include 'partials/signup-daily.twig' with {
-                    gaLocation: 'Single ' ~ type_name|esc_attr ~ ' | Footer'
+                {% include [
+                    'partials/signup-daily-single-entity.twig',
+                    'partials/signup-daily.twig'
+                ] with {
+                    gaLocation: 'Single ' ~ type_name|esc_attr ~ ' | Footer',
+                    details: signup_email_details
                 } %}
             </div>
 
@@ -76,7 +79,9 @@
 
             {% if 'feat_contributor' == item.get_single_author.get_primary_role %}
             <div class="c-main__author-info">
-                {{ macros.user_card( _context, item.get_single_author ) }}
+                {% set user = item.get_single_author %}
+                {% set format = 'compact' %}
+                {% include 'partials/user-card.twig' %}
             </div>
             {% endif %}
         </footer>

@@ -332,7 +332,7 @@ class Stream {
 
         $defaults = [
             'show_text' => true,
-            'show_nav' => true,
+            'show_nav'  => false,
             'next_text' => $default_next_text,
             'prev_text' => $default_prev_text,
         ];
@@ -344,7 +344,9 @@ class Stream {
 
         $context = [
             'show_text'      => $args['show_text'],
-            'show_nav'       => $args['show_nav'],
+            // Disable nav indefinitely
+            // 'show_nav'       => $args['show_nav'],
+            'show_nav'       => false,
             'total_pages'    => $pagination->total_pages,
             'current_page'   => $pagination->current_page,
             'next_url'       => $pagination->next_url,
@@ -401,12 +403,8 @@ class Stream {
      * @return boolean [description]
      */
     public function is_stream_list() {
-        if ( is_tax( 'pedestal_source' ) ) {
-            return false;
-        }
-
         if ( is_tax() ) {
-            return true;
+            return false;
         }
 
         if ( is_post_type_archive( Types::get_cluster_post_types() ) ) {

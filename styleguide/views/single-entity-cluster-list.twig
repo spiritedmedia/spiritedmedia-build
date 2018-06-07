@@ -1,0 +1,36 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block content %}
+
+{% markdown %}
+
+# Single Entity: Cluster List
+
+A list of the clusters connected to the currently-viewed entity. This appears at
+the bottom of single entity templates.
+
+Since we can't currently use real post data in the styleguide, we have to use a
+static copy-pasted example.
+
+---
+
+{% endmarkdown %}
+
+<div class="cluster-list">
+    <h3 class="cluster-list__heading">Topics</h3>
+    <p class="cluster-list__clusters">
+        <a href="https://billypenn.dev/topics/parks-2/" data-ga-category="Cluster Link" data-ga-label="Topic|Parks">Parks</a>,
+        <a href="https://billypenn.dev/topics/animals/" data-ga-category="Cluster Link" data-ga-label="Topic|Animals">Animals</a>
+    </p>
+
+    <h3 class="cluster-list__heading">Places</h3>
+    <p class="cluster-list__clusters">
+        <a href="https://billypenn.dev/places/phl-airport/" data-ga-category="Cluster Link" data-ga-label="Place|PHL Airport">PHL Airport</a>
+    </p>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

@@ -19,7 +19,7 @@
             {% endif %}
 
             {% if content %}
-                <div class="single-header__lead-text  s-post-content">
+                <div class="single-header__lead-text  s-content">
                     {{ content }}
                 </div>
             {% endif %}
@@ -33,7 +33,7 @@
                 </time>
             </p>
 
-            {% if 'story' == type %}
+            {% if 'story' == type and cluster_group_id or force_display_follow_form %}
             <div class="signup-email--cluster signup-email">
                 {% include 'partials/signup-cluster.twig' %}
             </div>

@@ -274,8 +274,9 @@ class User_Management {
         $caps_admin_reporters = array_map( '__return_true', $caps_admin_reporters );
         $caps_admin = $caps_admin_reporters + $caps_sales_manager;
         $caps_admin += [
-            'create_users'   => true,
-            'merge_clusters' => true,
+            'create_users'      => true,
+            'merge_clusters'    => true,
+            'manage_categories' => true,
         ];
         $caps_admin = array_map( '__return_true', $caps_admin );
         $this->merge_role_caps( 'administrator', $caps_admin );
@@ -316,7 +317,6 @@ class User_Management {
                 'import'                           => false,
                 'export'                           => false,
                 'unfiltered_upload'                => false,
-                'manage_categories'                => false,
                 'tablepress_access_options_screen' => false,
                 'tablepress_access_about_screen'   => false,
             ];

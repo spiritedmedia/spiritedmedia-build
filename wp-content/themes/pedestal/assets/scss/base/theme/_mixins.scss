@@ -4,6 +4,7 @@
 
 
 @import 'mixin-angle-edge';
+@import 'mixin-link-underline';
 
 
 /// Add a glowing effect to a block element state
@@ -23,7 +24,6 @@
     box-shadow: 0 0 rem( 5px ) $glowing-effect-color;
   }
 }
-
 
 /// Target IE10+ only
 @mixin ie-only {
@@ -65,13 +65,9 @@
 }
 
 
-
-
-
 //
 // Typography
 // ==========================================================================
-
 
 /// Generate heading font size styles including size reduction
 ///
@@ -79,8 +75,8 @@
 ///
 /// @access public
 /// @param {number} $h-level - Heading level number
-/// @param {bool}   $do-reduction [true] - Include reduction sizing?
-@mixin h-size( $h-level, $do-reduction: true ) {
+/// @param {bool}   $do-reduction - Include reduction sizing?
+@mixin h-size( $h-level, $do-reduction: $enable-heading-font-size-reduction ) {
   @if not is-number( $h-level ) {
     @error 'Parameter `$h-level` with value `#{$h-level}` is not a number!';
   }
@@ -121,14 +117,19 @@
   }
 }
 
-
-
+/// De-emphasized text
+@mixin de-emphasized {
+  line-height: 1.4;
+  font-family: $body-font-family;
+  font-size: rem( 14px );
+  color: $body-font-color;
+  letter-spacing: em( 0.3px );
+}
 
 
 //
 // Icons
 // ==========================================================================
-
 
 /**
  * Generate icons and fallbacks from PNG/SVG
@@ -181,13 +182,9 @@
 }
 
 
-
-
-
 //
 // Shapes
 // ==========================================================================
-
 
 @mixin corner-triangle( $size: rem( 16px ), $color: $primary-color, $corner: 'top-right' ) {
   width: 0;
@@ -210,13 +207,9 @@
 }
 
 
-
-
-
 //
 // Layout
 // ==========================================================================
-
 
 /// Block grid layout
 ///
@@ -272,7 +265,6 @@
   }
 }
 
-
 /// Break a component out of the bounds of its parent to edge of viewport width
 ///
 /// @param  {string} $side ['both']                Side to explode
@@ -314,35 +306,58 @@
 }
 
 
-
-
-
 //
-// Component-specific Mixins
+// Buttons
 // ==========================================================================
 
-
-@mixin _signup-email-header-inline {
-  .signup-email__header {
-    text-align: left;
-
-    > * {
-      display: inline-block;
-      vertical-align: middle;
-    }
+/// Make a button color variation
+///
+/// If hover state background color and text color are set to `false`, then they
+/// will effectively switch non-hover values with each other. I.E. The hover
+/// state background color will be the normal state text color, and the hover
+/// state text color will be the normal state background color.
+///
+/// @param {color} $bg-color
+/// @param {color} $text-color [text-contrast( $bg-color )]
+/// @param {color} $bg-color-hover [$mixin-btn-color-variant-bg-color-hover]
+/// @param {color} $text-color-hover [$mixin-btn-color-variant-text-color-hover]
+/// @param {color} $border-color [$bg-color]
+/// @param {color} $border-color-hover [$bg-color]
+/// @param {color} $outline-color-focus [null]
+@mixin btn-color-variant(
+  $bg-color,
+  $text-color: text-contrast( $bg-color ),
+  $bg-color-hover: $mixin-btn-color-variant-bg-color-hover,
+  $text-color-hover: $mixin-btn-color-variant-text-color-hover,
+  $border-color: $bg-color,
+  $border-color-hover: $bg-color,
+  $outline-color-focus: null
+) {
+  @if $bg-color-hover == false {
+    $bg-color-hover: $text-color;
   }
 
-  .signup-email__icon {
-    margin-bottom: 0;
-    margin-right: rem( 8px );
+  @if $text-color-hover == false {
+    $text-color-hover: $bg-color;
   }
 
-  .signup-email__title {
-    margin-bottom: 0;
+  &,
+  &:focus {
+    border-color: $border-color;
+    background-color: $bg-color;
+    color: $text-color;
+  }
 
-    // stylelint-disable-next-line selector-max-type
-    br {
-      display: none;
+  &:hover,
+  &:active {
+    border-color: $border-color-hover;
+    background-color: $bg-color-hover;
+    color: $text-color-hover;
+  }
+
+  @if $outline-color-focus {
+    &:focus {
+      outline: rem( 4px ) solid $outline-color-focus;
     }
   }
 }

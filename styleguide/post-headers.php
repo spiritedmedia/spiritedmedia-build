@@ -24,7 +24,7 @@ $single_author_image = ob_get_clean();
 ob_start();
     Timber::render( 'views/partials/post-headers-two-authors.twig', [] );
 $two_authors = ob_get_clean();
-$two_authors_image = Icons::get_logo( 'logo-icon', 'c-meta-info__img__icon', 40 );
+$two_authors_image = Icons::get_logo( 'logo-icon', 'single-entity-meta__img__icon', 40 );
 
 ob_start();
     Timber::render( 'views/partials/post-headers-three-authors.twig', [] );

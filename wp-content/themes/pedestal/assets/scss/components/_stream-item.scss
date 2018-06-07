@@ -1,11 +1,3 @@
-// Stream Item
-
-
-$stream-item-footer-font-size   : rem( 14px );
-$stream-item-footer-line-height : rem( 16px ) / $stream-item-footer-font-size;
-$stream-item-footer-image       : rem( 28px );
-
-
 .stream-item {
   @include clearfix;
 
@@ -52,14 +44,28 @@ $stream-item-footer-image       : rem( 28px );
 
 .stream-item__title,
 .stream-item__title-link {
+  color: $body-font-color;
+
   .stream--list & {
     color: $primary-color;
   }
 }
 
 .stream-item__title {
+  font-size: $stream-item-title-font-size;
+  font-weight: 600;
+  letter-spacing: $stream-item-title-letter-spacing;
+  line-height: $stream-item-title-line-height;
+
   .stream--list & {
     font-size: $h5-font-size;
+  }
+}
+
+.stream-item__title-link {
+  &:hover {
+    color: $stream-item-title-link-text-color-hover;
+    text-decoration: $stream-item-title-link-text-decoration-hover;
   }
 }
 
@@ -87,20 +93,25 @@ $stream-item-footer-image       : rem( 28px );
   .stream-item__featured-container {
     display: block;
   }
+
+  .stream-item__title {
+    font-size: $stream-item-title-font-size--lg;
+    letter-spacing: $stream-item-title-letter-spacing--lg;
+  }
 }
 
 
-
-
-
 //
-// Stream Item Footer / Meta Info
+// Stream Item Footer
 // ==========================================================================
 
-
 .stream-item__footer {
+  @include link-dark;
+
   margin-top: rem( 4px );
   margin-bottom: rem( 8px );
+  font-weight: normal;
+  line-height: 1;
 }
 
 .stream-item__footer__image {
@@ -119,15 +130,17 @@ $stream-item-footer-image       : rem( 28px );
   }
 }
 
-
-
+.stream-item__footer__text {
+  font-size: rem( 14px );
+}
 
 
 //
 // Types
 // ==========================================================================
 
-
+// Pretty sure this type of stream item doesn't exist
+// Can't find any markup with the class containing '--sponsored' -- RH
 .stream-item--sponsored {
   border: rem( 1px ) solid $elektroid-yellow;
   border-radius: rem( 6px );
@@ -155,7 +168,6 @@ $stream-item-footer-image       : rem( 28px );
   }
 }
 
-
 .stream-item--dfp {
   // Vertical spacing is handled on the .dfp elements so these stream items
   // disappear gracefully
@@ -165,7 +177,6 @@ $stream-item-footer-image       : rem( 28px );
     margin-bottom: $stream-item-spacing;
   }
 }
-
 
 .stream-item--article,
 .stream-item--whosnext,
@@ -181,7 +192,6 @@ $stream-item-footer-image       : rem( 28px );
   }
 }
 
-
 .stream-item--article,
 .stream-item--whosnext,
 .stream-item--factcheck {
@@ -190,13 +200,11 @@ $stream-item-footer-image       : rem( 28px );
   }
 }
 
-
 .stream-item--embed {
   .stream-item__footer {
     text-align: center;
   }
 }
-
 
 .stream-item--link {
   .stream-item__footer__image {

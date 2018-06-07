@@ -1,20 +1,12 @@
-// ==========================================================================
-// Pedestal // Base // SETUP: CHILD THEME
-//
-// Set up the basic variables and functions required for child themes.
-// ==========================================================================
-
-
 $site-theme-name: 'pedestal' !default;
 
 
 @import 'setup-core';
 
 
-//
+// ==========================================================================
 // Functions
 // ==========================================================================
-
 
 @function sm-theme-setting-get( $setting ) {
   @if global-variable-exists( site-theme-name ) {
@@ -24,19 +16,24 @@ $site-theme-name: 'pedestal' !default;
   }
 }
 
+/// Check if a theme supports a feature toggled by a theme constant
+///
+/// @param {string} $feature Feature name as it would appear in a config file
+/// @return {bool}
+@function sm-theme-supports( $feature ) {
+  $supports: sm-theme-setting-get( supports );
+  @return map-fetch( $supports, $feature );
+}
 
 
-
-
-//
+// ==========================================================================
 // Variables
 // ==========================================================================
 
-
 // URLs and paths
-$site-live-url            : sm-theme-setting-get( siteLiveURL );
+$site-live-url            : 'https://' + sm-theme-setting-get( baseDomain ) + '.com/';
 $site-theme-abspath       : '/' + sm-theme-setting-get( themePath );
 $site-theme-logo-abspath  : $site-theme-abspath + '/assets/images/logos';
 
 // Colors
-$site-theme-brand-color   : sm-theme-setting-get( brandColor );
+$primary-color: sm-theme-setting-get( brandColor );

@@ -159,17 +159,11 @@ class Person extends Cluster {
 
     /**
      * Get the Person's Instagram handle
+     *
      * @return string
      */
     public function get_instagram_handle() {
-        $url = $this->get_instagram_url();
-        if ( ! $url ) {
-            return;
-        }
-        $handle = str_ireplace( 'https://www.instagram.com/', '', $url );
-        // Strip whatspace characters and / from both ends of the string
-        $handle = trim( $handle, " \t\n\r\0\x0B\/" );
-        return $handle;
+        return Embed::get_instagram_username_from_url( $this->get_instagram_url() );
     }
 
     /**

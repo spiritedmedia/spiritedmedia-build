@@ -1,0 +1,91 @@
+// ==========================================================================
+// Denverite // Components // SITE HEADER
+// ==========================================================================
+
+
+.site-header {
+  padding-bottom: rem( 20px );
+}
+
+.site-header__logo,
+.site-header__cta {
+  width: auto;
+}
+
+.site-header__logo {
+
+  .logo--stacked {
+    width: rem( 100px );
+  }
+
+  .logo--wide {
+    display: none;
+    max-width: rem( 300px );
+
+    // IE10+ height fix
+    @include ie-only {
+      height: 1em;
+    }
+  }
+}
+
+.site-header__cta {
+  flex: 1;
+}
+
+.site-header__cta__tagline {
+  display: inline;
+}
+
+
+@media #{$medium-up} {
+  @include _header-cta-inline;
+
+  .site-header {
+    $_border: rem( 4px ) solid $primary-color;
+
+    background-color: $white;
+    border-top: $_border;
+    border-bottom: $_border;
+  }
+
+  .site-header__logo {
+    color: $primary-color;
+    width: 33%;
+
+    .logo--stacked {
+      display: none;
+    }
+
+    .logo--wide {
+      display: block;
+    }
+  }
+
+  .site-header,
+  .site-header__cta__action {
+    color: $primary-color;
+  }
+
+  .site-header__cta,
+  .site-header__cta__prompt,
+  .site-header__cta__tagline {
+    color: $body-font-color;
+  }
+
+  .site-header__cta {
+    text-align: center;
+    width: 66%;
+  }
+
+  .site-header__cta__tagline {
+    display: block;
+  }
+
+  .site-header__cta__action {
+    // IE11 spacing fix
+    @include ie-only {
+      padding-left: rem( 8px );
+    }
+  }
+}

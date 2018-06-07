@@ -71,41 +71,39 @@ class Cluster_Types {
      */
     protected $connection_types_entities = [];
 
-    private static $instance;
-
+    /**
+     * Get an instance of this class
+     */
     public static function get_instance() {
-
-        if ( ! isset( self::$instance ) ) {
-            self::$instance = new Cluster_Types;
-            self::$instance->setup_actions();
-            self::$instance->setup_filters();
-            self::$instance->setup_types();
+        static $instance = null;
+        if ( null === $instance ) {
+            $instance = new static();
+            $instance->setup_actions();
+            $instance->setup_filters();
+            $instance->setup_types();
         }
-        return self::$instance;
-
+        return $instance;
     }
 
     /**
      * Set up actions
      */
     private function setup_actions() {
-
         add_action( 'p2p_init', [ $this, 'action_p2p_init_register_connections' ] );
         add_action( 'init', [ $this, 'action_init_after_post_types_registered' ], 11 );
         add_action( 'edit_form_after_title', [ $this, 'action_edit_form_after_title' ] );
         add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ] );
-
     }
 
     /**
      * Set up filters
      */
     private function setup_filters() {
-
         add_filter( 'p2p_connectable_args', [ $this, 'filter_p2p_connectable_args' ], 10, 3 );
         add_filter( 'p2p_candidate_title', [ $this, 'filter_p2p_item_title' ], 10, 3 );
         add_filter( 'p2p_connected_title', [ $this, 'filter_p2p_item_title' ], 10, 3 );
         add_filter( 'post_type_link', [ $this, 'filter_post_type_link' ], 10, 2 );
+        add_filter( 'template_include', [ $this, 'filter_template_include' ] );
         add_filter( 'fm_presave_alter_values', [ $this, 'filter_fm_presave_alter_values_validate_social_urls' ], 10, 2 );
 
         // Fix canonical urls for pagination
@@ -140,7 +138,6 @@ class Cluster_Types {
             }
             return $redirect_url;
         }, 10, 2 );
-
     }
 
     /**
@@ -566,6 +563,19 @@ class Cluster_Types {
         // Replace our sanitized $value
         $values[0] = $value;
         return $values;
+    }
+
+    /**
+     * Filter template include to load the single cluster template
+     *
+     * @param  string $template Path to a PHP template
+     * @return string          Possibly modified template path
+     */
+    public function filter_template_include( $template = '' ) {
+        if ( Types::is_cluster( get_post_type() ) && is_single() ) {
+            $template = locate_template( [ 'single-cluster.php', 'singular.php' ] );
+        }
+        return $template;
     }
 
     /**

@@ -25,9 +25,9 @@
   bottom: 0;
   left: 0;
 
-  // Override `.s-post-content img`
+  // Override `.s-content img`
   &,
-  .s-post-content & {
+  .s-content & {
     height: 100%;
   }
 }

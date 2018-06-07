@@ -88,66 +88,44 @@
 - 🚫 Full Width + Small
 
 
+## CTA Examples
 
-
-
-## Color Examples
-
-{% set color_examples %}
+{% set cta_examples %}
+<!-- Primary CTA Button -->
 <p>
-    <a class="btn btn--primary" href="#">Primary Color</a>
-    <button class="btn btn--primary">Primary Color</button>
+    <a class="btn--primary" href="#">Primary CTA Button</a>
+    <button class="btn--primary">Primary CTA Button</button>
+</p>
+
+<!-- Secondary CTA Button -->
+<p>
+    <a class="btn--secondary" href="#">Secondary CTA Button</a>
+    <button class="btn--secondary">Secondary CTA Button</button>
+</p>
+
+<!-- Promo CTA Button -->
+<p>
+    <a class="btn--promo" href="#">Promo CTA Button</a>
+</p>
+<p>We need to test this with some longer text on Denverite to make sure the SVG background stretches properly:</p>
+<p>
+    <button class="btn--promo">Promo CTA Button With Long Text</button>
 </p>
 
 <p>
-    <a class="btn btn--secondary" href="#">Secondary Color</a>
-    <button class="btn btn--secondary">Secondary Color</button>
+    <a class="btn--achtung" href="#">Achtung! Color</a>
+    <button class="btn--achtung">Achtung! Color</button>
 </p>
 
 <p>
-    <a class="btn btn--alert" href="#">Alert Color</a>
-    <button class="btn btn--alert">Alert Color</button>
+    <a class="btn--achtung--outline" href="#">Achtung! Color (Outline Variation)</a>
+    <button class="btn--achtung--outline">Achtung! Color (Outline Variation)</button>
 </p>
 
-<p>
-    <a class="btn btn--achtung" href="#">Achtung! Color</a>
-    <button class="btn btn--achtung">Achtung! Color</button>
-</p>
-{% endset %}
-
-{{ color_examples }}
-
-```html
-{{ color_examples }}
-```
-
-
-### Live Usage (as of 2018-02-22)
-
-- 🚫 Primary Color
-- 🚫 Secondary Color
-- 🚫 Alert Color
-- ✅ Achtung Color
-    - Cluster Follow Update signup form
-    - Newsletter signup forms
-
-
-
-
-
-## Misc. Examples
-
-{% set misc_examples %}
 <!-- No Border -->
 <p>
     <a class="btn btn--no-border" href="#">No Border</a>
     <button class="btn btn--no-border">No Border</button>
-</p>
-
-<!-- CTA Button -->
-<p>
-    <a class="btn btn--cta" href="#">CTA Button</a>
-    <button class="btn btn--cta">CTA Button</button>
 </p>
 
 <!-- Pill-shaped Button -->
@@ -155,26 +133,33 @@
     <a class="btn btn--pill" href="#">Pill-shaped Button</a>
     <button class="btn btn--pill">Pill-shaped Button</button>
 </p>
-
 {% endset %}
 
-{{ misc_examples }}
+{{ cta_examples }}
 
-```html
-{{ misc_examples }}
+```
+{{ cta_examples }}
 ```
 
 
 ### Live Usage (as of 2018-02-22)
 
+- 🚫 Primary CTA
+- ✅ Secondary CTA
+    - Pagination (Denverite)
+- ✅ Promo CTA Button
+    - Donate form
+    - **Shortcode**: `[pedestal-cta-button]`
+        - Known usage on About and Membership pages
+- ✅ Achtung CTA
+    - Cluster Follow Update signup form
+    - Newsletter signup forms
+- ✅ Achtung CTA (Outline Variation)
+    - Pagination (default)
 - ✅ No Border
     - Donate form
     - Member bar
     - Search icon
-- ✅ CTA Button
-    - Donate form
-    - **Shortcode**: `[pedestal-cta-button]`
-        - Known usage on About and Membership pages
 - ✅ Pill Button
     - Donate form
     - Member bar

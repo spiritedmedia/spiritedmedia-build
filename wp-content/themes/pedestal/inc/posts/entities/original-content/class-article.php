@@ -16,7 +16,7 @@ class Article extends Original {
      */
     public function get_context( $context = [] ) {
         $context = parent::get_context( $context );
-        $context['content_classes'][] = 's-post-content';
+        $context['content_classes'][] = 's-content';
         return $context;
     }
 }

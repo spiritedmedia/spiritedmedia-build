@@ -12,7 +12,7 @@ class Signup_Newsletter_Widget extends \WP_Widget {
             'pedestal_signup_newsletter',
             esc_html__( 'Newsletter Signup', 'pedestal' ),
             [
-                'classname'   => 'signup-email--daily signup-email',
+                'classname'   => 'signup-email signup-email--daily',
                 'description' => esc_html__( 'Displays a form where users can sign up for the newsletter.', 'pedestal' ),
             ]
         );

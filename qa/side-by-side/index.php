@@ -13,7 +13,7 @@ $url_groups = [
     ],
     [
         'prod'  => 'https://www.denverite.com',
-        'stage' => 'http://dnvrite.staging.wpengine.com',
+        'stage' => 'https://staging.denverite.com',
         'dev'   => 'https://denverite.dev',
     ],
 ];

@@ -107,7 +107,7 @@ class SES {
 			'to'                         => $to,
 			'headers'                    => array(
 				'Content-Type'           => apply_filters( 'wp_mail_content_type', 'text/plain' ),
-				'From'                   => sprintf( '%s <%s>', apply_filters( 'wp_mail_from_name', get_bloginfo( 'name' ) ), apply_filters( 'wp_mail_from', $from_email ) ),
+				'From'                   => sprintf( '"%s" <%s>', apply_filters( 'wp_mail_from_name', get_bloginfo( 'name' ) ), apply_filters( 'wp_mail_from', $from_email ) ),
 			),
 		);
 		$message_args['headers'] = array_merge( $message_args['headers'], $headers );
@@ -177,11 +177,13 @@ class SES {
 			}
 
 			$args = apply_filters( 'aws_ses_wp_mail_ses_send_message_args', $args, $message_args );
-			$ses->sendEmail( $args );
+			$result = $ses->sendEmail( $args );
 		} catch ( Exception $e ) {
+			do_action( 'aws_ses_wp_mail_ses_error_sending_message', $e, $args, $message_args );
 			return new WP_Error( get_class( $e ), $e->getMessage() );
 		}
 
+		do_action( 'aws_ses_wp_mail_ses_sent_message', $result, $args, $message_args );
 		return true;
 	}
 

@@ -8,6 +8,7 @@ use Pedestal\Objects\Stream;
 global $wp_query;
 
 $context = Timber::get_context();
+$context['format'] = 'extended';
 
 $author_id = get_query_var( 'author' );
 if ( $author_id ) {
@@ -26,7 +27,6 @@ if ( $author_id ) {
     ] );
 
     Timber::render( 'author.twig', $context );
-
 } else {
     require_once get_404_template();
 }

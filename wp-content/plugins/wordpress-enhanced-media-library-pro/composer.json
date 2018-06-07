@@ -1,0 +1,12 @@
+
+{
+    "name": "spiritedmedia/wordpress-enhanced-media-library-pro",
+    "type": "wordpress-plugin",
+    "authors": [
+        {
+            "name": "Spirited Media",
+            "email": "product@spiritedmedia.com"
+        }
+    ],
+    "require": {}
+}

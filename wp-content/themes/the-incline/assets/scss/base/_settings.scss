@@ -1,0 +1,18 @@
+// ==========================================================================
+// Pedestal // * The Incline * // Base // Global // SETTINGS
+// ==========================================================================
+
+
+@import 'colors';
+
+
+$secondary-color: #7f5f59;
+$mark-color:      $grey-46;
+
+$h3-font-size: rem( 27px ); // !default
+$h4-font-size: rem( 22px ); // !default
+$h5-font-size: rem( 18px ); // !default
+
+$content-h1-font-size: $h3-font-size;
+$content-h2-font-size: $h4-font-size;
+$content-h3-font-size: $h5-font-size;

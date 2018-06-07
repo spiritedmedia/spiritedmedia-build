@@ -3,9 +3,27 @@
 {% block content %}
     <h1>Post Content / Common HTML Markup</h1>
 
+    <p>
+        <label class="form-label">
+            <input type="checkbox" class="js-toggle-content-scope" checked />
+            <strong>Display as post content?</strong>
+        </label>
+        <script>
+            (function($) {
+                $('.js-toggle-content-scope').on('change', function() {
+                    $('.js-main-body').toggleClass('s-content');
+                });
+            }(jQuery));
+        </script>
+    </p>
+
     <article class="c-main__content">
-        <section class="c-main__body s-post-content">
+        <section class="c-main__body s-content js-main-body">
             <p>Lorem ipsum dolor sit amet, id nam prima pertinax sadipscing, vix ea dicunt intellegebat. Et pri hinc labore apeirian, veritus postulant eum et, in quas epicurei sea. Mea tale detraxit senserit at. Salutatus dissentias at est, alii ullum reprimique mel cu. Ne vis corpora appellantur, partem alterum concludaturque ea mei. Posse ludus omnesque sit ea.</p>
+
+            <h3>De-emphasized Text</h3>
+            <p class="de-emphasized">This paragraph is less emphasized than normal paragraphs. This style should remain the same inside and outside of the post content scope.</p>
+
             <h1>Heading 1</h1>
             <h1>Heading 1 <small>with some small text</small></h1>
             <h2>Heading 2</h2>
@@ -13,7 +31,26 @@
             <h4>Heading 4</h4>
             <h5>Heading 5</h5>
             <h6>Heading 6</h6>
-            <p>Text level <abbr title="HyperText Markup Language">HTML</abbr> elements may be used within other elements. They include: <em>em</em> and <strong>strong</strong> for semantic emphasis, <i>i</i> and <b>b</b> for presentational formatting, <abbr title="Abbreviation">abbr</abbr> abbreviations, <acronym title="National Basketball Association">NBA</acronym> acronym, <cite>cite</cite> citations, <code>code</code> example, <del>del</del>, <ins>ins</ins> for visibly deleted and inserted content, <dfn>dfn</dfn> definitions, <mark>mark</mark> for highlighted passages and <sup>sup</sup> superscript and <sub>sub</sub> subscript. Since this is the web, we often <a href="#">like to link out</a> to other resources.</p>
+            <p>
+                Text level <abbr title="HyperText Markup Language">HTML</abbr>
+                elements may be used within other elements. They include:
+                <em>em</em> and <strong>strong</strong> for semantic emphasis,
+                <i>i</i> and <b>b</b> for presentational formatting, <abbr
+                title="Abbreviation">abbr</abbr> abbreviations, <acronym
+                title="National Basketball Association">NBA</acronym> acronym,
+                <cite>cite</cite> citations, <code>code</code> example,
+                <del>del</del>, <ins>ins</ins> for visibly deleted and inserted
+                content, <dfn>dfn</dfn> definitions, <mark>mark</mark> for
+                highlighted passages and <sup>sup</sup> superscript and
+                <sub>sub</sub> subscript. Since this is the web, we often <a
+                href="#">like to link out</a> to other resources.
+            </p>
+            <p>
+                We also use special link underlines on some sites, so let's test
+                those here, especially for the interaction of typeface
+                descenders and the underline:<br>
+                <a href="#">The quick brown fox jumps over the lazy dog</a>.
+            </p>
             <p>Pre Formatted Text:</p>
             <pre><p>
             Lorem ipsum dolor sit amet,
@@ -61,13 +98,33 @@
                         <li>Nested Ordered Item 1</li>
                         <li>Nested Ordered Item 2</li>
                         <li>Nested Ordered Item 3</li>
+                        <li>Nested Ordered Item 4</li>
+                        <li>
+                            Nested Ordered Item 5
+                            <ol>
+                                <li>Deeper Nested Ordered Item 1</li>
+                                <li>Deeper Nested Ordered Item 2</li>
+                                <li>Deeper Nested Ordered Item 3</li>
+                            </ol>
+                        </li>
+                        <li>Nested Ordered Item 6</li>
+                        <li>Nested Ordered Item 7</li>
+                        <li>Nested Ordered Item 8</li>
+                        <li>Nested Ordered Item 9</li>
+                        <li>Nested Ordered Item 10</li>
                     </ol>
                 </li>
                 <li>List Item 2
                     <ul>
                         <li>Nested Item 1</li>
                         <li>Nested Item 2</li>
-                        <li>Nested Item 3</li>
+                        <li>Nested Item 3
+                            <ul>
+                                <li>Deeper Nested Item 1</li>
+                                <li>Deeper Nested Item 2</li>
+                                <li>Deeper Nested Item 3</li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li>List Item 3</li>
@@ -77,13 +134,26 @@
                 <li>List Item 1</li>
                 <li>List Item 2</li>
                 <li>List Item 3</li>
+                <li>List Item 4</li>
+                <li>List Item 5</li>
+                <li>List Item 6</li>
+                <li>List Item 7</li>
+                <li>List Item 8</li>
+                <li>List Item 9</li>
+                <li>List Item 10</li>
             </ol>
             <ol>
                 <li>List Item 1
                     <ol>
                         <li>Nested Item 1</li>
                         <li>Nested Item 2</li>
-                        <li>Nested Item 3</li>
+                        <li>Nested Item 3
+                            <ul>
+                                <li>Deeper Nested Item 1</li>
+                                <li>Deeper Nested Item 2</li>
+                                <li>Deeper Nested Item 3</li>
+                            </ul>
+                        </li>
                     </ol>
                 </li>
                 <li>List Item 2

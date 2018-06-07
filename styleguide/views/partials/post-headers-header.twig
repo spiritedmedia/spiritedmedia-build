@@ -39,32 +39,32 @@
         {% endif %}
 
         {% if author_count > 2 %}
-            <div class="  c-meta-info--always-stacked single-header__meta c-meta-info--article  c-meta-info--entity-single  c-meta-info">
+            <div class="single-entity-meta--always-stacked single-header__meta single-entity-meta--article single-entity-meta">
         {% else %}
-            <div class=" single-header__meta c-meta-info--article  c-meta-info--entity-single  c-meta-info">
+            <div class="single-header__meta single-entity-meta--article single-entity-meta">
         {% endif %}
 
-        <div class="c-meta-info__img--standalone  c-meta-info__img  c-meta-info__item">
+        <div class="single-entity-meta__img--standalone  single-entity-meta__img  single-entity-meta__item">
             <a href="{{ author_link|esc_url }}" data-ga-category="Author" data-ga-label="Image|Placeholder">
                 {{ author_image }}
             </a>
         </div>
 
-        <div class="c-meta-info__stack  c-meta-info__item">
+        <div class="single-entity-meta__stack  single-entity-meta__item">
 
-            <div class="c-meta-info__name  c-meta-info__stack__item ">
+            <div class="single-entity-meta__name  single-entity-meta__stack__item ">
                 {{ author }}
             </div>
 
-            <div class="c-meta-info__timestamp  c-meta-info__stack__item  c-meta-info__stack__mover">
-                <time class="c-meta-info__timestamp__inner" datetime="{{ machine_time|esc_attr }}">
+            <div class="single-entity-meta__timestamp  single-entity-meta__stack__item  single-entity-meta__stack__mover">
+                <time class="single-entity-meta__timestamp__inner" datetime="{{ machine_time|esc_attr }}">
                     {{ date_time }}
                 </time>
             </div>
         </div>
 
-        <div class="c-meta-info__timestamp  c-meta-info__item  c-meta-info__mover">
-            <time class="c-meta-info__timestamp__inner" datetime="{{ machine_time|esc_attr }}">
+        <div class="single-entity-meta__timestamp  single-entity-meta__item  single-entity-meta__mover">
+            <time class="single-entity-meta__timestamp__inner" datetime="{{ machine_time|esc_attr }}">
                 {{ date_time }}
             </time>
         </div>

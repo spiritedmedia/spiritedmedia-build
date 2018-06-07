@@ -1,0 +1,167 @@
+// ==========================================================================
+// Pedestal // Components // SINGLE ENTITY META INFO
+// ==========================================================================
+
+$single-entity-meta-icon-spacing      : $icon-spacing / 2;
+$single-entity-meta-icon-size         : $icon-diameter--sm;
+$single-entity-meta-icon-size--email  : $icon-diameter--xs;
+
+.single-entity-meta {
+  @include clearfix;
+
+  clear: both;
+  margin-top: rem( 16px );
+  border-top: $single-entity-meta-border-y;
+  border-bottom: $single-entity-meta-border-y;
+  padding-top: rem( 8px );
+  padding-bottom: rem( 8px );
+  color: $body-font-color;
+  font-size: $small-font-size;
+  text-transform: $single-entity-meta-text-transform;
+
+  @media #{$medium-up} {
+    font-size: $base-font-size;
+  }
+
+  // stylelint-disable-next-line selector-max-type
+  a {
+    @include link-dark;
+  }
+
+  // If less than three authors, display normal medium layout
+  &.single-entity-meta--authors-few {}
+
+  // If three or more authors, always display stacked layout
+  &.single-entity-meta--authors-many {
+    @media #{$medium-up} {
+      font-size: $small-font-size;
+    }
+  }
+} // end .single-entity-meta
+
+
+.single-entity-meta__item {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: $single-entity-meta-icon-size;
+}
+
+.single-entity-meta__stack__item {
+  line-height: 1;
+}
+
+// Element within the stack that moves out of the stack in wider layouts
+.single-entity-meta__stack__mover {
+  display: block;
+
+  @media #{$medium-up} {
+    display: none;
+  }
+}
+
+
+// Element that has moved out of the stack in a wider layout
+.single-entity-meta__mover {
+  display: none;
+
+  @media #{$medium-up} {
+    display: block;
+    text-align: right;
+    float: right;
+  }
+}
+
+
+.single-entity-meta__source {}
+
+.single-entity-meta__source__item {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+.single-entity-meta__img {
+  margin-right: $single-entity-meta-icon-spacing;
+
+  // stylelint-disable-next-line selector-max-type
+  a {
+    color: $grey-62;
+  }
+
+  .c-avatar {
+    &,
+    &__img {
+      width: $single-entity-meta-icon-size;
+      height: $single-entity-meta-icon-size;
+    }
+
+    // stylelint-disable-next-line selector-max-type
+    img {
+      display: block;
+    }
+  }
+} // end .single-entity-meta__img
+
+.single-entity-meta__img__icon,
+.single-entity-meta__img .logo--icon {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: $single-entity-meta-icon-size;
+}
+
+.single-entity-meta__label {
+  font-weight: 700;
+}
+
+.single-entity-meta__name {
+  // stylelint-disable selector-max-type
+  a {
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $single-entity-meta-hover-background-color;
+    }
+  }
+  // stylelint-enable selector-max-type
+}
+
+.single-entity-meta__name,
+.single-entity-meta__timestamp {
+  @if $enable-de-emphasized-entity-meta {
+    @include de-emphasized;
+
+    line-height: 1;
+
+    @media #{$medium-up} {
+      line-height: 2;
+    }
+  }
+}
+
+
+.single-entity-meta--always-stacked {
+  font-size: $small-font-size;
+
+  .single-entity-meta__stack__mover {
+    display: block;
+  }
+
+  .single-entity-meta__stack__item {
+    line-height: 1;
+  }
+
+  .single-entity-meta__mover {
+    display: none;
+  }
+}
+
+
+@media print {
+  .single-entity-meta__img {
+    display: none;
+  }
+  // stylelint-disable-next-line selector-max-type
+  .single-entity-meta__name a[href]::after {
+    content: "";
+  }
+}

@@ -1,0 +1,82 @@
+// ==========================================================================
+// Pedestal // Components // PULLQUOTES
+// ==========================================================================
+
+
+.pullquote {
+  position: relative;
+  border-top: $pullquote-border-y;
+  border-bottom: $pullquote-border-y;
+  margin-bottom: rem( 16px );
+  padding: $pullquote-spacing-y 0;
+
+  &::before,
+  &::after {
+    $_mark-size: 0.4em;
+
+    position: absolute;
+    display: block;
+    padding-top: $_mark-size;
+    background-color: $white;
+    line-height: 0;
+    color: $primary-color;
+    font-family: $font-family-sans-serif;
+    font-size: $pullquote-marks-font-size;
+    font-weight: $pullquote-marks-font-weight;
+  }
+
+  &::before {
+    content: '\201C';
+    left: $pullquote-marks-offset-x;
+    top: $pullquote-marks-top-offset;
+    padding-right: $pullquote-marks-gutter-x;
+  }
+
+  &::after {
+    bottom: $pullquote-marks-bottom-offset;
+    content: '\201D';
+    right: $pullquote-marks-offset-x;
+    padding-left: $pullquote-marks-gutter-x;
+  }
+}
+
+.pullquote__content,
+.pullquote__credit {
+  &,
+  .s-content & {
+    font-family: $pullquote-font-family;
+  }
+}
+
+.pullquote__content {
+  &,
+  .s-content & {
+    border: 0;
+    margin-bottom: 0;
+    padding: 0 rem( 16px );
+    background-color: $white;
+    line-height: $pullquote-content-line-height;
+    color: $pullquote-content-font-color;
+    font-size: $pullquote-content-font-size;
+    font-weight: $pullquote-content-font-weight;
+    font-style: italic;
+    // As of 2018-04-10 only Safari supports this
+    // https://caniuse.com/#search=hanging-punctuation
+    hanging-punctuation: first;
+  }
+}
+
+.pullquote__credit {
+  display: block;
+  padding: rem( 8px ) rem( 32px ) 0;
+  line-height: $pullquote-credit-line-height;
+  font-size: $pullquote-credit-font-size;
+  color: $body-font-color;
+  font-style: $pullquote-credit-font-style;
+  text-align: right;
+  letter-spacing: $pullquote-credit-letter-spacing;
+
+  &::before {
+    content: "\2014";
+  }
+}

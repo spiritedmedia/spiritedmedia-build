@@ -1,0 +1,154 @@
+// stylelint-disable-next-line selector-max-type
+button {
+  // Override default browser styles
+  border: 0;
+}
+
+/// Base button styles
+.btn,
+%_btn {
+  display: inline-block;
+  vertical-align: middle;
+  width: rem( 275px );
+  max-width: 100%;
+  position: relative;
+  margin: 0;
+  margin-bottom: $input-spacing-y;
+  padding: $btn-spacing-y $btn-spacing-x;
+
+  border: $btn-border-width solid $primary-color;
+  border-radius: $btn-border-radius;
+  background-color: $white;
+
+  line-height: $btn-line-height;
+  font-family: $font-family-sans-serif;
+  font-weight: $btn-font-weight;
+  font-size: $btn-font-size;
+  color: $primary-color;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: $btn-letter-spacing;
+  transition:
+    background-color $btn-transition,
+    background-image $btn-transition,
+    border-color $btn-transition,
+    color $btn-transition;
+
+  &:hover,
+  &:active {
+    background-color: $primary-color;
+    color: text-contrast();
+  }
+
+  &:disabled,
+  &.is-disabled {
+    box-shadow: none;
+    cursor: default;
+    opacity: 0.5;
+  }
+}
+
+/// A pill-shaped button
+.btn--pill {
+  @extend %_btn;
+
+  border-radius: rem( 20px );
+}
+
+/// Primary CTA button
+.btn--primary {
+  @extend %_btn;
+
+  @include btn-color-variant(
+    $bg-color:            $btn-primary-bg-color,
+    $text-color:          $btn-primary-text-color,
+    $border-color:        $btn-primary-border-color,
+    $outline-color-focus: $btn-primary-outline-color-focus
+  );
+}
+
+/// Secondary CTA button
+.btn--secondary {
+  @extend %_btn;
+
+  @include btn-color-variant(
+    $bg-color:            $btn-secondary-bg-color,
+    $text-color:          $btn-secondary-text-color,
+    $border-color:        $btn-secondary-border-color,
+    $outline-color-focus: $btn-secondary-outline-color-focus
+  );
+}
+
+/// Promotional CTA button
+.btn--promo {
+  @extend %_btn;
+
+  margin-bottom: rem( 24px );
+  padding: $btn-promo-spacing-y $btn-promo-spacing-x;
+  border: rem( 4px ) solid $primary-color;
+  background-color: $white;
+
+  line-height: $btn-promo-line-height;
+  font-family: $btn-promo-font-family;
+  font-size: $btn-promo-font-size;
+  font-weight: 700;
+  letter-spacing: $btn-promo-letter-spacing;
+  text-transform: uppercase;
+}
+
+/// Button using the elektroid yellow color
+.btn--achtung,
+%_btn--achtung {
+  @extend %_btn;
+
+  @include btn-color-variant(
+    $bg-color: $elektroid-yellow,
+    $bg-color-hover: $white,
+    $text-color-hover: text-contrast( $elektroid-yellow ),
+    $border-color: $white
+  );
+}
+
+/// Lighter variation on achtung button without hover state
+.btn--achtung--outline {
+  @extend %_btn--achtung;
+
+  background-color: $white;
+
+  &,
+  &:hover {
+    border-color: $elektroid-yellow;
+  }
+}
+
+
+//
+// Size Variants
+// ==========================================================================
+
+@if $enable-btn-size-classes {
+  .btn--sm {
+    margin-bottom: $btn-spacing-y-sm;
+    padding: $btn-spacing-y-sm $btn-spacing-x-sm;
+    line-height: 1.5;
+    font-size: $small-font-size;
+  }
+
+  .btn--lg {
+    margin-bottom: $btn-spacing-y-lg;
+    padding: $btn-spacing-y-lg $btn-spacing-x-lg;
+    border-width: $btn-border-width-lg;
+    line-height: 1.5;
+    font-size: $input-font-size-lg;
+  }
+}
+
+
+//
+// Misc. Variants
+// ==========================================================================
+
+.btn--no-border       { border: 0; }
+.btn--full-width      { width: 100%; }

@@ -40,15 +40,16 @@ class Taxonomies {
 
     private static $taxonomy_names = [];
 
-    private static $instance;
-
+    /**
+     * Get an instance of this class
+     */
     public static function get_instance() {
-
-        if ( ! isset( self::$instance ) ) {
-            self::$instance = new Taxonomies;
-            self::$instance->setup_actions();
+        static $instance = null;
+        if ( null === $instance ) {
+            $instance = new static();
+            $instance->setup_actions();
         }
-        return self::$instance;
+        return $instance;
     }
 
     /**
@@ -130,7 +131,11 @@ class Taxonomies {
             'show_ui'           => true,
             'show_admin_column' => true,
             'query_var'         => true,
-            'rewrite'           => true,
+            'rewrite'           => [
+                'slug'              => 'sources',
+                'with_front'        => true,
+                'hierarchical'      => false,
+            ],
             'capabilities'      => [
                 'manage_terms'  => 'manage_terms',
                 'edit_terms'    => 'edit_entities',
@@ -155,6 +160,55 @@ class Taxonomies {
                 'menu_name'                  => __( 'Sources', 'pedestal' ),
             ],
         ] );
+
+        // Register Categories
+        $labels = [
+            'name'                       => 'Category',
+            'singular_name'              => 'Category',
+            'menu_name'                  => 'Categories',
+            'all_items'                  => 'All Categories',
+            'parent_item'                => 'Parent Category',
+            'parent_item_colon'          => 'Parent Category:',
+            'new_item_name'              => 'New Category Name',
+            'add_new_item'               => 'Add New Category',
+            'edit_item'                  => 'Edit Category',
+            'update_item'                => 'Update Category',
+            'view_item'                  => 'View Category',
+            'separate_items_with_commas' => 'Separate categories with commas',
+            'add_or_remove_items'        => 'Add or remove categories',
+            'choose_from_most_used'      => 'Choose from the most used',
+            'popular_items'              => 'Popular Categories',
+            'search_items'               => 'Search Categories',
+            'not_found'                  => 'Not Found',
+            'no_terms'                   => 'No categories',
+            'items_list'                 => 'Categories list',
+            'items_list_navigation'      => 'Categories list navigation',
+        ];
+        $args = [
+            'labels'                     => $labels,
+            'hierarchical'               => false,
+            'rewrite'                    => [
+                'slug'                       => 'categories',
+                'with_front'                 => true,
+                'hierarchical'               => false,
+            ],
+            'capabilities'               => [
+                'manage_terms'           => 'manage_categories',
+                'edit_terms'             => 'manage_categories',
+                'delete_terms'           => 'manage_categories',
+                'assign_terms'           => 'edit_entities',
+            ],
+            'public'                     => true,
+            'show_ui'                    => true,
+            'show_admin_column'          => true,
+            'show_in_nav_menus'          => true,
+            'show_tagcloud'              => true,
+            'single_option_taxonomy'     => true, // Make this taxonomy use radio buttons
+        ];
+        // Categories are only available for Denverite at the moment
+        if ( 4 == get_current_blog_id() ) {
+            register_taxonomy( 'pedestal_category', Types::get_entity_post_types(), $args );
+        }
 
     }
 

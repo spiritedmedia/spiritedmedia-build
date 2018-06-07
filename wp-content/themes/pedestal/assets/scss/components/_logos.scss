@@ -20,4 +20,23 @@
 .logo--icon {
   // Constrain the logo to its container
   height: 1em;
+
+  .logo__group--fill {
+    fill: $primary-color;
+  }
+
+  .logo__group--cutout {
+    fill: $white;
+  }
+}
+
+/// A light logo icon for use on dark background
+.logo--icon--light {
+  .logo__group--fill {
+    fill: $white;
+  }
+
+  .logo__group--cutout {
+    fill: $primary-color;
+  }
 }

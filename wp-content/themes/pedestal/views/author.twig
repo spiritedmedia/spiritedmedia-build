@@ -1,19 +1,7 @@
 {% extends 'layouts/layout--content.twig' %}
-{% import 'macros/user-card.twig' as macros %}
 
 {% block content %}
 <article class="c-profile  c-main__content">
-    {{ macros.user_card( _context, user, {
-        'format': 'extended',
-        'img_size': 'medium-square',
-        'img_sizes': '(max-width: 1024px) 150px, 300px',
-        'img_srcset': [ 150, 300 ],
-        'posts': false,
-        'stream': stream,
-        'pagination': pagination,
-        'upper_pagination': upper_pagination,
-        'show_closure_rule': show_closure_rule
-    } ) }}
+    {% include 'partials/user-card.twig' %}
 </article>
-
 {% endblock %}

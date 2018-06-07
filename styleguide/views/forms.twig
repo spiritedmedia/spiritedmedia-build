@@ -29,20 +29,20 @@ accounted for below.
 {% set basic_types %}
 <form>
     <div class="form-group">
-        <label>
+        <label class="form-label">
             Email address
             <input type="email" class="form-input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
         </label>
         <small id="emailHelp" class="form-group__text text-muted">We'll never share your email with anyone else.</small>
     </div>
     <div class="form-group">
-        <label for="exampleInputPassword1">
+        <label class="form-label" for="exampleInputPassword1">
             Password
             <input type="password" class="form-input" id="exampleInputPassword1" placeholder="Password">
         </label>
     </div>
     <div class="form-group">
-        <label for="exampleSelect1">Example select</label>
+        <label class="form-label" for="exampleSelect1">Example select</label>
         <select class="form-input" id="exampleSelect1">
             <option>1</option>
             <option>2</option>
@@ -52,7 +52,7 @@ accounted for below.
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleSelect2">Example multiple select</label>
+        <label class="form-label" for="exampleSelect2">Example multiple select</label>
         <select multiple class="form-input" id="exampleSelect2">
             <option>1</option>
             <option>2</option>
@@ -62,42 +62,42 @@ accounted for below.
         </select>
     </div>
     <div class="form-group">
-        <label for="exampleTextarea">Example textarea</label>
+        <label class="form-label" for="exampleTextarea">Example textarea</label>
         <textarea class="form-input" id="exampleTextarea" rows="3"></textarea>
     </div>
     <div class="form-group">
-        <label for="exampleInputFile">File input</label>
+        <label class="form-label" for="exampleInputFile">File input</label>
         <input type="file" class="form-input--file" id="exampleInputFile" aria-describedby="fileHelp">
         <small id="fileHelp" class="form-group__text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
     </div>
     <fieldset class="form-group">
         <legend class="form-group__legend">Radio buttons</legend>
         <div class="form-check">
-            <label class="form-check__label">
+            <label class="form-label form-check__label">
             <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
             Option one is this and that&mdash;be sure to include why it's great
             </label>
         </div>
         <div class="form-check">
-        <label class="form-check__label">
+        <label class="form-label form-check__label">
             <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios2" value="option2">
             Option two can be something else and selecting it will deselect option one
             </label>
         </div>
         <div class="form-check disabled">
-        <label class="form-check__label">
+        <label class="form-label form-check__label">
             <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
             Option three is disabled
             </label>
         </div>
     </fieldset>
     <div class="form-check">
-        <label class="form-check__label">
+        <label class="form-label form-check__label">
             <input type="checkbox" class="form-check__input">
             Check me out
         </label>
     </div>
-    <button type="submit" class="btn btn--primary">Submit</button>
+    <button type="submit" class="btn--primary">Submit</button>
 </form>
 {% endset %}
 
@@ -134,9 +134,6 @@ Any type not listed here is not used on the site.
 
 Fieldset should generally be used wherever multiple fields are used in a form.
 
-Note that the border styles come from Normalize.css and are not something we
-necessarily want to keep around...
-
 - Donate form
 
 
@@ -150,21 +147,21 @@ necessarily want to keep around...
 <form>
     <fieldset disabled>
         <div class="form-group">
-            <label for="disabledTextInput">Disabled input</label>
+            <label class="form-label" for="disabledTextInput">Disabled input</label>
             <input type="text" id="disabledTextInput" class="form-input" placeholder="Disabled input">
         </div>
         <div class="form-group">
-            <label for="disabledSelect">Disabled select menu</label>
+            <label class="form-label" for="disabledSelect">Disabled select menu</label>
             <select id="disabledSelect" class="form-input">
             <option>Disabled select</option>
             </select>
         </div>
         <div class="checkbox">
-            <label>
+            <label class="form-label">
             <input class="form-check" type="checkbox"> Can't check this
             </label>
         </div>
-        <button type="submit" class="btn btn--primary">Submit</button>
+        <button type="submit" class="btn--primary">Submit</button>
     </fieldset>
 </form>
 {% endset %}
@@ -233,31 +230,31 @@ Note that the Input Groups depend on this.
 <form>
     <div class="row">
         <div class="columns medium-6">
-            <label for="validationServer01">First name</label>
+            <label class="form-label" for="validationServer01">First name</label>
             <input type="text" class="form-input is-valid" id="validationServer01" placeholder="First name" value="Billy" required>
         </div>
         <div class="columns medium-6">
-            <label for="validationServer02">Last name</label>
+            <label class="form-label" for="validationServer02">Last name</label>
             <input type="text" class="form-input is-valid" id="validationServer02" placeholder="Last name" value="Penn" required>
         </div>
     </div>
     <div class="row">
         <div class="columns medium-6">
-            <label for="validationServer03">City</label>
+            <label class="form-label" for="validationServer03">City</label>
             <input type="text" class="form-input is-invalid" id="validationServer03" placeholder="City" required>
             <div class="invalid-feedback">
                 Please provide a valid city.
             </div>
         </div>
         <div class="columns medium-3">
-            <label for="validationServer04">State</label>
+            <label class="form-label" for="validationServer04">State</label>
             <input type="text" class="form-input is-invalid" id="validationServer04" placeholder="State" required>
             <div class="invalid-feedback">
                 Please provide a valid state.
             </div>
         </div>
         <div class="columns medium-3">
-            <label for="validationServer05">Zip</label>
+            <label class="form-label" for="validationServer05">Zip</label>
             <input type="text" class="form-input is-invalid" id="validationServer05" placeholder="Zip" required>
             <div class="invalid-feedback">
                 Please provide a valid zip.
@@ -265,7 +262,7 @@ Note that the Input Groups depend on this.
         </div>
     </div>
 
-    <button class="btn btn-primary" type="submit">Submit form</button>
+    <button class="btn--primary" type="submit">Submit form</button>
 </form>
 {% endset %}
 
@@ -273,6 +270,59 @@ Note that the Input Groups depend on this.
 
 ```html
 {{ validation }}
+```
+
+## Horizontal Form
+
+🚫 **Not currently in use.**
+
+{% set hoz_form %}
+<form>
+    <div class="form-group row">
+        <label for="exampleInputEmail1" class="form-label columns medium-3">Email address</label>
+        <input type="email" class="form-input columns medium-9" id="exampleInputEmail1" placeholder="Enter email">
+    </div>
+    <div class="form-group row">
+        <label for="exampleInputPassword1" class="form-label columns medium-3">Password</label>
+        <input type="password" class="form-input medium-9" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <fieldset class="form-group row">
+        <legend class="form-group__legend columns medium-3">Radio buttons</legend>
+        <div class="columns medium-9">
+            <div class="form-check">
+                <label class="form-label form-check__label">
+                    <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                    Option one is this and that&mdash;be sure to include why it's great
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-label form-check__label">
+                    <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios2" value="option2">
+                    Option two can be something else and selecting it will deselect option one
+                </label>
+            </div>
+            <div class="form-check disabled">
+                <label class="form-label form-check__label">
+                    <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
+                    Option three is disabled
+                </label>
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-check">
+        <label class="form-label form-check__label">
+            <input type="checkbox" class="form-check__input">
+            Check me out
+        </label>
+    </div>
+    <button type="submit" class="btn--primary">Submit</button>
+</form>
+{% endset %}
+
+{{ hoz_form }}
+
+```html
+{{ hoz_form }}
 ```
 
 

@@ -65,6 +65,8 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_BUILDING_NAME'                => '',
                 'PEDESTAL_STREET_ADDRESS'               => '1429 Walnut St., Suite 1201',
                 'PEDESTAL_BLOG_URL'                     => 'https://medium.com/billy-penn',
+
+                // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-54099407-1',
                 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '90219011',
                 'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => 'GTM-P8PWVHM',

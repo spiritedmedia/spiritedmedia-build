@@ -70,7 +70,10 @@ class Scripts_Styles {
     public function action_wp_enqueue_scripts() {
         $post = get_post();
 
-        wp_register_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Overpass:300,300i,400,400i,600,700,700i', [], null );
+        $google_fonts_string = 'Overpass:300,300i,400,400i,600,700,700i';
+        $google_fonts_string = apply_filters( 'pedestal_google_fonts_string', $google_fonts_string );
+        $google_fonts_src = 'https://fonts.googleapis.com/css?family=' . $google_fonts_string;
+        wp_register_style( 'google-fonts', $google_fonts_src, [], null );
 
         // Functionality-specific assets
         wp_register_script( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/js/soundcite.min.js', [], null, true );

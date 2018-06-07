@@ -29,39 +29,49 @@
 }
 
 
-/*figcaption*/.c-figure__text {
+.c-figure__text {
   margin-top: rem( 8px );
+  text-align: $figure-text-align;
+}
 
+.c-figure__text,
+.c-figure__text__caption,
+.c-figure__text__credit {
+  // Override `.s-content` heading sizes
   &,
-  &__caption,
-  &__credit {
-    // Override `.s-post-content` heading sizes
-    &,
-    .s-post-content & {
-      font-size: $small-font-size;
-      line-height: 1;
-    }
+  .s-content & {
+    font-size: $small-font-size;
+    line-height: 1.25;
   }
+}
 
-  &__caption,
-  &__credit {
-    display: inline;
-  }
+.c-figure__text__caption,
+.c-figure__text__credit {
+  display: inline;
+  letter-spacing: 0.02em;
+  color: $figure-caption-color;
+  font-style: normal; // Overrides user agent stylesheet behavior
+}
 
-  &__caption {
-    font-weight: 400;
-    padding-right: rem( 4px );
-  }
+.c-figure__text__caption {
+  padding-right: rem( 4px );
+  font-weight: 400;
+}
 
-  &__credit {
+.c-figure__text__credit {
+  @if $enable-figure-credit-distinction {
     color: $dimmed-text-color;
     font-weight: 300;
-    font-style: normal;
     text-transform: uppercase;
 
     // stylelint-disable-next-line selector-max-type
     a {
       @include link-light;
+    }
+  } @elseif $enable-emboldened-link-underlines {
+    a {
+      // Reduce the size of the text underline crop to account for the smaller font size
+      @include text-underline-crop( 1.25 );
     }
   }
 }

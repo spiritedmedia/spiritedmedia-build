@@ -42,6 +42,11 @@ class Shortcode_Manager {
         'donate-form'        => [
             'label'          => 'Donation Form',
             'listItemImage'  => 'dashicons-money',
+            'attrs'          => [
+                'label'      => 'Submit Button Text',
+                'attr'       => 'submit_text',
+                'type'       => 'text',
+            ],
         ],
         'embed'              => [
             'label'          => 'Embed',
@@ -61,8 +66,8 @@ class Shortcode_Manager {
                 'type'       => 'text',
             ],
         ],
-        'user-card'          => [],
         'user-grid'          => [],
+        'search-form'        => [],
     ];
 
     public static function get_instance() {
@@ -553,53 +558,6 @@ class Shortcode_Manager {
         ] );
     }
 
-    public function user_card( $atts, $content ) {
-
-        // @TODO
-        // @codingStandardsIgnoreStart
-        extract( shortcode_atts( [
-            'id'       => '',
-            'format'   => 'extended',
-            'twitter'  => 1,
-            'float'    => 1,
-            'img_size' => 'thumbnail',
-        ], $atts ) );
-        // @codingStandardsIgnoreEnd
-
-        $out = '';
-        if ( empty( $id ) ) {
-            return $out;
-        }
-
-        // @TODO
-        // @codingStandardsIgnoreStart
-        extract( User_Management::get_users_from_csv( $id ) );
-        // @codingStandardsIgnoreEnd
-
-        if ( empty( $users ) ) {
-            return $out;
-        }
-        $user = new \Pedestal\Objects\User( $users[0] );
-
-        $context = [
-            'options' => [
-                'format'  => $format,
-                'twitter' => (bool) $twitter,
-                'float'   => (bool) $float,
-            ],
-            'user' => $user,
-        ];
-
-        $out .= '<div class="pedestal-shortcode  pedestal-shortcode--user-card">';
-
-        ob_start();
-        Timber::render( 'partials/shortcode/user-card.twig', $context );
-        $out .= ob_get_clean();
-        $out .= '</div>';
-        return $out;
-
-    }
-
     /**
      * Insert a grid of users
      *
@@ -611,21 +569,18 @@ class Shortcode_Manager {
 
         $out = '';
         if ( empty( $atts['ids'] ) ) {
-            return $out;
+            return;
         }
 
-        // @TODO
-        // @codingStandardsIgnoreStart
-        extract( User_Management::get_users_from_csv( $atts['ids'] ) );
-        // @codingStandardsIgnoreEnd
+        $users = User_Management::get_users_from_csv( $atts['ids'] );
 
         if ( empty( $users ) ) {
-            return $out;
+            return;
         }
 
         $out .= '<div class="user-grid">';
-        foreach ( $ids as $id ) {
-            $users_filter = wp_filter_object_list( $users, [
+        foreach ( $users['ids'] as $id ) {
+            $users_filter = wp_filter_object_list( $users['users'], [
                 'ID' => $id,
             ] );
             if ( empty( $users_filter ) ) {
@@ -637,10 +592,11 @@ class Shortcode_Manager {
             $out .= '<div class="user-grid__user">';
 
             $context = [
-                'user' => $user,
+                'user'   => $user,
+                'format' => 'grid',
             ];
             ob_start();
-            Timber::render( 'partials/shortcode/user-card-grid.twig', $context );
+            Timber::render( 'partials/user-card.twig', $context );
             $out .= ob_get_clean();
 
             $out .= '</div>';
@@ -726,13 +682,16 @@ class Shortcode_Manager {
      * Do the donation form
      */
     public function donate_form( $attrs, $content ) {
+        $attrs = wp_parse_args( $attrs, [
+            'submit_text' => 'Support ' . PEDESTAL_BLOG_NAME,
+        ] );
         $stripe_logo = get_template_directory() . '/assets/images/membership/stripe-logo-white.svg';
         $stripe_logo = file_get_contents( $stripe_logo );
         $context = [
             'nrh_endpoint_domain' => 'https://checkout.fundjournalism.org',
             'nrh_property'        => PEDESTAL_NRH_PROPERTY,
             'campaign'            => $_GET['campaign'] ?? '',
-            'submit_text'         => 'Support ' . PEDESTAL_BLOG_NAME,
+            'submit_text'         => $attrs['submit_text'],
             'stripe_logo'         => $stripe_logo,
         ];
         $context = apply_filters( 'pedestal_donate_form_context', $context );
@@ -790,6 +749,19 @@ class Shortcode_Manager {
         $context['content'] = $content;
         ob_start();
         $out = Timber::render( 'partials/shortcode/brand-heading.twig', $context );
+        return ob_get_clean();
+    }
+
+    /**
+     * Display a site search form
+     */
+    public function search_form( $attrs, $content = '' ) {
+        $context = [
+            'site_url'    => get_site_url(),
+            'domain_name' => PEDESTAL_DOMAIN_PRETTY,
+        ];
+        ob_start();
+        $out = Timber::render( 'partials/shortcode/search-form.twig', $context );
         return ob_get_clean();
     }
 }

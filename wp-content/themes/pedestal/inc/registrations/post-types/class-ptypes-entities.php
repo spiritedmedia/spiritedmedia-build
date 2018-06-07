@@ -72,6 +72,7 @@ class Entity_Types {
      */
     public function setup_filters() {
         add_filter( 'pedestal_stream_item_context', [ $this, 'filter_pedestal_stream_item_context' ] );
+        add_filter( 'template_include', [ $this, 'filter_template_include' ] );
     }
 
     /**
@@ -247,6 +248,20 @@ class Entity_Types {
         ] );
 
         return $context;
+    }
+
+    /**
+     * Filter template include to load the single entity template
+     *
+     * @param  string $template Path to a PHP template
+     * @return string          Possibly modified template path
+     */
+    public function filter_template_include( $template = '' ) {
+        if ( Types::is_entity( get_post_type() ) && is_single() ) {
+            $template = locate_template( [ 'single-entity.php', 'singular.php' ] );
+        }
+
+        return $template;
     }
 
     /**

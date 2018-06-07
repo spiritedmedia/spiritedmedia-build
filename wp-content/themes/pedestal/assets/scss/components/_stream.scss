@@ -1,8 +1,3 @@
-// ==========================================================================
-// Pedestal // Components // STREAM
-// ==========================================================================
-
-
 .stream__header {
   margin-bottom: $stream-item-spacing;
 }
@@ -23,17 +18,15 @@
 }
 
 
-
-
-
 //
 // Home Stream
 // ==========================================================================
 
-
 .stream--home {
   .stream__header {
-    background-color: $another-lightish-color;
+    background-color: $stream-header-background-color;
+    color: text-contrast( $stream-header-background-color );
+    font-size: $stream-header-font-size;
   }
 
   .stream__header__inner {
@@ -60,13 +53,9 @@
 }
 
 
-
-
-
 //
 // List Stream
 // ==========================================================================
-
 
 .stream--list {
   .stream-item {
@@ -75,26 +64,22 @@
 }
 
 
-
-
-
 //
 // Author Stream
 // ==========================================================================
-
 
 .stream--author {
   .stream__header {
     padding-top: rem( 40px );
 
-    .c-pagination,
-    .c-pagination::before,
-    .c-pagination::after,
-    .c-pagination__text {
+    .pagination,
+    .pagination::before,
+    .pagination::after,
+    .pagination__text {
       display: inline;
     }
 
-    .c-pagination {
+    .pagination {
       margin-left: rem( 4px );
     }
   }
@@ -110,13 +95,9 @@
 }
 
 
-
-
-
 //
 // Featured Stream Items
 // ==========================================================================
-
 
 .stream__featured-items {
   .stream-item__featured-container {
@@ -131,6 +112,10 @@
     // stylelint-enable selector-max-type
   }
 
+  .stream-item__title {
+    font-size: $feat-item-title-font-size;
+  }
+
   .stream-item__datetime-separator {
     display: none;
   }
@@ -143,8 +128,21 @@
 }
 
 .stream__featured-items__primary {
+  .stream-item__title {
+    font-size: $feat-item-primary-title-font-size;
+    line-height: $feat-item-primary-title-line-height;
+  }
+
   .stream-item__title--pre-image {
     display: none;
+  }
+}
+
+.stream__featured-items__secondary {
+  .stream-item__title {
+    font-family: $feat-item-secondary-title-font-family;
+    letter-spacing: $feat-item-secondary-title-letter-spacing;
+    line-height: $feat-item-secondary-title-line-height;
   }
 }
 
@@ -174,12 +172,15 @@
   }
 
   .stream__featured-items__primary {
+    .stream-item__title {
+      font-size: $feat-item-primary-title-font-size--lg;
+      font-weight: 700;
+      letter-spacing: $feat-item-primary-title-letter-spacing--lg;
+      line-height: $feat-item-primary-title-line-height--lg;
+    }
+
     .stream-item__title--pre-image {
       display: block;
-      font-size: rem( 40px );
-      font-weight: 700;
-      letter-spacing: rem( -0.2px );
-      line-height: 1;
     }
 
     .stream-item__title--post-image {

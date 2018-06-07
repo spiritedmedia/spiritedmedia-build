@@ -24,11 +24,13 @@
 // ==========================================================================
 
 
-// Set text color to primary color
 .u-text-color-primary {
   color: $primary-color !important;
 }
 
+.u-text-color-white {
+  color: $white !important;
+}
 
 // Text alignment
 .u-text-align--left { text-align: left; }

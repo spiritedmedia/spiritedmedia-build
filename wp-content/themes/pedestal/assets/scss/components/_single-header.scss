@@ -22,15 +22,11 @@
 
 
 .single-header__title {
-  font-size: rem( 32px );
+  font-family: $heading-font-family;
+  font-size: $single-header-title-font-size;
   font-weight: 700;
   letter-spacing: em( -0.2px );
-  line-height: 1;
-}
-
-
-.single-header__link {
-  @include link-dark;
+  line-height: $single-header-title-line-height;
 }
 
 
@@ -50,9 +46,9 @@
 .single-header__description {
   &,
   > * {
-    font-size: rem( 24px );
+    font-size: $single-header-description-font-size;
     font-weight: 300;
-    line-height: 1;
+    line-height: $single-header-description-line-height;
   }
 
   > * {
@@ -62,8 +58,6 @@
 
 
 .single-header__meta {
-  font-size: rem( 15px );
-
   .single-cluster & {
     font-size: $small-font-size;
   }

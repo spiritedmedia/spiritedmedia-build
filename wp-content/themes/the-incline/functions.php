@@ -63,6 +63,8 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_BUILDING_NAME'                => 'Alloy 26',
                 'PEDESTAL_STREET_ADDRESS'               => '100 South Commons, Suite 102',
                 'PEDESTAL_BLOG_URL'                  => 'https://medium.com/billy-penn',
+
+                // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-77560864-1',
                 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '121833937',
                 'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => 'GTM-WFRTH8G',
@@ -127,7 +129,7 @@ class The_Incline extends Pedestal {
             $this->site_config = [
                 'site_name'           => get_bloginfo( 'name' ),
                 'site_live_url'       => 'http://theincline.com/',
-                'site_branding_color' => '#F05329',
+                'site_branding_color' => '#f05329',
             ];
         }
     }

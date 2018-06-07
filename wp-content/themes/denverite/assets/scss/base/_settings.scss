@@ -1,0 +1,296 @@
+@import 'colors';
+
+
+$enable-de-emphasized-entity-meta:  true;
+$enable-italic-footnotes:           false;
+$enable-emboldened-link-underlines: true;
+$enable-figure-credit-distinction:  false;
+$enable-heading-font-size-reduction: false;
+
+
+//
+// Typography
+// ==========================================================================
+
+$font-family-sans-serif:          "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif:               "Merriweather", Georgia, Cambria, "Times New Roman", Times, serif;
+
+$heading-line-height: 1.15;
+
+$h1-font-size: rem( 30px );
+$h2-font-size: rem( 28px );
+$h3-font-size: rem( 24px );
+$h4-font-size: rem( 23px );
+$h5-font-size: rem( 20px );
+$h6-font-size: rem( 18px );
+
+$h1-line-height: rem( 34px ) / $h1-font-size;
+$h2-line-height: rem( 32px ) / $h2-font-size;
+$h3-line-height: rem( 28px ) / $h3-font-size;
+$h4-line-height: rem( 28px ) / $h4-font-size;
+$h5-line-height: rem( 24px ) / $h5-font-size;
+$h6-line-height: rem( 24px ) / $h6-font-size;
+
+$body-font-family:      $font-family-serif;
+$paragraph-font-size:   rem( 16px ); // !default
+$paragraph-line-height: rem( 24px ) / $paragraph-font-size;
+
+
+//
+// Colors
+// ==========================================================================
+
+$secondary-color: #54345a;
+$accent-color:    $denverite-yellow; // !default
+$body-font-color: $darkest;
+
+
+//
+// Content Scope
+// ==========================================================================
+
+$content-h2-font-family: $font-family-sans-serif;
+$content-h3-font-family: $font-family-sans-serif;
+
+$content-h1-font-size: $h2-font-size;
+$content-h2-font-size: $h3-font-size;
+$content-h3-font-size: $h5-font-size;
+
+$content-h3-color: $darker;
+
+$content-h2-letter-spacing: em( -0.5px );
+$content-h3-letter-spacing: em( -0.5px );
+
+$blockquote-background-color: rgba( $primary-color, 0.05 );
+$blockquote-padding-y: rem( 20px );
+$blockquote-padding-left: rem( 10px );
+
+$list-counter-color: $secondary-color;
+$list-unordered-bullet-type: square;
+
+
+//
+// Pullquotes
+// ==========================================================================
+
+$pullquote-spacing-y:             rem( 8px );
+$pullquote-font-family:           $font-family-serif;
+
+$pullquote-marks-gutter-x:        em( 2px );
+$pullquote-marks-bottom-offset:   -0.3em;
+$pullquote-marks-color:           rgba( $primary-color, 0.8 );
+$pullquote-marks-font-size:       rem( 40px );
+$pullquote-marks-font-weight:     600;
+
+$pullquote-content-font-color:    $darker;
+$pullquote-content-font-size:     rem( 20px );
+$pullquote-content-line-height:   rem( 28px ) / $pullquote-content-font-size;
+$pullquote-content-font-weight:   600;
+
+$pullquote-credit-font-size:      rem( 14px );
+$pullquote-credit-line-height:    rem( 16px ) / $pullquote-credit-font-size;
+$pullquote-credit-font-style:     normal;
+$pullquote-credit-letter-spacing: em( 0.3px );
+
+
+//
+// Main Element
+// ==========================================================================
+
+$main-title-font-size:        $h1-font-size;
+$main-title-font-weight:      700;
+$main-description-font-size:  rem( 18px );
+$main-description-text-color: $body-font-color;
+
+
+//
+// Forms
+// ==========================================================================
+
+$input-max-width: rem( 280px );
+$input-bg: $light;
+$input-caret-color: $accent-color;
+$input-font-color: $darker;
+$input-font-style: italic;
+$input-border-color: $dark;
+$input-border-radius: rem( 2px );
+$input-box-shadow: inset 2px 4px 8px 0 $secondary-color 20%;
+$input-label-font-family: $font-family-sans-serif;
+$input-label-font-weight: 600;
+$input-label-line-height: 1.5;
+$input-label-color: $darker;
+$input-line-height: 1.5;
+
+
+//
+// Buttons
+// ==========================================================================
+
+// For calculations only
+$_btn-target-line-height: rem( 24px );
+
+// Basic button styles
+$btn-target-height:  rem( 60px );
+$btn-border-width:   rem( 4px );
+$btn-border-radius:  rem( 2px );
+$btn-font-weight:    600;
+$btn-font-size:      rem( 20px );
+$btn-line-height:    $_btn-target-line-height / $btn-font-size;
+$btn-letter-spacing: em( 0.5px );
+$btn-spacing-y:      ( $btn-target-height - $_btn-target-line-height - $btn-border-width * 2 ) / 2;
+
+// `btn-color-variant` mixin
+$mixin-btn-color-variant-bg-color-hover: false;
+$mixin-btn-color-variant-text-color-hover: false;
+
+// Primary CTA
+$btn-primary-bg-color:            $secondary-color;
+$btn-primary-bg-color-hover:      $light;
+$btn-primary-border-color-hover:  $btn-primary-bg-color-hover;
+$btn-primary-outline-color-focus: $accent-color;
+$btn-primary-text-color:          $light;
+$btn-primary-text-color-hover:    $primary-color;
+
+// Secondary CTA
+$btn-secondary-bg-color:            $light;
+$btn-secondary-bg-color-hover:      $secondary-color;
+$btn-secondary-border-color:        $secondary-color;
+$btn-secondary-border-color-hover:  $light;
+$btn-secondary-outline-color-focus: $accent-color;
+$btn-secondary-text-color:          $secondary-color;
+$btn-secondary-text-color-hover:    $light;
+
+// Promo CTA
+$btn-promo-spacing-y:      $btn-spacing-y;
+$btn-promo-line-height:    1.2;
+$btn-promo-font-family:    $font-family-sans-serif;
+$btn-promo-font-size:      $btn-font-size;
+$btn-promo-letter-spacing: em( 0.5px );
+
+
+//
+// User Card
+// ==========================================================================
+
+$user-card-show-hr: false;
+$user-card-show-contact-labels: false;
+
+$user-card-font-color:         $darker;
+$user-card-img-border:         rem( 4px ) solid $accent-color;
+$user-card-name-font-size:     rem( 20px );
+$user-card-name-line-height:   rem( 28px ) / $user-card-name-font-size;
+$user-card-name-font-style:    italic;
+$user-card-title-font-size:    rem( 16px );
+$user-card-title-font-weight:  normal;
+$user-card-title-font-style:   italic;
+$user-card-title-line-height:  rem( 24px ) / $user-card-title-font-size;
+$user-card-contact-icon-size:  rem( 18px );
+$user-card-contact-icon-color: $secondary-color;
+
+
+//
+// Modals
+// ==========================================================================
+
+$modal-overlay-background-color-fallback: $white;
+$modal-overlay-background-color:          rgba( 255, 255, 255, 0.7 );
+$modal-content-min-height:                rem( 400px );
+$modal-close-button-color:                $white;
+$modal-padding:                           rem( 16px );
+$modal-background-color:                  $secondary-color;
+
+
+//
+// Stream
+// ==========================================================================
+
+// Stream Header
+$stream-header-background-color:               $darker;
+$stream-header-font-size:                      rem( 14px );
+
+// Stream Items
+$stream-item-title-font-size:                  rem( 20px );
+$stream-item-title-letter-spacing:             0;
+$stream-item-title-line-height:                rem( 24px ) / $stream-item-title-font-size;
+$stream-item-title-link-text-color-hover:      $secondary-color;
+$stream-item-title-link-text-decoration-hover: none;
+
+// Larger screens
+$stream-item-title-font-size--lg:              $stream-item-title-font-size;
+$stream-item-title-letter-spacing--lg:         $stream-item-title-letter-spacing;
+
+
+//
+// Featured Stream Items
+// ==========================================================================
+
+$feat-item-title-font-size:                  rem( 22px );
+$feat-item-primary-title-font-size:          rem( 30px );
+$feat-item-primary-title-line-height:        rem( 34px ) / $feat-item-primary-title-font-size;
+$feat-item-secondary-title-font-family:      $font-family-sans-serif;
+$feat-item-secondary-title-letter-spacing:   em( -0.6px, $feat-item-title-font-size );
+$feat-item-secondary-title-line-height:      rem( 26px ) / $feat-item-title-font-size;
+
+// Larger screens
+$feat-item-primary-title-font-size--lg:      $feat-item-primary-title-font-size;
+$feat-item-primary-title-letter-spacing--lg: 0;
+$feat-item-primary-title-line-height--lg:    $feat-item-primary-title-line-height;
+
+
+//
+// Site Footer
+// ==========================================================================
+
+$site-footer-logo-size:                   rem( 44px );
+$site-footer-border-bottom-color:         $accent-color;
+$site-footer-nav-bg:                      $darker;
+$site-footer-social-link-bg-color--bp-sm: $light;
+$site-footer-social-link-color--bp-sm:    $site-footer-nav-bg;
+$site-footer-links-font-family:           $font-family-sans-serif;
+$site-footer-links-font-weight:           normal;
+$site-footer-links-font-size:             rem( 14px );
+$site-footer-links-color:                 #ffffff;
+$site-footer-links-color-hover:           $accent-color;
+$site-footer-links-letter-spacing:        em( 0.65px, $site-footer-links-font-size );
+$site-footer-links-line-height:           rem( 28px ) / $site-footer-links-font-size;
+$site-footer-links-separator-color:       $accent-color;
+$site-footer-colophon-background-color:   $primary-color;
+$site-footer-colophon-font-size:          rem( 14px );
+$site-footer-colophon-letter-spacing:     em( 0.3px, $site-footer-colophon-font-size );
+$site-footer-colophon-line-height:        rem( 20px ) / $site-footer-colophon-font-size;
+$site-footer-newsroom-font-style:         italic;
+
+
+//
+// Widgets
+// ==========================================================================
+$widget-title-font-size:   rem( 12px );
+$widget-title-color:       $primary-color;
+$widget-title-line-height: rem( 24px ) / $widget-title-font-size;
+
+//
+// Miscellaneous
+// ==========================================================================
+
+// Cluster links below single entity
+$cluster-list-heading-line-height: 1;
+$cluster-list-heading-text-transform: none;
+$cluster-list-heading-color: $secondary-color;
+
+// Single Header
+$single-header-title-font-size:         rem( 28px );
+$single-header-title-line-height:       1.2;
+$single-header-description-font-size:   rem( 18px );
+$single-header-description-line-height: rem( 24px ) / $single-header-description-font-size;
+
+// Single entity meta
+$single-entity-meta-border-y:               0;
+$single-entity-meta-hover-background-color: $accent-color;
+$single-entity-meta-text-transform:         none;
+
+// Figure
+$figure-caption-color: $darker;
+$figure-text-align: right;
+
+// Member Bar
+$member-bar-background-color: $darker;

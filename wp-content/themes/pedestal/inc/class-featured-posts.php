@@ -177,7 +177,8 @@ class Featured_Posts {
             'meta_query' => [
                 [
                     'key'     => 'exclude_from_home_stream',
-                    'value'   => 'show',
+                    'value'   => 'hide',
+                    'compare' => '!=',
                 ],
             ],
             'post_type'      => Types::get_original_post_types(),

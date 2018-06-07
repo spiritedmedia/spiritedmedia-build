@@ -9,6 +9,7 @@ class S3_Uploads {
 	private        $secret;
 
 	public $original_upload_dir;
+	public $original_file;
 
 	/**
 	 *
@@ -46,8 +47,10 @@ class S3_Uploads {
 
 		add_filter( 'upload_dir', array( $this, 'filter_upload_dir' ) );
 		add_filter( 'wp_image_editors', array( $this, 'filter_editors' ), 9 );
+		add_action( 'delete_attachment', array( $this, 'set_original_file' ) );
 		add_filter( 'wp_delete_file', array( $this, 'wp_filter_delete_file' ) );
 		add_filter( 'wp_read_image_metadata', array( $this, 'wp_filter_read_image_metadata' ), 10, 2 );
+		add_filter( 'wp_resource_hints', array( $this, 'wp_filter_resource_hints' ), 10, 2 );
 		remove_filter( 'admin_notices', 'wpthumb_errors' );
 
 		add_action( 'wp_handle_sideload_prefilter', array( $this, 'filter_sideload_move_temp_file_to_s3' ) );
@@ -103,6 +106,17 @@ class S3_Uploads {
 	}
 
 	/**
+	 * Capture the full path to the original file being deleted. This
+	 * is used when determining whether an absolute or relative path
+	 * should be used when deleting the file.
+	 *
+	 * @param $post_id
+	 */
+	public function set_original_file( $post_id ) {
+		$this->original_file = get_attached_file( $post_id );
+	}
+
+	/**
 	 * When WordPress removes files, it's expecting to do so on
 	 * absolute file paths, as such it breaks when using uris for
 	 * file paths (such as s3://...). We have to filter the file_path
@@ -114,6 +128,11 @@ class S3_Uploads {
 	 */
 	public function wp_filter_delete_file( $file_path ) {
 		$dir = wp_upload_dir();
+
+		// When `wp_delete_file()` is called directly, it expects an absolute path.
+		if ( ! $this->original_file || $file_path === $this->original_file ) {
+			return $file_path;
+		}
 
 		return str_replace( trailingslashit( $dir['basedir'] ), '', $file_path );
 	}
@@ -235,6 +254,21 @@ class S3_Uploads {
 		add_filter( 'wp_read_image_metadata', array( $this, 'wp_filter_read_image_metadata' ), 10, 2 );
 		unlink( $temp_file );
 		return $meta;
+	}
+
+	/**
+	 * Add the DNS address for the S3 Bucket to list for DNS prefetch.
+	 *
+	 * @param $hints
+	 * @param $relation_type
+	 * @return array
+	 */
+	function wp_filter_resource_hints( $hints, $relation_type ) {
+		if ( 'dns-prefetch' === $relation_type ) {
+			$hints[] = $this->get_s3_url();
+		}
+
+		return $hints;
 	}
 
 	/**

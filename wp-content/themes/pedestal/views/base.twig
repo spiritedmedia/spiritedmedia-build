@@ -29,7 +29,10 @@
             {% include 'partials/header/member-bar.twig' %}
             {% endif %}
 
-            {% include 'partials/header/site-header.twig' %}
+            {{ site_header }}
+
+            {% block after_header %}
+            {% endblock %}
 
             {% if spotlight.enabled and spotlight.content and not is_home and not is_page %}
             <aside class="spotlight">
@@ -62,14 +65,16 @@
 
         </div><!-- end .site-wrap -->
 
-        {% include 'partials/search.twig' with {'sitewide': true} %}
+        {% if header_navigation_disabled %}
+            {% include 'partials/search.twig' with {'sitewide': true} %}
+        {% endif %}
         {% include 'partials/modals/signup-daily.twig' %}
 
         {{function('wp_footer')}}
 
         {% include 'partials/analytics/analytics.twig' %}
         {% include 'partials/cdn-fallback.twig' %}
-
+        {% include 'partials/modals/modal.twig' %}
 
     </body>
 </html>

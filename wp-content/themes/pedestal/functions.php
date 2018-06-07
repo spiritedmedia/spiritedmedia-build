@@ -8,7 +8,10 @@ use Aptoma\Twig\TokenParser\MarkdownTokenParser;
 
 use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
-use Pedestal\Registrations\Taxonomies\Taxonomies;
+use Pedestal\Registrations\Taxonomies\{
+    Taxonomies,
+    Single_Option_Taxonomies
+};
 use Pedestal\Posts\Entities\Embed;
 use Pedestal\MetricBot\{
     MetricBots,
@@ -35,6 +38,10 @@ use Pedestal\Email\{
     Follow_Updates,
     Schedule_Follow_Updates
 };
+use Pedestal\Menus\{
+    Menus,
+    Menu_Icons
+};
 
 if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
@@ -57,6 +64,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         protected static $theme_class_map = [
             'billy-penn'  => 'Billy_Penn',
             'the-incline' => 'The_Incline',
+            'denverite'   => 'Denverite',
         ];
 
         protected static $instance;
@@ -65,7 +73,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * Load the theme
          */
         protected function load() {
-
             $this->set_environment();
             $this->define_constants();
             $this->set_site_config();
@@ -74,6 +81,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->setup_theme();
             $this->setup_actions();
             $this->setup_filters();
+
+            do_action( 'pedestal_loaded' );
         }
 
         /**
@@ -88,7 +97,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             } elseif ( isset( $_ENV['PANTHEON_ENVIRONMENT'] ) ) {
                 $pedestal_env = $_ENV['PANTHEON_ENVIRONMENT'];
             }
-            define( 'PEDESTAL_ENV', $pedestal_env );
+            if ( ! defined( 'PEDESTAL_ENV' ) ) {
+                define( 'PEDESTAL_ENV', $pedestal_env );
+            }
         }
 
         /**
@@ -97,16 +108,22 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         private function define_constants() {
 
             // The following constants can not be modified so we set them first.
-            $version = file_get_contents( ABSPATH . '/VERSION' );
-            $version = str_replace( 'Version: ', '', $version );
-            define( 'PEDESTAL_VERSION', $version );
+            if ( ! defined( 'PEDESTAL_VERSION' ) ) {
+                $version = file_get_contents( ABSPATH . '/VERSION' );
+                $version = str_replace( 'Version: ', '', $version );
+                define( 'PEDESTAL_VERSION', $version );
+            }
 
             // Define an abbreviated prefix for use in naming
-            define( 'PEDESTAL_PREFIX', 'ped_' );
+            if ( ! defined( 'PEDESTAL_PREFIX' ) ) {
+                define( 'PEDESTAL_PREFIX', 'ped_' );
+            }
 
             // Web-root relative path to the themes directory without leading slash
-            $wp_themes_path = ltrim( parse_url( get_theme_root_uri() )['path'], '/' );
-            define( 'PEDESTAL_WP_THEMES_PATH', $wp_themes_path );
+            if ( ! defined( 'PEDESTAL_WP_THEMES_PATH' ) ) {
+                $wp_themes_path = ltrim( parse_url( get_theme_root_uri() )['path'], '/' );
+                define( 'PEDESTAL_WP_THEMES_PATH', $wp_themes_path );
+            }
 
             $constants = apply_filters( 'pedestal_constants', [] );
             $defaults = [
@@ -119,6 +136,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_BLOG_URL'                     => '',
                 'PEDESTAL_BLOG_NAME'                    => get_bloginfo( 'name' ),
                 'PEDESTAL_BLOG_DESCRIPTION'             => get_bloginfo( 'description' ),
+                'PEDESTAL_BLOG_TAGLINE'                 => '',
                 'PEDESTAL_CITY_NAME'                    => '',
                 'PEDESTAL_CITY_NICKNAME'                => '',
                 'PEDESTAL_STATE_NAME'                   => '',
@@ -129,6 +147,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_DATE_FORMAT'                  => 'M d Y',
                 'PEDESTAL_TIME_FORMAT'                  => 'g:i a',
                 'PEDESTAL_DATETIME_FORMAT'              => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
+
+                // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => '',
                 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '',
                 'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => '',
@@ -169,6 +189,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
                 // Site Features
                 'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY'  => true,
+                'PEDESTAL_ENABLE_HEADER_NAVIGATION'     => false,
+                'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'     => false,
+                'PEDESTAL_ENABLE_FORMS_V2'              => false,
 
                 // Membership
                 'PEDESTAL_NRH_PROPERTY' => '',
@@ -182,10 +205,34 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
 
             // The following constants require other constants to be set first.
-            define( 'SPIRITEDMEDIA_PEDESTAL_LIVE_DIR', SPIRITEDMEDIA_LIVE_SITE_URL . '/wp-content/themes/pedestal' );
-            define( 'SPIRITEDMEDIA_PEDESTAL_STAGING_DIR', SPIRITEDMEDIA_STAGING_SITE_URL . '/wp-content/themes/pedestal' );
-            $twitter_share_text_max_length = 280 - strlen( ' via @' . PEDESTAL_TWITTER_USERNAME );
-            define( 'PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH', $twitter_share_text_max_length );
+
+            if ( ! defined( 'SPIRITEDMEDIA_PEDESTAL_LIVE_DIR' ) ) {
+                define( 'SPIRITEDMEDIA_PEDESTAL_LIVE_DIR', SPIRITEDMEDIA_LIVE_SITE_URL . '/wp-content/themes/pedestal' );
+            }
+
+            if ( ! defined( 'SPIRITEDMEDIA_PEDESTAL_STAGING_DIR' ) ) {
+                define( 'SPIRITEDMEDIA_PEDESTAL_STAGING_DIR', SPIRITEDMEDIA_STAGING_SITE_URL . '/wp-content/themes/pedestal' );
+            }
+
+            if ( ! defined( 'PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH' ) ) {
+                $twitter_share_text_max_length = 280 - strlen( ' via @' . PEDESTAL_TWITTER_USERNAME );
+                define( 'PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH', $twitter_share_text_max_length );
+            }
+
+            if ( ! defined( 'PEDESTAL_DOMAIN_PRETTY' ) ) {
+                $site_name = str_replace( ' ', '', PEDESTAL_BLOG_NAME );
+                $domain_name = parse_url( get_site_url(), PHP_URL_HOST );
+                $domain_name = str_replace( mb_strtolower( $site_name ), $site_name, $domain_name );
+                define( 'PEDESTAL_DOMAIN_PRETTY', $domain_name );
+            }
+
+            if ( ! defined( 'PEDESTAL_TWITTER_URL' ) ) {
+                define( 'PEDESTAL_TWITTER_URL', 'https://twitter.com/' . PEDESTAL_TWITTER_USERNAME );
+            }
+
+            if ( ! defined( 'PEDESTAL_INSTAGRAM_URL' ) ) {
+                define( 'PEDESTAL_INSTAGRAM_URL', 'https://www.instagram.com/' . PEDESTAL_INSTAGRAM_USERNAME . '/' );
+            }
         }
 
         /**
@@ -250,17 +297,20 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 $this->scripts_styles = Scripts_Styles::get_instance();
             }
 
-            $this->utilities         = Utils::get_instance();
-            $this->taxonomies        = Taxonomies::get_instance();
-            $this->post_types        = Types::get_instance();
-            $this->user_management   = User_Management::get_instance();
-            $this->shortcode_manager = Shortcode_Manager::get_instance();
-            $this->adverts           = Adverts::get_instance();
-            $this->slots             = Posts\Slots\Slots::get_instance();
-            $this->feeds             = Feeds::get_instance();
-            $this->featured_posts    = Featured_Posts::get_instance();
-            $this->icons             = Icons::get_instance();
-            $this->cron_management   = Cron_Management::get_instance();
+            $this->utilities                = Utils::get_instance();
+            $this->taxonomies               = Taxonomies::get_instance();
+            $this->single_option_taxonomies = Single_Option_Taxonomies::get_instance();
+            $this->post_types               = Types::get_instance();
+            $this->user_management          = User_Management::get_instance();
+            $this->shortcode_manager        = Shortcode_Manager::get_instance();
+            $this->adverts                  = Adverts::get_instance();
+            $this->slots                    = Posts\Slots\Slots::get_instance();
+            $this->feeds                    = Feeds::get_instance();
+            $this->featured_posts           = Featured_Posts::get_instance();
+            $this->icons                    = Icons::get_instance();
+            $this->cron_management          = Cron_Management::get_instance();
+            $this->menus                    = Menus::get_instance();
+            $this->menu_icons               = Menu_Icons::get_instance();
 
             // Metrics
             $this->metricbots                        = MetricBots::get_instance();
@@ -721,10 +771,10 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $context['datetime_format'] = PEDESTAL_DATETIME_FORMAT;
 
             $context['site']->social = [
-                'twitter_url'      => 'https://twitter.com/' . PEDESTAL_TWITTER_USERNAME,
+                'twitter_url'      => PEDESTAL_TWITTER_URL,
                 'facebook_url'     => PEDESTAL_FACEBOOK_PAGE,
                 'facebook_page_id' => PEDESTAL_FACEBOOK_PAGE_ID,
-                'instagram_url'    => 'https://www.instagram.com/' . PEDESTAL_INSTAGRAM_USERNAME . '/',
+                'instagram_url'    => PEDESTAL_INSTAGRAM_URL,
             ];
 
             $context['site']->address = [
@@ -759,7 +809,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             ];
 
             $context['site']->branding = [
-                'color' => PEDESTAL_BRAND_COLOR,
+                'color'   => PEDESTAL_BRAND_COLOR,
+                'tagline' => PEDESTAL_BLOG_TAGLINE,
             ];
 
             $parsely = new \Pedestal\Objects\Parsely;

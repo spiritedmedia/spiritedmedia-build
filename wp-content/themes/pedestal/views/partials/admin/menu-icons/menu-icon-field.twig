@@ -1,0 +1,16 @@
+{% set input_id = 'menu-item-icon-' ~ id %}
+
+<p class="description description-wide field-icon">
+    <label for="{{ input_id|esc_attr }}">Navigation Icon</label>
+    <br>
+    <span class="pedestal-menu-icon-preview js-pedestal-icon-preview">
+        {{ icon }}
+    </span>
+    <input
+        id="{{ input_id|esc_attr }}"
+        type="text"
+        class="js-pedestal-icon-picker"
+        name="menu-item-icon[{{ id|esc_attr }}]"
+        value="{{ value|esc_attr }}"
+    >
+</p>

@@ -1,0 +1,12 @@
+{% if member_bar_text %}
+<div class="member-bar">
+    <p class="member-bar__text">{{ member_bar_text }}</p>
+    <a href="{{ site.url|esc_url }}/support-our-work/"
+        class="member-bar__button btn-v2--oval--light"
+        data-ga-category="Member Bar"
+        data-ga-label="Support Our Work"
+    >
+        Support Our Work
+    </a>
+</div>
+{% endif %}

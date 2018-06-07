@@ -1,0 +1,67 @@
+{% extends 'layouts/layout--content.twig' %}
+
+{% block head %}
+<style>
+    .user-grid,
+    .user-card {
+        clear: both;
+    }
+
+    .user-card--compact {
+        max-width: 640px;
+    }
+
+    .s-content > h2 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock head %}
+
+{% block content %}
+
+<h1>User Card aka Contributor Highlight</h1>
+
+<div class="s-content">
+
+{% markdown %}
+
+## User Grid Shortcode
+
+This shortcode is used on each site's About page.
+
+```
+{{ user_grid_shortcode }}
+```
+
+<div class="clearfix">
+{{ user_grid_shortcode|shortcodes }}
+</div>
+
+## Compact Format
+
+Currently this is only in use on Billy Penn on articles written by Featured
+Contributors. [Here is an
+example](https://billypenn.com/2016/07/25/sister-mary-scullion-let-dnc-visitors-see-philadelphias-dark-side/).
+This initiative has since been abandoned, so this is only here for historial
+reasons. If we do add a contributor highlight for the author of each article it
+will likely use this component.
+
+<div class="clearfix">
+{% include "partials/user-card.twig" with { format: 'compact' } %}
+</div>
+
+## Extended Format
+
+This is used on author profile pages. Note that in this example the pagination
+will not work – you'll have to go to a live author page to test that.
+
+<div class="clearfix">
+{% include "partials/user-card.twig" with { format: 'extended' } %}
+</div>
+
+{% endmarkdown %}
+
+</div>
+
+{% endblock %}

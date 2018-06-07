@@ -1,31 +1,29 @@
-{% set heading_classes = 'c-cluster-list__heading  c-heading--minor' %}
-
 {% if has_clusters %}
 
-<div class="c-cluster-list">
+<div class="cluster-list">
     {% if has_multiple_stories %}
-    <h3 class="{{ heading_classes }}">Stories</h3>
-    <p class="c-cluster-list__clusters">{{ stories }}</p>
+    <h3 class="cluster-list__heading">Stories</h3>
+    <p class="cluster-list__clusters">{{ stories }}</p>
     {% endif %}
 
     {% if topics %}
-        <h3 class="{{ heading_classes }}">Topics</h3>
-        <p class="c-cluster-list__clusters">{{ topics }}</p>
+        <h3 class="cluster-list__heading">Topics</h3>
+        <p class="cluster-list__clusters">{{ topics }}</p>
     {% endif %}
 
     {% if people %}
-        <h3 class="{{ heading_classes }}">People</h3>
-        <p class="c-cluster-list__clusters">{{ people }}</p>
+        <h3 class="cluster-list__heading">People</h3>
+        <p class="cluster-list__clusters">{{ people }}</p>
     {% endif %}
 
     {% if orgs %}
-        <h3 class="{{ heading_classes }}">Organizations</h3>
-        <p class="c-cluster-list__clusters">{{ orgs }}</p>
+        <h3 class="cluster-list__heading">Organizations</h3>
+        <p class="cluster-list__clusters">{{ orgs }}</p>
     {% endif %}
 
     {% if places_localities %}
-        <h3 class="{{ heading_classes }}">Places</h3>
-        <p class="c-cluster-list__clusters">{{ places_localities }}</p>
+        <h3 class="cluster-list__heading">Places</h3>
+        <p class="cluster-list__clusters">{{ places_localities }}</p>
     {% endif %}
 </div>
 

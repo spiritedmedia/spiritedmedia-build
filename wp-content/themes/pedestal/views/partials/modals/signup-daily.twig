@@ -1,26 +1,11 @@
 {% set id_postfix = now() %}
-{% set id_title = 'signup-email-daily-title-' ~ id_postfix %}
-{% set id_description = 'signup-email-daily-description-' ~ id_postfix %}
 {% set id_email_input = 'signup-email-daily-email-input-' ~ id_postfix %}
 
 <div
-    role="dialog"
-    class="modal js-modal is-animated"
-    aria-labelledby="{{ id_title|esc_attr }}"
-    aria-describedby="{{ id_description|esc_attr }}"
-    aria-hidden="true"
+    id="modal-signup-email-form"
+    class="signup-email--daily signup-email--modal signup-email is-animated"
 >
-    <div class="modal__content js-modal-content signup-email--daily signup-email is-animated">
-        {% include 'partials/signup-daily.twig' with {
-            gaLocation: 'Modal'
-        } %}
-
-        <button class="modal__close js-modal-close" aria-label="Close Modal">
-            <span class="invisible">Close Modal</span>
-            {{ ped_icon( 'close' ) }}
-        </button>
-    </div>
-
+    {% include 'partials/signup-daily.twig' with {
+        gaLocation: 'Modal'
+    } %}
 </div>
-
-<div class="modal__overlay js-modal-overlay is-animated" aria-hidden="true"></div>
