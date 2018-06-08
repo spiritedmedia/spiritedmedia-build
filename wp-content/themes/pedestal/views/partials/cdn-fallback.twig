@@ -15,9 +15,12 @@
             }
         }
 
-        // If the <body> doesn't have the font-family set to Source Sans Pro,
+        // If the <body> doesn't have the font-family set to Overpass or Merriweather,
         // then we can assume the stylesheet failed to download
-        if ( -1 === window.getComputedStyle(document.body).getPropertyValue('font-family').indexOf('Overpass') ) {
+        if (
+            -1 === window.getComputedStyle(document.body).getPropertyValue('font-family').indexOf('Overpass')
+            && -1 === window.getComputedStyle(document.body).getPropertyValue('font-family').indexOf('Merriweather')
+        ) {
             changeElems( 'link', 'href' );
             changeElems( 'img', 'srcset' );
             changeElems( 'img', 'src' );

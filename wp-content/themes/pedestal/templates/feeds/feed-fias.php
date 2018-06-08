@@ -8,6 +8,8 @@ $context = Timber::get_context();
 $args = [
     'post_type'      => Types::get_original_post_types(),
     'posts_per_page' => 10,
+    'meta_key'       => 'publish_fb_instant_article',
+    'meta_value'     => true,
 ];
 if ( is_singular() ) {
     $args['posts_per_page'] = 1;

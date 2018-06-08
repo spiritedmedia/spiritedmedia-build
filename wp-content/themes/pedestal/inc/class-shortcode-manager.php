@@ -17,6 +17,13 @@ class Shortcode_Manager {
 
     private static $instance;
 
+    /**
+     * All of the shortcode tags loaded by Shortcake Bakery
+     *
+     * @var array
+     */
+    private $shortcake_bakery_tags = [];
+
     private $shortcodes = [
         'brand-heading'      => [
             'inner_content'  => [
@@ -328,7 +335,13 @@ class Shortcode_Manager {
             '\Pedestal\Shortcodes\Instagram',
             '\Pedestal\Shortcodes\Iframe',
         ];
-        return array_merge( $classes, $new );
+        $classes = array_merge( $classes, $new );
+
+        foreach ( $classes as $class ) {
+            $this->shortcake_bakery_tags[ $class::get_shortcode_tag() ] = '';
+        }
+
+        return $classes;
     }
 
     /**
@@ -556,6 +569,15 @@ class Shortcode_Manager {
             'automatic_url_conversion_new_window'   => false,
             'automatic_url_conversion_rel_nofollow' => false,
         ] );
+    }
+
+    /**
+     * Get the shortcode tags loaded by Shortcake Bakery
+     *
+     * @return array
+     */
+    public function get_shortcake_bakery_tags() {
+        return $this->shortcake_bakery_tags;
     }
 
     /**
