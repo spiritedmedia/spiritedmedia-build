@@ -421,6 +421,9 @@ class Entity_Types {
                         'editor_height' => 300,
                     ],
                 ] ),
+                'all_day' => new \Fieldmanager_Checkbox( [
+                    'label' => 'All Day? (Times will not be displayed)',
+                ] ),
                 'start_time'     => new \Fieldmanager_Datepicker( esc_html__( 'Start Time', 'pedestal' ), [
                     'name'       => 'start_time',
                     'use_time'   => true,
@@ -430,6 +433,7 @@ class Entity_Types {
                 ] ),
                 'end_time'     => new \Fieldmanager_Datepicker( esc_html__( 'End Time', 'pedestal' ), [
                     'name'       => 'end_time',
+                    'description' => 'If the end time is the same as the start time, then only the start time will be shown.',
                     'use_time'   => true,
                     'js_opts'    => [
                         'firstDay' => 0,

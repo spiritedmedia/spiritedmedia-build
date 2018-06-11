@@ -124,6 +124,12 @@ $icons = [
             'Social share button',
         ],
     ],
+    'hand-peace' => [
+        'label' => 'Hand making a peace sign',
+        'usage' => [
+            'Denverite culture menu item icon',
+        ],
+    ],
     'hand-spock' => [
         'label' => 'The Hand of Spock',
         'usage' => [

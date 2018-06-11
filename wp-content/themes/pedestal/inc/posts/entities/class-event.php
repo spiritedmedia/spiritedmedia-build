@@ -104,28 +104,87 @@ class Event extends Entity {
     }
 
     /**
-     * Get the full time string for the event
+     * Is this an all-day event?
      *
-     * If the event ends on the same day as it starts, displays the end time
-     * without the date.
+     * @return bool
+     */
+    public function is_all_day() {
+        $all_day = $this->get_fm_field( 'event_details', 'all_day' );
+        if ( ! $all_day ) {
+            return false;
+        }
+        // See http://fieldmanager.org/docs/fields/checkbox/ for default values
+        if ( '1' === $all_day ) {
+            return true;
+        }
+    }
+
+    /**
+     * Get the full time string for the event
      *
      * @return string
      */
-    public function get_when( $format = PEDESTAL_DATETIME_FORMAT ) {
-        $out = $this->get_start_time( $format );
-        if ( $this->get_end_time() ) {
-            if ( $this->get_start_time( 'Y-m-d' ) === $this->get_end_time( 'Y-m-d' ) ) {
-                $end = $this->get_end_time( get_option( 'time_format' ) );
-            } else {
-                $end = $this->get_end_time( $format );
-            }
-            $out .= ' to ' . $end;
+    public function get_when() {
+        $start_timestamp = (int) $this->get_start_time();
+        if ( ! $start_timestamp ) {
+            return;
         }
+
+        $end_timestamp = (int) $this->get_end_time();
+        $all_day = $this->is_all_day();
+        $display_end = (bool) $end_timestamp;
+        $start_date = date( 'Y-m-d', $start_timestamp );
+        $end_date = date( 'Y-m-d', $end_timestamp );
+        $same_day_end = $start_date === $end_date;
+
+        $date_format = 'F j, Y';
+        $datetime_format = $date_format . ' \a\t ' . PEDESTAL_TIME_FORMAT;
+
+        if ( $all_day ) {
+            $start_format = $date_format;
+            $end_format = $date_format;
+
+            // If the event lasts all day and it ends on the same day then we
+            // shouldn't display an end date
+            if ( $same_day_end ) {
+                $display_end = false;
+            }
+        } else {
+            $start_format = $datetime_format;
+            $end_format = $datetime_format;
+
+            if ( $same_day_end ) {
+                $start_time = date( $start_format, $start_timestamp );
+                $end_time = date( $end_format, $end_timestamp );
+                if ( $start_time === $end_time ) {
+                    // Hide the end time if it's identical to the start time
+                    $display_end = false;
+                } else {
+                    // Display the end time without the date if the event ends on the same day
+                    $end_format = PEDESTAL_TIME_FORMAT;
+                }
+            }
+        }
+
+        $start_time = $start_time ?? date( $start_format, $start_timestamp );
+        // Tweak the start date preposition to sound better with a single-day time range
+        if ( ! $all_day && $display_end && $same_day_end ) {
+            $start_time = str_replace( 'at', 'from', $start_time );
+        }
+
+        $out = $start_time;
+        if ( $display_end ) {
+            $end_time = date( $end_format, $end_timestamp );
+            $out .= ' to ' . $end_time;
+        }
+
         return apply_filters( 'pedestal_event_get_when', $out );
     }
 
     /**
-     * Get the start time for the event
+     * Get the raw start time for the event
+     *
+     * Does not take all day events into account.
      *
      * @param  string $format Date format. Defaults to Unix timestamp
      *
@@ -140,7 +199,9 @@ class Event extends Entity {
     }
 
     /**
-     * Get the end time for the event
+     * Get the raw end time for the event
+     *
+     * Does not take all day events into account.
      *
      * @param  string $format Date format. Defaults to Unix timestamp
      *

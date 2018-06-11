@@ -88,6 +88,7 @@ class Types {
         add_action( 'init', [ $this, 'action_init_disable_default_post_type' ] );
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'manage_posts_custom_column', [ $this, 'action_manage_posts_custom_column' ], 10, 2 );
+        add_action( 'manage_pedestal_event_posts_custom_column', [ $this, 'action_manage_pedestal_event_posts_custom_column' ], 10, 2 );
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts_sortable_columns' ] );
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts_originals' ] );
         add_action( 'template_redirect', [ $this, 'action_redirect_found_post_names' ], 10, 2 );
@@ -227,20 +228,10 @@ class Types {
      * @param int    $post_id
      */
     public function action_manage_posts_custom_column( $column_name, $post_id ) {
-
-        $obj = \Pedestal\Posts\Post::get( $post_id );
+        $obj = Post::get( $post_id );
         switch ( $column_name ) :
             case 'pedestal_external_url':
                 echo '<a href="' . esc_url( $obj->get_external_url() ) . '">' . esc_url( $obj->get_external_url() ) . '</a>';
-                break;
-            case 'pedestal_event_start_time':
-                echo esc_html( $obj->get_start_time( sprintf( __( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ) ) );
-                break;
-            case 'pedestal_event_end_time':
-                echo esc_html( $obj->get_end_time( sprintf( __( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ) ) );
-                break;
-            case 'pedestal_event_venue_name':
-                echo esc_html( $obj->get_venue_name() );
                 break;
             case 'pedestal_entity_cluster_connections':
                 $clusters_with_links = $obj->get_clusters_with_links();
@@ -270,6 +261,30 @@ class Types {
                 echo esc_html( $obj->get_id() );
                 break;
         endswitch;
+    }
+
+    /**
+     * Handle the output for custom columns on the Event post type
+     *
+     * @param string $column_name
+     * @param int    $post_id
+     */
+    public function action_manage_pedestal_event_posts_custom_column( $column_name, $post_id ) {
+        $obj = Post::get( $post_id );
+
+        $column_datetime_format = $obj->is_all_day() ? PEDESTAL_DATE_FORMAT : PEDESTAL_DATETIME_FORMAT;
+
+        switch ( $column_name ) {
+            case 'pedestal_event_start_time':
+                echo esc_html( $obj->get_start_time( $column_datetime_format ) );
+                break;
+            case 'pedestal_event_end_time':
+                echo esc_html( $obj->get_end_time( $column_datetime_format ) );
+                break;
+            case 'pedestal_event_venue_name':
+                echo esc_html( $obj->get_venue_name() );
+                break;
+        }
     }
 
     /**
@@ -548,9 +563,15 @@ class Types {
         }
         $truncate = true;
         $context['author_names'] = $ped_post->get_the_authors( $truncate );
-        $icon_size = '28';
-        $context['author_image'] = Icons::get_logo( 'logo-icon', '', $icon_size );
         $context['author_link']  = $ped_post->get_author_permalink();
+
+        $author_image_size = 28;
+        if ( PEDESTAL_ENABLE_STREAM_ITEM_AVATAR ) {
+            $display_link = false;
+            $context['author_image'] = $ped_post->get_meta_info_img( $author_image_size, $display_link );
+        } else {
+            $context['author_image'] = Icons::get_logo( 'logo-icon', '', $author_image_size );
+        }
         return $context;
     }
 

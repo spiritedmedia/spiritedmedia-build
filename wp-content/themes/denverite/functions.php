@@ -112,12 +112,10 @@ class Denverite extends Pedestal {
                 'PEDESTAL_BUILDING_NAME'                => '',
                 'PEDESTAL_STREET_ADDRESS'               => '1062 Delaware St',
                 'PEDESTAL_BLOG_URL'                     => 'https://medium.com/billy-penn',
+                'PEDESTAL_SITE_TIMEZONE'                => 'America/Denver',
 
                 // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-77340868-1',
-                // 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '90219011',
-                // 'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => 'GTM-P8PWVHM',
-                // 'PEDESTAL_COMSCORE_ID'                  => '',
 
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'    => 'denverite',
@@ -130,9 +128,6 @@ class Denverite extends Pedestal {
                 'PEDESTAL_EMAIL_CONTACT'          => 'contact@denverite.com',
                 'PEDESTAL_EMAIL_NEWS'             => 'news@denverite.com',
                 'PEDESTAL_EMAIL_TIPS'             => 'tips@denverite.com',
-                // 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => 'billypennnews',
-                // 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => 'gmail.com',
-                // 'PEDESTAL_EMAIL_PLACEHOLDER'      => 'william.penn@example.org',
 
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#den-botcountry',
@@ -146,6 +141,7 @@ class Denverite extends Pedestal {
                 'PEDESTAL_ENABLE_HEADER_NAVIGATION'     => true,
                 'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'     => true,
                 'PEDESTAL_ENABLE_FORMS_V2'              => true,
+                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'    => true,
 
                 // Membership
                 'PEDESTAL_NRH_PROPERTY' => 'denverite',

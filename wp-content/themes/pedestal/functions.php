@@ -146,7 +146,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_STREET_ADDRESS'               => '',
                 'PEDESTAL_DATE_FORMAT'                  => 'M d Y',
                 'PEDESTAL_TIME_FORMAT'                  => 'g:i a',
-                'PEDESTAL_DATETIME_FORMAT'              => sprintf( esc_html__( '%s \a\t %s', 'pedestal' ), get_option( 'date_format' ), get_option( 'time_format' ) ),
+                'PEDESTAL_DATETIME_FORMAT'              => 'M d Y \a\t g:i a',
+                'PEDESTAL_SITE_TIMEZONE'                => 'America/New_York',
 
                 // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => '',
@@ -192,6 +193,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_ENABLE_HEADER_NAVIGATION'     => false,
                 'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'     => false,
                 'PEDESTAL_ENABLE_FORMS_V2'              => false,
+                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'    => false,
 
                 // Membership
                 'PEDESTAL_NRH_PROPERTY' => '',
@@ -403,7 +405,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             add_filter( 'pre_option_show_avatars', '__return_true' );
             add_filter( 'pre_option_blog_public', '__return_true' );
             add_filter( 'pre_option_timezone_string', function() {
-                return 'America/New_York';
+                return PEDESTAL_SITE_TIMEZONE;
             });
             add_filter( 'pre_option_default_role', function() {
                 return 'subscriber';

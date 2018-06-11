@@ -500,9 +500,11 @@ abstract class Post {
     }
 
     /**
-     * Get the first author only
+     * Get the single author only
      *
-     * @return User
+     * If multiple authors, then return false.
+     *
+     * @return User|false
      */
     public function get_single_author() {
         $authors = $this->get_authors();
@@ -562,9 +564,10 @@ abstract class Post {
      * then the site logo icon will be used.
      *
      * @param int $size [28] Image size
+     * @param bool $link [true] Output anchor markup?
      * @return string Image HTML
      */
-    public function get_meta_info_img( $size = 28 ) {
+    public function get_meta_info_img( $size = 28, $link = true ) {
         $authors = $this->get_authors();
 
         $link_classes = '';
@@ -580,18 +583,26 @@ abstract class Post {
                     'widths' => $size,
                 ],
             ] );
-            return sprintf(
-                '<a href="%s" data-ga-category="Author" data-ga-label="Image|%s" class="%s">%s</a>',
-                esc_url( $this->get_single_author()->get_permalink() ),
-                esc_attr( $this->get_single_author()->get_display_name() ),
-                $link_classes,
-                $img
-            );
+            if ( $link ) {
+                return sprintf(
+                    '<a href="%s" data-ga-category="Author" data-ga-label="Image|%s" class="%s">%s</a>',
+                    esc_url( $this->get_single_author()->get_permalink() ),
+                    esc_attr( $this->get_single_author()->get_display_name() ),
+                    $link_classes,
+                    $img
+                );
+            }
+            return $img;
         }
 
-        $html  = '<a href="' . esc_url( home_url( '/about/' ) ) . '" data-ga-category="Author" data-ga-label="Image|Placeholder">';
+        $html = '';
+        if ( $link ) {
+            $html .= '<a href="' . esc_url( home_url( '/about/' ) ) . '" data-ga-category="Author" data-ga-label="Image|Placeholder">';
+        }
         $html .= Icons::get_logo( 'logo-icon' );
-        $html .= '</a>';
+        if ( $link ) {
+            $html .= '</a>';
+        }
         return $html;
     }
 

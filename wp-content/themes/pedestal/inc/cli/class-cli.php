@@ -1373,5 +1373,20 @@ class CLI extends \WP_CLI_Command {
         WP_CLI::success( 'Migrated `exclude_from_home_stream` post meta to string keys.' );
         WP_CLI::success( 'Done!' );
     }
+
+    /**
+     * Generate a list of clusters ranked by # of occurrences (entities associated with this cluster)
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal cluster-useage-report --url=https://billypenn.com/
+     *
+     * @subcommand cluster-useage-report
+     */
+    public function cluster_usage_report() {
+        $args = [
+            'post_type' => Types::get_cluster_post_types(),
+        ];
+    }
 }
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );
