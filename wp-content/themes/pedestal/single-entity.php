@@ -44,7 +44,7 @@ endif;
 // See https://github.com/spiritedmedia/spiritedmedia/issues/2667
 if ( 4 === get_current_blog_id() ) :
 
-    $arbitrary_cutoff = date( 'U', strtotime( '2018-06-11' ) );
+    $arbitrary_cutoff = date( 'U', strtotime( '2018-06-13' ) );
     $published_time = time();
     if ( Types::is_post( $item ) ) {
         $published_time = $item->get_post_date( 'U' );

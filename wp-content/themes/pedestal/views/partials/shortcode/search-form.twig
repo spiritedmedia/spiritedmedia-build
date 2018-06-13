@@ -4,15 +4,16 @@
     id="search-shortcode"
     class="pedestal-shortcode--search-form row"
 >
-    <div class="pedestal-shortcode--search-form__input-group input-with-icon">
+    <div class="pedestal-shortcode--search-form__input-group input-with-icon input-group-v2">
         <input
             type="search"
             name="s"
             id="search-shortcode-input"
             placeholder="enter your search term"
+            class="input-group-v2__input form-input"
         >
         <label for="search-shortcode-input">
-            {{ ped_icon( 'search' ) }}
+            {{ ped_icon( 'search', 'input-group-v2__addon' ) }}
             <span class="invisible">Search {{ domain_name }}</span>
         </label>
     </div>

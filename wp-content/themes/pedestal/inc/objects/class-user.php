@@ -139,7 +139,7 @@ class User extends Author {
     public function get_avatar( $size, $img_atts = [], $fallback = true ) {
         $attachment = $this->get_image_attachment();
 
-        if ( ! $attachment ) {
+        if ( ! Types::is_attachment( $attachment ) ) {
             return $fallback ? Icons::get_logo( 'logo-icon' ) : false;
         }
 
