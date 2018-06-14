@@ -1,0 +1,16 @@
+.search-tools {
+  display: none;
+  position: relative;
+
+  .is-active-search & {
+    display: block;
+  }
+}
+
+.search-tools__item {
+  display: inline-block;
+}
+
+.search-tools__total-results {
+  padding: rem( 4px );
+}

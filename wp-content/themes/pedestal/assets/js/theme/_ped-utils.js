@@ -68,6 +68,24 @@ class PedUtils {
     history.pushState('', document.title, window.location.pathname
       + window.location.search);
   }
+
+  /**
+   * Focus an input and place the caret at the end of the text
+   *
+   * @see https://stackoverflow.com/a/4609476
+   * @param {jQuery} $elem Input element to focus
+   */
+  static focusAtEnd($elem) {
+    if ($elem.length > 0) {
+      const elem = $elem[0];
+      const elemLen = elem.value.length;
+      if (elem.selectionStart || elem.selectionStart == '0') {
+        elem.selectionStart = elemLen;
+        elem.selectionEnd = elemLen;
+        elem.focus();
+      }
+    }
+  }
 }
 
 

@@ -27,6 +27,8 @@
       this.setupModals();
 
       DonateForm();
+
+      PedUtils.focusAtEnd($('#search-standalone-input'));
     },
 
     /**
@@ -321,13 +323,8 @@
         // When search modal is opened set focus to the search field
         if (target == '#site-header-search-modal') {
           theModal.on('modal:opened', function() {
-            var $theField = $('.js-site-header--search-field');
-            var oldVal = $theField.val();
-            // Focus the caret at the end of the text field
-            $theField
-              .val('')
-              .val(oldVal)
-              .focus();
+            const $theField = $('.js-site-header--search-field');
+            PedUtils.focusAtEnd($theField);
           });
         }
 

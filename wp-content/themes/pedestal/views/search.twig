@@ -1,10 +1,23 @@
 {% extends 'layouts/layout--content-sidebar.twig' %}
 
 {% set main_classes = 'is-active-search' %}
-{% block content %}
-    {% include 'partials/search-tools.twig' %}
 
-    {% if stream %}
+{% block content %}
+    <div class="c-main__body">
+        <section class="c-main__header">
+
+            {% if found_results %}
+            <div class="search-tools js-search-tools">
+                <p class="search-tools__total-results  search-tools__item">
+                    <strong>{{ found_results|number_format }}</strong>
+                    results found for <em>{{ search_query }}</em>
+                </p>
+            </div>
+            {% endif %}
+
+        </section>
+
+        {% if stream %}
         <section class="stream row small-12 columns">
             <div class="stream__items">
                 {{ stream }}
@@ -12,5 +25,6 @@
         </section>
 
         {{ pagination }}
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}

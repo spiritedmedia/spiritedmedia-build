@@ -1,0 +1,119 @@
+@media print {
+  .search-form {
+    // stylelint-disable-next-line declaration-no-important
+    display: none !important;
+  }
+}
+
+
+//
+// Standalone search form
+// ==========================================================================
+
+.search-form--standalone {
+  text-align: center;
+  margin-bottom: rem( 48px );
+
+  .search-form__input-group,
+  .search-form__button {
+    vertical-align: middle;
+    margin: 0 auto rem( 16px );
+  }
+
+  .search-form__button {
+    display: block;
+  }
+
+  @media screen and ( min-width: em( 860px ) ) {
+    .search-form__input-group {
+      margin-right: rem( 32px );
+
+      .input-group-v2__input {
+        width: rem( 520px );
+      }
+    }
+
+    .search-form__button {
+      display: inline-block;
+    }
+  }
+}
+
+
+//
+// Legacy fold-out sitewide search form
+// ==========================================================================
+
+.search-form--sitewide--legacy {
+  background-color: $grey-95;
+
+  .js &,
+  .is-search-open & {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1; // So it displays under the header
+  }
+
+  .admin-bar.is-search-open & {
+    top: $wp-admin-bar-height-mobile;
+
+    @media #{$wp-admin-bar-breakpoint} {
+      top: $wp-admin-bar-height-desktop;
+    }
+  }
+
+  .search-form__inner {
+    position: relative;
+
+    .is-active-search & {
+      margin-bottom: rem( 16px );
+    }
+  }
+
+  .search-form__icon {
+    padding: rem( 8px );
+    position: absolute;
+    top: rem( 4px );
+    color: $grey-25;
+    background-color: transparent;
+
+    &:hover,
+    &:focus {
+      background-color: transparent;
+      color: $black;
+    }
+  }
+
+  .search-form__icon--close {
+    right: 0;
+    display: none;
+
+    .js & {
+      display: block;
+    }
+
+    .o-icon {
+      width: icon-width-get( close ) * 1.5;
+    }
+  }
+
+  .search-form__field {
+    height: auto;
+    margin-bottom: rem( 16px );
+    width: 100%;
+    box-shadow: none;
+    border: 0;
+    border-bottom: 1px solid $grey-80;
+    border-radius: 0;
+    padding: rem( 8px );
+    padding-left: rem( 40 ); // input icon width
+    font-size: $h4-font-size;
+    color: $grey-25;
+
+    &,
+    &:focus {
+      background: transparent;
+    }
+  }
+}

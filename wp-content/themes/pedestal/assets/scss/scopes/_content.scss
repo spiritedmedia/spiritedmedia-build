@@ -299,39 +299,4 @@
     }
   }
 
-
-  //
-  // Search Form
-  // ==========================================================================
-
-  .pedestal-shortcode--search-form {
-    text-align: center;
-    margin-bottom: rem( 48px );
-  }
-
-  .pedestal-shortcode--search-form__input-group,
-  .pedestal-shortcode--search-form__button {
-    vertical-align: middle;
-    margin: 0 auto rem( 16px );
-  }
-
-  .pedestal-shortcode--search-form__button {
-    display: block;
-  }
-
-  @media screen and ( min-width: em( 860px ) ) {
-    .pedestal-shortcode--search-form__input-group {
-      margin-right: rem( 32px );
-
-      input {
-        width: rem( 520px );
-      }
-    }
-
-    .pedestal-shortcode--search-form__button {
-      display: inline-block;
-    }
-  }
-
-
 } // end .s-content

@@ -1,9 +1,9 @@
-Build [#5156](https://circleci.com/gh/spiritedmedia/spiritedmedia/5156) by kingkool68 at 2018-06-13 03:03 AM UTC
+Build [#5170](https://circleci.com/gh/spiritedmedia/spiritedmedia/5170) by kingkool68 at 2018-06-14 07:50 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v7.0.4](https://github.com/spiritedmedia/spiritedmedia/compare/v7.0.4)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v7.0.5](https://github.com/spiritedmedia/spiritedmedia/compare/v7.0.5)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.0.3...v7.0.4)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.0.4...v7.0.5)
 
- - [#2695](git@github.com:spiritedmedia/spiritedmedia.git/pull/2695): Explicitly check if variable is instance of `Attachment` in `User::get_avatar()`
- - [#2692](git@github.com:spiritedmedia/spiritedmedia.git/pull/2692): Fix Denverite's 404 Page Search Form
- - [#2691](git@github.com:spiritedmedia/spiritedmedia.git/pull/2691): Fix Misshapen Call to Action Arrow Button
+ - [#2696](git@github.com:spiritedmedia/spiritedmedia.git/pull/2696): Display a different secondary nav menu for smaller screens if such a menu is available
+ - [#2699](git@github.com:spiritedmedia/spiritedmedia.git/pull/2699): Add site name to end of single post title element
+ - [#2697](git@github.com:spiritedmedia/spiritedmedia.git/pull/2697): Denverite Search Results Page

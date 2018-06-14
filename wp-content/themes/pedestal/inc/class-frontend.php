@@ -358,21 +358,26 @@ class Frontend {
      */
     public function filter_wp_title( $wp_title ) {
 
+        $title = '';
         if ( is_home() ) {
-            return PEDESTAL_CITY_NAME . ' News, Local News, Breaking News - ' . PEDESTAL_BLOG_NAME;
+            $title = PEDESTAL_CITY_NAME . ' News, Local News, Breaking News';
         } elseif ( is_singular() ) {
-            $obj = \Pedestal\Posts\Post::get( get_queried_object_id() );
-            if ( ! is_object( $obj ) ) {
-                return $wp_title;
+            $ped_post = Post::get( get_queried_object_id() );
+            if ( ! Types::is_post( $ped_post ) ) {
+                $title = $wp_title;
             }
-            return $obj->get_seo_title();
+            $title = $ped_post->get_seo_title();
         } elseif ( is_search() ) {
-            return 'Search - ' . PEDESTAL_BLOG_NAME;
+            $title = 'Search';
         } elseif ( is_archive() ) {
-            return self::get_archive_title() . ' — ' . PEDESTAL_BLOG_NAME;
-        } else {
-            return get_bloginfo( 'name' );
+            $title = self::get_archive_title();
         }
+
+        if ( ! $title ) {
+            return PEDESTAL_BLOG_NAME;
+        }
+
+        return $title . ' - ' . PEDESTAL_BLOG_NAME;
 
     }
 

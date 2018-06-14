@@ -1,23 +1,23 @@
 <form
     method="get"
     action="{{ site_url|esc_url }}"
-    id="search-shortcode"
-    class="pedestal-shortcode--search-form row"
+    id="search-standalone"
+    class="search-form--standalone pedestal-shortcode--search-form row"
 >
-    <div class="pedestal-shortcode--search-form__input-group input-with-icon input-group-v2">
+    <div class="search-form__input-group input-group-v2">
         <input
             type="search"
             name="s"
-            id="search-shortcode-input"
+            id="search-standalone-input"
             placeholder="enter your search term"
             class="input-group-v2__input form-input"
         >
-        <label for="search-shortcode-input">
+        <label for="search-standalone-input">
             {{ ped_icon( 'search', 'input-group-v2__addon' ) }}
             <span class="invisible">Search {{ domain_name }}</span>
         </label>
     </div>
-    <button class="pedestal-shortcode--search-form__button btn-v2--oval btn-v2--secondary">
+    <button class="search-form__button btn-v2--oval btn-v2--secondary">
         Search
     </button>
 </form>

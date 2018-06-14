@@ -24,10 +24,21 @@
 </ul>
 {% endif %}
 
+{% if secondary_nav_mobile %}
+    {% set secondary_nav_desktop_class = 'site-nav--desktop' %}
+    <div class="site-nav--mobile" aria-hidden="true">
+        <ul>
+            {{ nav_macros.li( secondary_nav_mobile ) }}
+        </ul>
+    </div>
+{% endif %}
+
 {% if secondary_nav %}
-<ul>
-    {{ nav_macros.li( secondary_nav ) }}
-</ul>
+    <div class="{{ secondary_nav_desktop_class|esc_attr }}">
+        <ul>
+            {{ nav_macros.li( secondary_nav ) }}
+        </ul>
+    </div>
 {% endif %}
 
 {% endblock %}

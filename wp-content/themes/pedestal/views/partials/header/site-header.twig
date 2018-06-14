@@ -1,3 +1,20 @@
+{% import _self as nav_macros %}
+
+{% macro secondary_nav_list( data ) %}
+    <ul class="site-nav__list">
+        {% for class, item in data %}
+            <li class="site-nav__item">
+                <a href="{{ item.url|esc_url }}" class="site-nav__link {{ class|esc_attr }}">
+                    {% if item.icon %}
+                        {{ ped_icon( item.icon, 'site-nav__icon' ) }}
+                    {% endif %}
+                    {{ item.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
 <header class="site-header--with-nav" role="banner">
     <div class="site-header--with-nav__inner">
         <a
@@ -24,11 +41,11 @@
             method="get"
             action="{{ site_url|esc_url }}"
             id="site-header-search-modal"
-            class="site-header--with-nav__search-modal"
+            class="search-form--sitewide site-header--with-nav__search-modal"
         >
 
             <label class="form-label u-text-color-white" for="site-header--search-field">Search {{ domain_name }}</label>
-            <div class="input-group-v2">
+            <div class="search-form__input-group input-group-v2">
                 {{ ped_icon( 'search', 'input-group-v2__addon' ) }}
                 <input
                     type="search"
@@ -39,7 +56,7 @@
                     value="{{ search_query|esc_attr }}"
                 >
             </div>
-            <button class="btn-v2--oval--light site-header--with-nav__search-button">Search</button>
+            <button class="search-form__button btn-v2--oval--light site-header--with-nav__search-button">Search</button>
         </form>
 
         <section
@@ -48,7 +65,7 @@
         >
             <div class="site-nav--primary__outer">
                 <nav class="site-nav site-nav--primary">
-                    <ul class="site-nav__list site-nav--primary__list">
+                    <ul class="site-nav__list">
                         {% for item in primary_nav %}
 
                             {% if item.slug == 'search' %}
@@ -56,18 +73,18 @@
                                 {% set additional_attributes = 'data-modal-target="#site-header-search-modal"' %}
                             {% endif %}
 
-                            <li class="site-nav__item site-nav--primary__item">
+                            <li class="site-nav__item">
                                 <a
                                     href="{{ item.url|esc_url }}"
-                                    class="site-nav__link site-nav--primary__link {{ additional_classes }}"
+                                    class="site-nav__link {{ additional_classes|esc_attr }}"
                                     {{ additional_attributes }}
 
                                 >
-                                    <div class="site-nav--primary__group">
+                                    <div class="site-nav__group">
                                         {% if item.icon %}
-                                            {{ ped_icon( item.icon, 'site-nav__icon site-nav--primary__icon' ) }}
+                                            {{ ped_icon( item.icon, 'site-nav__icon' ) }}
                                         {% endif %}
-                                        <span class="site-nav--primary__text--{{ item.slug|esc_attr }}">
+                                        <span class="site-nav__text--{{ item.slug|esc_attr }}">
                                             {{ item.title }}
                                         </span>
                                     </div>
@@ -78,19 +95,15 @@
                 </nav>
             </div>
 
-            <nav class="site-nav--secondary">
-                <ul class="site-nav__list site-nav--secondary__list">
-                    {% for class, item in secondary_nav %}
-                    <li class="site-nav__item site-nav--secondary__item">
-                        <a href="{{ item.url|esc_url }}" class="site-nav__link site-nav--secondary__link {{ class|esc_attr }}">
-                            {% if item.icon %}
-                                {{ ped_icon( item.icon, 'site-nav__icon site-nav--secondary__icon' ) }}
-                            {% endif %}
-                            {{ item.title }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
+            {% if secondary_nav_mobile %}
+                {% set secondary_nav_desktop_class = 'site-nav--desktop' %}
+                <nav class="site-nav--secondary site-nav--mobile" aria-hidden="true">
+                    {{ nav_macros.secondary_nav_list( secondary_nav_mobile ) }}
+                </nav>
+            {% endif %}
+
+            <nav class="site-nav--secondary {{ secondary_nav_desktop_class|esc_attr }}">
+                {{ nav_macros.secondary_nav_list( secondary_nav ) }}
             </nav>
 
             <div class="site-header--with-nav__marketing">

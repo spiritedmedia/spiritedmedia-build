@@ -41,7 +41,8 @@ class Menus {
             return;
         }
         register_nav_menu( 'header-navigation', 'Header Navigation' );
-        register_nav_menu( 'header-secondary-navigation', 'Header Secondary Navigation' );
+        register_nav_menu( 'header-secondary-navigation', 'Header Secondary Navigation (Default/Desktop)' );
+        register_nav_menu( 'header-secondary-navigation-mobile', 'Header Secondary Navigation (Mobile Only)' );
     }
 
     /**
@@ -124,17 +125,18 @@ class Menus {
      */
     public function get_header_menu_html() {
         $context = [
-            'twitter_url'   => PEDESTAL_TWITTER_URL,
-            'facebook_url'  => PEDESTAL_FACEBOOK_PAGE,
-            'instagram_url' => PEDESTAL_INSTAGRAM_URL,
+            'twitter_url'          => PEDESTAL_TWITTER_URL,
+            'facebook_url'         => PEDESTAL_FACEBOOK_PAGE,
+            'instagram_url'        => PEDESTAL_INSTAGRAM_URL,
 
-            'site_url'      => get_site_url(),
-            'domain_name'   => PEDESTAL_DOMAIN_PRETTY,
-            'search_query'  => get_search_query(),
-            'tagline'       => PEDESTAL_BLOG_TAGLINE,
+            'site_url'             => get_site_url(),
+            'domain_name'          => PEDESTAL_DOMAIN_PRETTY,
+            'search_query'         => get_search_query(),
+            'tagline'              => PEDESTAL_BLOG_TAGLINE,
 
-            'primary_nav'   => $this->get_menu_data( 'header-navigation' ),
-            'secondary_nav' => $this->get_menu_data( 'header-secondary-navigation' ),
+            'primary_nav'          => $this->get_menu_data( 'header-navigation' ),
+            'secondary_nav'        => $this->get_menu_data( 'header-secondary-navigation' ),
+            'secondary_nav_mobile' => $this->get_menu_data( 'header-secondary-navigation-mobile' ),
         ];
         ob_start();
         Timber::render( 'partials/header/site-header.twig', $context );
