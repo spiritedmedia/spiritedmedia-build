@@ -76,6 +76,9 @@ abstract class Post {
         if ( is_numeric( $post ) ) {
             $post_id = $post;
             $wp_post = get_post( $post_id );
+            if ( empty( $wp_post ) ) {
+                return false;
+            }
         } elseif ( $post instanceof \WP_Post ) {
             $post_id = $post->ID;
             $wp_post = $post;

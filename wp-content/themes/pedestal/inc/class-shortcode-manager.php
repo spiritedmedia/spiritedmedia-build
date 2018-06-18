@@ -12,6 +12,7 @@ use Pedestal\Posts\Entities\{
     Embed,
     Event
 };
+use Pedestal\Registrations\Post_Types\Types;
 
 class Shortcode_Manager {
 
@@ -450,6 +451,9 @@ class Shortcode_Manager {
         }
         if ( ! empty( $attachment ) && ! empty( $size ) ) {
             $obj = Attachment::get( (int) $attachment );
+            if ( ! Types::is_attachment( $obj ) ) {
+                return '';
+            }
             if ( 'full' == $size ) {
                 $meta = $obj->get_metadata();
                 if ( ! empty( $meta['width'] ) && 1024 < $meta['width'] ) {
