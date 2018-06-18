@@ -67,7 +67,11 @@ class Denverite extends Pedestal {
             if ( ! is_numeric( $maybe_post_id ) ) {
                 return;
             }
-            $redirect_url = get_permalink( get_post( $maybe_post_id ) );
+            $maybe_post = get_post( $maybe_post_id );
+            if ( empty( $maybe_post ) ) {
+                return;
+            }
+            $redirect_url = get_permalink( $maybe_post );
             // Add any query parameters that might have been included in the request
             $redirect_url = add_query_arg( $_GET, $redirect_url );
             wp_safe_redirect( $redirect_url, 301 );
