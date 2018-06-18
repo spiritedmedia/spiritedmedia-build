@@ -156,7 +156,7 @@ class Denverite extends Pedestal {
                 'Terms of Use'   => '/terms-of-use/',
                 'Privacy Policy' => '/privacy-policy/',
                 'About'          => '/about-denverite-staff/',
-                'Search'         => '/search/',
+                'Search'         => '/?s=',
             ];
         } );
 

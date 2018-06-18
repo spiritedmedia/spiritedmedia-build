@@ -111,7 +111,7 @@ class Menus {
             $items[] = (object) [
                 'title' => 'Search',
                 'slug'  => 'search',
-                'url'   => get_site_url() . '/search/',
+                'url'   => get_site_url() . '/?s=',
                 'icon'  => 'search',
             ];
         }

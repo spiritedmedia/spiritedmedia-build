@@ -290,7 +290,7 @@ class Frontend {
             'Advertising'    => '/advertising/',
             'Terms of Use'   => '/terms-of-use/',
             'Privacy Policy' => '/privacy-policy/',
-            'Search'         => '/search/',
+            'Search'         => '/?s=',
         ] );
 
         $context['latest_newsletter'] = Newsletter::get_latest_newsletter_link();
