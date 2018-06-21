@@ -14,66 +14,33 @@ javascript:googletag.openConsole()
 ### First, a visual check.
 Visit this [story about donuts](https://billypenn.com/2017/09/26/we-knew-nothing-about-donuts-and-other-stories-in-the-new-federal-donuts-book/). You may not see any ads -- that’s okay. Our ad server may not have any ads to display at this moment. Click your Ad Debugger bookmark. The console below should show three ad slots, like this:
 
-|<img src="img/ads-visual-check.png" alt="" width="587">|
-|---|
+<img src="img/ads-visual-check.png" alt="" width="587">
+
 
 Close the debugger console.
 
 ### Second, an automated check.
-Visit the [ad checker](https://billypenn.com/qa/ad-checker.php).  This tool will check all the ad slots on the site. Every line should reads “PASS”, like this:
+This tool will check all the ad slots on the site. Every line should reads “PASS”, like this:
 
-|<img src="img/ads-automated-check.png" alt="" width="399">|
-|---|
+<img src="img/ads-automated-check.png" alt="" width="399">
+
+  - Visit the [Billy Penn ad checker](https://billypenn.com/qa/ad-checker.php)
+  - Visit the [The Incline ad checker](https://theincline.com/qa/ad-checker.php)
+  - Visit the [Denverite ad checker](https://denverite.com/qa/ad-checker.php)
 
 ## Do our newsletter signups work?
 
-**Currently these tests are broken.** You'll need to signup for the newsletter manually for now.
+ - Grab a temporary email address by visiting [Nada Mail](https://getnada.com/)
+ - Visit https://billypenn.com/qa/email-signup-checker.php
+ - Enter your temporary email address into the input field and click the "Test Email Signup" button
+ - The automated check will count the number of signup forms found on each page and compare it with the number of expected signup forms
+ - Each form will check for an input field to enter an email address, a hidden honeypot field to prevent spam, hidden group ID fields to subscribe the email address to a MailChimp group(s)
+ - The script will signup the email address to each signup field
+ - All checks should pass which looks like this
 
-### Setup
-Get a temporary email address by visiting [Nada Mail](https://getnada.com/). Copy the address, and keep this tab open.
+<img src="img/newsletter-automated-check.jpg" alt="" width="587">
 
-### First, a visual check.
-Visit this [story about weird yoga](https://theincline.com/2017/10/09/i-tried-all-of-pittsburghs-weird-yoga-classes-and-it-changed-my-life/). You should see a newsletter subscription prompt, like this:
+ - When finished, check that the email address is subscribed to different MailChimp lists
+ - With a fresh email address you should see results like this
 
-|<img src="img/newsletters-visual-check-1.png" alt="" width="1080">|
-|---|
-
-Enter your temporary email address and click “Sign up”. You should see a confirmation, like this:
-
-|<img src="img/newsletters-visual-check-2.png" alt="" width="1088">|
-|---|
-
-Go back to your Nada Mail tab and wait. You should see a confirmation email shortly, like this:
-
-|<img src="img/newsletters-visual-check-3.png" alt="" width="1030">|
-|---|
-
-Click the email and then click the confirmation link. You should be redirected to a confirmation page that says “Yippee skippy!”, like this:
-
-|<img src="img/newsletters-visual-check-4.png" alt="" width="1077">|
-|---|
-
-### Final check, and cleanup
-Visit the [email signup checker](https://billypenn.com/qa/email-signup-checker.php). Enter your temporary email address and click “Test email signups”. You should see that all the checks passed, and that the emails were sent, like this:
-
-|<img src="img/newsletters-automated-check-1.png" alt="" width="475">|
-|---|
-
-Go back to your Nada Mail tab and wait a couple minutes. You should see six more subscription confirmations, like this:
-
-|<img src="img/newsletters-automated-check-2.png" alt="" width="1022">|
-|---|
-
-Click one of the Billy Penn emails and then click the confirmation link. You should be redirected to a confirmation page that says “Yippee skippy!”, like the one we saw in the previous step.
-
-Open the [contacts list in ActiveCampaign](https://spiritedmedia.activehosted.com/app/contacts). Enter your temporary email in the search box at the upper-right corner of the table.
-
-Look at the “Lists” property in the info box. You should see a handful of mailing lists named, one for each that you tested (and one that’s labelled “All contacts”, which you can ignore), like this:
-
-|<img src="img/newsletters-automated-check-3.png" alt="" width="833">|
-|---|
-
-Finally, click the little gear icon next to the contact’s email address, click “Delete” and confirm.
-
-|<img src="img/newsletters-automated-check-4.png" alt="" width="395">|
-|---|
+<img src="img/email-address-signup-check.jpg" alt="" width="587">

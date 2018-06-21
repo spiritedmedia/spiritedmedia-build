@@ -120,6 +120,7 @@ class Denverite extends Pedestal {
 
                 // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-77340868-1',
+                'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '121553308',
 
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'    => 'denverite',
@@ -166,7 +167,7 @@ class Denverite extends Pedestal {
 
         // Send the Weekly Traffic Report to the editorial bot channel
         add_filter( 'pedestal_weekly_traffic_slack_args', function( $slack_args ) {
-            $slack_args['channel'] = PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL;
+            $slack_args['channel'] = '#den-voice';
             return $slack_args;
         });
 

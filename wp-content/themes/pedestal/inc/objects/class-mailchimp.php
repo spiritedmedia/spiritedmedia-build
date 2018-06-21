@@ -436,6 +436,28 @@ class MailChimp {
     }
 
     /**
+     * Get a contact from a list
+     *
+     * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/
+     * @param  string $email   Email address of the subscriber to add to the list
+     * @param  string $list_id List to add the subscriber to
+     * @return object          HTTP response
+     */
+    public function get_contact( $email = '', $list_id = '' ) {
+        if ( ! $email ) {
+            return false;
+        }
+        $email = sanitize_email( $email );
+        $list_id = $this->sanitize_list_id( $list_id );
+        if ( empty( $list_id ) ) {
+            return false;
+        }
+        $member_hash = $this->get_email_hash( $email );
+        $endpoint = "/lists/$list_id/members/$member_hash";
+        return $this->get_request( $endpoint );
+    }
+
+    /**
      * Base method for adding or removing a contact from a group within a list
      *
      * @see https://rudrastyh.com/mailchimp-api/interest-groups.html
@@ -561,7 +583,7 @@ class MailChimp {
      * @return object|false           Group object or false if not found
      */
     public function get_group_category( $group_category = '', $list_id = '' ) {
-        $groups = $this->get_group_categories();
+        $groups = $this->get_group_categories( $list_id );
         if ( empty( $groups ) || empty( $group_category ) ) {
             return false;
         }
@@ -640,18 +662,23 @@ class MailChimp {
     /**
      * Get all of the groups for a list across group categories
      *
+     * NOTE: We add the category_title property ourselves since MailChimp doesn't include it
+     *
      * @param  string $list_id Optional list ID
      * @return array          Flat array of group objects
      */
     public function get_all_groups( $list_id = '' ) {
         $list_id = $this->sanitize_list_id( $list_id );
-        $categories = $this->get_group_categories();
+        $categories = $this->get_group_categories( $list_id );
         $output = [];
         foreach ( $categories as $cat ) {
             if ( ! is_object( $cat ) || ! isset( $cat->id ) ) {
                 continue;
             }
             $groups = $this->get_groups( $cat->id, $list_id );
+            foreach ( $groups as $group ) {
+                $group->category_title = $cat->title;
+            }
             $output = array_merge( $output, $groups );
         }
         // Remove the _links element
