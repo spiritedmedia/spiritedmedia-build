@@ -18,37 +18,37 @@ switch ( $blog_id ) :
             [
                 'name'     => 'Billy Penn Homepage',
                 'path'     => '/',
-                'expected' => 13,
+                'expected' => 15,
             ],
             [
                 'name'     => 'Billy Penn Article',
                 'path'     => '/2017/09/26/we-knew-nothing-about-donuts-and-other-stories-in-the-new-federal-donuts-book/',
-                'expected' => 3,
+                'expected' => 6,
             ],
             [
                 'name'     => 'Billy Penn Story',
                 'path'     => '/stories/septa-key/',
-                'expected' => 12,
+                'expected' => 14,
             ],
             [
                 'name'     => 'Billy Penn Who\'s Next',
                 'path'     => '/2017/03/01/whos-next-bartenders-15-young-drink-maestros-elevating-phillys-booze-game/',
-                'expected' => 1,
+                'expected' => 3,
             ],
             [
                 'name'     => 'Billy Penn Fact Check',
                 'path'     => '/2017/09/01/why-the-black-lives-matter-protest-outside-a-philly-police-officers-home-was-not-illegal-occupation/',
-                'expected' => 1,
+                'expected' => 3,
             ],
             [
                 'name'     => 'Billy Penn Event',
                 'path'     => '/2017/03/10/drink-local-stouts-instead-of-guinness/',
-                'expected' => 3,
+                'expected' => 6,
             ],
             [
                 'name'     => 'Billy Penn Embed',
                 'path'     => '/2017/09/03/heres-what-it-was-like-to-check-in-at-phl-airport-in-the-1970s/',
-                'expected' => 3,
+                'expected' => 6,
             ],
         ];
         break;
@@ -58,7 +58,7 @@ switch ( $blog_id ) :
             [
                 'name'     => 'The Incline Homepage',
                 'path'     => '/',
-                'expected' => 8,
+                'expected' => 10,
             ],
         ];
         break;
@@ -68,12 +68,12 @@ switch ( $blog_id ) :
             [
                 'name'     => 'Denverite Homepage',
                 'path'     => '/',
-                'expected' => 3,
+                'expected' => 5,
             ],
             [
                 'name'     => 'Denverite Article',
                 'path'     => '/2017/12/18/denver-council-delays-consideration-massive-flood-control-project/',
-                'expected' => 3,
+                'expected' => 6,
             ],
         ];
         break;
