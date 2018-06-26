@@ -33,10 +33,13 @@
         this.options = $.extend(arguments[0], defaults);
       }
 
+      this.$target = $('#' + this.options.target);
+      this.modalClass = this.$target.data('modal-class');
+
       this.isOpen = false;
-      this.$target = $(this.options.target);
       this.$site = $('.js-site');
 
+      this.$modal = $('#modal');
       this.$modalContent = $('#modal-content');
 
       this.$modalOverlay = $('#modal-overlay');
@@ -100,8 +103,9 @@
       this.$placeholder = $('<div></div>')
         .hide();
       this.$target.after(this.$placeholder);
-      this.detached = this.$target.detach();
-      this.$modalContent.append(this.detached);
+      this.$detached = this.$target.detach();
+      this.$modalContent.append(this.$detached);
+      this.$modal.addClass(this.modalClass);
 
       // Fire an event for other scripts to hook into and do something
       // before the modal is opened
@@ -141,6 +145,7 @@
       this.$placeholder.replaceWith(this.$target);
       this.$modalContent.html('');
       this.$modalFrame.attr('aria-hidden', 'true');
+      this.$modal.removeClass(this.modalClass);
 
       // Fire an event for other scripts to hook into and do something
       // when the modal is closed

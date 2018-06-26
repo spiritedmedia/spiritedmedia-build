@@ -6,15 +6,14 @@
 
 .signup-email__form {
   padding: rem( 16px );
-  // Set this as the initial text alignment to keep the
-  // email input and submit button aligned center
-  text-align: center;
+}
+
+.signup-email__form__inner {
+  margin-bottom: rem( 16px );
 }
 
 .signup-email__title,
-.signup-email__icon,
-.signup-email__input-group,
-.signup-email__btn {
+.signup-email__icon {
   display: inline-block;
   vertical-align: middle;
   width: 100%;
@@ -40,7 +39,7 @@
 // stylelint-disable selector-max-type
 .signup-email__details,
 .signup-email__success-message__details p {
-  margin-bottom: rem( 8px );
+  margin-bottom: rem( 16px );
   text-align: left;
 }
 // stylelint-enable selector-max-type
@@ -59,32 +58,6 @@
   }
 }
 // stylelint-enable selector-max-type
-
-.signup-email__input-group,
-.signup-email__email-input {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.signup-email__input-group {
-  margin-top: rem( 16px );
-  text-align: center;
-}
-
-.signup-email__email-input {
-  width: 100%;
-  text-align: center;
-
-  // Hide placeholder text on focus
-  &:focus::placeholder {
-    color: transparent;
-  }
-}
-
-.signup-email__btn {
-  font-weight: 700;
-  text-transform: none;
-}
 
 // stylelint-disable-next-line selector-max-type
 .signup-email__success-message p {
@@ -113,22 +86,6 @@
 }
 
 
-@media ( min-width: em( 420px ) ) {
-  .signup-email__input-group,
-  .signup-email__btn {
-    width: 80%;
-  }
-}
-
-
-@media ( min-width: em( 520px ) ) {
-  .signup-email__input-group,
-  .signup-email__btn {
-    width: 70%;
-  }
-}
-
-
 @media #{$medium-up} {
   .signup-email__form {
     text-align: left;
@@ -152,17 +109,6 @@
       display: none;
     }
   }
-
-  .signup-email__input-group,
-  .signup-email__btn {
-    width: 45%;
-    text-align: center;
-  }
-
-  .signup-email__input-group {
-    margin-right: 1%;
-    margin-top: 0;
-  }
 }
 
 
@@ -181,14 +127,6 @@
 
       // stylelint-disable-next-line selector-max-type
       br { display: block; }
-    }
-  }
-
-  .signup-email__input-group,
-  .signup-email__btn {
-    .widget & {
-      display: block;
-      width: 100%;
     }
   }
 }
@@ -258,16 +196,3 @@
     @include explode-component( $side: 'left', $inner-selector: '.signup-email__form' );
   }
 } // end .signup-email--cluster
-
-
-//
-// Email signup in modal
-// ==========================================================================
-
-.signup-email--modal {
-  display: none;
-
-  .modal__content & {
-    display: block;
-  }
-}

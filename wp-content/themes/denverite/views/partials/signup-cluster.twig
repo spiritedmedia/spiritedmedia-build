@@ -7,20 +7,18 @@ Get email notifications whenever we write about <strong>{{ subscription_title }}
 
 
 {% block email_input %}
-<div class="signup-email__input-group input-group-v2">
+<div class="signup-email__input-group input-group">
     <label for="{{ id_email_input|esc_attr }}" class="invisible">
         Email Address
     </label>
-    {{ ped_icon( 'envelope-o', 'signup-email__input-icon input-group-v2__addon' ) }}
+    {{ ped_icon( 'envelope-o', 'signup-email__input-icon input-group__addon' ) }}
     {{ email_input }}
 </div>
 {% endblock email_input %}
 
 
 {% block submit_button %}
-<button class="signup-email__btn btn-v2--oval--light js-form-submit" type="submit">
-    {% include 'partials/email-forms/form-submit-signup-inner.twig' with {
-        text: 'Get Alerts'
-    } only %}
+<button class="signup-email__btn btn--oval btn--bg-light js-form-submit" type="submit">
+    {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
 </button>
 {% endblock submit_button %}

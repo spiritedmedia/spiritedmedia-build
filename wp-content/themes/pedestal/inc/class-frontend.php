@@ -46,25 +46,12 @@ class Frontend {
 
         add_filter( 'template_include', [ $this, 'filter_template_include' ] );
 
-        add_filter( 'get_search_form', function( $output ) {
-            $output = str_replace(
-                [ 'class="search-submit"', '</form>' ],
-                [ 'class="search-submit btn right"', '<div class="u-clear-right"></div></form>' ],
-                $output
-            );
-            return $output;
-        });
-
         add_filter( 'body_class', function( $body_classes ) {
 
             global $wp_query;
 
             if ( is_page() || is_author() ) {
                 $body_classes[] = 'full-width';
-            }
-
-            if ( is_search() && ! PEDESTAL_ENABLE_HEADER_NAVIGATION ) {
-                $body_classes[] = 'is-search-open';
             }
 
             if ( is_user_logged_in() && isset( $_GET['debug-ga'] ) ) {
@@ -303,6 +290,10 @@ class Frontend {
                 'label'           => $spotlight['label'],
                 'content'         => Pedestal()->get_spotlight_post(),
             ];
+        }
+
+        if ( is_search() ) {
+            $context['search_query'] = get_search_query();
         }
 
         if ( wp_get_current_user() ) {

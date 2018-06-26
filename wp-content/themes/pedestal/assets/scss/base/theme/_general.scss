@@ -20,6 +20,9 @@ body {
   background-color: $white;
 }
 
+.site-wrap {
+  overflow: hidden; // Required for the `explode-component` mixin to work
+}
 
 .content-wrapper {
   @include grid-row;
@@ -30,10 +33,6 @@ body {
   .page & {
     max-width: rem( 865px );
   }
-}
-
-.rail {
-  margin-top: $main-margin-top;
 }
 
 a.disabled {
@@ -63,18 +62,6 @@ figure {
   margin: 0 0 rem( 16px ) 0;
 }
 
-
-// Adjust site wrapper for search input
-.site-wrap {
-  overflow: hidden;
-  position: relative;
-  transition: transform 0.3s ease;
-  z-index: $z-index-1;
-
-  .is-search-open & {
-    transform: translateY( rem( 60 ) );
-  }
-}
 
 @media print {
   .content-wrapper {

@@ -192,7 +192,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY'  => true,
                 'PEDESTAL_ENABLE_HEADER_NAVIGATION'     => false,
                 'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'     => false,
-                'PEDESTAL_ENABLE_FORMS_V2'              => false,
                 'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'    => false,
 
                 // Membership
@@ -525,8 +524,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             // Render a DFP unit
             $twig->addFunction( new \Twig_SimpleFunction( 'dfp_unit', function( $id, $sizes ) {
                 $context = [
-                    'id'    => $id,
-                    'sizes' => $sizes,
+                    'id'        => $id,
+                    'sizes'     => $sizes,
+                    'unique_id' => uniqid(),
                 ];
                 ob_start();
                 \Timber\Timber::render( 'partials/adverts/dfp-unit.twig', $context );

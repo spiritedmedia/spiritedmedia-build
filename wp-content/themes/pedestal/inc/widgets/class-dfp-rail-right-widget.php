@@ -31,6 +31,7 @@ class Rail_Right_Widget extends \WP_Widget {
 
             case 'dfp_rail_right_skyscraper':
                 Timber::render( 'widgets/dfp-rail-right-skyscraper.twig', $context );
+                Timber::render( 'partials/adverts/sidebar-ad.twig' );
                 break;
 
             case 'dfp_rail_right_skyscraper_alt':

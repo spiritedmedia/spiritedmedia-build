@@ -1,4 +1,4 @@
-{% set form_submit_text = text|default( 'Sign Up' ) %}
+{% set form_submit_text = form_submit_text|default( 'Sign Up' ) %}
 
 <span class="form-submit__text js-form-submit-text">{{ form_submit_text }}</span>
 <div class="form-submit__loader js-form-submit-loader">{% include 'partials/loading.twig' %}</div>

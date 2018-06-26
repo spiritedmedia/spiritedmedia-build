@@ -253,26 +253,35 @@
     },
 
     /**
-     * A helper for creating modals purely from markup.
-     * All you need is to add the class `.js-modal-trigger`
-     * and a data attribute pointing to the target element for the modal
+     * A helper for creating modals purely from markup
+     *
+     * 1. Add the class `.js-modal-trigger` to the element you want to have
+     *    trigger the modal
+     * 2. Add the modal's inner content to a template, preferably in
+     *    `views/partials/modals/`
+     * 3. Give its outermost element an ID attribute, preferably with `modal`
+     *    somewhere in the ID for the sake of clarifying its purpose.
+     * 4. Also give the outermost element a `data-modal-class` attribute
+     *    containing the classes you want applied to the root modal element
+     * 5. Add a `data-modal-id` attribute to the modal trigger element --
+     *    set the target element's ID as the value
      *
      * @example
-     * <button class="js-modal-trigger" data-modal-target="#foo">
+     * <button class="js-modal-trigger" data-modal-id="foo-modal">
      *   Show Modal
      * </button>
-     * <div id="foo">My modal content</div>
+     * <div id="foo-modal" data-modal-class="modal--foo">My modal content</div>
      */
     setupModals: function() {
       $('.js-modal-trigger').each(function(index, elem) {
         var $elem = $(elem);
-        var target = $elem.data('modal-target');
+        var target = $elem.data('modal-id');
         if (!target) {
           return;
         }
 
         var callback = false;
-        if (target == '#modal-signup-email-form') {
+        if (target == 'signup-email-form-modal') {
           // #subscribe is used on membership pages to
           // trigger the email newsletter signup modal
           // See https://billypenn.com/membership/
@@ -298,7 +307,7 @@
           target: target
         }, callback);
 
-        if (target == '#modal-signup-email-form') {
+        if (target == 'signup-email-form-modal') {
           theModal.on('modal:close', function() {
             // Remove the location hash if present
             if (location.hash === '#subscribe') {
@@ -307,23 +316,10 @@
           });
         }
 
-        if (target == '#site-header--with-nav-modal-menu') {
-          // Add/remove a class to .modal__frame for styling purposes
-          var $modalFrame = $('.js-modal__frame');
-
-          theModal.on('modal:open', function() {
-            $modalFrame.addClass('modal--header-nav-modal');
-          });
-
-          theModal.on('modal:close', function() {
-            $modalFrame.removeClass('modal--header-nav-modal');
-          });
-        }
-
         // When search modal is opened set focus to the search field
-        if (target == '#site-header-search-modal') {
+        if (target == 'search-modal') {
           theModal.on('modal:opened', function() {
-            const $theField = $('.js-site-header--search-field');
+            const $theField = $('.js-modal-search-field');
             PedUtils.focusAtEnd($theField);
           });
         }

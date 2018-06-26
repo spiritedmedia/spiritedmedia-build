@@ -20,7 +20,7 @@
             class="site-header__cta js-modal-trigger"
             data-ga-category="Email Signup Modal | Header"
             data-ga-label="Signup"
-            data-modal-target="#modal-signup-email-form"
+            data-modal-id="signup-email-form-modal"
         >
             <div class="site-header__cta__prompt">
                 <h2 class="site-header__cta__tagline">On top of Philly news</h2>
@@ -32,6 +32,8 @@
                 Sign up!
             </div>
         </a>
+
+        {% include 'partials/modals/search.twig' %}
 
     </div>
 </header>

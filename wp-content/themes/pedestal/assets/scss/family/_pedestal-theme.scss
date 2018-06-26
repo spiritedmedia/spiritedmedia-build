@@ -52,11 +52,9 @@
 @import '../base/theme/general';
 @import '../base/theme/tables';
 @import '../base/theme/forms';
-@import '../base/theme/forms-v2';
 @import '../base/theme/animations';
 @import '../base/theme/sticky-footer';
 @import '../base/theme/buttons';
-@import '../base/theme/buttons-v2';
 
 
 
@@ -141,6 +139,7 @@
 @import '../components/newsletter';
 @import '../components/whos-next';
 @import '../components/site-footer';
+@import '../components/signup-email';
 
 // Membership
 @import '../components/donate-form';

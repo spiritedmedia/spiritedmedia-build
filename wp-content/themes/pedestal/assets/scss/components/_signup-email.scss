@@ -1,0 +1,119 @@
+.signup-email__form {
+  // Set this as the initial alignment for the email input and submit button
+  text-align: center;
+}
+
+.signup-email__input-group,
+.signup-email__btn {
+  margin-top: 0;
+  margin-bottom: rem( 8px );
+}
+
+.signup-email__input-group {
+  margin-left: auto;
+  text-align: center;
+  // Input group must be inline-block
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.signup-email__email-input {
+  // Hide placeholder text on focus
+  &:focus::placeholder {
+    color: transparent;
+  }
+}
+
+.signup-email__btn {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  text-transform: uppercase;
+}
+
+.signup-email__explore {
+  padding-top: rem( 16px );
+  text-align: center;
+}
+
+
+@media #{$medium-up} {
+
+  .signup-email__form {
+    // Alignment for the input and button
+    text-align: left;
+  }
+
+  .signup-email__input-group,
+  .signup-email__btn {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .signup-email__input-group,
+  .signup-email__btn {
+    margin-bottom: 0;
+  }
+
+  .signup-email__input-group {
+    margin-right: rem( 16px );
+  }
+
+}
+
+
+//
+// Daily Newsletter + Breaking News Signup
+// ==========================================================================
+
+.signup-email--daily {
+
+  @media #{$large-up} {
+    &.widget {
+      .signup-email__form {
+        text-align: center;
+      }
+
+      .signup-email__input-group,
+      .signup-email__btn {
+        margin-right: auto;
+        margin-bottom: rem( 8px );
+        margin-left: auto;
+      }
+
+      .signup-email__btn {
+        display: block;
+      }
+    } // &.widget
+  } // @media #{$large-up}
+
+}
+
+
+//
+// Follow Cluster Signup
+// ==========================================================================
+
+.signup-email--cluster {
+
+  .signup-email__header,
+  .signup-email__title,
+  .signup-email__subtitle {
+    margin-bottom: rem( 12px );
+  }
+
+}
+
+
+//
+// Email signup in modal
+// ==========================================================================
+
+.signup-email--modal {
+  display: none;
+
+  .modal & {
+    display: block;
+  }
+}

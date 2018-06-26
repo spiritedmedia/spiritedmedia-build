@@ -1,0 +1,32 @@
+<form
+    method="get"
+    action="{{ site_url|esc_url }}"
+    id="search-modal"
+    class="search-form--modal"
+    data-modal-class="modal--search"
+>
+
+    <label
+        class="form-label u-text-color-white"
+        for="modal-search-field"
+    >
+        Search {{ constant('PEDESTAL_DOMAIN_PRETTY') }}
+    </label>
+
+    <div class="search-form__input-group input-group">
+        {{ ped_icon( 'search', 'input-group__addon' ) }}
+        <input
+            type="search"
+            name="s"
+            id="modal-search-field"
+            class="input-group__input form-input js-modal-search-field"
+            placeholder="enter your search term"
+            value="{{ search_query|esc_attr }}"
+        >
+    </div>
+
+    <button class="search-form__button btn--oval">
+        Search
+    </button>
+
+</form>

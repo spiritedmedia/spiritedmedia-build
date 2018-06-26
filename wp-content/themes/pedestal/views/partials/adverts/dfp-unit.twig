@@ -1,9 +1,15 @@
 {% spaceless %}
 
 {% if id and sizes %}
-<div class="dfp js-dfp" data-dfp-sizes="{{ sizes }}" data-dfp-name="{{ id }}" id="div-gpt-ad-{{ id }}-0">
+<div
+    class="dfp js-dfp"
+    data-dfp-sizes="{{ sizes|esc_attr }}"
+    data-dfp-name="{{ id|esc_attr }}"
+    data-dfp-unique="{{ unique_id|esc_attr }}"
+    id="div-gpt-ad-{{ id|esc_attr }}-{{ unique_id|esc_attr }}"
+>
 <script type="text/javascript">
-    googletag.cmd.push(function() { googletag.display("div-gpt-ad-{{ id }}-0"); });
+    googletag.cmd.push(function() { googletag.display("div-gpt-ad-{{ id }}-{{ unique_id }}"); });
 </script>
 </div>
 {% endif %}

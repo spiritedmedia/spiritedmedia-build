@@ -1,24 +1,26 @@
-<div
-    id="modal-overlay"
-    class="modal__overlay"
-    aria-hidden="true"
-    tabindex="-1">
-</div>
-<div
-    id="modal-frame"
-    class="modal__frame js-modal__frame"
-    aria-role="dialog"
-    aria-hidden="true"
->
+<div id="modal" class="modal">
     <div
-        id="modal-content"
-        class="modal__content js-modal__content"
-        tabindex="0"
-    ></div>
-    <button
-        class="modal__close-button js-modal__close-button"
+        id="modal-overlay"
+        class="modal__overlay"
+        aria-hidden="true"
+        tabindex="-1">
+    </div>
+    <div
+        id="modal-frame"
+        class="modal__frame js-modal__frame"
+        aria-role="dialog"
+        aria-hidden="true"
     >
-        <span class="invisible">Close</span>
-        {{ ped_icon( 'times-circle' ) }}
-    </button>
+        <div
+            id="modal-content"
+            class="modal__content js-modal__content"
+            tabindex="0"
+        ></div>
+        <button
+            class="modal__close-button js-modal__close-button"
+        >
+            <span class="invisible">Close</span>
+            {{ ped_icon( 'times-circle' ) }}
+        </button>
+    </div>
 </div>

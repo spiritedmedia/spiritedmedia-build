@@ -1,12 +1,4 @@
-// ==========================================================================
-// Pedestal // Components // MEMBER BAR
-//
-// The membership CTA bar that appears above the site header.
-// ==========================================================================
-
-
-$_height:       rem( 60px );
-$_inner-height: rem( 40px );
+$member-bar-height:       rem( 60px );
 
 
 .member-bar {
@@ -28,26 +20,19 @@ $_inner-height: rem( 40px );
 }
 
 .member-bar__button {
-  height: $_inner-height;
+  height: rem( 36px );
   width: rem( 275px );
   margin-bottom: 0;
   padding: 0;
-  line-height: $_inner-height;
-
-  &,
-  &:hover {
-    background-color: $white;
-    color: $body-font-color;
-    font-weight: 700;
-  }
+  line-height: rem( 36px );
 }
 
 
 @media screen and ( min-width: em( 860px ) ) {
   .member-bar {
-    height: $_height;
+    height: $member-bar-height;
     padding: 0;
-    line-height: $_height;
+    line-height: $member-bar-height;
   }
 
   .member-bar__text,

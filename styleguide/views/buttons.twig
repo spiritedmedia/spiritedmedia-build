@@ -1,172 +1,77 @@
 {% extends 'layouts/layout--content-sidebar.twig' %}
 
+{% block head %}
+{# Custom styles for this page #}
+<style>
+    p {
+      margin-bottom: 3rem;
+    }
+
+    p a {
+        margin-right: 1.5rem;
+    }
+
+    .dark-background {
+        padding: 1.5rem;
+        background-color: #333;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-{% markdown %}
+    <h1>Buttons V2</h1>
 
-# Buttons
+    <p>
+        <a class="btn" href="#">Button</a>
+        <button class="btn">Button</button>
+    </p>
 
-## Basic Examples
+    <p>
+        <a class="btn--bg-secondary" href="#">Button</a>
+        <button class="btn--bg-secondary">Button</button>
+    </p>
 
-{% set basic_examples %}
-<p>
-    <a class="btn" href="#">Link Element as Button</a>
-    <button class="btn">Button element as button</button>
-</p>
-{% endset %}
+    <p>
+        <a class="btn--bg-grey" href="#">Button</a>
+        <button class="btn--bg-grey">Button</button>
+    </p>
 
+    <p>
+        <a class="btn--arrow" href="#">Arrow Button</a>
+        <button class="btn--arrow">Arrow Button</button>
+    </p>
 
-{{ basic_examples }}
+    <p>
+        <a class="btn--oval" href="#">Oval-shaped Button</a>
+        <button class="btn--oval">Oval-shaped Button</button>
+    </p>
 
-```html
-{{ basic_examples }}
-```
+    <p>
+        <a class="btn--bg-light btn--bordered" href="#">Bordered Button</a>
+        <button class="btn--bg-light btn--bordered">Bordered Button</button>
+    </p>
 
-### Live Usage (as of 2018-02-22)
+    <div class="dark-background">
+        <p>
+            <a class="btn--bg-light" href="#">Button</a>
+            <button class="btn--bg-light">Button</button>
+        </p>
 
-- Member bar
-- Search form submit icon
-- CTA button shortcode `[pedestal-cta-button]`
-- Donate form
-- Cluster Follow Update signup form
-- Newsletter signup forms
+        <p>
+            <a class="btn--bg-accent" href="#">Button</a>
+            <button class="btn--bg-accent">Button</button>
+        </p>
 
+        <p>
+            <a class="btn--arrow btn--bg-accent" href="#">Arrow Button</a>
+            <button class="btn--arrow btn--bg-accent">Arrow Button</button>
+        </p>
 
-
-
-
-## Size Examples
-
-{% set size_examples %}
-<!-- Small Button Example -->
-<p>
-    <a class="btn btn--sm" href="#">Small Button</a>
-    <button class="btn btn--sm">Small Button</button>
-</p>
-
-<!-- Large Button Example -->
-<p>
-    <a class="btn btn--lg" href="#">Large Button</a>
-    <button class="btn btn--lg">Large Button</button>
-</p>
-
-<!-- Full Width Button Example -->
-<p>
-    <a class="btn btn--full-width" href="#">Full Width Button</a>
-    <button class="btn btn--full-width">Full Width Button</button>
-</p>
-
-<!-- Full Width + Small -->
-<p>
-    <a class="btn btn--sm btn--full-width" href="#">Full Width Small Button</a>
-    <button class="btn btn--sm btn--full-width">Full Width Small Button</button>
-</p>
-
-<!-- Full Width + Large -->
-<p>
-    <a class="btn btn--lg btn--full-width" href="#">Full Width Large Button</a>
-    <button class="btn btn--lg btn--full-width">Full Width Large Button</button>
-</p>
-
-{% endset %}
-
-{{ size_examples }}
-
-```html
-{{ size_examples }}
-```
-
-
-### Live Usage (as of 2018-02-22)
-
-- 🚫 Small
-- ✅ Large
-    - Cluster Follow Update signup form
-    - Newsletter signup forms
-- ✅ Full Width (+ Large)
-    - Cluster Follow Update signup form
-    - Newsletter signup forms
-- 🚫 Full Width + Small
-
-
-## CTA Examples
-
-{% set cta_examples %}
-<!-- Primary CTA Button -->
-<p>
-    <a class="btn--primary" href="#">Primary CTA Button</a>
-    <button class="btn--primary">Primary CTA Button</button>
-</p>
-
-<!-- Secondary CTA Button -->
-<p>
-    <a class="btn--secondary" href="#">Secondary CTA Button</a>
-    <button class="btn--secondary">Secondary CTA Button</button>
-</p>
-
-<!-- Promo CTA Button -->
-<p>
-    <a class="btn--promo" href="#">Promo CTA Button</a>
-</p>
-<p>We need to test this with some longer text on Denverite to make sure the SVG background stretches properly:</p>
-<p>
-    <button class="btn--promo">Promo CTA Button With Long Text</button>
-</p>
-
-<p>
-    <a class="btn--achtung" href="#">Achtung! Color</a>
-    <button class="btn--achtung">Achtung! Color</button>
-</p>
-
-<p>
-    <a class="btn--achtung--outline" href="#">Achtung! Color (Outline Variation)</a>
-    <button class="btn--achtung--outline">Achtung! Color (Outline Variation)</button>
-</p>
-
-<!-- No Border -->
-<p>
-    <a class="btn btn--no-border" href="#">No Border</a>
-    <button class="btn btn--no-border">No Border</button>
-</p>
-
-<!-- Pill-shaped Button -->
-<p>
-    <a class="btn btn--pill" href="#">Pill-shaped Button</a>
-    <button class="btn btn--pill">Pill-shaped Button</button>
-</p>
-{% endset %}
-
-{{ cta_examples }}
-
-```
-{{ cta_examples }}
-```
-
-
-### Live Usage (as of 2018-02-22)
-
-- 🚫 Primary CTA
-- ✅ Secondary CTA
-    - Pagination (Denverite)
-- ✅ Promo CTA Button
-    - Donate form
-    - **Shortcode**: `[pedestal-cta-button]`
-        - Known usage on About and Membership pages
-- ✅ Achtung CTA
-    - Cluster Follow Update signup form
-    - Newsletter signup forms
-- ✅ Achtung CTA (Outline Variation)
-    - Pagination (default)
-- ✅ No Border
-    - Donate form
-    - Member bar
-    - Search icon
-- ✅ Pill Button
-    - Donate form
-    - Member bar
-    - **Shortcode**: `[pedestal-cta-button]`
-
-
-{% endmarkdown %}
+        <p>
+            <a class="btn--oval btn--bg-light" href="#">Oval-shaped Button</a>
+            <button class="btn--oval btn--bg-light">Oval-shaped Button</button>
+        </p>
+    </div>
 {% endblock %}
 
 {% block sidebar %}

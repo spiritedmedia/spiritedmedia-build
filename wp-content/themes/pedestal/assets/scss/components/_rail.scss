@@ -2,31 +2,36 @@
 // Pedestal // Components // RAIL
 // ==========================================================================
 
-// @TODO
-// stylelint-disable selector-max-type
-
-
 .rail {
-  // Shrink column padding so a 300px DFP advert can fit
-  padding-left: rem( 8px );
-  padding-right: rem( 8px );
+  display: none;
+}
 
-  // Fix for mysterious rail vertical explosion
-  // https://github.com/spiritedmedia/spiritedmedia/issues/338
-  overflow: hidden;
+@media #{$large-up} {
+  .rail {
+    display: block;
+    // Shrink column padding so a 300px DFP advert can fit
+    padding-left: rem( 8px );
+    padding-right: rem( 8px );
 
-  .widget-title {
-    font-family: $font-family-sans-serif;
-    font-size: $widget-title-font-size;
-    color: $widget-title-color;
-    text-transform: uppercase;
-    line-height: $widget-title-line-height;
-    margin-top: rem( 32px );
-    font-weight: 700;
-    letter-spacing: em( 0.3px, $widget-title-font-size );
+    margin-top: $main-margin-top;
 
-    &:first-child {
-      margin-top: 0;
+    // Fix for mysterious rail vertical explosion
+    // https://github.com/spiritedmedia/spiritedmedia/issues/338
+    overflow: hidden;
+
+    .widget-title {
+      font-family: $font-family-sans-serif;
+      font-size: $widget-title-font-size;
+      color: $widget-title-color;
+      text-transform: uppercase;
+      line-height: $widget-title-line-height;
+      margin-top: rem( 32px );
+      font-weight: 700;
+      letter-spacing: em( 0.3px, $widget-title-font-size );
+
+      &:first-child {
+        margin-top: 0;
+      }
     }
   }
 }

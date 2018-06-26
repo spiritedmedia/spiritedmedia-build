@@ -1,7 +1,6 @@
 .no-js,
 .has-closed-modal {
-  .modal__overlay,
-  .modal__frame {
+  .modal {
     display: none;
     z-index: -1;
   }
@@ -17,20 +16,24 @@
 
 .modal__overlay,
 .modal__frame {
-  background-color: $modal-overlay-background-color-fallback;
-  background-color: $modal-overlay-background-color;
-
   position: fixed;
+  z-index: $z-index-3;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
+}
 
-  z-index: $z-index-3;
+.modal__overlay {
+  background-color: rgba( $black, 0.4 );
+}
+
+.modal__frame,
+.modal__content {
+  background-color: $white;
 }
 
 .modal__frame {
-  background-color: $modal-background-color;
   overflow-y: auto;
 
   // Place on top of the overlay
@@ -42,8 +45,7 @@
 }
 
 .modal__content {
-  padding: $modal-padding;
-  background-color: $modal-background-color;
+  padding: rem( 16px );
 
   &:focus {
     outline: none;
@@ -51,40 +53,32 @@
 }
 
 .modal__close-button {
-  color: $white;
-  background-color: transparent;
-  font-size: rem( 30px );
-  border: 0;
-  height: rem( 40px ); // For IE11 alignment
-
   position: absolute;
+  z-index: $z-index-1;
   right: 0;
   top: 0;
 
-  z-index: $z-index-1;
+  height: rem( 40px ); // For IE11 alignment
+  border: 0;
+  background-color: transparent;
+
+  color: $white;
+  font-size: rem( 30px );
 }
 
-// Variatons of the modal background color
-.modal--header-nav-modal {
-  &.modal__frame,
-  .modal__content {
-    background-color: $primary-color;
-  }
-}
 
 @media ( min-width: em( 760px ) ) {
   .modal__frame {
-    background-color: transparent;
     margin: 0 auto;
     max-width: rem( 700px );
-    max-height: rem( 460px );
+    max-height: rem( 400px );
     top: rem( 32px );
     width: 100%; // IE 10 needs this set to center the frame
   }
 
   .modal__content {
     border-radius: rem( 4px );
-    min-height: $modal-content-min-height;
+    min-height: rem( 400px );
     position: relative;
   }
 }
@@ -93,4 +87,69 @@
   .admin-bar .modal__frame {
     top: $wp-admin-bar-height-mobile;
   }
+}
+
+
+//
+// Search Modal
+// ==========================================================================
+
+.modal--search {
+
+  .modal__overlay {
+    background-color: $modal-overlay-background-color-light;
+  }
+
+  .modal__frame,
+  .modal__content {
+    background-color: $modal-search-background-color;
+  }
+
+}
+
+
+//
+// Mobile Header Nav Modal
+// ==========================================================================
+
+.modal--header-nav {
+
+  .modal__overlay {
+    background-color: $modal-overlay-background-color-light;
+  }
+
+  .modal__frame,
+  .modal__content {
+    background-color: $primary-color;
+  }
+
+}
+
+
+//
+// Email Signup Form Modal
+// ==========================================================================
+
+.modal--signup-email-form {
+
+  .modal__frame,
+  .modal__content {
+    background-color: $white;
+  }
+
+  .modal__content {
+    padding: rem( 4px );
+  }
+
+
+  @media ( min-width: em( 760px ) ) {
+    .modal__frame {
+      max-height: fit-content;
+    }
+
+    .modal__content {
+      min-height: auto;
+    }
+  }
+
 }

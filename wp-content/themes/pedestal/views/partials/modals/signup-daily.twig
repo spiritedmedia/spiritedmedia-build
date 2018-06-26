@@ -2,8 +2,9 @@
 {% set id_email_input = 'signup-email-daily-email-input-' ~ id_postfix %}
 
 <div
-    id="modal-signup-email-form"
+    id="signup-email-form-modal"
     class="signup-email--daily signup-email--modal signup-email is-animated"
+    data-modal-class="modal--signup-email-form"
 >
     {% include 'partials/signup-daily.twig' with {
         gaLocation: 'Modal'

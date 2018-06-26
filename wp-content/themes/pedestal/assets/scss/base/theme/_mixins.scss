@@ -183,6 +183,32 @@
 
 
 //
+// Buttons
+// ==========================================================================
+
+/// Set up background and text color for a button color variant
+///
+/// Hover and focus text color must be set explicitly in all button variations
+/// to override default anchor element behavior. Any deviation from this pattern
+/// can be handled on a case by case basis.
+///
+/// @param {color} $bg-color - Background color
+@mixin button-color-variant( $bg-color ) {
+  background-color: $bg-color;
+
+  &,
+  &:hover,
+  &:focus {
+    color:
+      text-contrast(
+        $bg: $bg-color,
+        $text-dark: $button-text-color-dark
+      );
+  }
+}
+
+
+//
 // Shapes
 // ==========================================================================
 
@@ -301,63 +327,6 @@
       #{$inner-selector} {
         padding-#{$side}: $padding;
       }
-    }
-  }
-}
-
-
-//
-// Buttons
-// ==========================================================================
-
-/// Make a button color variation
-///
-/// If hover state background color and text color are set to `false`, then they
-/// will effectively switch non-hover values with each other. I.E. The hover
-/// state background color will be the normal state text color, and the hover
-/// state text color will be the normal state background color.
-///
-/// @param {color} $bg-color
-/// @param {color} $text-color [text-contrast( $bg-color )]
-/// @param {color} $bg-color-hover [$mixin-btn-color-variant-bg-color-hover]
-/// @param {color} $text-color-hover [$mixin-btn-color-variant-text-color-hover]
-/// @param {color} $border-color [$bg-color]
-/// @param {color} $border-color-hover [$bg-color]
-/// @param {color} $outline-color-focus [null]
-@mixin btn-color-variant(
-  $bg-color,
-  $text-color: text-contrast( $bg-color ),
-  $bg-color-hover: $mixin-btn-color-variant-bg-color-hover,
-  $text-color-hover: $mixin-btn-color-variant-text-color-hover,
-  $border-color: $bg-color,
-  $border-color-hover: $bg-color,
-  $outline-color-focus: null
-) {
-  @if $bg-color-hover == false {
-    $bg-color-hover: $text-color;
-  }
-
-  @if $text-color-hover == false {
-    $text-color-hover: $bg-color;
-  }
-
-  &,
-  &:focus {
-    border-color: $border-color;
-    background-color: $bg-color;
-    color: $text-color;
-  }
-
-  &:hover,
-  &:active {
-    border-color: $border-color-hover;
-    background-color: $bg-color-hover;
-    color: $text-color-hover;
-  }
-
-  @if $outline-color-focus {
-    &:focus {
-      outline: rem( 4px ) solid $outline-color-focus;
     }
   }
 }

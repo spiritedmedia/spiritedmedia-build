@@ -24,11 +24,11 @@ $anchor-text-decoration-hover: none;
 //
 // Colors / Opacity
 // ==========================================================================
+// These defaults are egregiously clashing so that we can easily spot their
+// functional use as they are never reader-facing.
 
-// We need to set these two commonly-used defaults which should be overridden in
-// the child themes
-$primary-color:           #333333 !default;
-$secondary-color:         lighten( #333333, 10% ) !default;
+$primary-color:           #bd10e0 !default;
+$secondary-color:         #7ed321 !default;
 
 $accent-color:            $elektroid-yellow !default;
 $success-color:           #43ac6a; // From Foundation

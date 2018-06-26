@@ -6,8 +6,12 @@ Get email notifications whenever we write about <strong>{{ subscription_title }}
 {% endblock title %}
 
 
-{% block submit_button %}
-<button class="signup-email__btn btn--lg btn--achtung btn--full-width js-form-submit" type="submit">
-    {% include 'partials/email-forms/form-submit-signup-inner.twig' with {text: 'Follow This'} only %}
-</button>
-{% endblock submit_button %}
+{% block email_input %}
+<div class="signup-email__input-group input-group">
+    <label for="{{ id_email_input|esc_attr }}" class="invisible">
+        Email Address
+    </label>
+    {{ ped_icon( 'envelope-o', 'signup-email__input-icon input-group__addon' ) }}
+    {{ email_input }}
+</div>
+{% endblock email_input %}

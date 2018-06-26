@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Denverite // Theme
  *
- * Version: 7.0.11
+ * Version: 7.1.0
  *
  * Copyright ( c ) 2016 Spirited Media
  */
@@ -19,7 +19,6 @@ $site-theme-name: 'denverite';
 @import 'pedestal-theme';
 
 // Child theme styles
-@import 'base/buttons';
 @import 'components/404';
 @import 'components/site-header';
 @import 'components/signup-email';

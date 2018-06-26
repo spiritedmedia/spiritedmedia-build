@@ -31,37 +31,18 @@
         <a
             href="{{ site_url|esc_url }}/navigation/"
             class="site-header--with-nav__menu-trigger js-modal-trigger"
-            data-modal-target="#site-header--with-nav-modal-menu"
+            data-modal-id="header-nav-modal"
         >
             {{ ped_icon( 'bars', 'site-header--with-nav__hamburger' ) }}
             <span class="invisible">Menu</span>
         </a>
 
-        <form
-            method="get"
-            action="{{ site_url|esc_url }}"
-            id="site-header-search-modal"
-            class="search-form--sitewide site-header--with-nav__search-modal"
-        >
-
-            <label class="form-label u-text-color-white" for="site-header--search-field">Search {{ domain_name }}</label>
-            <div class="search-form__input-group input-group-v2">
-                {{ ped_icon( 'search', 'input-group-v2__addon' ) }}
-                <input
-                    type="search"
-                    name="s"
-                    id="site-header--search-field"
-                    class="input-group-v2__input form-input js-site-header--search-field"
-                    placeholder="enter your search term"
-                    value="{{ search_query|esc_attr }}"
-                >
-            </div>
-            <button class="search-form__button btn-v2--oval--light site-header--with-nav__search-button">Search</button>
-        </form>
+        {% include 'partials/modals/search.twig' %}
 
         <section
-            id="site-header--with-nav-modal-menu"
+            id="header-nav-modal"
             class="site-header--with-nav__modal-menu"
+            data-modal-class="modal--header-nav"
         >
             <div class="site-nav--primary__outer">
                 <nav class="site-nav site-nav--primary">
@@ -70,7 +51,7 @@
 
                             {% if item.slug == 'search' %}
                                 {% set additional_classes = 'js-modal-trigger' %}
-                                {% set additional_attributes = 'data-modal-target="#site-header-search-modal"' %}
+                                {% set additional_attributes = 'data-modal-id="search-modal"' %}
                             {% endif %}
 
                             <li class="site-nav__item">

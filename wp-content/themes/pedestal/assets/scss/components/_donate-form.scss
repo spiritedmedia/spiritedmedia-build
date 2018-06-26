@@ -39,8 +39,7 @@
 // Amount Field + Label
 // ==========================================================================
 // 1. Hide spin box from number input
-// 2. Handle prefix+input sizing (simplified from `.input-group`)
-// 3. Handle inconsistent input sizing across browsers
+// 2. Handle inconsistent input sizing across browsers
 
 .donate-form__amount {
   margin-bottom: rem( 16px );
@@ -56,11 +55,11 @@
 .donate-form__amount__input-group {
   width: rem( 160px );
   display: block;
-  padding: 0; /* 3 */
+  padding: 0; /* 2 */
   background-color: $white;
 
   @include firefox-only {
-    padding: rem( 8px ) rem( 10px ); /* 3 */
+    padding: rem( 8px ) rem( 10px ); /* 2 */
   }
 }
 
@@ -85,7 +84,7 @@
   }
 
   @include ie-only {
-    height: rem( 40px ); /* 3 */
+    height: rem( 40px ); /* 2 */
   }
 }
 
@@ -98,68 +97,13 @@
 }
 
 
-@if sm-theme-supports( formsV2 ) {
+.donate-form__amount__input-group {
+  margin-top: rem( 4px );
+}
 
-  .donate-form__amount__input-group {
-    margin-top: rem( 4px );
-  }
-
-  .donate-form__amount__prefix {
-    @include ie-only {
-      height: rem( 24px ); /* 3 */
-    }
-  }
-
-} @else {
-
-  //
-  // Sites supporting forms v1 can't use `.input-group-v2` so we need to handle
-  // things differently...
-  //
-
-  .donate-form__amount__input-group,
-  .donate-form__amount__prefix,
-  .donate-form__amount__input {
-    /* 2 */
-    display: flex;
-    position: relative;
-  }
-
-  .donate-form__amount__input-group {
-    border: rem( 1px ) solid $grey-25;
-  }
-
-  .donate-form__amount__prefix,
-  .donate-form__amount__input {
-    align-items: center; /* 2 */
-  }
-
-  .donate-form__amount__prefix {
-    padding-left: rem( 5px ); /* 3 */
-    color: $primary-color;
-
-    @include firefox-only {
-      padding-left: 0; /* 3 */
-    }
-
-    @include ie-only {
-      height: rem( 32px ); /* 3 */
-    }
-  }
-
-  .donate-form__amount__input {
-    flex: 1 1 auto; /* 2 */
-    width: 1%; /* 2 */
-    position: relative;
-    padding: 0;
-
-    &:focus {
-      // Disable the outline because the input group styles here force the
-      // outline to cut off just before the icon. It's better to disable the
-      // outline entirely until we migrate everything to use the newer input
-      // group styles.
-      outline: none;
-    }
+.donate-form__amount__prefix {
+  @include ie-only {
+    height: rem( 24px ); /* 2 */
   }
 }
 

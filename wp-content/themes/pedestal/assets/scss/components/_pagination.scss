@@ -27,15 +27,3 @@ $pagination-button-bg: $grey-80;
 .pagination__text__total {
   font-weight: 700;
 }
-
-.pagination__load-more {
-  display: inline-block;
-
-  &.btn--achtung--outline {
-    border-radius: rem( 5px );
-    border-width: rem( 3px );
-    text-transform: none;
-    font-size: rem( 18px );
-    font-weight: 700;
-  }
-}

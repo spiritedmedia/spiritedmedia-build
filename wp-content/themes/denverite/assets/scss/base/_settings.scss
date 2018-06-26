@@ -41,7 +41,7 @@ $paragraph-line-height: rem( 24px ) / $paragraph-font-size;
 // ==========================================================================
 
 $secondary-color: #54345a;
-$accent-color:    $denverite-yellow; // !default
+$accent-color:    $denverite-yellow;
 $body-font-color: $darkest;
 
 
@@ -104,68 +104,22 @@ $main-description-text-color: $body-font-color;
 
 
 //
-// Forms
+// Forms + Input Groups
 // ==========================================================================
 
-$input-max-width: rem( 280px );
-$input-bg: $light;
-$input-caret-color: $accent-color;
-$input-font-color: $darker;
-$input-font-style: italic;
-$input-border-color: $dark;
-$input-border-radius: rem( 2px );
-$input-box-shadow: inset 2px 4px 8px 0 $secondary-color 20%;
-$input-label-font-family: $font-family-sans-serif;
-$input-label-font-weight: 600;
-$input-label-line-height: 1.5;
-$input-label-color: $darker;
-$input-line-height: 1.5;
+$input-label-font-family:       $font-family-sans-serif;
+$input-radio-label-font-family: $font-family-serif;
+
+// Input Groups
+$input-group-addon-color: $secondary-color;
 
 
 //
 // Buttons
 // ==========================================================================
 
-// For calculations only
-$_btn-target-line-height: rem( 24px );
-
-// Basic button styles
-$btn-target-height:  rem( 60px );
-$btn-border-width:   rem( 4px );
-$btn-border-radius:  rem( 2px );
-$btn-font-weight:    600;
-$btn-font-size:      rem( 20px );
-$btn-line-height:    $_btn-target-line-height / $btn-font-size;
-$btn-letter-spacing: em( 0.5px );
-$btn-spacing-y:      ( $btn-target-height - $_btn-target-line-height - $btn-border-width * 2 ) / 2;
-
-// `btn-color-variant` mixin
-$mixin-btn-color-variant-bg-color-hover: false;
-$mixin-btn-color-variant-text-color-hover: false;
-
-// Primary CTA
-$btn-primary-bg-color:            $secondary-color;
-$btn-primary-bg-color-hover:      $light;
-$btn-primary-border-color-hover:  $btn-primary-bg-color-hover;
-$btn-primary-outline-color-focus: $accent-color;
-$btn-primary-text-color:          $light;
-$btn-primary-text-color-hover:    $primary-color;
-
-// Secondary CTA
-$btn-secondary-bg-color:            $light;
-$btn-secondary-bg-color-hover:      $secondary-color;
-$btn-secondary-border-color:        $secondary-color;
-$btn-secondary-border-color-hover:  $light;
-$btn-secondary-outline-color-focus: $accent-color;
-$btn-secondary-text-color:          $secondary-color;
-$btn-secondary-text-color-hover:    $light;
-
-// Promo CTA
-$btn-promo-spacing-y:      $btn-spacing-y;
-$btn-promo-line-height:    1.2;
-$btn-promo-font-family:    $font-family-sans-serif;
-$btn-promo-font-size:      $btn-font-size;
-$btn-promo-letter-spacing: em( 0.5px );
+$button-border-color:    $secondary-color;
+$button-text-color-dark: $primary-color;
 
 
 //
@@ -186,18 +140,6 @@ $user-card-title-font-style:   italic;
 $user-card-title-line-height:  rem( 24px ) / $user-card-title-font-size;
 $user-card-contact-icon-size:  rem( 18px );
 $user-card-contact-icon-color: $secondary-color;
-
-
-//
-// Modals
-// ==========================================================================
-
-$modal-overlay-background-color-fallback: $white;
-$modal-overlay-background-color:          rgba( 255, 255, 255, 0.7 );
-$modal-content-min-height:                rem( 400px );
-$modal-close-button-color:                $white;
-$modal-padding:                           rem( 16px );
-$modal-background-color:                  $secondary-color;
 
 
 //
@@ -271,6 +213,13 @@ $widget-title-line-height: rem( 24px ) / $widget-title-font-size;
 //
 // Miscellaneous
 // ==========================================================================
+
+// Modals
+$modal-search-background-color: $secondary-color;
+
+// Search Form
+$search-form-standalone-button-background-color: $secondary-color;
+$search-form-modal-button-background-color: $white;
 
 // Cluster links below single entity
 $cluster-list-heading-line-height: 1;

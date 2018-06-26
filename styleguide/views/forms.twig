@@ -3,330 +3,88 @@
 {% block head %}
 {# Custom styles for this page #}
 <style>
-    h4,
-    h5 {
-        margin-top: 3rem;
-        margin-bottom: 1rem;
+    h1 {
+      padding-top: 36px;
     }
-    .form-input + .form-input {
-        margin-top: 0.5rem;
+
+    .example {
+      padding: 16px 8px;
+      margin-bottom: 16px;
+    }
+
+    .dark-background {
+      background-color: #4A4A4A;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-{% markdown %}
 
-# Forms
+    <h1>Forms</h1>
 
-## Basic Input Types
-
-The following example runs through the basic HTML input field types. They might
-not all be in use, but considering they're basic HTML we should still account
-for them all in our styles and in the styleguide. Live usage will still be
-accounted for below.
-
-{% set basic_types %}
-<form>
-    <div class="form-group">
-        <label class="form-label">
-            Email address
-            <input type="email" class="form-input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        </label>
-        <small id="emailHelp" class="form-group__text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label class="form-label" for="exampleInputPassword1">
-            Password
-            <input type="password" class="form-input" id="exampleInputPassword1" placeholder="Password">
-        </label>
-    </div>
-    <div class="form-group">
-        <label class="form-label" for="exampleSelect1">Example select</label>
-        <select class="form-input" id="exampleSelect1">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label class="form-label" for="exampleSelect2">Example multiple select</label>
-        <select multiple class="form-input" id="exampleSelect2">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label class="form-label" for="exampleTextarea">Example textarea</label>
-        <textarea class="form-input" id="exampleTextarea" rows="3"></textarea>
-    </div>
-    <div class="form-group">
-        <label class="form-label" for="exampleInputFile">File input</label>
-        <input type="file" class="form-input--file" id="exampleInputFile" aria-describedby="fileHelp">
-        <small id="fileHelp" class="form-group__text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-    </div>
-    <fieldset class="form-group">
-        <legend class="form-group__legend">Radio buttons</legend>
-        <div class="form-check">
-            <label class="form-label form-check__label">
-            <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            Option one is this and that&mdash;be sure to include why it's great
-            </label>
-        </div>
-        <div class="form-check">
-        <label class="form-label form-check__label">
-            <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios2" value="option2">
-            Option two can be something else and selecting it will deselect option one
-            </label>
-        </div>
-        <div class="form-check disabled">
-        <label class="form-label form-check__label">
-            <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
-            Option three is disabled
-            </label>
-        </div>
-    </fieldset>
-    <div class="form-check">
-        <label class="form-label form-check__label">
-            <input type="checkbox" class="form-check__input">
-            Check me out
-        </label>
-    </div>
-    <button type="submit" class="btn--primary">Submit</button>
-</form>
-{% endset %}
-
-{{ basic_types }}
-
-```html
-{{ basic_types }}
-```
-
-### Live Usage (as of 2018-02-23)
-
-Any type not listed here is not used on the site.
-
-#### `input[type="text"]`
-
-- Honeypot fields for signup forms (hidden if JavaScript is enabled)
-- Search
-- Donate form
-
-#### `input[type="email"]`
-
-- Cluster Follow Update signup form
-- Newsletter signup forms
-
-#### `input[type="number"]`
-
-- Donate form amount field (displayed as text field so styles don't apply)
-
-#### `input[type="radio"]`
-
-- Donate form frequency
-
-#### `<fieldset>`
-
-Fieldset should generally be used wherever multiple fields are used in a form.
-
-- Donate form
-
-
-
-
-## Disabled Fieldset State
-
-🚫 **Not currently in use.**
-
-{% set disabled_state %}
-<form>
-    <fieldset disabled>
-        <div class="form-group">
-            <label class="form-label" for="disabledTextInput">Disabled input</label>
-            <input type="text" id="disabledTextInput" class="form-input" placeholder="Disabled input">
-        </div>
-        <div class="form-group">
-            <label class="form-label" for="disabledSelect">Disabled select menu</label>
-            <select id="disabledSelect" class="form-input">
-            <option>Disabled select</option>
-            </select>
-        </div>
-        <div class="checkbox">
-            <label class="form-label">
-            <input class="form-check" type="checkbox"> Can't check this
-            </label>
-        </div>
-        <button type="submit" class="btn--primary">Submit</button>
-    </fieldset>
-</form>
-{% endset %}
-
-{{ disabled_state }}
-
-```html
-{{ disabled_state }}
-```
-
-
-
-
-## Readonly Field
-
-🚫 **Not currently in use.**
-
-{% set readonly %}
-<input class="form-input" type="text" placeholder="Readonly input here…" readonly>
-{% endset %}
-
-{{ readonly }}
-
-```html
-{{ readonly }}
-```
-
-
-
-
-## Field Sizing
-
-🚫 **Not currently in use.**
-
-Note that the Input Groups depend on this.
-
-
-{% set field_sizing %}
-<input class="form-input form-input--lg" type="text" placeholder=".form-input--lg">
-<input class="form-input" type="text" placeholder="Default input">
-<input class="form-input form-input--sm" type="text" placeholder=".form-input--sm">
-
-<select class="form-input form-input--lg">
-    <option>Large select</option>
-</select>
-<select class="form-input">
-    <option>Default select</option>
-</select>
-<select class="form-input form-input--sm">
-    <option>Small select</option>
-</select>
-{% endset %}
-
-{{ field_sizing }}
-
-```html
-{{ field_sizing }}
-```
-
-
-## Validation
-
-🚫 **Not currently in use.** We're relying on browser form validation currently.
-
-{% set validation %}
-<form>
-    <div class="row">
-        <div class="columns medium-6">
-            <label class="form-label" for="validationServer01">First name</label>
-            <input type="text" class="form-input is-valid" id="validationServer01" placeholder="First name" value="Billy" required>
-        </div>
-        <div class="columns medium-6">
-            <label class="form-label" for="validationServer02">Last name</label>
-            <input type="text" class="form-input is-valid" id="validationServer02" placeholder="Last name" value="Penn" required>
-        </div>
-    </div>
-    <div class="row">
-        <div class="columns medium-6">
-            <label class="form-label" for="validationServer03">City</label>
-            <input type="text" class="form-input is-invalid" id="validationServer03" placeholder="City" required>
-            <div class="invalid-feedback">
-                Please provide a valid city.
+    <form>
+        <h1>Styled <code>Radio</code> Buttons</h1>
+        <div class="example">
+            <div class="form-radio" for="radio-1-1">
+                <input type="radio" name="styled-radio-example" value="1" id="radio-1-1" class="form-radio__input">
+                <label class="form-radio__label" for="radio-1-1">Unchecked Radio Button</label>
+            </div>
+            <div class="radio" for="radio-1-2">
+                <input type="radio" name="styled-radio-example" value="2" id="radio-1-2" class="form-radio__input" checked>
+                <label class="form-radio__label" for="radio-1-2">Checked Radio Button</label>
             </div>
         </div>
-        <div class="columns medium-3">
-            <label class="form-label" for="validationServer04">State</label>
-            <input type="text" class="form-input is-invalid" id="validationServer04" placeholder="State" required>
-            <div class="invalid-feedback">
-                Please provide a valid state.
-            </div>
+
+        <h1>Normal <code>Radio</code> Buttons</h1>
+        <div class="example">
+            <label class="form-label implicit">
+                <input type="radio" name="normal-radio-example" value="1" id="radio-2-1">
+                Unchecked Radio Button
+            </label>
+            <label class="form-label implicit">
+                <input type="radio" name="normal-radio-example" value="2" id="radio-2-2" checked>
+                Checked Radio Button
+            </label>
         </div>
-        <div class="columns medium-3">
-            <label class="form-label" for="validationServer05">Zip</label>
-            <input type="text" class="form-input is-invalid" id="validationServer05" placeholder="Zip" required>
-            <div class="invalid-feedback">
-                Please provide a valid zip.
+
+        {% for count, input_type in input_types %}
+
+            <h1><code>{{ input_type }}</code> Input Types</h1>
+            <div class="example">
+                <input type="{{ input_type|esc_attr }}" class="form-input" placeholder="Placeholder">
             </div>
-        </div>
-    </div>
 
-    <button class="btn--primary" type="submit">Submit form</button>
-</form>
-{% endset %}
+            <div class="example">
+                <label class="form-label">Optional Label</label>
+                <input type="{{ input_type|esc_attr }}" class="form-input" placeholder="Placeholder">
+            </div>
 
-{{ validation }}
-
-```html
-{{ validation }}
-```
-
-## Horizontal Form
-
-🚫 **Not currently in use.**
-
-{% set hoz_form %}
-<form>
-    <div class="form-group row">
-        <label for="exampleInputEmail1" class="form-label columns medium-3">Email address</label>
-        <input type="email" class="form-input columns medium-9" id="exampleInputEmail1" placeholder="Enter email">
-    </div>
-    <div class="form-group row">
-        <label for="exampleInputPassword1" class="form-label columns medium-3">Password</label>
-        <input type="password" class="form-input medium-9" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <fieldset class="form-group row">
-        <legend class="form-group__legend columns medium-3">Radio buttons</legend>
-        <div class="columns medium-9">
-            <div class="form-check">
-                <label class="form-label form-check__label">
-                    <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                    Option one is this and that&mdash;be sure to include why it's great
+            <div class="example">
+                <label for="example-3-{{ count|esc_attr }}" class="form-label">
+                    Optional Label
                 </label>
+                <div class="input-group">
+                    <label for="example-3-{{ count|esc_attr }}" class="invisible">
+                        Optional Label
+                    </label>
+                    {{ ped_icon( 'search', 'input-group__addon' ) }}
+                    <input
+                        type="{{ input_type|esc_attr }}"
+                        class="form-input input-group__input"
+                        placeholder="Placeholder"
+                        id="example-3-{{ count|esc_attr }}"
+                        />
+                </div>
+
             </div>
-            <div class="form-check">
-                <label class="form-label form-check__label">
-                    <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios2" value="option2">
-                    Option two can be something else and selecting it will deselect option one
-                </label>
+
+            <div class="example dark-background">
+                <label class="form-label u-text-color-white">Optional Label</label>
+                <input type="{{ input_type|esc_attr }}" class="form-input" placeholder="Placeholder">
             </div>
-            <div class="form-check disabled">
-                <label class="form-label form-check__label">
-                    <input type="radio" class="form-check__input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
-                    Option three is disabled
-                </label>
-            </div>
-        </div>
-    </fieldset>
-    <div class="form-check">
-        <label class="form-label form-check__label">
-            <input type="checkbox" class="form-check__input">
-            Check me out
-        </label>
-    </div>
-    <button type="submit" class="btn--primary">Submit</button>
-</form>
-{% endset %}
+        {% endfor %}
+    </form>
 
-{{ hoz_form }}
-
-```html
-{{ hoz_form }}
-```
-
-
-{% endmarkdown %}
 {% endblock %}
 
 {% block sidebar %}

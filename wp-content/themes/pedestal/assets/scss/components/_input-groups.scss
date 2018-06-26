@@ -1,229 +1,25 @@
-@if sm-theme-supports( formsV2 ) {
+.input-group {
+  display: inline-block;
+  position: relative;
+}
 
+.input-group__input {
+  padding-left: rem( 40px );
+}
 
-  .input-group-v2 {
-    display: inline-block;
-    position: relative;
-  }
+.input-group__addon {
+  color: $input-group-addon-color;
+  font-size: rem( 24px );
 
-  .input-group-v2__input {
-    padding-left: rem( 40px );
-  }
+  position: absolute;
+  left: rem( 8px );
+  top: rem( 10px );
 
-  .input-group-v2__addon {
-    color: $secondary-color;
-    font-size: rem( 24px );
+  margin-bottom: 0;
+  width: rem( 24px );
+  height: rem( 24px );
 
-    position: absolute;
-    left: rem( 8px );
-    top: rem( 10px );
-
-    margin-bottom: 0;
-    width: rem( 24px );
-    height: rem( 24px );
-
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-  }
-
-
-} @else {
-
-
-  .input-group {
-    position: relative;
-    display: flex;
-    width: 100%;
-  }
-
-
-  // Text input groups
-  .input-group .form-input {
-    // Ensure that the input is always above the *appended* addon button for
-    // proper border colors.
-    position: relative;
-    z-index: $z-index-2;
-    flex: 1 1 auto;
-    // Add width 1% and flex-basis auto to ensure that button will not wrap out
-    // the column. Applies to IE Edge+ and Firefox. Chrome does not require this.
-    width: 1%;
-  }
-
-  .input-group__addon,
-  .input-group__btn,
-  .input-group .form-input {
-    // Vertically centers the content of the addons within the input group
-    display: flex;
-    align-items: center;
-
-    &:not( :first-child ):not( :last-child ) {
-      border-radius: 0;
-    }
-  }
-
-
-  .input-group .form-input,
-  .input-group__btn > .btn {
-    // Match the heights
-    line-height: $input-line-height;
-
-    // Bring the "active" field+button to the front
-    &:focus,
-    &:active {
-      z-index: $z-index-3;
-    }
-  }
-
-  .input-group__addon,
-  .input-group__btn > .btn {
-    // Input group addons + buttons must conform to input spacing
-    padding: $input-spacing-y $input-spacing-x;
-  }
-
-  .input-group__addon,
-  .input-group__btn {
-    white-space: nowrap;
-    vertical-align: middle; // Match the inputs
-  }
-
-
-
-
-
-  //
-  // Sizing
-  // ==========================================================================
-
-
-  .input-group--lg > .form-input,
-  .input-group--lg > .input-group__addon,
-  .input-group--lg > .input-group__btn > .btn {
-    @extend %form-input--lg;
-  }
-
-  .input-group--sm > .form-input,
-  .input-group--sm > .input-group__addon,
-  .input-group--sm > .input-group__btn > .btn {
-    @extend %form-input--sm;
-  }
-
-
-
-
-
-  //
-  // Reset rounded corners
-  // ==========================================================================
-
-
-  .input-group .form-input:not( :last-child ),
-  .input-group__addon:not( :last-child ),
-  .input-group__btn:not( :last-child ) > .btn {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  .input-group__addon:not( :last-child ) {
-    border-right: 0;
-  }
-
-  .input-group .form-input:not( :first-child ),
-  .input-group__addon:not( :first-child ),
-  .input-group__btn:not( :first-child ) > .btn {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  .input-group .form-input + .input-group__addon:not( :first-child ) {
-    border-left: 0;
-  }
-
-
-
-
-
-  //
-  // Addons
-  // ==========================================================================
-
-
-  .input-group__addon {
-    margin-bottom: rem( 8px );
-    border: $input-border-width solid $input-border-color;
-    border-radius: $global-radius;
-    line-height: 1.2;
-    background-color: $grey-90;
-    font-size: $base-font-size; // Match inputs
-    font-weight: normal;
-    color: $body-font-color;
-    text-align: center;
-
-    // Nuke default margins from checkboxes and radios to vertically center within.
-    //
-    // stylelint-disable selector-max-type
-    input[type="radio"],
-    input[type="checkbox"] {
-      margin-top: 0;
-    }
-    // stylelint-enable selector-max-type
-  }
-
-
-
-
-
-  //
-  // Buttons
-  // ==========================================================================
-
-
-  .input-group__btn {
-    position: relative;
-    // Jankily prevent input button groups from wrapping with `white-space` and
-    // `font-size` in combination with `inline-block` on buttons.
-    font-size: 0;
-    white-space: nowrap;
-
-    // Negative margin for spacing, position for bringing hovered/focused/actived
-    // element above the siblings
-    > .btn {
-      position: relative;
-
-      + .btn {
-        margin-left: ( -$input-border-width );
-      }
-
-      &:focus,
-      &:active {
-        z-index: $z-index-3;
-      }
-    }
-
-
-    //
-    // Negative margin to only have a single, shared border between the two
-    //
-
-    &:not( :last-child ) {
-      > .btn {
-        margin-right: ( -$input-border-width );
-      }
-    }
-
-    &:not( :first-child ) {
-      > .btn {
-        z-index: $z-index-2;
-        margin-left: ( -$input-border-width );
-
-        // Because specificity
-        &:focus,
-        &:active {
-          z-index: $z-index-3;
-        }
-      }
-    }
-  } // .input-group__btn
-
-
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
 }

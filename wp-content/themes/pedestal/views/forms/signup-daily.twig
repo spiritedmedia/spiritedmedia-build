@@ -14,7 +14,7 @@
 {% set email_input %}
 <input type="email"
     id="{{ id_email_input|esc_attr }}"
-    class="signup-email__email-input input-group-v2__input form-input js-email-input {{ input_class }}"
+    class="signup-email__email-input input-group__input form-input js-email-input {{ input_class }}"
     name="email_address"
     placeholder="enter your email address"
     required
@@ -32,7 +32,7 @@
     data-ga-category="Submitted Form"
     data-ga-label="{{ gaLabel|esc_attr }}">
 
-    <div class="form-group js-form-fields">
+    <div class="signup-email__form__inner form-group js-form-fields">
 
         <div class="signup-email__header">
             <div class="signup-email__icon">
@@ -48,14 +48,13 @@
         {% block details %}
         {% endblock details %}
 
-        {% block email_input %}
-            <div class="signup-email__input-group">
-                <label class="invisible" for="{{ id_email_input|esc_attr }}">
-                    Email Address
-                </label>
-                {{ email_input }}
-            </div>
-        {% endblock email_input %}
+        <div class="signup-email__input-group input-group">
+            <label for="{{ id_email_input|esc_attr }}" class="invisible">
+                Email Address
+            </label>
+            {{ ped_icon( 'envelope-o', 'signup-email__input-icon input-group__addon' ) }}
+            {{ email_input }}
+        </div>
 
         <input type="hidden" name="group-ids[]" value="{{ site.emails.daily_newsletter_id|esc_attr }}">
         <input type="hidden" name="group-ids[]" value="{{ site.emails.breaking_newsletter_id|esc_attr }}">
@@ -66,6 +65,9 @@
         <div class="js-fail-message invalid-feedback"></div>
 
         {% block submit_button %}
+        <button class="signup-email__btn btn--oval btn--bg-accent js-form-submit" type="submit">
+            {% include 'partials/email-forms/form-submit-signup-inner.twig' %}
+        </button>
         {% endblock submit_button %}
 
         {% if latest_newsletter %}
@@ -98,7 +100,9 @@
         </div>
 
         {% if explore %}
-        <a href="/" class="btn btn--lg btn--full-width">Explore {{ site.name }}</a>
+        <div class="signup-email__explore">
+            <a href="/" class="btn--oval">Explore {{ site.name }}</a>
+        </div>
         {% endif %}
     </div>
 </form>

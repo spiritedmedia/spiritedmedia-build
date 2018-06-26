@@ -10,7 +10,6 @@
 // Units
 // ==========================================================================
 
-
 /// Strip the unit from a number
 ///
 /// @param {number} $num
@@ -129,10 +128,6 @@
   @return min(max($number, $min), $max);
 }
 
-
-
-
-
 /**
  * Convert each value in a map of units or numbers to rems
  *
@@ -150,13 +145,9 @@
 }
 
 
-
-
-
 //
 // Colors
 // ==========================================================================
-
 
 /// Calculate text color with sufficient contrast against a given background color
 ///
@@ -191,13 +182,9 @@
 }
 
 
-
-
-
 //
 // Maps
 // ==========================================================================
-
 
 /**
  * `map-get()` with error checking
@@ -213,7 +200,6 @@
     @error 'ERROR: Specified index `#{$key}` does not exist in the map `#{$map}`!';
   }
 }
-
 
 /**
  * Get value from nested map
@@ -231,7 +217,6 @@
   @return $map;
 }
 
-
 /// Get the prescribed width of an icon
 ///
 /// IcoMoon generates specific em widths for each icon we use.
@@ -243,13 +228,9 @@
 }
 
 
-
-
-
 //
 // Strings
 // ==========================================================================
-
 
 /**
  * Replace `$search` with `$replace` in `$string`
@@ -274,13 +255,9 @@
 }
 
 
-
-
-
 // ==========================================================================
 // Spirited Media Config Data
 // ==========================================================================
-
 
 /**
  * Get a map of the rem dimensions for image sizes

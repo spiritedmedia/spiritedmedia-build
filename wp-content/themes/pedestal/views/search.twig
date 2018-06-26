@@ -1,19 +1,60 @@
-{% extends 'layouts/layout--content-sidebar.twig' %}
+{% extends 'layouts/layout--content.twig' %}
 
 {% set main_classes = 'is-active-search' %}
+{% set button_text = 'Search' %}
+{% set domain_name = constant('PEDESTAL_DOMAIN_PRETTY') %}
+
+{% set total_results_text %}
+How can we help you? Enter a search term below to search {{ domain_name }}:
+{% endset %}
 
 {% block content %}
     <div class="c-main__body">
         <section class="c-main__header">
+            <h1 class="c-main__title">Search Results</h1>
 
-            {% if found_results %}
+            {% if search_query %}
+                {% set button_text = 'Search Again' %}
+
+                {% set total_results_text %}
+                There are <strong>{{ found_results|number_format }}</strong>
+                matches for <strong>{{ search_query }}:</strong>
+                {% endset %}
+            {% endif %}
+
             <div class="search-tools js-search-tools">
-                <p class="search-tools__total-results  search-tools__item">
-                    <strong>{{ found_results|number_format }}</strong>
-                    results found for <em>{{ search_query }}</em>
+                <p class="search-tools__total-results search-tools__item">
+                    {{ total_results_text }}
                 </p>
             </div>
-            {% endif %}
+
+            <form
+                method="get"
+                action="{{ site.url|esc_url }}"
+                id="search-standalone"
+                class="search-form--standalone row"
+            >
+
+                <div class="search-form__input-group input-group">
+                    <input
+                        type="search"
+                        name="s"
+                        id="search-standalone-input"
+                        placeholder="enter your search term"
+                        value="{{ search_query|esc_attr }}"
+                        class="input-group__input form-input"
+                    >
+                    <label for="search-standalone-input">
+                        {{ ped_icon( 'search', 'input-group__addon' ) }}
+                        <span class="invisible">Search {{ domain_name }}</span>
+                    </label>
+                </div>
+
+                <button class="search-form__button btn--oval">
+                    {{ button_text }}
+                </button>
+
+            </form>
 
         </section>
 

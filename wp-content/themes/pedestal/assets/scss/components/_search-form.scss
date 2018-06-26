@@ -21,14 +21,19 @@
   }
 
   .search-form__button {
+    @include button-color-variant( $search-form-standalone-button-background-color );
+
     display: block;
   }
+}
 
-  @media screen and ( min-width: em( 860px ) ) {
+
+@media screen and ( min-width: em( 860px ) ) {
+  .search-form--standalone {
     .search-form__input-group {
       margin-right: rem( 32px );
 
-      .input-group-v2__input {
+      .input-group__input {
         width: rem( 520px );
       }
     }
@@ -40,80 +45,49 @@
 }
 
 
+
 //
-// Legacy fold-out sitewide search form
+// Sitewide Search Modal
 // ==========================================================================
 
-.search-form--sitewide--legacy {
-  background-color: $grey-95;
+.search-form--modal {
+  display: none;
 
-  .js &,
-  .is-search-open & {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 1; // So it displays under the header
+  max-width: rem( 260px );
+  margin: rem( 50px ) auto 0;
+
+  .modal & {
+    display: block;
   }
 
-  .admin-bar.is-search-open & {
-    top: $wp-admin-bar-height-mobile;
+  .search-form__button {
+    @include button-color-variant( $search-form-modal-button-background-color );
 
-    @media #{$wp-admin-bar-breakpoint} {
-      top: $wp-admin-bar-height-desktop;
-    }
+    margin-top: rem( 8px );
   }
+}
 
-  .search-form__inner {
-    position: relative;
 
-    .is-active-search & {
-      margin-bottom: rem( 16px );
-    }
-  }
+@media screen and ( min-width: em( 600px ) ) {
+  .search-form--modal {
+    margin-top: 0;
+    max-width: rem( 540px );
+    padding: rem( 32px ) 0;
 
-  .search-form__icon {
-    padding: rem( 8px );
-    position: absolute;
-    top: rem( 4px );
-    color: $grey-25;
-    background-color: transparent;
-
-    &:hover,
-    &:focus {
-      background-color: transparent;
-      color: $black;
-    }
-  }
-
-  .search-form__icon--close {
-    right: 0;
-    display: none;
-
-    .js & {
-      display: block;
-    }
-
-    .o-icon {
-      width: icon-width-get( close ) * 1.5;
-    }
-  }
-
-  .search-form__field {
-    height: auto;
-    margin-bottom: rem( 16px );
-    width: 100%;
-    box-shadow: none;
-    border: 0;
-    border-bottom: 1px solid $grey-80;
-    border-radius: 0;
-    padding: rem( 8px );
-    padding-left: rem( 40 ); // input icon width
-    font-size: $h4-font-size;
-    color: $grey-25;
-
-    &,
-    &:focus {
-      background: transparent;
+    .search-form__button {
+      margin: 0 0 0 rem( 16px );
     }
   }
 }
+
+
+@media #{$site-header-with-nav-breakpoint} {
+  .search-form--modal {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY( -50% );
+  }
+}
+
+

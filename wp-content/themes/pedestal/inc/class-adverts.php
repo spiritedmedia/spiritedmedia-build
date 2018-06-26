@@ -29,17 +29,19 @@ class Adverts {
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'pedestal_after_stream_item_2', [ $this, 'action_pedestal_after_stream_item_2' ] );
         add_action( 'pedestal_after_stream_item_4', function() {
-            echo $this->render_stream_ad_unit( '04' ); }
-        );
+            echo $this->render_stream_ad_unit( '04' );
+            $context = Timber::get_context();
+            Timber::render( 'partials/adverts/inline-ad.twig', $context );
+        } );
         add_action( 'pedestal_after_stream_item_8', function() {
-            echo $this->render_stream_ad_unit( '08' ); }
-        );
+            echo $this->render_stream_ad_unit( '08' );
+        } );
         add_action( 'pedestal_after_stream_item_12', function() {
-            echo $this->render_stream_ad_unit( '12' ); }
-        );
+            echo $this->render_stream_ad_unit( '12' );
+        } );
         add_action( 'pedestal_after_stream_item_16', function() {
-            echo $this->render_stream_ad_unit( '16' ); }
-        );
+            echo $this->render_stream_ad_unit( '16' );
+        } );
     }
 
     /**
@@ -111,25 +113,6 @@ class Adverts {
         $context = Timber::get_context();
         ob_start();
         Timber::render( 'partials/adverts/ad-stream-' . $index . '.twig', $context );
-        return ob_get_clean();
-    }
-
-    /**
-     * Render a DFP ad unit
-     * @param  string $id     The ID of the ad position
-     * @param  string $sizes  Comma separated list of accepted sizes
-     * @return string         HTML markup of the ad unit
-     */
-    public function render_dfp_unit( $id = '', $sizes = '' ) {
-        if ( empty( $id ) || empty( $sizes ) ) {
-            return;
-        }
-        $ad_context = [
-            'id'    => $id,
-            'sizes' => $sizes,
-        ];
-        ob_start();
-        Timber::render( 'partials/adverts/dfp-unit.twig', $ad_context );
         return ob_get_clean();
     }
 

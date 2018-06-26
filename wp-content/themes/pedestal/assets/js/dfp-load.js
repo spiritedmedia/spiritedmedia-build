@@ -19,17 +19,23 @@ googletag.cmd.push(function() {
   // The ad slots we will tell Google Tag about
   var slots = [];
   (function($) {
+    var isNarrowViewport = true;
+    if ($('.js-rail').css('display') != 'none') {
+      isNarrowViewport = false;
+    }
     // For each ad markup on the page we will get the slot name and accepted
     // sizes for the slot before defining the ad position
     $('.js-dfp').each(function(elIndex, el) {
       var $el = $(el);
       var rawSize = $el.data('dfp-sizes');
       var slotName = $el.data('dfp-name');
+      var uniqueId = $el.data('dfp-unique');
       if (!rawSize || !slotName) {
         var msg = 'Pedestal DFP: Slot missing required parameters';
         console.warn(msg, el);
         return;
       }
+
       var sizes = [];
       $.each(rawSize.split(','), function(sizeIndex, item) {
         item = $.trim(item);
@@ -48,7 +54,21 @@ googletag.cmd.push(function() {
         sizes.push(dimensions);
       });
       var path = '/' + DFP_ID + '/' + slotName;
-      var id = 'div-gpt-ad-' + slotName + '-0';
+      var id = 'div-gpt-ad-' + slotName + '-' + uniqueId;
+
+      // Don't fire XXX_Sidebar ad if viewport is narrow
+      if (isNarrowViewport && slotName.indexOf('Sidebar') > -1) {
+        return;
+      }
+
+      // Don't fire XXX_Inline ad if viewport is not narrow
+      // and ad unit is part of a stream
+      if (!isNarrowViewport && slotName.indexOf('Inline') > -1) {
+        if ($('#' + id).parents('.js-stream').length > 0) {
+          return;
+        }
+      }
+
       slots.push(googletag
         .defineSlot(path, sizes, id)
         .addService(googletag.pubads())

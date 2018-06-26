@@ -25,12 +25,11 @@ address the issue.
 
 ## Core Components
 
-- [Buttons](buttons.php) / [Buttons V2](buttons-v2.php)
-- [Forms](forms.php) / [Forms V2](forms-v2.php)
+- [Buttons](buttons.php)
+- [Forms](forms.php)
 - [Headers](headers.php)
 - [Horizontal Rules](horizontal-rules.php)
 - [Icons](icons.php)
-- [Input Groups (Form Input + Button)](input-groups.php)
 - [Modals](modals.php)
 - [Pagination](pagination.php)
 - [Post Content: Common HTML](common-html.php)

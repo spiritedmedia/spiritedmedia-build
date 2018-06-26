@@ -1,9 +1,6 @@
 .signup-email__form {
   padding: rem( 8px ) rem( 8px ) rem( 16px );
 
-  // Set this as the initial alignment for the email input and submit button
-  text-align: center;
-
   .form-group {
     margin-bottom: 0;
   }
@@ -64,35 +61,6 @@
 }
 // stylelint-enable selector-max-type
 
-.signup-email__input-group,
-.signup-email__btn {
-  margin-bottom: rem( 8px );
-}
-
-.signup-email__input-group {
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: auto;
-  text-align: center;
-}
-
-.signup-email__input-icon {
-  color: $secondary-color;
-}
-
-.signup-email__email-input {
-  // Hide placeholder text on focus
-  &:focus::placeholder {
-    color: transparent;
-  }
-}
-
-.signup-email__btn {
-  display: block;
-  margin: 0 auto;
-  text-transform: uppercase;
-}
-
 // stylelint-disable-next-line selector-max-type
 .signup-email__success-message p {
   line-height: 1.4;
@@ -106,8 +74,6 @@
 @media #{$medium-up} {
   .signup-email__form {
     padding: rem( 16px );
-    // Alignment for the input and button
-    text-align: left;
   }
 
   .signup-email__header,
@@ -125,19 +91,6 @@
   .signup-email__icon,
   .signup-email__title {
     width: auto;
-  }
-
-  .signup-email__input-group,
-  .signup-email__btn {
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-  }
-
-  .signup-email__input-group {
-    margin-right: rem( 16px );
-    margin-top: 0;
-    margin-bottom: 0;
   }
 
   // stylelint-disable-next-line selector-max-type
@@ -199,17 +152,6 @@
         text-align: center;
       }
 
-      .signup-email__input-group,
-      .signup-email__btn {
-        margin-right: auto;
-        margin-bottom: rem( 8px );
-        margin-left: auto;
-      }
-
-      .signup-email__btn {
-        display: block;
-      }
-
       .signup-email__success-message {
         .signup-email__title {
           width: 100%;
@@ -260,16 +202,3 @@
     @include explode-component( $side: 'left', $inner-selector: '.signup-email__form' );
   }
 } // end .signup-email--cluster
-
-
-//
-// Email signup in modal
-// ==========================================================================
-
-.signup-email--modal {
-  display: none;
-
-  .modal__content & {
-    display: block;
-  }
-}

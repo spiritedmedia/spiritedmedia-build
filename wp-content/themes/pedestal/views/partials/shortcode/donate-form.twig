@@ -20,13 +20,11 @@
                     <label class="donate-form__amount__label" for="donate-form-amount-input">
                         I would like to give
                     </label>
-                    <div class="donate-form__amount__input-group">
-                        <span class="donate-form__amount__prefix">
-                            {{ ped_icon('dollar-sign') }}
-                        </span>
+                    <div class="donate-form__amount__input-group input-group">
+                        {{ ped_icon( 'dollar-sign', 'donate-form__amount__prefix input-group__addon' ) }}
                         <input type="number"
                             id="donate-form-amount-input"
-                            class="donate-form__amount__input js-donate-form-amount"
+                            class="donate-form__amount__input input-group__input js-donate-form-amount"
                             name="amount"
                             value="15"
                         />
@@ -34,39 +32,47 @@
                 </div>
 
                 <fieldset class="donate-form__frequency">
-                    <label class="donate-form__frequency-option">
+                    <div class="donate-form__frequency-option form-radio">
                         <input type="radio" checked
-                            class="donate-form__frequency-option__input js-donate-form-frequency"
+                            id="donate-form-frequency-monthly"
+                            class="donate-form__frequency-option__input form-radio__input js-donate-form-frequency"
                             name="installmentPeriod"
                             value="monthly"
                         />
-                        Monthly (this helps us most!)
-                    </label>
-                    <label class="donate-form__frequency-option">
+                        <label for="donate-form-frequency-monthly" class="form-radio__label">
+                            Monthly (this helps us most!)
+                        </label>
+                    </div>
+
+                    <div class="donate-form__frequency-option form-radio">
                         <input type="radio"
-                            class="donate-form__frequency-option__input js-donate-form-frequency"
+                            id="donate-form-frequency-yearly"
+                            class="donate-form__frequency-option__input form-radio__input js-donate-form-frequency"
                             name="installmentPeriod"
                             value="yearly"
                         />
-                        Yearly
-                    </label>
-                    <label class="donate-form__frequency-option">
+                        <label for="donate-form-frequency-yearly" class="form-radio__label">
+                            Yearly
+                        </label>
+                    </div>
+
+                    <div class="donate-form__frequency-option form-radio">
                         <input type="radio"
-                            class="donate-form__frequency-option__input js-donate-form-frequency"
+                            id="donate-form-frequency-once"
+                            class="donate-form__frequency-option__input form-radio__input js-donate-form-frequency"
                             name="installmentPeriod"
                             value=""
                         />
-                        Today only
-                    </label>
+                        <label for="donate-form-frequency-once" class="form-radio__label">
+                            Today only
+                        </label>
+                    </div>
+
                 </fieldset>
             </div>
 
-
-
             <div class="donate-form__submit">
-                <button type="submit" class="donate-form__submit__button btn--promo btn--pill btn--no-border">
-                    {{ submit_text }}
-                </button>
+                {% include 'partials/shortcode/donate-form-submit-button.twig' %}
 
                 <div class="donate-form__secured-by">
                     <span class="donate-form__secured-by__lock">{{ ped_icon('lock') }}</span>

@@ -151,93 +151,22 @@ $main-description-text-color:  $dimmed-text-color !default;
 
 
 //
-// Forms
+// Forms + Input Groups
 // ==========================================================================
 
-$input-width:             rem( 280px );
-$input-max-width:         100%                                    !default;
-$input-spacing-y:         rem( 8px );
-$input-spacing-x:         rem( 12px );
-$input-line-height:       1.25                                    !default;
-$input-bg:                $white                                  !default;
-$input-border-color:      $grey-80                                !default;
-$input-border-width:      rem( 1px )                              !default;
-$input-border-radius:     $global-radius                          !default;
-$input-box-shadow:        inset 0 1px 5px 0 rgba( $black, 0.25 )  !default;
-$input-caret-color:       auto                                    !default;
-$input-font-family:       $body-font-family                       !default;
-$input-font-style:        normal                                  !default;
-$input-font-color:        rgba( $black, 0.75 )                    !default;
-$input-label-font-family: $body-font-family                       !default;
-$input-label-font-weight: normal                                  !default;
-$input-label-line-height: $body-line-height                       !default;
-$input-label-color:       $body-font-color                        !default;
+$input-label-font-family:       $body-font-family                      !default;
+$input-radio-label-font-family: $input-label-font-family               !default;
 
-// Small size
-$input-spacing-y-sm:      rem( 4px );
-$input-spacing-x-sm:      rem( 8px );
-$input-line-height-sm:    1.5;
-
-// Large size
-$input-spacing-y-lg:      rem( 8px );
-$input-spacing-x-lg:      rem( 16px );
-$input-line-height-lg:    1.5;
-$input-font-size-lg:      $h5-font-size;
+// Input Groups
+$input-group-addon-color: $primary-color !default;
 
 
 //
 // Buttons
 // ==========================================================================
 
-$btn-spacing-y:      $input-spacing-y !default;
-$btn-spacing-x:      $input-spacing-x !default;
-$btn-border-width:   rem( 2px )       !default;
-$btn-border-radius:  $global-radius   !default;
-$btn-line-height:    1.125            !default;
-$btn-font-size:      $base-font-size  !default;
-$btn-font-weight:    normal           !default;
-$btn-letter-spacing: 0                !default;
-$btn-transition:     300ms ease 0s;
-
-// `btn-color-variant` mixin
-$mixin-btn-color-variant-bg-color-hover: $white !default;
-$mixin-btn-color-variant-text-color-hover:
-  text-contrast( $mixin-btn-color-variant-bg-color-hover ) !default;
-
-// Small size
-$btn-spacing-y-sm: $input-spacing-y-sm !default;
-$btn-spacing-x-sm: $input-spacing-x-sm !default;
-
-// Large size
-$btn-border-width-lg: rem( 4px );
-$btn-spacing-y-lg:    $input-spacing-y-lg !default;
-$btn-spacing-x-lg:    $input-spacing-x-lg !default;
-
-// Primary CTA
-$btn-primary-bg-color:            $primary-color                               !default;
-$btn-primary-bg-color-hover:      $white                                       !default;
-$btn-primary-border-color:        $btn-primary-bg-color                        !default;
-$btn-primary-border-color-hover:  $btn-primary-bg-color                        !default;
-$btn-primary-outline-color-focus: null                                         !default;
-$btn-primary-text-color:          text-contrast( $btn-primary-bg-color )       !default;
-$btn-primary-text-color-hover:    text-contrast( $btn-primary-bg-color-hover ) !default;
-
-// Secondary CTA
-$btn-secondary-bg-color:            $secondary-color                               !default;
-$btn-secondary-bg-color-hover:      $white                                         !default;
-$btn-secondary-border-color:        $btn-secondary-bg-color                        !default;
-$btn-secondary-border-color-hover:  $btn-secondary-bg-color                        !default;
-$btn-secondary-outline-color-focus: null                                           !default;
-$btn-secondary-text-color:          text-contrast( $btn-secondary-bg-color )       !default;
-$btn-secondary-text-color-hover:    text-contrast( $btn-secondary-bg-color-hover ) !default;
-
-// Promo CTA
-$btn-promo-spacing-y:      rem( 21px )         !default;
-$btn-promo-spacing-x:      rem( 24px )         !default;
-$btn-promo-line-height:    1                   !default;
-$btn-promo-font-family:    $body-font-family   !default;
-$btn-promo-font-size:      rem( 18px )         !default;
-$btn-promo-letter-spacing: em( 1px )           !default;
+$button-border-color:    $primary-color   !default;
+$button-text-color-dark: $body-font-color !default;
 
 
 //
@@ -290,18 +219,6 @@ $pullquote-credit-font-size:      rem( 18px )                                !de
 $pullquote-credit-line-height:    rem( 22px ) / $pullquote-credit-font-size  !default;
 $pullquote-credit-font-style:     italic                                     !default;
 $pullquote-credit-letter-spacing: 0                                          !default;
-
-
-//
-// Modals
-// ==========================================================================
-
-$modal-overlay-background-color-fallback: $black               !default;
-$modal-overlay-background-color:          rgba( 0, 0, 0, 0.4 ) !default;
-$modal-content-min-height:                auto                 !default;
-$modal-close-button-color:                $grey-25             !default;
-$modal-padding:                           rem( 4px )           !default;
-$modal-background-color:                  $white               !default;
 
 
 //
@@ -411,6 +328,18 @@ $widget-title-line-height: 1.2              !default;
 
 $selection-color: $primary-color !default;
 $mark-color: $selection-color !default;
+
+// Site Header
+$site-header-with-nav-breakpoint: screen and ( min-width: em( 760px ) );
+
+// Modals
+$modal-overlay-background-color-light: rgba( $white, 0.7 );
+$modal-search-background-color: $dark-grey !default;
+$modal-search-button-background-color: $accent-color !default;
+
+// Search Form
+$search-form-standalone-button-background-color: $dark-grey !default;
+$search-form-modal-button-background-color: $accent-color !default;
 
 // Single Page
 $page-bg-c      : $white;

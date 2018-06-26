@@ -1,350 +1,170 @@
 /*
-stylelint-disable
+  stylelint-disable
   selector-max-type,
-  selector-no-vendor-prefix
+  selector-max-compound-selectors
 */
 
 
-@if not sm-theme-supports( formsV2 ) {
+.form-input,
+.form-label,
+.form-radio__input,
+.form-radio__label {
+  font-size: rem( 16px );
+  line-height: 1;
+}
 
+.form-label,
+%form-label {
+  font-family: $input-label-font-family;
+  color: $grey-25;
+  display: block;
+  font-weight: 600;
+  margin-bottom: rem( 8px );
+  letter-spacing: em( 0.2px );
 
-  $input-border-style:           solid;
-  $input-disabled-bg:            $grey-90;
-  $input-focus-border-color:     $primary-color;
-  $input-placeholder-font-color: $dimmed-text-color;
-  $label-margin-y:               rem( 8px );
-  $input-focus-bg-color:         lighten( $input-focus-border-color, 15% );
-  $form-check-input-gutter:      rem( 20px );
-  $legend-padding-x:             rem( 4px );
-  $input-height-border-lg:       $btn-border-width-lg * 2 - $input-border-width * 2;
-
-
-  @mixin form-input-size-sm {
-    font-size: $small-font-size;
-    line-height: $input-line-height-sm;
-    margin-bottom: $input-spacing-y-sm;
-    padding: $input-spacing-y-sm $input-spacing-x-sm;
-  }
-
-
-  @mixin form-input-size-lg {
-    font-size: $input-font-size-lg;
-    line-height: $input-line-height-lg;
-    margin-bottom: $input-spacing-y-lg;
-    padding: ( $input-spacing-y-lg + $input-height-border-lg / 2 ) $input-spacing-x-lg;
-  }
-
-
-  fieldset {
-    padding: rem( 16px );
-    border: 0;
-
-    &.row {
-      padding: 0;
-    }
-  }
-
-  .form-label {
-    display: inline-block;
-    margin-bottom: $label-margin-y;
-    max-width: $input-max-width;
-    line-height: $input-label-line-height;
-    font-family: $input-label-font-family;
-    color: $input-label-color;
+  &[for],
+  &.implicit {
     cursor: pointer;
+  }
+}
 
-    &:not( .form-check__label ) {
-      font-weight: $input-label-font-weight;
-    }
+.form-input {
+  background: $grey-95;
+  border: rem( 1px ) solid $grey-70;
+  box-shadow: inset rem( 2px ) rem( 4px ) rem( 8px ) 0 rgba( $black, 0.1 );
+  border-radius: rem( 2px );
 
-    > .form-input,
-    > .input-group {
-      margin-top: $label-margin-y;
-    }
+  font-family: $body-font-family;
+  font-style: italic;
+  opacity: 0.8;
 
-    > .form-input:last-child {
-      margin-bottom: 0;
-    }
+  width: rem( 260px );
+  height: rem( 44px );
+  line-height: 1;
+
+  padding-left: rem( 8px );
+  padding-right: rem( 8px );
+
+  &:focus {
+    opacity: 1;
   }
 
-  .form-input {
-    display: block;
-    width: $input-width;
-    max-width: $input-max-width;
-    border: $input-border-width solid $input-border-color;
-    border-radius: $input-border-radius;
-    margin-bottom: $input-spacing-y;
-    padding: $input-spacing-y $input-spacing-x;
+  &::placeholder {
+    color: $grey-70;
+    vertical-align: middle;
 
-    box-shadow: $input-box-shadow;
-    background-color: $input-bg;
-
-    line-height: $input-line-height;
-    color: $input-font-color;
-    caret-color: $input-caret-color;
-    font-family: $input-font-family;
-    font-size: $base-font-size;
-    font-weight: 300;
-    font-style: $input-font-style;
-
-    transition:
-      border-color ease-in-out 150ms,
-      box-shadow ease-in-out 150ms;
-
-    // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214.
-    background-image: none;
-    background-clip: padding-box;
-
-    // Unstyle the caret on `<select>`s in IE10+.
-    &::-ms-expand {
-      background-color: transparent;
-      border: 0;
-    }
-
-    &:focus {
-      color: $input-font-color;
-      border-color: $input-focus-border-color;
-      outline: none;
-    }
-
-    // Placeholder
-    &::placeholder {
-      color: $input-placeholder-font-color;
-      // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
-      opacity: 1;
-    }
-
-    // Disabled and read-only inputs
-    //
-    // HTML5 says that inputs under a fieldset > legend:first-child won't be
-    // disabled if the fieldset is disabled. Due to implementation difficulty, we
-    // don't honor that edge case; we style them as disabled anyway.
-    &:disabled,
-    &[readonly] {
-      background-color: $input-disabled-bg;
-      // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
-      opacity: 1;
-    }
-  } // .form-input
-
-  select.form-input {
-    &:not( [size] ):not( [multiple] ) {
-      height: $base-font-size * $input-line-height + $input-spacing-y * 2 + $input-border-width * 2;
-    }
-
-    // Suppress the nested default white text on blue background highlight given to
-    // the selected option text when the (still closed) <select> receives focus
-    // in IE and (under certain conditions) Edge, as it looks bad and cannot be made to
-    // match the appearance of the native widget.
-    // See https://github.com/twbs/bootstrap/issues/19398.
-    &:focus::-ms-value {
-      color: $input-font-color;
-      background-color: $input-bg;
+    // Line height must be `normal` to work in iOS browsers...
+    line-height: normal;
+    // But it needs to be unit-based for Firefox
+    @include firefox-only {
+      line-height: rem( 44px );
     }
   }
 
-  // Make file inputs better match text inputs by forcing them to new lines.
-  .form-input--file,
-  .form-input--range {
-    display: block;
+  &:focus::placeholder {
+    opacity: 1;
+  }
+}
+
+input[type="search"] {
+  appearance: none;
+  box-sizing: border-box; // Normalize sets "search" inputs to content-box
+}
+
+input[type="radio"] {
+  margin-right: 0;
+  cursor: pointer;
+}
+
+
+//
+// Custom radio inputs
+// ==========================================================================
+// https://medium.com/claritydesignsystem/pure-css-accessible-checkboxes-and-radios-buttons-54063e759bb3
+
+.form-radio__input {
+  opacity: 0;
+  position: absolute;
+
+  + .form-radio__label::after {
+    content: none;
   }
 
-
-  // Form input sizing
-  //
-  // Build on `.form-input` with modifier classes to decrease or increase the
-  // height and font-size of form inputs.
-  //
-  // The `.form-group-* form-input` variations are sadly duplicated to avoid the
-  // issue documented in https://github.com/twbs/bootstrap/issues/15074.
-
-  .form-input--sm,
-  %form-input--sm {
-    @include form-input-size-sm;
+  &:checked + .form-radio__label::after {
+    content: "";
   }
 
-  .form-input--lg,
-  %form-input--lg {
-    @include form-input-size-lg;
+  &:focus + .form-radio__label::before {
+    box-shadow: 0 0 rem( 5px ) $primary-color;
   }
+}
 
-  select.form-input--sm {
-    &:not( [size] ):not( [multiple] ) {
-      height: $small-font-size * $input-line-height-sm + $input-spacing-y-sm * 2 + $input-border-width * 2;
-    }
-  }
+.form-radio__label {
+  @extend %form-label;
 
-  select.form-input--lg {
-    &:not( [size] ):not( [multiple] ) {
-      height: $input-font-size-lg * $input-line-height-lg + $input-spacing-y-lg * 2 + $input-height-border-lg;
-    }
-  }
+  font-family: $input-radio-label-font-family;
+  font-weight: 400;
+  font-size: rem( 16px );
+  letter-spacing: 0;
+  position: relative;
+  display: inline-block;
 
+  // 16px width of fake radio + 4px distance between fake radio and text
+  padding-left: rem( 20px );
 
-  //
-  // Form groups
-  // ==========================================================================
-  // Designed to help with the organization and spacing of vertical forms. For
-  // horizontal forms, use the predefined grid classes.
-
-  .form-group {
-    margin-bottom: $paragraph-margin-bottom;
-  }
-
-  .form-group__legend {
-    line-height: $input-label-line-height;
-    font-family: $input-label-font-family;
-    font-weight: $input-label-font-weight;
-    color: $input-label-color;
-  }
-
-  .form-group__text {
-    display: block;
-    margin-top: rem( 4px );
-  }
-
-  // For use with horizontal and inline forms, when you need the legend text to
-  // be the same size as regular labels, and to align with the form inputs.
-  .column-form-legend {
-    padding-top: $input-spacing-y;
-    padding-bottom: $input-spacing-y;
-    margin-bottom: 0;
-    font-size: $base-font-size;
-  }
-
-
-  //
-  // Checkboxes and radios
-  // ==========================================================================
-  // Indent the labels to position radios/checkboxes as hanging inputs.
-
-  .form-check {
-    position: relative;
-    display: block;
-    margin-bottom: rem( 8px );
-
-    &.is-disabled {
-      .form-check__label {
-        color: $dimmed-text-color;
-      }
-    }
-  }
-
-  .form-check__label {
-    padding-left: $form-check-input-gutter;
-    margin-bottom: 0; // Override default `.form-label` bottom margin
-  }
-
-  .form-check__input {
+  &::before,
+  &::after {
     position: absolute;
-    margin-top: rem( 4px );
-    margin-left: -$form-check-input-gutter;
+    content: "";
 
-    &:only-child {
-      position: static;
-    }
-  }
-
-  // Radios and checkboxes on same line
-  .form-check--inline {
     display: inline-block;
-
-    .form-check__label {
-      vertical-align: middle;
-    }
-
-    + .form-check--inline {
-      margin-left: rem( 4px );
-    }
+    border-radius: 50%;
+    background-color: $white;
   }
 
+  &::before {
+    height: rem( 16px );
+    width: rem( 16px );
 
-  //
-  // Labels
-  // ===========================================================================
-  // For use with horizontal and inline forms, when you need the label text to
-  // align with the form inputs.
-
-  %column-form-label {
-    margin-bottom: 0; // Override the `.form-label` default
-    text-align: right;
+    border: rem( 1px ) solid $secondary-color;
+    left: 0;
   }
 
-  .column-form-label,
-  .form-label.columns,
-  .form-group__legend.columns {
-    @extend %column-form-label;
-
-    padding-top: $input-spacing-y - $input-border-width * 2;
-    padding-bottom: $input-spacing-y - $input-border-width * 2;
+  &::after {
+    height: rem( 10px );
+    width: rem( 10px );
+    background-color: $secondary-color;
+    left: rem( 3px );
+    top: rem( 3px );
   }
+} // .form-radio__label
 
-  .column-form-label--lg {
-    @extend %column-form-label;
 
-    padding-top: $input-spacing-y-lg - $input-border-width * 2;
-    padding-bottom: $input-spacing-y-lg - $input-border-width * 2;
-    font-size: $input-font-size-lg;
+//
+// Validation
+// ==========================================================================
+
+.invalid-feedback,
+.invalid-tooltip,
+.form-error-message {
+  display: none;
+
+  .is-failed & {
+    display: block;
   }
+}
 
-  .column-form-label--sm {
-    @extend %column-form-label;
+.success-message {
+  display: none;
 
-    padding-top: $input-spacing-y-sm - $input-border-width * 2;
-    padding-bottom: $input-spacing-y-sm - $input-border-width * 2;
-    font-size: $small-font-size;
+  .is-success & {
+    display: block;
   }
+}
 
-
-  //
-  // Validation
-  // ==========================================================================
-
-  .invalid-feedback,
-  .invalid-tooltip,
-  .form-error-message {
-    display: none;
-
-    .is-failed & {
-      display: block;
-    }
-  }
-
-  .success-message {
-    display: none;
-
-    .is-success & {
-      display: block;
-    }
-  }
-
-  .invalid-feedback {
-    margin-top: rem( 4px );
-    margin-bottom: rem( 8px );
-    font-size: $small-font-size;
-    color: $alert-color;
-  }
-
-
-  // Readonly inputs as plain text
-  //
-  // Apply class to a readonly input to make it appear like regular plain
-  // text (without any border, background color, focus indicator)
-
-  // .form-input--plaintext {
-  //   padding-top: $input-spacing-y;
-  //   padding-bottom: $input-spacing-y;
-  //   margin-bottom: 0; // match inputs if this class comes on inputs with default margins
-  //   line-height: $input-line-height;
-  //   border: solid transparent;
-  //   border-width: $input-border-width 0;
-  //
-  //   &.form-input--sm,
-  //   &.form-input--lg {
-  //     padding-right: 0;
-  //     padding-left: 0;
-  //   }
-  // }
-
-
+.invalid-feedback {
+  margin-top: rem( 4px );
+  margin-bottom: rem( 8px );
+  font-size: $small-font-size;
+  color: $alert-color;
 }
