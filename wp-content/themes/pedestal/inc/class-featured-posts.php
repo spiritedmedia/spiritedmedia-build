@@ -181,7 +181,7 @@ class Featured_Posts {
                     'compare' => '!=',
                 ],
             ],
-            'post_type'      => $this->post_types,
+            'post_type'      => Types::get_original_post_types(),
             'post_status'    => 'publish',
             'posts_per_page' => $num,
             'fields'         => 'ids',
