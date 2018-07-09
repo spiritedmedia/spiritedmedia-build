@@ -10,6 +10,30 @@ $context = Timber::get_context();
 
 if ( Types::is_post( $item ) ) :
 
+    if ( is_active_sidebar( 'sidebar-stream' ) ) {
+        $context['sidebar'] = Timber::get_widgets( 'sidebar-stream' );
+    }
+
+    if ( $item->is_story() ) {
+        $context['cluster'] = $item;
+        $context['cluster_id'] = $cluster_id;
+        $context['cluster_group_id'] = $item->get_mailchimp_group_id();
+        $context['cluster_group_category'] = $item->get_mailchimp_group_category();
+
+        add_filter( 'pedestal_stream_item_context', function( $context ) {
+            $context['overline'] = '';
+            return $context;
+        } );
+
+        if ( is_active_sidebar( 'sidebar-story' ) ) {
+            $context['sidebar'] = Timber::get_widgets( 'sidebar-story' );
+        }
+
+        if ( ! empty( $_GET['force-display-follow-form'] ) ) {
+            $context['force_display_follow_form'] = true;
+        }
+    }
+
     $cluster_stream = new Stream( $item->get_entities_query() );
     $context['stream'] = $cluster_stream->get_the_stream();
 
@@ -24,25 +48,6 @@ if ( Types::is_post( $item ) ) :
             'show_text' => true,
             'show_nav' => false,
         ] );
-    }
-
-    if ( is_active_sidebar( 'sidebar-stream' ) ) {
-        $context['sidebar'] = Timber::get_widgets( 'sidebar-stream' );
-    }
-
-    if ( $item->is_story() ) {
-        $context['cluster'] = $item;
-        $context['cluster_id'] = $cluster_id;
-        $context['cluster_group_id'] = $item->get_mailchimp_group_id();
-        $context['cluster_group_category'] = $item->get_mailchimp_group_category();
-
-        if ( is_active_sidebar( 'sidebar-story' ) ) {
-            $context['sidebar'] = Timber::get_widgets( 'sidebar-story' );
-        }
-
-        if ( ! empty( $_GET['force-display-follow-form'] ) ) {
-            $context['force_display_follow_form'] = true;
-        }
     }
 
     // Load Post context after everything else so it takes priority

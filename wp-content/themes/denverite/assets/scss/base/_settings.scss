@@ -161,22 +161,8 @@ $stream-item-title-link-text-decoration-hover: none;
 $stream-item-title-font-size--lg:              $stream-item-title-font-size;
 $stream-item-title-letter-spacing--lg:         $stream-item-title-letter-spacing;
 
-
-//
 // Featured Stream Items
-// ==========================================================================
-
-$feat-item-title-font-size:                  rem( 22px );
-$feat-item-primary-title-font-size:          rem( 30px );
-$feat-item-primary-title-line-height:        rem( 34px ) / $feat-item-primary-title-font-size;
-$feat-item-secondary-title-font-family:      $font-family-sans-serif;
-$feat-item-secondary-title-letter-spacing:   em( -0.6px, $feat-item-title-font-size );
-$feat-item-secondary-title-line-height:      rem( 26px ) / $feat-item-title-font-size;
-
-// Larger screens
-$feat-item-primary-title-font-size--lg:      $feat-item-primary-title-font-size;
-$feat-item-primary-title-letter-spacing--lg: 0;
-$feat-item-primary-title-line-height--lg:    $feat-item-primary-title-line-height;
+$feat-item-title-font-size: rem( 22px );
 
 
 //

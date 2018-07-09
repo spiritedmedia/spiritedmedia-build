@@ -1,0 +1,19 @@
+.stream__featured-items {
+  .stream-item__title {
+    font-family: $font-family-sans-serif;
+    letter-spacing: em( -0.6px, $feat-item-title-font-size );
+    line-height: rem( 26px ) / $feat-item-title-font-size;
+  }
+}
+
+
+@media #{$screen} and ( min-width: $stream-item-breakpoint ) {
+  .stream__featured-items__primary {
+    .stream-item__title {
+      font-size: rem( 30px );
+      line-height: rem( 34px ) / rem( 30px );
+      font-family: $font-family-serif;
+      letter-spacing: 0;
+    }
+  }
+}

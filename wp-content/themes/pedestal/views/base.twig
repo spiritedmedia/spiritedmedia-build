@@ -23,7 +23,7 @@
         {{ site.analytics.parsely.data }}
     </head>
     <body class="{{ body_class }} {{ layout_class }}" data-template="{{ template_name ?: 'base.twig' }}">
-        <div class="site-wrap js-site">
+        <div class="site-wrap has-sticky-footer js-site">
 
             {% if not is_page_donate %}
             {% include 'partials/header/member-bar.twig' %}

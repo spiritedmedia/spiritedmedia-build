@@ -10,8 +10,8 @@
 
   @if $enable-emboldened-link-underlines {
     // Try to prevent link underline styles from being added to shortcodes and
-    // non-text anchor links -- specificity is our friend here
-    > p > a {
+    // block level anchor links
+    > p a {
       @extend %link-underline;
     }
   }

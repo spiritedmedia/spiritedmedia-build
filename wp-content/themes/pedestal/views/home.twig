@@ -4,23 +4,32 @@
     {% if stream %}
         <section class="stream--home stream js-stream">
             {% if featured_stream_items %}
+
+            {% set has_any_overlines = false %}
+            {% for item in featured_stream_items %}
+                {% if item.context.overline and not loop.first %}
+                    {% set has_any_overlines = 'has-overlines' %}
+                {% endif %}
+            {% endfor %}
+
             <section class="stream__featured-items">
                 {% for item in featured_stream_items %}
                     {% if loop.first %}
-                        <div class="row">
-                            <div class="stream__featured-items__primary">
-                                {{ item }}
-                            </div>
+                        <div class="stream__featured-items__primary">
+                            {{ item.html }}
                         </div>
                     {% else %}
-                        {% if loop.index == 2 %}<div class="row">{% endif %}
-                            <div class="stream__featured-items__secondary">
-                                {{ item }}
-                            </div>
-                        {% if loop.index == 3 %}</div>{% endif %}
+                        {% if loop.index == 2 %}
+                        <div class="stream__featured-items__secondary {{ has_any_overlines }}">
+                        {% endif %}
+                            {{ item.html }}
+                        {% if loop.index == 3 %}
+                        </div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </section>
+
             {% endif %}
 
             {% if stream_header_city %}

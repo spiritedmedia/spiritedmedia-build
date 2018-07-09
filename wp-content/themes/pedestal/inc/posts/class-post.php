@@ -253,6 +253,15 @@ abstract class Post {
     }
 
     /**
+     * Get the original WP_Post object
+     *
+     * @return \WP_Post
+     */
+    public function get_wp_post() {
+        return $this->post;
+    }
+
+    /**
      * Get the filtered title for the post
      *
      * For exporting outside of the application, use `get_title()`.
@@ -1255,13 +1264,14 @@ abstract class Post {
      * @return string
      */
     public function get_mailto_share_string() {
-        $link = $this->get_permalink();
+        $title = $this->get_title();
+        $body = rawurlencode( $title ) . '%0A' . $this->get_permalink();
         $excerpt = $this->get_excerpt();
-        if ( strlen( $excerpt ) ) {
-            $excerpt = '%0A%0A&ldquo;' . rawurlencode( $excerpt ) . '&rdquo;';
+        if ( $excerpt ) {
+            $body .= '%0A%0A' . rawurlencode( $excerpt );
         }
-        $body = 'Yo, %0A%0AYou should see this link: ' . $link . $excerpt;
-        $subject = rawurlencode( $this->get_title() );
+        $subject = $title . ' (' . PEDESTAL_DOMAIN_PRETTY . ')';
+        $subject = rawurlencode( $subject );
         return "mailto:?subject=$subject&body=$body";
     }
 

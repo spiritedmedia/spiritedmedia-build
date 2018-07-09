@@ -181,7 +181,7 @@ class Featured_Posts {
                     'compare' => '!=',
                 ],
             ],
-            'post_type'      => Types::get_original_post_types(),
+            'post_type'      => $this->post_types,
             'post_status'    => 'publish',
             'posts_per_page' => $num,
             'fields'         => 'ids',
@@ -199,6 +199,8 @@ class Featured_Posts {
                 $index = absint( $data['index'] );
                 $new_post_id = $data['post'];
 
+                // Prevent duplicate post IDs
+                $post_ids = Utils::remove_array_item( $data['post'], $post_ids );
                 // Add the new post ID in to the array in the position it should
                 // live, bumping other post IDs back
                 array_splice( $post_ids, $index, 0, $new_post_id );
@@ -213,10 +215,9 @@ class Featured_Posts {
     /**
      * Get an array of all the featured posts
      *
-     * @return array Posts
+     * @return array Post data
      */
-    public function get_posts() {
-        $featured_data = $this->get_featured_data();
+    protected function get_posts() {
         $args = [
             'post_type' => $this->post_types,
             'post_status' => 'publish',
@@ -227,21 +228,7 @@ class Featured_Posts {
         if ( empty( $posts->posts ) ) {
             return [];
         }
-        $new_posts = [];
-        foreach ( $posts->posts as $post ) {
-            if ( isset( $featured_data[ $post->ID ] ) ) {
-                $override = $featured_data[ $post->ID ];
-                if ( ! empty( $override['post_title'] ) ) {
-                    $post->post_title = trim( $override['post_title'] );
-                }
-
-                if ( ! empty( $override['description'] ) ) {
-                    $post->post_excerpt = trim( $override['description'] );
-                }
-            }
-            $new_posts[] = $post;
-        }
-        return $new_posts;
+        return $posts->posts;
     }
 
     /**
@@ -251,13 +238,32 @@ class Featured_Posts {
      */
     public function get_the_featured_posts() {
         $posts = $this->get_posts();
+        $featured_data = $this->get_featured_data();
         $stream = new Stream;
         $items = [];
+
         foreach ( $posts as $index => $post ) :
+            if ( empty( $post ) ) {
+                continue;
+            }
             $index++;
             $ped_post = Post::get( $post );
             if ( ! Types::is_post( $ped_post ) ) {
                 continue;
+            }
+
+            $title = $ped_post->get_the_title();
+            $description = $ped_post->get_summary();
+
+            if ( isset( $featured_data[ $post->ID ] ) ) {
+                $override = $featured_data[ $post->ID ];
+                if ( ! empty( $override['post_title'] ) ) {
+                    $title = trim( $override['post_title'] );
+                }
+
+                if ( ! empty( $override['description'] ) ) {
+                    $description = trim( $override['description'] );
+                }
             }
 
             $default_context = [
@@ -282,11 +288,11 @@ class Featured_Posts {
                 'thumbnail_image_sizes' => [],
                 'overline'              => '',
                 'overline_url'          => '',
-                'title'                 => $ped_post->get_the_title(),
+                'title'                 => $title,
                 'permalink'             => $ped_post->get_the_permalink(),
                 'date_time'             => '',
                 'machine_time'          => '',
-                'description'           => $ped_post->get_summary(),
+                'description'           => $description,
                 'show_meta_info'        => true,
                 'author_names'          => '',
                 'author_image'          => '',
@@ -315,7 +321,8 @@ class Featured_Posts {
             do_action( 'pedestal_before_featured_item_' . $index, $post );
             echo $stream->get_the_stream_item( $context );
             do_action( 'pedestal_after_featured_item_' . $index, $post );
-            $items[] = ob_get_clean();
+            $html = ob_get_clean();
+            $items[] = compact( 'context', 'html' );
         endforeach;
         return $items;
     }

@@ -1,27 +1,12 @@
-// ==========================================================================
-// Pedestal // Base // Theme // STICKY FOOTER
-//
 // http://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
-// ==========================================================================
 
 
-/*
-stylelint-disable
-  selector-no-qualifying-type,
-  selector-max-type
-*/
-
-
-html.flexbox {
-
-  body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+.has-sticky-footer {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 
   .content-wrapper {
     flex: 1;
   }
-
 }

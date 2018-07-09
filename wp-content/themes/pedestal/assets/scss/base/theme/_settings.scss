@@ -244,22 +244,8 @@ $stream-item-footer-line-height:               rem( 16px ) / $stream-item-footer
 $stream-item-title-font-size--lg:              rem( 27px )             !default;
 $stream-item-title-letter-spacing--lg:         rem( -0.8px )           !default;
 
-
-//
 // Featured Stream Items
-// ==========================================================================
-
-$feat-item-title-font-size:                  $stream-item-title-font-size                         !default;
-$feat-item-primary-title-font-size:          $stream-item-title-font-size                         !default;
-$feat-item-primary-title-line-height:        $stream-item-title-line-height                                                    !default;
-$feat-item-secondary-title-font-family:      $body-font-family                                    !default;
-$feat-item-secondary-title-letter-spacing:   $stream-item-title-letter-spacing                    !default;
-$feat-item-secondary-title-line-height:      $stream-item-title-line-height                       !default;
-
-// Larger screens
-$feat-item-primary-title-font-size--lg:      rem( 40px )                                          !default;
-$feat-item-primary-title-letter-spacing--lg: em( -0.2px, $feat-item-primary-title-font-size--lg ) !default;
-$feat-item-primary-title-line-height--lg:    $feat-item-primary-title-line-height                 !default;
+$feat-item-title-font-size: $stream-item-title-font-size !default;
 
 
 //

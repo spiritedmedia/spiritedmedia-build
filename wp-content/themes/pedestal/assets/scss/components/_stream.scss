@@ -123,26 +123,17 @@
 
 .stream__featured-items__primary,
 .stream__featured-items__secondary {
-  // Note that column width must be specified explicitly for IE11 compatability
-  @include grid-column( 12 );
+  @include grid-row;
+
+  .stream-item {
+    // Note that column width must be specified explicitly for IE11 compatability
+    @include grid-column( 12 );
+  }
 }
 
 .stream__featured-items__primary {
-  .stream-item__title {
-    font-size: $feat-item-primary-title-font-size;
-    line-height: $feat-item-primary-title-line-height;
-  }
-
   .stream-item__title--pre-image {
     display: none;
-  }
-}
-
-.stream__featured-items__secondary {
-  .stream-item__title {
-    font-family: $feat-item-secondary-title-font-family;
-    letter-spacing: $feat-item-secondary-title-letter-spacing;
-    line-height: $feat-item-secondary-title-line-height;
   }
 }
 
@@ -160,23 +151,15 @@
 
 
 @media #{$screen} and ( min-width: $stream-item-breakpoint ) {
-  /// Align secondary items with or without overlines
-  .stream__featured-items {
-    .stream-item__featured-container {
-      margin-top: $overline-line-height-unit + $overline-margin-bottom;
-    }
-
-    .has-overline .stream-item__featured-container {
-      margin-top: 0;
-    }
-  }
-
   .stream__featured-items__primary {
+    .stream-item {
+      margin-bottom: rem( 16px );
+    }
+
     .stream-item__title {
-      font-size: $feat-item-primary-title-font-size--lg;
+      font-size: rem( 40px );
       font-weight: 700;
-      letter-spacing: $feat-item-primary-title-letter-spacing--lg;
-      line-height: $feat-item-primary-title-line-height--lg;
+      letter-spacing: em( -0.2px, rem( 40px ) );
     }
 
     .stream-item__title--pre-image {
@@ -194,6 +177,19 @@
   } // .stream__featured-items__primary
 
   .stream__featured-items__secondary {
-    @include grid-column( $columns: 6 );
+    $overline-x-offset: $overline-line-height-unit + $overline-margin-bottom;
+
+    &.has-overlines {
+      margin-top: $overline-x-offset;
+    }
+
+    .stream-item {
+      @include grid-column( 6 );
+
+      /// Align secondary items with or without overlines
+      &.has-overline {
+        margin-top: -( $overline-x-offset );
+      }
+    }
   }
 }

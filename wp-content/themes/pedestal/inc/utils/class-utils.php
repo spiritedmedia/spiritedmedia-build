@@ -249,12 +249,14 @@ class Utils {
     /**
      * Remove an item from an array by value
      *
-     * @param  mixed $item   The value to remove
+     * Returns the original array if the value is not present.
+     *
+     * @param  mixed $value   The value to remove
      * @param  array $array  The array to edit
      * @return array         The array without the value
      */
-    public static function remove_array_item( $item, $array ) {
-        $index = array_search( $item, $array );
+    public static function remove_array_item( $value, $array ) {
+        $index = array_search( $value, $array );
         if ( false !== $index ) {
             unset( $array[ $index ] );
         }
