@@ -93,14 +93,14 @@ googletag.cmd.push(function() {
     }
     return false;
   }
-  // Add 'ADVERTISEMENT' disclaimer text after all DFP units
+  // Add 'ADVERTISEMENT' disclaimer text before all DFP units
   googletag.pubads().addEventListener('slotRenderEnded', function(e) {
     var div, html;
     if (false === e.isEmpty) {
       var id = getGoogleDFPUnitID(e.slot);
       div = document.getElementById(id);
       html = '<div class="dfp-disclaimer">ADVERTISEMENT</div>';
-      div.insertAdjacentHTML('beforeend', html);
+      div.insertAdjacentHTML('afterbegin', html);
     }
   });
   googletag.enableServices();
