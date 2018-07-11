@@ -1,0 +1,38 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block content %}
+
+    {% markdown %}
+    # Inline Ads
+
+    Inline ads are injected into article content with the following requirements:
+
+    - Most articles will have two inline ad units
+    - Space inline ad units every 8 paragraphs with a maximum of 3 inline ads per article
+    - Ad units should only be inserted after a paragraph and should not immediately follow a heading or embed/graphic/etc (`<figure>`)
+    - Paragraphs between a block quote are off limits i.e. `<blockquote><p>...</p></blockquote>`
+    - The last paragraph at the end of the article is off limits
+
+    ## Examples
+    {% endmarkdown %}
+
+    <ol>
+    {% for example in examples %}
+        <li><a href="?example={{ example.slug|esc_attr }}">{{ example.title }}</a></li>
+    {% endfor %}
+    </ol>
+
+    {% markdown %}
+    ## Debugging
+
+     - Add `?debug-inline-ads` to the URL which numbers the paragraphs for verifying logic
+     - Add `?debug-inline-ads&max-ads=10` to the URL to change the maximum number of inline ads shown
+     - Add `?debug-inline-ads&ad-frequency=2` to the URL to change the number of paragraphs for spacing out the inline ad units
+
+     {% endmarkdown %}
+
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

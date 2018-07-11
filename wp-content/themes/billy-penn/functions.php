@@ -72,6 +72,9 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => 'GTM-P8PWVHM',
                 'PEDESTAL_COMSCORE_ID'                  => '23083389',
 
+                // DFP
+                'PEDESTAL_DFP_PREFIX' => 'PHL',
+
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'    => 'billy_penn',
                 'PEDESTAL_INSTAGRAM_USERNAME'  => 'billy_penn',

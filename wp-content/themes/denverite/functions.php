@@ -122,6 +122,9 @@ class Denverite extends Pedestal {
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-77340868-1',
                 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '121553308',
 
+                // DFP
+                'PEDESTAL_DFP_PREFIX' => 'DEN',
+
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'    => 'denverite',
                 'PEDESTAL_INSTAGRAM_USERNAME'  => 'dnvrite',

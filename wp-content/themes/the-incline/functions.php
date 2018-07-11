@@ -69,6 +69,9 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '121833937',
                 'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => 'GTM-WFRTH8G',
 
+                // DFP
+                'PEDESTAL_DFP_PREFIX' => 'PGH',
+
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'    => 'theinclinepgh',
                 'PEDESTAL_INSTAGRAM_USERNAME'  => 'theinclinepgh',

@@ -6,6 +6,7 @@ use function Pedestal\Pedestal;
 
 use WP_CLI;
 use joshtronic\LoremIpsum;
+use Sunra\PhpSimple\HtmlDomParser;
 
 use Pedestal\Objects\{
     MailChimp,
@@ -1375,18 +1376,92 @@ class CLI extends \WP_CLI_Command {
     }
 
     /**
-     * Generate a list of clusters ranked by # of occurrences (entities associated with this cluster)
+     * Generate a CSV of data points about original content
      *
      * ## EXAMPLES
      *
-     *     wp pedestal cluster-useage-report --url=https://billypenn.com/
+     *     wp pedestal content-analysis --url=https://billypenn.com/
      *
-     * @subcommand cluster-useage-report
+     * @subcommand content-analysis
      */
-    public function cluster_usage_report() {
+    public function content_analysis() {
         $args = [
-            'post_type' => Types::get_cluster_post_types(),
+            'post_type'              => Types::get_original_post_types(),
+            'post_status'            => 'public',
+            'posts_per_page'         => -1,
+            'fields'                 => 'ids',
+            'no_found_rows'          => true,
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false,
         ];
+        $posts = new \WP_Query( $args );
+        $file_name = PEDESTAL_BLOG_NAME . '--original-content-analysis--' . date( 'Y-m-d' );
+        $file_name = sanitize_title( $file_name ) . '.csv';
+        $file = fopen( $file_name, 'w' );
+        fputcsv( $file, [
+            'Paragraphs',
+            'Word Count',
+            'Shortcodes',
+            'Images',
+            'Title',
+            'Permalink',
+            'Date',
+        ]);
+        foreach ( $posts->posts as $post_id ) {
+            $post = get_post( $post_id );
+            if ( empty( $post->post_content ) ) {
+                continue;
+            }
+            // Get an HTML version of the post_content
+            $html = apply_filters( 'the_content', $post->post_content );
+
+            // Count the number of paragraphs
+            $graf_count = 0;
+            $dom = HtmlDomParser::str_get_html( $html );
+            if ( is_object( $dom ) ) {
+                $nodes = $dom->find( 'p' );
+                $graf_count = count( $nodes );
+            }
+
+            // Count the total number of words
+            $word_count = str_word_count( strip_tags( $html ) );
+
+            // Count the number of shortcodes used in the post
+            preg_match_all( '/' . get_shortcode_regex() . '/', $post->post_content, $matches, PREG_SET_ORDER );
+            $shortcodes = count( $matches );
+
+            // Tally shortcode tags
+            $images = 0;
+            foreach ( $matches as $match ) {
+                $shortcode_tag = $match[2];
+                if ( 'img' == $shortcode_tag ) {
+                    $images++;
+                }
+            }
+
+            // Get a live version of the permalink
+            $permalink = get_permalink( $post_id );
+            $permalink = str_replace( '.dev', '.com', $permalink );
+
+            $row = [
+                'paragraphs' => $graf_count,
+                'word_count' => $word_count,
+                'shortcodes' => $shortcodes,
+                'images'     => $images,
+                'title'      => $post->post_title,
+                'permalink'  => $permalink,
+                'date'       => $post->post_date,
+            ];
+            fputcsv( $file, $row );
+
+            // Hopefully this will help with memory management
+            unset( $post );
+            unset( $html );
+            unset( $dom );
+        }
+        fclose( $file );
+
+        WP_CLI::success( 'Done!' );
     }
 }
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );

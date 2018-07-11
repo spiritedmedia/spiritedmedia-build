@@ -3,10 +3,12 @@
 namespace Pedestal;
 
 use Timber\Timber;
+use Sunra\PhpSimple\HtmlDomParser;
 use Pedestal\Objects\Stream;
 use Pedestal\Posts\Slots\Slots;
 use Pedestal\Posts\Attachment;
 use Pedestal\Icons;
+use Pedestal\Registrations\Post_Types\Types;
 
 class Adverts {
     /**
@@ -30,8 +32,9 @@ class Adverts {
         add_action( 'pedestal_after_stream_item_2', [ $this, 'action_pedestal_after_stream_item_2' ] );
         add_action( 'pedestal_after_stream_item_4', function() {
             echo $this->render_stream_ad_unit( '04' );
-            $context = Timber::get_context();
-            Timber::render( 'partials/adverts/inline-ad.twig', $context );
+            echo self::render_dfp_unit( PEDESTAL_DFP_PREFIX . '_Inline', '300x250', [
+                'additional_classes' => 'dfp--inline-stream',
+            ] );
         } );
         add_action( 'pedestal_after_stream_item_8', function() {
             echo $this->render_stream_ad_unit( '08' );
@@ -62,6 +65,7 @@ class Adverts {
             return $template_path;
         });
         add_filter( 'pedestal_stream_item_template', [ $this, 'filter_pedestal_stream_item_template' ], 10, 2 );
+        add_filter( 'the_content', [ $this, 'filter_the_content_inject_inline_ads' ], 999 );
     }
 
     /**
@@ -96,6 +100,30 @@ class Adverts {
     }
 
     /**
+     * Filter the content of posts to inject ads in between paragraphs
+     *
+     * @param  string $html HTML to maybe inject ads into
+     * @return string       Modified HTML
+     */
+    public function filter_the_content_inject_inline_ads( $html = '' ) {
+        if ( ! is_single() ) {
+            return $html;
+        }
+        $post = get_post();
+        if ( ! is_object( $post ) ) {
+            return $html;
+        }
+        if ( ! Types::is_original_content( $post->post_type ) ) {
+            return $html;
+        }
+        $args = [
+            'ad_frequency' => 8,
+            'max_ads'      => 3,
+        ];
+        return self::inject_inline_ads( $html, $args );
+    }
+
+    /**
      * Render a stream ad unit, these are unique per site.
      * @param  string $index  Which ad unit position to render
      * @return string         HTML for the ad unit
@@ -113,6 +141,31 @@ class Adverts {
         $context = Timber::get_context();
         ob_start();
         Timber::render( 'partials/adverts/ad-stream-' . $index . '.twig', $context );
+        return ob_get_clean();
+    }
+
+    /**
+     * Render a DFP ad unit
+     * @param  string $id     The ID of the ad position
+     * @param  string $sizes  Comma separated list of accepted sizes
+     * @return string         HTML markup of the ad unit
+     */
+    public static function render_dfp_unit( $id = '', $sizes = '', $args = [] ) {
+        if ( empty( $id ) || empty( $sizes ) ) {
+            return;
+        }
+        $defaults = [
+            'additional_classes' => '',
+        ];
+        $args = wp_parse_args( $args, $defaults );
+        $ad_context = [
+            'id'        => $id,
+            'sizes'     => $sizes,
+            'unique_id' => uniqid(),
+        ];
+        $ad_context = wp_parse_args( $ad_context, $args );
+        ob_start();
+        Timber::render( 'partials/adverts/dfp-unit.twig', $ad_context );
         return ob_get_clean();
     }
 
@@ -187,5 +240,99 @@ class Adverts {
         ob_start();
         echo $stream->get_the_stream_item( $context );
         return ob_get_clean();
+    }
+
+    /**
+     * Injects inline ad units into a string of HTML
+     *
+     * @param  string $html HTML to have ads injected into it
+     * @param  array  $args Optional arguments
+     * @return string       Modified HTML
+     */
+    public function inject_inline_ads( $html = '', $args = [] ) {
+        $defaults = [
+            'ad_frequency' => 8,   // How often to inject ad between selectors
+            'max_ads'      => 3,   // Maximum number of ads to inject
+            'selector'     => 'p', // Selector to insert ads after
+        ];
+        $args = wp_parse_args( $args, $defaults );
+
+        $debug_ads = false;
+        if ( isset( $_GET['debug-inline-ads'] ) ) {
+            $debug_ads = true;
+        }
+        if ( $debug_ads ) {
+            if ( ! empty( $_GET['ad-frequency'] ) ) {
+                $args['ad_frequency'] = intval( $_GET['ad-frequency'] );
+            }
+
+            if ( ! empty( $_GET['max-ads'] ) ) {
+                $args['max_ads'] = intval( $_GET['max-ads'] );
+            }
+        }
+
+        if ( empty( $html ) ) {
+            return $html;
+        }
+
+        $dom = HtmlDomParser::str_get_html( $html );
+        $nodes = $dom->find( $args['selector'] );
+
+        // Weed out nodes that are children of another element
+        foreach ( $nodes as $index => $node ) {
+            if ( 'root' != $node->parent()->tag ) {
+                unset( $nodes[ $index ] );
+            }
+        }
+
+        // Reindex array
+        $nodes = array_values( $nodes );
+
+        // Remove the last node because an ad after the end of an article is off limits
+        array_pop( $nodes );
+
+        if ( count( $nodes ) < $args['ad_frequency'] ) {
+            // Not enough elements to inject even 1 ad...
+            return $html;
+        }
+
+        $ads_injected = 0;
+        foreach ( $nodes as $index => $node ) {
+            $ideal_position = $args['ad_frequency'] * ( $ads_injected + 1 );
+            if ( $index + 1 < $ideal_position ) {
+                continue;
+            }
+
+            $ad_unit_id = PEDESTAL_DFP_PREFIX . '_Inline';
+            $ad_unit = self::render_dfp_unit( $ad_unit_id, '300x250', [
+                'additional_classes' => 'dfp--inline dfp--inline--' . ( $index + 1 ),
+            ] );
+
+            // Insert the ad unit after the node
+            $node->outertext = $node->outertext . $ad_unit;
+            $ads_injected++;
+            if ( $ads_injected >= $args['max_ads'] ) {
+                break;
+            }
+        }
+
+        $html = $dom->save();
+
+        if ( $debug_ads ) {
+            $html = '
+            <style>
+                body {
+                    counter-reset: para;
+                }
+                .s-content > p::before,
+                .c-factcheck__analysis > p::before {
+                    counter-increment: para;
+                    content: counter( para ) ") ";
+                }
+            </style>
+            <div style="color: red;">Inline ads will be shown every ' . $args['ad_frequency'] . ' paragraphs, max of ' . $args['max_ads'] . ' ads<br><br></div>
+            ' . $html;
+        }
+        return $html;
     }
 }

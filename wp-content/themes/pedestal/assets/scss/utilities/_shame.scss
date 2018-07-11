@@ -1,0 +1,13 @@
+// Dedicated to housing nasty, hacky, quick-fix CSS
+// See https://csswizardry.com/2013/04/shame-css/
+
+
+// Invisibly JavaScript injects an iframe at the bottom of the page creating a
+// 4px odd gap with the footer. We position it absolutely to remove it from the follow
+// of the page
+
+// stylelint-disable-next-line selector-max-id
+#ads-text-iframe {
+  position: absolute;
+  bottom: 0;
+}

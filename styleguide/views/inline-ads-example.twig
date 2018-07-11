@@ -1,0 +1,23 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block content %}
+    <style>
+    body {
+        counter-reset: para;
+    }
+    .s-content > p::before {
+        counter-increment: para;
+        content: counter( para ) ") ";
+    }
+    </style>
+    <h1>{{ title }}</h1>
+
+    <section class="c-main__body s-content">
+        {{ example_content }}
+    </section>
+
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

@@ -30,6 +30,7 @@ address the issue.
 - [Headers](headers.php)
 - [Horizontal Rules](horizontal-rules.php)
 - [Icons](icons.php)
+- [Inline Ads](inline-ads.php)
 - [Modals](modals.php)
 - [Pagination](pagination.php)
 - [Post Content: Common HTML](common-html.php)
