@@ -164,6 +164,10 @@ class Adverts {
             'unique_id' => uniqid(),
         ];
         $ad_context = wp_parse_args( $ad_context, $args );
+        $show_ad_unit = (bool) apply_filters( 'pedestal_show_dfp_unit', true, $id, $sizes, $args );
+        if ( ! $show_ad_unit ) {
+            return;
+        }
         ob_start();
         Timber::render( 'partials/adverts/dfp-unit.twig', $ad_context );
         return ob_get_clean();

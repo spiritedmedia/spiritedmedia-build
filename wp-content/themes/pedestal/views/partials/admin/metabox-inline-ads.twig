@@ -1,0 +1,7 @@
+<label>
+    <input type="checkbox" name="pedestal-disable-ads" value="true" {{ checked( are_ads_hidden ) }}>
+    Hide ads from this {{ content_type|lower }}
+</label>
+<p class="fm-item-description">For conflicts/inappropriate content match only</p>
+
+{{ nonce_field }}

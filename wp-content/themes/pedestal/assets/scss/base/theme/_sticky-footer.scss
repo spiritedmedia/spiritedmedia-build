@@ -1,12 +1,16 @@
 // http://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
-
+// IE11 requires an extra container https://codepen.io/Sphinxxxx/pen/OXwOWX
+.has-sticky-footer-container {
+  display: flex;
+}
 
 .has-sticky-footer {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  flex: 1 1 auto;
 
   .content-wrapper {
-    flex: 1;
+    flex: 1 1 auto;
   }
 }

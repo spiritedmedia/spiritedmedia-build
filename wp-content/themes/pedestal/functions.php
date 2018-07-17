@@ -308,6 +308,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->user_management          = User_Management::get_instance();
             $this->shortcode_manager        = Shortcode_Manager::get_instance();
             $this->adverts                  = Adverts::get_instance();
+            $this->ad_kill_switch           = Admin\Ad_Kill_Switch::get_instance();
             $this->slots                    = Posts\Slots\Slots::get_instance();
             $this->feeds                    = Feeds::get_instance();
             $this->featured_posts           = Featured_Posts::get_instance();

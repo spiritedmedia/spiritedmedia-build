@@ -23,49 +23,51 @@
         {{ site.analytics.parsely.data }}
     </head>
     <body class="{{ body_class }} {{ layout_class }}" data-template="{{ template_name ?: 'base.twig' }}">
-        <div class="site-wrap has-sticky-footer js-site">
+        <div class="sticky-footer-container">
+            <div class="site-wrap has-sticky-footer js-site" style="flex: 1;">
 
-            {% if not is_page_donate %}
-            {% include 'partials/header/member-bar.twig' %}
-            {% endif %}
+                {% if not is_page_donate %}
+                {% include 'partials/header/member-bar.twig' %}
+                {% endif %}
 
-            {{ site_header }}
+                {{ site_header }}
 
-            {% block after_header %}
-            {% endblock %}
+                {% block after_header %}
+                {% endblock %}
 
-            {% if spotlight.enabled and spotlight.content and not is_home and not is_page %}
-            <aside class="spotlight">
-                <div class="row">
-                    <div class="spotlight__inner">
-                        <strong>{{ spotlight.label }}</strong>
-                        <a
-                            href="{{ spotlight.content.get_the_permalink|esc_url }}"
-                            data-ga-category="Spotlight|{{ spotlight.label|esc_attr }}"
-                            data-ga-label="{{ spotlight.content.get_the_title|esc_attr }}"
-                        >
-                            {{ spotlight.content.get_the_title }}
-                        </a>
+                {% if spotlight.enabled and spotlight.content and not is_home and not is_page %}
+                <aside class="spotlight">
+                    <div class="row">
+                        <div class="spotlight__inner">
+                            <strong>{{ spotlight.label }}</strong>
+                            <a
+                                href="{{ spotlight.content.get_the_permalink|esc_url }}"
+                                data-ga-category="Spotlight|{{ spotlight.label|esc_attr }}"
+                                data-ga-label="{{ spotlight.content.get_the_title|esc_attr }}"
+                            >
+                                {{ spotlight.content.get_the_title }}
+                            </a>
+                        </div>
                     </div>
+                </aside>
+                {% endif %}
+
+                {% if not is_page %}
+                    {% include 'partials/adverts/dfp-header-300x50.twig' ignore missing %}
+                {% endif %}
+
+                <div class="content-wrapper">
+                   {% block the_body %}
+                   {% endblock %}
+
+                   {% block the_sidebar %}
+                   {% endblock %}
                 </div>
-            </aside>
-            {% endif %}
 
-            {% if not is_page %}
-                {% include 'partials/adverts/dfp-header-300x50.twig' ignore missing %}
-            {% endif %}
+                {% include 'site-footer.twig' %}
 
-            <div class="content-wrapper">
-               {% block the_body %}
-               {% endblock %}
-
-               {% block the_sidebar %}
-               {% endblock %}
-            </div>
-
-            {% include 'site-footer.twig' %}
-
-        </div><!-- end .site-wrap -->
+            </div><!-- end .site-wrap -->
+        </div> <!-- end .sticky-footer-container -->
 
         {% include 'partials/modals/signup-daily.twig' %}
 

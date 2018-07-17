@@ -23,7 +23,7 @@ switch ( $blog_id ) :
             [
                 'name'     => 'Billy Penn Article',
                 'path'     => '/2017/09/26/we-knew-nothing-about-donuts-and-other-stories-in-the-new-federal-donuts-book/',
-                'expected' => 6,
+                'expected' => 7,
             ],
             [
                 'name'     => 'Billy Penn Story',
@@ -33,22 +33,22 @@ switch ( $blog_id ) :
             [
                 'name'     => 'Billy Penn Who\'s Next',
                 'path'     => '/2017/03/01/whos-next-bartenders-15-young-drink-maestros-elevating-phillys-booze-game/',
-                'expected' => 3,
+                'expected' => 1,
             ],
             [
                 'name'     => 'Billy Penn Fact Check',
                 'path'     => '/2017/09/01/why-the-black-lives-matter-protest-outside-a-philly-police-officers-home-was-not-illegal-occupation/',
-                'expected' => 3,
+                'expected' => 2,
             ],
             [
                 'name'     => 'Billy Penn Event',
                 'path'     => '/2017/03/10/drink-local-stouts-instead-of-guinness/',
-                'expected' => 6,
+                'expected' => 4,
             ],
             [
                 'name'     => 'Billy Penn Embed',
                 'path'     => '/2017/09/03/heres-what-it-was-like-to-check-in-at-phl-airport-in-the-1970s/',
-                'expected' => 6,
+                'expected' => 4,
             ],
         ];
         break;
@@ -73,7 +73,7 @@ switch ( $blog_id ) :
             [
                 'name'     => 'Denverite Article',
                 'path'     => '/2017/12/18/denver-council-delays-consideration-massive-flood-control-project/',
-                'expected' => 6,
+                'expected' => 5,
             ],
         ];
         break;

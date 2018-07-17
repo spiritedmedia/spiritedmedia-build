@@ -7952,6 +7952,7 @@ return array(
     'Monolog\\Processor\\WebProcessor' => $vendorDir . '/monolog/monolog/src/Monolog/Processor/WebProcessor.php',
     'Monolog\\Registry' => $vendorDir . '/monolog/monolog/src/Monolog/Registry.php',
     'Parsedown' => $vendorDir . '/erusev/parsedown/Parsedown.php',
+    'Pedestal\\Admin\\Ad_Kill_Switch' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-ad-kill-switch.php',
     'Pedestal\\Admin\\Admin' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-admin.php',
     'Pedestal\\Admin\\Bulk_Action' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-bulk-actions.php',
     'Pedestal\\Admin\\Cluster_Tools' => $baseDir . '/wp-content/themes/pedestal/inc/admin/class-cluster-tools.php',

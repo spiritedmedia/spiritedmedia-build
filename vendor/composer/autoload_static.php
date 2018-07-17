@@ -8150,6 +8150,7 @@ class ComposerStaticInit3fd466591cad51673a17d29c372efc2f
         'Monolog\\Processor\\WebProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/WebProcessor.php',
         'Monolog\\Registry' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Registry.php',
         'Parsedown' => __DIR__ . '/..' . '/erusev/parsedown/Parsedown.php',
+        'Pedestal\\Admin\\Ad_Kill_Switch' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-ad-kill-switch.php',
         'Pedestal\\Admin\\Admin' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-admin.php',
         'Pedestal\\Admin\\Bulk_Action' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-bulk-actions.php',
         'Pedestal\\Admin\\Cluster_Tools' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/admin/class-cluster-tools.php',
