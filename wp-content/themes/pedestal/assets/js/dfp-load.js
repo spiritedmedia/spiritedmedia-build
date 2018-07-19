@@ -3,11 +3,9 @@ googletag.cmd = googletag.cmd || [];
 (function() {
   var gads = document.createElement('script');
   gads.async = true;
-  gads.type = 'text/javascript';
-  var useSSL = 'https:' === document.location.protocol;
-  gads.src = (useSSL ? 'https:' : 'http:') +
-  '//www.googletagservices.com/tag/js/gpt.js';
-  var node = document.getElementsByTagName('script')[0];
+  gads.type  = 'text/javascript';
+  gads.src   = 'https://www.googletagservices.com/tag/js/gpt.js';
+  var node   = document.getElementsByTagName('script')[0];
   node.parentNode.insertBefore(gads, node);
 })();
 
@@ -16,15 +14,17 @@ googletag.cmd.push(function() {
   // Dynamically load the DFP ID from the data attribute of this script
   var DFP_ID = document.getElementById('dfp-load')
     .getAttribute('data-dfp-id');
-  // The ad slots we will tell Google Tag about
-  var slots = [];
+
+  // Keep track of the ids of ads we can display
+  var adsToDisplay = [];
+
   (function($) {
     // For each ad markup on the page we will get the slot name and accepted
     // sizes for the slot before defining the ad position
     $('.js-dfp').each(function(elIndex, el) {
       var $el = $(el);
       if ($el.css('display') == 'none') {
-        // Ad is hidden, don't request an ad
+      // Ad is hidden, don't request an ad
         return;
       }
       var rawSize = $el.data('dfp-sizes');
@@ -55,14 +55,12 @@ googletag.cmd.push(function() {
       });
       var path = '/' + DFP_ID + '/' + slotName;
       var id = 'div-gpt-ad-' + slotName + '-' + uniqueId;
-
-      slots.push(googletag
+      adsToDisplay.push(id);
+      googletag
         .defineSlot(path, sizes, id)
-        .addService(googletag.pubads())
-      );
+        .addService(googletag.pubads());
     });
   }(jQuery));
-
   // Additional options
   googletag.pubads().enableSingleRequest();
   googletag.pubads().collapseEmptyDivs(true);
@@ -104,4 +102,10 @@ googletag.cmd.push(function() {
     }
   });
   googletag.enableServices();
+
+  $.each(adsToDisplay, function(index, id) {
+    googletag.cmd.push(function() {
+      googletag.display(id);
+    });
+  });
 });

@@ -817,8 +817,9 @@ abstract class Post {
      * @return string
      */
     public function get_the_relative_datetime() {
-        $now = new \DateTime;
-        $match_date = new \DateTime;
+        $local_time_zone = new \DateTimeZone( PEDESTAL_SITE_TIMEZONE );
+        $now = new \DateTime( '', $local_time_zone );
+        $match_date = new \DateTime( '', $local_time_zone );
         $match_date->setTimestamp( $this->get_post_date() );
 
         // Reset time part, to prevent partial day comparison
