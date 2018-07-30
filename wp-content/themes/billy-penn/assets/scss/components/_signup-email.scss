@@ -71,14 +71,12 @@
 
 @media #{$small-only} {
   .signup-email__details {
-    .c-main__footer &,
-    .widget & {
+    .c-main__footer & {
       @include invisible;
     }
   }
 
   .signup-email__latest--standalone {
-    .widget &,
     .c-main__footer & {
       display: block;
     }
@@ -107,26 +105,6 @@
     // stylelint-disable-next-line selector-max-type
     br {
       display: none;
-    }
-  }
-}
-
-
-@media #{$large-up} {
-  .signup-email__header {
-    .widget & {
-      text-align: center;
-    }
-  }
-
-  .signup-email__icon,
-  .signup-email__title {
-    .widget & {
-      width: 100%;
-      margin-right: 0;
-
-      // stylelint-disable-next-line selector-max-type
-      br { display: block; }
     }
   }
 }

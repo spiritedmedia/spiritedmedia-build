@@ -24,6 +24,8 @@ class Featured_Posts {
         'pedestal_factcheck',
     ];
 
+    private $option_key = 'pedestal_featured_posts';
+
     /**
      * Get an instance of this class
      */
@@ -31,18 +33,22 @@ class Featured_Posts {
         static $instance = null;
         if ( null === $instance ) {
             $instance = new static();
-            $instance->setup_hooks();
+            $instance->setup_actions();
         }
         return $instance;
     }
 
     /**
-     * Hook in to various actions and filters
+     * Hook in to various actions
      */
-    private function setup_hooks() {
+    private function setup_actions() {
         // Needs to happen after post types are registered
         add_action( 'init', [ $this, 'action_init' ], 11 );
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts' ] );
+        add_action( 'wp_ajax_pedestal-featured-entities-placeholder', [ $this, 'action_wp_ajax_featured_entities_placeholder' ] );
+        add_action( 'admin_print_scripts-appearance_page_pedestal_featured_posts', function() {
+            wp_enqueue_script( 'featured-posts-admin', get_template_directory_uri() . '/assets/dist/js/featured-posts-admin.js', [ 'jquery' ], PEDESTAL_VERSION );
+        });
     }
 
     /**
@@ -54,11 +60,11 @@ class Featured_Posts {
         }
 
         $fm_featured = new \Fieldmanager_Group( esc_html__( 'Featured Posts', 'pedestal' ), [
-            'name' => 'pedestal_featured_posts',
+            'name' => $this->option_key,
             'children' => [
-                'feat-1' => $this->get_child_fields( 'Featured 1' ),
-                'feat-2' => $this->get_child_fields( 'Featured 2' ),
-                'feat-3' => $this->get_child_fields( 'Featured 3' ),
+                'feat-1' => $this->get_child_fields( 'Featured 1', 'feat-1' ),
+                'feat-2' => $this->get_child_fields( 'Featured 2', 'feat-2' ),
+                'feat-3' => $this->get_child_fields( 'Featured 3', 'feat-3' ),
             ],
         ] );
         $fm_featured->add_submenu_page( 'themes.php',
@@ -87,11 +93,39 @@ class Featured_Posts {
     }
 
     /**
+     * Return the homepage description value for a given Post ID via AJAX
+     */
+    public function action_wp_ajax_featured_entities_placeholder() {
+        if ( empty( $_POST['post_id'] ) ) {
+            wp_send_json_error( null, 500 );
+            die();
+        }
+
+        $post_id = absint( $_POST['post_id'] );
+        $ped_post = Post::get( $post_id );
+        if ( ! Types::is_post( $ped_post ) ) {
+            wp_send_json_error( null, 500 );
+            die();
+        }
+
+        $placeholder = $ped_post->get_homepage_description();
+        wp_send_json_success( $placeholder );
+        die();
+    }
+
+    /**
      * Get the Fieldmanager child fields
      *
      * @param  string $label Label for the field
      */
-    private function get_child_fields( $label = '' ) {
+    private function get_child_fields( $label = '', $data_key = '' ) {
+        $placeholder = '';
+        $data = get_option( $this->option_key );
+        if ( is_array( $data ) && ! empty( $data[ $data_key ]['post'] ) ) {
+            $post_id = $data[ $data_key ]['post'];
+            $ped_post = Post::get( $post_id );
+            $placeholder = $ped_post->get_homepage_description();
+        }
         return new \Fieldmanager_Group( $label, [
             'label_macro' => [
                 '%s',
@@ -116,13 +150,13 @@ class Featured_Posts {
                     'name'        => 'post_title',
                     'description' => 'Customize the display title.',
                 ] ),
-                'description' => new \Fieldmanager_RichTextArea( 'Description Override', [
-                    'name'            => 'description',
-                    'description'     => 'Customize the description.',
-                    'editor_settings' => [
-                        'teeny'         => true,
-                        'media_buttons' => false,
-                        'editor_height' => 300,
+                'description' => new \Fieldmanager_TextArea( 'Description Override', [
+                    'name'        => 'description',
+                    'description' => 'This will appear below the headline and image, when the article is featured. It defaults to the subhead of the article. If there is a homepage summary specificed on the article, that will override the subhead. If specified here, this text will override both.',
+                    'attributes'  => [
+                        'placeholder' => $placeholder,
+                        'style'       => 'width: 100%;',
+                        'rows'        => 4,
                     ],
                 ] ),
             ],
@@ -136,7 +170,7 @@ class Featured_Posts {
      */
     public function get_featured_data() {
         $output = [];
-        $data = get_option( 'pedestal_featured_posts' );
+        $data = get_option( $this->option_key );
         if ( ! empty( $data ) ) {
             // Keep track of the index so we know what position this featured post
             // should go to
@@ -252,20 +286,6 @@ class Featured_Posts {
                 continue;
             }
 
-            $title = $ped_post->get_the_title();
-            $description = $ped_post->get_summary();
-
-            if ( isset( $featured_data[ $post->ID ] ) ) {
-                $override = $featured_data[ $post->ID ];
-                if ( ! empty( $override['post_title'] ) ) {
-                    $title = trim( $override['post_title'] );
-                }
-
-                if ( ! empty( $override['description'] ) ) {
-                    $description = trim( $override['description'] );
-                }
-            }
-
             $default_context = [
                 'post'                     => $post,
                 'type'                     => $ped_post->get_type(),
@@ -288,11 +308,11 @@ class Featured_Posts {
                 'thumbnail_image_sizes' => [],
                 'overline'              => '',
                 'overline_url'          => '',
-                'title'                 => $title,
+                'title'                 => $ped_post->get_the_title(),
                 'permalink'             => $ped_post->get_the_permalink(),
                 'date_time'             => '',
                 'machine_time'          => '',
-                'description'           => $description,
+                'description'           => $ped_post->get_homepage_description(),
                 'show_meta_info'        => true,
                 'author_names'          => '',
                 'author_image'          => '',
@@ -312,6 +332,17 @@ class Featured_Posts {
             }
 
             $context = apply_filters( 'pedestal_stream_item_context', $default_context, $ped_post );
+
+            if ( isset( $featured_data[ $post->ID ] ) ) {
+                $override = $featured_data[ $post->ID ];
+                if ( ! empty( $override['post_title'] ) ) {
+                    $context['title'] = trim( $override['post_title'] );
+                }
+
+                if ( ! empty( $override['description'] ) ) {
+                    $context['description'] = trim( $override['description'] );
+                }
+            }
 
             if ( 1 == $index ) {
                 $context['primary_item'] = true;

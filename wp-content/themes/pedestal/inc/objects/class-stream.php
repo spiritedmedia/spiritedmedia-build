@@ -81,7 +81,7 @@ class Stream {
                 'permalink'         => $ped_post->get_the_permalink(),
                 'date_time'         => $ped_post->get_the_relative_datetime(),
                 'machine_time'      => $ped_post->get_post_date( 'c' ),
-                'description'       => $ped_post->get_summary(),
+                'description'       => $ped_post->get_homepage_description(),
                 'show_meta_info'    => true,
             ] + $this->get_default_stream_item_context();
             $context = apply_filters( 'pedestal_stream_item_context', $context, $ped_post );

@@ -227,22 +227,23 @@
      * to call `setContent()`.
      */
     setupSummaryButtons: function() {
-      const summaryID = 'fm-homepage_settings-0-summary-0';
-      const $btnSubhead = $('.js-pedestal-summary-copy-subhead');
-      const $btnGraf = $('.js-pedestal-summary-copy-first-graf');
+      const $summary = $('#fm-homepage_settings-0-summary-0');
+      if ($summary.length < 1) {
+        // No summary field on the page so don't setup event listeners
+        return;
+      }
 
       // Copy the subhead to the summary field
-      $btnSubhead.on('click', function() {
+      $('.js-pedestal-summary-copy-subhead').on('click', function() {
         const subhead = $('textarea#excerpt').val();
         if ('' === subhead) {
           return;
         }
-        const summary = tinyMCE.get(summaryID);
-        summary.setContent(subhead);
+        $summary.val(subhead);
       });
 
       // Copy the first paragraph in the main content field to the summary field
-      $btnGraf.on('click', function() {
+      $('.js-pedestal-summary-copy-first-graf').on('click', function() {
         const contentHTML = tinyMCE.get('content').getContent();
 
         // We only want the grafs that don't contain shortcodes
@@ -261,8 +262,7 @@
         }
 
         const graf = $normalGrafs.first().html();
-        const summary = tinyMCE.get(summaryID);
-        summary.setContent(graf);
+        $summary.val(graf);
       });
     },
 

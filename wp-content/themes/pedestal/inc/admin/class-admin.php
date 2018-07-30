@@ -134,8 +134,6 @@ class Admin {
             echo '<h1 class="wp-heading-inline">Distribution</h1>';
             do_meta_boxes( null, 'distribution', $post );
         } );
-
-        add_action( 'media_buttons', [ $this, 'action_media_buttons_summary_field' ] );
     }
 
     /**
@@ -286,7 +284,7 @@ class Admin {
         // Customize the excerpt field description
         add_filter( 'gettext', function( $translation, $original ) {
             if ( false !== strpos( $original, 'Excerpts are optional hand-crafted summaries of your' ) ) {
-                return 'Optional short sentence supporting the headline; help readers make a decision about continuing to read the full article.';
+                return 'Optional short sentence supporting the headline; help readers make a decision about continuing to read the full article. This will appear below the headline on the article. It will also appear on the homepage, unless it is overridden, see below.';
             }
             return $translation;
         }, 10, 2 );
@@ -296,7 +294,6 @@ class Admin {
      * Register Fieldmanager fields
      */
     public function action_init_after_post_types_registered() {
-        $this->register_post_homepage_settings_fields();
         $this->register_distribution_fields();
         $this->register_spotlight_fields();
     }
@@ -408,34 +405,6 @@ class Admin {
     public function action_admin_notice_slot_item_defaults_missing() {
         $message = 'You are missing required default values in the Slot Placement Defaults!';
         self::handle_admin_notice_error( 'slot_item_defaults_missing', $message );
-    }
-
-    /**
-     * Add media buttons to the Summary field
-     *
-     * 1. Copy Subhead to Summary field
-     * 2. Copy First Paragraph to Summary field
-     *
-     * @param string $editor_id
-     */
-    public function action_media_buttons_summary_field( $editor_id ) {
-        $summary_id = 'fm-homepage_settings-0-summary-0';
-        if ( $editor_id === $summary_id ) {
-            printf(
-                '<button type="button" class="button js-pedestal-summary-copy-subhead" data-editor="%s">' .
-                '<span class="wp-media-buttons-icon dashicons dashicons-admin-page"></span> %s' .
-                '</button>',
-                esc_attr( $editor_id ),
-                'Copy Subhead'
-            );
-            printf(
-                '<button type="button" class="button js-pedestal-summary-copy-first-graf" data-editor="%s">' .
-                '<span class="wp-media-buttons-icon dashicons dashicons-admin-page"></span> %s' .
-                '</button>',
-                esc_attr( $editor_id ),
-                'Copy First Paragraph'
-            );
-        }
     }
 
     /**
@@ -725,49 +694,6 @@ class Admin {
     }
 
     /**
-     * Register fields to manage a post's appearance on the homepage
-     */
-    private function register_post_homepage_settings_fields() {
-        $homepage_settings_group = new \Fieldmanager_Group( '', [
-            'name'           => 'homepage_settings',
-            'serialize_data' => false,
-            'add_to_prefix'  => false,
-        ] );
-
-        $summary_field = new \Fieldmanager_RichTextArea( 'Summary (optional)', [
-            'name' => 'summary',
-            'description' => 'Optional short paragraph(s) capturing the article in a nutshell; help readers get caught up on the news at-a-glance.',
-            'editor_settings' => [
-                'teeny'     => true,
-                'quicktags' => false,
-            ],
-            // Hack to hide all buttons (empty array gets overridden)
-            'buttons_1' => [ 'none' ],
-        ] );
-
-        $exclude_field = new \Fieldmanager_Radios( [
-            'name' => 'exclude_from_home_stream',
-            'default_value' => 'show',
-            'options' => [
-                'show' => 'Show on homepage stream',
-                'hide' => 'Hide from homepage stream',
-            ],
-        ] );
-
-        $homepage_settings_group->add_child( $summary_field );
-        $homepage_settings_group->add_child( $exclude_field );
-
-        if ( current_user_can( 'manage_distribution' ) ) {
-            $homepage_settings_group->add_meta_box(
-                esc_html__( 'Homepage', 'pedestal' ),
-                Types::get_entity_post_types(),
-                'distribution',
-                'default'
-            );
-        }
-    }
-
-    /**
      * Register fields to manage a post's social media appearance and SEO
      */
     private function register_distribution_fields() {
@@ -881,7 +807,7 @@ class Admin {
             $distribution_group->add_meta_box(
                 esc_html__( 'Social Media & Search Engines', 'pedestal' ),
                 $distributable_post_types,
-                'distribution',
+                'advanced',
                 'default'
             );
         }

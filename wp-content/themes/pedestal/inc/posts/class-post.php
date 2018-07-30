@@ -366,6 +366,22 @@ abstract class Post {
     }
 
     /**
+     * Get the homepage description
+     *
+     * The homepage description is the summary field unless it is blank in which case
+     * the subhead field will be used.
+     *
+     * @return string
+     */
+    public function get_homepage_description() {
+        $description = $this->get_summary();
+        if ( empty( $description ) ) {
+            $description = $this->get_excerpt();
+        }
+        return $description;
+    }
+
+    /**
      * Get the filtered excerpt for the post
      *
      * @return string

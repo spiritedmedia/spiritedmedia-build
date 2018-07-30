@@ -10,6 +10,8 @@ use Pedestal\Posts\{
     Newsletter
 };
 
+use Pedestal\Registrations\Post_Types\Types;
+
 use Pedestal\Objects\MailChimp;
 
 use Pedestal\Email\{
@@ -39,6 +41,14 @@ class Newsletter_Emails {
         add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ], 10, 2 );
         add_action( 'save_post', [ $this, 'action_save_post_maybe_send_email' ], 100 );
         add_action( 'pedestal_email_tester_newsletter', [ $this, 'action_pedestal_email_tester' ] );
+        add_action( 'pedestal_after_stream_item_3', function() {
+            if ( is_singular( 'pedestal_story' ) ) {
+                return;
+            }
+            // Render the newsletter signup form after the 3rd item in a stream
+            $context = Timber::get_context();
+            Timber::render( 'partials/stream/stream-signup-daily.twig', $context );
+        } );
         add_action( 'admin_footer', function() {
             $post = get_post();
             if ( ! $post instanceof \WP_Post ) {

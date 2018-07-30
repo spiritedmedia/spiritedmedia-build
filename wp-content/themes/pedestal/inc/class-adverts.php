@@ -30,10 +30,9 @@ class Adverts {
     private function setup_actions() {
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'pedestal_after_stream_item_2', [ $this, 'action_pedestal_after_stream_item_2' ] );
-        add_action( 'pedestal_after_stream_item_4', function() {
-            echo $this->render_stream_ad_unit( '04' );
+        add_action( 'pedestal_after_stream_item_6', function() {
             echo self::render_dfp_unit( PEDESTAL_DFP_PREFIX . '_Inline', '300x250', [
-                'additional_classes' => 'dfp--inline-stream',
+                'additional_classes' => 'dfp--inline-stream stream-item',
             ] );
         } );
         add_action( 'pedestal_after_stream_item_8', function() {

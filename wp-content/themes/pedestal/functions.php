@@ -292,6 +292,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             if ( is_admin() ) {
                 $this->admin              = Admin\Admin::get_instance();
+                $this->homepage_settings  = Admin\Homepage_Settings::get_instance();
                 $this->cluster_tools      = Admin\Cluster_Tools::get_instance();
                 $this->taxonomy_tools     = Admin\Taxonomy_Tools::get_instance();
                 // Will be reimplemented after our move to MailChimp. See #2426
@@ -666,7 +667,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             global $wp_widget_factory;
 
             // Our widgets
-            register_widget( '\Pedestal\Widgets\Signup_Newsletter_Widget' );
             register_widget( '\Pedestal\Widgets\In_This_Story_Widget' );
             register_widget( '\Pedestal\Widgets\Recent_Content_Widget' );
             register_widget( '\Pedestal\Widgets\Recent_Video_Widget' );

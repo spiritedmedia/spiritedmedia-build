@@ -1,8 +1,8 @@
 [
     {
         "name": "alleyinteractive/wordpress-fieldmanager",
-        "version": "dev-spiritedmedia-upstream-468-fm-ui-update",
-        "version_normalized": "dev-spiritedmedia-upstream-468-fm-ui-update",
+        "version": "dev-spiritedmedia",
+        "version_normalized": "dev-spiritedmedia",
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/wordpress-fieldmanager.git",

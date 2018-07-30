@@ -112,11 +112,6 @@
     margin-bottom: rem( 32px );
   }
 
-  &.widget {
-    // Widgets already have bottom padding
-    padding-bottom: 0;
-  }
-
   .signup-email__title {
     font-family: $font-family-serif;
     font-size: rem( 20px );
@@ -128,37 +123,11 @@
 
   @media #{$small-only} {
     .signup-email__latest--standalone {
-      .widget &,
       .c-main__footer & {
         display: block;
       }
     }
   }
-
-
-  @media #{$large-up} {
-    &.widget {
-      .signup-email__form,
-      .signup-email__header,
-      .signup-email__details {
-        text-align: center;
-      }
-
-      .signup-email__icon {
-        margin-right: 0;
-      }
-
-      .signup-email__title {
-        text-align: center;
-      }
-
-      .signup-email__success-message {
-        .signup-email__title {
-          width: 100%;
-        }
-      }
-    } // &.widget
-  } // @media #{$large-up}
 } // .signup-email--daily
 
 
