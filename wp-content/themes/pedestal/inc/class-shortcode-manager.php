@@ -56,6 +56,7 @@ class Shortcode_Manager {
                 'type'       => 'text',
             ],
         ],
+        'email-signup-form'  => [],
         'embed'              => [
             'label'          => 'Embed',
             'listItemImage'  => 'dashicons-twitter',
@@ -725,6 +726,17 @@ class Shortcode_Manager {
         ob_start();
         $out = Timber::render( 'partials/shortcode/donate-form.twig', $context );
         return ob_get_clean();
+    }
+
+    /**
+     * Do the email signup form
+     */
+    public function email_signup_form( $attrs ) {
+        $context = Timber::get_context();
+
+        ob_start();
+        Timber::render( 'partials/shortcode/email-signup.twig', $context );
+        return '<div class="signup-email--shortcode">' . ob_get_clean() . '</div>';
     }
 
     /**

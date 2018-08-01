@@ -52,7 +52,9 @@
             <label for="{{ id_email_input|esc_attr }}" class="invisible">
                 Email Address
             </label>
-            {{ ped_icon( 'envelope-o', 'signup-email__input-icon input-group__addon' ) }}
+            {% block input_icon %}
+                {{ ped_icon( 'envelope-o', 'signup-email__input-icon input-group__addon' ) }}
+            {% endblock input_icon %}
             {{ email_input }}
         </div>
 
@@ -82,7 +84,9 @@
     <div class="signup-email__success-message success-message js-success-message">
         <div class="signup-email__header">
             <div class="signup-email__icon">
-                {{ ped_icon( 'check' ) }}
+                {% block success_icon %}
+                    {{ ped_icon( 'check' ) }}
+                {% endblock success_icon %}
             </div>
 
             <p class="signup-email__title">

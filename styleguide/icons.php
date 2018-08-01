@@ -15,6 +15,12 @@ $icons = [
         'label' => 'Angle Right',
         'usage' => [],
     ],
+    'at-symbol' => [
+        'label' => 'At Symbol',
+        'usage' => [
+            'Email signup shortcode',
+        ],
+    ],
     'bars' => [
         'label' => 'Bars',
         'usage' => [],

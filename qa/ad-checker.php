@@ -18,7 +18,7 @@ switch ( $blog_id ) :
             [
                 'name'     => 'Billy Penn Homepage',
                 'path'     => '/',
-                'expected' => 15,
+                'expected' => 13,
             ],
             [
                 'name'     => 'Billy Penn Article',
@@ -28,7 +28,7 @@ switch ( $blog_id ) :
             [
                 'name'     => 'Billy Penn Story',
                 'path'     => '/stories/septa-key/',
-                'expected' => 14,
+                'expected' => 12,
             ],
             [
                 'name'     => 'Billy Penn Who\'s Next',
@@ -68,7 +68,7 @@ switch ( $blog_id ) :
             [
                 'name'     => 'Denverite Homepage',
                 'path'     => '/',
-                'expected' => 5,
+                'expected' => 4,
             ],
             [
                 'name'     => 'Denverite Article',

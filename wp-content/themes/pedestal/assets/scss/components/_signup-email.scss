@@ -117,3 +117,48 @@
     display: block;
   }
 }
+
+
+//
+// Email signup shortcode
+// ==========================================================================
+.signup-email--shortcode {
+  margin-bottom: rem( 16px );
+
+  .signup-email__form {
+    padding: 0;
+  }
+
+  .signup-email__header,
+  .signup-email__latest--standalone,
+  .signup-email__title {
+    display: none;
+  }
+
+  .is-success {
+
+    .success-message {
+      overflow: auto;
+    }
+
+    .signup-email__header {
+      display: block;
+      float: left;
+      margin-right: rem( 16px );
+      margin-bottom: rem( 8px );
+    }
+
+    .signup-email__icon {
+      color: $yet-another-red;
+      font-size: rem( 40px );
+    }
+
+    .signup-email__subtitle {
+      margin-bottom: 0;
+    }
+
+    .signup-email__success-message__details {
+      overflow: auto;
+    }
+  }
+}
