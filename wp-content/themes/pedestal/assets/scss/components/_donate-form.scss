@@ -173,6 +173,7 @@
 .donate-form__secured-by__lock {
   // Hacky sizing for the weirdly shaped SVG
   line-height: rem( 20px );
+  // stylelint-disable-next-line unit-blacklist
   margin-right: -0.2em;
 }
 
@@ -182,6 +183,7 @@
 
 .donate-form__stripe-logo {
   // Slight spacing tweak
+  // stylelint-disable-next-line unit-blacklist
   margin-left: -0.3em;
 
   // stylelint-disable-next-line selector-max-type

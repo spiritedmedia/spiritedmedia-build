@@ -19,6 +19,7 @@
 
 .logo--icon {
   // Constrain the logo to its container
+  // stylelint-disable-next-line unit-blacklist
   height: 1em;
 
   .logo__group--fill {

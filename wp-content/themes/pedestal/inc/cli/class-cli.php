@@ -1463,5 +1463,276 @@ class CLI extends \WP_CLI_Command {
 
         WP_CLI::success( 'Done!' );
     }
+
+    /**
+     * Categorize content and setup various categories
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal categorize --url=https://billypenn.dev
+     *
+     * @subcommand categorize
+     */
+    public function categorize() {
+
+        /**
+         * Get posts IDs associated with a given cluster name
+         *
+         * @return array Post IDs found
+         */
+        function get_ids_from_cluster_name( $name = '' ) {
+            global $wpdb;
+            $name = trim( $name );
+            if ( empty( $name ) ) {
+                return [];
+            }
+
+            $post_types = Types::get_cluster_post_types();
+            $in_placeholders = array_fill( 0, count( $post_types ), '%s' );
+            $in_placeholders = implode( ', ', $in_placeholders );
+            $args = array_merge( [
+                $wpdb->esc_like( $name ),
+            ], $post_types );
+
+            // WordPress.WP.PreparedSQL.NotPrepared
+            $cluster_ids = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT `ID` FROM $wpdb->posts WHERE `post_status` = 'publish' AND `post_title` = '%s' AND `post_type` IN ($in_placeholders) LIMIT 1", // phpcs:ignore
+                    $args
+                )
+            );
+            if ( empty( $cluster_ids[0] ) ) {
+                WP_CLI::line( '!!! Problem getting cluster ID from ' . $name );
+                return 0;
+            }
+            return (int) $cluster_ids[0]->ID;
+        }
+
+        function get_category_id_by_name( $name = '' ) {
+            $name = trim( $name );
+            $term = get_term_by( 'name', $name, 'pedestal_category' );
+            if ( $term && isset( $term->term_id ) ) {
+                return $term->term_id;
+            }
+
+            // Category not found, lets add it!
+            $new_term = wp_insert_term( $name, 'pedestal_category' );
+            if ( is_wp_error( $new_term ) ) {
+                return false;
+            }
+            return $new_term['term_id'];
+        }
+
+        function associate_clusters_to_category( $cluster_name = '', $category_name = '' ) {
+            $category_id = get_category_id_by_name( $category_name );
+            if ( ! $category_id ) {
+                WP_CLI::error( 'Couldn\'t get category id for ' . $category_name );
+            }
+            $cluster_id = get_ids_from_cluster_name( $cluster_name );
+            $ped_post = Post::get( $cluster_id );
+            if ( ! Types::is_cluster( $ped_post ) ) {
+                // WP_CLI::error( $name . ' is not a cluster!' );
+                return;
+            }
+            $connected = $ped_post->get_entities_query([
+                'posts_per_page' => -1,
+                'post_status'    => 'publish',
+                'post_type'      => Types::get_entity_post_types(),
+                'fields'         => 'ids',
+            ]);
+            foreach ( $connected->posts as $id ) {
+                $append = false;
+                $result = wp_set_object_terms( $id, $category_id, 'pedestal_category', $append );
+                if ( is_wp_error( $result ) ) {
+                    WP_CLI::error( 'Problem setting category for "' . $cluster_name . '"' );
+                }
+            }
+            WP_CLI::line( 'Set ' . count( $connected->posts ) . ' entities associated with ' . $cluster_name . ' to ' . $category_name );
+        }
+
+        // Setup some per site variables based on how the data is structured
+        $sheet_name = '';
+        switch ( get_current_blog_id() ) {
+            case 2:
+                $sheet_name = 'Billy+Penn';
+                $category_column = 1;
+                $cluster_column = 2;
+                break;
+
+            case 3:
+                $sheet_name = 'The+Incline';
+                $category_column = 1;
+                $cluster_column = 3;
+                break;
+
+            default:
+                WP_CLI::error( get_site_url() . ' has nothing to categorize!' );
+                break;
+        }
+
+        /*
+        // Get all of the cluster names
+        $all_cluster_names = [];
+        $args = [
+            'post_type'              => [ 'pedestal_story', 'pedestal_topic' ],
+            'post_status'            => 'public',
+            'posts_per_page'         => -1,
+            'no_found_rows'          => true,
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false,
+        ];
+        $posts = new \WP_Query( $args );
+        if ( empty( $posts->posts ) ) {
+            WP_CLI::error( 'No posts found!' );
+        }
+        foreach ( $posts->posts as $post ) {
+            $all_cluster_names[ $post->post_title ] = $post->ID;
+        }
+        */
+
+        // Download the CSV of data so we don't need to worry about storing it anywhere
+        // See https://stackoverflow.com/a/33727897/1119655
+        $spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1o3B1zMkVjZ3dy5OP8rVCJmWX8YEjgpcUAxd_SKyhwhE/gviz/tq?tqx=out:csv';
+        $spreadsheet_url = add_query_arg( 'sheet', $sheet_name, $spreadsheet_url );
+        WP_CLI::line( '=== Processing ' . $spreadsheet_url );
+        $filename = wp_tempnam( $spreadsheet_url );
+        wp_remote_get( $spreadsheet_url, [
+            'timeout'  => 15,
+            'stream'   => true,
+            'filename' => $filename,
+        ] );
+
+        // Open the csv
+        $file_handle = fopen( $filename, 'r' );
+        $count = 0;
+        // phpcs:ignore
+        while ( false !== ( $row = fgetcsv( $file_handle, 0, ',') ) ) {
+            $count++;
+            if ( 1 >= $count ) {
+                // Skip the first row which is headers
+                continue;
+            }
+            $category_name = $row[ $category_column ];
+            $clusters      = $row[ $cluster_column ];
+            $cluster_names = explode( ',', $clusters );
+            $cluster_names = array_map( 'trim', $cluster_names );
+            foreach ( $cluster_names as $cluster_name ) {
+                associate_clusters_to_category( $cluster_name, $category_name );
+            }
+        }
+
+        // Download the CSV of data so we don't need to worry about storing it anywhere
+        // See https://stackoverflow.com/a/33727897/1119655
+        $spreadsheet_url = 'https://docs.google.com/spreadsheets/d/13ifnc30FSDH2jfYgPw7Ss2rHVKbhmziGHedtZoEg1oc/gviz/tq?tqx=out:csv';
+        $spreadsheet_url = add_query_arg( 'sheet', $sheet_name, $spreadsheet_url );
+        WP_CLI::line( '=== Processing ' . $spreadsheet_url );
+        $filename = wp_tempnam( $spreadsheet_url );
+        wp_remote_get( $spreadsheet_url, [
+            'timeout'  => 15,
+            'stream'   => true,
+            'filename' => $filename,
+        ] );
+
+        // Open the csv
+        $file_handle = fopen( $filename, 'r' );
+        $count = 0;
+        // phpcs:ignore
+        while ( false !== ( $row = fgetcsv( $file_handle, 0, ',') ) ) {
+            $count++;
+            if ( 1 >= $count ) {
+                // Skip the first row which is headers
+                continue;
+            }
+            $category_name = $row[1];
+            $cluster_name  = trim( $row[0] );
+            associate_clusters_to_category( $cluster_name, $category_name );
+        }
+
+        WP_CLI::success( 'Done!' );
+    }
+
+    /**
+     * Get a CSV of uncategorized posts
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal get-uncategorized-content --url=https://billypenn.dev
+     *
+     * @subcommand get-uncategorized-content
+     */
+    public function get_uncategorized_content() {
+        global $wpdb;
+        $taxonomy = 'pedestal_category';
+        $term_ids = get_terms( $taxonomy, [
+            'fields' => 'ids',
+        ] );
+        $args = [
+            'post_type'      => 'pedestal_article',
+            'posts_per_page' => 3000,
+            'post_status'    => 'publish',
+            'tax_query'      => [
+                [
+                    'taxonomy'    => $taxonomy,
+                    'field'       => 'id',
+                    'terms'       => $term_ids,
+                    'operator'    => 'NOT IN',
+                ],
+            ],
+        ];
+        $query = new \WP_Query( $args );
+
+        $file_name = PEDESTAL_BLOG_NAME . '--uncategorized--' . date( 'Y-m-d' );
+        $file_name = sanitize_title( $file_name ) . '.csv';
+        $file = fopen( $file_name, 'w' );
+        fputcsv( $file, [
+            'Title',
+            'Post Type',
+            'Permalink',
+            'Cluster Names',
+            'Cluster Permalinks',
+            'Date',
+        ]);
+
+        foreach ( $query->posts as $post ) {
+            // WP_CLI::line( $post->post_title );
+            $ped_post = Post::get( $post->ID );
+            $permalink = $ped_post->get_the_permalink();
+            $permalink = str_replace( '.dev', '.com', $permalink );
+            $cluster_args = [
+                'types'   => Types::get_cluster_post_types(),
+                'flatten' => true,
+            ];
+            $clusters = $ped_post->get_clusters( $cluster_args );
+            $cluster_names = [];
+            $cluster_links = [];
+            if ( ! empty( $clusters ) ) {
+                foreach ( $clusters as $cluster ) {
+                    if ( ! Types::is_cluster( $cluster ) ) {
+                        continue;
+                    }
+                    $cluster_names[] = $cluster->get_the_title();
+                    $cluster_links[] = str_replace( '.dev', '.com', $cluster->get_the_permalink() );
+                }
+            }
+            $row = [
+                'title'         => $ped_post->get_the_title(),
+                'post_type'     => $ped_post->get_post_type_name(),
+                'permalink'     => $permalink,
+                'cluster_names' => implode( ', ', $cluster_names ),
+                'cluster_links' => implode( ', ', $cluster_links ),
+                'date'          => $post->post_date,
+
+            ];
+            fputcsv( $file, $row );
+
+            unset( $row );
+            unset( $cluster_names );
+            unset( $cluster_links );
+            unset( $ped_post );
+            $wpdb->flush();
+        }
+        fclose( $file );
+        WP_CLI::success( 'Done!' );
+    }
 }
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );

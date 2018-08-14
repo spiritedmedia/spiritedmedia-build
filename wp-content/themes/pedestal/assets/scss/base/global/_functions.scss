@@ -41,11 +41,13 @@
 ///
 /// Does calculation for individual unit conversion.
 ///
-/// If a rem unit is passed as $value, return that value. This currently does
-/// not support em units as $value or $base-value.
+/// This currently does not support em units as $value or $base-value.
 ///
-/// @param {number} $value - Single pixel value to convert to rem
-/// @param {number} $base-value [$rem-base] - Base rem calculation off this unit
+/// @param {px} $value - Single pixel value to convert to rem. If a rem unit
+///     is passed instead, it will be returned immediately.
+/// @param {px|rem} $base-value [$rem-base] - Base rem calculation off this
+///     pixel unit. If a rem unit is passed instead, then it will be converted
+///     to pixels assuming the base value for that conversion is `$rem-base`.
 @function _convert-to-rem( $value, $base-value: $rem-base ) {
   @if 'rem' == unit( $value ) {
     @return $value;
@@ -53,6 +55,7 @@
   @if 'rem' == unit( $base-value ) {
     $base-value: _convert-to-px( $base-value );
   }
+  // stylelint-disable-next-line unit-blacklist
   $value: strip-unit( $value ) / strip-unit( $base-value ) * 1rem;
   // stylelint-disable-next-line length-zero-no-unit
   @if ( $value == 0rem ) {
@@ -111,6 +114,7 @@
 
   $em-values: ();
   @for $i from 1 through $max {
+    // stylelint-disable-next-line unit-blacklist
     $em-values: append( $em-values, strip-unit( nth( $rem-values, $i ) ) * 1em );
   }
   @return $em-values;

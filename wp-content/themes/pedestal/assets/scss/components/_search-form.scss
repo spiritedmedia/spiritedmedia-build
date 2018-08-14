@@ -81,7 +81,7 @@
 }
 
 
-@media #{$site-header-with-nav-breakpoint} {
+@media #{$site-header-breakpoint} {
   .search-form--modal {
     position: absolute;
     top: 50%;

@@ -3,49 +3,51 @@
 {% macro secondary_nav_list( data ) %}
     <ul class="site-nav__list">
         {% for class, item in data %}
-            <li class="site-nav__item">
-                <a href="{{ item.url|esc_url }}" class="site-nav__link {{ class|esc_attr }}">
-                    {% if item.icon %}
-                        {{ ped_icon( item.icon, 'site-nav__icon' ) }}
-                    {% endif %}
-                    {{ item.title }}
+            <li class="site-nav__item site-nav__item--{{ class|esc_attr }}">
+                <a href="{{ item.url|esc_url }}" class="site-nav__link">
+                    <div class="site-nav__link__inner">
+                        {% if item.icon %}
+                            {{ ped_icon( item.icon, 'site-nav__icon' ) }}
+                        {% endif %}
+                        <span class="site-nav__text">{{ item.title }}</span>
+                    </div>
                 </a>
             </li>
         {% endfor %}
     </ul>
 {% endmacro %}
 
-<header class="site-header--with-nav" role="banner">
-    <div class="site-header--with-nav__inner">
+<header class="site-header" role="banner">
+    <div class="site-header__inner">
         <a
             href="{{ site_url|esc_url }}"
-            class="site-header--with-nav__logo-link"
+            class="site-header__logo-link"
             rel="home"
             data-ga-category="Site Logo|Header"
             data-ga-label=""
         >
-            {{ ped_logo( 'logo', 'site-header--with-nav__logo' ) }}
+            {{ ped_logo( 'logo', 'site-header__logo' ) }}
             <span class="invisible">Home</span>
         </a>
 
         <a
             href="{{ site_url|esc_url }}/navigation/"
-            class="site-header--with-nav__menu-trigger js-modal-trigger"
-            data-modal-id="header-nav-modal"
+            class="site-header__menu-trigger js-modal-trigger"
+            data-modal-id="site-header-nav"
         >
-            {{ ped_icon( 'bars', 'site-header--with-nav__hamburger' ) }}
+            {{ ped_icon( 'bars', 'site-header__hamburger' ) }}
             <span class="invisible">Menu</span>
         </a>
 
         {% include 'partials/modals/search.twig' %}
 
         <section
-            id="header-nav-modal"
-            class="site-header--with-nav__modal-menu"
+            id="site-header-nav"
+            class="site-header__nav"
             data-modal-class="modal--header-nav"
         >
             <div class="site-nav--primary__outer">
-                <nav class="site-nav site-nav--primary">
+                <nav class="site-nav--primary">
                     <ul class="site-nav__list">
                         {% for item in primary_nav %}
 
@@ -54,18 +56,18 @@
                                 {% set additional_attributes = 'data-modal-id="search-modal"' %}
                             {% endif %}
 
-                            <li class="site-nav__item">
+                            <li class="site-nav__item site-nav__item--{{ item.slug|esc_attr }}">
                                 <a
                                     href="{{ item.url|esc_url }}"
                                     class="site-nav__link {{ additional_classes|esc_attr }}"
                                     {{ additional_attributes }}
 
                                 >
-                                    <div class="site-nav__group">
+                                    <div class="site-nav__link__inner">
                                         {% if item.icon %}
                                             {{ ped_icon( item.icon, 'site-nav__icon' ) }}
                                         {% endif %}
-                                        <span class="site-nav__text--{{ item.slug|esc_attr }}">
+                                        <span class="site-nav__text">
                                             {{ item.title }}
                                         </span>
                                     </div>
@@ -87,38 +89,38 @@
                 {{ nav_macros.secondary_nav_list( secondary_nav ) }}
             </nav>
 
-            <div class="site-header--with-nav__marketing">
-                <ul class="site-header--with-nav__social">
+            <div class="site-header__marketing">
+                <ul class="site-header__social">
                     {% set gaCategorySocial = 'Social Icon - Header' %}
-                    {% set socialIconClass = 'site-header--with-nav__social-icon' %}
+                    {% set socialIconClass = 'site-header__social-icon' %}
 
-                    <li class="site-header--with-nav__social-item">
+                    <li class="site-header__social-item">
                         <a
                             href="{{ twitter_url|esc_url }}"
                             target="_blank"
-                            class="site-header--with-nav__social-link"
+                            class="site-header__social-link"
                             data-ga-category="{{ gaCategorySocial|esc_attr }}"
                             data-ga-label="Twitter"
                         >
                             {{ ped_icon('twitter', socialIconClass) }}
                         </a>
                     </li>
-                    <li class="site-header--with-nav__social-item">
+                    <li class="site-header__social-item">
                         <a
                             href="{{ facebook_url|esc_url }}"
                             target="_blank"
-                            class="site-header--with-nav__social-link"
+                            class="site-header__social-link"
                             data-ga-category="{{ gaCategorySocial|esc_attr }}"
                             data-ga-label="Facebook"
                         >
                             {{ ped_icon('facebook', socialIconClass) }}
                         </a>
                     </li>
-                    <li class="site-header--with-nav__social-item">
+                    <li class="site-header__social-item">
                         <a
                             href="{{ instagram_url|esc_url }}"
                             target="_blank"
-                            class="site-header--with-nav__social-link"
+                            class="site-header__social-link"
                             data-ga-category="{{ gaCategorySocial|esc_attr }}"
                             data-ga-label="Instagram"
                         >
@@ -128,7 +130,7 @@
                 </ul>
 
                 {% if tagline %}
-                <p class="site-header--with-nav__tagline">{{ tagline }}</p>
+                <p class="site-header__tagline">{{ tagline }}</p>
                 {% endif %}
             </div>
         </section>

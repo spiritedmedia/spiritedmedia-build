@@ -26,6 +26,7 @@ $c-slot-item-lead-pd : rem( 16px );
     color: $dimmed-text-color;
     font-size: $small-font-size;
     font-weight: 300;
+    // stylelint-disable-next-line unit-blacklist
     letter-spacing: 0.05em;
     text-transform: uppercase;
     margin-right: $c-slot-item-pd;

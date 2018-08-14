@@ -57,6 +57,7 @@ class Billy_Penn extends Pedestal {
                 // Site Details
                 'PEDESTAL_BLOG_NAME'                    => 'Billy Penn',
                 'PEDESTAL_BLOG_DESCRIPTION'             => 'Billy Penn is a mobile platform for a better Philly -- the easiest way to find and follow local and breaking news in Philadelphia.',
+                'PEDESTAL_BLOG_TAGLINE'                 => 'On top of Philly news',
                 'PEDESTAL_CITY_NAME'                    => 'Philadelphia',
                 'PEDESTAL_CITY_NICKNAME'                => 'Philly',
                 'PEDESTAL_STATE_NAME'                   => 'Pennsylvania',

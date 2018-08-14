@@ -69,6 +69,8 @@ $loading-default-opacity: 0.25;
 // Note that this doesn't represent a definitive list of all icons we use --
 // these are only the icons that need their widths adjusted. A definitive list
 // can be found in the form of the files present in the SVG icon directory.
+//
+// stylelint-disable unit-blacklist
 $icon-widths: (
   angle-left:      0.375em,
   angle-right:     0.33928571428571425em,
@@ -90,6 +92,7 @@ $icon-widths: (
   vine:            0.8571428571428571em,
   youtube:         0.8571428571428571em,
 );
+// stylelint-enable unit-blacklist
 
 
 //

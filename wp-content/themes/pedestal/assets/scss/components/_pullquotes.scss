@@ -12,6 +12,7 @@
 
   &::before,
   &::after {
+    // stylelint-disable-next-line unit-blacklist
     $_mark-size: 0.4em;
 
     position: absolute;

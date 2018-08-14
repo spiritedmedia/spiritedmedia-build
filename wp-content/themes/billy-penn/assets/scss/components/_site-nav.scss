@@ -1,0 +1,58 @@
+.site-nav__link {
+  color: $grey-90;
+
+  &:hover,
+  &:focus {
+    &,
+    .site-nav__icon {
+      color: $secondary-color;
+    }
+  }
+}
+
+
+.site-nav--secondary {
+  .site-nav__link {
+    &:hover,
+    &:focus {
+      .site-nav__icon {
+        color: $white;
+      }
+    }
+  }
+
+  .site-nav__icon {
+    color: $accent-color;
+  }
+}
+
+
+@media #{$site-header-breakpoint} {
+  .site-nav--primary {
+    .site-nav__link {
+      color: $white;
+
+      &:hover,
+      &:focus {
+        .site-nav__icon {
+          color: rgba( $white, 0.5 );
+        }
+      }
+    }
+
+    .site-nav__icon {
+      color: rgba( $white, 0.5 );
+    }
+  }
+
+  .site-nav--secondary {
+    .site-nav__item:not( :last-child ) {
+      margin-right: rem( 4px );
+    }
+
+    .site-nav__link {
+      border-radius: rem( 4px );
+      color: $body-font-color;
+    }
+  }
+}

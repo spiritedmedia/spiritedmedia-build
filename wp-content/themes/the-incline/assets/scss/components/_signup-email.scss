@@ -116,8 +116,19 @@
 
 
 .signup-email--daily {
-  background-image: linear-gradient( $elektroid-yellow, $white );
+  @include angle-edge(
+    $angle: 1,
+    $angle-position-y: top
+  );
+
+  margin-top: rem( 48px );
   border-bottom: 0;
+  background-image: linear-gradient( $elektroid-yellow, $white );
+
+  .signup-email__form {
+    padding-top: rem( 8px );
+    padding-bottom: rem( 24px );
+  }
 
   .signup-email__header,
   .signup-email__title,
@@ -128,34 +139,17 @@
   .signup-email__latest--standalone {
     display: none;
   }
+} // end .signup-email--daily
 
-  &:not( .signup-email--modal ) {
+
+@media #{$large-up} {
+  .signup-email--daily {
     @include angle-edge(
-      $angle: 1,
+      $angle: 0.5,
       $angle-position-y: top
     );
-
-    margin-top: rem( 48px );
-    background-image: linear-gradient( $elektroid-yellow, $white );
-    border-bottom: 0;
-
-    .signup-email__latest--standalone {
-      display: none;
-    }
-
-    @media #{$large-up} {
-      @include angle-edge(
-        $angle: 0.5,
-        $angle-position-y: top
-      );
-    }
-
-    .signup-email__form {
-      padding-top: rem( 8px );
-      padding-bottom: rem( 24px );
-    }
   }
-} // end .signup-email--daily
+}
 
 
 //

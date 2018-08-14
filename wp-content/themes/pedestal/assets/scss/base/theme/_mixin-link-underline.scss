@@ -66,6 +66,7 @@
   @include text-underline-crop;
   @include _text-underline( rgba( $primary-color, 0.6 ) );
 
+  // stylelint-disable-next-line unit-blacklist
   padding-bottom: 0.05em;
   text-decoration: none;
   color: $body-font-color;

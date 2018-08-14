@@ -605,6 +605,7 @@
   font-family: $font-family-sans-serif;
   font-size: $small-font-size;
   line-height: $base-line-height;
+  // stylelint-disable-next-line unit-blacklist
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: $dimmed-text-color;

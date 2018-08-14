@@ -280,41 +280,9 @@
           return;
         }
 
-        var callback = false;
-        if (target == 'signup-email-form-modal') {
-          // #subscribe is used on membership pages to
-          // trigger the email newsletter signup modal
-          // See https://billypenn.com/membership/
-          callback = function() {
-            var modal = this;
-            // Open the modal if the user is directed to
-            // a URL containing `#subscribe`...
-            var subscribeURL = window.location.href.indexOf('#subscribe');
-            if (subscribeURL !== -1) {
-              modal.open();
-            }
-
-            // ...or if the window hash changes
-            window.addEventListener('hashchange', function() {
-              if (location.hash === '#subscribe') {
-                modal.open();
-              }
-            });
-          };
-        }
-
         var theModal = new Modal({
           target: target
-        }, callback);
-
-        if (target == 'signup-email-form-modal') {
-          theModal.on('modal:close', function() {
-            // Remove the location hash if present
-            if (location.hash === '#subscribe') {
-              PedUtils.removeHash();
-            }
-          });
-        }
+        });
 
         // When search modal is opened set focus to the search field
         if (target == 'search-modal') {

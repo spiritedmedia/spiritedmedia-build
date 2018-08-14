@@ -46,6 +46,21 @@ $body-font-color: $darkest;
 
 
 //
+// Site Header + Nav
+// ==========================================================================
+
+$site-header-background-color:           $dark;
+$site-header-border-top-color:           $dark;
+$site-header-logo-link-width:            rem( 125px );
+$site-header-logo-link-padding:          rem( 12px );
+$site-header-logo-link-background-color: $primary-color;
+$site-header-logo-color:                 $white;
+$site-header-logo-color--bp-up:          $secondary-color;
+
+$site-nav-secondary-font-size--bp-up: rem( 14px );
+
+
+//
 // Content Scope
 // ==========================================================================
 
@@ -77,6 +92,7 @@ $pullquote-spacing-y:             rem( 8px );
 $pullquote-font-family:           $font-family-serif;
 
 $pullquote-marks-gutter-x:        em( 2px );
+// stylelint-disable-next-line unit-blacklist
 $pullquote-marks-bottom-offset:   -0.3em;
 $pullquote-marks-color:           rgba( $primary-color, 0.8 );
 $pullquote-marks-font-size:       rem( 40px );

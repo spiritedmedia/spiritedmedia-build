@@ -146,7 +146,6 @@ class Denverite extends Pedestal {
 
                 // Site Features
                 'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY'  => false,
-                'PEDESTAL_ENABLE_HEADER_NAVIGATION'     => true,
                 'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'     => true,
                 'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'    => true,
 

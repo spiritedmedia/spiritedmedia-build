@@ -1,5 +1,3 @@
-$_primary-nav-icon-color: mix( $white, $primary-color, 50% );
-
 .site-nav__list {
   margin-bottom: rem( 16px );
 }
@@ -10,19 +8,12 @@ $_primary-nav-icon-color: mix( $white, $primary-color, 50% );
 }
 
 .site-nav__link {
-  color: $grey-95;
   display: block;
-  font-size: rem( 20px );
-  font-weight: 400;
-  letter-spacing: em( 0.5px );
-  line-height: ( 28 / 20 );
   padding: rem( 4px ) 0;
-
-  &:hover,
-  &:focus {
-    color: $denverite-yellow;
-    font-weight: 700;
-  }
+  line-height: rem( 28px ) / $site-nav-font-size;
+  white-space: nowrap;
+  font-size: $site-nav-font-size;
+  font-weight: 400;
 }
 
 .site-nav__icon {
@@ -30,29 +21,33 @@ $_primary-nav-icon-color: mix( $white, $primary-color, 50% );
   color: $white;
   margin-right: rem( 4px );
   text-align: center;
-
-  /* stylelint-disable selector-max-type */
-  a:hover &,
-  a:focus & {
-    color: $denverite-yellow;
-  }
-  /* stylelint-enable selector-max-type */
 }
+
 
 .site-nav--desktop {
   display: none;
 }
 
-.site-nav--secondary {
-  flex: 1; // To push down the footer and lock it to the bottom of the modal
 
-  .site-nav__icon {
-    color: $denverite-yellow;
+.site-nav--primary {
+  .site-nav__item:first-child {
+    .site-nav__link {
+      padding-top: 0;
+    }
   }
 }
 
 
-@media ( min-width: em( 760px ) ) {
+.site-nav--secondary {
+  flex: 1; // To push down the footer and lock it to the bottom of the modal
+
+  .site-nav__icon {
+    color: $accent-color;
+  }
+}
+
+
+@media #{$site-header-breakpoint} {
 
   .site-nav__list {
     display: flex;
@@ -78,53 +73,39 @@ $_primary-nav-icon-color: mix( $white, $primary-color, 50% );
   }
 
   .site-nav--primary {
-    background-color: $primary-color;
+    background-color: $site-nav-primary-background-color--bp-up;
+
+    .site-nav__item--search {
+      .site-nav__text {
+        display: none;
+      }
+    }
 
     .site-nav__link {
-      $_font-size: 14px;
-      color: $grey-95;
       display: block;
-      font-size: rem( $_font-size );
-      letter-spacing: em( -0.25px );
-      line-height: ( 24px / $_font-size );
       padding: 0;
+      font-size: rem( 15px );
+      font-weight: 600;
+      line-height: rem( 24px ) / rem( 15px );
 
       &:hover,
       &:focus {
-        .site-nav__group {
-          color: $grey-95;
-          border-bottom-color: $denverite-yellow;
-          font-weight: 400;
-        }
-
-        .site-nav__icon {
-          color: $_primary-nav-icon-color;
+        .site-nav__link__inner {
+          border-bottom-color: $accent-color;
         }
       }
     }
 
-    .site-nav__group {
-      border-bottom: rem( 4px ) solid $primary-color;
+    .site-nav__link__inner {
+      border-bottom: rem( 4px ) solid transparent;
+
+      // Keep the border from touching the nav item to the right
       display: inline-block;
       padding: rem( 8px ) rem( 16px ) rem( 4px ) 0;
-
-      /* stylelint-disable selector-max-type */
-      a:hover &,
-      a:focus & {
-        color: $grey-95;
-        border-bottom-color: $denverite-yellow;
-        font-weight: 400;
-      }
-      /* stylelint-enable selector-max-type */
     }
 
     .site-nav__icon {
       font-size: rem( 16px );
-      color: $_primary-nav-icon-color;
-    }
-
-    .site-nav__text--search {
-      display: none;
     }
   } // end .site-nav--primary
 
@@ -133,24 +114,26 @@ $_primary-nav-icon-color: mix( $white, $primary-color, 50% );
     top: rem( 8px );
     right: 0;
 
-    .site-nav__item {
-      line-height: em( 21px, 16px );
+    .site-nav__item--support-our-work,
+    .site-nav__item--support-us {
+      .site-nav__link {
+        background-color: $accent-color;
+      }
     }
 
     .site-nav__link {
+      padding: 0 rem( 16px );
       font-weight: 600;
-      font-size: rem( 14px );
-      color: $primary-color;
+      font-size: $site-nav-secondary-font-size--bp-up;
+      line-height: em( 30px, $site-nav-secondary-font-size--bp-up );
+      color: $body-font-color;
       letter-spacing: em( 0.4px );
       text-align: right;
       text-transform: uppercase;
-      padding: rem( 7px ) rem( 16px );
 
-      &.support-us,
       &:hover,
       &:focus {
-        color: $primary-color;
-        background-color: $denverite-yellow;
+        background-color: $accent-color;
       }
     }
 

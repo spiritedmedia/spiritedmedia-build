@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // The Incline // Theme
  *
- * Version: 7.1.9
+ * Version: 7.2.0
  *
  * Copyright ( c ) 2018 Spirited Media
  *
@@ -24,7 +24,7 @@ $site-theme-name: 'the-incline';
 // Child theme styles
 @import 'scopes/content';
 @import 'components/404';
-@import 'components/site-header';
+@import 'components/site-nav';
 @import 'components/signup-email';
 @import 'components/event';
 @import 'components/donate-form';

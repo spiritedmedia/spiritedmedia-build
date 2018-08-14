@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Billy Penn // Theme
  *
- * Version: 7.1.9
+ * Version: 7.2.0
  *
  * Copyright ( c ) 2018 Spirited Media
  *
@@ -23,5 +23,5 @@ $site-theme-name: 'billy-penn';
 
 // Child theme styles
 @import 'components/404';
-@import 'components/site-header';
+@import 'components/site-nav';
 @import 'components/signup-email';

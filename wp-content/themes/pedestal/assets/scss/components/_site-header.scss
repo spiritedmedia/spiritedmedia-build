@@ -1,148 +1,179 @@
-// ==========================================================================
-// Pedestal // Components // SITE HEADER
-// ==========================================================================
-
-
-$breakpoint-header-display-social-icons: em( 738px );
-$site-header-cta-icon-padding: rem( 4px );
-
-
-/// Make the header newsletter CTA do its inline thing
-///
-/// Used in child themes for breakpoint-specific changes
-///
-/// https://cl.ly/0t3h1Y3b3Y0h/Screen%20Recording%202017-10-13%20at%2011.38.gif
-@mixin _header-cta-inline {
-  .site-header__cta {
-    text-align: center;
-  }
-
-  .site-header__cta__prompt,
-  .site-header__cta__action {
-    display: inline-block;
-    margin-bottom: 0;
-    vertical-align: middle;
-  }
-
-  .site-header__cta__prompt {
-    text-align: right;
-  }
-
-  .site-header__cta__action {
-    padding-left: $site-header-cta-icon-padding;
-  }
-
-  .site-header__cta__tagline {
-    display: block;
-  }
-}
-
-
 .site-header {
-  background-color: $primary-color;
-  padding-top: rem( 20px );
+  height: $site-header-height;
+  margin-bottom: rem( 32px );
+  box-shadow: $site-header-box-shadow;
+  padding: $site-header-padding-y rem( 8px );
+  background-color: $site-header-background-color;
+  font-family: $font-family-sans-serif;
 }
 
 .site-header__inner {
-  @include grid-row;
-
-  align-items: center;
-  display: flex;
-  flex-flow: row wrap;
+  position: relative;
+  max-width: $row-width;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.site-header__logo,
-.site-header__cta {
-  @include grid-column( 12, $float: false );
+.site-header__logo-link {
+  position: absolute;
+  left: 0;
+  top: 0;
 
-  color: $white;
+  @if $site-header-logo-link-align == 'center' {
+    right: 0;
+  }
+
+  width: $site-header-logo-link-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding: $site-header-logo-link-padding;
+  background-color: $site-header-logo-link-background-color;
+  color: $site-header-logo-color;
+
+  &:hover {
+    color: $site-header-logo-color;
+    opacity: 0.8;
+  }
 }
-
-
-
-
-
-//
-// Logo
-// ==========================================================================
-
 
 .site-header__logo {
-  margin-bottom: 0;
+  height: rem( 26px );
+  width: auto;
+  vertical-align: middle;
 }
 
-.site-header__logo__link {
-  display: block;
+.site-header__menu-trigger {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: $site-header-menu-trigger-size;
+  height: $site-header-menu-trigger-size;
+  text-align: right;
+  font-size: rem( 20px );
+  color: $site-header-menu-trigger-color;
+}
+
+.site-header__hamburger {
+  line-height: $site-header-menu-trigger-size;
+}
+
+.site-header__nav {
+  display: none;
+
+  .modal & {
+    display: flex;
+    flex-direction: column;
+    font-family: $font-family-sans-serif;
+
+    //
+    // Ensure the modal menu is as tall as the viewport + any vertical padding
+    // from .modal__content
+    //
+
+    // stylelint-disable-next-line unit-blacklist
+    height: calc( 100vh - #{$modal-close-button-height} );
+
+    .admin-bar & {
+      // stylelint-disable-next-line unit-blacklist
+      height: calc( 100vh - #{$modal-close-button-height} - #{$wp-admin-bar-height-mobile} );
+    }
+  }
+}
+
+.site-header__social,
+.site-header__tagline {
+  width: 100%;
+}
+
+.site-header__social {
+  margin: 0 auto rem( 16px );
+  text-align: center;
+}
+
+.site-header__social-item,
+.site-header__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-header__social-item {
+  margin: 0 rem( 8px );
+  list-style: none;
+}
+
+.site-header__social-link {
+  width: rem( 44px );
+  height: rem( 44px );
+  border-radius: 50%;
+  background-color: $grey-95;
+  text-align: center;
+  font-size: rem( 18px );
 
   &,
-  &:active,
-  &:hover {
-    color: inherit;
+  &:hover,
+  &:active {
+    color: $site-header-social-link-icon-color;
   }
 }
 
-.site-header__logo__img {}
-
-.site-header__logo__text {
-  @include invisible;
-}
-
-
-@media print {
-  // Don't display the URL for the logo link
-  .site-header__logo__link[href]::after {
-    content: "";
-  }
-}
-
-
-//
-// Call to Action
-// ==========================================================================
-
-
-.site-header__cta {
-  vertical-align: middle;
-  // Prevent flash of color upon opening modal in Chrome
-  // https://github.com/spiritedmedia/spiritedmedia/issues/2366
-  -webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.site-header__cta,
-.site-header__cta__prompt,
-.site-header__cta__tagline,
-.site-header__cta__action {
+.site-header__tagline {
+  font-family: $body-font-family;
+  font-size: rem( 14px );
   color: $white;
-  font-size: $body-font-size;
-  line-height: 1.2;
-}
-
-.site-header__cta__prompt {
-  margin-bottom: rem( 12px );
-}
-
-.site-header__cta__tagline {
-  margin-bottom: 0;
-}
-
-.site-header__cta__action {
-  @include h-size( 5 );
-
-  display: block;
   font-style: italic;
+  text-align: center;
+  padding-bottom: 0;
 }
 
-.site-header__cta__icon {
-  font-size: rem( 48px );
-  padding-right: $site-header-cta-icon-padding;
-}
 
-@media print {
-  .site-header__cta {
+@media #{$site-header-breakpoint} {
+
+  .site-header {
+    height: auto;
+    margin-bottom: 0;
+    box-shadow: $site-header-box-shadow--bp-up;
+    border-top: rem( 4px ) solid $site-header-border-top-color;
+    padding: rem( 8px ) ( $column-gutter / 2 ) 0;
+    background-color: $white;
+  }
+
+  .site-header__logo-link {
+    position: static;
+    display: inline-block;
+    height: auto;
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+    padding: rem( 9.5px ) 0 rem( 17.5px );
+    background-color: $white;
+
+    &,
+    &:hover {
+      color: $site-header-logo-color--bp-up;
+    }
+  }
+
+  .site-header__logo {
+    display: inline-block;
+    height: $site-header-logo-height--bp-up;
+    margin-bottom: 0;
+  }
+
+  .site-header__inner {
+    height: auto;
+  }
+
+  .site-header__menu-trigger {
     display: none;
   }
-}
+
+  .site-header__nav {
+    display: block;
+  }
+
+  .site-header__marketing {
+    display: none;
+  }
+
+} // end @media $site-header-breakpoint

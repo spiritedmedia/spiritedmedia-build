@@ -21,6 +21,10 @@ $icons = [
             'Email signup shortcode',
         ],
     ],
+    'balance-scale-solid' => [
+        'label' => 'Balance Scale',
+        'usage' => [],
+    ],
     'bars' => [
         'label' => 'Bars',
         'usage' => [],
@@ -59,6 +63,12 @@ $icons = [
             'Newsletter signup prompt',
         ],
     ],
+    'chess' => [
+        'label' => 'Chess',
+        'useage' => [
+            'The Incline nav',
+        ],
+    ],
     'close' => [
         'label' => 'Close / X (multiplication sign)',
         'usage' => [
@@ -75,6 +85,12 @@ $icons = [
     'comment' => [
         'label' => 'Comment',
         'usage' => [],
+    ],
+    'comment-dots' => [
+        'label' => 'Comment Dots',
+        'usage' => [
+            'The Incline Nav',
+        ],
     ],
     'dollar-sign' => [
         'label' => 'Dollar Sign',
@@ -117,18 +133,32 @@ $icons = [
             'Event more info link',
         ],
     ],
-    'facebook'       => [
+    'facebook' => [
         'label' => 'Facebook',
         'usage' => [
             'Embeds in stream and single post templates',
             'Site footer',
         ],
     ],
-    'facebook-square'       => [
+    'facebook-square' => [
         'label' => 'Facebook (Square)',
         'usage' => [
             'Social share button',
         ],
+    ],
+    'fast-forward' => [
+        'label' => 'Fast Forward',
+        'usage' => [
+            'The Incline Nav',
+        ],
+    ],
+    'fish-solid' => [
+        'label' => 'Fish',
+        'usage' => [],
+    ],
+    'gavel-solid' => [
+        'label' => 'Gavel',
+        'usage' => [],
     ],
     'hand-peace' => [
         'label' => 'Hand making a peace sign',
@@ -190,6 +220,14 @@ $icons = [
         'label' => 'Newspaper',
         'usage' => [],
     ],
+    'newspaper-solid' => [
+        'label' => 'Newspaper (Solid)',
+        'usage' => [],
+    ],
+    'paper-plane-solid' => [
+        'label' => 'Paper Plane',
+        'usage' => [],
+    ],
     'phone-square' => [
         'label' => 'Phone (Square)',
         'usage' => [],
@@ -198,6 +236,16 @@ $icons = [
         'label' => 'Play',
         'usage' => [
             'YouTube placeholder',
+        ],
+    ],
+    'quidditch-solid' => [
+        'label' => 'Quidditch',
+        'usage' => [],
+    ],
+    'rocket' => [
+        'label' => 'Rocket',
+        'usage' => [
+            'The Incline Nav',
         ],
     ],
     'scribd' => [
@@ -221,6 +269,16 @@ $icons = [
     'star' => [
         'label' => 'Star',
         'usage' => [],
+    ],
+    'subway-solid' => [
+        'label' => 'Subway',
+        'usage' => [],
+    ],
+    'sun' => [
+        'label' => 'Sun',
+        'usage' => [
+            'The Incline Nav',
+        ],
     ],
     'times-circle' => [
         'label' => 'Times Circle',
@@ -256,6 +314,10 @@ $icons = [
         'usage' => [
             'Embeds in stream and single post templates',
         ],
+    ],
+    'walking-solid' => [
+        'label' => 'Walking',
+        'usage' => [],
     ],
     'youtube' => [
         'label' => 'YouTube',

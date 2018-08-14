@@ -6,12 +6,16 @@
   }
 }
 
-// The admin bar should display fixed alongside the modal so it doesn't
-// awkwardly disappear when scrolling
-//
-// stylelint-disable-next-line selector-max-id
-.has-open-modal #wpadminbar {
-  position: fixed;
+.has-open-modal {
+  // Prevent body from scrolling underneath the open modal
+  overflow: hidden;
+
+  // The admin bar should display fixed alongside the modal so it doesn't
+  // awkwardly disappear when scrolling
+  // stylelint-disable-next-line selector-max-id
+  #wpadminbar {
+    position: fixed;
+  }
 }
 
 .modal__overlay,
@@ -45,7 +49,7 @@
 }
 
 .modal__content {
-  padding: rem( 16px );
+  padding: $modal-close-button-height rem( 16px ) rem( 16px );
 
   &:focus {
     outline: none;
@@ -58,7 +62,7 @@
   right: 0;
   top: 0;
 
-  height: rem( 40px ); // For IE11 alignment
+  height: $modal-close-button-height; // For IE11 alignment
   border: 0;
   background-color: transparent;
 
@@ -67,7 +71,7 @@
 }
 
 
-@media ( min-width: em( 760px ) ) {
+@media #{$site-header-breakpoint} {
   .modal__frame {
     margin: 0 auto;
     max-width: rem( 700px );
@@ -120,36 +124,11 @@
 
   .modal__frame,
   .modal__content {
-    background-color: $primary-color;
-  }
-
-}
-
-
-//
-// Email Signup Form Modal
-// ==========================================================================
-
-.modal--signup-email-form {
-
-  .modal__frame,
-  .modal__content {
-    background-color: $white;
+    background-color: $modal-header-nav-background-color;
   }
 
   .modal__content {
-    padding: rem( 4px );
-  }
-
-
-  @media ( min-width: em( 760px ) ) {
-    .modal__frame {
-      max-height: fit-content;
-    }
-
-    .modal__content {
-      min-height: auto;
-    }
+    padding-bottom: 0;
   }
 
 }

@@ -48,6 +48,7 @@
 .c-figure__text__caption,
 .c-figure__text__credit {
   display: inline;
+  // stylelint-disable-next-line unit-blacklist
   letter-spacing: 0.02em;
   color: $figure-caption-color;
   font-style: normal; // Overrides user agent stylesheet behavior

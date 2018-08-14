@@ -36,7 +36,7 @@ $links_to_check = [
     [
         'name'           => 'Billy Penn Story',
         'url'            => $billy_penn_root . '/stories/the-new-love-park/',
-        'expected_forms' => 3,
+        'expected_forms' => 2,
     ],
     [
         'name'           => 'The Incline Homepage',
@@ -56,7 +56,7 @@ $links_to_check = [
     [
         'name'           => 'The Incline Story',
         'url'            => $the_incline_root . '/stories/self-driving-vehicles/',
-        'expected_forms' => 3,
+        'expected_forms' => 2,
     ],
     [
         'name'           => 'Denverite Homepage',

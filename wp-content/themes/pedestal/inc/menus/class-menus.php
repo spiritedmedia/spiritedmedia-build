@@ -37,9 +37,6 @@ class Menus {
      * Register theme locations for menus if header navigation is enabled
      */
     public function action_pedestal_loaded() {
-        if ( ! PEDESTAL_ENABLE_HEADER_NAVIGATION ) {
-            return;
-        }
         register_nav_menu( 'header-navigation', 'Header Navigation' );
         register_nav_menu( 'header-secondary-navigation', 'Header Secondary Navigation (Default/Desktop)' );
         register_nav_menu( 'header-secondary-navigation-mobile', 'Header Secondary Navigation (Mobile Only)' );
@@ -87,15 +84,6 @@ class Menus {
      * @return array          Timber context values with header menu HTML added
      */
     public function filter_timber_context( $context ) {
-        if ( ! PEDESTAL_ENABLE_HEADER_NAVIGATION ) {
-            $context['header_navigation_disabled'] = true;
-            $context['site_url'] = get_site_url();
-            ob_start();
-            Timber::render( 'partials/header/site-header.twig', $context );
-            $context['site_header'] = ob_get_clean();
-            return $context;
-        }
-
         $context['header_navigation_disabled'] = false;
         $context['site_header'] = $this->get_header_menu_html();
         return $context;

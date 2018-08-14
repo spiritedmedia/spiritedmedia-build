@@ -542,7 +542,12 @@ class Admin {
         $settings['style_formats'] = json_encode( $style_formats );
 
         // Add classes to the editor body element
-        $settings['body_class'] .= ' s-content';
+        $extra_classes = ' s-content';
+        if ( empty( $settings['body_class'] ) ) {
+            $settings['body_class'] = $extra_classes;
+        } else {
+            $settings['body_class'] .= $extra_classes;
+        }
 
         return $settings;
     }

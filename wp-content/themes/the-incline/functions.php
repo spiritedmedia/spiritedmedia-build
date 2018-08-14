@@ -55,6 +55,7 @@ class The_Incline extends Pedestal {
                 // Site Details
                 'PEDESTAL_BLOG_NAME'                    => 'The Incline',
                 'PEDESTAL_BLOG_DESCRIPTION'             => 'The Incline is a mobile platform for a better Pittsburgh -- the easiest way to find and follow local and breaking news in Pittsburgh.',
+                'PEDESTAL_BLOG_TAGLINE'                 => 'Elevating the news in Pittsburgh',
                 'PEDESTAL_CITY_NAME'                    => 'Pittsburgh',
                 'PEDESTAL_CITY_NICKNAME'                => 'Steel City',
                 'PEDESTAL_STATE_NAME'                   => 'Pennsylvania',

@@ -31,6 +31,7 @@ $enable-heading-font-size-reduction: true !default;
 
 
 $body-font-family:        $font-family-sans-serif !default;
+// stylelint-disable-next-line unit-blacklist
 $body-font-size:          1em;
 $body-line-height:        $base-line-height / $base-font-size;
 
@@ -170,6 +171,37 @@ $button-text-color-dark: $body-font-color !default;
 
 
 //
+// Site Header + Nav
+// ==========================================================================
+
+$site-header-breakpoint: screen and ( min-width: em( 760px ) );
+
+// Site Header
+$site-header-background-color:           $white                        !default;
+$site-header-box-shadow:                 none                          !default;
+$site-header-box-shadow--bp-up:          none;
+$site-header-border-top-color:           $primary-color                !default;
+$site-header-height:                     rem( 40px );
+$site-header-padding-y:                  rem( 6px );
+$site-header-logo-link-width:            fit-content                   !default;
+$site-header-logo-link-padding:          0                             !default;
+$site-header-logo-link-align:            center                        !default;
+$site-header-logo-link-background-color: $site-header-background-color !default;
+$site-header-logo-height--bp-up:                rem( 45px );
+$site-header-logo-color:                 $primary-color                !default;
+$site-header-logo-color-hover:           $white                        !default;
+$site-header-logo-color--bp-up:          $primary-color                !default;
+$site-header-menu-trigger-color:         $primary-color                !default;
+$site-header-menu-trigger-size:          rem( 28px );
+$site-header-social-link-icon-color:     $primary-color                !default;
+
+// Primary nav
+$site-nav-font-size: rem( 20px );
+$site-nav-primary-background-color--bp-up:        $primary-color                                      !default;
+$site-nav-secondary-font-size--bp-up: rem( 16px ) !default;
+
+
+//
 // Content Scope
 // ==========================================================================
 
@@ -204,7 +236,9 @@ $pullquote-font-family:           $font-family-sans-serif                    !de
 
 $pullquote-marks-gutter-x:        em( 1px )                                  !default;
 $pullquote-marks-offset-x:        -( $pullquote-marks-gutter-x + em( 1px ) );
+// stylelint-disable-next-line unit-blacklist
 $pullquote-marks-top-offset:      -0.15em;
+// stylelint-disable-next-line unit-blacklist
 $pullquote-marks-bottom-offset:   -0.25em                                    !default;
 $pullquote-marks-color:           $primary-color                             !default;
 $pullquote-marks-font-size:       rem( 64px )                                !default;
@@ -315,11 +349,11 @@ $widget-title-line-height: 1.2              !default;
 $selection-color: $primary-color !default;
 $mark-color: $selection-color !default;
 
-// Site Header
-$site-header-with-nav-breakpoint: screen and ( min-width: em( 760px ) );
-
 // Modals
 $modal-overlay-background-color-light: rgba( $white, 0.7 );
+$modal-close-button-height: rem( 40px );
+$modal-content-padding-bottom: rem( 16px );
+$modal-header-nav-background-color: $primary-color !default;
 $modal-search-background-color: $dark-grey !default;
 $modal-search-button-background-color: $accent-color !default;
 
@@ -346,6 +380,7 @@ $spinkit-size                   : rem( 32px );
 $spinkit-spinner-color          : $grey-80;
 
 // Hanging quotation mark nudge
+// stylelint-disable-next-line unit-blacklist
 $nudge-punctuation              : -0.4em;
 
 // WordPress admin bar

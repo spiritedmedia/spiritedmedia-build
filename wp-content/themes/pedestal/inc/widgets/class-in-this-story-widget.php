@@ -64,9 +64,9 @@ class In_This_Story_Widget extends \WP_Widget {
     }
 
     public function form( $instance ) {
-    ?>
+        ?>
     <p><?php esc_html_e( 'There are no settings for this widget.', 'pedestal' ); ?></p>
-    <?php
+        <?php
     }
 
     public function update( $new_instance, $old_instance ) {

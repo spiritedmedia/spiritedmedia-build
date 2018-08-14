@@ -207,7 +207,7 @@ get_header(); ?>
         <?php
         foreach ( $press_links as $press ) :
             $press = (object) $press;
-        ?>
+            ?>
             <li class="home-press-list-item"><a href="<?php echo esc_url( $press->url ); ?>" class="home-press-list-link"><?php echo $press->title; ?></a> <?php echo $press->date; ?>, <em class="home-press-list-publisher"><?php echo $press->publication; ?></em></li>
         <?php endforeach; ?>
         </ul>

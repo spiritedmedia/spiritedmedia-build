@@ -1,0 +1,49 @@
+$_font-size: rem( 14px );
+
+.site-nav__link {
+  color: $grey-95;
+  letter-spacing: em( 0.5px, $site-nav-font-size );
+
+  &:hover,
+  &:focus {
+    &,
+    .site-nav__icon {
+      color: $accent-color;
+    }
+  }
+}
+
+
+@media #{$site-header-breakpoint} {
+
+  .site-nav--primary {
+    .site-nav__link {
+      font-size: $_font-size;
+      line-height: rem( 24px ) / $_font-size;
+      letter-spacing: em( -0.25px, $_font-size );
+      font-weight: normal;
+
+      &,
+      &:hover,
+      &:focus {
+        color: $grey-95;
+
+        .site-nav__icon {
+          color: rgba( $white, 0.5 );
+        }
+      }
+    }
+
+    .site-nav__icon {
+      color: rgba( $white, 0.5 );
+    }
+  }
+
+  .site-nav--secondary {
+    .site-nav__link {
+      font-size: $site-nav-secondary-font-size--bp-up;
+      color: $primary-color;
+    }
+  }
+
+}

@@ -193,7 +193,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
                 // Site Features
                 'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY'  => true,
-                'PEDESTAL_ENABLE_HEADER_NAVIGATION'     => false,
                 'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'     => false,
                 'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'    => false,
 

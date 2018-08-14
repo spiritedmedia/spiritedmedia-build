@@ -59,6 +59,8 @@ class Taxonomies {
         add_action( 'init', [ $this, 'action_init_register_taxonomies' ] );
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'template_redirect', [ $this, 'action_template_redirect' ], 9 );
+        add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts_with_no_categories' ] );
+        add_action( 'restrict_manage_posts', [ $this, 'action_restrict_manage_posts' ] );
 
         // Register additional fields for each of the Types taxonomies
         foreach ( self::$ptypes_types_tax as $tax_name => $v ) {
@@ -205,10 +207,7 @@ class Taxonomies {
             'show_tagcloud'              => true,
             'single_option_taxonomy'     => true, // Make this taxonomy use radio buttons
         ];
-        // Categories are only available for Denverite at the moment
-        if ( 4 == get_current_blog_id() ) {
-            register_taxonomy( 'pedestal_category', Types::get_entity_post_types(), $args );
-        }
+        register_taxonomy( 'pedestal_category', Types::get_entity_post_types(), $args );
 
     }
 
@@ -264,6 +263,65 @@ class Taxonomies {
             wp_safe_redirect( home_url( trailingslashit( $canonical_locality_type . '/' . $name ) ) );
             exit;
         }
+    }
+
+    /**
+     * Return posts that are or aren't categorized
+     *
+     * @param  WP_Query $query The WP_Query object we're modifying
+     */
+    function action_pre_get_posts_with_no_categories( $query ) {
+        if ( ! is_admin() || ! $query->is_main_query() || empty( $_GET['term-filter'] ) ) {
+            return;
+        }
+
+        switch ( $_GET['term-filter'] ) {
+            case 'uncategorized':
+                $operator = 'NOT IN';
+                break;
+
+            case 'categorized':
+                $operator = 'IN';
+                break;
+
+            default:
+                return;
+                break;
+        }
+
+        $taxonomy = 'pedestal_category';
+        $term_ids = get_terms( $taxonomy, [
+            'fields' => 'ids',
+        ] );
+        $query->set( 'tax_query', [
+            [
+                'taxonomy'    => $taxonomy,
+                'field'       => 'id',
+                'terms'       => $term_ids,
+                'operator'    => $operator,
+            ],
+        ] );
+    }
+
+    /**
+     * Add a select menu for filtering categoriztion in the post list screen
+     */
+    function action_restrict_manage_posts() {
+        $whitelisted_post_types = Types::get_entity_post_types();
+        if ( ! in_array( get_current_screen()->post_type, $whitelisted_post_types ) ) {
+            return;
+        }
+        $selected = false;
+        if ( ! empty( $_GET['term-filter'] ) ) {
+            $selected = sanitize_text_field( $_GET['term-filter'] );
+        }
+        ?>
+        <select name="term-filter">
+            <option value="">All Categorizations</option>
+            <option value="categorized" <?php echo selected( 'categorized', $selected ); ?>>Only Categorized</option>
+            <option value="uncategorized" <?php echo selected( 'uncategorized', $selected ); ?>>Only Uncategorized</option>
+        </select>
+        <?php
     }
 
     /**

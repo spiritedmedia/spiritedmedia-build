@@ -103,6 +103,7 @@ button {
   @extend %_btn;
 
   border-radius: 0;
+  // stylelint-disable-next-line unit-blacklist
   padding: 0 2em; // Fit text within SVG background
   text-align: center;
   line-height: rem( 45.5px );
