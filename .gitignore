@@ -30,6 +30,7 @@
 # !yarn.lock
 # !.ruby-gemset
 # !.ruby-version
+# !.babelrc
 # !config/
 
 # Coding Standards

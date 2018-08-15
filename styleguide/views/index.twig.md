@@ -31,6 +31,7 @@ address the issue.
 - [Horizontal Rules](horizontal-rules.php)
 - [Icons](icons.php)
 - [Inline Ads](inline-ads.php)
+- [Message Spot](message-spot.php)
 - [Modals](modals.php)
 - [Pagination](pagination.php)
 - [Post Content: Common HTML](common-html.php)

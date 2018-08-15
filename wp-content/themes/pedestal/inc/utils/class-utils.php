@@ -2,6 +2,8 @@
 
 namespace Pedestal\Utils;
 
+use Timber\Timber;
+
 /**
  * Utilities
  */
@@ -560,5 +562,20 @@ class Utils {
         $string = str_replace( [ '<br />', '<br>', '<br/>' ], "\n", $string );
         $string = str_replace( '</p>', "\n\n", $string );
         return $string;
+    }
+
+    /**
+     * Load a Twig template's source without rendering it
+     *
+     * Variables will not be expanded, control statements will be visible, etc.
+     *
+     * Useful for sharing templates between PHP and JavaScript.
+     *
+     * @param string $template_path
+     * @return string Unrendered Twig template source
+     */
+    public static function load_template_source( $template_path ) {
+        $process = '{{ source("' . $template_path . '") }}';
+        return Timber::compile_string( $process );
     }
 }

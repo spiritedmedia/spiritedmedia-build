@@ -1,0 +1,84 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block head %}
+<style>
+    .form-label {
+        display: block;
+    }
+</style>
+{% endblock %}
+
+{% block pre_header %}
+    {% spaceless %}
+
+    {% include 'partials/header/message-spot.twig' with messages.standard only %}
+    {% include 'partials/header/message-spot.twig' with messages.with_title only %}
+    {% include 'partials/header/message-spot.twig' with messages.with_button only %}
+
+    {% endspaceless %}
+{% endblock %}
+
+{% block content %}
+    <h1>Message Spot</h1>
+
+    <p>
+        <fieldset>
+            <legend class="form-radio__legend">Pick the example you want to test</legend class="form-group__legend">
+
+            <div class="form-radio">
+                <input type="radio" name="message-spot-display"
+                    id="input-message-spot-display-all"
+                    value="all"
+                    class="form-radio__input js-message-spot-display"
+                    checked />
+                <label for="input-message-spot-display-all" class="form-radio__label">All</label>
+            </div>
+
+            <div class="form-radio">
+                <input type="radio" name="message-spot-display"
+                    id="input-message-spot-display-standard"
+                    value="standard"
+                    class="form-radio__input js-message-spot-display" />
+                <label for="input-message-spot-display-standard" class="form-radio__label">Standard</label>
+            </div>
+
+            <div class="form-radio">
+                <input type="radio" name="message-spot-display"
+                    id="input-message-spot-display-with-title"
+                    value="with-title"
+                    class="form-radio__input js-message-spot-display" />
+                <label for="input-message-spot-display-with-title" class="form-radio__label">With Title</label>
+            </div>
+
+            <div class="form-radio">
+                <input type="radio" name="message-spot-display"
+                    id="input-message-spot-display-with-button"
+                    value="with-button"
+                    class="form-radio__input js-message-spot-display" />
+                <label for="input-message-spot-display-with-button" class="form-radio__label">With Button</label>
+            </div>
+
+        </fieldset>
+        <script>
+            (function($) {
+                var $document = $(document);
+                $document.ready(function() {
+                    $document.on('change', '.js-message-spot-display', function() {
+                        var value = $(this).val();
+                        if ('all' === value) {
+                            $('.js-message-spot').show();
+                        } else {
+                            var el = '.js-message-spot-' + value;
+                            $('.js-message-spot').hide();
+                            $(el).show();
+                        }
+                    });
+                });
+            }(jQuery));
+        </script>
+    </p>
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

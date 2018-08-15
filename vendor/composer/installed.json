@@ -6,12 +6,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/wordpress-fieldmanager.git",
-            "reference": "99668aba293587441fa4b43e4b61b5901ce7a981"
+            "reference": "ff6370516801c838ae281ecb70978b4bb4cfdf64"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/wordpress-fieldmanager/zipball/99668aba293587441fa4b43e4b61b5901ce7a981",
-            "reference": "99668aba293587441fa4b43e4b61b5901ce7a981",
+            "url": "https://api.github.com/repos/spiritedmedia/wordpress-fieldmanager/zipball/ff6370516801c838ae281ecb70978b4bb4cfdf64",
+            "reference": "ff6370516801c838ae281ecb70978b4bb4cfdf64",
             "shasum": ""
         },
         "require": {
@@ -21,7 +21,7 @@
             "squizlabs/php_codesniffer": "2.*",
             "wp-coding-standards/wpcs": "dev-master"
         },
-        "time": "2018-05-11T14:29:43+00:00",
+        "time": "2018-07-31T17:59:50+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -43,7 +43,7 @@
             "wordpress"
         ],
         "support": {
-            "source": "https://github.com/spiritedmedia/wordpress-fieldmanager/tree/spiritedmedia-upstream-468-fm-ui-update"
+            "source": "https://github.com/spiritedmedia/wordpress-fieldmanager/tree/spiritedmedia"
         }
     },
     {

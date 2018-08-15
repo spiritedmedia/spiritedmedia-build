@@ -15,6 +15,8 @@ $enable-heading-font-size-reduction: false;
 $font-family-sans-serif:          "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $font-family-serif:               "Merriweather", Georgia, Cambria, "Times New Roman", Times, serif;
 
+$base-font-size: rem( 16px );
+
 $heading-line-height: 1.15;
 
 $h1-font-size: rem( 30px );
@@ -41,6 +43,8 @@ $paragraph-line-height: rem( 24px ) / $paragraph-font-size;
 // ==========================================================================
 
 $secondary-color: #54345a;
+$color-dark:      $darker;
+$color-grey:      $dark;
 $accent-color:    $denverite-yellow;
 $body-font-color: $darkest;
 
@@ -216,6 +220,11 @@ $widget-title-line-height: rem( 24px ) / $widget-title-font-size;
 // Miscellaneous
 // ==========================================================================
 
+// Message Spot
+$message-spot-title-line-height: rem( 24px );
+$message-spot-title-font-size: rem( 12px );
+$message-spot-title-letter-spacing: em( 0.3px, $message-spot-title-font-size );
+
 // Modals
 $modal-search-background-color: $secondary-color;
 
@@ -242,6 +251,3 @@ $single-entity-meta-text-transform:         none;
 // Figure
 $figure-caption-color: $darker;
 $figure-text-align: right;
-
-// Member Bar
-$member-bar-background-color: $darker;

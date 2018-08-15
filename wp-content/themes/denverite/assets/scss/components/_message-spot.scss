@@ -1,0 +1,23 @@
+.message-spot--with-title {
+  &,
+  .message-spot__inner {
+    height: rem( 80px );
+  }
+}
+
+.message-spot__button {
+  @include button-arrow(
+    $accent-color,
+    $include-base-styles: false,
+    $height: $button-height--small
+  );
+}
+
+@media #{$large-up} {
+  .message-spot--with-title {
+    &,
+    .message-spot__inner {
+      height: rem( 60px );
+    }
+  }
+}

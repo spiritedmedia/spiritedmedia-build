@@ -46,8 +46,16 @@ $icons = [
         'usage' => [],
     ],
     'calendar-alt' => [
-        'label' => 'Calendar Alt',
-        'usage' => [],
+        'label' => 'Calendar Alt (Solid)',
+        'usage' => [
+            'Message spot',
+        ],
+    ],
+    'calendar-alt-regular' => [
+        'label' => 'Calendar Alt (Regular/Outline)',
+        'usage' => [
+            'Message spot',
+        ],
     ],
     'caret-down' => [
         'label' => 'Caret (Down)',
@@ -61,6 +69,7 @@ $icons = [
         'label' => 'Check',
         'usage' => [
             'Newsletter signup prompt',
+            'Message spot',
         ],
     ],
     'chess' => [
@@ -80,6 +89,7 @@ $icons = [
         'label' => 'Coffee',
         'usage' => [
             'Daily email signup widget (Denverite)',
+            'Message spot',
         ],
     ],
     'comment' => [
@@ -92,6 +102,12 @@ $icons = [
             'The Incline Nav',
         ],
     ],
+    'comments' => [
+        'label' => 'Comments',
+        'usage' => [
+            'Message spot',
+        ],
+    ],
     'dollar-sign' => [
         'label' => 'Dollar Sign',
         'usage' => [
@@ -100,12 +116,15 @@ $icons = [
     ],
     'envelope' => [
         'label' => 'Envelope',
-        'usage' => [],
+        'usage' => [
+            'Message spot',
+        ],
     ],
     'envelope-o' => [
         'label' => 'Envelope (Outline)',
         'usage' => [
             'User card (author profile + author grid + featured contributor bio)',
+            'Message spot',
         ],
     ],
     'envelope-open' => [
@@ -166,6 +185,12 @@ $icons = [
             'Denverite culture menu item icon',
         ],
     ],
+    'hand-point-right' => [
+        'label' => 'Hand pointing right',
+        'usage' => [
+            'Message spot',
+        ],
+    ],
     'hand-spock' => [
         'label' => 'The Hand of Spock',
         'usage' => [
@@ -173,7 +198,11 @@ $icons = [
         ],
     ],
     'heart' => [
-        'label' => 'Heart',
+        'label' => 'Heart (Solid)',
+        'usage' => [],
+    ],
+    'heart-regular' => [
+        'label' => 'Heart (Regular/Outline)',
         'usage' => [],
     ],
     'home' => [
@@ -201,7 +230,7 @@ $icons = [
     'link' => [
         'label' => 'Link',
         'usage' => [
-            'Message Spot',
+            'Message spot',
         ],
     ],
     'linkedin' => [
@@ -210,10 +239,22 @@ $icons = [
             "Who's Next single posts",
         ],
     ],
+    'list-ol' => [
+        'label' => 'List (ordered)',
+        'usage' => [
+            'Message spot',
+        ],
+    ],
     'lock' => [
         'label' => 'Lock',
         'usage' => [
             'Donation form',
+        ],
+    ],
+    'location-arrow' => [
+        'label' => 'Location arrow',
+        'usage' => [
+            'Message spot',
         ],
     ],
     'newspaper' => [
@@ -268,7 +309,10 @@ $icons = [
     ],
     'star' => [
         'label' => 'Star',
-        'usage' => [],
+        'usage' => [
+            'Message spot',
+            'Secondary nav menu',
+        ],
     ],
     'subway-solid' => [
         'label' => 'Subway',

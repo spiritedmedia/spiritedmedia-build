@@ -1,8 +1,3 @@
-// ==========================================================================
-// Pedestal // Base // Global // MIXINS
-// ==========================================================================
-
-
 /// Visually hide an element
 ///
 /// Shows for screen-readers
@@ -23,22 +18,11 @@
   }
 }
 
-
-
-
-
-//
-// Typography
-// ==========================================================================
-
-
-/**
- * Set unhovered and hovered link colors and decoration easily.
- *
- * Defaults to `a` selector. If included within another selector, just use `&`
- *
- * Unvisited/visited will be the same, hover/active will be the same.
- */
+/// Set unhovered and hovered link colors and decoration easily.
+///
+/// Defaults to `a` selector. If included within another selector, just use `&`
+///
+/// Unvisited/visited will be the same, hover/active will be the same.
 @mixin anchorage(
   $selector: 'a',
   $unhovered: $anchor-font-color,
@@ -64,7 +48,6 @@
   }
 }
 
-
 /// Lighten/dim some links
 @mixin link-light {
   color: $dimmed-text-color;
@@ -75,7 +58,6 @@
   }
 }
 
-
 /// Darken some links arbitrarily
 @mixin link-dark {
   &,
@@ -84,7 +66,6 @@
     color: $body-font-color;
   }
 }
-
 
 /// List without bullet or numbers
 ///
@@ -110,21 +91,10 @@
   // stylelint-enable selector-max-type, declaration-no-important
 }
 
-
-
-
-
-//
-// Icons
-// ==========================================================================
-
-
-/**
- * Load an image placeholder on the given element
- *
- * @param  {unit} $size  : $icon-diameter Size of the image
- * @param  {str}  $shape : square
- */
+/// Load an image placeholder on the given element
+///
+/// @param  {unit} $size  : $icon-diameter Size of the image
+/// @param  {str}  $shape : square
 @mixin img-placeholder( $size: $icon-diameter, $shape: square ) {
   display: block;
 
@@ -136,17 +106,28 @@
   }
 }
 
-
-
-
-
-//
-// Borders
-// ==========================================================================
-
 @mixin dash-rule {
   // stylelint-disable-next-line unit-blacklist
   width: 4em;
   margin: 0 auto;
   border-bottom: rem( 4px ) solid $border-std-color;
+}
+
+/// Mimic the browser's native focus outline
+///
+/// Optionally apply the outline styles as a border instead.
+///
+/// @link https://ghinda.net/article/mimic-native-focus-css/
+/// @param string $border [false] Apply as border instead of outline?
+@mixin native-outline( $border: false ) {
+  $property: if( $border, 'border', 'outline' );
+
+  #{$property}: rem( 2px ) solid Highlight;
+
+  // WebKit gets its native focus styles
+  // stylelint-disable-next-line media-feature-name-no-vendor-prefix
+  @media ( -webkit-min-device-pixel-ratio: 0 ) {
+    #{$property}-style: auto;
+    #{$property}-color: -webkit-focus-ring-color;
+  }
 }

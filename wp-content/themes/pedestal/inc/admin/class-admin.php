@@ -331,6 +331,8 @@ class Admin {
         wp_enqueue_style( 'pedestal-admin', get_template_directory_uri() . '/assets/dist/css/admin.css', [], PEDESTAL_VERSION );
         wp_enqueue_script( 'pedestal-admin', get_template_directory_uri() . '/assets/dist/js/admin.js', [], PEDESTAL_VERSION );
 
+        wp_register_script( 'twig', get_template_directory_uri() . '/assets/dist/js/vendor/twig.min.js', [], PEDESTAL_VERSION );
+
         // Dequeue Fieldmanager group tabs CSS so we can load our own
         wp_dequeue_style( 'fm_group_tabs_css' );
     }

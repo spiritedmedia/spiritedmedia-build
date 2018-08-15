@@ -1,28 +1,5 @@
-$button-height: rem( 44px );
-
 %_btn {
-  display: inline-block;
-  min-width: rem( 260px );
-  height: $button-height;
-  line-height: $button-height;
-  padding-left: rem( 32px );
-  padding-right: rem( 32px );
-  border-radius: rem( 12px );
-
-  font-family: $font-family-sans-serif;
-  font-weight: 600;
-  font-size: rem( 16px );
-  letter-spacing: em( 1px );
-  text-align: center;
-  vertical-align: middle;
-  text-transform: uppercase;
-
-  @include button-color-variant( $primary-color );
-
-  &:hover,
-  &:focus {
-    opacity: 0.8;
-  }
+  @include button( $include-base-styles: true );
 }
 
 // stylelint-disable-next-line selector-max-type
@@ -39,17 +16,13 @@ button {
 /// Button with an oval shape
 .btn--oval {
   @extend %_btn;
-
-  border-radius: rem( 50px );
+  @include button( 'oval', $include-base-styles: false );
 }
 
 /// Button with a border
 .btn--bordered {
   @extend %_btn;
-
-  border: rem( 3px ) solid $button-border-color;
-  // Account for border in line height to keep text vertically centered
-  line-height: $button-height - rem( 3px ) * 2;
+  @include button( 'bordered', $include-base-styles: false );
 }
 
 
@@ -82,35 +55,10 @@ button {
 // Arrow Buttons
 // ==========================================================================
 
-/// Handle arrow button variations
-///
-/// Color variations need to be handled specifically because we need to
-/// re-colorize the SVG background
-///
-/// @param {color} $bg-color - Background color
-@mixin _btn-arrow( $bg-color ) {
-  $color: encode-color( $bg-color );
-  $svg: "data:image/svg+xml;charset=UTF-8,%3csvg preserveAspectRatio='none' viewBox='0 0 275 60' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdesc%3eArrow Shape%3c/desc%3e%3cdefs%3e%3c/defs%3e%3cg id='button-promo' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='button-arrow' fill='#{$color}'%3e%3cpolygon id='shape-copy' transform='translate(137.500000, 30.500000) rotate(90.000000) translate(-137.500000, -30.500000) ' points='107.5 -82 137.486328 -107 167.5 -82 167.5 168 137.5 155.5 107.5 168'%3e%3c/polygon%3e%3c/g%3e%3c/g%3e%3c/svg%3e ";
-  // stylelint-disable-next-line function-url-quotes
-  background: url( $svg );
-  // Firefox needs this
-  background-repeat: no-repeat;
-  background-size: 100% rem( 44px );
-}
-
-/// Button with an arrow shape
 .btn--arrow {
-  @extend %_btn;
-
-  border-radius: 0;
-  // stylelint-disable-next-line unit-blacklist
-  padding: 0 2em; // Fit text within SVG background
-  text-align: center;
-  line-height: rem( 45.5px );
-
-  @include _btn-arrow( $primary-color );
+  @include button-arrow( $primary-color );
 
   &.btn--bg-accent {
-    @include _btn-arrow( $accent-color );
+    @include button-arrow( $accent-color, $include-base-styles: false );
   }
 }

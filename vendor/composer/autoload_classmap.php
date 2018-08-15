@@ -7977,6 +7977,7 @@ return array(
     'Pedestal\\Icons' => $baseDir . '/wp-content/themes/pedestal/inc/class-icons.php',
     'Pedestal\\Menus\\Menu_Icons' => $baseDir . '/wp-content/themes/pedestal/inc/menus/class-menu-icons.php',
     'Pedestal\\Menus\\Menus' => $baseDir . '/wp-content/themes/pedestal/inc/menus/class-menus.php',
+    'Pedestal\\Message_Spot' => $baseDir . '/wp-content/themes/pedestal/inc/class-message-spot.php',
     'Pedestal\\MetricBot\\MetricBots' => $baseDir . '/wp-content/themes/pedestal/inc/metricbot/class-metricbots.php',
     'Pedestal\\MetricBot\\Newsletter_Signups_By_Page_Metric' => $baseDir . '/wp-content/themes/pedestal/inc/metricbot/class-newsletter-signups-by-page-metric.php',
     'Pedestal\\MetricBot\\Weekly_Traffic_Metric' => $baseDir . '/wp-content/themes/pedestal/inc/metricbot/class-weekly-traffic-metric.php',

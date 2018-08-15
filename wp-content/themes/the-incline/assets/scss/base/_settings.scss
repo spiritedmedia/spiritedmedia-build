@@ -2,6 +2,7 @@
 
 
 $secondary-color: #7f5f59;
+$color-dark:      $grey-25;
 $mark-color:      $grey-46;
 
 $h3-font-size: rem( 27px ); // !default
@@ -19,4 +20,4 @@ $content-h1-font-size: $h3-font-size;
 $content-h2-font-size: $h4-font-size;
 $content-h3-font-size: $h5-font-size;
 
-$modal-header-nav-background-color: $dark-grey;
+$modal-header-nav-background-color: $color-dark;

@@ -1,4 +1,71 @@
+/* global jQuery */
 /* exported PedUtils */
+
+/**
+ * Convert a string to camelCase
+ *
+ * @return {string} camelCase string
+ */
+String.prototype.toCamelCase = function() {
+  return this
+    .replace(/\s(.)/g, function(s) { return s.toUpperCase(); })
+    .replace(/\s/g, '')
+    .replace(/^(.)/, function(s) { return s.toLowerCase(); });
+};
+
+/**
+ * Capitalize the first letter of a string
+ *
+ * @return {string}
+ */
+String.prototype.capFirst = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+/**
+ * Escape a string for use in HTML attributes
+ *
+ * {@link https://stackoverflow.com/a/9756789}
+ *
+ * @param {boolean} preserveCR
+ */
+String.prototype.escAttr = function(preserveCR) {
+  preserveCR = preserveCR ? '&#13;' : '\n';
+  return this
+    .replace(/&/g, '&amp;') // This must be the 1st replacement
+    .replace(/'/g, '&apos;') // The 4 other predefined entities, required
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\r\n/g, preserveCR) // Must be before the next replacement
+    .replace(/[\r\n]/g, preserveCR)
+  ;
+};
+
+/**
+ * Format an object as a string of HTML attributes
+ *
+ * @return {string} String formatted as `key1="val1" key2="val2"`
+ */
+Object.defineProperty(Object.prototype, 'toAttsString', {
+  value: function() {
+    let string = '';
+    for (const key in this) {
+      if (this.hasOwnProperty(key)) {
+        let value = this[key];
+        if (Array.isArray(value)) {
+          value = value.join(' ');
+        }
+        if (typeof value === 'string' || value instanceof String) {
+          string += `${key}="${value.escAttr()}" `;
+        }
+      }
+    }
+    return string;
+  },
+  enumerable: false
+});
+
 
 /**
  * Helper methods that can be used throughout our codebase
@@ -86,26 +153,25 @@ class PedUtils {
       }
     }
   }
+
+  /**
+   * Generate a semi-random ID-like string
+   *
+   * N.B. This is not guaranteed to be unique!
+   *
+   * {@link https://gist.github.com/fiznool/73ee9c7a11d1ff80b81c}
+   *
+   * @param {int} length
+   * @return {string} Semi-random string with the specified length
+   */
+  static genStr(length = 8) {
+    let out = '';
+    const alphabet = '23456789abdegjkmnpqrvwxyz';
+    for (let i = 0; i < length; i++) {
+      out += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    }
+    return out;
+  }
 }
 
 
-/**
- * Convert a string to camelCase
- *
- * @return {string} camelCase string
- */
-String.prototype.toCamelCase = function() {
-  return this
-    .replace(/\s(.)/g, function(s) { return s.toUpperCase(); })
-    .replace(/\s/g, '')
-    .replace(/^(.)/, function(s) { return s.toLowerCase(); });
-};
-
-/**
- * Capitalize the first letter of a string
- *
- * @return {string}
- */
-String.prototype.capFirst = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};

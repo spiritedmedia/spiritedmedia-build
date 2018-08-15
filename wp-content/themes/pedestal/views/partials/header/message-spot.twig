@@ -1,0 +1,36 @@
+{% if body and url %}
+
+<section class="message-spot {{ additional_classes }} js-message-spot">
+    <a href="{{ url }}" class="message-spot__link">
+        <div class="message-spot__inner">
+
+            {% if icon %}
+            <div class="message-spot__item">
+                {{ ped_icon( icon, 'message-spot__icon' )}}
+            </div>
+            {% endif %}
+
+            <div class="message-spot__body message-spot__item">
+
+                {% if title %}
+                <h1 class="message-spot__title">
+                    {{ title }}<span class="message-spot__title__postfix">:&ensp;</span>
+                </h1>
+                {% endif %}
+
+                <div class="message-spot__message">
+                    {{ body }}
+                </div>
+
+                {% if button_label %}
+                <button class="message-spot__button">
+                    <span class="message-spot__button__inner">{{ button_label }}</span>
+                </button>
+                {% endif %}
+
+            </div>
+        </div>
+    </a>
+</section>
+
+{% endif %}

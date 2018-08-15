@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Admin
  *
- * Version: 7.2.1
+ * Version: 7.3.0
  *
  * Copyright ( c ) 2018 Spirited Media
  *
@@ -14,11 +14,19 @@
 /* stylelint-disable selector-max-type, selector-max-id */
 
 
+@import 'setup-core';
+
+// Vendor
 @import 'sassy-lists/dist/SassyLists';
 
-@import 'admin/fieldmanager-group-tabs';
+// Base
+@import '../base/theme/settings';
+@import '../base/global/mixins';
+@import '../base/theme/mixins';
+@import '../objects/icons';
 
 
+// Defined here because the original is defined within Foundation
 @mixin clearfix {
   &::after {
     display: block;
@@ -26,6 +34,12 @@
     clear: both;
   }
 }
+
+
+// Admin-specific
+@import 'admin/fieldmanager-group-tabs';
+@import 'admin/message-spot';
+
 
 .clearfix {
   @include clearfix;

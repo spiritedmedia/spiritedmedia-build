@@ -7,6 +7,11 @@ use \Pedestal\Utils\Utils;
 
 class Icons {
 
+    /**
+     * SVG markup for all icons in the filesystem
+     */
+    private static $icon_svgs;
+
     static function get_instance() {
         static $instance = null;
         if ( null === $instance ) {
@@ -179,5 +184,37 @@ class Icons {
             $atts['class'] = implode( ' ', $atts['class'] );
         }
         return $atts;
+    }
+
+    /**
+     * Read all of the icons in the SVG assets directory in filesystem
+     *
+     * @return object Icon names and SVG contents sorted in alphabetical order
+     */
+    public static function get_all_icons_svg() {
+        if ( self::$icon_svgs && is_object( self::$icon_svgs ) ) {
+            return self::$icon_svgs;
+        }
+        $directory = get_template_directory() . '/assets/images/icons/svg/';
+        $icons = [];
+        $iterator = new \DirectoryIterator( $directory );
+        foreach ( $iterator as $file ) {
+            if ( ! $file->isFile() ) {
+                continue;
+            }
+            $parts = explode( '.', $file->getFilename() );
+            if ( empty( $parts[1] ) || 'svg' != $parts[1] ) {
+                continue;
+            }
+            $icon_name = $parts[0];
+            $icon = static::get_icon( $icon_name );
+            $icons[ $icon_name ] = (object) [
+                'svg'   => $icon,
+                'label' => $icon_name,
+            ];
+        }
+        ksort( $icons );
+        self::$icon_svgs = $icons;
+        return self::$icon_svgs;
     }
 }

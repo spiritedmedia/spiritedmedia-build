@@ -21,7 +21,8 @@ use Pedestal\MetricBot\{
 };
 use Pedestal\{
     Featured_Posts,
-    Icons
+    Icons,
+    Message_Spot
 };
 use Pedestal\Posts\{
     Post,
@@ -316,6 +317,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->cron_management          = Cron_Management::get_instance();
             $this->menus                    = Menus::get_instance();
             $this->menu_icons               = Menu_Icons::get_instance();
+            $this->message_spot             = Message_Spot::get_instance();
 
             // Metrics
             $this->metricbots                        = MetricBots::get_instance();

@@ -26,8 +26,11 @@
         <div class="sticky-footer-container">
             <div class="site-wrap has-sticky-footer js-site" style="flex: 1;">
 
+                {% block pre_header %}
+                {% endblock %}
+
                 {% if not is_page_donate %}
-                {% include 'partials/header/member-bar.twig' %}
+                {% include 'partials/header/message-spot.twig' with message_spot only %}
                 {% endif %}
 
                 {{ site_header }}

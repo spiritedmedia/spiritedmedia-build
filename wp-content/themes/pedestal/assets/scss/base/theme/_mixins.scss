@@ -207,6 +207,104 @@
   }
 }
 
+/// Button base styles and shape variant
+///
+/// Allows us to implement button styles without relying on classes.
+///
+/// @param {bool} $variant [false] - Shape/style variant name
+/// @param {bool} $include-base-styles [true] - Include button base styles?
+/// @param {unit} $height [$button-height] - Button height in rems
+@mixin button(
+  $variant: false,
+  $include-base-styles: true,
+  $height: $button-height
+) {
+
+  @if not $variant or $include-base-styles {
+    display: inline-block;
+    min-width: rem( 260px );
+    height: $height;
+    line-height: $height;
+    padding-left: rem( 32px );
+    padding-right: rem( 32px );
+    border-radius: rem( 12px );
+
+    font-family: $font-family-sans-serif;
+    font-weight: 600;
+    font-size: rem( 16px );
+    letter-spacing: em( 1px );
+    text-align: center;
+    vertical-align: middle;
+    text-transform: uppercase;
+
+    @include button-color-variant( $primary-color );
+
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+    }
+  }
+
+  @if 'oval' == $variant {
+
+    border-radius: rem( 50px );
+
+  } @else if 'bordered' == $variant {
+
+    border: rem( 3px ) solid $button-border-color;
+    // Account for border in line height to keep text vertically centered
+    line-height: $height - rem( 3px ) * 2;
+
+  } @else if 'angled' == $variant {
+
+    transform: skew( -10deg );
+    border-radius: 0;
+
+    // stylelint-disable-next-line
+    &__inner {
+      display: block;
+      transform: skew( 10deg );
+    }
+
+  }
+}
+
+/// Handle arrow button variations
+///
+/// Color variations need to be handled specifically because we need to
+/// re-colorize the SVG background
+///
+/// @param {color} $bg-color - Background color
+/// @param {bool}  $include-base-styles [true] - Include the base styles?
+/// @param {unit} $height [$button-height] - Button height in rems
+@mixin button-arrow(
+  $bg-color,
+  $include-base-styles: true,
+  $height: $button-height
+) {
+  $color: encode-color( $bg-color );
+  $svg: "data:image/svg+xml;charset=UTF-8,%3csvg preserveAspectRatio='none' viewBox='0 0 275 60' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdesc%3eArrow Shape%3c/desc%3e%3cdefs%3e%3c/defs%3e%3cg id='button-promo' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='button-arrow' fill='#{$color}'%3e%3cpolygon id='shape-copy' transform='translate(137.500000, 30.500000) rotate(90.000000) translate(-137.500000, -30.500000) ' points='107.5 -82 137.486328 -107 167.5 -82 167.5 168 137.5 155.5 107.5 168'%3e%3c/polygon%3e%3c/g%3e%3c/g%3e%3c/svg%3e ";
+
+  @if $include-base-styles {
+    @include button( $include-base-styles: true );
+  }
+
+  border-radius: 0;
+
+  // Adjust text position within SVG background
+  padding: 0 em( 32px );
+  text-align: center;
+  line-height: $height + rem( 1.5px );
+
+  @include button-color-variant( $bg-color );
+
+  // stylelint-disable-next-line function-url-quotes
+  background: url( $svg );
+  // Firefox needs this
+  background-repeat: no-repeat;
+  background-size: 100% $height;
+}
+
 
 //
 // Shapes

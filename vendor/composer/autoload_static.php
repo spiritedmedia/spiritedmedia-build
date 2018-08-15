@@ -8175,6 +8175,7 @@ class ComposerStaticInit3fd466591cad51673a17d29c372efc2f
         'Pedestal\\Icons' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-icons.php',
         'Pedestal\\Menus\\Menu_Icons' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/menus/class-menu-icons.php',
         'Pedestal\\Menus\\Menus' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/menus/class-menus.php',
+        'Pedestal\\Message_Spot' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-message-spot.php',
         'Pedestal\\MetricBot\\MetricBots' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/metricbot/class-metricbots.php',
         'Pedestal\\MetricBot\\Newsletter_Signups_By_Page_Metric' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/metricbot/class-newsletter-signups-by-page-metric.php',
         'Pedestal\\MetricBot\\Weekly_Traffic_Metric' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/metricbot/class-weekly-traffic-metric.php',

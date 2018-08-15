@@ -1,8 +1,3 @@
-// ==========================================================================
-// Pedestal // Base // Theme // SETTINGS
-// ==========================================================================
-
-
 //
 // Configuration
 // ==========================================================================
@@ -21,8 +16,15 @@ $enable-de-emphasized-entity-meta:   false !default;
 $enable-italic-footnotes:           true !default;
 $enable-emboldened-link-underlines: false !default;
 $enable-figure-credit-distinction:  true !default;
-$enable-btn-size-classes:           true !default;
 $enable-heading-font-size-reduction: true !default;
+
+
+//
+// Colors
+// ==========================================================================
+
+$color-dark: $grey-25 !default;
+$color-grey: $grey-70 !default;
 
 
 //
@@ -166,6 +168,8 @@ $input-group-addon-color: $primary-color !default;
 // Buttons
 // ==========================================================================
 
+$button-height:          rem( 44px );
+$button-height--small:   rem( 36px );
 $button-border-color:    $primary-color   !default;
 $button-text-color-dark: $body-font-color !default;
 
@@ -345,20 +349,25 @@ $widget-title-line-height: 1.2              !default;
 // Miscellaneous
 // ==========================================================================
 
-
 $selection-color: $primary-color !default;
 $mark-color: $selection-color !default;
+
+// Message Spot
+$message-spot-font-size: rem( 14px );
+$message-spot-title-font-size: rem( 14px ) !default;
+$message-spot-title-line-height: rem( 20px ) / $message-spot-title-font-size !default;
+$message-spot-title-letter-spacing: 0 !default;
 
 // Modals
 $modal-overlay-background-color-light: rgba( $white, 0.7 );
 $modal-close-button-height: rem( 40px );
 $modal-content-padding-bottom: rem( 16px );
 $modal-header-nav-background-color: $primary-color !default;
-$modal-search-background-color: $dark-grey !default;
+$modal-search-background-color: $color-dark !default;
 $modal-search-button-background-color: $accent-color !default;
 
 // Search Form
-$search-form-standalone-button-background-color: $dark-grey !default;
+$search-form-standalone-button-background-color: $color-dark !default;
 $search-form-modal-button-background-color: $accent-color !default;
 
 // Single Page
@@ -425,6 +434,3 @@ $cluster-list-heading-font-family: $font-family-sans-serif !default;
 $cluster-list-heading-line-height: 1.2 !default;
 $cluster-list-heading-text-transform: uppercase !default;
 $cluster-list-heading-color: $body-font-color !default;
-
-// Member Bar
-$member-bar-background-color: $grey-25 !default;

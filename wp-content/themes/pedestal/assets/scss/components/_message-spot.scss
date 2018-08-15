@@ -1,0 +1,168 @@
+.message-spot {
+  background-color: $color-dark;
+}
+
+.message-spot,
+.message-spot__inner {
+  height: rem( 75px );
+}
+
+.message-spot__link {
+  display: block;
+  width: 100%;
+
+  &,
+  &:hover,
+  &:active,
+  &:focus {
+    color: $white;
+  }
+
+  &:focus {
+    // For some reason the outline upon focus is nearly invisible
+    @include native-outline( $border: true );
+
+    .message-spot__inner {
+      // Counteract the additional border added by `native-outline`
+      margin-top: rem( -2px );
+    }
+  }
+}
+
+.message-spot__inner {
+  @include grid-row;
+
+  padding: rem( 8px ) rem( 16px );
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.message-spot__item {
+  vertical-align: middle;
+  margin-bottom: 0;
+  line-height: 0;
+}
+
+.message-spot__icon {
+  margin-right: rem( 16px );
+  color: $accent-color;
+  font-size: rem( 40px );
+}
+
+.message-spot__title,
+.message-spot__message {
+  // stylelint-disable selector-max-type
+  &,
+  p {
+    margin-bottom: 0;
+    font-size: $message-spot-font-size;
+    line-height: rem( 20px ) / $message-spot-font-size;
+  }
+  // stylelint-enable selector-max-type
+}
+
+.message-spot__title {
+  display: inline;
+  font-size: $message-spot-title-font-size;
+  line-height: $message-spot-title-line-height;
+  letter-spacing: $message-spot-title-letter-spacing;
+  color: $color-grey;
+  font-family: $font-family-sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.message-spot__title__postfix {
+  display: none;
+}
+
+.message-spot__button {
+  @include button( $height: $button-height--small );
+}
+
+
+@media #{$large-up} {
+  .message-spot,
+  .message-spot__inner {
+    height: rem( 60px );
+  }
+
+  .message-spot__inner {
+    justify-content: center;
+  }
+}
+
+
+@media print {
+  .message-spot {
+    display: none;
+  }
+}
+
+
+//
+// Message Spot with Title
+// ==========================================================================
+
+.message-spot--with-title {
+  .message-spot__inner {
+    align-items: normal;
+  }
+
+  .message-spot__item:first-child {
+    line-height: rem( 20px );
+  }
+
+  .message-spot__icon {
+    margin-right: rem( 8px );
+    font-size: rem( 16px );
+  }
+}
+
+
+@media #{$large-up} {
+  .message-spot--with-title {
+    .message-spot__inner {
+      align-items: center;
+    }
+
+    .message-spot__icon {
+      margin-right: rem( 16px );
+      font-size: rem( 40px );
+    }
+
+    .message-spot__body * {
+      display: inline;
+    }
+
+    .message-spot__title__postfix {
+      display: inline;
+    }
+  }
+}
+
+
+//
+// Message Spot with Button
+// ==========================================================================
+
+.message-spot--with-button {
+  .message-spot__inner {
+    justify-content: center;
+  }
+
+  .message-spot__message {
+    display: none;
+  }
+
+  @media #{$large-up} {
+    .message-spot__message {
+      display: inline-flex;
+    }
+
+    .message-spot__button {
+      margin-left: rem( 32px );
+    }
+  }
+}

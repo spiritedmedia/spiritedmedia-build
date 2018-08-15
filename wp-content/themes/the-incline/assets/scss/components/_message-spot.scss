@@ -1,0 +1,4 @@
+.message-spot__button {
+  @include button( 'angled', $height: $button-height--small );
+  @include button-color-variant( $white );
+}
