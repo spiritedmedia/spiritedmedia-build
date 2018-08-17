@@ -5,10 +5,10 @@ define( 'PEDESTAL_VERSION', $version );
 
 add_action( 'wp_enqueue_scripts', function() {
     wp_register_style( 'spirited-media-google-fonts', 'https://fonts.googleapis.com/css?family=Lato:400,700', [], null, 'all' );
-    wp_enqueue_style( 'spirited-media-styles', get_template_directory_uri() . '/assets/dist/css/theme.css', [ 'spirited-media-google-fonts' ], PEDESTAL_VERSION );
+    wp_enqueue_style( 'spirited-media-styles', PEDESTAL_DIST_DIRECTORY_URI . '/css/theme.css', [ 'spirited-media-google-fonts' ], PEDESTAL_VERSION );
 
     if ( is_home() ) {
-        wp_enqueue_script( 'spirited-media-home', get_template_directory_uri() . '/assets/dist/js/home.js', [ 'jquery' ], PEDESTAL_VERSION, true );
+        wp_enqueue_script( 'spirited-media-home', PEDESTAL_DIST_DIRECTORY_URI . '/js/home.js', [ 'jquery' ], PEDESTAL_VERSION, true );
     }
 });
 

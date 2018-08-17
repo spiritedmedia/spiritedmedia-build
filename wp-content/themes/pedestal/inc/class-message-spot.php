@@ -64,6 +64,9 @@ class Message_Spot {
             'admin_print_scripts-appearance_page_pedestal_message_spot',
             [ $this, 'action_admin_print_scripts' ]
         );
+        add_action( 'update_option_pedestal_message_spot', function() {
+            do_action( 'rt_nginx_helper_purge_all' );
+        } );
     }
 
     /**
@@ -87,7 +90,7 @@ class Message_Spot {
     public function action_admin_print_scripts() {
         wp_enqueue_script(
             'pedestal-message-spot',
-            get_template_directory_uri() . '/assets/dist/js/message-spot.js',
+            PEDESTAL_DIST_DIRECTORY_URI . '/js/message-spot.js',
             [ 'jquery', 'backbone', 'twig' ],
             PEDESTAL_VERSION,
             true

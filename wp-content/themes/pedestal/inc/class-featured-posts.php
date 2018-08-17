@@ -47,7 +47,7 @@ class Featured_Posts {
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts' ] );
         add_action( 'wp_ajax_pedestal-featured-entities-placeholder', [ $this, 'action_wp_ajax_featured_entities_placeholder' ] );
         add_action( 'admin_print_scripts-appearance_page_pedestal_featured_posts', function() {
-            wp_enqueue_script( 'featured-posts-admin', get_template_directory_uri() . '/assets/dist/js/featured-posts-admin.js', [ 'jquery' ], PEDESTAL_VERSION );
+            wp_enqueue_script( 'featured-posts-admin', PEDESTAL_DIST_DIRECTORY_URI . '/js/featured-posts-admin.js', [ 'jquery' ], PEDESTAL_VERSION );
         });
     }
 

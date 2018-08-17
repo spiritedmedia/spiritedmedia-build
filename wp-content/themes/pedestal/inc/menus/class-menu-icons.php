@@ -40,12 +40,12 @@ class Menu_Icons {
      * Enqueue CSS and JavaScript files on nav-menus.php admin page
      */
     public function action_admin_print_styles_nav_menus_php() {
-        wp_enqueue_script( 'pedestal-menu-icons', get_template_directory_uri() . '/assets/dist/js/pedestal-menu-icons.js', [ 'jquery-ui-autocomplete' ], PEDESTAL_VERSION, true );
+        wp_enqueue_script( 'pedestal-menu-icons', PEDESTAL_DIST_DIRECTORY_URI . '/js/pedestal-menu-icons.js', [ 'jquery-ui-autocomplete' ], PEDESTAL_VERSION, true );
 
         $icons = array_values( Icons::get_all_icons_svg() );
         wp_localize_script( 'pedestal-menu-icons', 'PedestalIcons', $icons );
 
-        wp_enqueue_style( 'pedestal-menu-icons', get_template_directory_uri() . '/assets/dist/css/pedestal-menu-icons.css', [], PEDESTAL_VERSION );
+        wp_enqueue_style( 'pedestal-menu-icons', PEDESTAL_DIST_DIRECTORY_URI . '/css/pedestal-menu-icons.css', [], PEDESTAL_VERSION );
     }
 
     /**

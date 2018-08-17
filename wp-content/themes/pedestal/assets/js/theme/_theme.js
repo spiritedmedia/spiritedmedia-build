@@ -231,6 +231,7 @@
           cc_load_policy: 1,
           color: 'white',
           controls: controls,
+          rel: 0,
           showinfo: 0
         };
         const query = $.param(params);

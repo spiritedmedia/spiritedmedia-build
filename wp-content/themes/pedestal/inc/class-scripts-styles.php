@@ -45,6 +45,9 @@ class Scripts_Styles {
         if ( defined( 'WP_ENV' ) && 'development' === strtolower( WP_ENV ) ) {
             add_filter( 'script_loader_src', [ $this, 'filter_cache_busting_file_src' ], 10 );
             add_filter( 'style_loader_src', [ $this, 'filter_cache_busting_file_src' ], 10 );
+        } else {
+            add_filter( 'script_loader_src', [ $this, 'filter_remove_ver_query_string' ], 10 );
+            add_filter( 'style_loader_src', [ $this, 'filter_remove_ver_query_string' ], 10 );
         }
 
         // 3rd party hosted JavaScript should have async set so they don't block
@@ -92,16 +95,17 @@ class Scripts_Styles {
         }
 
         // Core site assets
-        wp_enqueue_style( PEDESTAL_THEME_NAME . '-styles', get_stylesheet_directory_uri() . '/assets/dist/css/theme.css', [ 'google-fonts' ], PEDESTAL_VERSION );
-        wp_enqueue_script( 'pedestal-scripts', get_template_directory_uri() . '/assets/dist/js/theme.js', [ 'jquery' ], PEDESTAL_VERSION, true );
+        $theme_dir = get_stylesheet_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION;
+        wp_enqueue_style( PEDESTAL_THEME_NAME . '-styles', $theme_dir . '/css/theme.css', [ 'google-fonts' ], PEDESTAL_VERSION );
+        wp_enqueue_script( 'pedestal-scripts', PEDESTAL_DIST_DIRECTORY_URI . '/js/theme.js', [ 'jquery' ], PEDESTAL_VERSION, true );
 
         // Advertising
-        wp_enqueue_script( $this->dfp_load_script_handle, get_template_directory_uri() . '/assets/dist/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
+        wp_enqueue_script( $this->dfp_load_script_handle, PEDESTAL_DIST_DIRECTORY_URI . '/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
         if ( isset( $_GET['show-ad-units'] ) ) {
-            wp_enqueue_script( 'dfp-placeholders', get_template_directory_uri() . '/assets/dist/js/dfp-placeholders.js', [ 'jquery' ], PEDESTAL_VERSION );
+            wp_enqueue_script( 'dfp-placeholders', PEDESTAL_DIST_DIRECTORY_URI . '/js/dfp-placeholders.js', [ 'jquery' ], PEDESTAL_VERSION );
         }
 
-        wp_register_script( 'pedestal-footnotes', get_template_directory_uri() . '/assets/dist/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, true );
+        wp_register_script( 'pedestal-footnotes', PEDESTAL_DIST_DIRECTORY_URI . '/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, true );
     }
 
     /**
@@ -127,6 +131,7 @@ class Scripts_Styles {
 
     /**
      * Replace the `ver` query arg with the file's last modified date
+     *
      * @param  string $src URL to a file
      * @return string      Modified URL to a file
      */
@@ -165,6 +170,19 @@ class Scripts_Styles {
     }
 
     /**
+     * Remove ver query string from static asset URLs if they contain assets/dist/VERSION/
+     *
+     * @param  string $src URL to a file
+     * @return string      Modified URL to a file
+     */
+    public function filter_remove_ver_query_string( $src = '' ) {
+        if ( strstr( $src, 'assets/dist/' . PEDESTAL_VERSION . '/' ) ) {
+            $src = remove_query_arg( 'ver', $src );
+        }
+        return $src;
+    }
+
+    /**
      * Conditional for determining if a post contains the TablePress shortcode [table]
      * @param  integer $post_id  ID of Post to check for shortcode
      */
@@ -198,7 +216,7 @@ class Scripts_Styles {
             $new_script_element .= $script_element;
             $new_script_element .= '<![endif]-->';
             // jQuery 2.x gets served to everyone else...
-            $jquery2_path = get_template_directory_uri() . '/assets/dist/js/vendor/jquery.min.js';
+            $jquery2_path = PEDESTAL_DIST_DIRECTORY_URI . '/js/vendor/jquery.min.js';
             $jquery2_src = apply_filters( 'script_loader_src', $jquery2_path );
             $new_script_element .= '<!--[if (gte IE 9) | (!IE)]><!-->';
             $new_script_element .= "<script type='text/javascript' src='" . $jquery2_src . "'></script>";

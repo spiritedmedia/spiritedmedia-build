@@ -111,9 +111,12 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             // The following constants can not be modified so we set them first.
             if ( ! defined( 'PEDESTAL_VERSION' ) ) {
                 $version = file_get_contents( ABSPATH . '/VERSION' );
-                $version = str_replace( 'Version: ', '', $version );
-                define( 'PEDESTAL_VERSION', $version );
+                $version = str_replace( 'Version:', '', $version );
+                define( 'PEDESTAL_VERSION', trim( $version ) );
             }
+
+            // URL to the versioned dist directory
+            define( 'PEDESTAL_DIST_DIRECTORY_URI', get_template_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION );
 
             // Define an abbreviated prefix for use in naming
             if ( ! defined( 'PEDESTAL_PREFIX' ) ) {

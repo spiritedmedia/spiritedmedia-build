@@ -21,52 +21,52 @@ $links_to_check = [
     [
         'name'           => 'Billy Penn Homepage',
         'url'            => $billy_penn_root . '/',
-        'expected_forms' => 2,
+        'expected_forms' => 1,
     ],
     [
         'name'           => 'Billy Penn Newsletter Signup Page',
         'url'            => $billy_penn_root . '/newsletter-signup/',
-        'expected_forms' => 2,
+        'expected_forms' => 1,
     ],
     [
         'name'           => 'Billy Penn Article with Story',
         'url'            => $billy_penn_root . '/2017/10/02/the-new-yards-tasting-room-could-be-open-in-6-weeks/',
-        'expected_forms' => 2,
+        'expected_forms' => 1,
     ],
     [
         'name'           => 'Billy Penn Story',
         'url'            => $billy_penn_root . '/stories/the-new-love-park/',
-        'expected_forms' => 2,
+        'expected_forms' => 1,
     ],
     [
         'name'           => 'The Incline Homepage',
         'url'            => $the_incline_root . '/',
-        'expected_forms' => 2,
+        'expected_forms' => 1,
     ],
     [
         'name'           => 'The Incline Newsletter Signup Page',
         'url'            => $the_incline_root . '/newsletter-signup/',
-        'expected_forms' => 2,
+        'expected_forms' => 1,
     ],
     [
         'name'           => 'The Incline Article with Story',
         'url'            => $the_incline_root . '/2017/10/03/grocery-delivery-is-expanding-in-pittsburgh-and-that-means-you-can-get-fresh-food-without-ever-leaving-your-couch/',
-        'expected_forms' => 2,
+        'expected_forms' => 1,
     ],
     [
         'name'           => 'The Incline Story',
         'url'            => $the_incline_root . '/stories/self-driving-vehicles/',
-        'expected_forms' => 2,
+        'expected_forms' => 1,
     ],
     [
         'name'           => 'Denverite Homepage',
         'url'            => $denverite_root . '/',
-        'expected_forms' => 2,
+        'expected_forms' => 1,
     ],
     [
         'name'           => 'The Incline Newsletter Signup Page',
         'url'            => $denverite_root . '/newsletter-signup/',
-        'expected_forms' => 2,
+        'expected_forms' => 1,
     ],
 ];
 

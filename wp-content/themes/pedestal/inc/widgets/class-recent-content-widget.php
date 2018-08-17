@@ -22,7 +22,7 @@ class Recent_Content_Widget extends \WP_Widget {
 
         wp_enqueue_script(
             'recent-content-widget',
-            get_template_directory_uri() . '/assets/dist/js/recent-content-widget-admin.js',
+            PEDESTAL_DIST_DIRECTORY_URI . '/js/recent-content-widget-admin.js',
             [ 'jquery-ui-autocomplete' ],
             false,
             true
