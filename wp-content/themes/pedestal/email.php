@@ -5,8 +5,10 @@ use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 use Pedestal\Posts\Slots\Slots;
 
-$base_css = file_get_contents( get_template_directory() . '/assets/dist/css/email-base.css' );
-$css = file_get_contents( get_stylesheet_directory() . '/assets/dist/css/email.css' );
+
+$dist_ver_path = '/assets/dist/' . PEDESTAL_VERSION;
+$base_css = file_get_contents( get_template_directory() . $dist_ver_path . '/css/email-base.css' );
+$css = file_get_contents( get_stylesheet_directory() . $dist_ver_path . '/css/email.css' );
 
 $debug_styles = false;
 if ( defined( 'PEDESTAL_DEBUG_EMAIL_CSS' ) && true === PEDESTAL_DEBUG_EMAIL_CSS ) {
