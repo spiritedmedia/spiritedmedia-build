@@ -104,17 +104,22 @@ class Frontend {
             return;
         }
 
+        $exclude_from_stream_meta_query = [
+            [
+                'key'     => 'exclude_from_home_stream',
+                'value'   => 'hide',
+                'compare' => '!=',
+            ],
+        ];
+
         if ( $query->is_home() ) {
-            $meta_query = [
-                [
-                    'key'     => 'exclude_from_home_stream',
-                    'value'   => 'hide',
-                    'compare' => '!=',
-                ],
-            ];
-            $query->set( 'meta_query', $meta_query );
+            $query->set( 'meta_query', $exclude_from_stream_meta_query );
             $query->set( 'post_type', Types::get_entity_post_types() );
             $query->set( 'posts_per_page', 20 );
+        }
+
+        if ( ! empty( $query->query['pedestal_category'] ) ) {
+            $query->set( 'meta_query', $exclude_from_stream_meta_query );
         }
 
         if ( $query->is_feed() ) {
@@ -351,7 +356,7 @@ class Frontend {
 
         $title = '';
         if ( is_home() ) {
-            $title = PEDESTAL_CITY_NAME . ' News, Local News, Breaking News';
+            return PEDESTAL_HOMEPAGE_TITLE;
         } elseif ( is_singular() ) {
             $ped_post = Post::get( get_queried_object_id() );
             if ( ! Types::is_post( $ped_post ) ) {
@@ -368,8 +373,7 @@ class Frontend {
             return PEDESTAL_BLOG_NAME;
         }
 
-        return $title . ' - ' . PEDESTAL_BLOG_NAME;
-
+        return $title . ' - ' . PEDESTAL_BLOG_TAGLINE;
     }
 
     /**

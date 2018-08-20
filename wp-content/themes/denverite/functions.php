@@ -106,8 +106,9 @@ class Denverite extends Pedestal {
             return [
                 // Site Details
                 'PEDESTAL_BLOG_NAME'                    => 'Denverite',
-                'PEDESTAL_BLOG_DESCRIPTION'             => 'Denver news, Colorado sports and things to do in Denver.',
+                'PEDESTAL_BLOG_DESCRIPTION'             => 'Useful and delightful news for people who care about Denver. What’s happening and why it matters. Plus: Fun stuff.',
                 'PEDESTAL_BLOG_TAGLINE'                 => 'Denverite, the Denver site!',
+                'PEDESTAL_HOMEPAGE_TITLE'               => 'Denverite, the Denver site!',
                 'PEDESTAL_CITY_NAME'                    => 'Denver',
                 'PEDESTAL_CITY_NICKNAME'                => 'Mile High City',
                 'PEDESTAL_STATE_NAME'                   => 'Colorado',

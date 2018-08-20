@@ -20,11 +20,4 @@ class Page extends Post {
         ], $classes );
         return $classes;
     }
-
-    /**
-     * Get the SEO title
-     */
-    public function get_seo_title() {
-        return parent::get_seo_title() . ' - ' . PEDESTAL_BLOG_NAME . ', ' . PEDESTAL_CITY_NAME;
-    }
 }

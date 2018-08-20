@@ -117,6 +117,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             // URL to the versioned dist directory
             define( 'PEDESTAL_DIST_DIRECTORY_URI', get_template_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION );
+            define( 'PEDESTAL_THEME_DIST_DIRECTORY_URI', get_stylesheet_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION );
 
             // Define an abbreviated prefix for use in naming
             if ( ! defined( 'PEDESTAL_PREFIX' ) ) {
@@ -141,6 +142,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_BLOG_NAME'                    => get_bloginfo( 'name' ),
                 'PEDESTAL_BLOG_DESCRIPTION'             => get_bloginfo( 'description' ),
                 'PEDESTAL_BLOG_TAGLINE'                 => '',
+                'PEDESTAL_HOMEPAGE_TITLE'               => '',
                 'PEDESTAL_CITY_NAME'                    => '',
                 'PEDESTAL_CITY_NICKNAME'                => '',
                 'PEDESTAL_STATE_NAME'                   => '',
@@ -302,9 +304,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 // $this->newsletter_testing = Newsletter_Testing::get_instance();
             } else {
                 $this->frontend       = Frontend::get_instance();
-                $this->scripts_styles = Scripts_Styles::get_instance();
             }
 
+            $this->scripts_styles           = Scripts_Styles::get_instance();
             $this->utilities                = Utils::get_instance();
             $this->taxonomies               = Taxonomies::get_instance();
             $this->single_option_taxonomies = Single_Option_Taxonomies::get_instance();
@@ -629,12 +631,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             add_image_size( 'twitter-card', 120, 120, true );
             add_image_size( 'facebook-open-graph', 1200, 630, true );
-
-            $editor_stylesheets = [ '/assets/dist/css/editor-style.css' ];
-            array_walk( $editor_stylesheets, function( &$value ) {
-                $value = get_stylesheet_directory_uri() . $value;
-            } );
-            add_editor_style( $editor_stylesheets );
 
             $sidebars = [
                 'homepage'      => esc_html__( 'Homepage', 'pedestal' ),

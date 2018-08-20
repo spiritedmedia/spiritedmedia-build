@@ -31,6 +31,7 @@ class Scripts_Styles {
      * Hook in to WordPress via actions
      */
     public function setup_actions() {
+        add_action( 'admin_init', [ $this, 'action_admin_init' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'action_wp_enqueue_scripts' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'action_wp_enqueue_scripts_dequeue_tablepress' ], 11 );
         add_action( 'wp', [ $this, 'action_wp_dequeue_tablepress' ] );
@@ -67,6 +68,9 @@ class Scripts_Styles {
         add_filter( 'script_loader_tag', [ $this, 'filter_script_loader_tag_modify_dfp_loader' ], 10, 3 );
     }
 
+    public function action_admin_init() {
+        add_editor_style( PEDESTAL_THEME_DIST_DIRECTORY_URI . '/css/editor-style.css' );
+    }
     /**
      * Enqueue scripts and styles
      */
@@ -95,8 +99,7 @@ class Scripts_Styles {
         }
 
         // Core site assets
-        $theme_dir = get_stylesheet_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION;
-        wp_enqueue_style( PEDESTAL_THEME_NAME . '-styles', $theme_dir . '/css/theme.css', [ 'google-fonts' ], PEDESTAL_VERSION );
+        wp_enqueue_style( PEDESTAL_THEME_NAME . '-styles', PEDESTAL_THEME_DIST_DIRECTORY_URI . '/css/theme.css', [ 'google-fonts' ], PEDESTAL_VERSION );
         wp_enqueue_script( 'pedestal-scripts', PEDESTAL_DIST_DIRECTORY_URI . '/js/theme.js', [ 'jquery' ], PEDESTAL_VERSION, true );
 
         // Advertising
