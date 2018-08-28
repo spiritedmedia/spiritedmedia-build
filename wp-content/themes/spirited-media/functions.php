@@ -2,6 +2,8 @@
 $version = file_get_contents( ABSPATH . '/VERSION' );
 $version = str_replace( 'Version: ', '', $version );
 define( 'PEDESTAL_VERSION', $version );
+define( 'PEDESTAL_DIST_DIRECTORY_URI', get_template_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION );
+define( 'PEDESTAL_THEME_DIST_DIRECTORY_URI', get_stylesheet_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION );
 
 add_action( 'wp_enqueue_scripts', function() {
     wp_register_style( 'spirited-media-google-fonts', 'https://fonts.googleapis.com/css?family=Lato:400,700', [], null, 'all' );

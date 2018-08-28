@@ -21,3 +21,6 @@ if [ ! -f $PHP_CUSTOM_INI_FILE ]; then
   touch $PHP_CUSTOM_INI_FILE
   echo 'default_socket_timeout = 1' > $PHP_CUSTOM_INI_FILE
 fi
+
+# Tell Git to read our hooks
+git config core.hooksPath .githooks

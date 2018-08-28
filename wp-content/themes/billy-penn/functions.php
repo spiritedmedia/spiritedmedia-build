@@ -65,7 +65,7 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_STATE'                        => 'PA',
                 'PEDESTAL_ZIPCODE'                      => '19102',
                 'PEDESTAL_BUILDING_NAME'                => '',
-                'PEDESTAL_STREET_ADDRESS'               => '1429 Walnut St., Suite 1201',
+                'PEDESTAL_STREET_ADDRESS'               => '30 S. 15th St., The Graham Building, 15th Fl.',
                 'PEDESTAL_BLOG_URL'                     => 'https://medium.com/billy-penn',
 
                 // Account Identifiers

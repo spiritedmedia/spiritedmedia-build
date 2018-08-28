@@ -20,6 +20,7 @@
 # !.gitignore-build
 !.gitattributes
 # !.github/
+# !.githooks
 
 # Package Managers + Dev Tools
 # !composer.*
