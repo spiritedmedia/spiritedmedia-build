@@ -702,9 +702,16 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * @return [type]       [description]
          */
         public function filter_oembed_result( $data, $url, $args ) {
-            return Embed::do_embed( [
-                'url' => $url,
-            ] );
+            switch ( Utils::get_service_name_from_url( $url ) ) {
+                case 'documentcloud':
+                case 'instagram':
+                    return $data;
+
+                default:
+                    return Embed::do_embed( [
+                        'url' => $url,
+                    ] );
+            }
         }
 
         /**

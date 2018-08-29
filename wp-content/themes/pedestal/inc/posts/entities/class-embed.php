@@ -28,16 +28,17 @@ class Embed extends Entity {
      * @var array
      */
     protected static $embeddable_services = [
-        'youtube'    => 'YouTube',
-        'twitter'    => 'Twitter',
-        'instagram'  => 'Instagram',
-        'vine'       => 'Vine',
-        'facebook'   => 'Facebook',
-        'scribd'     => 'Scribd',
-        'flickr'     => 'Flickr',
-        'giphy'      => 'Giphy',
-        'infogram'   => 'Infogram',
-        'soundcloud' => 'SoundCloud',
+        'youtube'       => 'YouTube',
+        'twitter'       => 'Twitter',
+        'instagram'     => 'Instagram',
+        'vine'          => 'Vine',
+        'facebook'      => 'Facebook',
+        'scribd'        => 'Scribd',
+        'flickr'        => 'Flickr',
+        'giphy'         => 'Giphy',
+        'infogram'      => 'Infogram',
+        'soundcloud'    => 'SoundCloud',
+        'documentcloud' => 'DocumentCloud',
     ];
 
     /**
@@ -318,16 +319,26 @@ class Embed extends Entity {
      * @return object|false Object of oEmbed data if successful, false if not
      */
     public static function get_oembed_data( string $url ) {
-        $cache_key = 'oembed_' . $url;
-        $data = wp_cache_get( $cache_key );
+        $cache_key = false;
+        $embed_type = self::get_embed_type_from_url( $url );
+        if ( 'documentcloud' !== $embed_type ) {
+            $cache_key = 'oembed_' . $url;
+        }
 
-        if ( $data ) {
-            return $data;
+        if ( $cache_key ) {
+            $data = wp_cache_get( $cache_key );
+            if ( $data ) {
+                return $data;
+            }
         }
 
         $wp_oembed = new \WP_oEmbed;
         $data = $wp_oembed->fetch( static::get_oembed_provider_url( $url ), $url );
-        wp_cache_set( $cache_key, $data );
+
+        if ( $cache_key ) {
+            wp_cache_set( $cache_key, $data );
+        }
+
         return $data;
     }
 

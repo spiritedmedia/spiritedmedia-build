@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Admin
  *
- * Version: 7.3.5
+ * Version: 7.4.0
  *
  * Copyright ( c ) 2018 Spirited Media
  *
@@ -191,6 +191,18 @@ body.tools_page_pedestal_cluster_tools {
       float: right;
       width: 45%;
     }
+  }
+}
+
+
+.shortcode-ui-edit-documentcloud {
+  .shortcode-ui-attribute-url input {
+    width: 600px;
+  }
+
+  .shortcode-ui-attribute-page input,
+  .shortcode-ui-attribute-note input {
+    width: 100px;
   }
 }
 

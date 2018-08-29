@@ -15,19 +15,20 @@ class Utils {
      * @var array
      */
     private static $service_domain_map = [
-        'twitter.com'     => 'twitter',
-        'instagram.com'   => 'instagram',
-        'instagr.am'      => 'instagram',
-        'youtube.com'     => 'youtube',
-        'youtu.be'        => 'youtube',
-        'vine.co'         => 'vine',
-        'facebook.com'    => 'facebook',
-        'scribd.com'      => 'scribd',
-        'flickr.com'      => 'flickr',
-        'giphy.com'       => 'giphy',
-        'infogr.am'       => 'infogram',
-        'soundcloud.com'  => 'soundcloud',
-        'linkedin.com'    => 'linkedin',
+        'documentcloud.org' => 'documentcloud',
+        'twitter.com'       => 'twitter',
+        'instagram.com'     => 'instagram',
+        'instagr.am'        => 'instagram',
+        'youtube.com'       => 'youtube',
+        'youtu.be'          => 'youtube',
+        'vine.co'           => 'vine',
+        'facebook.com'      => 'facebook',
+        'scribd.com'        => 'scribd',
+        'flickr.com'        => 'flickr',
+        'giphy.com'         => 'giphy',
+        'infogr.am'         => 'infogram',
+        'soundcloud.com'    => 'soundcloud',
+        'linkedin.com'      => 'linkedin',
     ];
 
     /**

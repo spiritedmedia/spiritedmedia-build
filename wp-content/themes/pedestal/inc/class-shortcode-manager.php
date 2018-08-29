@@ -94,6 +94,7 @@ class Shortcode_Manager {
     private function setup_actions() {
         add_action( 'init', [ $this, 'action_init_register_shortcodes' ] );
         add_action( 'init', [ $this, 'action_init_register_tablepress_shortcode_ui' ] );
+        add_action( 'init', [ $this, 'action_init_register_documentcloud_shortcode_ui' ] );
     }
 
     /**
@@ -301,6 +302,24 @@ class Shortcode_Manager {
             ],
         ];
         shortcode_ui_register_for_shortcode( 'tablepress', $ui_arguments );
+    }
+
+    /**
+     * Register UI for DocumentCloud shortcode
+     */
+    public function action_init_register_documentcloud_shortcode_ui() {
+        $ui_arguments = [
+            'label'          => 'DocumentCloud',
+            'listItemImage'  => 'dashicons-media-document',
+            'attrs'          => [
+                [
+                    'label'      => 'URL to document, page, or note (Required)',
+                    'attr'       => 'url',
+                    'type'       => 'text',
+                ],
+            ],
+        ];
+        shortcode_ui_register_for_shortcode( 'documentcloud', $ui_arguments );
     }
 
     /**

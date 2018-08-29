@@ -155,10 +155,7 @@ class Instagram extends Shortcode {
             }
         }
 
-        $class = Pedestal();
-        remove_filter( 'oembed_result', [ $class, 'filter_oembed_result' ], 10, 3 );
         $html = wp_oembed_get( $url, $args );
-        add_filter( 'oembed_result', [ $class, 'filter_oembed_result' ], 10, 3 );
         if ( '[' == $html[0] ) {
             return '';
         }
