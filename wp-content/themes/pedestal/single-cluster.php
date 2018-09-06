@@ -20,6 +20,12 @@ if ( Types::is_post( $item ) ) :
         $context['cluster_group_id'] = $item->get_mailchimp_group_id();
         $context['cluster_group_category'] = $item->get_mailchimp_group_category();
 
+        $default_cta_text = "Get email notifications whenever we write about <strong>{$item->get_the_title()}</strong>";
+        $custom_cta_text = $item->get_fm_field( 'signup_form_settings', 'cta_text' );
+        $custom_submit_button_text = $item->get_fm_field( 'signup_form_settings', 'button_text' );
+        $context['signup_form_cta_text'] = $custom_cta_text ?: $default_cta_text;
+        $context['form_submit_text'] = $custom_submit_button_text ?: 'Get Alerts';
+
         add_filter( 'pedestal_stream_item_context', function( $context ) {
             $context['overline'] = '';
             return $context;

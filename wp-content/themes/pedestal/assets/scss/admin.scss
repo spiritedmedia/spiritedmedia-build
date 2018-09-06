@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Admin
  *
- * Version: 7.4.0
+ * Version: 7.4.1
  *
  * Copyright ( c ) 2018 Spirited Media
  *
@@ -167,6 +167,14 @@ body.tools_page_pedestal_cluster_tools {
 
   .fm-element {
     margin-right: 0;
+  }
+}
+
+.fm-signup_form_settings {
+  .fm-label-cta_text {
+    float: left;
+    margin-bottom: 0;
+    margin-top: 8px;
   }
 }
 

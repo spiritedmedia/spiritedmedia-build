@@ -589,7 +589,34 @@ class Cluster_Types {
                 'placeholder'       => esc_html__( 'Headline (optional)', 'pedestal' ),
             ],
         ] );
-        $this->pedestal_headline_context = new \Fieldmanager_Context_Post( esc_html__( 'Headline', 'pedestal' ), [ 'pedestal_story' ], 'edit_form_after_title', 'default', $headline );
+        $this->pedestal_headline_context = new \Fieldmanager_Context_Post(
+            esc_html__( 'Headline', 'pedestal' ),
+            [ 'pedestal_story' ],
+            'edit_form_after_title',
+            'default',
+            $headline
+        );
+
+        $signup_form_settings = new \Fieldmanager_Group( false, [
+            'name' => 'signup_form_settings',
+            'children' => [
+                'cta_text' => new \Fieldmanager_RichTextArea( 'Call to action', [
+                    'description'     => 'Customize the call to action readers see in the email subscription signup form. Leave empty for the default text.',
+                    'editor_settings' => [
+                        'media_buttons' => false,
+                    ],
+                    'buttons_1' => [ 'bold', 'italic', 'underline' ],
+                    'buttons_2' => [],
+                ] ),
+                'button_text' => new \Fieldmanager_TextField( 'Signup button', [
+                    'description' => 'Customize the button text readers see in the email subscription signup form.',
+                    'attributes'  => [
+                        'placeholder' => 'Get Alerts',
+                    ],
+                ] ),
+            ],
+        ] );
+        $signup_form_settings->add_meta_box( 'Signup Form Override', 'pedestal_story', 'normal', 'default' );
 
     }
 
