@@ -27,20 +27,21 @@ $anchor-text-decoration-hover: none;
 // These defaults are egregiously clashing so that we can easily spot their
 // functional use as they are never reader-facing.
 
-$primary-color:           #bd10e0 !default;
-$secondary-color:         #7ed321 !default;
+$primary-color:           #bd10e0           !default;
+$secondary-color:         #7ed321           !default;
 
 $accent-color:            $elektroid-yellow !default;
+$accent-2-color:          #9013fe           !default;
 $success-color:           #43ac6a; // From Foundation
 $alert-color:             $yet-another-red;
 
-$body-bg:                 $white !default;
-$body-font-color:         $grey-25 !default;
-$c-panel-bg:              $white !default;
+$body-bg:                 $white            !default;
+$body-font-color:         $grey-25          !default;
+$c-panel-bg:              $white            !default;
 $anchor-font-color:       $primary-color;
-$anchor-font-color-hover: $black !default;
-$border-std-color:        $grey-90 !default;
-$header-font-color:       $body-font-color !default;
+$anchor-font-color-hover: $black            !default;
+$border-std-color:        $grey-90          !default;
+$header-font-color:       $body-font-color  !default;
 
 // WCAG 2.0 guidelines require a text contrast ratio of at least 4.5:1 (#767676)
 // for AA and 7:1 for AAA (#595959).

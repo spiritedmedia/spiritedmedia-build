@@ -45,6 +45,11 @@ button {
   @include button-color-variant( $accent-color );
 }
 
+.btn--bg-accent-2 {
+  @extend %_btn;
+  @include button-color-variant( $accent-2-color );
+}
+
 .btn--bg-grey {
   @extend %_btn;
   @include button-color-variant( $grey-70 );

@@ -35,6 +35,13 @@
 
 .c-heading--overline {
   margin-bottom: $overline-margin-bottom;
+
+  /* stylelint-disable selector-max-type */
+  &,
+  a {
+    color: $accent-2-color;
+  }
+  /* stylelint-enable selector-max-type */
 }
 
 .c-heading--archive {
