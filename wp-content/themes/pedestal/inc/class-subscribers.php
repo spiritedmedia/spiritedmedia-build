@@ -145,7 +145,7 @@ class Subscribers {
             $merge_fields,
             [
                 'BPRECRAMT',
-                'TIRECRAMT',
+                'TINRECRAMT',
                 'DENRECRAMT',
             ],
             0

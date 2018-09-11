@@ -69,16 +69,16 @@ switch ( get_current_blog_id() ) {
     // The Incline
     case 3:
         $mapping = [
-            'TICURMEM'  => 'CURMEM',
-            'TIRECRMEM' => 'RECRMEM',
-            'TIEXPDATE' => 'EXPDATE',
-            'TISUM365'  => 'SUM365',
-            'TIRECRAMT' => 'RECRAMT',
-            'TIDONA7'   => 'DONA7',
-            'TIDONA14'  => 'DONA14',
-            'TIDONA30'  => 'DONA30',
-            'TIDONA365' => 'DONA365',
-            'TIMEMLVL'  => 'MEMLVL',
+            'TICURMEM'   => 'CURMEM',
+            'TIRECRMEM'  => 'RECRMEM',
+            'TIEXPDATE'  => 'EXPDATE',
+            'TISUM365'   => 'SUM365',
+            'TINRECRAMT' => 'RECRAMT',
+            'TIDONA7'    => 'DONA7',
+            'TIDONA14'   => 'DONA14',
+            'TIDONA30'   => 'DONA30',
+            'TIDONA365'  => 'DONA365',
+            'TIMEMLVL'   => 'MEMLVL',
         ];
         break;
 
