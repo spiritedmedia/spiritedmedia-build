@@ -92,6 +92,12 @@
               $parentModal.addClass('has-successful-form');
             }
 
+            // Let other functions know a form submission with an email
+            // address happened
+            $el.trigger('pedFormSubmission:success', [{
+              'emailAddress': emailAddress
+            }]);
+
             // Use email address in success message for user verification
             if (emailAddress && $successEmail.length) {
               $successEmail.text(emailAddress).addClass('u-font-weight--bold');
@@ -198,6 +204,29 @@
           }
           ga('send', 'event', eventCategory, eventAction, eventLabel);
         });
+
+      // Send events when subscribers/members/donors view a page
+      $(document).on('pedSubscriber:ready', function(e, data) {
+        var eventCategory = 'reader-cookie-set';
+        var eventAction = window.location.href;
+        var eventLabel = 'subscriber';
+        if (data.data.current_member) {
+          eventLabel = 'member';
+        } else if (data.data.donate_365 > 0) {
+          eventLabel = 'donor';
+        }
+        if (debugging) {
+          /* eslint-disable no-console */
+          console.group('Subscriber Google Analytics Event Data');
+          console.log('Category: ', eventCategory);
+          console.log('Action: ', eventAction);
+          console.log('Label: ', eventLabel);
+          console.groupEnd();
+          /* eslint-enable no-console */
+          return;
+        }
+        ga('send', 'event', eventCategory, eventAction, eventLabel);
+      });
 
     }, // end analyticsEventTracking()
 

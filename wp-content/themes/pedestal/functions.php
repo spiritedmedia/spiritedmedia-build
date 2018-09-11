@@ -22,6 +22,7 @@ use Pedestal\MetricBot\{
 use Pedestal\{
     Featured_Posts,
     Icons,
+    Subscribers,
     Message_Spot
 };
 use Pedestal\Posts\{
@@ -319,6 +320,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->feeds                    = Feeds::get_instance();
             $this->featured_posts           = Featured_Posts::get_instance();
             $this->icons                    = Icons::get_instance();
+            $this->subscribers              = Subscribers::get_instance();
             $this->cron_management          = Cron_Management::get_instance();
             $this->menus                    = Menus::get_instance();
             $this->menu_icons               = Menu_Icons::get_instance();

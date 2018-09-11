@@ -8241,6 +8241,7 @@ class ComposerStaticInit3fd466591cad51673a17d29c372efc2f
         'Pedestal\\Shortcodes\\Script' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-script.php',
         'Pedestal\\Shortcodes\\Soundcite' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-soundcite.php',
         'Pedestal\\Shortcodes\\Twitter' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-twitter.php',
+        'Pedestal\\Subscribers' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-subscribers.php',
         'Pedestal\\The_Incline' => __DIR__ . '/../..' . '/wp-content/themes/the-incline/functions.php',
         'Pedestal\\User_Management' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-user-management.php',
         'Pedestal\\Utils\\Image_Ratio' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/utils/class-image-ratio.php',

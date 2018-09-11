@@ -185,7 +185,7 @@
         .on('keyup', filterSelector, function() {
           var $this = $(this);
           var $checklists = $this.parent().find('.categorychecklist li');
-          if($this.val().length < 2) {
+          if ($this.val().length < 2) {
             $checklists.show();
           } else {
             $checklists
@@ -201,7 +201,7 @@
         // and cancel the event which submits the form
         .on('keydown', filterSelector, function(e) {
           // Prevent the return key from submitting the form
-          if(e.keyCode == 13) {
+          if (e.keyCode == 13) {
             e.preventDefault();
             return false;
           }

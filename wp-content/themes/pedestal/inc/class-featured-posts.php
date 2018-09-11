@@ -124,7 +124,9 @@ class Featured_Posts {
         if ( is_array( $data ) && ! empty( $data[ $data_key ]['post'] ) ) {
             $post_id = $data[ $data_key ]['post'];
             $ped_post = Post::get( $post_id );
-            $placeholder = $ped_post->get_homepage_description();
+            if ( $ped_post ) {
+                $placeholder = $ped_post->get_homepage_description();
+            }
         }
         return new \Fieldmanager_Group( $label, [
             'label_macro' => [

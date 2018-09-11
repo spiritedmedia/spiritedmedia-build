@@ -102,6 +102,11 @@ class Scripts_Styles {
         wp_enqueue_style( PEDESTAL_THEME_NAME . '-styles', PEDESTAL_THEME_DIST_DIRECTORY_URI . '/css/theme.css', [ 'google-fonts' ], PEDESTAL_VERSION );
         wp_enqueue_script( 'pedestal-scripts', PEDESTAL_DIST_DIRECTORY_URI . '/js/theme.js', [ 'jquery' ], PEDESTAL_VERSION, true );
 
+        // Ensure Pedestal variables are defined on the frontend globally
+        wp_localize_script( 'pedestal-scripts', 'PedVars', [
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+        ] );
+
         // Advertising
         wp_enqueue_script( $this->dfp_load_script_handle, PEDESTAL_DIST_DIRECTORY_URI . '/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
         if ( isset( $_GET['show-ad-units'] ) ) {

@@ -458,6 +458,26 @@ class MailChimp {
     }
 
     /**
+     * Get one or more contacts from a list
+     *
+     * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/
+     * @param  array  $args    Arguments to filter the list of members returned
+     * @param  string $list_id List to get contacts from
+     * @return object          HTTP response
+     */
+    public function get_list_contacts( $args = [], $list_id = '' ) {
+        if ( ! is_array( $args ) || empty( $args ) ) {
+            return false;
+        }
+        $list_id = $this->sanitize_list_id( $list_id );
+        if ( empty( $list_id ) ) {
+            return false;
+        }
+        $endpoint = "/lists/$list_id/members";
+        return $this->get_request( $endpoint, $args );
+    }
+
+    /**
      * Base method for adding or removing a contact from a group within a list
      *
      * @see https://rudrastyh.com/mailchimp-api/interest-groups.html

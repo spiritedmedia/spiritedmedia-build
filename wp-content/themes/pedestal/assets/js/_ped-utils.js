@@ -172,6 +172,30 @@ class PedUtils {
     }
     return out;
   }
+
+  /**
+   * Get query string paramaters from the current URL
+   *
+   * {@link https://stackoverflow.com/a/26744533/1119655}
+   *
+   * @param  {String}        key Optional key to return
+   *                             otherwise returns all params
+   * @param  {String}        url Optional URL to search
+   *                             defaults to location.search
+   * @return {Object|String}     Object of key-value pairs
+   *                             or single value if key provided
+   */
+  static getURLParams(key = '', url = ''){
+    var params = {};
+    if (! url) {
+      url = location.search;
+    }
+    url.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(match, param, val) {
+      params[param] = val;
+    });
+    if (key) {
+      return params[key];
+    }
+    return params;
+  }
 }
-
-

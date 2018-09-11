@@ -294,7 +294,7 @@ jQuery(document).ready(function($) {
   Twig.extendFunction('ped_icon', function(name, classes) {
     name = name.trim();
     if (!PedestalIcons.hasOwnProperty(name)) {
-      throw(`[Message Spot] The icon "${name}" doesn't seem to exist!`);
+      throw (`[Message Spot] The icon "${name}" doesn't seem to exist!`);
     }
     const $icon = $(PedestalIcons[name].svg);
     $icon.addClass(classes);

@@ -67,6 +67,10 @@
 .donate-form__amount__input {
   font-size: rem( 16px );
   line-height: 2.5;
+
+  @include firefox-only {
+    line-height: 1.75; /* 2 */
+  }
 }
 
 .donate-form__amount__input {

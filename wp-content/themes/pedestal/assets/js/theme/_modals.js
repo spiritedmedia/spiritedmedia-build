@@ -165,7 +165,7 @@
     }
 
     closeAll() {
-      for(var i = 0; i < allModals.length; i++) {
+      for (var i = 0; i < allModals.length; i++) {
         allModals[i].close();
       }
     }

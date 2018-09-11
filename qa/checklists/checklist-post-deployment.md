@@ -44,3 +44,11 @@ This tool will check all the ad slots on the site. Every line should reads “PA
  - With a fresh email address you should see results like this
 
 <img src="img/email-address-signup-check.jpg" alt="" width="587">
+
+## Does our subscriber cookie work?
+This tool checks if our subscriber cookie data is being set correctly. Visit each
+URL and make sure the green test is shown indicating the test passed.
+
+- Visit the [Billy Penn subscriber cookie checker](https://billypenn.com/qa/subscriber-cookie-checker.php)
+- Visit the [The Incline subscriber cookie checker](https://theincline.com/qa/subscriber-cookie-checker.php)
+- Visit the [Denverite subscriber cookie checker](https://denverite.com/qa/subscriber-cookie-checker.php)

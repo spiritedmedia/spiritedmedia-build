@@ -8043,6 +8043,7 @@ return array(
     'Pedestal\\Shortcodes\\Script' => $baseDir . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-script.php',
     'Pedestal\\Shortcodes\\Soundcite' => $baseDir . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-soundcite.php',
     'Pedestal\\Shortcodes\\Twitter' => $baseDir . '/wp-content/themes/pedestal/inc/shortcodes/class-shortcode-twitter.php',
+    'Pedestal\\Subscribers' => $baseDir . '/wp-content/themes/pedestal/inc/class-subscribers.php',
     'Pedestal\\The_Incline' => $baseDir . '/wp-content/themes/the-incline/functions.php',
     'Pedestal\\User_Management' => $baseDir . '/wp-content/themes/pedestal/inc/class-user-management.php',
     'Pedestal\\Utils\\Image_Ratio' => $baseDir . '/wp-content/themes/pedestal/inc/utils/class-image-ratio.php',
