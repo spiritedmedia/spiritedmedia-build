@@ -712,11 +712,12 @@ class Admin {
         $twitter_group = new \Fieldmanager_Group( esc_html__( 'Twitter', 'pedestal' ), [
             'name'                    => 'twitter',
             'children'                => [
-                'title'               => new \Fieldmanager_TextField( esc_html__( 'Alt Headline', 'pedestal' ), [
+                'title'               => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
                     'description'     => esc_html__( 'Title truncates after 70 characters', 'pedestal' ),
                     'attributes'      => [
                         'style'           => 'width:100%',
                         'maxlength'       => 70,
+                        'rows'            => 2,
                     ],
                 ] ),
                 'image'               => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
@@ -739,10 +740,11 @@ class Admin {
         $facebook_group = new \Fieldmanager_Group( esc_html__( 'Facebook', 'pedestal' ), [
             'name'                    => 'facebook',
             'children'                => [
-                'title'               => new \Fieldmanager_TextField( esc_html__( 'Alt Headline', 'pedestal' ), [
+                'title'               => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
                     'description'     => esc_html__( 'The title of your article, excluding any branding.', 'pedestal' ),
                     'attributes'      => [
-                        'style'           => 'width:100%',
+                        'style' => 'width:100%',
+                        'rows'  => 2,
                     ],
                 ] ),
                 'image'               => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
@@ -764,17 +766,18 @@ class Admin {
         $linkedin_group = new \Fieldmanager_Group( esc_html__( 'LinkedIn', 'pedestal' ), [
             'name'                    => 'linkedin',
             'children'                => [
-                'title'               => new \Fieldmanager_TextField( esc_html__( 'Alt Headline', 'pedestal' ), [
+                'title'               => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
                     'description'     => esc_html__( 'The title of your article, excluding any branding. Max 200 characters.', 'pedestal' ),
                     'attributes'      => [
-                        'style'           => 'width:100%',
+                        'style' => 'width:100%',
+                        'rows'  => 2,
                     ],
                 ] ),
                 'description'         => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
                     'description'     => esc_html__( 'A detailed description of the piece of content, usually between 2 and 4 sentences. Longer titles will be truncated gracefully with ellipses.', 'pedestal' ),
                     'attributes'      => [
-                        'style'           => 'width:100%',
-                        'rows'            => 4,
+                        'style' => 'width:100%',
+                        'rows'  => 4,
                     ],
                 ] ),
             ],
@@ -783,17 +786,18 @@ class Admin {
         $seo_group = new \Fieldmanager_Group( esc_html__( 'Google Search', 'pedestal' ), [
             'name'        => 'seo',
             'children'                => [
-                'title'          => new \Fieldmanager_TextField( esc_html__( 'Alt Headline', 'pedestal' ), [
+                'title'          => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
                     'description'     => esc_html__( 'Suggested length of up to 60 characters.', 'pedestal' ),
                     'attributes'      => [
-                        'style'           => 'width:100%',
+                        'style' => 'width:100%',
+                        'rows'  => 2,
                     ],
                 ] ),
-                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
-                    'description'     => esc_html__( 'Suggested length of up to 150 characters. Defaults to summary or subhead.', 'pedestal' ),
-                    'attributes'      => [
-                        'style'           => 'width:100%',
-                        'rows'            => 2,
+                'description'     => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
+                    'description' => esc_html__( 'Suggested length of up to 150 characters. Defaults to summary or subhead.', 'pedestal' ),
+                    'attributes'  => [
+                        'style' => 'width:100%',
+                        'rows'  => 2,
                     ],
                 ] ),
             ],

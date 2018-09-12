@@ -4,6 +4,9 @@
 
 
 $share-button-gutter: rem( 4px );
+$share-button-margin-y: rem( 32px );
+$share-button-link-height: rem( 44px );
+$share-button-height: $share-button-margin-y + $share-button-link-height;
 
 
 @mixin _share-button-background( $color ) {
@@ -16,11 +19,18 @@ $share-button-gutter: rem( 4px );
 }
 
 
+.has-sticky-share-buttons {
+  .c-main__header {
+    margin-top: $share-button-height;
+  }
+}
+
+
 .share-buttons {
   overflow: auto;
   background-color: $white;
-  margin-top: rem( 32px );
-  margin-bottom: rem( 32px );
+  margin-top: $share-button-margin-y;
+  margin-bottom: $share-button-margin-y;
   font-family: $font-family-sans-serif;
 
   .has-sticky-share-buttons & {
@@ -48,7 +58,7 @@ $share-button-gutter: rem( 4px );
 
 .share-buttons__link {
   display: block;
-  min-height: 44px;
+  min-height: $share-button-link-height;
   padding: rem( 12px ) 0;
   text-align: center;
   font-size: rem( 15px );
