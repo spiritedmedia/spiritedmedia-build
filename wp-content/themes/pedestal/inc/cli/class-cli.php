@@ -1734,5 +1734,55 @@ class CLI extends \WP_CLI_Command {
         fclose( $file );
         WP_CLI::success( 'Done!' );
     }
+
+    /**
+     * Update message spot option structure
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal update-message-spot-structure
+     *     wp pedestal update-message-spot-structure --url=https://billypenn.com/
+     *
+     * @subcommand update-message-spot-structure
+     */
+    public function update_message_spot_structure() {
+        $messages = get_option( 'pedestal_message_spot' );
+        if ( ! $messages ) {
+            WP_CLI::warning( 'Existing message spot data unavailable... is something wrong?' );
+        }
+
+        if ( empty( $messages[0]['type'] ) ) {
+            WP_CLI::error( 'Existing message spot data is malformed!' );
+        }
+
+        foreach ( $messages as &$message ) {
+            // Match the new behavior where we store the model encoded with
+            // JavaScript's `encodeURIComponent()`
+            //
+            // https://stackoverflow.com/a/1734255/1801260
+            // @codingStandardsIgnoreLine
+            $revert = [ '%21' => '!', '%2A' => '*', '%27' => "'", '%28' => '(', '%29' => ')' ];
+            $encoded_model = strtr( rawurlencode( $message['preview_model'] ), $revert );
+            $message['preview_model'] = $encoded_model;
+        }
+
+        $new_data = [
+            'messages' => $messages,
+            'override' => [
+                'enabled'       => 'false',
+                'id'            => 'override',
+                'type'          => 'override',
+                'preview'       => '',
+                'preview_model' => '',
+                'title'         => '',
+                'post'          => 0,
+                'body'          => '',
+                'url'           => '',
+                'icon'          => '',
+            ],
+        ];
+        update_option( 'pedestal_message_spot', $new_data );
+        WP_CLI::success( 'Success!' );
+    }
 }
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );

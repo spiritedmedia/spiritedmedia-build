@@ -3,6 +3,9 @@
 
 $secondary-color: #92c4c5;
 $accent-2-color:  #d74447;
+$color-dark:      $grey-25;
+$color-grey:      $grey-70;
+$color-blackish:  #1a1a1a;
 
 $h3-font-size: rem( 27px ); // !default
 $h4-font-size: rem( 22px ); // !default
@@ -17,3 +20,5 @@ $site-nav-primary-background-color--bp-up:     $grey-25;
 $content-h1-font-size: $h3-font-size;
 $content-h2-font-size: $h4-font-size;
 $content-h3-font-size: $h5-font-size;
+
+$message-spot-override-title-color: $color-blackish;

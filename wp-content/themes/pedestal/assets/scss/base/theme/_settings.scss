@@ -357,6 +357,8 @@ $message-spot-font-size: rem( 14px );
 $message-spot-title-font-size: rem( 14px ) !default;
 $message-spot-title-line-height: rem( 20px ) / $message-spot-title-font-size !default;
 $message-spot-title-letter-spacing: 0 !default;
+$message-spot-override-icon-color: $accent-color !default;
+$message-spot-override-title-color: $color-dark !default;
 
 // Modals
 $modal-overlay-background-color-light: rgba( $white, 0.7 );

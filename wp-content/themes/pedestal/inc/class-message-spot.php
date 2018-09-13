@@ -3,6 +3,8 @@
 namespace Pedestal;
 
 use Pedestal\Utils\Utils;
+use Pedestal\Posts\Post;
+use Pedestal\Registrations\Post_Types\Types;
 
 class Message_Spot {
 
@@ -36,12 +38,22 @@ class Message_Spot {
      * @var array
      */
     private static $model_defaults = [
-        'type'         => 'standard',
-        'url'          => '#',
-        'icon'         => 'link',
-        'title'        => 'Default Title',
-        'body'         => 'This is the default message body',
-        'button_label' => 'Default Button Label',
+        'standard' => [
+            'type'         => 'standard',
+            'url'          => '#',
+            'icon'         => 'link',
+            'title'        => 'Default Title',
+            'body'         => 'This is the default message body',
+            'button_label' => 'Default Label',
+        ],
+        'override' => [
+            'enabled'      => 'false',
+            'type'         => 'override',
+            'url'          => '#',
+            'icon'         => 'bolt-solid',
+            'title'        => 'Breaking News',
+            'body'         => 'This is the default message body',
+        ],
     ];
 
     static function get_instance() {
@@ -67,6 +79,7 @@ class Message_Spot {
         add_action( 'update_option_pedestal_message_spot', function() {
             do_action( 'rt_nginx_helper_purge_all' );
         } );
+        add_action( 'wp_ajax_pedestal-message-spot-override', [ $this, 'action_wp_ajax_override' ] );
     }
 
     /**
@@ -81,7 +94,7 @@ class Message_Spot {
         });
         add_filter( 'template_include', [ $this, 'filter_template_include' ] );
         add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
-        add_filter( 'fm_element_markup_start', [ $this, 'filter_fm_element_markup_start' ], 10, 2 );
+        add_filter( 'pre_update_option_pedestal_message_spot', [ $this, 'filter_pre_update_option' ], 10, 2 );
     }
 
     /**
@@ -90,7 +103,7 @@ class Message_Spot {
     public function action_admin_print_scripts() {
         wp_enqueue_script(
             'pedestal-message-spot',
-            PEDESTAL_DIST_DIRECTORY_URI . '/js/message-spot.js',
+            PEDESTAL_DIST_DIRECTORY_URI . '/js/message-spot-admin.js',
             [ 'jquery', 'backbone', 'twig' ],
             PEDESTAL_VERSION,
             true
@@ -100,7 +113,7 @@ class Message_Spot {
         wp_localize_script( 'pedestal-message-spot', 'PedestalIcons', $icons );
         $preview_url = home_url() . '/api/component-preview/message-spot/';
         wp_localize_script( 'pedestal-message-spot', 'pedestalPreviewURL', $preview_url );
-        wp_localize_script( 'pedestal-message-spot', 'messagePreviewModelDefaults', self::$model_defaults );
+        wp_localize_script( 'pedestal-message-spot', 'messagePreviewDefaults', self::$model_defaults );
     }
 
     /**
@@ -118,8 +131,65 @@ class Message_Spot {
      * Register the admin UI
      */
     public function action_init_after_post_types_registered() {
-        $message_spot = new \Fieldmanager_Group( 'Message', [
-            'name'              => 'pedestal_message_spot',
+        $override_group = new \Fieldmanager_Group( 'Message Override', [
+            'collapsible' => true,
+            'children' => [
+                'enabled' => new \Fieldmanager_Radios( false, [
+                    'description'   => 'The override is shown to <strong>every reader on every page</strong> and suppresses other messages specified below. Use sparingly.',
+                    'escape' => [
+                        'description' => 'wp_kses_post',
+                    ],
+                    'default_value' => 'false',
+                    'options' => [
+                        'false' => 'Override Off',
+                        'true' => 'Override On',
+                    ],
+                ] ),
+                'id' => new \Fieldmanager_Hidden( false, [
+                    'default_value' => 'override',
+                ] ),
+                'type' => new \Fieldmanager_Hidden( [
+                    'default_value' => 'override',
+                ] ),
+                'preview' => new \Fieldmanager_TextField( 'Preview', [
+                    'template' => get_template_directory() . '/templates/raw/message-spot.php',
+                ] ),
+                'preview_model' => new \Fieldmanager_Hidden( false, [
+                    'sanitize' => [ '\Pedestal\Utils\Utils', 'return_same' ],
+                ] ),
+                'title' => new \Fieldmanager_TextField( 'Message Title', [
+                    'default_value' => 'Breaking News',
+                    'description'   => '“Breaking News”, “Developing Story”, etc.',
+                ] ),
+                'post' => new \Fieldmanager_Autocomplete( 'Article', [
+                    'description' => 'Start typing to retrieve a post',
+                    'attributes'  => [
+                        'placeholder' => '…',
+                        'size'        => 75,
+                    ],
+                    'datasource' => new \Fieldmanager_Datasource_Post( [
+                        'query_args' => [
+                            'post_type'      => Types::get_post_types(),
+                            'posts_per_page' => 15,
+                            'post_status'    => [ 'publish' ],
+                        ],
+                    ] ),
+                ] ),
+                'post_title' => new \Fieldmanager_Hidden(),
+                'body' => new \Fieldmanager_Textfield( 'Headline', [
+                    'description' => 'Adjust headline for this message',
+                    'attributes'  => [
+                        'size' => 75,
+                    ],
+                ] ),
+                'url' => new \Fieldmanager_Hidden(),
+                'icon' => new \Fieldmanager_Hidden( [
+                    'default_value' => 'bolt-solid',
+                ] ),
+            ],
+        ] );
+
+        $messages_group = new \Fieldmanager_Group( 'Message', [
             'field_class'       => 'message fm-group',
             'add_more_label'    => 'Add New Message',
             'add_more_position' => 'top',
@@ -128,6 +198,7 @@ class Message_Spot {
             'save_empty'        => false,
             'extra_elements'    => 0,
             'collapsible'       => true,
+            'collapsed'         => true,
             'label_macro'    => [
                 '%s',
                 'body',
@@ -149,7 +220,9 @@ class Message_Spot {
                     'description_after_element' => false,
                     'template'                  => get_template_directory() . '/templates/raw/message-spot.php',
                 ] ),
-                'preview_model' => new \Fieldmanager_Hidden(),
+                'preview_model' => new \Fieldmanager_Hidden( false, [
+                    'sanitize' => [ '\Pedestal\Utils\Utils', 'return_same' ],
+                ] ),
                 'body'  => new \Fieldmanager_RichTextArea( 'Message (under 90 characters)', [
                     'editor_settings' => [
                         'media_buttons' => false,
@@ -208,7 +281,62 @@ class Message_Spot {
                 ] ),
             ],
         ] );
-        $message_spot->add_submenu_page( 'themes.php', 'Message Spot', 'Message Spot', 'manage_spotlight' );
+
+        $message_spot = new \Fieldmanager_Group( false, [
+            'name'     => 'pedestal_message_spot',
+            'children' => [
+                'override' => $override_group,
+                'messages' => $messages_group,
+            ],
+        ] );
+        $message_spot->add_submenu_page( 'themes.php', 'Message Spot', 'Message Spot', 'manage_message_spot' );
+    }
+
+    /**
+     * Filter the message spot option data before saving to the database
+     *
+     * @param array $new_value
+     * @param array $old_value
+     */
+    public function filter_pre_update_option( $new_value, $old_value ) {
+        $defaults = $this->get_model_defaults();
+        if ( 'false' === $new_value['override']['enabled'] ) {
+            $new_value['override'] = [
+                'enabled'       => 'false',
+                'preview'       => '',
+                'preview_model' => '',
+                'title'         => 'Breaking News',
+                'post'          => 0,
+                'body'          => '',
+                'url'           => '',
+            ] + $new_value['override'];
+        }
+        $new_value['override_previous_settings'] = $old_value['override'];
+        return $new_value;
+    }
+
+    /**
+     * Retrieve data about the post selected in the override section
+     */
+    public function action_wp_ajax_override() {
+        if ( empty( $_POST['post_id'] ) ) {
+            wp_send_json_error( null, 500 );
+            die();
+        }
+
+        $post_id = absint( $_POST['post_id'] );
+        $ped_post = Post::get( $post_id );
+        if ( ! Types::is_post( $ped_post ) ) {
+            wp_send_json_error( null, 500 );
+            die();
+        }
+
+        $value = [
+            'title' => $ped_post->get_title(),
+            'url' => $ped_post->get_permalink(),
+        ];
+        wp_send_json_success( $value );
+        die();
     }
 
     /**
@@ -240,36 +368,19 @@ class Message_Spot {
     public function filter_timber_context( $context ) {
         $context['message_spot'] = [];
         if ( ! is_page() ) {
+            $message = [];
             $data = get_option( 'pedestal_message_spot' );
-            $context['message_spot'] = $this->prepare_timber_context( $data[0] );
+            if ( isset( $data['override'] ) && isset( $data['messages'] ) ) {
+                if ( isset( $data['messages'][0] ) ) {
+                    $message = $data['messages'][0];
+                }
+                if ( isset( $data['override']['enabled'] ) && 'true' === $data['override']['enabled'] ) {
+                    $message = $data['override'];
+                }
+            }
+            $context['message_spot'] = $this->prepare_timber_context( $message );
         }
         return $context;
-    }
-
-    /**
-     * Add some helpful description text above the repeating message groups
-     */
-    public function filter_fm_element_markup_start( $out, $fm ) {
-        $screen = get_current_screen();
-        if ( 'appearance_page_pedestal_message_spot' !== $screen->base ) {
-            return $out;
-        }
-
-        $fm_tree = $fm->get_form_tree();
-        $parent = array_pop( $fm_tree );
-        if (
-            empty( $parent->name )
-            || 'pedestal_message_spot' != $parent->name
-        ) {
-            return $out;
-        }
-
-        echo '<div class="js-message-spot-prompt">';
-            echo '<p class="message-spot-prompt__no-messages">No message specified, so nothing will appear. Add a new message!</p>';
-            echo '<p class="message-spot-prompt__has-messages">The first message in the list will appear on the frontend. Drag the messages around to display a different one.</p>';
-        echo '</div>';
-
-        return $out;
     }
 
     /**
@@ -295,6 +406,21 @@ class Message_Spot {
             case 'with_button':
                 $message['icon'] = false;
                 $message['title'] = false;
+                break;
+            case 'override':
+                $message['additional_classes'] .= ' message-spot--with-title js-message-spot-with-title';
+                $message['icon'] = 'bolt-solid';
+                $message['button_label'] = false;
+                $message['ga_label'] = 'override';
+                if ( empty( $message['post'] ) ) {
+                    return [];
+                }
+                $post = Post::get( $message['post'] );
+                if ( ! Types::is_post( $post ) ) {
+                    return [];
+                }
+                $message['url'] = $post->get_permalink();
+                $message['body'] = $message['body'] ?: $post->get_the_title();
                 break;
         }
         return $message;

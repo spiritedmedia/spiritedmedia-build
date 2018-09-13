@@ -31,8 +31,21 @@ $message_data = [
         'body'         => '<p>A message that supports the action that follows it.</p>',
         'button_label' => 'Take Action',
     ],
+    'override' => [
+        'type'         => 'override',
+        'url'          => '#',
+        'icon'         => 'bolt-solid',
+        'title'        => 'Breaking News',
+        'body'         => '<p>A handcrafted headline for maximum newsiness</p>',
+    ],
 ];
 $context['messages'] = array_map( function( $item ) {
+    // Circumvent `Message_Spot::prepare_timber_context()` so we can set data
+    // for the override manually
+    if ( 'override' === $item['type'] ) {
+        $item['additional_classes'] = "message-spot--override message-spot--with-title js-message-spot-override";
+        return $item;
+    }
     return Message_Spot::prepare_timber_context( $item );
 }, $message_data );
 

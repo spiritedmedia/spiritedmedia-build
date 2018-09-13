@@ -166,3 +166,29 @@
     }
   }
 }
+
+
+//
+// Overridden Message Spot
+// ==========================================================================
+// E.G. Breaking news, developing stories...
+
+.message-spot--override {
+  background-color: $accent-2-color;
+
+  .message-spot__icon {
+    color: $message-spot-override-icon-color;
+  }
+
+  .message-spot__title {
+    color: $message-spot-override-title-color;
+  }
+}
+
+@media #{$large-up} {
+  .message-spot--override {
+    .message-spot__icon {
+      margin-right: rem( 8px );
+    }
+  }
+}

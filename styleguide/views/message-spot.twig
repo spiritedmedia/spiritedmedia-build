@@ -14,6 +14,7 @@
     {% include 'partials/header/message-spot.twig' with messages.standard only %}
     {% include 'partials/header/message-spot.twig' with messages.with_title only %}
     {% include 'partials/header/message-spot.twig' with messages.with_button only %}
+    {% include 'partials/header/message-spot.twig' with messages.override only %}
 
     {% endspaceless %}
 {% endblock %}
@@ -56,6 +57,14 @@
                     value="with-button"
                     class="form-radio__input js-message-spot-display" />
                 <label for="input-message-spot-display-with-button" class="form-radio__label">With Button</label>
+            </div>
+
+            <div class="form-radio">
+                <input type="radio" name="message-spot-display"
+                    id="input-message-spot-display-override"
+                    value="override"
+                    class="form-radio__input js-message-spot-display" />
+                <label for="input-message-spot-display-override" class="form-radio__label">Override</label>
             </div>
 
         </fieldset>

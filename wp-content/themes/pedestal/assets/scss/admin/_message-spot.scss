@@ -1,20 +1,3 @@
-.message-spot-prompt__no-messages {
-  display: block;
-
-  .has-messages & {
-    display: none;
-  }
-}
-
-.message-spot-prompt__has-messages {
-  display: none;
-
-  .has-messages & {
-    display: block;
-  }
-}
-
-
 .message-spot-preview-container {
   height: 80px;
   width: 320px;
@@ -41,6 +24,24 @@
     @include clearfix;
   }
 
+  // stylelint-disable-next-line selector-max-type
+  .fm-label-messages p {
+    margin: 0;
+  }
+}
+
+
+.fm-override-wrapper {
+  .fm-enabled-wrapper {
+    .fm-item-description {
+      font-style: normal;
+      color: #444444;
+    }
+  }
+}
+
+
+.fm-messages-wrapper {
   .fm-option {
     display: inline-block;
   }
@@ -104,9 +105,4 @@
       transform: translateY( 1px );
     }
   }
-
-  // stylelint-disable-next-line selector-max-type
-  .fm-label-pedestal_message_spot p {
-    margin: 0;
-  }
-}
+} // end .fm-messages-wrapper

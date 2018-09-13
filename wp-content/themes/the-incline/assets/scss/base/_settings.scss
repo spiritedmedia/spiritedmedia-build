@@ -1,10 +1,12 @@
 @import 'colors';
 
 
-$secondary-color: #7f5f59;
-$accent-2-color:  #4281a4;
-$color-dark:      $grey-25;
-$mark-color:      $grey-46;
+$secondary-color:  #7f5f59;
+$accent-2-color:   #4281a4;
+$color-dark:       $grey-25;
+$color-grey:       $grey-70;
+$color-light-grey: #e6e6e6;
+$mark-color:       $grey-46;
 
 $h3-font-size: rem( 27px ); // !default
 $h4-font-size: rem( 22px ); // !default
@@ -22,3 +24,5 @@ $content-h2-font-size: $h4-font-size;
 $content-h3-font-size: $h5-font-size;
 
 $modal-header-nav-background-color: $color-dark;
+
+$message-spot-override-title-color: $color-light-grey;

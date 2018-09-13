@@ -70,7 +70,7 @@ class Featured_Posts {
         $fm_featured->add_submenu_page( 'themes.php',
             esc_html__( 'Featured Entities', 'pedestal' ),
             esc_html__( 'Featured', 'pedestal' ),
-            'manage_spotlight'
+            'manage_featured_posts'
         );
     }
 

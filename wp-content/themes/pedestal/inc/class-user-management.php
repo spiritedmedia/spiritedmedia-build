@@ -253,11 +253,12 @@ class User_Management {
 
         // Administrators and Reporters
         $caps_admin_reporters = [
-            'send_emails'         => '',
-            'manage_spotlight'    => '',
-            'manage_terms'        => '',
-            'manage_distribution' => '',
-            'manage_uploads'      => '',
+            'send_emails'           => '',
+            'manage_featured_posts' => '',
+            'manage_message_spot'   => '',
+            'manage_terms'          => '',
+            'manage_distribution'   => '',
+            'manage_uploads'        => '',
         ];
         $ptypes_admin_reporters = array_merge(
             [ 'pedestal_newsletter' ],

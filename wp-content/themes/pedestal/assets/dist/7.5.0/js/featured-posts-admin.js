@@ -1,0 +1,1 @@
+jQuery(document).ready(function(o){o("body").on("change",".fm-autocomplete-hidden",function(){var e=o(this),t=parseInt(e.val()),a=e.closest(".fm-group-inner").find(".fm-description textarea");if(t){var n={post_id:t,action:"pedestal-featured-entities-placeholder"};o.post(ajaxurl,n,function(e){e.data&&a.attr("placeholder",e.data)})}else a.attr("placeholder","")})});

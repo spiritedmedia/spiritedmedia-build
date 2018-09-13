@@ -295,7 +295,6 @@ class Admin {
      */
     public function action_init_after_post_types_registered() {
         $this->register_distribution_fields();
-        $this->register_spotlight_fields();
     }
 
     /**
@@ -658,46 +657,6 @@ class Admin {
         }
 
         return $data;
-    }
-
-    /**
-     * Register fields for the "Spotlight"
-     */
-    private function register_spotlight_fields() {
-
-        $fm_spotlight = new \Fieldmanager_Group( false, [
-            'name'       => 'pedestal_spotlight',
-            'children'   => [
-                'enabled' => new \Fieldmanager_Radios( false, [
-                    'name'              => 'enabled',
-                    'default_value'     => 0,
-                    'options'           => [
-                        1               => esc_html__( 'On', 'pedestal' ),
-                        0               => esc_html__( 'Off', 'pedestal' ),
-                    ],
-                    'sanitize'          => 'intval',
-                ] ),
-                'label'  => new \Fieldmanager_TextField( esc_html__( 'Label', 'pedestal' ), [
-                    'name'              => 'label',
-                    'default_value'     => 'Breaking',
-                ] ),
-                'content'     => new \Fieldmanager_Autocomplete( esc_html__( 'Story or Entity', 'pedestal' ), [
-                    'name'             => 'content',
-                    'description'      => esc_html__( 'Leave blank to display most recent original content', 'pedestal' ),
-                    'attributes'       => [
-                        'placeholder'  => esc_html__( 'Search by title', 'pedestal' ),
-                        'size'         => 50,
-                    ],
-                    'datasource'       => new \Fieldmanager_Datasource_Post( [
-                        'query_args'        => [
-                            'post_type'     => Types::get_post_types(),
-                        ],
-                    ] ),
-                ] ),
-            ],
-        ] );
-        $fm_spotlight->add_submenu_page( 'themes.php', esc_html__( 'Spotlight Settings', 'pedestal' ), esc_html__( 'Spotlight', 'pedestal' ), 'manage_spotlight' );
-
     }
 
     /**

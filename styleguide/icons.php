@@ -35,6 +35,12 @@ $icons = [
             "Who's Next single posts",
         ],
     ],
+    'bolt-solid' => [
+        'label' => 'Bolt (Solid)',
+        'usage' => [
+            'Message spot (override variant)',
+        ],
+    ],
     'briefcase' => [
         'label' => 'Briefcase',
         'usage' => [

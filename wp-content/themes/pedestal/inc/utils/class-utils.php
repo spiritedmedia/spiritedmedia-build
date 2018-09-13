@@ -579,4 +579,16 @@ class Utils {
         $process = '{{ source("' . $template_path . '") }}';
         return Timber::compile_string( $process );
     }
+
+    /**
+     * Return the input parameter
+     *
+     * Useful as a non-sanitizing sanitization function.
+     *
+     * @param mixed $input
+     * @return mixed Just `$input`
+     */
+    public static function return_same( $input ) {
+        return $input;
+    }
 }

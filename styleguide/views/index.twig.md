@@ -48,7 +48,6 @@ Also present on each page are:
 - Site header
 - Newsletter signup modal
 - Search
-- Spotlight – might be hidden depending on current site settings
 - Site footer
 
 ## Utilities

@@ -70,7 +70,7 @@ Object.defineProperty(Object.prototype, 'toAttsString', {
 /**
  * Helper methods that can be used throughout our codebase
  */
-class PedUtils {
+window.PedUtils = new class {
 
   /**
    * Execute a function only once after a defined interval of time
@@ -83,7 +83,7 @@ class PedUtils {
    * @param  int      wait      How long to delay firing the callback
    * @param  bool     immediate Whether to fire the callback immediatly
    */
-  static debounce(func, wait, immediate) {
+  debounce(func, wait, immediate) {
     var timeout;
     return function() {
       var context = this;
@@ -113,7 +113,7 @@ class PedUtils {
    * @param  {function} callback  A callback to be fired
    * @param  {int}      limit     The delay between executions
    */
-  static throttle(callback, limit) {
+  throttle(callback, limit) {
     var wait = false;
     return function () {
       if (!wait) {
@@ -131,7 +131,7 @@ class PedUtils {
    *
    * {@link https://stackoverflow.com/a/5298684/1801260}
    */
-  static removeHash() {
+  removeHash() {
     history.pushState('', document.title, window.location.pathname
       + window.location.search);
   }
@@ -142,7 +142,7 @@ class PedUtils {
    * @see https://stackoverflow.com/a/4609476
    * @param {jQuery} $elem Input element to focus
    */
-  static focusAtEnd($elem) {
+  focusAtEnd($elem) {
     if ($elem.length > 0) {
       const elem = $elem[0];
       const elemLen = elem.value.length;
@@ -164,7 +164,7 @@ class PedUtils {
    * @param {int} length
    * @return {string} Semi-random string with the specified length
    */
-  static genStr(length = 8) {
+  genStr(length = 8) {
     let out = '';
     const alphabet = '23456789abdegjkmnpqrvwxyz';
     for (let i = 0; i < length; i++) {
@@ -185,7 +185,7 @@ class PedUtils {
    * @return {Object|String}     Object of key-value pairs
    *                             or single value if key provided
    */
-  static getURLParams(key = '', url = ''){
+  getURLParams(key = '', url = '') {
     var params = {};
     if (! url) {
       url = location.search;
@@ -198,4 +198,5 @@ class PedUtils {
     }
     return params;
   }
-}
+
+};

@@ -288,15 +288,6 @@ class Frontend {
         $context['latest_newsletter'] = Newsletter::get_latest_newsletter_link();
         $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) . ' Spirited Media';
 
-        if ( ! is_home() ) {
-            $spotlight = Pedestal()->get_spotlight_data();
-            $context['spotlight'] = [
-                'enabled'         => $spotlight['enabled'],
-                'label'           => $spotlight['label'],
-                'content'         => Pedestal()->get_spotlight_post(),
-            ];
-        }
-
         if ( is_search() ) {
             $context['search_query'] = get_search_query();
         }
