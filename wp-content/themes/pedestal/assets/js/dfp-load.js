@@ -9,68 +9,73 @@ googletag.cmd = googletag.cmd || [];
   node.parentNode.insertBefore(gads, node);
 })();
 
-// We dynamically define ad slots on the page based on the ad markup present
-googletag.cmd.push(function() {
+jQuery(function($) {
   // Dynamically load the DFP ID from the data attribute of this script
-  var DFP_ID = document.getElementById('dfp-load')
+  var DFP_ID = document
+    .getElementById('dfp-load')
     .getAttribute('data-dfp-id');
 
-  // Keep track of the ids of ads we can display
-  var adsToDisplay = [];
-
-  (function($) {
-    // For each ad markup on the page we will get the slot name and accepted
-    // sizes for the slot before defining the ad position
-    $('.js-dfp').each(function(elIndex, el) {
-      var $el = $(el);
-      if ($el.css('display') == 'none') {
+  // For each ad markup on the page we will get the slot name and accepted
+  // sizes for the slot before defining the ad position
+  $('.js-dfp').each(function(elIndex, el) {
+    var $el = $(el);
+    if ($el.css('display') == 'none') {
       // Ad is hidden, don't request an ad
-        return;
-      }
-      var rawSize = $el.data('dfp-sizes');
-      var slotName = $el.data('dfp-name');
-      var uniqueId = $el.data('dfp-unique');
-      if (!rawSize || !slotName) {
-        var msg = 'Pedestal DFP: Slot missing required parameters';
-        console.warn(msg, el);
-        return;
-      }
+      return;
+    }
+    var rawSize  = $el.data('dfp-sizes');
+    var slotName = $el.data('dfp-name');
+    var uniqueId = $el.data('dfp-unique');
+    if (!rawSize || !slotName) {
+      var msg = 'Pedestal DFP: Slot missing required parameters';
+      console.warn(msg, el);
+      return;
+    }
 
-      var sizes = [];
-      $.each(rawSize.split(','), function(sizeIndex, item) {
-        item = $.trim(item);
-        if (!item) {
-          return;
-        }
-        var dimensions = item.split('x');
-        if (dimensions.length !== 2) {
-          var msg = 'Pedestal DFP: Bad dimensions!';
-          console.warn(msg, item, el);
-          return;
-        }
-        for (var i = 0; i < dimensions.length; i++) {
-          dimensions[i] = parseInt(dimensions[i]);
-        }
-        sizes.push(dimensions);
-      });
-      var path = '/' + DFP_ID + '/' + slotName;
-      var id = 'div-gpt-ad-' + slotName + '-' + uniqueId;
-      adsToDisplay.push(id);
+    var sizes = [];
+    $.each(rawSize.split(','), function(sizeIndex, item) {
+      item = $.trim(item);
+      if (!item) {
+        return;
+      }
+      var dimensions = item.split('x');
+      if (dimensions.length !== 2) {
+        var msg = 'Pedestal DFP: Bad dimensions!';
+        console.warn(msg, item, el);
+        return;
+      }
+      for (var i = 0; i < dimensions.length; i++) {
+        dimensions[i] = parseInt(dimensions[i]);
+      }
+      sizes.push(dimensions);
+    });
+
+    var path = '/' + DFP_ID + '/' + slotName;
+    var id = 'div-gpt-ad-' + slotName + '-' + uniqueId;
+
+    googletag.cmd.push(function() {
       googletag
         .defineSlot(path, sizes, id)
         .addService(googletag.pubads());
+      googletag.display(id);
     });
-  }(jQuery));
+  });
+});
+
+// We dynamically define ad slots on the page based on the ad markup present
+googletag.cmd.push(function() {
+
   // Additional options
   googletag.pubads().enableSingleRequest();
   googletag.pubads().collapseEmptyDivs(true);
 
   /**
-   * Get the ID of the ad unit so it can be selected in the DOM and manipulated
+   * Get the ID of the ad unit so it can be selected in the DOM
+   * and manipulated
    *
    * @param  {object} slot Slot object returned from the slotRenderEnded
    *                       event listener
-   * @return {stirng}      HTML ID of the slot
+   * @return {string}      HTML ID of the slot
    */
   function getGoogleDFPUnitID(slot) {
     if (typeof slot !== 'object') {
@@ -102,10 +107,4 @@ googletag.cmd.push(function() {
     }
   });
   googletag.enableServices();
-
-  $.each(adsToDisplay, function(index, id) {
-    googletag.cmd.push(function() {
-      googletag.display(id);
-    });
-  });
 });
