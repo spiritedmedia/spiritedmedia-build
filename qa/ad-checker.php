@@ -68,12 +68,12 @@ switch ( $blog_id ) :
             [
                 'name'     => 'Denverite Homepage',
                 'path'     => '/',
-                'expected' => 4,
+                'expected' => 2,
             ],
             [
                 'name'     => 'Denverite Article',
                 'path'     => '/2017/12/18/denver-council-delays-consideration-massive-flood-control-project/',
-                'expected' => 5,
+                'expected' => 2,
             ],
         ];
         break;
@@ -104,11 +104,11 @@ of ad positions.</p>
 $root = pedestal_get_root_url( $blog_id );
 
 foreach ( $links_to_check as $link ) {
-    $url = $root . $link['path'];
+    $url              = $root . $link['path'];
     $use_include_path = false;
-    $html = HtmlDomParser::file_get_html( $url, $use_include_path, $file_get_html_context );
-    $script_found = count( $html->find( 'script[src*=dfp-load.js]' ) );
-    $found_ads = count( $html->find( '.js-dfp' ) );
+    $html             = HtmlDomParser::file_get_html( $url, $use_include_path, $file_get_html_context );
+    $script_found     = count( $html->find( 'script[src*=dfp-load.js],script[src*=dfp-load-patch.js]' ) );
+    $found_ads        = count( $html->find( '.js-dfp' ) );
     if ( $found_ads === $link['expected'] && 1 === $script_found ) {
         echo '<li class="pass">PASS: <a href="' . $url . '" target="_blank">' . $link['name'] . '</a></li>';
     } else {
