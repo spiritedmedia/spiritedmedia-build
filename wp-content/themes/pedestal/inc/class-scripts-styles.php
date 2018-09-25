@@ -5,6 +5,7 @@ namespace Pedestal;
 use function Pedestal\Pedestal;
 
 use \Pedestal\Posts\Post;
+use \Pedestal\Registrations\Post_Types\Types;
 
 class Scripts_Styles {
 
@@ -108,7 +109,13 @@ class Scripts_Styles {
         ] );
 
         // Advertising
-        wp_enqueue_script( $this->dfp_load_script_handle, PEDESTAL_DIST_DIRECTORY_URI . '/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
+        if ( 4 == get_current_blog_id() ) {
+            // Denverite gets a new DFP script
+            wp_enqueue_script( $this->dfp_load_script_handle, PEDESTAL_DIST_DIRECTORY_URI . '/js/dfp-load-patch.js', [ 'jquery' ], PEDESTAL_VERSION );
+            wp_enqueue_script( 'prebid', PEDESTAL_DIST_DIRECTORY_URI . '/js/prebid.js', [ $this->dfp_load_script_handle ], PEDESTAL_VERSION );
+        } else {
+            wp_enqueue_script( $this->dfp_load_script_handle, PEDESTAL_DIST_DIRECTORY_URI . '/js/dfp-load.js', [ 'jquery' ], PEDESTAL_VERSION );
+        }
         if ( isset( $_GET['show-ad-units'] ) ) {
             wp_enqueue_script( 'dfp-placeholders', PEDESTAL_DIST_DIRECTORY_URI . '/js/dfp-placeholders.js', [ 'jquery' ], PEDESTAL_VERSION );
         }
@@ -245,10 +252,80 @@ class Scripts_Styles {
      */
     public function filter_script_loader_tag_modify_dfp_loader( $script_element, $handle, $script_src ) {
         if ( $this->dfp_load_script_handle == $handle && defined( 'PEDESTAL_DFP_ID' ) ) {
+
+            // Figure out the DFP Path for hierarchical ad targeting
+            $dfp_path = PEDESTAL_DFP_ID . '/spirited.media/' . PEDESTAL_DFP_SITE;
+            if ( is_home() ) {
+                $dfp_path .= '/homepage';
+            } elseif ( is_singular() ) {
+                $terms = wp_get_object_terms( get_the_ID(), 'pedestal_category' );
+                if ( ! empty( $terms[0] ) ) {
+                    $ad_category = get_term_meta( $terms[0]->term_id, 'ad-category', true );
+                    if ( $ad_category ) {
+                        $dfp_path .= '/' . sanitize_title( $ad_category );
+                    }
+                }
+            } elseif ( is_tax( 'pedestal_category' ) ) {
+                $term = get_queried_object();
+                if ( ! empty( $term->term_id ) ) {
+                    $ad_category = get_term_meta( $term->term_id, 'ad-category', true );
+                    if ( $ad_category ) {
+                        $dfp_path .= '/' . sanitize_title( $ad_category );
+                    }
+                }
+            }
+
+            // Figure out the DFP Article ID for targeting ads by specific post
+            $dfp_article_id = '';
+            if ( is_singular() && ! Types::is_cluster( get_post_type() ) ) {
+                $dfp_article_id = get_the_ID();
+            }
+
+            // Figure out topic targeting
+            $tag_permalinks = [];
+            if ( is_singular() ) {
+                if ( Types::is_cluster( get_post_type() ) ) {
+                    $tag_permalinks[] = get_permalink();
+                } else {
+                    $ped_post = Post::get( get_the_ID() );
+                    if ( Types::is_entity( $ped_post ) ) {
+                        $clusters = $ped_post->get_clusters([
+                            'types'   => Types::get_cluster_post_types(),
+                            'flatten' => true,
+                        ]);
+                        if ( ! empty( $clusters ) ) {
+                            foreach ( $clusters as $cluster ) {
+                                $tag_permalinks[] = $cluster->get_permalink();
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Transform cluster permalinks into the cluster slug
+            // https://denverite.com/topics/foo/ ==> foo
+            $tags = array_map( function( $permalink ) {
+                $path = str_replace( get_site_url(), '', $permalink );
+                $parts = explode( '/', $path );
+                return $parts[2];
+            }, $tag_permalinks);
+            $dfp_topics = implode( ' ', $tags );
+
             $new_attrs = sprintf(
-                'id="%s" data-dfp-id="%s"',
+                '
+                    id="%s"
+                    data-dfp-id="%s"
+                    data-dfp-path="%s"
+                    data-dfp-article-id="%s"
+                    data-dfp-site="%s"
+                    data-dfp-topics="%s"
+                ',
                 esc_attr( $this->dfp_load_script_handle ),
-                esc_attr( PEDESTAL_DFP_ID )
+                esc_attr( PEDESTAL_DFP_ID ),
+                esc_attr( $dfp_path ),
+                esc_attr( $dfp_article_id ),
+                esc_attr( PEDESTAL_DFP_SITE ),
+                esc_attr( $dfp_topics )
             );
             $script_element = str_replace( 'src=', $new_attrs . ' src=', $script_element );
         }

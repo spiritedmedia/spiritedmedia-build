@@ -209,6 +209,16 @@ class Taxonomies {
         ];
         register_taxonomy( 'pedestal_category', Types::get_entity_post_types(), $args );
 
+        // Register an ad category field for the DFP Path hierarchical targeting
+        add_action( 'fm_term_pedestal_category', function() {
+            $fm = new \Fieldmanager_TextField( [
+                'name'        => 'ad-category',
+                'description' => 'Value to use in the DFP ad path',
+                'required'    => false,
+            ] );
+            $fm->add_term_meta_box( 'Ad Category', 'pedestal_category' );
+        } );
+
     }
 
     /**

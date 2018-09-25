@@ -16,10 +16,6 @@ add_action( 'wp_head', function() {
             margin-top: 16px;
             margin-bottom: 16px;
         }
-
-        ul li {
-            padding-top: 8px;
-        }
     </style>
     <?php echo ob_get_clean();
 } );

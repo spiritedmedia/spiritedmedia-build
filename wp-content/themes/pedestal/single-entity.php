@@ -3,6 +3,7 @@ use Timber\Timber;
 use Pedestal\Adverts;
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Email\Newsletter_Emails;
 
 $item = Post::get( get_the_ID() );
 $context = Timber::get_context();
@@ -23,6 +24,8 @@ if ( Types::is_post( $item ) ) :
     if ( is_active_sidebar( 'sidebar-entity' ) ) {
         $context['sidebar'] = Timber::get_widgets( 'sidebar-entity' );
     }
+
+    $context['newsletter_signup_prompt'] = Newsletter_Emails::get_signup_form();
 
     $adverts = new Adverts;
     $sponsored_item = $adverts->get_the_sponsored_item();

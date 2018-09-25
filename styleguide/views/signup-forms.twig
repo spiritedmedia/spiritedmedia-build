@@ -1,0 +1,47 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block head %}
+{# Custom styles for this page #}
+<style>
+h2 {
+    margin: 45px 0 20px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <label for="state-change">Change State:</label>
+    <select id="state-change">
+        <option value="">--</option>
+        <option value="is-loading">Loading</option>
+        <option value="is-success">Success</option>
+        <option value="is-failed">Failed</option>
+    </select>
+
+    <h2>Newsletter Prompt</h2>
+    <div class="signup-email--daily signup-email">
+        {{ default_inline_prompt }}
+    </div>
+
+    <h2><a href="{{ shortcode_url|esc_url }}" target="_blank">Shortcode Newsletter Prompt</a></h2>
+    {{ shortcode_inline_prompt }}
+
+    <h2><a href="{{ cluster_url|esc_url }}" target="_blank">Cluster Prompt</a></h2>
+    {{ cluster_prompt }}
+
+    <script>
+        jQuery(document).ready(function($) {
+            $('#state-change').on('change', function(e) {
+                var newClass = $(this).val();
+                $('.js-signup-email-form')
+                    .removeClass('is-loading is-success is-failed')
+                    .addClass(newClass);
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

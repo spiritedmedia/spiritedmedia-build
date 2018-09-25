@@ -165,6 +165,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 // DFP
                 'PEDESTAL_DFP_ID'     => '104495818',
                 'PEDESTAL_DFP_PREFIX' => '',
+                'PEDESTAL_DFP_SITE'   => '',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => '',
@@ -535,8 +536,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             } ) );
 
             // Render a DFP unit
-            $twig->addFunction( new \Twig_SimpleFunction( 'dfp_unit', function( $id, $sizes ) {
-                return Adverts::render_dfp_unit( $id, $sizes );
+            $twig->addFunction( new \Twig_SimpleFunction( 'dfp_unit', function( $id, $sizes, $args = [], $slot_target = '' ) {
+                return Adverts::render_dfp_unit( $id, $sizes, $args, $slot_target );
             } ) );
 
             // Add WordPress' checked() function to Twig

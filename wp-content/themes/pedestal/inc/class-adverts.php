@@ -29,11 +29,17 @@ class Adverts {
      */
     private function setup_actions() {
         add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
+        add_action( 'parse_request', [ $this, 'action_parse_request_ads_txt' ], 10, 1 );
         add_action( 'pedestal_after_stream_item_2', [ $this, 'action_pedestal_after_stream_item_2' ] );
         add_action( 'pedestal_after_stream_item_6', function() {
-            echo self::render_dfp_unit( PEDESTAL_DFP_PREFIX . '_Inline', '300x250', [
-                'additional_classes' => 'dfp--inline-stream stream-item',
-            ] );
+            echo self::render_dfp_unit(
+                PEDESTAL_DFP_PREFIX . '_Inline',
+                '300x250',
+                [
+                    'additional_classes' => 'dfp--inline-stream stream-item',
+                ],
+                'artclbox1'
+            );
         } );
         add_action( 'pedestal_after_stream_item_8', function() {
             echo $this->render_stream_ad_unit( '08' );
@@ -52,6 +58,7 @@ class Adverts {
     private function setup_filters() {
         add_filter( 'query_vars', function( $query_vars ) {
             $query_vars[] = 'pedestal-ad-tester';
+            $query_vars[] = 'pedestal-ads-txt';
             return $query_vars;
         });
         add_filter( 'template_include', function( $template_path ) {
@@ -72,6 +79,20 @@ class Adverts {
      */
     public function action_init_register_rewrites() {
         add_rewrite_rule( '^ad-tester/?$', 'index.php?pedestal-ad-tester=1', 'top' );
+        add_rewrite_rule( '^ads\.txt$', 'index.php?pedestal-ads-txt=1', 'top' );
+    }
+
+    /**
+     * Hook the parse_request action and serve the ads.txt when custom query variable is set
+     *
+     * @param WP $wp Current WordPress environment instance
+     */
+    public function action_parse_request_ads_txt( $wp ) {
+        if ( isset( $wp->query_vars['pedestal-ads-txt'] ) ) {
+            header( 'Content-Type: text/plain' );
+            Timber::render( 'partials/ads-txt.twig', [] );
+            exit;
+        }
     }
 
     /**
@@ -145,11 +166,13 @@ class Adverts {
 
     /**
      * Render a DFP ad unit
-     * @param  string $id     The ID of the ad position
-     * @param  string $sizes  Comma separated list of accepted sizes
-     * @return string         HTML markup of the ad unit
+     * @param  string $id           The ID of the ad position
+     * @param  string $sizes        Comma separated list of accepted sizes
+     * @param  array $args          Additional arguments to modify the unit
+     * @param  string $slot_target  Slot target value for Patch to uniquely target positions
+     * @return string               HTML markup of the ad unit
      */
-    public static function render_dfp_unit( $id = '', $sizes = '', $args = [] ) {
+    public static function render_dfp_unit( $id = '', $sizes = '', $args = [], $slot_target = '' ) {
         if ( empty( $id ) || empty( $sizes ) ) {
             return;
         }
@@ -158,9 +181,10 @@ class Adverts {
         ];
         $args = wp_parse_args( $args, $defaults );
         $ad_context = [
-            'id'        => $id,
-            'sizes'     => $sizes,
-            'unique_id' => uniqid(),
+            'id'          => $id,
+            'sizes'       => $sizes,
+            'slot_target' => $slot_target,
+            'unique_id'   => uniqid(),
         ];
         $ad_context = wp_parse_args( $ad_context, $args );
         $show_ad_unit = (bool) apply_filters( 'pedestal_show_dfp_unit', true, $id, $sizes, $args );
@@ -307,9 +331,14 @@ class Adverts {
             }
 
             $ad_unit_id = PEDESTAL_DFP_PREFIX . '_Inline';
-            $ad_unit = self::render_dfp_unit( $ad_unit_id, '300x250', [
-                'additional_classes' => 'dfp--inline dfp--inline--' . ( $index + 1 ),
-            ] );
+            $ad_unit = self::render_dfp_unit(
+                $ad_unit_id,
+                '300x250',
+                [
+                    'additional_classes' => 'dfp--inline dfp--inline--' . ( $index + 1 ),
+                ],
+                'artclbox' . ( $ads_injected + 1 )
+            );
 
             // Insert the ad unit after the node
             $node->outertext = $node->outertext . $ad_unit;

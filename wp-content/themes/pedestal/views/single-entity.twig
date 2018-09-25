@@ -65,15 +65,11 @@
 
             {% include 'partials/entity-circulation.twig' %}
 
-            <div class="signup-email--daily signup-email">
-                {% include [
-                    'partials/signup-daily-single-entity.twig',
-                    'partials/signup-daily.twig'
-                ] with {
-                    gaLocation: 'Single ' ~ type_name|esc_attr ~ ' | Footer',
-                    details: signup_email_details
-                } %}
-            </div>
+            {% if newsletter_signup_prompt %}
+                <div class="signup-email--daily signup-email">
+                    {{ newsletter_signup_prompt }}
+                </div>
+            {% endif %}
 
             {{ cluster_list }}
 
@@ -91,7 +87,5 @@
 
 
 {% block sidebar %}
-    {% if sidebar %}
-        {{ sidebar }}
-    {% endif %}
+    {{ sidebar }}
 {% endblock %}

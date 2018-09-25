@@ -3,6 +3,8 @@ use Timber\Timber;
 use Pedestal\Objects\Stream;
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
+use Pedestal\Email\Follow_Updates;
+use Pedestal\Adverts;
 
 $cluster_id = get_the_ID();
 $item = Post::get( $cluster_id );
@@ -15,16 +17,7 @@ if ( Types::is_post( $item ) ) :
     }
 
     if ( $item->is_story() ) {
-        $context['cluster'] = $item;
-        $context['cluster_id'] = $cluster_id;
-        $context['cluster_group_id'] = $item->get_mailchimp_group_id();
-        $context['cluster_group_category'] = $item->get_mailchimp_group_category();
-
-        $default_cta_text = "Get email notifications whenever we write about <strong>{$item->get_the_title()}</strong>";
-        $custom_cta_text = $item->get_fm_field( 'signup_form_settings', 'cta_text' );
-        $custom_submit_button_text = $item->get_fm_field( 'signup_form_settings', 'button_text' );
-        $context['signup_form_cta_text'] = $custom_cta_text ?: $default_cta_text;
-        $context['form_submit_text'] = $custom_submit_button_text ?: 'Get Alerts';
+        $context['cluster_prompt'] = Follow_Updates::get_signup_form( [], $cluster_id );
 
         add_filter( 'pedestal_stream_item_context', function( $context ) {
             $context['overline'] = '';
@@ -33,10 +26,6 @@ if ( Types::is_post( $item ) ) :
 
         if ( is_active_sidebar( 'sidebar-story' ) ) {
             $context['sidebar'] = Timber::get_widgets( 'sidebar-story' );
-        }
-
-        if ( ! empty( $_GET['force-display-follow-form'] ) ) {
-            $context['force_display_follow_form'] = true;
         }
     }
 
@@ -54,6 +43,16 @@ if ( Types::is_post( $item ) ) :
             'show_text' => true,
             'show_nav' => false,
         ] );
+    }
+
+    // If there is not a sidebar specificed, add a sidebar ad in the right rail
+    if ( empty( $context['sidebar'] ) ) {
+        $right_rail_ad = Adverts::render_dfp_unit(
+            PEDESTAL_DFP_PREFIX . '_Sidebar',
+            '300x600,160x600,300x250',
+            '1'
+        );
+        $context['sidebar'] = '<li class="widget widget_pedestal_dfp_rail_right">' . $right_rail_ad . '</li>';
     }
 
     // Load Post context after everything else so it takes priority

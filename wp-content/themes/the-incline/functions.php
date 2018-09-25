@@ -102,6 +102,13 @@ class The_Incline extends Pedestal {
         } );
 
         add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
+
+        // Configure newsletter signup form
+        add_filter( 'pedestal_newsletter_signup_form_args', function( $args = [] ) {
+            $args['title'] = 'Get The Incline Daily every day in your inbox';
+            $args['send_time'] = '6:30 a.m.';
+            return $args;
+        } );
     }
 
     /**

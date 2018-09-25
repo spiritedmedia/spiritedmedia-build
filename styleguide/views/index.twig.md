@@ -38,6 +38,7 @@ address the issue.
 - [Post Content: Post Elements](post-elements.php)
 - [Post Content: Images](images.php)
 - [Post Headers](post-headers.php)
+- [Signup Forms](signup-forms.php)
 - [Single Entity: Cluster List](single-entity-cluster-list.php)
 - [Stream Items](stream-items.php)
 - [Tables](tables.php)

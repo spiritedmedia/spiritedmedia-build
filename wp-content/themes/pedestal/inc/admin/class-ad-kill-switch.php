@@ -89,7 +89,7 @@ class Ad_Kill_Switch {
         $context = [
             'content_type'    => $ped_post->get_type_name(),
             'nonce_field'     => $nonce_field,
-            'are_ads_hidden' => $this->are_ads_hidden( $post->ID ),
+            'are_ads_hidden'  => $this->are_ads_hidden( $post->ID ),
         ];
         Timber::render( 'partials/admin/metabox-inline-ads.twig', $context );
     }

@@ -1,4 +1,4 @@
-/* global ga objectFitImages ScrollDepth DonateForm Modal PedUtils */
+/* global ga ScrollDepth DonateForm Modal PedUtils */
 
 (function($) {
 
@@ -12,17 +12,12 @@
       // Video controls will be hidden for small screens < 480px wide
       this.showVideoControls = ($(window).width() >= 480);
 
-      // CSS object-fit polyfill
-      // https://github.com/bfred-it/object-fit-images/
-      objectFitImages('.js-stream-item-img img', {watchMQ: true});
-
       this.bindEvents();
       this.handleSubscriptionForms();
       this.responsiveIframes();
       this.disabledAnchors();
       this.analyticsEventTracking();
       this.scrollDepthTracking();
-      this.honeyPotHelper();
       this.lazyLoad();
       this.setupModals();
 
@@ -57,40 +52,24 @@
     handleSubscriptionForms: function() {
       $('.js-signup-email-form').on('submit', function(e) {
         e.preventDefault();
-        var $el = $(this);
-        var $fields = $el.find('.js-form-fields');
-        var $submitBtn = $el.find('.js-form-submit');
-        var $submitText = $el.find('.js-form-submit-text');
-        var $invalidFeedback = $el.find('.js-fail-message');
-        var $parentModal = $el.closest('.js-modal');
-        var buttonWidth = $submitBtn.width();
-        var actionURL = $el.attr('action');
+        var $el                = $(this);
+        var $submitBtn         = $el.find('.js-form-submit');
+        var $invalidFeedback   = $el.find('.js-fail-message');
+        var actionURL          = $el.attr('action');
         var actionUrlSeparator = actionURL.indexOf('?') >= 0 ? '&' : '?';
         actionURL += actionUrlSeparator + $.param({'ajax-request': 1});
 
-        $submitBtn.width(buttonWidth);
-        $submitBtn.css('padding-left', 0);
-        $submitBtn.css('padding-right', 0);
-        $submitText.hide();
         $el.removeClass('is-failed');
         $el.addClass('is-loading');
-
-        if ($parentModal.length) {
-          $parentModal.removeClass('has-failed-form');
-        }
+        $submitBtn.prop('disabled', true);
 
         $.post(actionURL, $el.serialize(), function() {
           if ($el.find('.js-success-message').length) {
             var $successEmail = $el.find('.js-success-message-email');
             var emailAddress = $el.find('.js-email-input').val();
 
-            $fields.hide();
             $el.removeClass('is-loading');
             $el.addClass('is-success');
-
-            if ($parentModal.length) {
-              $parentModal.addClass('has-successful-form');
-            }
 
             // Let other functions know a form submission with an email
             // address happened
@@ -107,15 +86,13 @@
           var msg = response.responseText;
           $el.removeClass('is-loading');
           $el.addClass('is-failed');
-          if ($parentModal.length) {
-            $parentModal.addClass('has-failed-form');
-          }
-          $submitText.show();
           if ($invalidFeedback.length && msg.length) {
             $invalidFeedback.text(msg);
           } else {
             $submitBtn.before(msg);
           }
+        }).always(function() {
+          $submitBtn.prop('disabled', false);
         });
       });
     },
@@ -237,11 +214,6 @@
         [0, 50, 100]
       );
     },
-
-    honeyPotHelper: function() {
-      var fullYear = new Date().getFullYear();
-      $('.js-pedestal-current-year-check').val(fullYear);
-    }, // end honeyPotHelper()
 
     lazyLoad: function() {
       const controls = this.showVideoControls ? 1 : 0;

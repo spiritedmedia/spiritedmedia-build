@@ -120,6 +120,10 @@
     line-height: 1.2;
   }
 
+  .signup-email__btn {
+    @include button-color-variant( $primary-color );
+  }
+
 
   @media #{$small-only} {
     .signup-email__latest--standalone {
@@ -152,6 +156,7 @@
 
   .signup-email__btn {
     font-weight: 600;
+    @include button-color-variant( $white );
   }
 
 

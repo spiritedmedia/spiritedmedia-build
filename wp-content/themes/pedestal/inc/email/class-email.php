@@ -171,10 +171,8 @@ class Email {
      * @return bool  True if the request passes the check
      */
     public function handle_honeypot_check() {
-        if ( isset( $_POST['pedestal-current-year-check'] ) && isset( $_POST['pedestal-blank-field-check'] ) ) {
-            if ( empty( $_POST['pedestal-blank-field-check'] ) && date( 'Y' ) == $_POST['pedestal-current-year-check'] ) {
-                return true;
-            }
+        if ( isset( $_POST['pedestal-blank-field-check'] ) && empty( $_POST['pedestal-blank-field-check'] ) ) {
+            return true;
         }
 
         status_header( 400 );

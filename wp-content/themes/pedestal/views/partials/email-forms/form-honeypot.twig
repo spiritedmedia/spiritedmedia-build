@@ -1,16 +1,3 @@
-{% if size %}
-    {% set size = 'form-input--' ~ size %}
-{% endif %}
-
-<label class="pedestal-current-year-check">
-    {{ __( 'What is the current year?', 'pedestal' ) }}
-    <input type="text"
-        name="pedestal-current-year-check"
-        class="{{ size }} form-input js-pedestal-current-year-check"
-        value=""
-        placeholder="YYYY"
-    />
-</label>
 <label style="display:none;" for="pedestal-blank-field-check">
     {{ __( 'Leave this field blank.', 'pedestal' ) }}
     <input type="text"

@@ -3,12 +3,13 @@ namespace Pedestal\Email;
 
 use function Pedestal\Pedestal;
 use Timber\Timber;
+
+use Pedestal\Icons;
 use Pedestal\Posts\Post;
 use Pedestal\Posts\Clusters\{
     Cluster,
     Story
 };
-use Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
 use Pedestal\Email\{
     Email,
     Email_Groups
@@ -285,5 +286,91 @@ class Follow_Updates {
         $old_name = $post_before->post_title;
         $group_category = $cluster->get_mailchimp_group_category();
         $mc->edit_group_name( $new_name, $old_name, $group_category );
+    }
+
+    /**
+     * Get a signup form for follow updates
+     *
+     * @param  array   $args       Arguments to manipulate the signup form
+     * @param  integer $cluster_id The post ID of the cluster readers are signing up for
+     * @return string              HTML markup of the signup form or nothing
+     *                             if the form can't be rendered
+     */
+    public static function get_signup_form( $args = [], $cluster_id = 0 ) {
+        if ( ! $cluster_id ) {
+            $cluster_id = get_the_ID();
+        }
+        $cluster = Post::get( $cluster_id );
+        if ( ! Types::is_cluster( $cluster ) ) {
+            return;
+        }
+        $defaults = [
+            'action_url'      => get_site_url() . '/subscribe-to-email-group/',
+            'ga_category'     => 'cluster-prompt',
+            'ga_label'        => 'unidentified',
+            'ga_action'       => 'subscribe',
+            'input_icon_name' => 'envelope-o',
+            'input_icon'      => '',
+            'title'           => self::get_cta_text( $cluster_id ),
+            'button_text'     => self::get_submit_button_text( $cluster_id ),
+            'group_ids'       => [
+                $cluster->get_mailchimp_group_id(),
+            ],
+            'group_category'  => $cluster->get_mailchimp_group_category(),
+            'cluster_id'      => $cluster->get_id(),
+        ];
+        $site_defaults = apply_filters( 'pedestal_cluster_signup_form_args', [] );
+        $defaults      = wp_parse_args( $site_defaults, $defaults );
+        $context       = wp_parse_args( $args, $defaults );
+
+        // Can't show a sign up form if it can't be associated with a group
+        $context['group_ids'] = array_filter( $context['group_ids'], 'is_string' );
+        if ( empty( $context['group_ids'] ) ) {
+            return;
+        }
+
+        // Sanity checks to ensure we have consistent markup
+        $context['title'] = wpautop( $context['title'] );
+
+        if ( empty( $context['input_icon'] ) && ! empty( $context['input_icon_name'] ) ) {
+            $context['input_icon'] = Icons::get_icon( $context['input_icon_name'], 'signup-email__input-icon input-group__addon' );
+        }
+
+        ob_start();
+        Timber::render( 'views/forms/cluster-signup-form.twig', $context );
+        return ob_get_clean();
+    }
+
+    /**
+     * Helper method to get the text for the signup form submit button
+     *
+     * @param  integer $cluster_id Post ID of the cluster
+     * @return string              Default or customized text
+     */
+    public static function get_submit_button_text( $cluster_id = 0 ) {
+        $default_text = 'Get Alerts';
+        $cluster = Post::get( $cluster_id );
+        if ( ! Types::is_cluster( $cluster ) ) {
+            return $default_text;
+        }
+        $custom_text = $cluster->get_fm_field( 'signup_form_settings', 'button_text' );
+        return $custom_text ?: $default_text;
+    }
+
+    /**
+     * Helper method to get the call to action text for the signup form
+     *
+     * @param  integer $cluster_id Post ID of the cluster
+     * @return string              Default or customized text
+     */
+    public static function get_cta_text( $cluster_id = 0 ) {
+        $default_text = 'Get email notifications';
+        $cluster = Post::get( $cluster_id );
+        if ( ! Types::is_cluster( $cluster ) ) {
+            return $default_text;
+        }
+        $default_text = "Get email notifications whenever we write about <strong>{$cluster->get_the_title()}</strong>";
+        $custom_text = $cluster->get_fm_field( 'signup_form_settings', 'cta_text' );
+        return $custom_text ?: $default_text;
     }
 }

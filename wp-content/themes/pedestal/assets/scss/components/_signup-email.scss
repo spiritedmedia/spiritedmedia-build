@@ -3,6 +3,12 @@
   text-align: center;
 }
 
+.signup-email__form__inner {
+  .signup-email__form.is-success & {
+    display: none;
+  }
+}
+
 .signup-email__input-group,
 .signup-email__btn {
   margin-top: 0;
@@ -29,6 +35,16 @@
   margin-right: auto;
   margin-left: auto;
   text-transform: uppercase;
+
+  .signup-email--daily & {
+    @include button-color-variant( $accent-color );
+  }
+}
+
+.signup-email__submit-text {
+  .signup-email__form.is-loading & {
+    display: none;
+  }
 }
 
 .signup-email__explore {
@@ -101,6 +117,14 @@
   .signup-email__title,
   .signup-email__subtitle {
     margin-bottom: rem( 12px );
+  }
+
+  .signup-email__title :last-of-type {
+    margin-bottom: 0;
+  }
+
+  .signup-email__btn {
+    @include button-color-variant( $accent-2-color );
   }
 
 }

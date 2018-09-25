@@ -5,6 +5,7 @@ use function Pedestal\Pedestal;
 
 use Timber\Timber;
 
+use Pedestal\Icons;
 use Pedestal\Posts\{
     Post,
     Newsletter
@@ -16,7 +17,7 @@ use Pedestal\Objects\MailChimp;
 
 use Pedestal\Email\{
     Email,
-    Newsletter_Groups
+    Email_Groups
 };
 
 class Newsletter_Emails {
@@ -46,8 +47,10 @@ class Newsletter_Emails {
                 return;
             }
             // Render the newsletter signup form after the 3rd item in a stream
-            $context = Timber::get_context();
-            Timber::render( 'partials/stream/stream-signup-daily.twig', $context );
+            $signup_form = self::get_signup_form();
+            echo '<div class="stream-item stream-item--signup-email signup-email--daily">';
+            echo $signup_form;
+            echo '</div>';
         } );
         add_action( 'admin_footer', function() {
             $post = get_post();
@@ -270,5 +273,72 @@ class Newsletter_Emails {
         }
 
         return $new_text;
+    }
+
+    /**
+     * Get a signup form for newsletters
+     *
+     * @param  array   $args       Arguments to manipulate the signup form
+     * @return string              HTML markup of the signup form or nothing
+     *                             if the form can't be rendered
+     */
+    public static function get_signup_form( $args = [] ) {
+        $email_groups = Email_Groups::get_instance();
+        $defaults = [
+            'action_url'           => get_site_url() . '/subscribe-to-email-group/',
+            'ga_category'          => 'inline-prompt',
+            'ga_label'             => 'unidentified',
+            'ga_action'            => 'subscribe',
+            'icon'                 => Icons::get_icon( 'envelope-slant' ),
+            'input_icon_name'      => 'envelope-o',
+            'input_icon'           => '',
+            'success_icon'         => Icons::get_icon( 'check' ),
+            'name'                 => PEDESTAL_BLOG_NAME,
+            'title'                => '',
+            'body'                 => 'default',
+            'name'                 => PEDESTAL_BLOG_NAME,
+            'sender_email_address' => PEDESTAL_EMAIL_NEWS,
+            'send_time'            => '7:00 a.m.',
+            'group_ids'            => [
+                $email_groups->get_newsletter_group_id( 'Daily Newsletter' ),
+                $email_groups->get_newsletter_group_id( 'Breaking News' ),
+            ],
+            'group_category'       => 'Newsletters',
+        ];
+        $site_defaults = apply_filters( 'pedestal_newsletter_signup_form_args', [] );
+        $defaults      = wp_parse_args( $site_defaults, $defaults );
+        $context       = wp_parse_args( $args, $defaults );
+
+        // Can't show a sign up form if it can't be associated with a group
+        $context['group_ids'] = array_filter( $context['group_ids'], 'is_string' );
+        if ( empty( $context['group_ids'] ) ) {
+            return;
+        }
+
+        if ( 'default' == $context['body'] ) {
+            $latest_newsletter_url = Newsletter::get_latest_newsletter_link();
+            $default_body = '
+                <ul class="signup-email__details">
+                    <li>Top news highlights and can\'t-miss ' . PEDESTAL_CITY_NICKNAME . ' stories</li>
+                    <li>Upcoming events and activities in your area for you and your family</li>
+            ';
+            if ( $latest_newsletter_url ) {
+                $default_body .= '
+                <li>
+                    Check out a <a href="' . esc_url( $latest_newsletter_url ) . '">sample from today\'s newsletter</a>
+                </li>
+                ';
+            }
+            $default_body .= '</ul>';
+            $context['body'] = $default_body;
+        }
+
+        if ( empty( $context['input_icon'] ) && ! empty( $context['input_icon_name'] ) ) {
+            $context['input_icon'] = Icons::get_icon( $context['input_icon_name'], 'signup-email__input-icon input-group__addon' );
+        }
+
+        ob_start();
+        Timber::render( 'views/forms/newsletter-signup-form.twig', $context );
+        return ob_get_clean();
     }
 }

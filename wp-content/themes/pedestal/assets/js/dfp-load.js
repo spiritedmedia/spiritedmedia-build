@@ -32,6 +32,7 @@ jQuery(function($) {
       return;
     }
 
+    // Determine available sizes for the ad unit
     var sizes = [];
     $.each(rawSize.split(','), function(sizeIndex, item) {
       item = $.trim(item);
@@ -102,6 +103,9 @@ googletag.cmd.push(function() {
     if (false === e.isEmpty) {
       var id = getGoogleDFPUnitID(e.slot);
       div = document.getElementById(id);
+      if (! div) {
+        return;
+      }
       html = '<div class="dfp-disclaimer">ADVERTISEMENT</div>';
       div.insertAdjacentHTML('afterbegin', html);
     }

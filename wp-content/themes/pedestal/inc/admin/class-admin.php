@@ -5,10 +5,7 @@ namespace Pedestal\Admin;
 use function Pedestal\Pedestal;
 
 use Timber\Timber;
-use Pedestal\Email\{
-    Email,
-    Newsletter_Groups
-};
+use Pedestal\Email\Email;
 use Pedestal\Icons;
 use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;

@@ -3,6 +3,8 @@
 namespace Pedestal;
 
 use Timber\Timber;
+
+use Pedestal\Icons;
 use Pedestal\Objects\{
     User,
     YouTube
@@ -12,6 +14,7 @@ use Pedestal\Posts\Entities\{
     Embed,
     Event
 };
+use Pedestal\Email\Newsletter_Emails;
 use Pedestal\Registrations\Post_Types\Types;
 
 class Shortcode_Manager {
@@ -751,11 +754,18 @@ class Shortcode_Manager {
      * Do the email signup form
      */
     public function email_signup_form( $attrs ) {
-        $context = Timber::get_context();
-
-        ob_start();
-        Timber::render( 'partials/shortcode/email-signup.twig', $context );
-        return '<div class="signup-email--shortcode">' . ob_get_clean() . '</div>';
+        $args = [
+            'input_icon_name' => 'at-symbol',
+            'title'           => '',
+            'icon'            => '',
+            'body'            => '',
+            'success_icon'    => Icons::get_icon( 'heart' ),
+        ];
+        if ( ! empty( $attrs['ga_category'] ) ) {
+            $args['ga_category'] = $attrs['ga_category'];
+        }
+        $signup_form = Newsletter_Emails::get_signup_form( $args );
+        return '<div class="signup-email--shortcode">' . $signup_form . '</div>';
     }
 
     /**

@@ -117,6 +117,12 @@ class Billy_Penn extends Pedestal {
             $context['submit_text'] = 'Take my money!';
             return $context;
         } );
+
+        // Configure newsletter signup form
+        add_filter( 'pedestal_newsletter_signup_form_args', function( $args = [] ) {
+            $args['title'] = 'Get Billy Penn every day in your inbox';
+            return $args;
+        } );
     }
 
     /**

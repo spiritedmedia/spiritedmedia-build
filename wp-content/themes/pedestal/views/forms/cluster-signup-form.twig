@@ -1,0 +1,58 @@
+<form class="signup-email__form js-signup-email-form"
+    action="{{ action_url|esc_url }}"
+    method="POST"
+    data-ga-category="{{ ga_category|esc_attr }}"
+    data-ga-label="{{ ga_label|esc_attr }}"
+    {% if ga_action %}
+        data-ga-action="{{ ga_action|esc_attr }}"
+    {% endif %}
+>
+
+    <div class="signup-email__form__inner form-group">
+
+        {% if title %}
+            <div class="signup-email__header">
+                <div class="signup-email__title">
+                    {{ title }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="signup-email__input-group input-group">
+            <label for="{{ id_email_input|esc_attr }}" class="invisible">
+                Email Address
+            </label>
+            {{ input_icon }}
+            <input type="email"
+                id="{{ id_email_input|esc_attr }}"
+                class="signup-email__email-input input-group__input form-input js-email-input {{ input_class }}"
+                name="email_address"
+                placeholder="enter your email address"
+                required
+            />
+        </div>
+
+        <input type="hidden" name="cluster-id" value="{{ cluster_id|esc_attr }}">
+        {% for group_id in group_ids %}
+            <input type="hidden" name="group-ids[]" value="{{ group_id|esc_attr }}">
+        {% endfor %}
+        <input type="hidden" name="group-category" value="{{ group_category|esc_attr }}">
+
+        {% include 'partials/email-forms/form-honeypot.twig' %}
+
+        <button class="signup-email__btn btn--oval js-form-submit" type="submit">
+            <span class="signup-email__submit-text js-form-submit-text">{{ button_text }}</span>
+            <div class="form-submit__loader js-form-submit-loader">{% include 'partials/loading.twig' %}</div>
+        </button>
+
+    </div>
+
+    <div class="js-fail-message invalid-feedback">Something went wrong!</div>
+
+    <div class="signup-email__success-message success-message js-success-message">
+        <div class="signup-email__success-message__details">
+            <p><strong>Thank you.</strong></p>
+            <p>You can unsubscribe anytime from a link at the bottom of every email.</p>
+        </div>
+    </div>
+</form>

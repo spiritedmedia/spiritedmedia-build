@@ -5,6 +5,7 @@
 
 namespace Pedestal;
 
+use Pedestal\Icons;
 use \Pedestal\Utils\Utils;
 
 class Denverite extends Pedestal {
@@ -124,7 +125,9 @@ class Denverite extends Pedestal {
                 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '121553308',
 
                 // DFP
+                'PEDESTAL_DFP_ID'     => '270360483',
                 'PEDESTAL_DFP_PREFIX' => 'DEN',
+                'PEDESTAL_DFP_SITE'   => 'denverite',
 
                 // Social Media
                 'PEDESTAL_TWITTER_USERNAME'    => 'denverite',
@@ -176,6 +179,21 @@ class Denverite extends Pedestal {
         // Add Merriweather and Montserrat fonts
         add_filter( 'pedestal_google_fonts_string', function( $string ) {
             return 'Merriweather:400,400i,700,700i|Montserrat:400,400i,600,600i';
+        } );
+
+        // Configure newsletter signup form
+        add_filter( 'pedestal_newsletter_signup_form_args', function( $args = [] ) {
+            $args['title'] = 'Denverite goes great with mornings';
+            $args['body'] = '<p>If you’re here, you care about Denver. Our quick, newsy (and sometimes a little funny) morning newsletter is for people like you, by people like you.</p>';
+            $args['icon'] = Icons::get_icon( 'coffee' );
+            $args['send_time'] = '7:20 a.m.';
+
+            if ( is_singular() ) {
+                $args['title'] = 'Hi! You’re like us!';
+                $args['body'] = '<p>Looks like you’re the type of person who reads to the ends of articles! Well, <em>true believer</em>, you might really like our morning newsletter. It’s quick, free and gets you up to speed on the important and delightful things happening right here in Denver.</p>';
+                $args['icon'] = Icons::get_icon( 'hand-spock' );
+            }
+            return $args;
         } );
     }
 

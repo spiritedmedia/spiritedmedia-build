@@ -33,10 +33,10 @@
                 </time>
             </p>
 
-            {% if 'story' == type and cluster_group_id or force_display_follow_form %}
-            <div class="signup-email--cluster signup-email">
-                {% include 'partials/signup-cluster.twig' %}
-            </div>
+            {% if cluster_prompt %}
+                <div class="signup-email--cluster signup-email">
+                    {{ cluster_prompt }}
+                </div>
             {% endif %}
 
         </header>
@@ -68,7 +68,5 @@
         {% include 'partials/whosnext/description-widget.twig' %}
     {% endif %}
 
-    {% if sidebar %}
-        {{ sidebar }}
-    {% endif %}
+    {{ sidebar }}
 {% endblock %}

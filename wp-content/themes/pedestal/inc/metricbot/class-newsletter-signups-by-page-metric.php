@@ -6,7 +6,6 @@ use Pedestal\Objects\{
     Google_Analytics,
     Notifications
 };
-use Pedestal\Email\Newsletter_Groups;
 use Pedestal\Utils\Utils;
 
 class Newsletter_Signups_By_Page_Metric {
