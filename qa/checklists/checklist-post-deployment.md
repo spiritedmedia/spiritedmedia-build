@@ -12,9 +12,9 @@ javascript:googletag.openConsole()
 
 ## Do the ads work?
 ### First, a visual check.
-Visit this [story about donuts](https://billypenn.com/2017/09/26/we-knew-nothing-about-donuts-and-other-stories-in-the-new-federal-donuts-book/). You may not see any ads -- that’s okay. Our ad server may not have any ads to display at this moment. Click your Ad Debugger bookmark. The console below should show seven ad slots, like this:
+Visit this [story about donuts](https://billypenn.com/2017/09/26/we-knew-nothing-about-donuts-and-other-stories-in-the-new-federal-donuts-book/). You may not see any ads -- that’s okay. Our ad server may not have any ads to display at this moment. Click your Ad Debugger bookmark. The console below should show four ad slots, like this:
 
-<img src="img/ads-visual-check.jpg" alt="" width="587">
+<img src="img/ads-visual-check.png" alt="" width="587">
 
 
 Close the debugger console.
