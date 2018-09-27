@@ -12,8 +12,9 @@ $context = Timber::get_context();
 
 if ( Types::is_post( $item ) ) :
 
+    $context['sidebar'] = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
     if ( is_active_sidebar( 'sidebar-stream' ) ) {
-        $context['sidebar'] = Timber::get_widgets( 'sidebar-stream' );
+        $context['sidebar'] .= Timber::get_widgets( 'sidebar-stream' );
     }
 
     if ( $item->is_story() ) {
@@ -25,7 +26,7 @@ if ( Types::is_post( $item ) ) :
         } );
 
         if ( is_active_sidebar( 'sidebar-story' ) ) {
-            $context['sidebar'] = Timber::get_widgets( 'sidebar-story' );
+            $context['sidebar'] .= Timber::get_widgets( 'sidebar-story' );
         }
     }
 
@@ -43,16 +44,6 @@ if ( Types::is_post( $item ) ) :
             'show_text' => true,
             'show_nav' => false,
         ] );
-    }
-
-    // If there is not a sidebar specificed, add a sidebar ad in the right rail
-    if ( empty( $context['sidebar'] ) ) {
-        $right_rail_ad = Adverts::render_dfp_unit(
-            PEDESTAL_DFP_PREFIX . '_Sidebar',
-            '300x600,160x600,300x250',
-            '1'
-        );
-        $context['sidebar'] = '<li class="widget widget_pedestal_dfp_rail_right">' . $right_rail_ad . '</li>';
     }
 
     // Load Post context after everything else so it takes priority

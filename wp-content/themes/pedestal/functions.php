@@ -535,11 +535,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 return round( microtime( true ) * 1000 );
             } ) );
 
-            // Render a DFP unit
-            $twig->addFunction( new \Twig_SimpleFunction( 'dfp_unit', function( $id, $sizes, $args = [], $slot_target = '' ) {
-                return Adverts::render_dfp_unit( $id, $sizes, $args, $slot_target );
-            } ) );
-
             // Add WordPress' checked() function to Twig
             $twig->addFunction( new \Twig_SimpleFunction( 'checked', function( $checked, $current = true ) {
                 return checked( $checked, $current );
@@ -677,9 +672,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             if ( PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY ) {
                 register_widget( '\Pedestal\Widgets\Daily_Insta_Widget' );
             }
-
-            // Our DFP widgets
-            register_widget( '\Pedestal\Widgets\DFP\Rail_Right_Widget' );
 
             // Unregister core widgets we won't be using
             unregister_widget( 'WP_Widget_Calendar' );

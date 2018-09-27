@@ -278,4 +278,17 @@ abstract class Entity extends Post {
         $context['cluster_list'] = ob_get_clean();
         return $context;
     }
+
+    /**
+     * Get the Category term object associated with this entity
+     *
+     * @return WP_Term|false The category term object or false if not found
+     */
+    public function get_category_term() {
+        $terms = wp_get_object_terms( $this->get_id(), 'pedestal_category' );
+        if ( ! is_wp_error( $terms ) && ! empty( $terms[0] ) ) {
+            return $terms[0];
+        }
+        return false;
+    }
 }

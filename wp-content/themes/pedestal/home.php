@@ -3,6 +3,7 @@
 use Timber\Timber;
 use Pedestal\Objects\Stream;
 use Pedestal\Featured_Posts;
+use Pedestal\Adverts;
 
 $stream = new Stream;
 $featured_posts = Featured_Posts::get_instance();
@@ -23,7 +24,8 @@ $context['stream'] = $stream->get_the_stream();
 $context['pagination'] = $stream->get_load_more_button();
 
 if ( is_active_sidebar( 'sidebar-homepage' ) ) {
-    $context['sidebar'] = Timber::get_widgets( 'sidebar-homepage' );
+    $context['sidebar'] = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
+    $context['sidebar'] .= Timber::get_widgets( 'sidebar-homepage' );
 }
 
 Timber::render( 'home.twig', $context );

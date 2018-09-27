@@ -29,11 +29,6 @@ $context['pagination'] = $stream->get_load_more_button([
     'text' => $button_text,
 ]);
 
-$right_rail_ad = Adverts::render_dfp_unit(
-    PEDESTAL_DFP_PREFIX . '_Sidebar',
-    '300x600,160x600,300x250',
-    '1'
-);
-$context['sidebar'] = '<li class="widget widget_pedestal_dfp_rail_right">' . $right_rail_ad . '</li>';
+$context['sidebar'] = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
 
 Timber::render( 'archive.twig', $context );

@@ -22,7 +22,8 @@ if ( Types::is_post( $item ) ) :
         'widths' => [ 320, 480, 640, 676, 700, 800, 1024 ],
     ];
     if ( is_active_sidebar( 'sidebar-entity' ) ) {
-        $context['sidebar'] = Timber::get_widgets( 'sidebar-entity' );
+        $context['sidebar'] = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
+        $context['sidebar'] .= Timber::get_widgets( 'sidebar-entity' );
     }
 
     $context['newsletter_signup_prompt'] = Newsletter_Emails::get_signup_form();

@@ -1,4 +1,9 @@
 // Handle the flag appearance of the logo wrapper
+
+.site-header {
+  margin-bottom: rem( 32px );
+}
+
 .site-header__logo-link {
   display: flex;
   justify-content: center;
@@ -23,6 +28,10 @@
 
 
 @media #{$site-header-breakpoint} {
+  .site-header {
+    margin-bottom: 0;
+  }
+
   .site-header__logo {
     height: $site-header-logo-height--bp-up;
   }

@@ -38,10 +38,6 @@
                 {% block after_header %}
                 {% endblock %}
 
-                {% if not is_page %}
-                    {% include 'partials/adverts/dfp-header-300x50.twig' ignore missing %}
-                {% endif %}
-
                 <div class="content-wrapper">
                    {% block the_body %}
                    {% endblock %}

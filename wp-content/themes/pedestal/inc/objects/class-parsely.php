@@ -120,6 +120,7 @@ class Parsely {
                 }
                 $headline = $this->str_sanitize( $post->get_title() );
                 $schema = ( 'page' == $post->get_type() ) ? 'WebPage' : 'NewsArticle';
+                $article_section = '';
                 if ( $post->is_entity() ) {
                     $clusters = $post->get_clusters( [
                         'types'   => Types::get_cluster_post_types(),
@@ -132,6 +133,11 @@ class Parsely {
                             $keywords[] = $type . ' :: ' . $cluster->get_title();
                         }
                     }
+
+                    $category = $post->get_category_term();
+                    if ( ! empty( $category->name ) ) {
+                        $article_section = $category->name;
+                    }
                 }
                 $data = array_merge( $base_data, [
                     '@type'          => $schema,
@@ -140,10 +146,11 @@ class Parsely {
                     'thumbnailUrl'   => $post->get_featured_image_url(),
                     'articleId'      => (string) $post->get_id(),
                     'dateCreated'    => $post->get_post_date_gmt( 'c' ),
-                    'articleSection' => '',
+                    'articleSection' => $article_section,
                     'creator'        => $post->get_author_names(),
                     'keywords'       => $keywords,
                 ] );
+
                 break;
 
             case 'user':

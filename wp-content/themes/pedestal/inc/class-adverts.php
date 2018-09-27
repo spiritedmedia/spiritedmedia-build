@@ -41,15 +41,6 @@ class Adverts {
                 'artclbox1'
             );
         } );
-        add_action( 'pedestal_after_stream_item_8', function() {
-            echo $this->render_stream_ad_unit( '08' );
-        } );
-        add_action( 'pedestal_after_stream_item_12', function() {
-            echo $this->render_stream_ad_unit( '12' );
-        } );
-        add_action( 'pedestal_after_stream_item_16', function() {
-            echo $this->render_stream_ad_unit( '16' );
-        } );
     }
 
     /**
@@ -144,27 +135,6 @@ class Adverts {
     }
 
     /**
-     * Render a stream ad unit, these are unique per site.
-     * @param  string $index  Which ad unit position to render
-     * @return string         HTML for the ad unit
-     */
-    public function render_stream_ad_unit( $index = '' ) {
-        $stream = new Stream;
-        if ( $stream->is_stream_list() ) {
-            return;
-        }
-
-        // Don't show on author pages
-        if ( get_query_var( 'author_name' ) ) {
-            return;
-        }
-        $context = Timber::get_context();
-        ob_start();
-        Timber::render( 'partials/adverts/ad-stream-' . $index . '.twig', $context );
-        return ob_get_clean();
-    }
-
-    /**
      * Render a DFP ad unit
      * @param  string $id           The ID of the ad position
      * @param  string $sizes        Comma separated list of accepted sizes
@@ -194,6 +164,20 @@ class Adverts {
         ob_start();
         Timber::render( 'partials/adverts/dfp-unit.twig', $ad_context );
         return ob_get_clean();
+    }
+
+    /**
+     * Helper for rendering a sidebar ad unit
+     *
+     * @return string HTML markup of the sidebar ad unit
+     */
+    public static function render_sidebar_ad_unit() {
+        return self::render_dfp_unit(
+            PEDESTAL_DFP_PREFIX . '_Sidebar',
+            '300x600,160x600,300x250',
+            [],
+            '1'
+        );
     }
 
     /**

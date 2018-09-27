@@ -80,7 +80,7 @@ class Taxonomies {
      * Register custom taxonomies
      */
     public function action_init_register_taxonomies() {
-
+        global $wp_taxonomies;
         foreach ( self::$ptypes_types_tax as $tax_name => $tax_settings ) :
 
             $singular = sprintf( '%s Type', $tax_settings['singular_name'] );
@@ -208,6 +208,8 @@ class Taxonomies {
             'single_option_taxonomy'     => true, // Make this taxonomy use radio buttons
         ];
         register_taxonomy( 'pedestal_category', Types::get_entity_post_types(), $args );
+        // Remove the built in Categroy taxonomy which causes confusion
+        unset( $wp_taxonomies['category'] );
 
         // Register an ad category field for the DFP Path hierarchical targeting
         add_action( 'fm_term_pedestal_category', function() {

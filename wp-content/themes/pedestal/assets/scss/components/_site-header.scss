@@ -1,6 +1,5 @@
 .site-header {
   height: $site-header-height;
-  margin-bottom: rem( 32px );
   box-shadow: $site-header-box-shadow;
   padding: $site-header-padding-y rem( 8px );
   background-color: $site-header-background-color;
@@ -131,7 +130,6 @@
 
   .site-header {
     height: auto;
-    margin-bottom: 0;
     box-shadow: $site-header-box-shadow--bp-up;
     border-top: rem( 4px ) solid $site-header-border-top-color;
     padding: rem( 8px ) ( $column-gutter / 2 ) 0;
