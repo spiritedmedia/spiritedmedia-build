@@ -591,4 +591,48 @@ class Utils {
     public static function return_same( $input ) {
         return $input;
     }
+
+    /**
+     * Add an ordinal suffix to a given integer
+     *
+     * @link https://stackoverflow.com/a/3110033/1801260
+     * @param int|string $number Integer or numeric string
+     * @return string String with ordinal suffix or the original value if not numeric
+     */
+    public static function add_ordinal_suffix( $number ) {
+        if ( ! is_numeric( $number ) ) {
+            return $number;
+        }
+        $ends = [ 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th' ];
+        if ( ( ( $number % 100 ) >= 11 ) && ( ( $number % 100 ) <= 13 ) ) {
+            return $number . 'th';
+        }
+        return $number . $ends[ $number % 10 ];
+    }
+
+    /**
+     * Get the regular expression for a given shortcode attribute name
+     *
+     * @link https://regex101.com/r/8ERUqF/4
+     * @param string $attribute_name Shortcode attribute name
+     * @return string Regular expression
+     */
+    public static function get_shortcode_attribute_regex( $attribute_name ) {
+        return '/' . $attribute_name . '="(.*?)(("\s[a-zA-Z]*?=")|("\s?\/?\]))/m';
+    }
+
+    /**
+     * Decode all HTML entities in a string, including numeric entities
+     *
+     * @link http://php.net/manual/en/function.html-entity-decode.php#104617
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function decode_html_entities( string $string ) {
+        $string = html_entity_decode( $string );
+        return preg_replace_callback( '/(&#[0-9]+;)/', function( $match ) {
+            return mb_convert_encoding( $match[1], 'UTF-8', 'HTML-ENTITIES' );
+        }, $string );
+    }
 }

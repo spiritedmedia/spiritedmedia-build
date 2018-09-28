@@ -8249,7 +8249,6 @@ class ComposerStaticInit3fd466591cad51673a17d29c372efc2f
         'Pedestal\\Widgets\\Daily_Insta_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-daily-insta-widget.php',
         'Pedestal\\Widgets\\In_This_Story_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-in-this-story-widget.php',
         'Pedestal\\Widgets\\Recent_Content_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-recent-content-widget.php',
-        'Pedestal\\Widgets\\Recent_Video_Widget' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/widgets/class-recent-video-widget.php',
         'Psr\\Cache\\CacheException' => __DIR__ . '/..' . '/psr/cache/src/CacheException.php',
         'Psr\\Cache\\CacheItemInterface' => __DIR__ . '/..' . '/psr/cache/src/CacheItemInterface.php',
         'Psr\\Cache\\CacheItemPoolInterface' => __DIR__ . '/..' . '/psr/cache/src/CacheItemPoolInterface.php',

@@ -1784,5 +1784,213 @@ class CLI extends \WP_CLI_Command {
         update_option( 'pedestal_message_spot', $new_data );
         WP_CLI::success( 'Success!' );
     }
+
+    /**
+     * Encode image shortcode attributes
+     *
+     * Fixes issues with some legacy image attributes including square brackets
+     * and HTML.
+     *
+     * Does a dry run by default. Pass the `--save` argument to save changes to
+     * the database.
+     *
+     * ## OPTIONS
+     *
+     * [--save]
+     * : Save the changes to the database?
+     *
+     * ## EXAMPLES
+     *
+     *     wp pedestal encode-img-shortcode-captions
+     *     wp pedestal encode-img-shortcode-captions --url=https://denverite.com/
+     *
+     * @subcommand encode-img-shortcode-captions
+     */
+    public function encode_img_shortcode_captions( $args, $assoc_args ) {
+        $save = $assoc_args['save'] ?? false;
+        $debug = $assoc_args['debug'] ?? false;
+
+        $encode_attributes = [
+            'alt',
+            'caption',
+        ];
+        $query_args = [
+            'post_type'              => Types::get_original_post_types(),
+            'post_status'            => 'public',
+            'posts_per_page'         => -1,
+            'fields'                 => 'ids',
+            'no_found_rows'          => true,
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false,
+            's'                      => '[img',
+            'date_query'             => [
+                // This is the first day Denverite was live running Pedestal
+                // https://spiritedmedia.slack.com/archives/CAXG6UK2M/p1528861481000093
+                'before' => '2018-06-13',
+            ],
+        ];
+        $query = new \WP_Query( $query_args );
+        $post_count = count( $query->posts );
+
+        WP_CLI::line( "$post_count total posts found containing `[img]` shortcodes..." );
+        $progress = \WP_CLI\Utils\make_progress_bar( 'Encoding image shortcode attributes', $post_count );
+        foreach ( $query->posts as $post_id ) :
+            $post = Post::get( $post_id );
+            if ( ! Types::is_post( $post ) ) {
+                WP_CLI::debug( "Could not retrieve a Pedestal post object for $post_id!" );
+                continue;
+            }
+
+            $post_content = $post->get_content();
+
+            if ( ! $post_content ) {
+                WP_CLI::warning( "Post content for post $post_id is empty! That's weird! Moving on..." );
+                $progress->tick();
+                continue;
+            }
+
+            $permalink = $post->get_the_permalink();
+            $ignore_caps = true;
+            $edit_link = $post->get_edit_link( $ignore_caps );
+
+            // Find all the shortcodes in the post content
+            preg_match_all( '/' . get_shortcode_regex() . '/', $post_content, $shortcode_matches, PREG_SET_ORDER );
+
+            $exception = false;
+            $num_images = 0;
+            $updated_content = $post_content;
+            foreach ( $shortcode_matches as $match ) :
+                $shortcode_tag = $match[2];
+
+                if ( 'img' != $shortcode_tag ) {
+                    continue;
+                }
+
+                $full_shortcode = $match[0];
+                $shortcode_order = Utils::add_ordinal_suffix( $num_images + 1 );
+
+                foreach ( $encode_attributes as $attribute_name ) :
+
+                    $attr_pattern = Utils::get_shortcode_attribute_regex( $attribute_name );
+                    preg_match_all( $attr_pattern, $full_shortcode, $orig_attr_matches, PREG_SET_ORDER );
+
+                    if ( empty( $orig_attr_matches ) ) {
+                        continue;
+                    }
+
+                    $orig_attr = $orig_attr_matches[0][1];
+                    $decoded_attr = Utils::decode_html_entities( $orig_attr );
+
+                    // Convert <br> tags to spaces
+                    $decoded_attr = preg_replace( '/<br\s*\/?>/', ' ', $decoded_attr );
+
+                    // Warn upon discovering any other suspected HTML in attribute
+                    // https://stackoverflow.com/a/1736801/1801260
+                    $html_pattern = '/<(?:"[^"]*"[\'"]*|\'[^\']*\'[\'"]*|[^\'">])+>/';
+                    if ( preg_match( $html_pattern, $decoded_attr ) ) {
+                        $exception = true;
+                        WP_CLI::warning( "The `$attribute_name` attribute for the $shortcode_order image shortcode in $post_id seems to contain HTML tags. Double check it below:" );
+                        WP_CLI::line( '' );
+                        WP_CLI::line( $decoded_attr );
+                        WP_CLI::line( '' );
+                        WP_CLI::line( "Edit here: $edit_link" );
+                        WP_CLI::line( "View here: $permalink" );
+                        WP_CLI::line( '' );
+                        WP_CLI::line( '' );
+                    }
+
+                    // Move on to the next post if the attribute seems to be
+                    // encoded already.
+                    //
+                    // It's likely that the attribute content will contain a
+                    // space, so check for the urlencoded value of a space.
+                    if ( strpos( $decoded_attr, '%20' ) !== false ) {
+                        WP_CLI::debug( "The `$attribute_name` attribute for the $shortcode_order image shortcode in $post_id seems to be urlencoded already:" );
+                        if ( $debug ) {
+                            WP_CLI::line( $decoded_attr );
+                        }
+                        WP_CLI::debug( "Edit here: $edit_link" );
+                        WP_CLI::debug( 'Moving on to the next attribute...' );
+                        if ( $debug ) {
+                            WP_CLI::line( '' );
+                        }
+                        continue;
+                    }
+
+                    $encoded_attr = rawurlencode( $decoded_attr );
+
+                    // Compare the original decoded attribute content with the
+                    // new attribute content -- there should be no differences
+                    $re_decoded_attr = rawurldecode( $encoded_attr );
+                    $attr_identical = ( $re_decoded_attr === $decoded_attr );
+                    if ( ! $attr_identical ) {
+                        $exception = true;
+                        WP_CLI::error( "The `$attribute_name` attribute for the $shortcode_order image shortcode in $post_id mutated during encoding:" );
+                    }
+
+                    // Be as specific as possible when replacing attributes
+                    //
+                    // Due to this approach, if the same value is duplicated
+                    // across multiple shortcodes in the content, the
+                    // replacement will only need to be done the first time.
+                    $updated_content = str_replace(
+                        "$attribute_name=\"$orig_attr\"",
+                        "$attribute_name=\"$encoded_attr\"",
+                        $updated_content
+                    );
+
+                endforeach;
+
+                $num_images++;
+
+            endforeach;
+
+            if ( $updated_content !== $post_content ) {
+                $updated_post = $post_id;
+
+                if ( $save ) {
+                    $updated_post = wp_update_post( [
+                        'ID'           => $post_id,
+                        'post_content' => $updated_content,
+                    ] );
+                }
+
+                if ( is_wp_error( $updated_post ) ) {
+                    foreach ( $updated_post->get_error_messages() as $error ) {
+                        WP_CLI::error( $error );
+                    }
+                } else {
+                    WP_CLI::debug( "Post $post_id was updated successfully! $num_images image shortcodes were updated." );
+                    WP_CLI::debug( $edit_link );
+                    WP_CLI::debug( '' );
+
+                    if ( $exception ) {
+                        WP_CLI::warning( "Post $post_id was updated successfully, but there was an issue." );
+                        WP_CLI::line( "$num_images image shortcodes were updated." );
+                        WP_CLI::line( $edit_link );
+                        WP_CLI::line( '' );
+                    }
+                }
+            } else {
+                WP_CLI::debug( "Post content for $post_id was unchanged. Moving on..." );
+            }
+
+            $progress->tick();
+
+            // Hopefully this will help with memory management
+            unset( $attr_diff );
+            unset( $updated_shortcode );
+            unset( $updated_content );
+            unset( $updated_post );
+            unset( $edit_link );
+            unset( $exception );
+            unset( $post );
+
+        endforeach;
+
+        $progress->finish();
+
+        WP_CLI::success( 'Done!' );
+    }
 }
 WP_CLI::add_command( 'pedestal', '\Pedestal\CLI\CLI' );

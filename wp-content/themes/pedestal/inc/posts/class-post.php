@@ -680,10 +680,15 @@ abstract class Post {
     /**
      * Get the edit link for the post
      *
+     * @param boolean $ignore_caps Return an assumed edit link if user can't edit posts?
      * @return string  URL to edit the post
      */
-    public function get_edit_link() {
-        return get_edit_post_link( $this->get_id() );
+    public function get_edit_link( $ignore_caps = false ) {
+        $edit_link = get_edit_post_link( $this->get_id() );
+        if ( ! $edit_link && $ignore_caps ) {
+            $edit_link = site_url( "/wp-admin/post.php?post={$this->get_id()}&action=edit" );
+        }
+        return $edit_link;
     }
 
     /**

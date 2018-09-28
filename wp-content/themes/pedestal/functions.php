@@ -667,7 +667,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             // Our widgets
             register_widget( '\Pedestal\Widgets\In_This_Story_Widget' );
             register_widget( '\Pedestal\Widgets\Recent_Content_Widget' );
-            register_widget( '\Pedestal\Widgets\Recent_Video_Widget' );
 
             if ( PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY ) {
                 register_widget( '\Pedestal\Widgets\Daily_Insta_Widget' );

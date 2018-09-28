@@ -59,13 +59,18 @@ $links_to_check = [
         'expected_forms' => 1,
     ],
     [
+        'name'           => 'The Incline Newsletter Signup Page',
+        'url'            => $denverite_root . '/newsletter-signup/',
+        'expected_forms' => 1,
+    ],
+    [
         'name'           => 'Denverite Homepage',
         'url'            => $denverite_root . '/',
         'expected_forms' => 1,
     ],
     [
-        'name'           => 'The Incline Newsletter Signup Page',
-        'url'            => $denverite_root . '/newsletter-signup/',
+        'name'           => 'Denverite Story',
+        'url'            => $denverite_root . '/stories/santa-fe-drive-denver-week/',
         'expected_forms' => 1,
     ],
 ];

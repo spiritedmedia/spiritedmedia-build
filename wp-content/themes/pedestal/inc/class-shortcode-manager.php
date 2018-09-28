@@ -376,7 +376,8 @@ class Shortcode_Manager {
             'label'       => __( 'Caption', 'pedestal' ),
             'attr'        => 'caption',
             'type'        => 'textarea',
-            'description' => __( 'A caption to describe the embed', 'pedestal' ),
+            'encode'      => true,
+            'description' => __( 'A caption to describe the embed.', 'pedestal' ),
         ];
         return $ui_args;
     }
@@ -420,7 +421,9 @@ class Shortcode_Manager {
         }
 
         $figure_atts = [
-            'caption' => isset( $attrs['caption'] ) ? $attrs['caption'] : '',
+            'caption' => isset( $attrs['caption'] )
+                ? rawurldecode( $attrs['caption'] )
+                : '',
         ];
 
         $figure_atts['classes'] = 'op-interactive';
@@ -511,7 +514,7 @@ class Shortcode_Manager {
         $credit_link = $obj->get_credit_link();
         if ( $credit ) {
             $shortcode_attrs = wp_parse_args( [
-                'credit' => $credit,
+                'credit' => rawurlencode( $credit ),
             ], $shortcode_attrs );
         }
         if ( $credit_link ) {
@@ -544,8 +547,8 @@ class Shortcode_Manager {
             'label'       => esc_html__( 'Credit', 'pedestal' ),
             'attr'        => 'credit',
             'type'        => 'text',
+            'encode'      => true,
             'placeholder' => esc_attr__( 'Credit for the image', 'pedestal' ),
-            'description' => esc_html__( 'Quote marks and HTML tags are not allowed', 'pedestal' ),
         ];
         $shortcode_ui_args['attrs'][] = [
             'label'       => esc_html__( 'Credit Link', 'pedestal' ),
