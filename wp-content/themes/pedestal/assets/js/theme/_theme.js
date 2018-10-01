@@ -57,7 +57,7 @@
         var $invalidFeedback   = $el.find('.js-fail-message');
         var actionURL          = $el.attr('action');
         var actionUrlSeparator = actionURL.indexOf('?') >= 0 ? '&' : '?';
-        actionURL += actionUrlSeparator + $.param({'ajax-request': 1});
+        actionURL += actionUrlSeparator + $.param({ 'ajax-request': 1 });
 
         $el.removeClass('is-failed');
         $el.addClass('is-loading');

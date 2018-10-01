@@ -21,6 +21,7 @@ class Message_Spot {
         'list-ol'              => 'Ordered list',
         'check'                => 'Checkmark',
         'star'                 => 'Star',
+        'sun'                  => 'Sun',
         'calendar-alt-regular' => 'Calendar (Outline)',
         'envelope-o'           => 'Envelope (Outline)',
         'heart-regular'        => 'Heart (Outline)',
@@ -28,6 +29,7 @@ class Message_Spot {
         'comments'             => 'Comment bubbles',
         'coffee'               => 'Coffee cup',
         'link'                 => 'Link',
+        'hand-spock'           => 'Spock Hand',
     ];
 
     /**

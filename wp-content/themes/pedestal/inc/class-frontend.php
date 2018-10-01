@@ -341,7 +341,7 @@ class Frontend {
     }
 
     /**
-     * Filter the title on single posts
+     * Filter the page title
      */
     public function filter_wp_title( $wp_title ) {
 
@@ -349,11 +349,11 @@ class Frontend {
         if ( is_home() ) {
             return PEDESTAL_HOMEPAGE_TITLE;
         } elseif ( is_singular() ) {
+            $title = $wp_title;
             $ped_post = Post::get( get_queried_object_id() );
-            if ( ! Types::is_post( $ped_post ) ) {
-                $title = $wp_title;
+            if ( Types::is_post( $ped_post ) ) {
+                $title = $ped_post->get_seo_title();
             }
-            $title = $ped_post->get_seo_title();
         } elseif ( is_search() ) {
             $title = 'Search';
         } elseif ( is_archive() ) {
