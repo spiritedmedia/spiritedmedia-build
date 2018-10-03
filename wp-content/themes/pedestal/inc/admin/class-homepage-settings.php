@@ -2,10 +2,13 @@
 namespace Pedestal\Admin;
 
 use Sunra\PhpSimple\HtmlDomParser;
+use Pedestal\Frontend;
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
 
 class Homepage_Settings {
+
+    private $exclude_stream_meta_key = 'exclude_from_home_stream';
 
     /**
      * Get an instance of this class
@@ -25,6 +28,7 @@ class Homepage_Settings {
      */
     private function setup_actions() {
         add_action( 'init', [ $this, 'action_init' ], 11 );
+        add_action( 'updated_post_meta', [ $this, 'action_updated_post_meta' ], 10, 3 );
     }
 
     /**
@@ -51,7 +55,7 @@ class Homepage_Settings {
         ] );
 
         $exclude_field = new \Fieldmanager_Radios( [
-            'name' => 'exclude_from_home_stream',
+            'name' => $this->exclude_stream_meta_key,
             'default_value' => 'show',
             'options' => [
                 'show' => 'Show on homepage stream',
@@ -70,6 +74,23 @@ class Homepage_Settings {
                 'default'
             );
         }
+    }
+
+    /**
+     * Listen for change to exclude_from_home_stream post meta value and flush
+     * the option that stores the list of post ids that should be excluded from streams
+     *
+     * @param  string  $meta_id   ID of meta item in post_meta table
+     * @param  integer $object_id Post ID associated with this meta
+     * @param  string  $meta_key  The key used to store this post meta value
+     */
+    public function action_updated_post_meta( $meta_id = '', $object_id = 0, $meta_key = '' ) {
+        if ( $this->exclude_stream_meta_key !== $meta_key ) {
+            return;
+        }
+
+        $force_refresh = true;
+        Frontend::get_post_ids_excluded_from_home_stream( $force_refresh );
     }
 
     /**

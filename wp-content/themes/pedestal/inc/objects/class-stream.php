@@ -61,6 +61,7 @@ class Stream {
 
     /**
      * Get a rendered series of stream items
+     *
      * @return string Rendered markup of a stream
      */
     public function get_the_stream() {

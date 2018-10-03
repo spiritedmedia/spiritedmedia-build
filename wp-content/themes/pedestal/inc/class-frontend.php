@@ -104,22 +104,24 @@ class Frontend {
             return;
         }
 
-        $exclude_from_stream_meta_query = [
-            [
-                'key'     => 'exclude_from_home_stream',
-                'value'   => 'hide',
-                'compare' => '!=',
-            ],
-        ];
+        // Exclude posts that are set to be hidden in streams
+        if (
+            $query->is_home() ||
+            ! empty( $query->query['pedestal_category'] ) &&
+            // If post__in is set then we don't need post__not_in
+            empty( $query->get( 'post__in' ) )
+        ) {
 
-        if ( $query->is_home() ) {
-            $query->set( 'meta_query', $exclude_from_stream_meta_query );
-            $query->set( 'post_type', Types::get_entity_post_types() );
-            $query->set( 'posts_per_page', 20 );
+            $post_not_in  = $query->get( 'post__not_in' );
+            $excluded_ids = self::get_post_ids_excluded_from_home_stream();
+            $post_not_in  = array_merge( $post_not_in, $excluded_ids );
+
+            $query->set( 'post__not_in', $post_not_in );
         }
 
-        if ( ! empty( $query->query['pedestal_category'] ) ) {
-            $query->set( 'meta_query', $exclude_from_stream_meta_query );
+        if ( $query->is_home() ) {
+            $query->set( 'post_type', Types::get_entity_post_types() );
+            $query->set( 'posts_per_page', 20 );
         }
 
         if ( $query->is_feed() ) {
@@ -616,5 +618,35 @@ class Frontend {
         } else {
             return __( 'Archives' );
         }
+    }
+
+    /**
+     * Get list of IDs that should be excluded from the home stream
+     *
+     * @return array List of post IDs that should be excluded from a query
+     */
+    public static function get_post_ids_excluded_from_home_stream( $force_refresh = false ) {
+        $option_name = 'exclude_from_home_stream';
+        $ids = get_option( $option_name );
+        if ( ! empty( $ids ) && ! $force_refresh ) {
+            return $ids;
+        }
+
+        $args = [
+            'meta_query' => [
+                [
+                    'key'     => $option_name,
+                    'value'   => 'hide',
+                    'compare' => '==',
+                ],
+            ],
+            'post_type'      => Types::get_original_post_types(),
+            'post_status'    => 'publish',
+            'posts_per_page' => 500,
+            'fields'         => 'ids',
+        ];
+        $query = new \WP_Query( $args );
+        update_option( $option_name, $query->posts );
+        return $query->posts;
     }
 }

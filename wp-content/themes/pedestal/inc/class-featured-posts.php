@@ -3,6 +3,7 @@
 namespace Pedestal;
 
 use function Pedestal\Pedestal;
+use Pedestal\Frontend;
 use Pedestal\Posts\Post;
 use Pedestal\Objects\Stream;
 use Pedestal\Registrations\Post_Types\Types;
@@ -87,7 +88,9 @@ class Featured_Posts {
         if ( $query->is_home() ) {
             $post_ids = $this->get_featured_post_ids();
             if ( $post_ids ) {
-                $query->set( 'post__not_in', $post_ids );
+                $post_not_in = $query->get( 'post__not_in' );
+                $post_not_in = array_merge( $post_not_in, $post_ids );
+                $query->set( 'post__not_in', $post_not_in );
             }
         }
     }
@@ -210,13 +213,7 @@ class Featured_Posts {
         }
         // Get most recent original content
         $args = [
-            'meta_query' => [
-                [
-                    'key'     => 'exclude_from_home_stream',
-                    'value'   => 'hide',
-                    'compare' => '!=',
-                ],
-            ],
+            'post__not_in'   => Frontend::get_post_ids_excluded_from_home_stream(),
             'post_type'      => Types::get_original_post_types(),
             'post_status'    => 'publish',
             'posts_per_page' => $num,

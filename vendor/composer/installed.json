@@ -1635,48 +1635,6 @@
         ]
     },
     {
-        "name": "stuttter/ludicrousdb",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/stuttter/ludicrousdb.git",
-            "reference": "3264654adca6046fec15f565a909c3ce83a33418"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/stuttter/ludicrousdb/zipball/3264654adca6046fec15f565a909c3ce83a33418",
-            "reference": "3264654adca6046fec15f565a909c3ce83a33418",
-            "shasum": ""
-        },
-        "require": {
-            "composer/installers": "~1.0",
-            "php": ">=5.2"
-        },
-        "time": "2018-01-26T01:07:48+00:00",
-        "type": "wordpress-muplugin",
-        "installation-source": "source",
-        "license": [
-            "GPL-2.0-or-later"
-        ],
-        "authors": [
-            {
-                "name": "John James Jacoby",
-                "email": "johnjamesjacoby@me.com"
-            },
-            {
-                "name": "Jonny Harris",
-                "email": "jon@spacedmonkey.co.uk"
-            }
-        ],
-        "description": "LudicrousDB is a database class that supports replication, failover, load balancing, & partitioning, based on Automattic's HyperDB drop-in.",
-        "homepage": "https://github.com/stuttter/ludicrousdb",
-        "support": {
-            "issues": "https://github.com/stuttter/ludicrousdb/issues",
-            "source": "https://github.com/stuttter/ludicrousdb"
-        }
-    },
-    {
         "name": "sunra/php-simple-html-dom-parser",
         "version": "v1.5.2",
         "version_normalized": "1.5.2.0",
