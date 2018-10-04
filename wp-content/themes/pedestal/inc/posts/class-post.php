@@ -485,34 +485,42 @@ abstract class Post {
     /**
      * Get the authors with links
      *
-     * @param  boolean $truncate Whether to truncate 3+ authors
+     * @param  array $args Arguments to modify the markup
      * @return string HTML
      */
-    public function get_the_authors( $truncate = false ) {
+    public function get_the_authors( $args = [] ) {
+        $args = wp_parse_args( $args, [
+            'truncate'    => false,
+            'ga_category' => '',
+            'ga_label'    => '',
+        ] );
+
         $pretext = esc_html__( '%s', 'pedestal' );
         $posttext = esc_html__( 'and', 'pedestal' );
 
         $authors = $this->get_authors();
-        if ( $truncate && count( $authors ) >= 3 ) {
+        if ( $args['truncate'] && count( $authors ) >= 3 ) {
             $name = PEDESTAL_BLOG_NAME . ' Staff';
-            return sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Name|%s">%s</a>',
+            return sprintf( '<a href="%s" data-ga-category="%s" data-ga-label="%s">%s</a>',
                 esc_url( get_site_url() . '/about/' ),
-                esc_attr( $name ),
+                esc_attr( $args['ga_category'] ),
+                esc_attr( $args['ga_label'] ),
                 esc_html( $name )
             );
         }
         $authors_names_with_links = [];
         foreach ( $authors as $author ) {
-            $authors_names_with_links[] = sprintf( '<a href="%s" data-ga-category="Author" data-ga-label="Name|%s">%s</a>',
+            $authors_names_with_links[] = sprintf( '<a href="%s" data-ga-category="%s" data-ga-label="%s">%s</a>',
                 esc_url( $author->get_permalink() ),
-                esc_attr( $author->get_display_name() ),
+                esc_attr( $args['ga_category'] ),
+                esc_attr( $args['ga_label'] ),
                 esc_html( $author->get_display_name() )
             );
 
         }
 
         return Utils::get_byline_list( $authors_names_with_links, [
-            'truncate' => $truncate,
+            'truncate' => $args['truncate'],
         ] );
     }
 
@@ -523,8 +531,9 @@ abstract class Post {
      *
      * @return string HTML
      */
-    public function get_the_authors_truncated() {
-        return $this->get_the_authors( true );
+    public function get_the_authors_truncated( $args = [] ) {
+        $args['truncate'] = true;
+        return $this->get_the_authors( $args );
     }
 
     /**
@@ -613,9 +622,8 @@ abstract class Post {
             ] );
             if ( $link ) {
                 return sprintf(
-                    '<a href="%s" data-ga-category="Author" data-ga-label="Image|%s" class="%s">%s</a>',
+                    '<a href="%s" data-ga-category="post-header" data-ga-label="author" class="%s">%s</a>',
                     esc_url( $this->get_single_author()->get_permalink() ),
-                    esc_attr( $this->get_single_author()->get_display_name() ),
                     $link_classes,
                     $img
                 );
@@ -625,7 +633,7 @@ abstract class Post {
 
         $html = '';
         if ( $link ) {
-            $html .= '<a href="' . esc_url( home_url( '/about/' ) ) . '" data-ga-category="Author" data-ga-label="Image|Placeholder">';
+            $html .= '<a href="' . esc_url( home_url( '/about/' ) ) . '" data-ga-category="post-header" data-ga-label="author">';
         }
         $html .= Icons::get_logo( 'logo-icon' );
         if ( $link ) {
@@ -1002,7 +1010,7 @@ abstract class Post {
         if ( $attachment instanceof Attachment ) {
             $defaults = [
                 'attachment'             => $this->get_featured_image_id(),
-                'url'                    => $this->get_permalink(),
+                'url'                    => '',
                 'caption'                => $attachment->get_caption(),
                 'credit'                 => $attachment->get_credit(),
                 'credit_link'            => $attachment->get_credit_link(),

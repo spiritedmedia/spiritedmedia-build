@@ -2,6 +2,8 @@
 
 namespace Pedestal\Objects;
 
+use function Pedestal\Pedestal;
+
 use Timber\Timber;
 
 use Pedestal\Icons;
@@ -199,12 +201,17 @@ class Figure {
             $context['classes'] .= ' c-figure--youtube';
             $context['wrap_classes'] .= ' yt-placeholder';
 
+            $placeholder_ga_category = 'post-content';
+            if ( Pedestal()->is_stream() ) {
+                $placeholder_ga_category = 'stream-item';
+            }
             ob_start();
             Timber::render( 'partials/yt-placeholder.twig', [
-                'id'         => $youtube_id,
-                'url'        => $youtube_url,
-                'img_src'    => $thumbnails['src'],
-                'img_srcset' => $srcset_attr,
+                'id'          => $youtube_id,
+                'url'         => $youtube_url,
+                'img_src'     => $thumbnails['src'],
+                'img_srcset'  => $srcset_attr,
+                'ga_category' => $placeholder_ga_category,
             ] );
             $context['content'] = ob_get_clean();
         }

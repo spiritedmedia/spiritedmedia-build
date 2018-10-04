@@ -5,8 +5,9 @@
     <li>
         <a
             href="{{ link|esc_url }}"
-            data-ga-category="Footer Links"
-            data-ga-label="{{ title|esc_attr }}"
+            data-ga-category="navigation"
+            data-ga-label="footer"
+            data-ga-action="/virtual/internal/search-modal"
             data-modal-id="search-modal"
             class="js-modal-trigger"
         >
@@ -15,7 +16,7 @@
     </li>
 {% else %}
     <li>
-        <a href="{{ link|esc_url }}" data-ga-category="Footer Links" data-ga-label="{{ title|esc_attr }}">
+        <a href="{{ link|esc_url }}" data-ga-category="navigation" data-ga-label="footer">
             {{ title }}
         </a>
     </li>
@@ -26,16 +27,14 @@
     <nav class="site-footer__nav">
         <div class="site-footer__container">
             <ul class="site-footer__social">
-                {% set gaCategorySocial = 'Social Icon - Footer' %}
-
                 {% for item in footer_social_icons %}
                 <li class="site-footer__social__item">
                     <a
                         href="{{ item.url|esc_url }}"
                         target="_blank"
                         class="site-footer__social__link"
-                        data-ga-category="Social Icon - Footer"
-                        data-ga-label="{{ item.ga_label }}"
+                        data-ga-category="navigation"
+                        data-ga-label="footer"
                     >
                         {{ ped_icon( item.icon ) }}
                         <span class="invisible">{{ item.sr_label }}</span>
@@ -60,7 +59,7 @@
             <div class="columns small-12">
                 <span class="site-footer__newsroom">
                     {{ ped_logo( 'logo-icon', 'logo--icon--light site-footer__logo' ) }}
-                    {{ site.name }} is a <a href="https://spiritedmedia.com/">Spirited Newsroom</a>
+                    {{ site.name }} is a <a href="https://spiritedmedia.com/" data-ga-category="navigation" data-ga-label="footer">Spirited Newsroom</a>
                 </span>
                 <span class="site-footer__copyright">{{ copyright_text }}</span>
             </div>

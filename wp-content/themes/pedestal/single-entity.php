@@ -1,6 +1,7 @@
 <?php
 use Timber\Timber;
 use Pedestal\Adverts;
+use Pedestal\Objects\Stream;
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Email\Newsletter_Emails;
@@ -32,6 +33,31 @@ if ( Types::is_post( $item ) ) :
     $sponsored_item = $adverts->get_the_sponsored_item();
     if ( $sponsored_item ) {
         $context['sponsored_item'] = $sponsored_item;
+    }
+
+    // Handle the footer recirculation stream
+    if ( Types::is_original_content( $item ) ) {
+        $query_args = [
+            'posts_per_page'         => 20,
+            'paged'                  => 1,
+            'post_status'            => 'publish',
+            'ignore_sticky_posts'    => true,
+            'post_type'              => Types::get_original_post_types(),
+            'post__not_in'           => [ $item->get_id() ],
+            'no_found_rows'          => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
+        ];
+        $query = new \WP_Query( $query_args );
+        $stream = new Stream( $query );
+        $context['recirc_stream'] = $stream->get_the_stream();
+
+        ob_start();
+        Timber::render( 'partials/pagination-load-more.twig', [
+            'url'  => site_url( '/originals/page/2/' ),
+            'text' => 'More Originals',
+        ] );
+        $context['recirc_pagination'] = ob_get_clean();
     }
 
     // Load Post context after everything else so it takes priority

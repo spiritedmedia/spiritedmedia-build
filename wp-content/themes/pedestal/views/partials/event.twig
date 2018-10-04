@@ -22,8 +22,8 @@ cta_label - Call to action label
                 <a
                     href="{{ overline_url|esc_url }}"
                     class="event__overline-link"
-                    data-ga-category="{{ gaCategory|esc_attr }}"
-                    data-ga-label="Overline|{{ overline|esc_attr }}"
+                    data-ga-category="{{ ga_category|esc_attr }}"
+                    data-ga-label="cluster-story"
                 >
                     {{ overline }}
                 </a>
@@ -48,8 +48,8 @@ cta_label - Call to action label
                     <a
                         href="{{ permalink|esc_url }}"
                         class="event__title__link"
-                        data-ga-category="{{ gaCategory|esc_attr }}"
-                        data-ga-label="Title|{{ title|esc_attr }}"
+                        data-ga-category="{{ ga_category|esc_attr }}"
+                        data-ga-label="post"
                     >
                         {{ title }}
                     </a>
@@ -104,8 +104,8 @@ cta_label - Call to action label
         <a
             href="{{ cta_link|esc_url }}"
             class="event__cta__link"
-            data-ga-category="Event"
-            data-ga-label="Details|{{ cta_label|esc_attr }}"
+            data-ga-category="{{ ga_category|esc_attr }}"
+            data-ga-label="event-info"
             target="_blank"
         >
             {{ ped_icon( 'external-link', 'event__cta__icon' ) }}

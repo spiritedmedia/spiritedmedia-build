@@ -561,8 +561,15 @@ class Types {
         if ( ! Types::is_post( $ped_post ) ) {
             return $context;
         }
-        $truncate = true;
-        $context['author_names'] = $ped_post->get_the_authors( $truncate );
+
+        $ga_category = 'stream-item';
+        if ( 'featured' == $context['__context'] ) {
+            $ga_category = 'homepage-featured';
+        }
+        $context['author_names'] = $ped_post->get_the_authors_truncated([
+            'ga_category' => $ga_category,
+            'ga_label'    => 'author',
+        ]);
         $context['author_link']  = $ped_post->get_author_permalink();
 
         $author_image_size = 28;
@@ -1096,6 +1103,7 @@ class Types {
      * Get original post types
      *
      * @param bool   $sort  Sort alphabetically or not?
+     * @return array Simple array of post types
      */
     public static function get_original_post_types( $sort = true ) {
         $general_types = self::$groups['general']->original_post_types;

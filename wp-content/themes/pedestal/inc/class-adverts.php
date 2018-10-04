@@ -32,6 +32,9 @@ class Adverts {
         add_action( 'parse_request', [ $this, 'action_parse_request_ads_txt' ], 10, 1 );
         add_action( 'pedestal_after_stream_item_2', [ $this, 'action_pedestal_after_stream_item_2' ] );
         add_action( 'pedestal_after_stream_item_6', function() {
+            if ( is_singular( Types::get_original_post_types() ) ) {
+                return;
+            }
             echo self::render_dfp_unit(
                 PEDESTAL_DFP_PREFIX . '_Inline',
                 '300x250',
@@ -247,6 +250,9 @@ class Adverts {
             'source_image'    => Icons::get_icon( 'external-link' ),
             'source_link'     => $data['url'],
         ];
+
+        $context['ga_label'] = is_singular() ? 'post-footer' : 'mid-stream';
+
         $stream = new Stream;
         ob_start();
         echo $stream->get_the_stream_item( $context );

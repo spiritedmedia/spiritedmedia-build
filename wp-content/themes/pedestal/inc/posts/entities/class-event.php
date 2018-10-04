@@ -2,6 +2,8 @@
 
 namespace Pedestal\Posts\Entities;
 
+use function Pedestal\Pedestal;
+
 use Timber\Timber;
 use Pedestal\Utils\Utils;
 
@@ -384,9 +386,13 @@ class Event extends Entity {
             'show_meta_info'  => false,
             'content'         => '',
             'show_header'     => true,
+            'ga_category'     => 'post-content',
         ] + parent::get_context( $context );
         if ( is_singular( static::$post_type ) ) {
             $context['show_header'] = false;
+        }
+        if ( Pedestal()->is_stream() ) {
+            $context['ga_category'] = 'stream-item';
         }
         ob_start();
             Timber::render( 'partials/event.twig', $context );

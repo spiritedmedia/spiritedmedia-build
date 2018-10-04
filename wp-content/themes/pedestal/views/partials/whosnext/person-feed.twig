@@ -17,8 +17,8 @@
     <strong>Twitter:</strong>
     <a href="{{ person.get_twitter_profile_url }}"
         title="@{{ person.get_twitter_handle }} on twitter"
-        data-ga-category="Person"
-        data-ga-label="Twitter|@{{ person.get_twitter_handle }}|{{ person.get_the_title }}">
+        data-ga-category="post-content"
+        data-ga-label="link">
             @{{ person.get_twitter_handle }}
     </a>
     {% endif %}
@@ -27,8 +27,8 @@
     <strong>Instagram:</strong>
     <a href="{{ person.get_instagram_url }}"
         title="@{{ person.get_instagram_handle }} on Instagram"
-        data-ga-category="Person"
-        data-ga-label="Instagram|@{{ person.get_instagram_handle }}|{{ person.get_the_title }}">
+        data-ga-category="post-content"
+        data-ga-label="link">
             @{{ person.get_instagram_handle }}
     </a>
     {% endif %}
@@ -37,8 +37,8 @@
     <strong>LinkedIn:</strong>
     <a href="{{ person.get_linkedin_url }}"
         title="{{ person.get_the_title }} on LinkedIn"
-        data-ga-category="Person"
-        data-ga-label="LinkedIn|{{ person.get_the_title }}">
+        data-ga-category="post-content"
+        data-ga-label="link">
             {{ person.get_the_title }} on LinkedIn
     </a>
     {% endif %}

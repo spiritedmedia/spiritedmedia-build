@@ -1,7 +1,7 @@
 {% if body and url %}
 
 <section class="message-spot {{ additional_classes }} js-message-spot">
-    <a href="{{ url }}" class="message-spot__link">
+    <a href="{{ url }}" class="message-spot__link" data-ga-category="message-spot" data-ga-label="{{ ga_label }}">
         <div class="message-spot__inner">
 
             {% if icon %}

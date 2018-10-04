@@ -77,12 +77,8 @@ class Frontend {
         add_filter( 'the_content', [ $this, 'filter_the_content_prepare_footnotes' ] );
         add_filter( 'the_footnotes', [ $this, 'filter_the_footnotes_render' ], 10, 2 );
         add_filter( 'nav_menu_link_attributes', function( $attrs = [], $item, $args = [], $depth ) {
-            $ga_cat = 'Menu';
-            if ( isset( $args->menu->name ) ) {
-                $ga_cat .= ' - ' . $args->menu->name;
-            }
-            $attrs['data-ga-category'] = $ga_cat;
-            $attrs['data-ga-label'] = $item->title;
+            $attrs['data-ga-category'] = 'sidebar';
+            $attrs['data-ga-label'] = 'link';
             return $attrs;
         }, 10, 4 );
 

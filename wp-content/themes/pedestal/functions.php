@@ -51,6 +51,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
         private $is_email = false;
 
+        private $is_stream = false;
+
         /**
          * The root URL for the CDN i.e. https://a.spirited.media
          *
@@ -976,6 +978,15 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          */
         public function is_email() {
             return $this->is_email;
+        }
+
+        /**
+         * Are we currently rendering a stream?
+         *
+         * @return boolean
+         */
+        public function is_stream() {
+            return $this->is_stream;
         }
     }
 

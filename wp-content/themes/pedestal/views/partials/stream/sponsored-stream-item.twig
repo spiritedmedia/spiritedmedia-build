@@ -19,8 +19,8 @@
                     <a
                         href="{{ permalink|esc_url }}"
                         class="stream-item__thumbnail-image-link"
-                        data-ga-category="Sponsored"
-                        data-ga-label="Image|{{ title|esc_attr }}"
+                        data-ga-category="sponsored-link"
+                        data-ga-label="{{ ga_label|esc_attr }}"
                     >
                         {{ thumbnail_image }}
                     </a>
@@ -40,8 +40,8 @@
                             rel="nofollow"
                             target="_blank"
                             class="stream-item__overline-link"
-                            data-ga-category="Sponsored"
-                            data-ga-label="Overline|{{ overline|esc_attr }}"
+                            data-ga-category="sponsored-link"
+                            data-ga-label="{{ ga_label|esc_attr }}"
                         >
                             {{ overline }}
                         </a>
@@ -58,8 +58,8 @@
                         rel="nofollow"
                         target="_blank"
                         class="stream-item__title-link"
-                        data-ga-category="Sponsored"
-                        data-ga-label="Title|{{ title|esc_attr }}"
+                        data-ga-category="sponsored-link"
+                        data-ga-label="{{ ga_label|esc_attr }}"
                     >
                         {{ title }}
                     </a>
@@ -84,8 +84,8 @@
                             rel="nofollow"
                             target="_blank"
                             class="stream-item__source-name"
-                            data-ga-category="Source|{{ type|esc_attr }}"
-                            data-ga-label="Name|{{ source_name|esc_attr }}"
+                            data-ga-category="sponsored-link"
+                            data-ga-label="{{ ga_label|esc_attr }}"
                         >
                             {{ source_name }}
                         </a>

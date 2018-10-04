@@ -35,6 +35,13 @@ abstract class Entity extends Post {
     ];
 
     /**
+     * Cache a list of all post ids connected to this post
+     *
+     * @var array
+     */
+    private $all_connected_object_ids = [];
+
+    /**
      * Set up the Post's HTML data attributes
      */
     protected function set_data_atts() {
@@ -143,14 +150,12 @@ abstract class Entity extends Post {
         if ( ! empty( $clusters ) ) {
             $count = 0;
             foreach ( $clusters as $cluster ) {
-                $html = '<a href="%s" data-ga-category="Cluster Link" data-ga-label="%s">%s</a>';
-                $ga_label = $cluster->get_type_name() . '|' . $cluster->get_title();
+                $html = '<a href="%s" data-ga-category="post-footer" data-ga-label="cluster">%s</a>';
                 if ( $args['accent_primary'] && 0 === $count ) {
                     $html = '<strong>' . $html . '</strong>';
                 }
                 $clusters_with_links[] = sprintf( $html,
                     esc_url( $cluster->get_permalink() ),
-                    esc_attr( $ga_label ),
                     esc_html( $cluster->get_title() )
                 );
                 $count++;
@@ -158,18 +163,6 @@ abstract class Entity extends Post {
             return implode( ', ', $clusters_with_links );
         }
         return false;
-    }
-
-    /**
-     * Check whether the entity has any non-story clusters
-     *
-     * @return boolean
-     */
-    public function has_clusters() {
-        return (bool) $this->get_clusters( [
-            'count'      => 1,
-            'count_only' => true,
-        ] );
     }
 
     /**
@@ -200,14 +193,15 @@ abstract class Entity extends Post {
             return 'pedestal_' . $type;
         }, $types );
 
-        $query_args = [
+        $defaults = [
             'post_type'       => $types,
             'post_status'     => 'publish',
             'posts_per_page'  => $count,
             'no_found_rows'   => true,
             'connected_type'  => Types::get_cluster_connection_types( $types ),
             'connected_items' => $this->post,
-        ] + $args;
+        ];
+        $query_args = wp_parse_args( $args, $defaults );
 
         if ( $args['paginate'] || $count_only ) {
             $query_args['no_found_rows'] = false;
@@ -217,6 +211,12 @@ abstract class Entity extends Post {
             $query_args['update_post_meta_cache'] = false;
             $query_args['update_post_term_cache'] = false;
             $query_args['fields'] = 'ids';
+        }
+
+        // Reduce the strain of the query by narrowing the post IDs to search for
+        // to only those that are connected to the current post
+        if ( empty( $query_args['post__in'] ) && empty( $query_args['post__not_in'] ) ) {
+            $query_args['post__in'] = $this->get_all_connected_object_ids();
         }
 
         $count = 0;
@@ -247,6 +247,28 @@ abstract class Entity extends Post {
     }
 
     /**
+     * Get a list of all post IDs connected to this post
+     *
+     * @return array List of post IDs
+     */
+    public function get_all_connected_object_ids() {
+        global $wpdb;
+
+        if ( ! empty( $this->all_connected_object_ids[0] ) ) {
+            return $this->all_connected_object_ids;
+        }
+
+        $post_ids = $wpdb->get_col(
+            $wpdb->prepare(
+                "SELECT `p2p_to` FROM {$wpdb->p2p} WHERE `p2p_from` = %s",
+                $this->get_id()
+            )
+        );
+        $this->all_connected_object_ids = $post_ids;
+        return $post_ids;
+    }
+
+    /**
      * Get the Twig context for this post
      *
      * @param array Existing context to filter
@@ -262,16 +284,7 @@ abstract class Entity extends Post {
         }
 
         $cluster_list_context = [
-            'has_clusters'         => $this->has_clusters(),
-            'has_multiple_stories' => $this->has_multiple_stories(),
-            'stories'              => $this->get_clusters_with_links( 'story' ),
-            'topics'               => $this->get_clusters_with_links( 'topic' ),
-            'people'               => $this->get_clusters_with_links( 'person' ),
-            'orgs'                 => $this->get_clusters_with_links( 'org' ),
-            'places_localities'    => $this->get_clusters_with_links( [
-                'place',
-                'locality',
-            ] ),
+            'clusters' => $this->get_clusters_with_links(),
         ];
         ob_start();
         Timber::render( 'partials/cluster-list.twig', $cluster_list_context );

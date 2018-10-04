@@ -42,16 +42,20 @@ class Newsletter_Emails {
         add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ], 10, 2 );
         add_action( 'save_post', [ $this, 'action_save_post_maybe_send_email' ], 100 );
         add_action( 'pedestal_email_tester_newsletter', [ $this, 'action_pedestal_email_tester' ] );
+
+        // Render the newsletter signup form after the 3rd item in a stream
         add_action( 'pedestal_after_stream_item_3', function() {
-            if ( is_singular( 'pedestal_story' ) ) {
+            $ignore_post_types = Types::get_original_post_types();
+            $ignore_post_types[] = 'pedestal_story';
+            if ( is_singular( $ignore_post_types ) ) {
                 return;
             }
-            // Render the newsletter signup form after the 3rd item in a stream
             $signup_form = self::get_signup_form();
             echo '<div class="stream-item stream-item--signup-email signup-email--daily">';
             echo $signup_form;
             echo '</div>';
         } );
+
         add_action( 'admin_footer', function() {
             $post = get_post();
             if ( ! $post instanceof \WP_Post ) {
@@ -287,7 +291,6 @@ class Newsletter_Emails {
         $defaults = [
             'action_url'           => get_site_url() . '/subscribe-to-email-group/',
             'ga_category'          => 'inline-prompt',
-            'ga_label'             => 'unidentified',
             'ga_action'            => 'subscribe',
             'icon'                 => Icons::get_icon( 'envelope-slant' ),
             'input_icon_name'      => 'envelope-o',

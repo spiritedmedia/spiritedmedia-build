@@ -25,13 +25,15 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
 #}
 
 
-{% set ga_category_stream = 'Stream' %}
+{% set ga_category_stream = 'stream-item' %}
+{% set ga_label = 'post' %}
 {% if __context == 'featured' %}
-    {% set ga_category_stream = 'Featured' %}
+    {% set ga_category_stream = 'homepage-featured' %}
 {% endif %}
 
 {% if type == 'link' %}
     {% set permalink_target = 'target="_blank"' %}
+    {% set ga_label = 'source' %}
 {% endif %}
 
 {% if stream_index %}
@@ -47,7 +49,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 {{ permalink_target }}
                 class="stream-item__thumbnail-image-link"
                 data-ga-category="{{ ga_category_stream|esc_attr }}"
-                data-ga-label="Image|{{ title|esc_attr }}"
+                data-ga-label="{{ ga_label|esc_attr }}"
             >{{ thumbnail_image }}</a>
         {% else %}
             {{ thumbnail_image }}
@@ -65,7 +67,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 {{ permalink_target }}
                 class="stream-item__featured-image-link"
                 data-ga-category="{{ ga_category_stream|esc_attr }}"
-                data-ga-label="Image|{{ title|esc_attr }}"
+                data-ga-label="{{ ga_label|esc_attr }}"
             >{{ featured_image }}</a>
         {% else %}
             {{ featured_image }}
@@ -83,7 +85,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 href="{{ overline_url|esc_url }}"
                 class="stream-item__overline-link"
                 data-ga-category="{{ ga_category_stream|esc_attr }}"
-                data-ga-label="Overline|{{ overline|esc_attr }}"
+                data-ga-label="cluster-story"
             >
                 {{ overline }}
             </a>
@@ -102,7 +104,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
             {{ permalink_target }}
             class="stream-item__title-link"
             data-ga-category="{{ ga_category_stream|esc_attr }}"
-            data-ga-label="Title|{{ title|esc_attr }}"
+            data-ga-label="{{ ga_label|esc_attr }}"
         >
             {{ title }}
         </a>
@@ -168,8 +170,8 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 <a
                     {{ source_link_href }}
                     class="stream-item__footer__image"
-                    data-ga-category="Source|{{ type|esc_attr }}"
-                    data-ga-label="Source Image|{{ source_name|esc_attr }}"
+                    data-ga-category="{{ ga_category_stream|esc_attr }}"
+                    data-ga-label="source"
                 >
                     {{ source_image }}
                 </a>
@@ -179,8 +181,8 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 <a
                     {{ author_link_href }}
                     class="stream-item__footer__image"
-                    data-ga-category="Author"
-                    data-ga-label="Image"
+                    data-ga-category="{{ ga_category_stream|esc_attr }}"
+                    data-ga-label="author"
                 >
                     {{ author_image }}
                 </a>
@@ -195,8 +197,8 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                     <a
                         {{ source_link_href }}
                         class="stream-item__source-name"
-                        data-ga-category="Source|{{ type|esc_attr }}"
-                        data-ga-label="Name|{{ source_name|esc_attr }}"
+                        data-ga-category="{{ ga_category_stream|esc_attr }}"
+                        data-ga-label="source"
                     >
                         on <strong>{{ source_name }}</strong>
                     </a>

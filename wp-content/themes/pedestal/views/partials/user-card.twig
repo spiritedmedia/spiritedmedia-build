@@ -32,8 +32,8 @@
     {% if user_image %}
     <a href="{{ author_url|esc_url }}"
         class="user-card__img"
-        data-ga-category="User"
-        data-ga-label="Image|Author URL|{{ user_name|esc_attr }}"
+        data-ga-category="user-card"
+        data-ga-label="author"
     >
         {{ user_image }}
     </a>
@@ -44,8 +44,8 @@
         <h1 class="user-card__name">
             <a href="{{ author_url|esc_url }}"
                 itemprop="author_url"
-                data-ga-category="User"
-                data-ga-label="Name|Author URL|{{ user_name|esc_attr }}"
+                data-ga-category="user-card"
+                data-ga-label="author"
             >
                 <span itemprop="name">{{ user_name }}</span>
             </a>
@@ -62,8 +62,8 @@
         <div class="user-card__contact">
             <a href="mailto:{{ email }}"
                 class="user-card__email user-card__contact__item"
-                data-ga-category="User"
-                data-ga-label="Email|{{ email }}|{{ name|esc_attr }}"
+                data-ga-category="user-card"
+                data-ga-label="contact"
             >
                 {{ ped_icon( 'envelope', 'user-card__contact__icon' ) }}
                 <span class="user-card__contact__text" itemprop="email">{{ email }}</span>
@@ -74,8 +74,8 @@
                 {% spaceless %}
                 <a href="{{ twitter_url|esc_url }}"
                     class="user-card__twitter user-card__contact__item"
-                    data-ga-category="User"
-                    data-ga-label="Twitter|@{{ twitter_handle|esc_attr }}|{{ name|esc_attr }}"
+                    data-ga-category="user-card"
+                    data-ga-label="contact"
                 >
                     {{ ped_icon( 'twitter', 'user-card__contact__icon' ) }}
                     <span class="user-card__twitter__handle user-card__contact__text">
@@ -90,8 +90,8 @@
                 {% spaceless %}
                 <a href="{{ instagram_url|esc_url }}"
                     class="user-card__instagram user-card__contact__item"
-                    data-ga-category="User"
-                    data-ga-label="Instagram|@{{ instagram_handle|esc_attr }}|{{ name|esc_attr }}"
+                    data-ga-category="user-card"
+                    data-ga-label="contact"
                 >
                     {{ ped_icon( 'instagram', 'user-card__contact__icon' ) }}
                     <span class="user-card__instagram__handle user-card__contact__text">
@@ -105,8 +105,8 @@
                 {% spaceless %}
                 <a href="tel:+1-{{ phone_number }}"
                     class="user-card__phone-number user-card__contact__item"
-                    data-ga-category="User"
-                    data-ga-label="Phone|{{ phone_number|esc_attr }}|{{ name|esc_attr }}"
+                    data-ga-category="user-card"
+                    data-ga-label="contact"
                 >
                     {{ ped_icon( 'phone-square', 'user-card__contact__icon' ) }}
                     <span class="user-card__contact__text">{{ phone_number_parens }}</span>

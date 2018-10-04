@@ -397,6 +397,7 @@ class Message_Spot {
         }
         $type = str_replace( '_', '-', $message['type'] );
         $message['additional_classes'] = "message-spot--{$type} js-message-spot-{$type}";
+        $message['ga_label'] = 'unidentified';
         switch ( $message['type'] ) {
             case 'standard':
                 $message['title'] = false;

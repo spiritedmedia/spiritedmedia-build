@@ -5,7 +5,17 @@
 {% set img_link_url = item.get_the_permalink %}
 
 {% set source_name %}
-    {% include 'partials/byline.twig' %}
+    {% if is_cluster %}
+        {{ item.get_the_authors_truncated( {
+            'ga_category': 'post-header',
+            'ga_label': 'author',
+        } ) }}
+    {% else %}
+        {{ item.get_the_authors( {
+            'ga_category': 'post-header',
+            'ga_label': 'author',
+        } ) }}
+    {% endif %}
 {% endset %}
 
 {% set timestamp %}
@@ -16,47 +26,12 @@
     </time>
 {% endset %}
 
-{% if item.get_type == 'link' %}
-
-    {% set img_ga_label = item.get_source.get_name ~ '|' ~ item.get_source.get_name %}
-    {% set source_name %}
-        <a href="{{ item.get_the_permalink }}"
-            data-ga-category="Source|Link"
-            data-ga-label="Name|{{ item.get_source.get_name }}">
-            {{ item.get_source.get_name }}
-        </a>
-    {% endset %}
-
-{% elseif item.get_type == 'event' %}
-
-    {% set img_ga_label = item.get_source_icon_name %}
-    {% set source_name %}
-        <a href="{{ item.get_the_permalink }}"
-            data-ga-category="Source|Event"
-            data-ga-label="Name|event">
-            {{ __( 'Event', 'pedestal' ) }}
-        </a>
-    {% endset %}
-    {% set timestamp %}
-        <ul class="single-entity-meta__timestamp__inner">
-            <li class="single-entity-meta__label  single-entity-meta__timestamp__item">
-              {{ __( 'Posted', 'pedestal' ) }}
-            </li>
-            <li class="single-entity-meta__date  single-entity-meta__timestamp__item">
-              {{ item.get_post_date( site.date_format ) }}
-            </li>
-            <li class="single-entity-meta__time  single-entity-meta__timestamp__item">
-              &nbsp; &middot; &nbsp; {{ item.get_post_date( site.time_format ) }}
-            </li>
-        </ul>
-    {% endset %}
-
-{% elseif item.get_type == 'embed' %}
+{% if item.get_type == 'embed' %}
 
     {% set img_link_url = item.get_embed_url %}
-    {% set img_ga_label = item.get_source_icon_name ~ '|' ~ item.get_source %}
+    {% set img_ga_label = 'source' %}
     {% set source_name %}
-        <a href="{{ item.get_embed_url }}" data-ga-category="Source|Embed" data-ga-label="Name|{{ item.get_source }}">
+        <a href="{{ item.get_embed_url }}" data-ga-category="post-header" data-ga-label="source">
             {{ item.get_source }}
         </a>
     {% endset %}
@@ -68,8 +43,8 @@
     <div class="single-entity-meta__img--standalone  single-entity-meta__img  single-entity-meta__item">
         {% if img_ga_label %}
             <a href="{{ img_link_url }}"
-                data-ga-category="Source|{{ item.get_post_type_name( is_single ) }}"
-                data-ga-label="Icon|{{ img_ga_label }}">
+                data-ga-category="post-header"
+                data-ga-label="{{ img_ga_label|esc_attr }}">
 
                 {{ ped_icon( item.get_source_icon_name, 'single-entity-meta__img__icon', icon_color ) }}
 

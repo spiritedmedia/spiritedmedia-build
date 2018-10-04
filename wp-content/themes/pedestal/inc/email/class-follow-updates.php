@@ -307,7 +307,6 @@ class Follow_Updates {
         $defaults = [
             'action_url'      => get_site_url() . '/subscribe-to-email-group/',
             'ga_category'     => 'cluster-prompt',
-            'ga_label'        => 'unidentified',
             'ga_action'       => 'subscribe',
             'input_icon_name' => 'envelope-o',
             'input_icon'      => '',

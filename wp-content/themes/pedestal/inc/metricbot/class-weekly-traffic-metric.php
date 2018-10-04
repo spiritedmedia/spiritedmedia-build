@@ -204,7 +204,7 @@ class Weekly_Traffic_Metric {
     public function process_engaged_completion_data( $raw_data = [] ) {
         // We need to filter out event categories we don't want
         $raw_data = array_filter( $raw_data, function( $obj ) {
-            if ( 'Scroll Depth' == $obj->{'ga:eventCategory'} ) {
+            if ( 'post-scroll-depth' == $obj->{'ga:eventCategory'} ) {
                 return true;
             }
             return false;

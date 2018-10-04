@@ -1,5 +1,8 @@
 <?php
+
 namespace Pedestal\Objects;
+
+use function Pedestal\Pedestal;
 
 use Timber\Timber;
 use Pedestal\Icons;
@@ -65,6 +68,7 @@ class Stream {
      * @return string Rendered markup of a stream
      */
     public function get_the_stream() {
+        Pedestal()->set_property( 'is_stream', true );
         $wp_query = $this->query_obj;
         $html = '';
         foreach ( $wp_query->posts as $index => $post ) {
@@ -93,6 +97,7 @@ class Stream {
             do_action( 'pedestal_after_stream_item_' . $index, $post );
             $html .= ob_get_clean();
         }
+        Pedestal()->set_property( 'is_stream', false );
         return $html;
     }
 

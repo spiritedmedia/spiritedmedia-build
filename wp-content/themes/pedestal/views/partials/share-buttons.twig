@@ -1,30 +1,30 @@
 <div class="share-buttons js-share-buttons">
     <ul class="share-buttons__inner">
         <li class="share-buttons__item">
-            <a class="share-buttons__link share-buttons__link--facebook"
+            <a class="share-buttons__link share-buttons__link--facebook js-share-button"
                 target="_blank"
                 href="{{ item.get_facebook_share_link }}"
-                data-ga-category="Button"
-                data-ga-label="Share|Facebook|{{item.get_the_title}}">
+                data-ga-category="post-share-button"
+                data-ga-action="facebook">
                 {{ ped_icon( 'facebook-square', 'share-buttons__icon' ) }}
                 Share
             </a>
         </li>
         <li class="share-buttons__item">
-            <a class="share-buttons__link share-buttons__link--twitter"
+            <a class="share-buttons__link share-buttons__link--twitter js-share-button"
                 target="_blank"
                 href="{{ item.get_twitter_share_link }}"
-                data-ga-category="Button"
-                data-ga-label="Share|Twitter|{{item.get_the_title}}">
+                data-ga-category="post-share-button"
+                data-ga-action="twitter">
                 {{ ped_icon( 'twitter-square', 'share-buttons__icon' ) }}
                 Tweet
             </a>
         </li>
         <li class="share-buttons__item">
-            <a class="share-buttons__link share-buttons__link--email"
+            <a class="share-buttons__link share-buttons__link--email js-share-button"
                 href="{{ item.get_mailto_share_string }}"
-                data-ga-category="Button"
-                data-ga-label="Share|Email|{{item.get_the_title}}">
+                data-ga-category="post-share-button"
+                data-ga-action="email">
                 {{ ped_icon( 'envelope-open', 'share-buttons__icon' ) }}
                 Email
             </a>

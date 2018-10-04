@@ -15,12 +15,12 @@
             {% endblock %}
 
             <li class="widget tips-feedback">
-                <p>Have a tip? Email us at <a href="mailto:{{ site.emails.tips|esc_attr }}">{{ site.emails.tips }}</a></p>
+                <p>Have a tip? Email us at <a href="mailto:{{ site.emails.tips|esc_attr }}" data-ga-category="sidebar" data-ga-label="link">{{ site.emails.tips }}</a></p>
             </li>
 
             {% if 'Billy Penn' == site.name %}
             <li class="widget tips-feedback">
-                <p>See something wrong on the site? Please <a href="mailto:{{ site.emails.contact|esc_attr }}">let us know</a>.</p>
+                <p>See something wrong on the site? Please <a href="mailto:{{ site.emails.contact|esc_attr }}" data-ga-category="sidebar" data-ga-label="link">let us know</a>.</p>
             </li>
             {% endif %}
         </ul>

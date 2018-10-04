@@ -70,11 +70,11 @@ function ScrollDepth(selector, label, percs) {
    * @param  {string} label
    * @param  {int}    value
    */
-  function sendEvent(action, label, value) {
+  function sendEvent(action, label) {
     if (typeof window.ga !== 'function') {
       return;
     }
-    window.ga('send', 'event', 'Scroll Depth', action, label, value, {
+    window.ga('send', 'event', 'post-scroll-depth', action, label, null, {
       'nonInteraction': true
     });
   }
@@ -123,13 +123,11 @@ function ScrollDepth(selector, label, percs) {
    */
   var checkElements = $.proxy(function(depth) {
     if (this.$element.length && depth >= this.$element.offset().top) {
-      var percInt;
       // Send events for each mark in the element
       $.each(calculateMarks(), $.proxy(function(perc, coordY) {
         if ($.inArray(perc, cache) === -1 && depth >= coordY) {
           // GA requires values to be integers
-          percInt = Math.round(parseFloat(perc));
-          sendEvent(perc, this.label, percInt);
+          sendEvent(perc, this.label);
           cache.push(perc);
         }
       }, this));

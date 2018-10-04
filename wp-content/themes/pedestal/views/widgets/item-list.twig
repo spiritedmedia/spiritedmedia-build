@@ -1,5 +1,13 @@
 <ul>
 {% for item in items %}
-    <li {% if item.get_id == current_item.get_id %} class="active"{% endif %}><a href="{{ item.get_the_permalink }}">{{ item.get_the_title }}</a></li>
+    <li {% if item.get_id == current_item.get_id %} class="active"{% endif %}>
+        <a
+            href="{{ item.get_the_permalink }}"
+            data-ga-category="sidebar"
+            data-ga-label="post"
+        >
+            {{ item.get_the_title }}
+        </a>
+    </li>
 {% endfor %}
 </ul>

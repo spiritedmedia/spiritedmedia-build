@@ -38,7 +38,7 @@
                                 {{ item.get_source }}
                             </a>
                         {% else %}
-                            {% include 'partials/byline.twig' %}
+                            {{ item.get_the_authors_truncated }}
                         {% endif %}
                     </td>
                 </tr>

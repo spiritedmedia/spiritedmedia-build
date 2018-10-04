@@ -20,8 +20,8 @@
                     {% if overline_url %}
                         <a
                             href="{{ overline_url|esc_url }}"
-                            data-ga-category="{{ 'Single ' ~ type_name|esc_attr }}"
-                            data-ga-label="Overline|{{ overline|esc_attr }}"
+                            data-ga-category="post-header"
+                            data-ga-label="cluster-story"
                         >
                             {{ overline }}
                         </a>
@@ -43,7 +43,7 @@
             {{ featured_image }}
 
             {% if show_meta_info %}
-            {% include 'partials/single-entity-meta.twig' %}
+                {% include 'partials/single-entity-meta.twig' %}
             {% endif %}
 
             {% include 'partials/share-buttons.twig' %}
@@ -79,6 +79,16 @@
                 {% set format = 'compact' %}
                 {% include 'partials/user-card.twig' %}
             </div>
+            {% endif %}
+
+            {% if recirc_stream %}
+                <section class="stream--entity-footer stream js-stream">
+                    <div class="stream__items">
+                        {{ recirc_stream }}
+                    </div>
+                </section>
+
+                {{ recirc_pagination }}
             {% endif %}
         </footer>
 

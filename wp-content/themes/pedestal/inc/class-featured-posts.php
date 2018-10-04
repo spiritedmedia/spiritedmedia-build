@@ -50,6 +50,9 @@ class Featured_Posts {
         add_action( 'admin_print_scripts-appearance_page_pedestal_featured_posts', function() {
             wp_enqueue_script( 'featured-posts-admin', PEDESTAL_DIST_DIRECTORY_URI . '/js/featured-posts-admin.js', [ 'jquery' ], PEDESTAL_VERSION );
         });
+        add_action( 'update_option_' . $this->option_key, function() {
+            do_action( 'rt_nginx_helper_purge_all' );
+        } );
     }
 
     /**

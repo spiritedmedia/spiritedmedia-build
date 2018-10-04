@@ -2,13 +2,18 @@
 function ShareButtons($) {
   this.result = false;
 
-  if (!$('.js-share-buttons').length) {
+  var $buttonsContainer = $('.js-share-buttons');
+
+  if (!$buttonsContainer.length) {
     return;
   }
 
   var $win = $(window);
   var $body = $('body');
   var $header = $('.js-main-header');
+
+  var $buttons = $buttonsContainer.find('.js-share-button');
+  $buttons.attr('data-ga-label', 'top').data('ga-label', 'top');
 
   this.getCutoffs = function() {
     var $adminBar = $('#wpadminbar');
@@ -35,8 +40,10 @@ function ShareButtons($) {
       && currentPosition < this.cutoffs.bottom
     ) {
       $body.addClass('has-sticky-share-buttons');
+      $buttons.attr('data-ga-label', 'sticky').data('ga-label', 'sticky');
     } else {
       $body.removeClass('has-sticky-share-buttons');
+      $buttons.attr('data-ga-label', 'top').data('ga-label', 'top');
     }
   };
 

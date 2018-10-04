@@ -1,3 +1,12 @@
 <sup class="footnote">
-<a href="#footnote-{{ token }}" id="fnref-{{ token }}" class="js-footnote-link" data-ga-category="Footnote" data-ga-label="{{ num }}">{{ num }}</a>
+    <a
+        href="#footnote-{{ token }}"
+        id="fnref-{{ token }}"
+        class="js-footnote-link"
+        data-ga-category="post-content"
+        data-ga-action="footnote-{{ token|esc_attr }}"
+        data-ga-label="footnote"
+        >
+            {{ num }}
+    </a>
 </sup>

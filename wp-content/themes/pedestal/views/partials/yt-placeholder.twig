@@ -2,8 +2,8 @@
     <a href="{{ url|esc_url }}" target="_blank"
         class="yt-placeholder__link js-yt-placeholder-link"
         data-youtube-id="{{ id|esc_attr }}"
-        data-ga-category="Embed|Video"
-        data-ga-label="Load YouTube Video"
+        data-ga-category="{{ ga_category|esc_attr }}"
+        data-ga-label="video-play"
     >
         <img src="{{ img_src|esc_url }}"
             srcset="{{ img_srcset|esc_attr }}"

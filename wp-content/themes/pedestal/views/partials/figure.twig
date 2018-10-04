@@ -10,9 +10,12 @@
     <{{ element_figure_wrap }} {{ style }} class="{{ wrap_classes }} c-figure__content-wrap  column-width">
 
         {% if url %}
-        <a href="{{ url }}" class="c-figure__link"
+        <a
+            href="{{ url }}"
+            class="c-figure__link"
             data-ga-category="{{ gaCategory }}"
-            data-ga-label="{{ gaLabel }}">
+            data-ga-label="{{ gaLabel }}"
+        >
         {% endif %}
 
             {{ content }}
@@ -37,7 +40,13 @@
             <cite class="c-figure__text__credit">
 
                 {% if credit_link %}
-                <a href="{{ credit_link }}" target="_blank" data-ga-category="Figure" data-ga-label="Credit|{{ type }}">
+                <a
+                    href="{{ credit_link }}"
+                    target="_blank"
+                    rel="noopener"
+                    data-ga-category="post-content"
+                    data-ga-label="image-credit"
+                >
                 {% endif %}
 
                 {{ credit }}
