@@ -667,7 +667,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             global $wp_widget_factory;
 
             // Our widgets
-            register_widget( '\Pedestal\Widgets\In_This_Story_Widget' );
             register_widget( '\Pedestal\Widgets\Recent_Content_Widget' );
 
             if ( PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY ) {
@@ -675,17 +674,26 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
 
             // Unregister core widgets we won't be using
-            unregister_widget( 'WP_Widget_Calendar' );
-            unregister_widget( 'WP_Widget_Pages' );
             unregister_widget( 'WP_Widget_Archives' );
-            unregister_widget( 'WP_Widget_Links' );
-            unregister_widget( 'WP_Widget_Meta' );
+            unregister_widget( 'WP_Widget_Calendar' );
             unregister_widget( 'WP_Widget_Categories' );
+            unregister_widget( 'WP_Widget_Custom_HTML' );
+            unregister_widget( 'WP_Widget_Links' );
+            unregister_widget( 'WP_Widget_Media_Audio' );
+            unregister_widget( 'WP_Widget_Media_Gallery' );
+            unregister_widget( 'WP_Widget_Media_Image' );
+            unregister_widget( 'WP_Widget_Media_Video' );
+            unregister_widget( 'WP_Widget_Meta' );
+            unregister_widget( 'WP_Widget_Pages' );
             unregister_widget( 'WP_Widget_Recent_Comments' );
             unregister_widget( 'WP_Widget_Recent_Posts' );
             unregister_widget( 'WP_Widget_RSS' );
-            unregister_widget( 'WP_Widget_Tag_Cloud' );
             unregister_widget( 'WP_Widget_Search' );
+            unregister_widget( 'WP_Widget_Tag_Cloud' );
+            unregister_widget( 'WP_Widget_Text' );
+
+            // Unregister widgets added by plugins
+            unregister_widget( 'P2P_Widget' );
 
         }
 

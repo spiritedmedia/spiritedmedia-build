@@ -67,9 +67,9 @@ class Newsletter_Signups_By_Page_Metric {
         $metrics = $ga->get_metrics( $metric_args );
         $dimension_filter_args = [
             [
-                'name'        => 'ga:eventLabel',
-                'operator'    => 'BEGINS_WITH',
-                'expressions' => [ 'Newsletter Signup' ],
+                'name'        => 'ga:eventCategory',
+                'operator'    => 'EXACT',
+                'expressions' => [ 'inline-prompt', 'newsletter-page' ],
             ],
         ];
         $dimension_filter_clause = $ga->get_dimension_filters( $dimension_filter_args );

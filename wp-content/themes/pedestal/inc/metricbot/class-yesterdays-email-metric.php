@@ -136,6 +136,8 @@ class Yesterdays_Email_Metric {
         $message = [
             'Here\'s how ' . $label . ' performed!',
             '',
+            $campaign->subject,
+            '',
             number_format( $campaign->sent_to ) . ' recipients',
             round( $open_rate, 1 ) . '% opened the email',
             round( $click_rate, 1 ) . '% clicked a link',
