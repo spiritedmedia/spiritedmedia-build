@@ -636,7 +636,7 @@ class Frontend {
                     'compare' => '==',
                 ],
             ],
-            'post_type'      => Types::get_original_post_types(),
+            'post_type'      => Types::get_pedestal_post_types(),
             'post_status'    => 'publish',
             'posts_per_page' => 500,
             'fields'         => 'ids',
