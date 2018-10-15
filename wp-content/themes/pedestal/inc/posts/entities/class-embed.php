@@ -201,11 +201,10 @@ class Embed extends Entity {
      * @return string
      */
     public function get_embed_html() {
-        $args = [
-            'url'           => $this->get_embed_url(),
-            'caption'       => $this->get_embed_caption(),
-            'display_media' => 'true',
-        ];
+        $args = wp_parse_args( [
+            'url'     => $this->get_embed_url(),
+            'caption' => $this->get_embed_caption(),
+        ], $this->get_fm_field( 'embed_options' ) );
 
         $html = self::do_embed( $args );
         if ( ! empty( $html ) ) {
@@ -234,26 +233,21 @@ class Embed extends Entity {
             return '';
         }
 
-        $shortcode = sprintf( '[%s url="%s" ', $embed_type, $url );
+        foreach ( $args as $attr_key => &$attr_val ) {
+            // Store the strings `true` or `false` for boolean values
+            if (
+                is_bool( $attr_val )
+                || ( is_numeric( $attr_val ) && ( $attr_val == 0 || $attr_val == 1 ) )
+            ) {
+                $attr_val = $attr_val ? 'true' : 'false';
+            }
+            if ( ! is_string( $attr_val ) ) {
+                unset( $args[ $attr_key ] );
+            }
+        }
+        $atts_str = Utils::array_to_atts_str( $args );
 
-        switch ( $embed_type ) {
-            case 'twitter':
-                $twitter_settings = [
-                    'display_media'  => 'true',
-                    'exclude_parent' => 'false',
-                ];
-                foreach ( $twitter_settings as $key => $value ) {
-                    if ( isset( $args[ $key ] ) && is_string( $args[ $key ] ) ) {
-                        $value = $args[ $key ];
-                    }
-                    $shortcode .= sprintf( '%s="%s" ', $key, $value );
-                }
-                break;
-        }
-        if ( ! empty( $args['caption'] ) ) {
-            $shortcode .= sprintf( 'caption="%s"', $args['caption'] );
-        }
-        $shortcode .= ']';
+        $shortcode = "[{$embed_type} {$atts_str}]";
         return do_shortcode( $shortcode );
     }
 
@@ -415,12 +409,19 @@ class Embed extends Entity {
     }
 
     /**
-     * Update stored embed data without overwriting existing data
+     * Update stored embed data
+     *
+     * @param boolean $force [false]
      */
-    public function update_embed_data() {
-        if ( ! $this->get_embed_data() ) {
-            $this->set_embed_data( $this->fetch_embed_data() );
+    public function update_embed_data( $force = false ) {
+        if ( ! $force || $this->get_embed_data() ) {
+            return;
         }
+        $embed_data = $this->fetch_embed_data();
+        if ( ! $embed_data ) {
+            return;
+        }
+        $this->set_embed_data( $embed_data );
     }
 
     /**

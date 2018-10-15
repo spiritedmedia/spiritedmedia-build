@@ -395,7 +395,7 @@ class Utils {
     }
 
     /**
-     * Convert an associative array to an HTML attributes string
+     * Convert an associative array to an HTML or shortcode attributes string
      *
      * Use Utils::array_to_data_atts_str() for working with data attributes.
      *

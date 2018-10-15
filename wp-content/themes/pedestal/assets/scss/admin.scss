@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Admin
  *
- * Version: 7.7.2
+ * Version: 7.8.0
  *
  * Copyright ( c ) 2018 Spirited Media
  *
@@ -117,8 +117,8 @@ body.taxonomy-pedestal_subscriptions.edit-tags-php .wrap .search-form,
 body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right .tablenav,
 // Hide the user description field on profile page
 .user-description-wrap,
-// Hide Instagram of the Day metabox by default
-#fm_meta_box_daily_insta_date {
+#fm_meta_box_daily_insta_date,
+#fm_meta_box_embed_options {
   display: none;
 }
 

@@ -25,7 +25,9 @@ class Twitter extends Shortcode {
                         'true'  => esc_html__( 'True', 'pedestal' ),
                         'false' => esc_html__( 'False', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Should the tweet display its image or video if available?', 'pedestal' ),
+                    'description'      => esc_html__( 'Should the tweet display its image or video if available?', 'pedestal' ),
+                    'fm_class'         => 'Checkbox',
+                    'fm_default_value' => true,
                 ],
                 [
                     'label'        => esc_html__( 'Exclude Parent Tweet?', 'pedestal' ),
@@ -36,6 +38,7 @@ class Twitter extends Shortcode {
                         'true'  => esc_html__( 'True', 'pedestal' ),
                     ],
                     'description'  => esc_html__( 'Should the parent tweet be excluded from display?', 'pedestal' ),
+                    'fm_class'     => 'Checkbox',
                 ],
             ],
         ];

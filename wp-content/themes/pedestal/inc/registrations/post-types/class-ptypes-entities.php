@@ -16,6 +16,7 @@ use Pedestal\Posts\Entities\Entity;
 use Pedestal\Posts\Entities\Embed;
 use Pedestal\Posts\Entities\Originals\Whos_Next;
 use Pedestal\Posts\Clusters\Person;
+use Pedestal\Shortcodes\Twitter;
 
 class Entity_Types {
 
@@ -65,6 +66,7 @@ class Entity_Types {
         add_action( 'init', [ $this, 'action_init_after_post_types_registered' ], 11 );
         add_action( 'save_post_pedestal_embed', [ $this, 'action_save_post_pedestal_embed' ], 10, 3 );
         add_action( 'save_post_pedestal_whosnext', [ $this, 'action_save_post_whosnext_clusters' ], 10, 3 );
+        add_action( 'updated_post_meta', [ $this, 'action_updated_post_meta' ], 10, 4 );
     }
 
     /**
@@ -345,6 +347,25 @@ class Entity_Types {
     }
 
     /**
+     * Do stuff when post meta is updated
+     *
+     * @param int    $meta_id    ID of updated metadata entry.
+     * @param int    $object_id  Object ID.
+     * @param string $meta_key   Meta key.
+     * @param mixed  $meta_value Meta value.
+     */
+    public function action_updated_post_meta( $meta_id, $object_id, $meta_key, $_meta_value ) {
+        if ( $meta_key == 'embed_options' ) {
+            $post = Post::get( $object_id );
+            if ( ! Types::is_post( $post ) ) {
+                return;
+            }
+            $force = true;
+            $post->update_embed_data( $force );
+        }
+    }
+
+    /**
      * Register fields for all entities
      */
     private function register_entity_fields() {
@@ -402,6 +423,46 @@ class Entity_Types {
             ] );
             $daily_insta->add_meta_box( esc_html__( 'Instagram of the Day', 'pedestal' ), [ 'pedestal_embed' ], 'normal', 'high' );
         }
+
+        $twitter_embed_options_children = [];
+        $shortcode_args = Twitter::get_shortcode_ui_args();
+        foreach ( $shortcode_args['attrs'] as $shortcode_attr ) {
+            $shortcode_attr_name = $shortcode_attr['attr'];
+
+            // Skip the `url` attribute because that's already handled for the
+            // Embed post type
+            if ( $shortcode_attr_name == 'url' ) {
+                continue;
+            }
+
+            $class = $shortcode_attr['fm_class'] ?? null;
+            if ( ! $class ) {
+                continue;
+            }
+            unset( $shortcode_attr['fm_class'] );
+
+            // Pass shortcode attribute setting to the Fieldmanager class
+            // constructor if its key begins with `fm_`
+            $class_atts = [
+                'description' => $shortcode_attr['description'] ?? '',
+            ];
+            foreach ( $shortcode_attr as $attr_key => $attr_value ) {
+                if ( strpos( $attr_key, 'fm_' ) === 0 ) {
+                    $class_attr_key = str_replace( 'fm_', '', $attr_key );
+                    $class_atts[ $class_attr_key ] = $attr_value;
+                }
+            }
+
+            $class = '\\Fieldmanager_' . $class;
+            $field_instance = new $class( $shortcode_attr['label'], $class_atts );
+            $twitter_embed_options_children[ $shortcode_attr_name ] = $field_instance;
+        }
+
+        $twitter_embed_options = new \Fieldmanager_Group( false, [
+            'name' => 'embed_options',
+            'children' => $twitter_embed_options_children,
+        ] );
+        $twitter_embed_options->add_meta_box( 'Twitter Options', [ 'pedestal_embed' ], 'normal', 'high' );
 
     }
 
