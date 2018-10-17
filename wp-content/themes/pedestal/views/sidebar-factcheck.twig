@@ -14,16 +14,3 @@
     our <a href="http://www.politifact.com/truth-o-meter/article/2011/feb/21/principles-truth-o-meter/" target="_blank" data-ga-category="sidebar" data-ga-label="link">Truth-O-Meter.</a></p>
 
 </li>
-
-{% if item.get_sources %}
-<li class="c-factcheck__sources  widget widget_pedestal_factcheck_sources">
-    <h3 class="widget-title">Sources</h3>
-    {{ item.get_the_sources }}
-</li>
-{% endif %}
-
-{% if item.get_editor %}
-<li class="c-factcheck__editor  widget widget_pedestal_factcheck_editor">
-    <p><strong>Edited by:</strong> {{ item.get_editor }}</p>
-</li>
-{% endif %}

@@ -11,7 +11,9 @@ How can we help you? Enter a search term below to search {{ domain_name }}:
 {% block content %}
     <div class="c-main__body">
         <section class="c-main__header">
-            <h1 class="c-main__title">Search Results</h1>
+            {% if page_title %}
+                <h1 class="c-main__title">{{ page_title }}</h1>
+            {% endif %}
 
             {% if search_query %}
                 {% set button_text = 'Search Again' %}

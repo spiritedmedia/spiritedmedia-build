@@ -9,7 +9,9 @@ $stream = new Stream;
 $featured_posts = Featured_Posts::get_instance();
 
 $context = Timber::get_context();
-if ( ! get_query_var( 'paged' ) ) {
+if ( get_query_var( 'paged' ) ) {
+    $context['page_title'] = 'More Stories';
+} else {
     $context['featured_stream_items'] = $featured_posts->get_the_featured_posts();
     $context['stream_header_city'] = '';
     switch ( PEDESTAL_THEME_NAME ) {

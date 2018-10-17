@@ -549,6 +549,7 @@ class Shortcode_Manager {
             'type'        => 'text',
             'encode'      => true,
             'placeholder' => esc_attr__( 'Credit for the image', 'pedestal' ),
+            'description' => esc_html__( 'N.B. If you want to add a link, use the Credit Link field below. Don\'t use the <a> tag in this field!' ),
         ];
         $shortcode_ui_args['attrs'][] = [
             'label'       => esc_html__( 'Credit Link', 'pedestal' ),

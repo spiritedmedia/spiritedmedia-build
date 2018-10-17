@@ -4,6 +4,7 @@
         data-youtube-id="{{ id|esc_attr }}"
         data-ga-category="{{ ga_category|esc_attr }}"
         data-ga-label="video-play"
+        data-ga-action="{{ url|esc_url }}"
     >
         <img src="{{ img_src|esc_url }}"
             srcset="{{ img_srcset|esc_attr }}"

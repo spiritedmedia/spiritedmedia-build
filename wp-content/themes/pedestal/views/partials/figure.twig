@@ -1,6 +1,4 @@
 {% spaceless %}
-{% set gaCategory = gaCategory|default('Figure') %}
-{% set gaLabel = gaLabel|default('Link' ~ type) %}
 {% set element_figure = if_email('div', 'figure')  %}
 {% set element_figure_caption = if_email('div', 'figcaption')  %}
 {% set element_figure_wrap = element_figure_wrap|default( 'div' )  %}
@@ -13,8 +11,8 @@
         <a
             href="{{ url }}"
             class="c-figure__link"
-            data-ga-category="{{ gaCategory }}"
-            data-ga-label="{{ gaLabel }}"
+            data-ga-category="{{ ga_category }}"
+            data-ga-label="{{ ga_label }}"
         >
         {% endif %}
 
@@ -40,19 +38,15 @@
             <cite class="c-figure__text__credit">
 
                 {% if credit_link %}
-                <a
-                    href="{{ credit_link }}"
-                    target="_blank"
-                    rel="noopener"
-                    data-ga-category="post-content"
-                    data-ga-label="image-credit"
-                >
-                {% endif %}
-
-                {{ credit }}
-
-                {% if credit_link %}
-                </a>
+                    <a
+                        href="{{ credit_link }}"
+                        target="_blank"
+                        rel="noopener"
+                        data-ga-category="post-content"
+                        data-ga-label="image-credit"
+                    >{{ credit }}</a>
+                {% else %}
+                    {{ credit }}
                 {% endif %}
 
             </cite>

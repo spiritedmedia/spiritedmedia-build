@@ -219,6 +219,10 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             // The following constants require other constants to be set first.
 
+            if ( ! defined( 'PEDESTAL_BLOG_NAME_SANS_THE' ) && defined( 'PEDESTAL_BLOG_NAME' ) ) {
+                define( 'PEDESTAL_BLOG_NAME_SANS_THE', str_replace( 'The ', '', PEDESTAL_BLOG_NAME ) );
+            }
+
             if ( ! defined( 'SPIRITEDMEDIA_PEDESTAL_LIVE_DIR' ) ) {
                 define( 'SPIRITEDMEDIA_PEDESTAL_LIVE_DIR', SPIRITEDMEDIA_LIVE_SITE_URL . '/wp-content/themes/pedestal' );
             }
@@ -668,6 +672,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             // Our widgets
             register_widget( '\Pedestal\Widgets\Recent_Content_Widget' );
+            register_widget( '\Pedestal\Widgets\Recent_Video_Widget' );
 
             if ( PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY ) {
                 register_widget( '\Pedestal\Widgets\Daily_Insta_Widget' );

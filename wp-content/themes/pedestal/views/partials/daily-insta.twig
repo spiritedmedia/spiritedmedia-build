@@ -1,18 +1,25 @@
 {% spaceless %}
-<article class="{{ classes }} c-daily-insta  c-panel">
+<article class="{{ classes|esc_attr }} c-daily-insta  c-panel">
     <header class="c-daily-insta__header">
         <h1 class="c-daily-insta__title">
-            <a href="{{ story_url }}" class="c-daily-insta__title__link"
-                data-ga-category="sidebar"
-                data-ga-label="post">
+            {% if story_url %}
+                <a
+                    href="{{ story_url|esc_url }}"
+                    class="c-daily-insta__title__link"
+                    data-ga-category="sidebar"
+                    data-ga-label="post"
+                >
+                    Instagram of the Day
+                </a>
+            {% else %}
                 Instagram of the Day
-            </a>
+            {% endif %}
         </h1>
     </header>
     <figure class="c-daily-insta__body  c-figure--img  c-figure">
         <div class="c-daily-insta__img  c-figure__content">
             <a
-                href="{{ item.get_embed_url }}"
+                href="{{ item.get_embed_url|esc_url }}"
                 target="_blank"
                 data-ga-category="sidebar"
                 data-ga-label="source"
@@ -30,7 +37,7 @@
             </h1>
             <h2 class="c-daily-insta__author  c-daily-insta__body__text">
                 <a
-                    href="{{ item.get_embed_url }}"
+                    href="{{ item.get_embed_url|esc_url }}"
                     target="_blank"
                     data-ga-category="sidebar"
                     data-ga-label="source"

@@ -55,7 +55,7 @@ if ( Types::is_post( $item ) ) :
         ob_start();
         Timber::render( 'partials/pagination-load-more.twig', [
             'url'  => site_url( '/originals/page/2/' ),
-            'text' => 'More Originals',
+            'text' => 'More ' . PEDESTAL_BLOG_NAME_SANS_THE,
         ] );
         $context['recirc_pagination'] = ob_get_clean();
     }

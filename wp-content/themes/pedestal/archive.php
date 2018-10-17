@@ -18,7 +18,7 @@ if ( $stream->is_stream_list() ) {
 
 $button_text = 'More stories';
 if ( is_archive() && 'originals' == get_query_var( 'pedestal_originals' ) ) {
-    $button_text = 'More originals';
+    $button_text = 'More ' . PEDESTAL_BLOG_NAME_SANS_THE;
 }
 if ( is_post_type_archive() ) {
     if ( isset( get_queried_object()->labels->name ) ) {

@@ -414,7 +414,7 @@ class Embed extends Entity {
      * @param boolean $force [false]
      */
     public function update_embed_data( $force = false ) {
-        if ( ! $force || $this->get_embed_data() ) {
+        if ( ! $force && ! empty( $this->get_embed_data() ) ) {
             return;
         }
         $embed_data = $this->fetch_embed_data();

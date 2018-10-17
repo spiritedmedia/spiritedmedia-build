@@ -45,8 +45,9 @@ class Figure {
         'credit_link'         => '',
         'element_figure_wrap' => '',
         'style'               => '',
-        'gaCategory'          => '',
-        'gaLabel'             => '',
+        'ga_category'         => '',
+        'ga_label'            => '',
+        'content_ga_category' => '',
     ];
 
     public function __construct( $type, $content, $atts = [] ) {
@@ -93,7 +94,8 @@ class Figure {
             $id_str .= sprintf( 'aria-labelledby="figcaption_%s" ', $id );
         }
 
-        if ( 'embed' === $type || 'social-embed' === $type ) {
+        if ( 'embed' === $type || 'social-embed' === $type ) :
+
             // Let's figure out an aspect ratio...
             $width = '';
             $height = '';
@@ -104,7 +106,9 @@ class Figure {
             $xpath = new \DOMXPath( $dom );
             $nodes = $xpath->query( '//*[@width]' );
             $whitelisted_elements = [ 'script', 'iframe' ];
-            foreach ( $nodes as $node ) {
+
+            foreach ( $nodes as $node ) :
+
                 // @codingStandardsIgnoreStart
                 if ( ! in_array( $node->nodeName, $whitelisted_elements ) ) {
                     // @codingStandardsIgnoreEnd
@@ -144,7 +148,8 @@ class Figure {
                     $parts = explode( '/embed/', $youtube_url );
                     $youtube_id = untrailingslashit( $parts[1] );
                 }
-            }// End foreach().
+
+            endforeach;
 
             if ( $width && $height && $is_responsive ) {
                 $classes = 'c-figure--responsive-iframe ' . $classes;
@@ -154,7 +159,8 @@ class Figure {
                 }
                 $style = 'padding-bottom: ' . $ratio . '%;';
             }
-        }// End if().
+
+        endif;
 
         if ( $style ) {
             $style = 'style="' . esc_attr( $style ) . '"';
@@ -169,8 +175,8 @@ class Figure {
             'figcaption_classes'  => $atts['figcaption_classes'],
             'wrap_classes'        => $wrap_classes,
             'url'                 => $atts['url'],
-            'gaCategory'          => $atts['gaCategory'],
-            'gaLabel'             => $atts['gaLabel'],
+            'ga_category'         => $atts['ga_category'],
+            'ga_label'            => $atts['ga_label'],
             'content'             => $this->content,
             'caption'             => $atts['caption'],
             'caption_html'        => $atts['caption_html'],
@@ -201,10 +207,14 @@ class Figure {
             $context['classes'] .= ' c-figure--youtube';
             $context['wrap_classes'] .= ' yt-placeholder';
 
-            $placeholder_ga_category = 'post-content';
-            if ( Pedestal()->is_stream() ) {
-                $placeholder_ga_category = 'stream-item';
+            $placeholder_ga_category = $atts['content_ga_category'];
+            if ( ! $placeholder_ga_category ) {
+                $placeholder_ga_category = 'post-content';
+                if ( Pedestal()->is_stream() ) {
+                    $placeholder_ga_category = 'stream-item';
+                }
             }
+
             ob_start();
             Timber::render( 'partials/yt-placeholder.twig', [
                 'id'          => $youtube_id,

@@ -37,6 +37,12 @@ if ( Types::is_post( $item ) ) :
         $context['show_closure_rule'] = true;
     }
 
+    if ( ! $item->is_story() ) {
+        $context['heading_prefix'] = $cluster_stream->is_first_page()
+            ? 'Posts tagged with'
+            : 'More posts tagged with';
+    }
+
     $context['pagination'] = $cluster_stream->get_load_more_button();
 
     if ( ! $cluster_stream->is_first_page() ) {

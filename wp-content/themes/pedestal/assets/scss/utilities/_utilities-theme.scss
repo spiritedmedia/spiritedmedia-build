@@ -1,8 +1,3 @@
-// ==========================================================================
-// Pedestal // Utilities -- Theme
-// ==========================================================================
-
-
 //
 // Typography
 // ==========================================================================
@@ -14,3 +9,9 @@
 .u-size-h4 { font-size: $h4-font-size; }
 .u-size-h5 { font-size: $h5-font-size; }
 .u-size-h6 { font-size: $h6-font-size; }
+
+.s-content {
+  .u-size-h1 { font-size: $content-h1-font-size; }
+  .u-size-h2 { font-size: $content-h2-font-size; }
+  .u-size-h3 { font-size: $content-h3-font-size; }
+}

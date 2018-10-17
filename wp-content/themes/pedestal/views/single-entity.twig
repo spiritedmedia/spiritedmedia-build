@@ -54,9 +54,28 @@
             {{ content }}
         </section>
 
-        {% if footnotes %}
-        <aside class="c-main__footnotes s-content js-content-footnotes">
-            {{ footnotes }}
+        {% if footnotes or 'factcheck' == type %}
+        <aside class="c-main__supplemental s-content hr--slim js-content-footnotes">
+            {% if footnotes %}
+                <section class="c-main__footnotes">
+                    {{ footnotes }}
+                </section>
+            {% endif %}
+
+            {% if 'factcheck' == type %}
+                {% if item.get_sources %}
+                <section class="c-factcheck__sources">
+                    <h1>Sources</h1>
+                    {{ item.get_the_sources }}
+                </section>
+                {% endif %}
+
+                {% if item.get_editor %}
+                <section class="c-factcheck__editor">
+                    <p><strong>Edited by:</strong> {{ item.get_editor }}</p>
+                </section>
+                {% endif %}
+            {% endif %}
         </aside>
         {% endif %}
 

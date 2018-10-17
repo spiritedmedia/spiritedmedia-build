@@ -578,42 +578,47 @@ class Frontend {
      * @return string Archive title.
      */
     public static function get_archive_title() {
-        if ( is_category() ) {
-            return single_cat_title( '', false );
-        } elseif ( is_tag() ) {
-            return sprintf( __( 'Tag: %s' ), single_tag_title( '', false ) );
-        } elseif ( is_author() ) {
+        $paged = get_query_var( 'paged' ) >= 2;
+        $title = $paged ? 'More ' : '';
+
+        if ( is_author() ) {
             return sprintf( __( '%s' ), get_the_author() );
-        } elseif ( is_year() ) {
-            return sprintf( __( 'Year: %s' ), get_the_date( _x( 'Y', 'yearly archives date format' ) ) );
-        } elseif ( is_month() ) {
-            return sprintf( __( 'Month: %s' ), get_the_date( _x( 'F Y', 'monthly archives date format' ) ) );
-        } elseif ( is_day() ) {
-            return sprintf( __( 'Day: %s' ), get_the_date( _x( 'F j, Y', 'daily archives date format' ) ) );
         } elseif ( is_post_type_archive() ) {
-            return post_type_archive_title( '', false );
+            $type = Utils::remove_name_prefix( get_query_var( 'post_type' ) );
+            switch ( $type ) {
+                case 'factcheck':
+                case 'event':
+                case 'newsletter':
+                    // Only some post types deserve a "More" prefix on paged archives
+                    $title .= post_type_archive_title( '', false );
+                    break;
+                default:
+                    $title = post_type_archive_title( '', false );
+                    break;
+            }
         } elseif ( is_tax() ) {
             $taxonomy_singular_name = '';
             $term_title = single_term_title( '', false );
             if ( isset( get_queried_object()->taxonomy ) ) {
                 $tax = get_taxonomy( get_queried_object()->taxonomy );
                 if ( 'pedestal_category' === $tax->name ) {
-                    return $term_title;
-                }
-                if ( isset( $tax->labels->singular_name ) ) {
+                    $title .= $term_title;
+                } elseif ( isset( $tax->labels->singular_name ) ) {
                     $taxonomy_singular_name = $tax->labels->singular_name;
+                    $title .= sprintf(
+                        __( '%1$s: %2$s' ),
+                        $taxonomy_singular_name,
+                        $term_title
+                    );
                 }
             }
-            return sprintf(
-                __( '%1$s: %2$s' ),
-                $taxonomy_singular_name,
-                $term_title
-            );
         } elseif ( is_archive() && 'originals' == get_query_var( 'pedestal_originals' ) ) {
-            return __( 'Originals' );
+            $title .= PEDESTAL_BLOG_NAME_SANS_THE . ' Originals';
         } else {
-            return __( 'Archives' );
+            $title .= 'Archives';
         }
+
+        return $title;
     }
 
     /**

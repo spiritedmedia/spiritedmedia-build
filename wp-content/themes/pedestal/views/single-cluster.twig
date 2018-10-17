@@ -8,8 +8,8 @@
         <header class="c-main__header js-main-header  single-header">
 
             <h1 class="single-header__title  c-heading--archive">
-                {% if 'story' != type %}
-                    <span class="c-heading__prefix">Posts tagged with</span>
+                {% if heading_prefix %}
+                    <span class="c-heading__prefix">{{ heading_prefix }}</span>
                 {% endif %}
                 <span class="c-heading__title">{{ title }}</span>
             </h1>

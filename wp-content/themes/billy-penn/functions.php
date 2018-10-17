@@ -101,6 +101,9 @@ class Billy_Penn extends Pedestal {
 
                 // Membership
                 'PEDESTAL_NRH_PROPERTY' => 'billypenn',
+
+                // Site Features
+                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR' => true,
             ];
         } );
 

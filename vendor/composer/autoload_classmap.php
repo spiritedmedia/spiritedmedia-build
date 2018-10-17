@@ -8050,6 +8050,7 @@ return array(
     'Pedestal\\Utils\\Utils' => $baseDir . '/wp-content/themes/pedestal/inc/utils/class-utils.php',
     'Pedestal\\Widgets\\Daily_Insta_Widget' => $baseDir . '/wp-content/themes/pedestal/inc/widgets/class-daily-insta-widget.php',
     'Pedestal\\Widgets\\Recent_Content_Widget' => $baseDir . '/wp-content/themes/pedestal/inc/widgets/class-recent-content-widget.php',
+    'Pedestal\\Widgets\\Recent_Video_Widget' => $baseDir . '/wp-content/themes/pedestal/inc/widgets/class-recent-video-widget.php',
     'Psr\\Cache\\CacheException' => $vendorDir . '/psr/cache/src/CacheException.php',
     'Psr\\Cache\\CacheItemInterface' => $vendorDir . '/psr/cache/src/CacheItemInterface.php',
     'Psr\\Cache\\CacheItemPoolInterface' => $vendorDir . '/psr/cache/src/CacheItemPoolInterface.php',

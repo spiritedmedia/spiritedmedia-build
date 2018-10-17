@@ -44,12 +44,8 @@
   line-height: 1.33333;
 }
 
-.c-main__footer {
-  margin-top: rem( 32px );
-
-  .stream-item--sponsored {
-    margin-bottom: $stream-item-spacing;
-  }
+.c-main__supplemental {
+  padding-top: rem( 16px );
 }
 
 // stylelint-disable selector-max-type
@@ -72,6 +68,14 @@
   }
 }
 // stylelint-enable selector-max-type
+
+.c-main__footer {
+  margin-top: rem( 32px );
+
+  .stream-item--sponsored {
+    margin-bottom: $stream-item-spacing;
+  }
+}
 
 
 @media print {
