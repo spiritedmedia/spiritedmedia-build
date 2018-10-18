@@ -19,33 +19,19 @@ $share-button-height: $share-button-margin-y + $share-button-link-height;
 }
 
 
-.has-sticky-share-buttons {
-  .c-main__header {
-    margin-top: $share-button-height;
-  }
-}
-
-
 .share-buttons {
+  width: 100%; // Width should be equal to the main content
+  bottom: 0;
   overflow: auto;
   background-color: $white;
   margin-top: $share-button-margin-y;
   margin-bottom: $share-button-margin-y;
   font-family: $font-family-sans-serif;
-
-  .has-sticky-share-buttons & {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: $z-index-3;
-    border: rem( 3px ) solid $white;
-    border-bottom: 0;
-    margin-bottom: 0;
-  }
 }
 
 .share-buttons__inner {
+  @include clearfix;
+
   margin: 0 auto;
   max-width: $row-width;
 }
@@ -95,6 +81,17 @@ $share-button-height: $share-button-margin-y + $share-button-link-height;
   position: relative;
   vertical-align: sub;
 }
+
+
+.share-buttons--bottom {
+  display: none;
+  position: sticky;
+  z-index: $z-index-3;
+  bottom: 0;
+  margin-bottom: 0;
+  border-top: rem( 3px ) solid $white;
+}
+
 
 @media print {
   .share-buttons {

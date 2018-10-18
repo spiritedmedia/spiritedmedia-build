@@ -171,6 +171,10 @@
 
 
   @media #{$large-up} {
-    @include explode-component( $side: 'left', $inner-selector: '.signup-email__form' );
+    @include explode-component(
+      $side: 'left',
+      $inner-selector: '.signup-email__form',
+      $inner-max-columns: 8
+    );
   }
 } // end .signup-email--cluster

@@ -69,7 +69,7 @@
   }
 
   .site-nav--primary__outer {
-    @include explode-component( $inner-selector: '.site-nav--primary' );
+    @include explode-component( $inner-selector: '.site-nav__list' );
   }
 
   .site-nav--primary {

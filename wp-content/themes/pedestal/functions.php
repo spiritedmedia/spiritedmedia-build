@@ -637,9 +637,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             add_image_size( 'facebook-open-graph', 1200, 630, true );
 
             $sidebars = [
-                'homepage'      => esc_html__( 'Homepage', 'pedestal' ),
-                'story'       => esc_html__( 'Story', 'pedestal' ),
-                'entity'      => esc_html__( 'Entity', 'pedestal' ),
+                'homepage' => esc_html__( 'Homepage', 'pedestal' ),
             ];
             foreach ( $sidebars as $id => $sidebar ) {
                 $args = [

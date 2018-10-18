@@ -320,6 +320,8 @@ class Frontend {
 
         $context['is_page_donate'] = is_page( 'support-our-work' ) ?: false;
 
+        $context['sidebar_ad'] = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
+
         // Load some WP conditional functions as Timber context variables
         $conditionals = [
             'is_home',

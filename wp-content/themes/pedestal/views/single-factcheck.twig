@@ -1,0 +1,34 @@
+{% extends 'single-entity.twig' %}
+
+
+{% block hero %}
+{% include 'partials/factchecks/hero.twig' %}
+{% endblock hero %}
+
+
+{% block supplemental %}
+<aside class="c-main__supplemental s-content hr--slim js-content-footnotes">
+    {% if footnotes %}
+        <section class="c-main__footnotes">
+            {{ footnotes }}
+        </section>
+    {% endif %}
+
+    {% if item.get_sources %}
+    <section class="c-factcheck__sources">
+        <h1>Sources</h1>
+        {{ item.get_the_sources }}
+    </section>
+    {% endif %}
+
+    {% if item.get_editor %}
+    <section class="c-factcheck__editor">
+        <p><strong>Edited by:</strong> {{ item.get_editor }}</p>
+    </section>
+    {% endif %}
+</aside>
+{% endblock supplemental %}
+
+
+{% block sidebar_ad %}
+{% endblock sidebar_ad %}

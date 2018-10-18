@@ -18,10 +18,10 @@ body {
 
 body {
   background-color: $white;
-}
 
-.site-wrap {
-  overflow: hidden; // Required for the `explode-component` mixin to work
+  // Required for the `explode-component` mixin to work
+  // Does not affect `position: sticky;`
+  overflow-x: hidden;
 }
 
 .content-wrapper {

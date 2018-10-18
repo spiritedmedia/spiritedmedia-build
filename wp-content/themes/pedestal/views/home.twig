@@ -54,6 +54,18 @@
     {% endif %}
 {% endblock %}
 
-{% block sidebar %}
-    {{ sidebar }}
-{% endblock %}
+
+{% block sidebar_secondary %}
+    <li class="widget tips-feedback">
+        <p>
+            Have a tip? Email us at
+            <a
+                href="mailto:{{ site.emails.tips|esc_attr }}"
+                data-ga-category="sidebar"
+                data-ga-label="link"
+            >
+                {{ site.emails.tips }}
+            </a>
+        </p>
+    </li>
+{% endblock sidebar_secondary %}

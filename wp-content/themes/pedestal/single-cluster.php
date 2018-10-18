@@ -12,22 +12,17 @@ $context = Timber::get_context();
 
 if ( Types::is_post( $item ) ) :
 
-    $context['sidebar'] = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
-    if ( is_active_sidebar( 'sidebar-stream' ) ) {
-        $context['sidebar'] .= Timber::get_widgets( 'sidebar-stream' );
-    }
-
     if ( $item->is_story() ) {
         $context['cluster_prompt'] = Follow_Updates::get_signup_form( [], $cluster_id );
+
+        if ( $item->get_slug() == 'whos-next' ) {
+            $context['rail_class'] = '';
+        }
 
         add_filter( 'pedestal_stream_item_context', function( $context ) {
             $context['overline'] = '';
             return $context;
         } );
-
-        if ( is_active_sidebar( 'sidebar-story' ) ) {
-            $context['sidebar'] .= Timber::get_widgets( 'sidebar-story' );
-        }
     }
 
     $cluster_stream = new Stream( $item->get_entities_query() );
@@ -54,6 +49,11 @@ if ( Types::is_post( $item ) ) :
 
     // Load Post context after everything else so it takes priority
     $context = $item->get_context( $context );
+
+    $context['rail_class'] = '';
+    if ( empty( $context['sidebar'] ) && $item->get_slug() != 'whos-next' ) {
+        $context['rail_class'] .= 'is-sticky';
+    }
 
 endif;
 

@@ -8,21 +8,14 @@
 {% endblock %}
 
 {% block the_sidebar %}
-    <aside class="rail js-rail columns large-4">
+    <aside class="rail columns large-4 js-rail {{ rail_class }}">
         <ul class="sidebar {{ sidebar_class }}">
-            {% block sidebar %}
-                {# The default sidebar if no sidebar is specified #}
-            {% endblock %}
+            {% block sidebar_ad sidebar_ad %}
 
-            <li class="widget tips-feedback">
-                <p>Have a tip? Email us at <a href="mailto:{{ site.emails.tips|esc_attr }}" data-ga-category="sidebar" data-ga-label="link">{{ site.emails.tips }}</a></p>
-            </li>
+            {% block sidebar sidebar %}
 
-            {% if 'Billy Penn' == site.name %}
-            <li class="widget tips-feedback">
-                <p>See something wrong on the site? Please <a href="mailto:{{ site.emails.contact|esc_attr }}" data-ga-category="sidebar" data-ga-label="link">let us know</a>.</p>
-            </li>
-            {% endif %}
+            {% block sidebar_secondary %}
+            {% endblock sidebar_secondary %}
         </ul>
     </aside>
 {% endblock %}

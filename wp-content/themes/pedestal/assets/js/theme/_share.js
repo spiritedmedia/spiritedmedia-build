@@ -2,53 +2,56 @@
 function ShareButtons($) {
   this.result = false;
 
-  var $buttonsContainer = $('.js-share-buttons');
+  var $buttonsContainerTop = $('.js-share-buttons-top');
+  var $buttonsContainerBottom = $('.js-share-buttons-bottom');
+  var $bottomPlaceholder = $('.js-share-buttons-bottom-placeholder');
 
-  if (!$buttonsContainer.length) {
+  if (!$buttonsContainerTop.length || !$buttonsContainerBottom.length) {
     return;
   }
 
   var $win = $(window);
-  var $body = $('body');
-  var $header = $('.js-main-header');
 
-  var $buttons = $buttonsContainer.find('.js-share-button');
-  $buttons.attr('data-ga-label', 'top').data('ga-label', 'top');
+  var $bottomButtons = $buttonsContainerBottom.find('.js-share-button');
 
   this.getCutoffs = function() {
     var $adminBar = $('#wpadminbar');
-    var headerOffset = $header.offset();
-    var footerOffset = $('.js-main-footer').offset();
-    var top = headerOffset ? headerOffset.top + $header.height() : 0;
-    var bottom = footerOffset ? footerOffset.top - $win.height() : 0;
+    var topOffset = $buttonsContainerTop.offset();
+    var top = topOffset ? topOffset.top + $buttonsContainerTop.height() : 0;
+    var bottomOffset = $bottomPlaceholder.offset();
+    var bottom = bottomOffset ? bottomOffset.top - $win.height() : 0;
     if ($adminBar.length > 0) {
       top -= $adminBar.height();
     }
-    return {
-      top: top,
-      bottom: bottom
-    };
+    return { top, bottom };
   };
+
   this.cutoffs = this.getCutoffs();
 
-  // eslint-disable-next-line no-unused-vars
   this.scroll = function() {
     var currentPosition = $win.scrollTop();
 
-    if (
-      currentPosition > this.cutoffs.top
-      && currentPosition < this.cutoffs.bottom
-    ) {
-      $body.addClass('has-sticky-share-buttons');
-      $buttons.attr('data-ga-label', 'sticky').data('ga-label', 'sticky');
+    if (currentPosition < this.cutoffs.top) {
+      $buttonsContainerBottom.hide();
     } else {
-      $body.removeClass('has-sticky-share-buttons');
-      $buttons.attr('data-ga-label', 'top').data('ga-label', 'top');
+      $buttonsContainerBottom.show();
+
+      if (currentPosition < this.cutoffs.bottom) {
+        this.updateBottomButtonsLabel('sticky');
+      } else {
+        this.updateBottomButtonsLabel('bottom');
+      }
     }
   };
 
   this.resize = function() {
     this.cutoffs = this.getCutoffs();
+  };
+
+  this.updateBottomButtonsLabel = function(position) {
+    $bottomButtons
+      .attr('data-ga-label', position)
+      .data('ga-label', position);
   };
 
   this.result = true;
@@ -57,13 +60,16 @@ function ShareButtons($) {
 /**
  * Activate new share buttons
  */
-jQuery(document).ready(function($) {
+jQuery(window).on('load', function() {
+  var $ = jQuery;
   var $win = $(window);
   var obj = new ShareButtons($);
   var result = obj.result;
   if (!result) {
     return false;
   }
+
+  obj.updateBottomButtonsLabel('sticky');
 
   var scrollCb = $.proxy(obj.scroll, obj);
   $win.on('scroll', PedUtils.throttle(scrollCb, 50));

@@ -16,6 +16,8 @@ if ( $stream->is_stream_list() ) {
     $context['stream'] = $stream->get_the_stream();
 }
 
+$context['rail_class'] = 'is-sticky';
+
 $button_text = 'More stories';
 if ( is_archive() && 'originals' == get_query_var( 'pedestal_originals' ) ) {
     $button_text = 'More ' . PEDESTAL_BLOG_NAME_SANS_THE;
@@ -28,7 +30,5 @@ if ( is_post_type_archive() ) {
 $context['pagination'] = $stream->get_load_more_button([
     'text' => $button_text,
 ]);
-
-$context['sidebar'] = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
 
 Timber::render( 'archive.twig', $context );

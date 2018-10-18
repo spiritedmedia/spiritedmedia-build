@@ -13,7 +13,6 @@ if ( Types::is_post( $item ) ) :
 
     // Load Post context after everything else so it takes priority
     $context = $item->get_context( $context );
-
 endif;
 
 // single.twig is the lowest priority template and for now should just be blank

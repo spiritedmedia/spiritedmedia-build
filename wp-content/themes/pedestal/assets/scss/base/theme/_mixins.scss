@@ -391,39 +391,58 @@
 
 /// Break a component out of the bounds of its parent to edge of viewport width
 ///
-/// @param  {string} $side ['both']                Side to explode
-/// @param  {string} $selector ['&']               Selector
-/// @param  {string} $inner-selector ['&__inner']  Inner selector
-/// @param  {bool}   $ignore-gutter [false]        Ignore the grid gutter? By default
-///     the inner padding will include the gutter space
+/// This requires `body { overflow-x: hidden; }`. Fortunately this declaration
+/// does not affect `position: sticky;`.
+///
+/// The inner element can be constrained to the column width as specified by
+/// `$inner-max-columns`, where column width is calculated by you, the
+/// developer, at the root level of the site's 12-column grid.
+///
+/// For example, at the time of writing, the main element and the sidebar are 8
+/// columns and 4 columns respectively. So if you want to have an exploding
+/// component within the main element, then set `$inner-max-columns` to `8`.
+///
+/// Note that the Codepen linked below includes more code for limiting the
+/// explosion area to something smaller than 100vw, but we currently have no use
+/// case for that so it was omitted.
+///
+/// @link https://codepen.io/tigt/post/bust-elements-out-of-containers-with-one-line-of-css
+///
+/// @param  {string} $side ['both']                Side to explode outwards
+/// @param  {string} $inner-selector ['&__inner']  Inner selector to wrap contents
+/// @param  {number} $inner-max-columns [12]       Grid columns to restrict inner element
 @mixin explode-component(
   $side: 'both',
-  $selector: '&',
   $inner-selector: '&__inner',
-  $ignore-gutter: false
+  $inner-max-columns: 12
 ) {
-  $sides: ();
+
+  @include clearfix;
+  box-sizing: border-box;
 
   @if $side == 'left' or $side == 'both' {
-    $sides: append( $sides, 'left' );
+    margin-left: calc( 50% - 50vw );
   }
 
   @if $side == 'right' or $side == 'both' {
-    $sides: append( $sides, 'right' );
+    margin-right: calc( 50% - 50vw );
   }
 
-  $side-gutter: $column-gutter / 2;
-  $margin: if( $ignore-gutter, calc( #{-100vw} - #{$side-gutter} ), -100vw );
-  $padding: if( $ignore-gutter, calc( 100vw - #{$side-gutter} ), 100vw );
+  @if $inner-selector and $inner-max-columns {
+    $inner-max-width-percent: grid-calc( $inner-max-columns, $total-columns );
+    $inner-max-width-decimal: $inner-max-width-percent / 100%;
+    $inner-max-width: $row-width * $inner-max-width-decimal - $column-gutter;
 
-  #{$selector} {
-    position: relative;
+    #{$inner-selector} {
+      width: 100%;
+      max-width: $inner-max-width;
+      margin-left: auto;
+      margin-right: auto;
 
-    @each $side in $sides {
-      margin-#{$side}: $margin;
-
-      #{$inner-selector} {
-        padding-#{$side}: $padding;
+      @if $side == 'left' {
+        float: right;
+      } @elseif $side == 'right' {
+        float: left;
       }
     }
   }

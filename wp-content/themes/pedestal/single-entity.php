@@ -9,7 +9,11 @@ use Pedestal\Email\Newsletter_Emails;
 $item = Post::get( get_the_ID() );
 $context = Timber::get_context();
 
+$templates = [];
+
 if ( Types::is_post( $item ) ) :
+
+    $templates[] = 'single-' . $item->get_type() . '.twig';
 
     $context['cluster'] = $item->get_primary_story();
     $context['featured_image_sizes'] = [
@@ -22,10 +26,6 @@ if ( Types::is_post( $item ) ) :
         'ratio'  => 16 / 9,
         'widths' => [ 320, 480, 640, 676, 700, 800, 1024 ],
     ];
-    if ( is_active_sidebar( 'sidebar-entity' ) ) {
-        $context['sidebar'] = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
-        $context['sidebar'] .= Timber::get_widgets( 'sidebar-entity' );
-    }
 
     $context['newsletter_signup_prompt'] = Newsletter_Emails::get_signup_form();
 
@@ -68,6 +68,11 @@ if ( Types::is_post( $item ) ) :
         $context['content_classes'] = implode( ' ', $context['content_classes'] );
     }
 
+    $context['rail_class'] = '';
+    if ( empty( $context['sidebar'] ) ) {
+        $context['rail_class'] .= 'is-sticky';
+    }
+
 endif;
 
 // Special exception for Denverite featured images pre-migration to Bridge
@@ -86,5 +91,7 @@ if ( 4 === get_current_blog_id() ) :
 
 endif;
 
+$templates[] = 'single-entity.twig';
+
 $context['item'] = $item;
-Timber::render( 'single-entity.twig', $context );
+Timber::render( $templates, $context );

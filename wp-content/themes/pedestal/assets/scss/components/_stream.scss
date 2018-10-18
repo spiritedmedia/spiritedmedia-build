@@ -30,7 +30,7 @@
   }
 
   .stream__header__inner {
-    padding: rem( 20px ) 0;
+    padding: rem( 20px ) ( $column-gutter / 2 );
   }
 }
 
@@ -47,7 +47,12 @@
 @media #{$large-up} {
   .stream--home {
     .stream__header {
-      @include explode-component( left );
+      @include explode-component( $side: 'left', $inner-max-columns: 8 );
+    }
+
+    .stream__header__inner {
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }
@@ -151,8 +156,7 @@
   .stream__featured-items {
     .stream-item__featured-container {
       @include explode-component(
-        $inner-selector: '.stream-item__featured-image-link',
-        $ignore-gutter: true
+        $inner-selector: '.stream-item__featured-image-link'
       );
     }
   }
