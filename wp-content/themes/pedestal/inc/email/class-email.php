@@ -156,11 +156,17 @@ class Email {
         }
         $group_category = sanitize_text_field( $_POST['group-category'] );
 
+        $signup_source = '';
+        if ( ! empty( $_POST['signup-source'] ) ) {
+            $signup_source = sanitize_text_field( $_POST['signup-source'] );
+        }
+
         $email = sanitize_email( $_REQUEST['email_address'] );
         // Subscribe the email subscriber to the groups
         $args = [
             'groups'         => $group_ids,
             'group_category' => $group_category,
+            'signup_source'  => $signup_source,
         ];
         return $mc->add_contact_to_groups( $email, $args );
     }
@@ -171,8 +177,10 @@ class Email {
      * @return bool  True if the request passes the check
      */
     public function handle_honeypot_check() {
-        if ( isset( $_POST['pedestal-blank-field-check'] ) && empty( $_POST['pedestal-blank-field-check'] ) ) {
-            return true;
+        if ( isset( $_POST['pedestal-current-year-check'] ) && isset( $_POST['pedestal-blank-field-check'] ) ) {
+            if ( empty( $_POST['pedestal-blank-field-check'] ) && date( 'Y' ) == $_POST['pedestal-current-year-check'] ) {
+                return true;
+            }
         }
 
         status_header( 400 );

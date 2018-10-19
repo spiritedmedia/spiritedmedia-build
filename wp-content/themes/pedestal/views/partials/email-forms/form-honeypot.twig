@@ -1,3 +1,21 @@
+<div class="pedestal-current-year-check">
+    <label class="invisible" for="pedestal-current-year-check">What is the current year?</label>
+    {# Matches alignment on Cluster signup forms #}
+    <div class="signup-email__input-group">
+        <input type="text"
+            name="pedestal-current-year-check"
+            class="form-input js-pedestal-current-year-check"
+            id="pedestal-current-year-check"
+            value=""
+            placeholder="What is the current year? (YYYY)"
+        >
+    </div>
+    <button
+        class="btn--oval pedestal-current-year-check-placeholder"
+        tabindex="-1"
+    ></button>
+</div>
+
 <label style="display:none;" for="pedestal-blank-field-check">
     {{ __( 'Leave this field blank.', 'pedestal' ) }}
     <input type="text"
@@ -6,5 +24,6 @@
         id="pedestal-blank-field-check"
         value=""
         placeholder=""
+        tabindex="-1"
     />
 </label>

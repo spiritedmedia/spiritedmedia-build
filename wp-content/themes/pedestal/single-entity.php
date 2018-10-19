@@ -27,7 +27,9 @@ if ( Types::is_post( $item ) ) :
         'widths' => [ 320, 480, 640, 676, 700, 800, 1024 ],
     ];
 
-    $context['newsletter_signup_prompt'] = Newsletter_Emails::get_signup_form();
+    $context['newsletter_signup_prompt'] = Newsletter_Emails::get_signup_form([
+        'signup_source' => 'Post footer',
+    ]);
 
     $adverts = new Adverts;
     $sponsored_item = $adverts->get_the_sponsored_item();

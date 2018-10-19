@@ -12,7 +12,6 @@ $base-line-height  : rem( 22px );
 $global-radius: rem( 4px ) !default;
 
 // Enable/disable some visual features
-$enable-de-emphasized-entity-meta:   false !default;
 $enable-italic-footnotes:           true !default;
 $enable-emboldened-link-underlines: false !default;
 $enable-figure-credit-distinction:  true !default;
@@ -411,8 +410,6 @@ $single-header-title-font-size:             rem( 32px )      !default;
 $single-header-title-line-height:           1                !default;
 $single-header-description-font-size:       rem( 24px )      !default;
 $single-header-description-line-height:     1                !default;
-$single-entity-meta-border-y:               $border-standard !default;
-$single-entity-meta-text-transform:         uppercase        !default;
 $single-entity-meta-hover-background-color: inherit          !default;
 
 // Brand Headings

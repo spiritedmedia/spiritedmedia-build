@@ -161,8 +161,19 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
                 {% set author_link_href = 'href="' ~ author_link|esc_url ~ '"' %}
             {% endif %}
 
+            {% if machine_time %}
+                {% set datetime_attr %}
+                    datetime="{{ machine_time|esc_attr }}"
+                {% endset %}
+            {% endif %}
+
             {% set time_html %}
-                <time {% if machine_time %}datetime="{{ machine_time|esc_attr }}"{% endif %} class="stream-item__datetime">{{ date_time }}</time>
+                <time
+                    {{ datetime_attr }}
+                    class="stream-item__datetime"
+                >
+                    {{ date_time }}
+                </time>
             {% endset %}
 
             {# Display stuff #}

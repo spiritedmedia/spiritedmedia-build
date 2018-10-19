@@ -50,7 +50,14 @@ class Newsletter_Emails {
             if ( is_singular( $ignore_post_types ) ) {
                 return;
             }
-            $signup_form = self::get_signup_form();
+            $signup_source = 'Other stream';
+            if ( is_home() ) {
+                $signup_source = 'Homepage stream';
+            }
+
+            $signup_form = self::get_signup_form([
+                'signup_source' => $signup_source,
+            ]);
             echo '<div class="stream-item stream-item--signup-email signup-email--daily">';
             echo $signup_form;
             echo '</div>';
@@ -290,18 +297,22 @@ class Newsletter_Emails {
         $email_groups = Email_Groups::get_instance();
         $defaults = [
             'action_url'           => get_site_url() . '/subscribe-to-email-group/',
+
             'ga_category'          => 'inline-prompt',
             'ga_action'            => 'subscribe',
+            'signup_source'        => '',
+
             'icon'                 => Icons::get_icon( 'envelope-slant' ),
             'input_icon_name'      => 'envelope-o',
             'input_icon'           => '',
             'success_icon'         => Icons::get_icon( 'check' ),
+
             'name'                 => PEDESTAL_BLOG_NAME,
             'title'                => '',
             'body'                 => 'default',
-            'name'                 => PEDESTAL_BLOG_NAME,
             'sender_email_address' => PEDESTAL_EMAIL_NEWS,
             'send_time'            => '7:00 a.m.',
+
             'group_ids'            => [
                 $email_groups->get_newsletter_group_id( 'Daily Newsletter' ),
                 $email_groups->get_newsletter_group_id( 'Breaking News' ),

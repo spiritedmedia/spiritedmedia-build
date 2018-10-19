@@ -766,7 +766,10 @@ class Shortcode_Manager {
             'success_icon'    => Icons::get_icon( 'heart' ),
         ];
         if ( ! empty( $attrs['ga_category'] ) ) {
-            $args['ga_category'] = $attrs['ga_category'];
+            $args['ga_category']   = $attrs['ga_category'];
+        }
+        if ( ! empty( $attrs['signup_source'] ) ) {
+            $args['signup_source'] = $attrs['signup_source'];
         }
         $signup_form = Newsletter_Emails::get_signup_form( $args );
         return '<div class="signup-email--shortcode">' . $signup_form . '</div>';

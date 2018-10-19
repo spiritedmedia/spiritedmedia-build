@@ -20,9 +20,7 @@
 
 {% set timestamp %}
     <time class="single-entity-meta__timestamp__inner" datetime="{{ item.get_post_date( 'c' ) }}">
-        {{ item.get_post_date( site.date_format ) }}
-        &nbsp;&middot;&nbsp;
-        {{ item.get_post_date( site.time_format ) }}
+        {{ item.get_the_relative_datetime }}
     </time>
 {% endset %}
 

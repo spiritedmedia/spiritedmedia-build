@@ -306,12 +306,16 @@ class Follow_Updates {
         }
         $defaults = [
             'action_url'      => get_site_url() . '/subscribe-to-email-group/',
+
             'ga_category'     => 'cluster-prompt',
             'ga_action'       => 'subscribe',
+
             'input_icon_name' => 'envelope-o',
             'input_icon'      => '',
+
             'title'           => self::get_cta_text( $cluster_id ),
             'button_text'     => self::get_submit_button_text( $cluster_id ),
+
             'group_ids'       => [
                 $cluster->get_mailchimp_group_id(),
             ],

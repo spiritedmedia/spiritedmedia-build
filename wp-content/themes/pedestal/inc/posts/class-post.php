@@ -858,23 +858,50 @@ abstract class Post {
         // Extract days count in interval
         $diff = $now->diff( $match_date );
         $diff_days = (integer) $diff->format( '%R%a' );
+        $time_string = ', ' . $this->get_post_date( PEDESTAL_TIME_FORMAT );
         switch ( $diff_days ) {
             case 0:
-                return 'Today';
+                return 'Today' . $time_string;
             case -1:
-                return 'Yesterday';
-            default:
-                return $this->get_the_datetime();
+                $yesterday = 'Yesterday';
+                if ( ! Pedestal()->is_stream() ) {
+                    $yesterday .= $time_string;
+                }
+                return $yesterday;
         }
+
+        $datetime_args = [];
+
+        if ( Pedestal()->is_stream() ) {
+            $datetime_args['time'] = false;
+
+            // If the post date is after Jan. 1st of this year, omit the year
+            if ( $now->format( 'Y' ) === $match_date->format( 'Y' ) ) {
+                $datetime_args['year'] = false;
+            }
+        }
+
+        return $this->get_the_datetime( $datetime_args );
     }
 
     /**
      * Get a formatted date time string
      *
-     * @return string  Datetime of the post separated by a dot
+     * @param array $args
+     * @return string  Datetime of the post separated by a comma
      */
-    public function get_the_datetime() {
-        $datetime = $this->get_post_date( PEDESTAL_DATE_FORMAT ) . ' &middot; ' . $this->get_post_date( PEDESTAL_TIME_FORMAT );
+    public function get_the_datetime( $args = [] ) {
+        $args = wp_parse_args( $args, [
+            'year' => true,
+            'time' => true,
+        ] );
+        $date_format = $args['year']
+            ? PEDESTAL_DATE_FORMAT
+            : str_replace( ', Y', '', PEDESTAL_DATE_FORMAT );
+        $datetime = $this->get_post_date( $date_format );
+        if ( $args['time'] ) {
+            $datetime .= ', ' . $this->get_post_date( PEDESTAL_TIME_FORMAT );
+        }
         return apply_filters( 'pedestal_get_the_datetime', $datetime );
     }
 

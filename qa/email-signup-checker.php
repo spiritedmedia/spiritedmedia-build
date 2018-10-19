@@ -124,6 +124,7 @@ if ( empty( $test_email_address ) ) {
         $html = HtmlDomParser::file_get_html( $link['url'], $use_include_path, $file_get_html_context );
         $forms = $html->find( 'form[action*=/subscribe-to-email-group/]' );
         foreach ( $forms as $form ) {
+            $honeypot_count = count( $form->find( '.pedestal-current-year-check' ) );
             $email_input_count = count( $form->find( '[name=email_address]' ) );
             $hidden_inputs = $form->find( 'input[type=hidden]' );
             $found_input_values = [];
@@ -136,6 +137,9 @@ if ( empty( $test_email_address ) ) {
                 }
             }
             $failure_reasons = [];
+            if ( 1 !== $honeypot_count ) {
+                $failure_reasons[] = 'No honeypot found!';
+            }
             if ( 1 !== $email_input_count ) {
                 $failure_reasons[] = 'No email input!';
             }

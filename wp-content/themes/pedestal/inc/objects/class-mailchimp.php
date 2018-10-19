@@ -493,11 +493,16 @@ class MailChimp {
             'groups'         => [],
             'group_category' => '',
             'list_id'        => '',
+            'signup_source'  => '',
+            'merge_fields'   => [],
             'add_to_groups'  => true, // Setting to false unsubscribes contact from group
         ];
         $args = wp_parse_args( $args, $default_args );
         if ( ! is_array( $args['groups'] ) ) {
             $args['groups'] = [ $args['groups'] ];
+        }
+        if ( ! is_array( $args['merge_fields'] ) ) {
+            $args['merge_fields'] = [];
         }
         $interests = [];
         foreach ( $args['groups'] as $group ) {
@@ -518,7 +523,15 @@ class MailChimp {
         }
         $subscribe_args = [
             'interests' => $interests,
+
         ];
+        if ( ! empty( $args['signup_source'] ) ) {
+            $args['merge_fields']['SIGNUP'] = $args['signup_source'];
+        }
+        if ( ! empty( $args['merge_fields'] ) ) {
+            $subscribe_args['merge_fields'] = $args['merge_fields'];
+        }
+        error_log( print_r( $args, true ) );
         return $this->subscribe_contact( $email, $subscribe_args, $list_id );
     }
 
@@ -534,6 +547,7 @@ class MailChimp {
             'groups'         => [],
             'group_category' => '',
             'list_id'        => '',
+            'signup_source'  => '',
         ];
         $args = wp_parse_args( $args, $default_args );
         $args['add_to_groups'] = true;

@@ -1,0 +1,16 @@
+.pedestal-current-year-check {
+  margin-top: rem( 8px );
+  margin-bottom: rem( 8px );
+}
+
+.pedestal-current-year-check-placeholder,
+.js .pedestal-current-year-check {
+  display: none;
+}
+
+@media #{$medium-up} {
+  .pedestal-current-year-check-placeholder {
+    display: inline-block;
+    visibility: hidden;
+  }
+}

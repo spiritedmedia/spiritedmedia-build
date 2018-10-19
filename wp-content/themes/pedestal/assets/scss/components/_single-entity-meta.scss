@@ -11,13 +11,10 @@ $single-entity-meta-icon-size--email  : $icon-diameter--xs;
 
   clear: both;
   margin-top: rem( 16px );
-  border-top: $single-entity-meta-border-y;
-  border-bottom: $single-entity-meta-border-y;
   padding-top: rem( 8px );
   padding-bottom: rem( 8px );
   color: $body-font-color;
   font-size: $small-font-size;
-  text-transform: $single-entity-meta-text-transform;
 
   @media #{$medium-up} {
     font-size: $base-font-size;
@@ -127,14 +124,12 @@ $single-entity-meta-icon-size--email  : $icon-diameter--xs;
 
 .single-entity-meta__name,
 .single-entity-meta__timestamp {
-  @if $enable-de-emphasized-entity-meta {
-    @include de-emphasized;
+  @include de-emphasized;
 
-    line-height: 1;
+  line-height: 1;
 
-    @media #{$medium-up} {
-      line-height: 2;
-    }
+  @media #{$medium-up} {
+    line-height: 2;
   }
 }
 

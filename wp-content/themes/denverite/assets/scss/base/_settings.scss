@@ -1,7 +1,6 @@
 @import 'colors';
 
 
-$enable-de-emphasized-entity-meta:  true;
 $enable-italic-footnotes:           false;
 $enable-emboldened-link-underlines: true;
 $enable-figure-credit-distinction:  false;
@@ -247,9 +246,7 @@ $single-header-description-font-size:   rem( 18px );
 $single-header-description-line-height: rem( 24px ) / $single-header-description-font-size;
 
 // Single entity meta
-$single-entity-meta-border-y:               0;
 $single-entity-meta-hover-background-color: $accent-color;
-$single-entity-meta-text-transform:         none;
 
 // Figure
 $figure-caption-color: $darker;

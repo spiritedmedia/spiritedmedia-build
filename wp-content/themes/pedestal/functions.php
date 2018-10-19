@@ -153,9 +153,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_ZIPCODE'                      => '',
                 'PEDESTAL_BUILDING_NAME'                => '',
                 'PEDESTAL_STREET_ADDRESS'               => '',
-                'PEDESTAL_DATE_FORMAT'                  => 'M d Y',
+                'PEDESTAL_DATE_FORMAT'                  => 'M. d, Y',
                 'PEDESTAL_TIME_FORMAT'                  => 'g:i a',
-                'PEDESTAL_DATETIME_FORMAT'              => 'M d Y \a\t g:i a',
+                'PEDESTAL_DATETIME_FORMAT'              => 'M. d, Y \a\t g:i a',
                 'PEDESTAL_SITE_TIMEZONE'                => 'America/New_York',
 
                 // Account Identifiers

@@ -33,12 +33,12 @@ switch ( $blog_id ) :
             [
                 'name'     => 'Billy Penn Who\'s Next',
                 'path'     => '/2017/03/01/whos-next-bartenders-15-young-drink-maestros-elevating-phillys-booze-game/',
-                'expected' => 0,
+                'expected' => 1,
             ],
             [
                 'name'     => 'Billy Penn Fact Check',
                 'path'     => '/2017/09/01/why-the-black-lives-matter-protest-outside-a-philly-police-officers-home-was-not-illegal-occupation/',
-                'expected' => 1,
+                'expected' => 2,
             ],
             [
                 'name'     => 'Billy Penn Event',

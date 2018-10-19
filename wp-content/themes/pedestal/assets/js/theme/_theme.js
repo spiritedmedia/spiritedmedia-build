@@ -18,6 +18,7 @@
       this.disabledAnchors();
       this.analyticsEventTracking();
       this.scrollDepthTracking();
+      this.honeyPotHelper();
       this.lazyLoad();
       this.setupModals();
 
@@ -61,7 +62,6 @@
 
         $el.removeClass('is-failed');
         $el.addClass('is-loading');
-        $submitBtn.prop('disabled', true);
 
         $.post(actionURL, $el.serialize(), function() {
           if ($el.find('.js-success-message').length) {
@@ -91,8 +91,6 @@
           } else {
             $submitBtn.before(msg);
           }
-        }).always(function() {
-          $submitBtn.prop('disabled', false);
         });
       });
     },
@@ -281,6 +279,11 @@
         '',
         [0, 50, 100]
       );
+    },
+
+    honeyPotHelper: function() {
+      var fullYear = new Date().getFullYear();
+      $('.js-pedestal-current-year-check').val(fullYear);
     },
 
     lazyLoad: function() {
