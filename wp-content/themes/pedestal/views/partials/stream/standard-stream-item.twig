@@ -59,6 +59,7 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
 {% endif %}
 
 {% if featured_image %}
+    {% set featured_image_class = 'has-featured-image' %}
     {% set featured_image_html %}
     <figure class="stream-item__featured-container">
         {% if permalink %}
@@ -113,7 +114,10 @@ machine_time       - Machine readable verison (ISO 8601 format usually) of the d
     {% endif %}
 {% endset %}
 
-<article class="stream-item stream-item--{{ type|esc_attr }} {{ overline_class }}" {{ stream_index }}>
+<article
+    class="stream-item stream-item--{{ type|esc_attr }} {{ overline_class }} {{ featured_image_class }}"
+    {{ stream_index }}
+>
     {% if primary_item %}
     <h1 class="stream-item__title--pre-image stream-item__title" aria-hidden="true">
         {{ title_html }}

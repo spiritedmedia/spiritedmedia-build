@@ -146,6 +146,16 @@
 }
 
 .stream__featured-items__primary {
+  @if $enable-stream-flush-with-header {
+    .stream-item.has-featured-image {
+      margin-top: -( $content-wrapper-margin-top );
+
+      &.has-overline {
+        margin-top: -( $content-wrapper-margin-top / 2 );
+      }
+    }
+  }
+
   .stream-item__title--pre-image {
     display: none;
   }
@@ -167,6 +177,12 @@
   .stream__featured-items__primary {
     .stream-item {
       margin-bottom: rem( 16px );
+
+      @if $enable-stream-flush-with-header {
+        &.has-featured-image {
+          margin-top: 0;
+        }
+      }
     }
 
     .stream-item__title {

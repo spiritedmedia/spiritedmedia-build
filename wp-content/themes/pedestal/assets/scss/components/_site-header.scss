@@ -1,4 +1,6 @@
 .site-header {
+  position: relative;
+  z-index: $z-index-1;
   height: $site-header-height;
   box-shadow: $site-header-box-shadow;
   padding: $site-header-padding-y rem( 8px );

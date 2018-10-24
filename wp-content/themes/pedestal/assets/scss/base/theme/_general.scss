@@ -27,8 +27,8 @@ body {
 .content-wrapper {
   @include grid-row;
 
-  margin-top: $content-wrapper-m-t;
-  margin-bottom: $content-wrapper-m-b;
+  margin-top: $content-wrapper-margin-top;
+  margin-bottom: $content-wrapper-margin-bottom;
 
   .page & {
     max-width: rem( 865px );

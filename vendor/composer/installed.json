@@ -6,12 +6,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/spiritedmedia/wordpress-fieldmanager.git",
-            "reference": "ff6370516801c838ae281ecb70978b4bb4cfdf64"
+            "reference": "556592aacbcdb55d26d473ba42f773b718baa83d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/spiritedmedia/wordpress-fieldmanager/zipball/ff6370516801c838ae281ecb70978b4bb4cfdf64",
-            "reference": "ff6370516801c838ae281ecb70978b4bb4cfdf64",
+            "url": "https://api.github.com/repos/spiritedmedia/wordpress-fieldmanager/zipball/556592aacbcdb55d26d473ba42f773b718baa83d",
+            "reference": "556592aacbcdb55d26d473ba42f773b718baa83d",
             "shasum": ""
         },
         "require": {
@@ -21,7 +21,7 @@
             "squizlabs/php_codesniffer": "2.*",
             "wp-coding-standards/wpcs": "dev-master"
         },
-        "time": "2018-07-31T17:59:50+00:00",
+        "time": "2018-10-23T16:09:09+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "scripts": {
@@ -1044,7 +1044,7 @@
             "url": "git@github.com:humanmade/tachyon-plugin.git",
             "reference": "master"
         },
-        "time": "2017-11-06T02:06:04+00:00",
+        "time": "2018-09-19T13:33:36+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source"
     },

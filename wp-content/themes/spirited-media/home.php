@@ -116,6 +116,8 @@ $press_links = [
     ],
 ];
 
+$partnerships_email_address = antispambot( 'partnerships@spiritedmedia.com' );
+
 get_header(); ?>
     <section class="section--full-width home-hero">
         <h1 class="home-hero--heading">Reimagining Local News</h1>
@@ -195,10 +197,9 @@ get_header(); ?>
     </section>
 
     <section class="section home-advertising-partners">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/advertising-partners.png">
-        <h2>Advertising Partners</h2>
-        <p>Spirited Media’s advertising partners include Comcast NBC Universal, the Philadelphia Eagles, the Knight Foundation, Beneficial Bank. PECO, SugarHouse Casino, the Philadelphia Foundation, VisitPhilly, the Shops at Liberty Place and many others.</p>
-        <a href="http://billypenn.com/advertising/" class="button home-advertising-partners--button">Advertise with Us</a>
+        <h2>Partnerships</h2>
+        <p>Spirited Media’s partners include: S&T Bank, Independence Blue Cross/IBX, The Philadelphia Contributionship, Lyft, Convene, Washington & Jefferson College, Meow Wolf, the University of Pennsylvania’s Fels Institute, the Colorado Trust, the Philadelphia Ronald McDonald House, The Children’s Museum of Pittsburgh, Red Bull, the YMCA of Pittsburgh, and Live Nation and many more.</p>
+        <p>To become a partner, email <a href="mailto:<?php echo esc_attr( $partnerships_email_address ); ?>"><?php echo $partnerships_email_address; ?></a>.</p>
     </section>
 
     <section class="section home-press-coverage" id="press">

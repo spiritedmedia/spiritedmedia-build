@@ -1,13 +1,13 @@
 <script>
     (function(window, document, ga){
-        function changeElems( tagName, attr ) {
+        function changeElems( tagName, attr, newHostName ) {
             var elems = document.getElementsByTagName(tagName);
             for ( var i = 0; i<elems.length; i++ ) {
                 var elem = elems[i];
                 var attrVal = elem.getAttribute(attr);
                 if ( attrVal ) {
                     // Replace a.spirited.media with the current domain
-                    var newAttrVal = attrVal.replace(/a\.spirited\.media/ig, window.location.host);
+                    var newAttrVal = attrVal.replace(/a\.spirited\.media/ig, newHostName);
                     if ( attrVal !== newAttrVal ) {
                         elem.setAttribute(attr, newAttrVal);
                     }
@@ -21,10 +21,12 @@
             -1 === window.getComputedStyle(document.body).getPropertyValue('font-family').indexOf('Overpass')
             && -1 === window.getComputedStyle(document.body).getPropertyValue('font-family').indexOf('Merriweather')
         ) {
-            changeElems( 'link', 'href' );
-            changeElems( 'img', 'srcset' );
-            changeElems( 'img', 'src' );
-            changeElems( 'script', 'src' );
+            var newHostName = window.location.host;
+            var newImgHostName = 'd9nsjsuh3e2lm.cloudfront.net';
+            changeElems( 'link', 'href', newHostName);
+            changeElems( 'img', 'srcset', newImgHostName );
+            changeElems( 'img', 'src', newImgHostName );
+            changeElems( 'script', 'src', newHostName );
 
             // Ensure Google Analytics is available
             if ( typeof ga === 'function' ) {

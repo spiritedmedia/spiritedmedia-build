@@ -147,22 +147,7 @@ class Admin {
             add_filter( 'attachment_fields_to_save', [ $this, 'filter_attachment_fields_to_save' ], 10, 2 );
         }
 
-        // Filter the post titles in FM Post Datasource results
-        add_filter( 'fm_datasource_post_title', function( $title, $post ) {
-            if ( isset( $post->post_type ) ) {
-                $plurals = false;
-                $type = Types::get_post_type_name( $post->post_type, $plurals );
-                if ( 'pedestal_locality' === $post->post_type ) {
-                    $locality = Post::get( $post->ID );
-                    $type = $locality->get_type_name();
-                }
-                $title .= ' (' . $type . ')';
-            }
-            if ( isset( $post->post_status ) && 'future' == $post->post_status ) {
-                $title = '— Scheduled: ' . $title . ' — ' . date( 'M, d Y g:ia', strtotime( $post->post_date ) );
-            }
-            return $title;
-        }, 10, 2 );
+        add_filter( 'fm_datasource_post_get_items', [ $this, 'filter_fm_datasource_post_get_items' ] );
 
         // Highlight the proper parent menu item for submenu items that have been moved around
         add_filter( 'parent_file', function( $parent_file ) {
@@ -514,6 +499,40 @@ class Admin {
         }
 
         return $out;
+    }
+
+    /**
+     * Filter the posts returned by an FM datasource
+     *
+     * @link https://github.com/alleyinteractive/wordpress-fieldmanager/pull/696
+     * @param array $ret ID => title
+     * @return array
+     */
+    public function filter_fm_datasource_post_get_items( $ret ) {
+        foreach ( $ret as $post_id => &$post_title ) :
+            $ped_post = Post::get( $post_id );
+            if ( ! Types::is_post( $ped_post ) ) {
+                continue;
+            }
+
+            // Append the post type name to the post title
+            $plurals = false;
+            $type = $ped_post->get_post_type_name( $plurals );
+            if ( $ped_post->is_locality() ) {
+                $type = $ped_post->get_type_name();
+            }
+            $post_title .= ' (' . $type . ')';
+
+            // Indicate a post is to be published in the future
+            if ( $ped_post->get_status() == 'future' ) {
+                $post_title = sprintf(
+                    '— Scheduled: %s – %s',
+                    $post_title,
+                    $ped_post->get_the_datetime()
+                );
+            }
+        endforeach;
+        return $ret;
     }
 
     /**
