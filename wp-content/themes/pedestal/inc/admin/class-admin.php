@@ -531,6 +531,10 @@ class Admin {
                     $ped_post->get_the_datetime()
                 );
             }
+
+            if ( $ped_post->is_password_protected() ) {
+                $post_title = '— PROTECTED: ' . $post_title;
+            }
         endforeach;
         return $ret;
     }

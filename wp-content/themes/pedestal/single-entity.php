@@ -6,12 +6,20 @@ use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Email\Newsletter_Emails;
 
-$item = Post::get( get_the_ID() );
+$post_id = get_the_ID();
+$item = Post::get( $post_id );
 $context = Timber::get_context();
 
 $templates = [];
 
 if ( Types::is_post( $item ) ) :
+
+    if ( $item->is_password_required() ) {
+        $context['form_action'] = site_url( 'wp-login.php?action=postpass', 'login_post' );
+        $context['input_id'] = 'password-form-' . $post_id;
+        Timber::render( 'single-entity-protected.twig', $context );
+        return;
+    }
 
     $templates[] = 'single-' . $item->get_type() . '.twig';
 

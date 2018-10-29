@@ -1,81 +1,8 @@
-.signup-email__form {
-  padding: rem( 8px ) rem( 8px ) rem( 16px );
-
-  .form-group {
-    margin-bottom: 0;
-  }
+.signup-email__btn {
+  @include button( 'oval', $include-base-styles: false );
 }
-
-.signup-email__header,
-.signup-email__title,
-.signup-email__subtitle {
-  margin-bottom: rem( 12px );
-}
-
-.signup-email__title,
-.signup-email__subtitle {
-  font-size: rem( 16px );
-  line-height: 1.25;
-}
-
-.signup-email__title,
-.signup-email__icon {
-  display: inline-block;
-  vertical-align: middle;
-  width: 100%;
-  margin-bottom: 0;
-}
-
-.signup-email__icon {
-  margin-right: rem( 8px );
-  color: $secondary-color;
-  font-size: rem( 30px );
-  line-height: 0;
-}
-
-.signup-email__subtitle {
-  text-align: left;
-}
-
-// stylelint-disable selector-max-type
-.signup-email__details,
-.signup-email__success-message p {
-  margin-bottom: rem( 8px );
-  text-align: center;
-}
-// stylelint-enable selector-max-type
-
-// stylelint-disable selector-max-type
-.signup-email__details {
-  list-style-position: inside;
-  margin-bottom: rem( 20px );
-  margin-left: 0;
-
-  li {
-    margin-bottom: 0;
-
-    &:focus {
-      outline: 0;
-    }
-  }
-}
-// stylelint-enable selector-max-type
-
-// stylelint-disable-next-line selector-max-type
-.signup-email__success-message p {
-  line-height: 1.4;
-}
-
-.signup-email__help-text {
-  text-align: center;
-}
-
 
 @media #{$medium-up} {
-  .signup-email__form {
-    padding: rem( 16px );
-  }
-
   .signup-email__header,
   .signup-email__details {
     text-align: left;
@@ -86,11 +13,6 @@
     br {
       display: none;
     }
-  }
-
-  .signup-email__icon,
-  .signup-email__title {
-    width: auto;
   }
 
   // stylelint-disable-next-line selector-max-type
@@ -105,34 +27,59 @@
 // ==========================================================================
 
 .signup-email--daily {
-  border: rem( 4px ) solid $secondary-color;
-  border-radius: $global-radius;
-
-  .c-main__footer & {
-    margin-bottom: rem( 32px );
-  }
+  border-radius: rem( 4px );
 
   .signup-email__title {
     font-family: $font-family-serif;
-    font-size: rem( 20px );
     font-weight: 600;
-    color: $darkest;
-    line-height: 1.2;
   }
 
   .signup-email__btn {
-    @include button-color-variant( $primary-color );
+    @include button-color-variant( $brand-2-color );
   }
 
+  .signup-email__input-icon {
+    color: $brand-2-color;
+  }
+}
 
-  @media #{$small-only} {
-    .signup-email__latest--standalone {
-      .c-main__footer & {
-        display: block;
-      }
+.signup-email--daily {
+  &.signup-email--emphatic {
+    border-color: $brand-1-color;
+
+    .signup-email__icon {
+      color: $brand-2-color;
+    }
+
+    .signup-email__btn {
+      @include button-color-variant( $brand-1-color );
+    }
+
+    .signup-email__input-icon {
+      color: $brand-1-color;
     }
   }
-} // .signup-email--daily
+}
+
+.signup-email--daily {
+  &.signup-email--screamer {
+    border-color: $accent-2-color;
+
+    .signup-email__icon {
+      color: $brand-2-color;
+    }
+
+    .signup-email__btn {
+      @include button-color-variant( $accent-1-color );
+      color: $brand-2-color;
+    }
+
+    .signup-email__input-icon {
+      color: $accent-1-color;
+    }
+  }
+}
+
 
 
 //
@@ -140,12 +87,7 @@
 // ==========================================================================
 
 .signup-email--cluster {
-  margin-bottom: rem( 16px );
-  background-color: $primary-color;
-
-  .signup-email__form {
-    padding: rem( 32px );
-  }
+  background-color: $brand-1-color;
 
   // stylelint-disable selector-max-type
   .signup-email__title,
@@ -157,22 +99,5 @@
   .signup-email__btn {
     font-weight: 600;
     @include button-color-variant( $white );
-  }
-
-
-  @media #{$medium-up} {
-    .subscription-confirmation-page & {
-      @include explode-component( $inner-selector: '.signup-email__form' );
-    }
-  }
-
-
-  @media #{$medium-down} {
-    @include explode-component( $inner-selector: '.signup-email__form' );
-  }
-
-
-  @media #{$large-up} {
-    @include explode-component( $side: 'left', $inner-selector: '.signup-email__form' );
   }
 } // end .signup-email--cluster

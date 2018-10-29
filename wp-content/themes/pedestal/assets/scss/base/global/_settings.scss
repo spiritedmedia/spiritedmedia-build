@@ -17,41 +17,26 @@ $font-family-serif        : Georgia, Cambria, "Times New Roman", Times, serif !d
 $anchor-text-decoration: none;
 $anchor-text-decoration-hover: none;
 
-
-
-
-
 //
 // Colors / Opacity
 // ==========================================================================
-// These defaults are egregiously clashing so that we can easily spot their
-// functional use as they are never reader-facing.
 
-$primary-color:           #bd10e0           !default;
-$secondary-color:         #7ed321           !default;
-
-$accent-color:            $elektroid-yellow !default;
-$accent-2-color:          #9013fe           !default;
-$success-color:           #43ac6a; // From Foundation
-$alert-color:             $yet-another-red;
-$color-light-grey:        #f2f2f2           !default;
-$color-blackish:          #1a1a1a           !default;
 
 $body-bg:                 $white            !default;
-$body-font-color:         $grey-25          !default;
+$body-font-color:         $dark-gray-color  !default;
 $c-panel-bg:              $white            !default;
-$anchor-font-color:       $primary-color;
+$anchor-font-color:       $brand-1-color    !default;
 $anchor-font-color-hover: $black            !default;
-$border-std-color:        $grey-90          !default;
+$border-std-color:        $light-gray-color !default;
 $header-font-color:       $body-font-color  !default;
 
 // WCAG 2.0 guidelines require a text contrast ratio of at least 4.5:1 (#767676)
 // for AA and 7:1 for AAA (#595959).
 // https:                 //www.w3.org/TR/WCAG20/#visual-audio-contrast
-$dimmed-text-color:       $grey-46 !default;
+$dimmed-text-color:       $gray-46 !default;
 
 // User role colors
-$user-staff-color:        $primary-color !default;
+$user-staff-color:        $brand-1-color !default;
 $user-contributor-color:  $mustard-gas !default;
 
 $loading-default-opacity: 0.25;

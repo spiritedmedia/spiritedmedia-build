@@ -17,7 +17,7 @@
   .brand-heading__logo {
     // stylelint-disable-next-line selector-max-type
     path {
-      fill: $grey-46;
+      fill: $gray-46;
     }
   }
 
@@ -28,7 +28,7 @@
       height: $brand-heading-bar-height;
       overflow: hidden;
 
-      background-color: $primary-color;
+      background-color: $brand-1-color;
 
       &::before {
         $_size: $brand-heading-bar-height * 4;
@@ -39,7 +39,7 @@
         width: 0;
 
         border-bottom: $_size solid $white;
-        border-left: $_size solid $primary-color;
+        border-left: $_size solid $brand-1-color;
         content: '';
       }
     }

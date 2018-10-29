@@ -36,4 +36,4 @@ $site-theme-abspath       : '/' + sm-theme-setting-get( themePath );
 $site-theme-logo-abspath  : $site-theme-abspath + '/assets/images/logos';
 
 // Colors
-$primary-color: sm-theme-setting-get( brandColor );
+$brand-1-color: sm-theme-setting-get( brandColor );

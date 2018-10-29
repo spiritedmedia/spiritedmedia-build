@@ -183,8 +183,8 @@ class Denverite extends Pedestal {
 
         // Configure newsletter signup form
         add_filter( 'pedestal_newsletter_signup_form_args', function( $args = [] ) {
-            $args['title'] = 'Denverite goes great with mornings';
-            $args['body'] = '<p>If you’re here, you care about Denver. Our quick, newsy (and sometimes a little funny) morning newsletter is for people like you, by people like you.</p>';
+            $args['title'] = 'Denverite goes great <span class="u-nowrap">with mornings</span>';
+            $args['body'] = '<p>If you’re here, you care about Denver. Our quick, newsy (and sometimes a little funny) morning newsletter is for people like you, <span class="u-nowrap">by people like you.</span></p>';
             $args['icon'] = Icons::get_icon( 'coffee' );
             $args['send_time'] = '7:20 a.m.';
 

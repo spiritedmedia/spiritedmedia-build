@@ -11,11 +11,11 @@
 ///
 /// @param {string} $selector - Used for selector state. Default: focus, Options: hover, active, visited
 /// @param {unit}   $fade-time - Default: 300ms
-/// @param {color}  $glowing-effect-color - Default: fade-out($primary-color, .25)
+/// @param {color}  $glowing-effect-color - Default: fade-out($brand-1-color, .25)
 @mixin block-glowing-effect(
   $selector:focus,
   $fade-time: 300ms,
-  $glowing-effect-color: fade-out($primary-color, 0.25)
+  $glowing-effect-color: fade-out($brand-1-color, 0.25)
 ) {
   transition: box-shadow $fade-time, border-color $fade-time ease-in-out;
 
@@ -237,7 +237,7 @@
     vertical-align: middle;
     text-transform: uppercase;
 
-    @include button-color-variant( $primary-color );
+    @include button-color-variant( $brand-1-color );
 
     &:hover,
     &:focus {
@@ -310,7 +310,7 @@
 // Shapes
 // ==========================================================================
 
-@mixin corner-triangle( $size: rem( 16px ), $color: $primary-color, $corner: 'top-right' ) {
+@mixin corner-triangle( $size: rem( 16px ), $color: $brand-1-color, $corner: 'top-right' ) {
   width: 0;
   height: 0;
 

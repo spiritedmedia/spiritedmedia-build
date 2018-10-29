@@ -109,12 +109,6 @@ class Billy_Penn extends Pedestal {
 
         add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
 
-        // Send the Weekly Traffic Report to #phl-botcountry
-        add_filter( 'pedestal_weekly_traffic_slack_args', function( $slack_args ) {
-            $slack_args['channel'] = PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL;
-            return $slack_args;
-        });
-
         // Configure donate form
         add_filter( 'pedestal_donate_form_context', function( $context ) {
             $context['submit_text'] = 'Take my money!';
@@ -123,7 +117,15 @@ class Billy_Penn extends Pedestal {
 
         // Configure newsletter signup form
         add_filter( 'pedestal_newsletter_signup_form_args', function( $args = [] ) {
-            $args['title'] = 'Get Billy Penn every day in your inbox';
+            $args['title'] = 'Start your day informed <span class="u-nowrap">with Billy Penn</span>';
+            $args['body'] = '<p>Our quick morning newsletter recaps the interesting, important and exciting things you need to know about Philly. It’s the easy way to stay <span class="u-nowrap">on top of local news.</span></p>';
+            $args['icon'] = Icons::get_icon( 'sun' );
+
+            if ( is_singular() ) {
+                $args['title'] = 'Hoorah! You <span class="u-nowrap">read to the end.</span>';
+                $args['body'] = '<p>Seems you’re the kind of person who really digs into the news. Want more? Get an update direct to your inbox each morning, with everything you need to stay on top of Philly news.</p>';
+                $args['icon'] = Icons::get_icon( 'heart' );
+            }
             return $args;
         } );
     }

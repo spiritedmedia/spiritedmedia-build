@@ -200,6 +200,9 @@ abstract class Post {
      */
     public function get_css_classes() {
         $classes = [];
+        if ( $this->is_password_protected() ) {
+            $classes[] = 'is-password-protected';
+        }
         return $classes;
     }
 
@@ -1716,33 +1719,33 @@ abstract class Post {
      * @return array
      */
     public function get_context( $context ) {
+        // See standard-item.twig for descriptions of these values
         $context = [
-            // Note: __context needs two underscores so as not to conflict with twig context variable
-            // See standard-item.twig for descriptions of these values
-            '__context'         => 'standard',
-            'item'              => $this,
-            'post'              => $this->post,
-            'type'              => $this->get_type(),
-            'type_name'         => $this->get_type_name(),
-            'overline'          => '',
-            'overline_url'      => '',
-            'title'             => $this->get_the_title(),
-            'headline'          => '',
-            'permalink'         => $this->get_the_permalink(),
-            'date_time'         => $this->get_the_datetime(),
-            'machine_time'      => $this->get_post_date( 'c' ),
-            'description'       => $this->get_the_excerpt(),
-            'show_meta_info'    => true,
-            'author_names'      => '',
-            'author_image'      => '',
-            'author_link'       => '',
-            'author_bio'        => '',
-            'source_name'       => '',
-            'source_image'      => '',
-            'source_link'       => '',
-            'content_classes'   => [],
-            'content'           => $this->get_the_content(),
-            'footnotes'         => '',
+            // N.B.: `__context` needs two underscores to avoid conflict with Twig's `_context` variable
+            '__context'          => 'standard',
+            'item'               => $this,
+            'post'               => $this->post,
+            'type'               => $this->get_type(),
+            'type_name'          => $this->get_type_name(),
+            'overline'           => '',
+            'overline_url'       => '',
+            'title'              => $this->get_the_title(),
+            'headline'           => '',
+            'permalink'          => $this->get_the_permalink(),
+            'date_time'          => $this->get_the_datetime(),
+            'machine_time'       => $this->get_post_date( 'c' ),
+            'description'        => $this->get_the_excerpt(),
+            'show_meta_info'     => true,
+            'author_names'       => '',
+            'author_image'       => '',
+            'author_link'        => '',
+            'author_bio'         => '',
+            'source_name'        => '',
+            'source_image'       => '',
+            'source_link'        => '',
+            'content_classes'    => [],
+            'content'            => $this->get_the_content(),
+            'footnotes'          => '',
         ] + $context;
 
         $ratio = new Image_Ratio;
@@ -1760,6 +1763,32 @@ abstract class Post {
             $context['author_link']  = $this->get_author_permalink();
         }
         return $context;
+    }
+
+    /**
+     * Whether post is password-protected
+     *
+     * Does not check whether a password is required! Use
+     * `Post::is_password_required()` for that use case.
+     *
+     * @return boolean
+     */
+    public function is_password_protected() {
+        return (bool) $this->post->post_password;
+    }
+
+    /**
+     * Whether post requires password and correct password has been provided
+     *
+     * Wrapper for the WP core function `post_password_required()`
+     *
+     * N.B. The return value of this function should not be stored in the object
+     * cache because it may change depending on a cookie.
+     *
+     * @return bool false if a password is not required or the correct password cookie is present, true otherwise
+     */
+    public function is_password_required() {
+        return post_password_required( $this->post );
     }
 }
 

@@ -72,7 +72,7 @@ $share-button-height: $share-button-margin-y + $share-button-link-height;
 }
 
 .share-buttons__link--email {
-  @include _share-button-background( $grey-62 );
+  @include _share-button-background( $gray-62 );
 }
 
 .share-buttons__icon {

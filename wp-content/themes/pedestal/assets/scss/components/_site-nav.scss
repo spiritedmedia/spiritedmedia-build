@@ -42,7 +42,7 @@
   flex: 1; // To push down the footer and lock it to the bottom of the modal
 
   .site-nav__icon {
-    color: $accent-color;
+    color: $accent-1-color;
   }
 }
 
@@ -92,7 +92,7 @@
       &:hover,
       &:focus {
         .site-nav__link__inner {
-          border-bottom-color: $accent-color;
+          border-bottom-color: $accent-1-color;
         }
       }
     }
@@ -118,7 +118,7 @@
     .site-nav__item--support-our-work,
     .site-nav__item--support-us {
       .site-nav__link {
-        background-color: $accent-color;
+        background-color: $accent-1-color;
       }
     }
 
@@ -134,7 +134,7 @@
 
       &:hover,
       &:focus {
-        background-color: $accent-color;
+        background-color: $accent-1-color;
       }
     }
 

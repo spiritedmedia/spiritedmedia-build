@@ -83,6 +83,12 @@ class Frontend {
         }, 10, 4 );
 
         add_filter( 'robots_txt', [ $this, 'filter_robots_txt' ] );
+
+        // Let post password cookies expire in 15 minutes to minimize the amount
+        // of time the user will browse the site while bypassing the cache
+        add_filter( 'post_password_expires', function( $expires ) {
+            return time() + 15 * MINUTE_IN_SECONDS;
+        } );
     }
 
 
@@ -95,6 +101,14 @@ class Frontend {
      * Modify the main query
      */
     public function action_pre_get_posts( $query ) {
+
+        // Exclude all password protected posts from queries
+        if ( ! $query->is_singular() && ! $query->is_admin() ) {
+            add_filter( 'posts_where', function( $where ) {
+                global $wpdb;
+                return $where .= " AND {$wpdb->posts}.post_password = '' ";
+            } );
+        }
 
         if ( ! $query->is_main_query() ) {
             return;

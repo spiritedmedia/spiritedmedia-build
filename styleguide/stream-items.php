@@ -116,7 +116,7 @@ $stream_items = [
         'permalink' => 'https://billypenn.com/?p=8998',
         'date_time' => $date_time,
         'machine_time' => $machine_time,
-        'description' => '<p>“If you’re stereotyping about people who are criminals...it’s that they’re insensitive to how their actions affect society,” said the artist best known for the Obama Hope image. “But people who make art are clearly trying to do something they think is pleasing to people, that creates healthy conversations.”</p>',// 308 characters
+        'description' => '<p>“If you’re stereotyping about people who are criminals...it’s that they’re insensitive to how their actions affect society,” said the artist best known for the Obama Hope image. “But people who make art are clearly trying to do something they think is pleasing to people, that creates healthy conversations.”</p>', // 308 characters
         'show_meta_info' => true,
         'author_names' => $single_author,
         'author_image' => $author_image,
@@ -151,6 +151,22 @@ $stream_items = [
         'source_link' => $example_url,
     ],
 
+    // Event
+    [
+        'type'        => 'event',
+        'title'       => 'An Event Stream Item',
+        'permalink'   => 'https://example.com',
+        'show_header' => true,
+        'what'        => 'What',
+        'where'       => 'Where',
+        'when'        => 'When',
+        'cost'        => 'Cost',
+        'cta_link'    => 'https://example.com',
+        'cta_label'   => 'Label',
+        'cta_source'  => 'Source',
+        'content'     => '',
+    ],
+
     // Instagram Embed
     [
         'type' => 'embed',
@@ -179,7 +195,7 @@ $stream_items = [
         'source_link' => $example_url,
     ],
 
-	// Facebook Embed
+    // Facebook Embed
     [
         'type' => 'embed',
         'title' => 'A Facebook Embed',

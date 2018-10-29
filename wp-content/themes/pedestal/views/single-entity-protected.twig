@@ -1,0 +1,39 @@
+{% extends 'layouts/layout--content.twig' %}
+
+
+{% block content %}
+
+<section class="c-main__content--password-required c-main__content">
+    <form
+        method="POST"
+        action="{{ form_action|esc_url }}"
+        class="post-password-form"
+        data-ga-category="post-content"
+        data-ga-label="password"
+    >
+        <p><strong>
+            What’s the password?
+        </strong></p>
+        <p>
+            <label for="{{ input_id|esc_attr }}" class="invisible">
+                Password
+            </label>
+            <input
+                type="text"
+                id="{{ input_id|esc_attr }}"
+                class="form-input"
+                name="post_password"
+                size="20"
+            />
+        </p>
+        <p>
+            <button
+                class="btn--oval btn--bg-light btn--bordered"
+                type="submit"
+                name="submit"
+            >Enter</button>
+        </p>
+    </form>
+</section>
+
+{% endblock %}

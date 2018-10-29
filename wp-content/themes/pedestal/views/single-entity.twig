@@ -1,104 +1,106 @@
 {% extends 'layouts/layout--content-sidebar.twig' %}
 
+
 {% block content %}
 
-    <article class="c-main__content  {{ item.css_classes|esc_attr }}"
-        {{ item.get_the_data_atts }} >
+<article class="c-main__content  {{ item.css_classes|esc_attr }}"
+    {{ item.get_the_data_atts }} >
 
-        <header class="c-main__header js-main-header single-header">
+    <header class="c-main__header js-main-header single-header">
 
-            {% block hero %}
-            {% endblock hero %}
+        {% block hero %}
+        {% endblock hero %}
 
-            <div class="single-header__sponsorship">
-                {{ ped_slot( 'single_lead' ) }}
-            </div>
+        <div class="single-header__sponsorship">
+            {{ ped_slot( 'single_lead' ) }}
+        </div>
 
-            {% if overline %}
-                <h2 class="single-header__overline c-heading--overline">
-                    {% if overline_url %}
-                        <a
-                            href="{{ overline_url|esc_url }}"
-                            data-ga-category="post-header"
-                            data-ga-label="cluster-story"
-                        >
-                            {{ overline }}
-                        </a>
-                    {% else %}
+        {% if overline %}
+            <h2 class="single-header__overline c-heading--overline">
+                {% if overline_url %}
+                    <a
+                        href="{{ overline_url|esc_url }}"
+                        data-ga-category="post-header"
+                        data-ga-label="cluster-story"
+                    >
                         {{ overline }}
-                    {% endif %}
-                </h2>
-            {% endif %}
+                    </a>
+                {% else %}
+                    {{ overline }}
+                {% endif %}
+            </h2>
+        {% endif %}
 
 
-            <h1 class="single-header__title">
-                {{ title }}
-            </h1>
+        <h1 class="single-header__title">
+            {{ title }}
+        </h1>
 
-            {% if description %}
-                <div class="single-header__description">{{ description }}</div>
-            {% endif %}
+        {% if description %}
+            <div class="single-header__description">{{ description }}</div>
+        {% endif %}
 
-            {{ featured_image }}
+        {{ featured_image }}
 
-            {% if show_meta_info %}
-                {% include 'partials/single-entity-meta.twig' %}
-            {% endif %}
+        {% if show_meta_info %}
+            {% include 'partials/single-entity-meta.twig' %}
+        {% endif %}
 
-        </header>
+    </header>
 
-        {% include 'partials/share-buttons.twig' with { position: 'top' } %}
+    {% include 'partials/share-buttons.twig' with { position: 'top' } %}
 
-        <section class="c-main__body {{ content_classes }}">
-            {{ content }}
+    <section class="c-main__body {{ content_classes }}">
+        {{ content }}
+    </section>
+
+    {% block supplemental %}
+    {% if footnotes %}
+    <aside class="c-main__supplemental s-content hr--slim js-content-footnotes">
+        {% if footnotes %}
+            <section class="c-main__footnotes">
+                {{ footnotes }}
+            </section>
+        {% endif %}
+    </aside>
+    {% endif %}
+    {% endblock supplemental %}
+
+    <footer class="c-main__footer js-main-footer">
+        {{ sponsored_item }}
+
+        {% include 'partials/entity-circulation.twig' %}
+
+        {% if newsletter_signup_prompt %}
+            <div class="signup-email--daily signup-email--emphatic signup-email">
+                {{ newsletter_signup_prompt }}
+            </div>
+        {% endif %}
+
+        {{ cluster_list }}
+
+        {% if 'feat_contributor' == item.get_single_author.get_primary_role %}
+        <div class="c-main__author-info">
+            {% set user = item.get_single_author %}
+            {% set format = 'compact' %}
+            {% include 'partials/user-card.twig' %}
+        </div>
+        {% endif %}
+    </footer>
+
+    <div class="js-share-buttons-bottom-placeholder"></div>
+    {% include 'partials/share-buttons.twig' with { position: 'bottom' } %}
+
+    {% if recirc_stream %}
+        <section class="stream--entity-footer stream js-stream">
+            <div class="stream__items">
+                {{ recirc_stream }}
+            </div>
         </section>
 
-        {% block supplemental %}
-        {% if footnotes %}
-        <aside class="c-main__supplemental s-content hr--slim js-content-footnotes">
-            {% if footnotes %}
-                <section class="c-main__footnotes">
-                    {{ footnotes }}
-                </section>
-            {% endif %}
-        </aside>
-        {% endif %}
-        {% endblock supplemental %}
+        {{ recirc_pagination }}
+    {% endif %}
 
-        <footer class="c-main__footer js-main-footer">
-            {{ sponsored_item }}
+</article>
 
-            {% include 'partials/entity-circulation.twig' %}
-
-            {% if newsletter_signup_prompt %}
-                <div class="signup-email--daily signup-email">
-                    {{ newsletter_signup_prompt }}
-                </div>
-            {% endif %}
-
-            {{ cluster_list }}
-
-            {% if 'feat_contributor' == item.get_single_author.get_primary_role %}
-            <div class="c-main__author-info">
-                {% set user = item.get_single_author %}
-                {% set format = 'compact' %}
-                {% include 'partials/user-card.twig' %}
-            </div>
-            {% endif %}
-        </footer>
-
-        <div class="js-share-buttons-bottom-placeholder"></div>
-        {% include 'partials/share-buttons.twig' with { position: 'bottom' } %}
-
-        {% if recirc_stream %}
-            <section class="stream--entity-footer stream js-stream">
-                <div class="stream__items">
-                    {{ recirc_stream }}
-                </div>
-            </section>
-
-            {{ recirc_pagination }}
-        {% endif %}
-
-    </article>
 {% endblock %}

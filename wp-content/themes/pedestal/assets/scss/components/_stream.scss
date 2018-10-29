@@ -5,7 +5,7 @@
 .stream__items {
   .stream-item:not( .stream-item--event ) {
     .stream-item__title-link:visited {
-      color: $grey-62;
+      color: $gray-62;
     }
   }
 }
@@ -95,7 +95,7 @@
     font-weight: normal;
     text-transform: uppercase;
     font-style: italic;
-    color: $grey-46;
+    color: $gray-46;
   }
 }
 

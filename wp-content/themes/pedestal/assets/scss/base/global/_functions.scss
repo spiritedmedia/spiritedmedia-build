@@ -155,12 +155,12 @@
 
 /// Calculate text color with sufficient contrast against a given background color
 ///
-/// @param  {color} $bg - $primary-color - Background color
+/// @param  {color} $bg - $brand-1-color - Background color
 /// @param  {color} $text-light - $white
 /// @param  {color} $text-dark - $body-font-color
 /// @param  {percent} $threshold - Lightness threshold
 @function text-contrast(
-  $bg: $primary-color,
+  $bg: $brand-1-color,
   $text-light: $white,
   $text-dark: $body-font-color,
   $threshold: 65%

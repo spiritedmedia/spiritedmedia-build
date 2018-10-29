@@ -7,7 +7,7 @@
 
 .message-spot__button {
   @include button-arrow(
-    $accent-color,
+    $accent-1-color,
     $include-base-styles: false,
     $height: $button-height--small
   );

@@ -16,7 +16,7 @@
 .form-label,
 %form-label {
   font-family: $input-label-font-family;
-  color: $grey-25;
+  color: $dark-gray-color;
   display: block;
   font-weight: 600;
   margin-bottom: rem( 8px );
@@ -29,8 +29,8 @@
 }
 
 .form-input {
-  background: $grey-95;
-  border: rem( 1px ) solid $grey-70;
+  background: $light-gray-color;
+  border: rem( 1px ) solid $gray-color;
   box-shadow: inset rem( 2px ) rem( 4px ) rem( 8px ) 0 rgba( $black, 0.1 );
   border-radius: rem( 2px );
 
@@ -50,7 +50,7 @@
   }
 
   &::placeholder {
-    color: $grey-70;
+    color: $gray-color;
     vertical-align: middle;
 
     // Line height must be `normal` to work in iOS browsers...
@@ -95,7 +95,7 @@ input[type="radio"] {
   }
 
   &:focus + .form-radio__label::before {
-    box-shadow: 0 0 rem( 5px ) $primary-color;
+    box-shadow: 0 0 rem( 5px ) $brand-1-color;
   }
 }
 
@@ -126,14 +126,14 @@ input[type="radio"] {
     height: rem( 16px );
     width: rem( 16px );
 
-    border: rem( 1px ) solid $secondary-color;
+    border: rem( 1px ) solid $brand-2-color;
     left: 0;
   }
 
   &::after {
     height: rem( 10px );
     width: rem( 10px );
-    background-color: $secondary-color;
+    background-color: $brand-2-color;
     left: rem( 3px );
     top: rem( 3px );
   }
@@ -166,5 +166,5 @@ input[type="radio"] {
   margin-top: rem( 4px );
   margin-bottom: rem( 8px );
   font-size: $small-font-size;
-  color: $alert-color;
+  color: $danger-color;
 }

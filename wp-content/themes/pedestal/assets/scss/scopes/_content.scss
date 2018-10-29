@@ -83,7 +83,7 @@
   // ==========================================================================
 
   blockquote {
-    border-left: rem( 4px ) solid rgba( $primary-color, 0.7 );
+    border-left: rem( 4px ) solid rgba( $brand-1-color, 0.7 );
     padding:
       $blockquote-padding-y
       $blockquote-padding-right
@@ -95,7 +95,7 @@
 
     &,
     p {
-      color: $grey-25;
+      color: $dark-gray-color;
       font-size: rem( 15px );
       line-height: 1.33333;
     }
@@ -220,7 +220,7 @@
   // stylelint-disable selector-max-compound-selectors
   .pedestal-shortcode--checklist {
     ul li::before {
-      color: $primary-color;
+      color: $brand-1-color;
       content: '\002714'; // ✔
 
       // Override default post content list style

@@ -58,7 +58,7 @@ class Newsletter_Emails {
             $signup_form = self::get_signup_form([
                 'signup_source' => $signup_source,
             ]);
-            echo '<div class="stream-item stream-item--signup-email signup-email--daily">';
+            echo '<div class="stream-item stream-item--signup-email signup-email--daily signup-email--emphatic">';
             echo $signup_form;
             echo '</div>';
         } );
@@ -309,7 +309,9 @@ class Newsletter_Emails {
 
             'name'                 => PEDESTAL_BLOG_NAME,
             'title'                => '',
-            'body'                 => 'default',
+            'body'                 => '',
+            'button_text'          => 'Sign Up',
+
             'sender_email_address' => PEDESTAL_EMAIL_NEWS,
             'send_time'            => '7:00 a.m.',
 
@@ -327,24 +329,6 @@ class Newsletter_Emails {
         $context['group_ids'] = array_filter( $context['group_ids'], 'is_string' );
         if ( empty( $context['group_ids'] ) ) {
             return;
-        }
-
-        if ( 'default' == $context['body'] ) {
-            $latest_newsletter_url = Newsletter::get_latest_newsletter_link();
-            $default_body = '
-                <ul class="signup-email__details">
-                    <li>Top news highlights and can\'t-miss ' . PEDESTAL_CITY_NICKNAME . ' stories</li>
-                    <li>Upcoming events and activities in your area for you and your family</li>
-            ';
-            if ( $latest_newsletter_url ) {
-                $default_body .= '
-                <li>
-                    Check out a <a href="' . esc_url( $latest_newsletter_url ) . '">sample from today\'s newsletter</a>
-                </li>
-                ';
-            }
-            $default_body .= '</ul>';
-            $context['body'] = $default_body;
         }
 
         if ( empty( $context['input_icon'] ) && ! empty( $context['input_icon_name'] ) ) {

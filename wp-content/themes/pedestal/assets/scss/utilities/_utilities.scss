@@ -25,7 +25,7 @@
 
 
 .u-text-color-primary {
-  color: $primary-color !important;
+  color: $brand-1-color !important;
 }
 
 .u-text-color-white {
@@ -52,4 +52,8 @@
   -ms-word-break: break-all;
   word-break: break-word;
   hyphens: auto;
+}
+
+.u-nowrap {
+  white-space: nowrap;
 }

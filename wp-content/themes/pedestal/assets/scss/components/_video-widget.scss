@@ -39,7 +39,7 @@
 
 
   &__link {
-    @include anchorage('&', $body-font-color, $primary-color);
+    @include anchorage('&', $body-font-color, $brand-1-color);
   }
 
 

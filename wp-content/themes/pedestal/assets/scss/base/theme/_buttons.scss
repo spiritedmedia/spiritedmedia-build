@@ -32,7 +32,7 @@ button {
 
 .btn--bg-secondary {
   @extend %_btn;
-  @include button-color-variant( $secondary-color );
+  @include button-color-variant( $brand-2-color );
 }
 
 .btn--bg-light {
@@ -42,7 +42,7 @@ button {
 
 .btn--bg-accent {
   @extend %_btn;
-  @include button-color-variant( $accent-color );
+  @include button-color-variant( $accent-1-color );
 }
 
 .btn--bg-accent-2 {
@@ -50,9 +50,9 @@ button {
   @include button-color-variant( $accent-2-color );
 }
 
-.btn--bg-grey {
+.btn--bg-gray {
   @extend %_btn;
-  @include button-color-variant( $grey-70 );
+  @include button-color-variant( $gray-color );
 }
 
 
@@ -61,9 +61,9 @@ button {
 // ==========================================================================
 
 .btn--arrow {
-  @include button-arrow( $primary-color );
+  @include button-arrow( $brand-1-color );
 
   &.btn--bg-accent {
-    @include button-arrow( $accent-color, $include-base-styles: false );
+    @include button-arrow( $accent-1-color, $include-base-styles: false );
   }
 }

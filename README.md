@@ -1,11 +1,9 @@
-Build [#5968](https://circleci.com/gh/spiritedmedia/spiritedmedia/5968) by kingkool68 at 2018-10-24 02:12 PM UTC
+Build [#6003](https://circleci.com/gh/spiritedmedia/spiritedmedia/6003) by kingkool68 at 2018-10-29 02:51 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v7.9.2](https://github.com/spiritedmedia/spiritedmedia/compare/v7.9.2)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v7.10.0](https://github.com/spiritedmedia/spiritedmedia/compare/v7.10.0)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.9.1...v7.9.2)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.9.2...v7.10.0)
 
- - [#2972](git@github.com:spiritedmedia/spiritedmedia.git/pull/2972): Remove Advertising Logos and Update Text in Spirited Media Theme
- - [#2968](git@github.com:spiritedmedia/spiritedmedia.git/pull/2968): Make Images Fallback to CloudFront When a.spirited.media Is Unavilable
- - [#2970](git@github.com:spiritedmedia/spiritedmedia.git/pull/2970): [HOTFIX] Update Fieldmanager in composer.lock
- - [#2969](git@github.com:spiritedmedia/spiritedmedia.git/pull/2969): Rework filter to work with `fm_datasource_post_get_items`
- - [#2943](git@github.com:spiritedmedia/spiritedmedia.git/pull/2943): Adjust spacing between site header and content wrapper
+ - [#2979](git@github.com:spiritedmedia/spiritedmedia.git/pull/2979): Send Weekly reader report to #phl not #phl-botcountry
+ - [#2967](git@github.com:spiritedmedia/spiritedmedia.git/pull/2967): Bring Billy Penn and The Incline Newsletter Prompt Styles Inline With Denverite
+ - [#2966](git@github.com:spiritedmedia/spiritedmedia.git/pull/2966): Add support for password-protected posts

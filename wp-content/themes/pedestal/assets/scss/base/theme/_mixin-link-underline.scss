@@ -64,7 +64,7 @@
 /// unintentional side effects!
 %link-underline {
   @include text-underline-crop;
-  @include _text-underline( rgba( $primary-color, 0.6 ) );
+  @include _text-underline( rgba( $brand-1-color, 0.6 ) );
 
   // stylelint-disable-next-line unit-blacklist
   padding-bottom: 0.05em;
@@ -83,7 +83,7 @@
     }
 
     &::selection {
-      background-color: $primary-color;
+      background-color: $brand-1-color;
     }
   }
 
@@ -93,7 +93,7 @@
     @include _text-underline( transparent );
 
     // Use `background` and not `background-color` to override everything set by `link-underline`
-    background: $accent-color;
+    background: $accent-1-color;
     // Override the link underline and crop
     box-shadow: none;
     text-shadow: none;

@@ -47,7 +47,7 @@
   color: $body-font-color;
 
   .stream--list & {
-    color: $primary-color;
+    color: $brand-1-color;
   }
 }
 
@@ -140,7 +140,7 @@
   // stylelint-disable selector-max-type, selector-max-compound-selectors
   &,
   a {
-    color: $grey-62;
+    color: $gray-62;
   }
   // stylelint-enable selector-max-type, selector-max-compound-selectors
 }
@@ -157,7 +157,7 @@
 // Pretty sure this type of stream item doesn't exist
 // Can't find any markup with the class containing '--sponsored' -- RH
 .stream-item--sponsored {
-  border: rem( 1px ) solid $elektroid-yellow;
+  border: rem( 1px ) solid $accent-1-color;
   border-radius: rem( 6px );
 
   .stream-item__inner {
@@ -241,7 +241,7 @@
 
 @media #{$screen} and ( min-width: em( 510px ) ) {
   .stream-item--sponsored {
-    border-color: $grey-95;
+    border-color: $light-gray-color;
 
     .stream-item__thumbnail-container {
       display: block;

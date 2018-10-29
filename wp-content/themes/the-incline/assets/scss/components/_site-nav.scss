@@ -1,11 +1,11 @@
 .site-nav__link {
-  color: $grey-90;
+  color: $light-gray-color;
 
   &:hover,
   &:focus {
     &,
     .site-nav__icon {
-      color: $grey-70;
+      color: $gray-color;
     }
   }
 }
@@ -38,7 +38,7 @@
       &:focus {
         &,
         .site-nav__icon {
-          color: $primary-color;
+          color: $brand-1-color;
         }
 
         .site-nav__link__inner {
@@ -48,7 +48,7 @@
     }
 
     .site-nav__icon {
-      color: $grey-25;
+      color: $dark-gray-color;
     }
   }
 

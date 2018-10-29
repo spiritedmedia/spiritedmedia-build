@@ -1,23 +1,22 @@
 @import 'colors';
 
-
-$secondary-color:  #7f5f59;
+$brand-2-color:    #7f5f59;
 $accent-2-color:   #4281a4;
-$color-dark:       $grey-25;
-$color-grey:       $grey-70;
-$color-light-grey: #e6e6e6;
-$mark-color:       $grey-46;
+$color-dark:       $dark-gray-color;
+$color-gray:       $gray-color;
+$light-gray-color: #e6e6e6;
+$mark-color:       $gray-46;
 
-$h3-font-size: rem( 27px ); // !default
-$h4-font-size: rem( 22px ); // !default
-$h5-font-size: rem( 18px ); // !default
+$h3-font-size: rem( 27px );
+$h4-font-size: rem( 22px );
+$h5-font-size: rem( 18px );
 
-$site-header-background-color:       $primary-color;
-$site-header-logo-color:             $white;
-$site-header-menu-trigger-color:     $white;
-$site-header-social-link-icon-color: $grey-25;
+$site-header-background-color:       $brand-1-color;
+$site-header-logo-color:             #ffffff;
+$site-header-menu-trigger-color:     #ffffff;
+$site-header-social-link-icon-color: $color-dark;
 
-$site-nav-primary-background-color--bp-up:        $grey-90;
+$site-nav-primary-background-color--bp-up: $light-gray-color;
 
 $content-h1-font-size: $h3-font-size;
 $content-h2-font-size: $h4-font-size;
@@ -25,4 +24,4 @@ $content-h3-font-size: $h5-font-size;
 
 $modal-header-nav-background-color: $color-dark;
 
-$message-spot-override-title-color: $color-light-grey;
+$message-spot-override-title-color: $light-gray-color;

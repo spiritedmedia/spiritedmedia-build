@@ -105,8 +105,16 @@ class The_Incline extends Pedestal {
 
         // Configure newsletter signup form
         add_filter( 'pedestal_newsletter_signup_form_args', function( $args = [] ) {
-            $args['title'] = 'Get The Incline Daily every day in your inbox';
+            $args['title'] = 'Start every day <span class="u-nowrap">with The Incline</span>';
+            $args['body'] = '<p>Our free morning newsletter helps you plan your day and better understand Pittsburgh &mdash; because <span class="u-nowrap">we love this city, too.</span></p>';
+            $args['icon'] = Icons::get_icon( 'coffee' );
             $args['send_time'] = '6:30 a.m.';
+
+            if ( is_singular() ) {
+                $args['title'] = 'Gold star for <span class="u-nowrap">making it here!</span>';
+                $args['body'] = '<p>Looks like you\'re the type of person who reads to the end <span class="u-nowrap">of articles.</span></p> <p>Because you love learning about Pittsburgh, you need our free morning newsletter, full of useful news, can’t-miss events, and everything else you need to know about our city.</p>';
+                $args['icon'] = Icons::get_icon( 'star' );
+            }
             return $args;
         } );
     }

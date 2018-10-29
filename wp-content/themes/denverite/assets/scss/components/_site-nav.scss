@@ -1,14 +1,14 @@
 $_font-size: rem( 14px );
 
 .site-nav__link {
-  color: $grey-95;
+  color: $light-gray-color;
   letter-spacing: em( 0.5px, $site-nav-font-size );
 
   &:hover,
   &:focus {
     &,
     .site-nav__icon {
-      color: $accent-color;
+      color: $accent-1-color;
     }
   }
 }
@@ -26,7 +26,7 @@ $_font-size: rem( 14px );
       &,
       &:hover,
       &:focus {
-        color: $grey-95;
+        color: $light-gray-color;
 
         .site-nav__icon {
           color: rgba( $white, 0.5 );
@@ -42,7 +42,7 @@ $_font-size: rem( 14px );
   .site-nav--secondary {
     .site-nav__link {
       font-size: $site-nav-secondary-font-size--bp-up;
-      color: $primary-color;
+      color: $brand-1-color;
     }
   }
 

@@ -23,12 +23,12 @@ td {
 
 thead,
 tfoot {
-  background-color: $grey-90;
+  background-color: $light-gray-color;
   font-weight: 700;
 }
 
 tr {
   &:nth-of-type( even ) {
-    background: $grey-95;
+    background: $light-gray-color;
   }
 }

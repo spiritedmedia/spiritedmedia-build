@@ -6,24 +6,47 @@
 // ==========================================================================
 
 
-$black:                          #000000;
-$white:                          #ffffff;
+//
+// Color variables as defined in our color system
+// See https://docs.google.com/document/d/1Im_znX1lhiKTYXpN6pUYdvxrcbYJH33rlB09_i08o-A/edit
+// ==========================================================================
 
-$grey-95:                        #f2f2f2;
-$grey-90:                        #e6e6e6;
-$grey-80:                        #cccccc; //
-$grey-70:                        #b3b3b3; //
-$grey-62:                        #9e9e9e; //
-$grey-46:                        #767676; // minimum darkness for text
-$grey-40:                        #666666; // only used as link hover color
-$grey-25:                        #3f3f3f; //
+// These defaults are egregiously clashing so that we can easily spot their
+// functional use as they are never reader-facing.
+$brand-1-color:                  #bd10e0  !default;
+$brand-2-color:                  #7ed321  !default;
+$accent-1-color:                 #fcd651  !default;
+$accent-2-color:                 #9013fe  !default;
+
+// Alert palette
+$success-color:                  #417505; // From Foundation
+$danger-color:                   #c81212  !default;
+
+// Grayscale palette
+$white:                          #ffffff  !default;
+$light-gray-color:               #f2f2f2  !default;
+$gray-color:                     #b3b3b3  !default;
+$dark-gray-color:                #3f3f3f  !default;
+$blackish-color:                 #1a1a1a  !default;
+$black:                          #000000  !default;
+
+
+//
+// Old color variables that we will eventually purge from our codebase
+// ==========================================================================
+
+
+$gray-80:                        #cccccc; //
+$gray-62:                        #9e9e9e; //
+$gray-46:                        #767676; // minimum darkness for text
+$gray-40:                        #666666; // only used as link hover color
 
 // Neutral colors for Denverite
 $darkest:                        #1a1a1a;
 $darker:                         #2f2839;
 $dark:                           #bebbc2;
-$light:                          $grey-95;
-$lightest:                       $white;
+$light:                          #f2f2f2; // Same as $light-gray-color
+$lightest:                       #ffffff; // Same as $white
 
 $sea-foam-green:                 #e5f2f6;
 $prussian-blue:                  #122b3a;
@@ -33,8 +56,6 @@ $blood-orange:                   #db7053;
 $yet-another-red:                #c73e1d; // Red call to action
 $absinthe:                       #c1a540;
 $mustard-gas:                    #b26536;
-$denverite-yellow:               #f3ec65;
-$elektroid-yellow:               #fcd651;
 $another-lightish-color:         #eae6e1;
 
 // These colors are all too similar...
