@@ -531,7 +531,6 @@ class MailChimp {
         if ( ! empty( $args['merge_fields'] ) ) {
             $subscribe_args['merge_fields'] = $args['merge_fields'];
         }
-        error_log( print_r( $args, true ) );
         return $this->subscribe_contact( $email, $subscribe_args, $list_id );
     }
 
