@@ -1,1 +1,0 @@
-jQuery(document).ready(function(r){r(".js-main").on("click",".js-footnote-link",function(t){var e=r(".js-entity-share.fixed"),o=this.href.split("#")[1],n=r("#"+o),a=0;0<e.length&&(a=e.height());var i,s=n.offset().top-a,l=(i=s,Math.abs(r(document.body).scrollTop()-i)/1200*1e3);r("html, body").animate({scrollTop:s},l),t.preventDefault(),n.attr("tabindex",0).focus()})});

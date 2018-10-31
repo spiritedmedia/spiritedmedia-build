@@ -109,7 +109,7 @@ class Scripts_Styles {
         ] );
 
         // Advertising
-        if ( 4 == get_current_blog_id() ) {
+        if ( 'denverite' == PEDESTAL_THEME_NAME ) {
             // Denverite gets a new DFP script
             wp_enqueue_script( $this->dfp_load_script_handle, PEDESTAL_DIST_DIRECTORY_URI . '/js/dfp-load-patch.js', [ 'jquery' ], PEDESTAL_VERSION );
             wp_enqueue_script( 'prebid', PEDESTAL_THEME_DIST_DIRECTORY_URI . '/js/prebid.js', [ $this->dfp_load_script_handle ], PEDESTAL_VERSION );

@@ -38,6 +38,10 @@ if ( Types::is_post( $item ) ) :
     $context['newsletter_signup_prompt'] = Newsletter_Emails::get_signup_form([
         'signup_source' => 'Post footer',
     ]);
+    $context['newsletter_prompt_style'] = 'emphatic';
+    if ( 'denverite' == PEDESTAL_THEME_NAME ) {
+        $context['newsletter_prompt_style'] = 'screamer';
+    }
 
     $adverts = new Adverts;
     $sponsored_item = $adverts->get_the_sponsored_item();
@@ -87,7 +91,7 @@ endif;
 
 // Special exception for Denverite featured images pre-migration to Bridge
 // See https://github.com/spiritedmedia/spiritedmedia/issues/2667
-if ( 4 === get_current_blog_id() ) :
+if ( 'denverite' == PEDESTAL_THEME_NAME ) :
 
     $arbitrary_cutoff = date( 'U', strtotime( '2018-06-13' ) );
     $published_time = time();

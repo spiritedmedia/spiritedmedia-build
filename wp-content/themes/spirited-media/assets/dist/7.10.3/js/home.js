@@ -1,0 +1,1 @@
+!function(){"use strict";jQuery(document).ready(function(t){var a=(new Date).getFullYear();t("input.js-contact-year").val(a),t(".js-contact-year").addClass("hide")})}();

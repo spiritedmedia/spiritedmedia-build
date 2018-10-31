@@ -156,6 +156,20 @@ $expected_merge_fields = [
     'donate_365'                 => true,
 ];
 
+$script_handle = 'pedestal-qa-subscriber-cookie-checker';
+add_action( 'wp_enqueue_scripts', function() use ( $script_handle, $expected_merge_fields, $email ) {
+    $in_footer = true;
+    wp_enqueue_script(
+        $script_handle,
+        PEDESTAL_DIST_DIRECTORY_URI . '/js/subscriber-cookie-checker.js',
+        [ 'jquery' ],
+        PEDESTAL_VERSION,
+        $in_footer
+    );
+    wp_localize_script( $script_handle, 'subscriberExpectedMergeFields', [ 'data' => $expected_merge_fields ] );
+    wp_localize_script( $script_handle, 'subscriberEmail', $email );
+} );
+
 wp_head();
 ?>
 <div id="pass" style="display: none;">
@@ -168,47 +182,5 @@ wp_head();
 
 <p>Email address: <code><?php echo $email; ?></code></p>
 
-<script>
-jQuery(document).ready(function($) {
-    var expectedMergeFields = <?php echo json_encode( $expected_merge_fields ); ?>;
-    // Delete the subscriber cookie
-    localStorageCookie( PedSubscriber.storageKey, null );
-
-    // Fetch subscriber details for the email
-    PedSubscriber.fetchData('<?php echo $email; ?>');
-    $(this).on('pedSubscriber:ready', function(e, data) {
-        $('#output').html(JSON.stringify( data.data, null, 4) );
-        var output = {
-            'pass': [],
-            'fail': []
-        };
-        for ( key in expectedMergeFields ) {
-            var valueToCheck = data.data[key];
-            var expectedValue = expectedMergeFields[key];
-            if ( valueToCheck !== expectedValue ) {
-                output['fail'].push({
-                    key: key,
-                    expected: expectedValue,
-                    actualValue: valueToCheck
-                });
-            } else {
-                output['pass'].push(key);
-            }
-        }
-
-        if ( output['fail'].length <= 0 ) {
-            // Our checks passed!
-            $('#pass').show();
-        } else {
-            // Our checks failed
-            $('#fail').show();
-            $('#fail-output').html(JSON.stringify(output['fail'], null, 4) );
-        }
-
-        // Clean up
-        $.get( '?cleanup', function(data) {});
-    });
-})
-</script>
 <?php
 wp_footer();

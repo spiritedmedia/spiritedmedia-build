@@ -1,4 +1,5 @@
 /* global jQuery, ajaxurl */
+
 jQuery(document).ready(function($) {
 
   var autocompleteCache = {};

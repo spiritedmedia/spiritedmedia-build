@@ -189,9 +189,9 @@ class Denverite extends Pedestal {
             $args['send_time'] = '7:20 a.m.';
 
             if ( is_singular() ) {
-                $args['title'] = 'Hi! You’re like us!';
-                $args['body'] = '<p>Looks like you’re the type of person who reads to the ends of articles! Well, <em>true believer</em>, you might really like our morning newsletter. It’s quick, free and gets you up to speed on the important and delightful things happening right here in Denver.</p>';
-                $args['icon'] = Icons::get_icon( 'hand-spock' );
+                $args['title'] = 'You\'re paying attention';
+                $args['body'] = '<p>Now take the next step. Know the most important (and most fun) stuff going on in Denver and Colorado&mdash;get the Denverite newsletter. It\'s quick, free and delightful.</p>';
+                $args['icon'] = Icons::get_icon( 'check' );
             }
             return $args;
         } );
