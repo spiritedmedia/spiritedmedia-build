@@ -306,6 +306,7 @@ class Follow_Updates {
         }
         $defaults = [
             'action_url'      => get_site_url() . '/subscribe-to-email-group/',
+            'nonce'           => wp_create_nonce( PEDESTAL_THEME_NAME ),
 
             'ga_category'     => 'cluster-prompt',
             'ga_action'       => 'subscribe',

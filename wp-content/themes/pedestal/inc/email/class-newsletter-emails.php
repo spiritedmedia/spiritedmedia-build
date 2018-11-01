@@ -297,6 +297,7 @@ class Newsletter_Emails {
         $email_groups = Email_Groups::get_instance();
         $defaults = [
             'action_url'           => get_site_url() . '/subscribe-to-email-group/',
+            'nonce'                => wp_create_nonce( PEDESTAL_THEME_NAME ),
 
             'ga_category'          => 'inline-prompt',
             'ga_action'            => 'subscribe',

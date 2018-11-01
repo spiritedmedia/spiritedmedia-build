@@ -141,9 +141,17 @@ class Email {
         if ( empty( $_REQUEST['email_address'] )
             || empty( $_POST['group-ids'] )
             || empty( $_POST['group-category'] )
+            || empty( $_POST['signup-source'] )
         ) {
             status_header( 400 );
-            echo 'Missing information.';
+            echo 'The form is missing information. Please reload the page and try again.';
+            exit;
+        }
+
+        if ( empty( $_POST['signup-form-nonce'] ) || ! wp_verify_nonce( $_POST['signup-form-nonce'], PEDESTAL_THEME_NAME ) ) {
+            // The request could not be completed due to a conflict with the current state of the target resource
+            status_header( 409 );
+            echo 'The form has expired. Please reload the page and try again.';
             exit;
         }
 

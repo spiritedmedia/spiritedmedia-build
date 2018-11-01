@@ -120,8 +120,10 @@ if ( empty( $test_email_address ) ) {
     $confirmations_to_check = 0;
     foreach ( $links_to_check as $link ) {
         $found_forms = [];
+        // Bust page cache so we know we're getting fresh HTML
+        $url = add_query_arg( 'qa-check', date( 'Y-m-d_G-i' ), $link['url'] );
         $use_include_path = false;
-        $html = HtmlDomParser::file_get_html( $link['url'], $use_include_path, $file_get_html_context );
+        $html = HtmlDomParser::file_get_html( $url, $use_include_path, $file_get_html_context );
         $forms = $html->find( 'form[action*=/subscribe-to-email-group/]' );
         foreach ( $forms as $form ) {
             $honeypot_count = count( $form->find( '.pedestal-current-year-check' ) );
@@ -135,6 +137,12 @@ if ( empty( $test_email_address ) ) {
                 if ( 'group-category' == $input->name ) {
                     $found_input_values['group-category'] = $input->value;
                 }
+                if ( 'signup-source' == $input->name ) {
+                    $found_input_values['signup-source'] = $input->value;
+                }
+                if ( 'signup-form-nonce' == $input->name ) {
+                    $found_input_values['signup-form-nonce'] = $input->value;
+                }
             }
             $failure_reasons = [];
             if ( 1 !== $honeypot_count ) {
@@ -145,6 +153,12 @@ if ( empty( $test_email_address ) ) {
             }
             if ( empty( $found_input_values ) ) {
                 $failure_reasons[] = 'No group ids are set!';
+            }
+            if ( empty( $found_input_values['signup-source'] ) ) {
+                $failure_reasons[] = 'No signup source field set!';
+            }
+            if ( empty( $found_input_values['signup-form-nonce'] ) ) {
+                $failure_reasons[] = 'No nonce field set!';
             }
             $found_forms[] = (object) [
                 'form'     => $form,
@@ -159,6 +173,8 @@ if ( empty( $test_email_address ) ) {
                         'email_address'               => $test_email_address,
                         'pedestal-current-year-check' => date( 'Y' ),
                         'pedestal-blank-field-check'  => '',
+                        'signup-form-nonce'           => wp_create_nonce( PEDESTAL_THEME_NAME ),
+                        'signup-source'               => 'QA Signup Checker',
                     ],
                 ];
                 foreach ( $found_input_values as $key => $ids ) {

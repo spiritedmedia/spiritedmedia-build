@@ -768,6 +768,7 @@ class Shortcode_Manager {
         if ( ! empty( $attrs['ga_category'] ) ) {
             $args['ga_category']   = $attrs['ga_category'];
         }
+        $args['signup_source'] = 'Shortcode Signup Form';
         if ( ! empty( $attrs['signup_source'] ) ) {
             $args['signup_source'] = $attrs['signup_source'];
         }

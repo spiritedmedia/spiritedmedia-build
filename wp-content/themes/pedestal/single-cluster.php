@@ -13,7 +13,9 @@ $context = Timber::get_context();
 if ( Types::is_post( $item ) ) :
 
     if ( $item->is_story() ) {
-        $context['cluster_prompt'] = Follow_Updates::get_signup_form( [], $cluster_id );
+        $context['cluster_prompt'] = Follow_Updates::get_signup_form( [
+            'signup_source' => $item->get_type_name(),
+        ], $cluster_id );
 
         if ( $item->get_slug() == 'whos-next' ) {
             $context['rail_class'] = '';
