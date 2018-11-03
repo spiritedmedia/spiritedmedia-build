@@ -43,6 +43,8 @@ if ( Types::is_post( $item ) ) :
         $context['newsletter_prompt_style'] = 'screamer';
     }
 
+    $context['entity_circulation_hook'] = 'Want some more?';
+
     $adverts = new Adverts;
     $sponsored_item = $adverts->get_the_sponsored_item();
     if ( $sponsored_item ) {
@@ -104,6 +106,21 @@ if ( 'denverite' == PEDESTAL_THEME_NAME ) :
     }
 
 endif;
+
+if ( 'the-incline' == PEDESTAL_THEME_NAME && Types::is_post( $item ) ) {
+    // Remove the "Want some more?" text from the entity circulation prompt
+    // on the "Shooting at Tree of Life Synagogue" story
+    //
+    // This is a nasty hack but in the interest of time this seemed to be the
+    // optimal route.
+    //
+    // @TODO Develop a more universal way of handling this sort of
+    // customization
+    $story = $item->get_primary_story();
+    if ( Types::is_story( $story ) && 51076 === $story->get_id() ) {
+        $context['entity_circulation_hook'] = '';
+    }
+}
 
 $templates[] = 'single-entity.twig';
 
