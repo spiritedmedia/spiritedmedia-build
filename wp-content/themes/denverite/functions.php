@@ -6,7 +6,8 @@
 namespace Pedestal;
 
 use Pedestal\Icons;
-use \Pedestal\Utils\Utils;
+use Pedestal\Utils\Utils;
+use Pedestal\Registrations\Post_Types\Types;
 
 class Denverite extends Pedestal {
 
@@ -188,7 +189,7 @@ class Denverite extends Pedestal {
             $args['icon'] = Icons::get_icon( 'coffee' );
             $args['send_time'] = '7:20 a.m.';
 
-            if ( is_singular() ) {
+            if ( is_singular() && Types::is_entity( get_post_type() ) ) {
                 $args['title'] = 'You\'re paying attention';
                 $args['body'] = '<p>Now take the next step. Know the most important (and most fun) stuff going on in Denver and Colorado&mdash;get the Denverite newsletter. It\'s quick, free and delightful.</p>';
                 $args['icon'] = Icons::get_icon( 'check' );

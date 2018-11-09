@@ -5,7 +5,8 @@
 
 namespace Pedestal;
 
-use \Pedestal\Utils\Utils;
+use Pedestal\Utils\Utils;
+use Pedestal\Registrations\Post_Types\Types;
 
 class Billy_Penn extends Pedestal {
 
@@ -121,7 +122,7 @@ class Billy_Penn extends Pedestal {
             $args['body'] = '<p>Our quick morning newsletter recaps the interesting, important and exciting things you need to know about Philly. It’s the easy way to stay <span class="u-nowrap">on top of local news.</span></p>';
             $args['icon'] = Icons::get_icon( 'sun' );
 
-            if ( is_singular() ) {
+            if ( is_singular() && Types::is_entity( get_post_type() ) ) {
                 $args['title'] = 'Hoorah! You <span class="u-nowrap">read to the end.</span>';
                 $args['body'] = '<p>Seems you’re the kind of person who really digs in. Want more? Get an update direct to your inbox each morning, with everything you need to stay on top of Philly news.</p>';
                 $args['icon'] = Icons::get_icon( 'heart' );

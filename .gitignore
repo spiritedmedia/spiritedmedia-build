@@ -32,7 +32,7 @@
 # !.ruby-gemset
 # !.ruby-version
 # !.babelrc
-# !config/
+!config/
 
 # Coding Standards
 # !.eslintrc.json
@@ -69,6 +69,10 @@
 
 # Bin
 !bin/
+
+# Ignore everything in the config directory except config.json.
+config/*
+!config/config.json
 
 # Ignore everything in the "wp-content" directory, except the "plugins", "mu-plugins",
 # and "themes" directories.

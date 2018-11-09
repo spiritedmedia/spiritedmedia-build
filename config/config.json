@@ -1,0 +1,49 @@
+{
+    "wp": {
+        "themesPath": "wp-content\/themes"
+    },
+    "pedestal": {
+        "path": "wp-content\/themes\/pedestal",
+        "imageSizes": {
+            "thumbnail": {
+                "width": 150,
+                "height": 150
+            },
+            "medium": {
+                "width": 300,
+                "height": 300
+            },
+            "large": {
+                "width": 1024,
+                "height": 1024
+            },
+            "medium-square": {
+                "width": 300,
+                "height": 300
+            }
+        },
+        "iconColors": [
+            "#9f9f9f"
+        ],
+        "children": {
+            "billy-penn": {
+                "siteName": "Billy Penn",
+                "baseDomain": "billypenn",
+                "brandColor": "#268a8c",
+                "themePath": "wp-content\/themes\/billy-penn"
+            },
+            "the-incline": {
+                "siteName": "The Incline",
+                "baseDomain": "theincline",
+                "brandColor": "#f05329",
+                "themePath": "wp-content\/themes\/the-incline"
+            },
+            "denverite": {
+                "siteName": "Denverite",
+                "baseDomain": "denverite",
+                "brandColor": "#210c42",
+                "themePath": "wp-content\/themes\/denverite"
+            }
+        }
+    }
+}

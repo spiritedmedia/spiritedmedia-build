@@ -1,7 +1,8 @@
-Build [#6056](https://circleci.com/gh/spiritedmedia/spiritedmedia/6056) by montchr at 2018-11-03 05:04 PM UTC
+Build [#6106](https://circleci.com/gh/spiritedmedia/spiritedmedia/6106) by kingkool68 at 2018-11-09 06:26 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v7.10.5](https://github.com/spiritedmedia/spiritedmedia/compare/v7.10.5)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v7.10.6](https://github.com/spiritedmedia/spiritedmedia/compare/v7.10.6)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.10.4...v7.10.5)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.10.5...v7.10.6)
 
- - [#2993](git@github.com:spiritedmedia/spiritedmedia.git/pull/2993): Customize entity circulation prompt on entities with the "Shooting at Tree of Life Synagogue" story on The Incline
+ - [#2999](git@github.com:spiritedmedia/spiritedmedia.git/pull/2999): HOTFIX: End-of-Article Newsletter Prompt Language Should Only Be Shown On Singular Entities
+ - [#2996](git@github.com:spiritedmedia/spiritedmedia.git/pull/2996): Add a Color Style Guide

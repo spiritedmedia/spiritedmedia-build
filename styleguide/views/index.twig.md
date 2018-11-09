@@ -26,6 +26,7 @@ address the issue.
 ## Core Components
 
 - [Buttons](buttons.php)
+- [Colors](colors.php)
 - [Forms](forms.php)
 - [Headers](headers.php)
 - [Horizontal Rules](horizontal-rules.php)

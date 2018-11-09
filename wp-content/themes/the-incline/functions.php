@@ -5,6 +5,8 @@
 
 namespace Pedestal;
 
+use Pedestal\Registrations\Post_Types\Types;
+
 class The_Incline extends Pedestal {
 
     /**
@@ -110,7 +112,7 @@ class The_Incline extends Pedestal {
             $args['icon'] = Icons::get_icon( 'coffee' );
             $args['send_time'] = '6:30 a.m.';
 
-            if ( is_singular() ) {
+            if ( is_singular() && Types::is_entity( get_post_type() ) ) {
                 $args['title'] = 'We love you, Pittsburgh.';
                 $args['body'] = '<p>Looks like you\'re the type of person who reads to the end <span class="u-nowrap">of articles.</span></p> <p>Because you love learning about Pittsburgh, you need our free morning newsletter, full of useful news, can’t-miss events, and everything else you need to know about our city.</p>';
                 $args['icon'] = Icons::get_icon( 'heart' );
