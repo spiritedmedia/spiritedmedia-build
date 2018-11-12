@@ -123,8 +123,8 @@ class Billy_Penn extends Pedestal {
             $args['icon'] = Icons::get_icon( 'sun' );
 
             if ( is_singular() && Types::is_entity( get_post_type() ) ) {
-                $args['title'] = 'Hoorah! You <span class="u-nowrap">read to the end.</span>';
-                $args['body'] = '<p>Seems you’re the kind of person who really digs in. Want more? Get an update direct to your inbox each morning, with everything you need to stay on top of Philly news.</p>';
+                $args['title'] = 'Thanks for reading all the way.';
+                $args['body'] = '<p>Seems you\'re the kind of person who really digs in. Want more? Get an update direct to your inbox each morning, with everything you need to stay on top of Philly news.</p>';
                 $args['icon'] = Icons::get_icon( 'heart' );
             }
             return $args;

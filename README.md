@@ -1,8 +1,7 @@
-Build [#6106](https://circleci.com/gh/spiritedmedia/spiritedmedia/6106) by kingkool68 at 2018-11-09 06:26 PM UTC
+Build [#6123](https://circleci.com/gh/spiritedmedia/spiritedmedia/6123) by kingkool68 at 2018-11-12 06:00 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v7.10.6](https://github.com/spiritedmedia/spiritedmedia/compare/v7.10.6)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v7.10.7](https://github.com/spiritedmedia/spiritedmedia/compare/v7.10.7)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.10.5...v7.10.6)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.10.6...v7.10.7)
 
- - [#2999](git@github.com:spiritedmedia/spiritedmedia.git/pull/2999): HOTFIX: End-of-Article Newsletter Prompt Language Should Only Be Shown On Singular Entities
- - [#2996](git@github.com:spiritedmedia/spiritedmedia.git/pull/2996): Add a Color Style Guide
+ - [#3001](git@github.com:spiritedmedia/spiritedmedia.git/pull/3001): [HOTFIX] Tweak End-of-Article Signup Prompt Title for Billy Penn
