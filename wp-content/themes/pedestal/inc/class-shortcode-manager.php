@@ -764,9 +764,13 @@ class Shortcode_Manager {
             'icon'            => '',
             'body'            => '',
             'success_icon'    => Icons::get_icon( 'heart' ),
+            'ga_label'        => 'signup-form',
         ];
         if ( ! empty( $attrs['ga_category'] ) ) {
             $args['ga_category']   = $attrs['ga_category'];
+        }
+        if ( ! empty( $attrs['ga_label'] ) ) {
+            $args['ga_label']   = $attrs['ga_label'];
         }
         $args['signup_source'] = 'Shortcode Signup Form';
         if ( ! empty( $attrs['signup_source'] ) ) {

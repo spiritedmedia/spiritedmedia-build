@@ -27,3 +27,9 @@ $pagination-button-bg: $gray-80;
 .pagination__text__total {
   font-weight: 700;
 }
+
+@media print {
+  .pagination {
+    display: none;
+  }
+}

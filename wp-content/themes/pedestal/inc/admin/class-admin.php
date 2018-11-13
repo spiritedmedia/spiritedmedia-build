@@ -5,19 +5,12 @@ namespace Pedestal\Admin;
 use function Pedestal\Pedestal;
 
 use Timber\Timber;
-use Pedestal\Email\Email;
-use Pedestal\Icons;
-use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Posts\Post;
 use Pedestal\Posts\Attachment;
 use Pedestal\Posts\Entities\Embed;
-use Pedestal\Posts\Clusters\Geospaces\Localities\Neighborhood;
 use Pedestal\Posts\Slots\Slots;
-use Pedestal\Posts\Clusters\{
-    Person,
-    Story
-};
+use Pedestal\Posts\Clusters\Person;
 
 /**
  * Encapsulates customizations for the WordPress admin
@@ -131,6 +124,16 @@ class Admin {
             echo '<h1 class="wp-heading-inline">Distribution</h1>';
             do_meta_boxes( null, 'distribution', $post );
         } );
+
+        // Fix the SVG icon size
+        add_action('admin_head', function() {
+            echo '<style type="text/css">
+                    .fm-icon .thumbnail {
+                          width: 50px;
+                          height: 50px;
+                     }
+                 </style>';
+        });
     }
 
     /**
@@ -186,16 +189,6 @@ class Admin {
         add_filter('upload_mimes', function( $mimes ) {
             $mimes['svg'] = 'image/svg+xml';
             return $mimes;
-        });
-
-        // Fix the SVG icon size
-        add_action('admin_head', function() {
-            echo '<style type="text/css">
-                    .fm-icon .thumbnail {
-                          width: 50px;
-                          height: 50px;
-                     }
-                 </style>';
         });
 
         // Disable TinyMCE if the post content contains a SoundCite shortcode
@@ -270,6 +263,9 @@ class Admin {
             }
             return $translation;
         }, 10, 2 );
+
+        add_filter( 'content_save_pre', [ $this, 'filter_fix_characters_before_save' ] );
+        add_filter( 'title_save_pre',   [ $this, 'filter_fix_characters_before_save' ] );
     }
 
     /**
@@ -460,7 +456,7 @@ class Admin {
             return $out;
         }
 
-        $post = \Pedestal\Posts\Post::get( get_the_ID() );
+        $post = Post::get( get_the_ID() );
         if ( ! $post ) {
             return $out;
         }
@@ -677,6 +673,39 @@ class Admin {
         }
 
         return $data;
+    }
+
+    /**
+     * Removes "smart" characters from word processors and replaces them with the correct HTML safe characters
+     * WordPress will handle converting them to "smart" characters on the frontend with the use of wptexturize()
+     *
+     * @link https://wordpress.org/plugins/smart-quote-fixer/
+     *
+     * @param  string $str String to be modified
+     * @return string      Cleaned string
+     */
+    public function filter_fix_characters_before_save( $str = '' ) {
+        // Replace the smart quotes that cause question marks to appear
+        $str = str_replace(
+            [ "\xe2\x80\x98", "\xe2\x80\x99", "\xe2\x80\x9c", "\xe2\x80\x9d", "\xe2\x80\x93", "\xe2\x80\x94", "\xe2\x80\xa6" ],
+            [ "'", "'", '"', '"', '-', '--', '...' ],
+            $str
+        );
+
+        // Replace the smart quotes that cause question marks to appear
+        $str = str_replace(
+            [ chr( 145 ), chr( 146 ), chr( 147 ), chr( 148 ), chr( 150 ), chr( 151 ), chr( 133 ) ],
+            [ "'", "'", '"', '"', '-', '--', '...' ],
+            $str
+        );
+
+        $str = str_replace(
+            [ '™', '©', '®' ],
+            [ '&trade;', '&copy;', '&reg;' ],
+            $str
+        );
+
+        return $str;
     }
 
     /**

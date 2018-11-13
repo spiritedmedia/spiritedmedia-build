@@ -72,3 +72,9 @@ $dfp-mobile-ad-offset--panelled : -( $column-gutter );
     display: none;
   }
 }
+
+@media print {
+  .dfp {
+    display: none;
+  }
+}

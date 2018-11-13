@@ -310,6 +310,7 @@ class Follow_Updates {
 
             'ga_category'     => 'cluster-prompt',
             'ga_action'       => 'subscribe',
+            'ga_label'        => 'signup-form',
 
             'input_icon_name' => 'envelope-o',
             'input_icon'      => '',

@@ -108,6 +108,12 @@
   margin-top: rem( 64px );
 }
 
+@media print {
+  .stream--entity-footer {
+    display: none;
+  }
+}
+
 
 //
 // Featured Stream Items

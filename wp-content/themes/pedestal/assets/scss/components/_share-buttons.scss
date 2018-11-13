@@ -96,5 +96,7 @@ $share-button-height: $share-button-margin-y + $share-button-link-height;
 @media print {
   .share-buttons {
     display: none;
+    // display property gets changed inline by JavaScript
+    visibility: hidden;
   }
 }

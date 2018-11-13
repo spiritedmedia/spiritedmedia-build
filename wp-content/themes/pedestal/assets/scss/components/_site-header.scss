@@ -177,3 +177,9 @@
   }
 
 } // end @media $site-header-breakpoint
+
+@media print {
+  .site-header__menu-trigger {
+    display: none;
+  }
+}
