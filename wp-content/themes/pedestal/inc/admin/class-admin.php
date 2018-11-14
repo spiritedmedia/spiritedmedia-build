@@ -264,8 +264,12 @@ class Admin {
             return $translation;
         }, 10, 2 );
 
+        // Remove smart characters before inserting into the database
         add_filter( 'content_save_pre', [ $this, 'filter_fix_characters_before_save' ] );
         add_filter( 'title_save_pre',   [ $this, 'filter_fix_characters_before_save' ] );
+        // Restore smart characters before displaying in WYSIWYG editor
+        add_filter( 'content_edit_pre', 'wptexturize' );
+        add_filter( 'title_edit_pre', 'wptexturize' );
     }
 
     /**
