@@ -160,13 +160,21 @@ $script_handle = 'pedestal-qa-subscriber-cookie-checker';
 add_action( 'wp_enqueue_scripts', function() use ( $script_handle, $expected_merge_fields, $email ) {
     $in_footer = true;
     wp_enqueue_script(
-        $script_handle,
-        PEDESTAL_DIST_DIRECTORY_URI . '/js/subscriber-cookie-checker.js',
-        [ 'jquery' ],
+        'local-storage-cookie',
+        PEDESTAL_DIST_DIRECTORY_URI . '/js/globalLocalStorageCookie.js',
         PEDESTAL_VERSION,
         $in_footer
     );
-    wp_localize_script( $script_handle, 'subscriberExpectedMergeFields', [ 'data' => $expected_merge_fields ] );
+    wp_enqueue_script(
+        $script_handle,
+        PEDESTAL_DIST_DIRECTORY_URI . '/js/subscriber-cookie-checker.js',
+        [ 'jquery', 'local-storage-cookie' ],
+        PEDESTAL_VERSION,
+        $in_footer
+    );
+    wp_localize_script( $script_handle, 'subscriberExpectedMergeFields', [
+        'data' => $expected_merge_fields,
+    ] );
     wp_localize_script( $script_handle, 'subscriberEmail', $email );
 } );
 

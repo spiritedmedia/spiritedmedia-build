@@ -1,7 +1,6 @@
-/* global PedVars */
+/* global PedVars, localStorageCookie */
 
 import { getURLParams } from 'PedUtils';
-import localStorageCookie from 'localStorageCookie';
 
 /**
  * Subscriber functionality for the frontend

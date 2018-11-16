@@ -67,6 +67,11 @@ class Scripts_Styles {
 
         // Modify dfp-loader.js <script> element
         add_filter( 'script_loader_tag', [ $this, 'filter_script_loader_tag_modify_dfp_loader' ], 10, 3 );
+
+        add_filter( 'timber_context', function( $context ) {
+            $context['local_storage_cookie_script_url'] = PEDESTAL_DIST_DIRECTORY_URI . '/js/globalLocalStorageCookie.js';
+            return $context;
+        } );
     }
 
     public function action_admin_init() {

@@ -54,13 +54,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         private $is_stream = false;
 
         /**
-         * The root URL for the CDN i.e. https://a.spirited.media
-         *
-         * @var string
-         */
-        protected $cdn_url;
-
-        /**
          * Map controller classes to the correct theme
          *
          * @var array
@@ -357,18 +350,28 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
             add_action( 'widgets_init', [ $this, 'action_widgets_init' ], 11 );
 
-            /*
-             * Remove "Comments" from admin bar because we don't have comments
-             */
-            add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
-                $wp_admin_bar->remove_menu( 'comments' );
-            }, 999 );
-
             add_action( 'draft_to_publish', [ $this, 'handle_post_notifications' ] );
             add_action( 'draft_to_publish', [ $this, 'handle_set_post_pedestal_version' ] );
             add_action( 'future_to_publish', [ $this, 'handle_post_notifications' ] );
             add_action( 'future_to_publish', [ $this, 'handle_set_post_pedestal_version' ] );
 
+            /**
+             * Modify what appears in the admin bar menu
+             */
+            add_action( 'wp_before_admin_bar_render', function () {
+                global $wp_admin_bar;
+
+                // Remove comments because we don't have comments
+                $wp_admin_bar->remove_menu( 'comments' );
+
+                // Remove the New Post link from the My Sites admin bar menu becuase
+                // we don't have Posts
+                foreach ( $wp_admin_bar->get_nodes() as $node ) {
+                    if ( $node->title == 'New Post' || $node->title == 'Manage Comments' ) {
+                        $wp_admin_bar->remove_node( $node->id );
+                    }
+                }
+            }, 999 );
         }
 
         /**
@@ -758,7 +761,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          */
         public function filter_rewrite_url_for_cdn( $url = '' ) {
             if ( $this->get_cdn_url() ) {
-                return str_replace( get_site_url(), $this->cdn_url, $url );
+                return str_replace( get_site_url(), $this->get_cdn_url(), $url );
             }
             return $url;
         }
@@ -947,39 +950,15 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         }
 
         /**
-         * Returns the CDN URL
-         *
-         * If the CDN URL is not set, then set it.
+         * Returns the CDN URL if defined by S3_UPLOADS_BUCKET_URL constant in wp-config.php
          *
          * @return string|false The CDN URL
          */
         public function get_cdn_url() {
-            if ( empty( $this->cdn_url ) ) {
-                $this->set_cdn_url();
+            if ( defined( 'S3_UPLOADS_BUCKET_URL' ) && ! empty( S3_UPLOADS_BUCKET_URL ) ) {
+                return S3_UPLOADS_BUCKET_URL;
             }
-            return $this->cdn_url;
-        }
-
-        /**
-         * Set the CDN URL
-         */
-        protected function set_cdn_url() {
-            $s3_options = get_site_option( 'tantan_wordpress_s3' );
-            if (
-                ! is_array( $s3_options )
-                || empty( $s3_options['cloudfront'] )
-                || ! isset( $s3_options['cloudfront'] )
-                || '0' === $s3_options['serve-from-s3']
-            ) {
-                $this->cdn_url = false;
-                return;
-            }
-
-            $proto = 'http://';
-            if ( isset( $s3_options['force-https'] ) && '1' === $s3_options['force-https'] ) {
-                $proto = 'https://';
-            }
-            $this->cdn_url = $proto . $s3_options['cloudfront'];
+            return false;
         }
 
         /**

@@ -696,19 +696,11 @@ class Admin {
             $str
         );
 
-        // Replace the smart quotes that cause question marks to appear
-        $str = str_replace(
-            [ chr( 145 ), chr( 146 ), chr( 147 ), chr( 148 ), chr( 150 ), chr( 151 ), chr( 133 ) ],
-            [ "'", "'", '"', '"', '-', '--', '...' ],
-            $str
-        );
-
         $str = str_replace(
             [ '™', '©', '®' ],
             [ '&trade;', '&copy;', '&reg;' ],
             $str
         );
-
         return $str;
     }
 
