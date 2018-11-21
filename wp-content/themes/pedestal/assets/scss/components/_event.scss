@@ -117,19 +117,3 @@ $event-inner-spacing: rem( 20px );
     }
   }
 }
-
-
-
-
-
-//
-// Single Events
-// ==========================================================================
-
-
-.single-event {
-  .c-main__body {
-    // Prevent margin collapse between the event component and its parent
-    overflow: auto;
-  }
-}

@@ -104,10 +104,7 @@ class Frontend {
 
         // Exclude all password protected posts from queries
         if ( ! $query->is_singular() && ! $query->is_admin() ) {
-            add_filter( 'posts_where', function( $where ) {
-                global $wpdb;
-                return $where .= " AND {$wpdb->posts}.post_password = '' ";
-            } );
+            $query->set( 'has_password', false );
         }
 
         if ( ! $query->is_main_query() ) {

@@ -29,28 +29,25 @@
 }
 
 .form-input {
-  background: $light-gray-color;
-  border: rem( 1px ) solid $gray-color;
-  box-shadow: inset rem( 2px ) rem( 4px ) rem( 8px ) 0 rgba( $black, 0.1 );
-  border-radius: rem( 2px );
-
-  font-family: $body-font-family;
-  font-style: italic;
-  opacity: 0.8;
-
   width: rem( 260px );
   height: rem( 44px );
-  line-height: 1;
-
+  box-shadow: inset rem( 2px ) rem( 4px ) rem( 8px ) 0 rgba( $black, 0.1 );
+  border: rem( 1px ) solid $gray-color;
+  border-radius: rem( 2px );
+  background: $white;
   padding-left: rem( 8px );
   padding-right: rem( 8px );
+  line-height: 1;
+  font-family: $body-font-family;
+  font-style: italic;
+  color: rgba( $body-font-color, 0.8 );
 
   &:focus {
-    opacity: 1;
+    color: $body-font-color;
   }
 
   &::placeholder {
-    color: $gray-color;
+    color: rgba( $gray-color, 0.8 );
     vertical-align: middle;
 
     // Line height must be `normal` to work in iOS browsers...
@@ -62,7 +59,7 @@
   }
 
   &:focus::placeholder {
-    opacity: 1;
+    color: $gray-color;
   }
 }
 

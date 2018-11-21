@@ -875,6 +875,125 @@ class MailChimp {
 
     /*
     |--------------------------------------------------------------------------
+    | Campaign Folders
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get all campaign folders
+     *
+     * @link https://developer.mailchimp.com/documentation/mailchimp/reference/campaign-folders/
+     * @param  array  $args Args to modify the response
+     * @return object       Campaign folders
+     */
+    public function get_campaign_folders( $args = [] ) {
+        $defaults = [
+            'count' => 10,
+            'offset' => 0,
+        ];
+        $args = wp_parse_args( $args, $defaults );
+        $endpoint = '/campaign-folders';
+        $output = $this->get_request( $endpoint, $args );
+
+        // Remove the _links items
+        if ( ! empty( $output->folders ) ) {
+            foreach ( $output->folders as $key => $folder ) {
+                if ( isset( $folder->_links ) ) {
+                    unset( $output->folders[ $key ]->_links );
+                }
+            }
+        }
+
+        return $output;
+    }
+
+    /**
+     * Get the details of a specific folder
+     *
+     * @link https://developer.mailchimp.com/documentation/mailchimp/reference/campaign-folders/
+     * @param  string $folder_id ID of the folder
+     * @return object            Folder details
+     */
+    public function get_campaign_folder( $folder_id ) {
+        $endpoint = "/campaign-folders/$folder_id/";
+        return $this->get_request( $endpoint );
+    }
+
+    /**
+     * Get the id of a campaign folder given a name or create it if not found
+     *
+     * @param  string  $name                Name of the folder to search for
+     * @param  boolean $create_if_not_found Whether to create a new folder if one doesn't already exist
+     * @return string|false                 id of the campaign folder or false if fail
+     */
+    public function get_campaign_folder_id( $name, $create_if_not_found = true ) {
+        $folders = $this->get_campaign_folders( [
+            'count' => 99,
+        ] );
+        if ( ! empty( $folders->folders ) ) {
+            foreach ( $folders->folders as $folder ) {
+                if ( $name == $folder->name ) {
+                    return $folder->id;
+                }
+            }
+        }
+
+        // Folder doesn't exist so maybe create it?
+        if ( $create_if_not_found ) {
+            $folder = $this->create_campaign_folder( $name );
+            if ( ! empty( $folder->id ) ) {
+                return $folder->id;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Create a campaign folder
+     *
+     * @link https://developer.mailchimp.com/documentation/mailchimp/reference/campaign-folders/
+     * @param  string $name  Name of the folder
+     * @return object        Folder details
+     */
+    public function create_campaign_folder( $name ) {
+        $args = [
+            'name' => $name,
+        ];
+        $endpoint = '/campaign-folders';
+        return $this->post_request( $endpoint, $args );
+    }
+
+    /**
+     * Rename a campaign folder
+     *
+     * @link https://developer.mailchimp.com/documentation/mailchimp/reference/campaign-folders/
+     * @param  string $folder_id ID of the folder
+     * @param  string $new_name  New name for the folder
+     * @return object            Folder details
+     */
+    public function rename_campaign_folder( $folder_id, $new_name ) {
+        $args = [
+            'name' => $new_name,
+        ];
+        $endpoint = "/campaign-folders/$folder_id/";
+        return $this->patch_request( $endpoint, $args );
+    }
+
+    /**
+     * Delete a specific folder
+     *
+     * @link https://developer.mailchimp.com/documentation/mailchimp/reference/campaign-folders/
+     * @param  string $folder_id ID of the folder to delete
+     * @return string|object     Message if successful, object if there was a problem
+     */
+    public function delete_campaign_folder( $folder_id ) {
+        $endpoint = "/campaign-folders/$folder_id/";
+        return $this->delete_request( $endpoint );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Campaigns
     |--------------------------------------------------------------------------
     */
@@ -972,6 +1091,7 @@ class MailChimp {
         $defaults = [
             'type'             => 'regular',
             'message'          => '',
+            'folder_name'      => 'Newsletters, daily',
             'list_id'          => '',
             'group_category'   => '',
             'groups'           => [],
@@ -1064,6 +1184,13 @@ class MailChimp {
                 'text_clicks' => $args['text_clicks'],
             ],
         ];
+
+        if ( ! empty( $args['folder_name'] ) ) {
+            $folder_id = $this->get_campaign_folder_id( $args['folder_name'] );
+            if ( $folder_id ) {
+                $campaign_args['settings']['folder_id'] = $folder_id;
+            }
+        }
 
         if ( empty( $segment_opts ) ) {
             // No segment arguments were set and we don't want to send

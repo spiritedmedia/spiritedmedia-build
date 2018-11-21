@@ -255,6 +255,9 @@ class Email {
             'subject_line'   => $the_message['subject'],
 
         ];
+        if ( ! empty( $args['folder_name'] ) ) {
+            $mc_args['folder_name'] = $args['folder_name'];
+        }
         $campaign_id = $mc->send_campaign( $mc_args );
         do_action( 'pedestal_sent_email_campaign', $args, $mc_args );
         return $campaign_id;

@@ -225,6 +225,7 @@ class Follow_Updates {
             'groups'         => [ $cluster->get_mailchimp_group_id() ],
             'group_category' => $cluster->get_mailchimp_group_category(),
             'email_type'     => 'Follow Update',
+            'folder_name'    => 'Story updates',
         ];
         $sending_args = wp_parse_args( $sending_args, $args );
         $sent = Email::send_mailchimp_email( $sending_args );

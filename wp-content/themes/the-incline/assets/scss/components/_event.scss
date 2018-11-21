@@ -1,27 +1,18 @@
-// ==========================================================================
-// The Incline // Components // EVENT
-// ==========================================================================
-
-
 .event {
-  @include angle-edge(
-    $angle: 1,
-    $angle-position-y: both,
-    $angle-position-x: left,
-    $angle-position-bottom-x: right
-  );
-
-  padding-top: 10vw;
+  padding-top: 5vw;
+  transform: skewY( -2deg );
 
   &.has-overline {
     padding-top: rem( 32px );
   }
 
   @media screen and ( min-width: em( 500px ) ) {
-    &,
-    &.has-overline {
-      padding-top: rem( 48px );
-      padding-bottom: 1vw;
-    }
+    padding-top: rem( 32px );
+    padding-bottom: 1vw;
   }
+}
+
+.event__inner,
+.event__hr {
+  transform: skewY( 2deg );
 }

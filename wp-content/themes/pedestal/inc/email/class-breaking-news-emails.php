@@ -183,6 +183,7 @@ class Breaking_News_Emails {
             'groups'         => 'Breaking News',
             'group_category' => 'Newsletters',
             'email_type'     => 'Breaking News',
+            'folder_name'    => 'Breaking/alerts',
         ];
         $sending_args = wp_parse_args( $sending_args, $args );
         return Email::send_mailchimp_email( $sending_args );
