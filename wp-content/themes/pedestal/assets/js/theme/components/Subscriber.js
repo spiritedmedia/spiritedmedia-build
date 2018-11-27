@@ -18,7 +18,7 @@ export default class Subscriber {
      * Versioning so we can force clients to update their data if need be
      * @type {Number}
      */
-    this.version = 1;
+    this.version = 2;
 
     // Make sure we trigger our ready event late enough for other events to
     // listen for it. If the cookie is already present, the ready event is
@@ -50,6 +50,14 @@ export default class Subscriber {
       var oldId = false;
       if ('mc_id' in subscriberData.data) {
         oldId = subscriberData.data.mc_id;
+      }
+
+      // If the cookie version is out of date
+      if ('version' in subscriberData) {
+        if (subscriberData.version != this.version) {
+          this.fetchData(oldId);
+          return true;
+        }
       }
 
       // If the cookie is stale...
