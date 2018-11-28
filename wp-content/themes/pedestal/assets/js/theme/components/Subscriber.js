@@ -18,7 +18,7 @@ export default class Subscriber {
      * Versioning so we can force clients to update their data if need be
      * @type {Number}
      */
-    this.version = 2;
+    this.version = 3;
 
     // Make sure we trigger our ready event late enough for other events to
     // listen for it. If the cookie is already present, the ready event is
@@ -47,6 +47,7 @@ export default class Subscriber {
     var mcEid = getURLParams('mc_eid');
     var subscriberData = localStorageCookie(this.storageKey);
     if (subscriberData && 'data' in subscriberData) {
+
       var oldId = false;
       if ('mc_id' in subscriberData.data) {
         oldId = subscriberData.data.mc_id;

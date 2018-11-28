@@ -7,7 +7,7 @@ use Pedestal\Email\Email_Groups;
 
 class Subscribers {
 
-    private $version = 2;
+    private $version = 3;
 
     /**
      * Get an instance of this class
@@ -38,8 +38,12 @@ class Subscribers {
             wp_send_json_error();
         }
         $id = sanitize_text_field( $_POST['subscriberID'] );
+        if ( empty( $id ) ) {
+            error_log( 'BAD subscriberID ' . $_POST['subscriberID'] );
+            wp_send_json_error();
+        }
         $data = $this->get_subscriber_data( $id );
-        if ( empty( $data ) ) {
+        if ( empty( $data['mc_id'] ) ) {
             wp_send_json_error();
         }
 
@@ -59,6 +63,9 @@ class Subscribers {
      */
     public function get_subscriber_data( $id = '' ) {
         $id = trim( $id );
+        if ( empty( $id ) ) {
+            return false;
+        }
         $mc = MailChimp::get_instance();
         $subscriber = false;
         // If ID is an email, use a different API
@@ -100,6 +107,11 @@ class Subscribers {
             return $output;
         }
 
+        // If the response back from Mailchimp is a 404 then bail
+        if ( ! empty( $subscriber->status ) && '404' == $subscriber->status ) {
+            return $output;
+        }
+
         /*
             TODO
             It would be nice to have a mapping of this data somewhere
@@ -116,7 +128,7 @@ class Subscribers {
         $output['rating'] = intval( $subscriber->member_rating );
 
         $merge_fields = $subscriber->merge_fields;
-        $output['current_member'] = (bool) $this->get_multiprop_value(
+        $output['current_member'] = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPCURMEM',
@@ -133,7 +145,7 @@ class Subscribers {
             ],
             0
         );
-        $output['recurring_member'] = (bool) $this->get_multiprop_value(
+        $output['recurring_member'] = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPRECRMEM',
@@ -150,13 +162,13 @@ class Subscribers {
             ],
             0
         );
-        $output['no_promote'] = (bool) $this->get_multiprop_value(
+        $output['no_promote'] = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'NOPROMOTE',
             ]
         );
-        $output['major_donor'] = (bool) $this->get_multiprop_value(
+        $output['major_donor'] = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 '500DONOR',
@@ -171,7 +183,7 @@ class Subscribers {
             ],
             0
         );
-        $output['donate_7'] = (bool) $this->get_multiprop_value(
+        $output['donate_7'] = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPDONA7',
@@ -179,7 +191,7 @@ class Subscribers {
                 'DENDONA7',
             ]
         );
-        $output['donate_14'] = (bool) $this->get_multiprop_value(
+        $output['donate_14'] = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPDONA14',
@@ -187,7 +199,7 @@ class Subscribers {
                 'DENDONA14',
             ]
         );
-        $output['donate_30'] = (bool) $this->get_multiprop_value(
+        $output['donate_30'] = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPDONA30',
@@ -195,7 +207,7 @@ class Subscribers {
                 'DENDONA30',
             ]
         );
-        $output['donate_365'] = (bool) $this->get_multiprop_value(
+        $output['donate_365'] = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPDONA365',
@@ -234,7 +246,10 @@ class Subscribers {
     }
 
     /**
-     * Helper method for getting the value of one or more properties of an object
+     * Helper method for getting a single value of one or more properties of an object.
+     * We loop over the properties looking for one that is set on the given object.
+     * If found, the value of that property is returned.
+     * Otherwise $default_value is returned if none of the properties are found.
      *
      * @param  object  $obj           Object with properties to check
      * @param  array   $properties    One or more properties to check
@@ -254,5 +269,22 @@ class Subscribers {
             }
         }
         return $default_value;
+    }
+
+    /**
+     * Helper method for ensuring booleans are properly returned from get_multiprop_value()
+     *
+     * @param  object  $obj           Object with properties to check
+     * @param  array   $properties    One or more properties to check
+     * @param  boolean $default_value Default value to return if all properties not found
+     * @return mixed                  Value of found property or default value
+     */
+    private function get_multiprop_bool_value( $obj, $properties = [], $default_value = false ) {
+        $val = $this->get_multiprop_value( $obj, $properties, $default_value );
+        if ( is_string( $val ) ) {
+            $val = strtolower( $val );
+            return $val === 'true' ? true : false;
+        }
+        return $val;
     }
 }
