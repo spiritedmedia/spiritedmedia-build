@@ -1,6 +1,10 @@
 <?php
 use Timber\Timber;
-use Pedestal\Adverts;
+use Pedestal\{
+    Adverts,
+    Conversion_Prompts,
+    Conversion_Prompt_Admin
+};
 use Pedestal\Objects\Stream;
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
@@ -35,13 +39,9 @@ if ( Types::is_post( $item ) ) :
         'widths' => [ 320, 480, 640, 676, 700, 800, 1024 ],
     ];
 
-    $context['newsletter_signup_prompt'] = Newsletter_Emails::get_signup_form([
+    $context['conversion_prompts'] = Conversion_Prompts::get_prompts( 'entity', [
         'signup_source' => 'Post footer',
-    ]);
-    $context['newsletter_prompt_style'] = 'emphatic';
-    if ( 'denverite' == PEDESTAL_THEME_NAME ) {
-        $context['newsletter_prompt_style'] = 'screamer';
-    }
+    ] );
 
     $context['entity_circulation_hook'] = 'Want some more?';
 

@@ -2,7 +2,7 @@
 /*!*
  * Pedestal // Admin
  *
- * Version: 7.10.13
+ * Version: 7.11.0
  *
  * Copyright ( c ) 2018 Spirited Media
  *
@@ -38,13 +38,64 @@
 
 // Admin-specific
 @import 'admin/fieldmanager-group-tabs';
-@import 'admin/message-spot';
+@import 'admin/messages-conversions';
 
 
 .clearfix {
   @include clearfix;
 }
 
+
+.wp-list-table {
+  th.column-pedestal_id,
+  td.column-pedestal_id {
+    width: 40px;
+  }
+}
+
+body.taxonomy-pedestal_subscriptions.edit-tags-php #col-left,
+body.taxonomy-pedestal_subscriptions.edit-tags-php .wrap .search-form,
+body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right .tablenav,
+// Hide the user description field on profile page
+.user-description-wrap,
+#fm_meta_box_daily_insta_date,
+#fm_meta_box_embed_options {
+  display: none;
+}
+
+body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right {
+  width: 100%;
+}
+
+body.tools_page_pedestal_cluster_tools {
+  #wpbody-content > p {
+    margin: 0;
+  }
+
+  // Prevent the footer from overlapping Cluster Tools log messages
+  #wpfooter {
+    position: static;
+  }
+}
+
+#distribution-sortables {
+  padding-top: 10px;
+}
+
+
+//
+// Fields / Fieldmanager
+// ==========================================================================
+
+.fm-group-inner {
+  @include clearfix;
+}
+
+// Slug field width in post editor
+#slugdiv #post_name {
+  width: 100%;
+  font-size: 90%;
+}
 
 .fm-headline-wrapper {
   input {
@@ -105,55 +156,12 @@
   height: 4em;
 }
 
-.wp-list-table {
-  th.column-pedestal_id,
-  td.column-pedestal_id {
-    width: 40px;
-  }
-}
-
-body.taxonomy-pedestal_subscriptions.edit-tags-php #col-left,
-body.taxonomy-pedestal_subscriptions.edit-tags-php .wrap .search-form,
-body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right .tablenav,
-// Hide the user description field on profile page
-.user-description-wrap,
-#fm_meta_box_daily_insta_date,
-#fm_meta_box_embed_options {
-  display: none;
-}
-
-body.taxonomy-pedestal_subscriptions.edit-tags-php #col-right {
-  width: 100%;
-}
-
-body.tools_page_pedestal_cluster_tools {
-  #wpbody-content > p {
-    margin: 0;
-  }
-
-  // Prevent the footer from overlapping Cluster Tools log messages
-  #wpfooter {
-    position: static;
-  }
-}
-
-// Slug field width in post editor
-#slugdiv #post_name {
-  width: 100%;
-  font-size: 90%;
-}
-
-#distribution-sortables {
-  padding-top: 10px;
-}
-
 // Manage buttons from above the Summary field
 .fm-summary {
   .wp-media-buttons {
     float: right;
     margin-bottom: 4px;
   }
-
 }
 
 // Clean up the Exclude from Home Stream fields
@@ -180,10 +188,6 @@ body.tools_page_pedestal_cluster_tools {
 
 .fm-pedestal_distribution {
   @media screen and ( min-width: 1240px ) {
-    .fm-group-inner {
-      @include clearfix;
-    }
-
     .fm-group-description {
       clear: both;
     }
@@ -202,6 +206,50 @@ body.tools_page_pedestal_cluster_tools {
   }
 }
 
+//
+// Icon Buttons
+// ==========================================================================
+
+// We need to use this obnoxious chained class selector to override WP core styles
+.ped-icon-button.button-secondary {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  color: $body-font-color;
+
+  &,
+  .o-icon {
+    line-height: 32px;
+  }
+
+  .o-icon {
+    margin-left: 1px;
+  }
+
+  &.is-checked {
+    // Use WordPress `.button-secondary:active` styles
+    background: #eeeeee;
+    border-color: #999999;
+    box-shadow: inset 0 2px 5px -3px rgba( $black, 0.5 );
+    transform: translateY( 1px );
+  }
+}
+
+.fm-icon-wrapper,
+.fm-icon_name-wrapper {
+  max-width: 430px;
+
+  .fm-option {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+
+
+//
+// Shortcode UI (Shortcake)
+// ==========================================================================
 
 .shortcode-ui-edit-documentcloud {
   .shortcode-ui-attribute-url input {
@@ -219,7 +267,6 @@ body.tools_page_pedestal_cluster_tools {
 // Posts to Posts Metaboxes
 // ==========================================================================
 
-
 .p2p-box {
   .p2p-tab-create-post,
   .p2p-tab-search {
@@ -232,7 +279,6 @@ body.tools_page_pedestal_cluster_tools {
 // Custom TinyMCE buttons
 // ==========================================================================
 
-
 i.mce-i-insert-post-element::before {
   font-family: 'dashicons';
   font-size: 120%;
@@ -243,7 +289,6 @@ i.mce-i-insert-post-element::before {
 //
 // Schedule Follow Updates Metabox
 // ==========================================================================
-
 
 .pedestal-schedule-follow-updates-metabox {
   .frequency-label {
@@ -272,7 +317,6 @@ i.mce-i-insert-post-element::before {
 //
 // Taxonomies
 // ==========================================================================
-
 
 $advanced-cluster-types: ( 'org', 'place', 'locality' );
 $advanced-cluster-types-selectors: ();

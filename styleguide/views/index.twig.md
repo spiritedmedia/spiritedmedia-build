@@ -27,6 +27,7 @@ address the issue.
 
 - [Buttons](buttons.php)
 - [Colors](colors.php)
+- [Conversion Prompts](conversion-prompts.php)
 - [Forms](forms.php)
 - [Headers](headers.php)
 - [Horizontal Rules](horizontal-rules.php)

@@ -4,22 +4,23 @@
 export default function(e) {
   e.preventDefault();
   var $el                = $(this);
+  var $parent            = $el.parent();
   var $submitBtn         = $el.find('.js-form-submit');
   var $invalidFeedback   = $el.find('.js-fail-message');
   var actionURL          = $el.attr('action');
   var actionUrlSeparator = actionURL.indexOf('?') >= 0 ? '&' : '?';
   actionURL += actionUrlSeparator + $.param({ 'ajax-request': 1 });
 
-  $el.removeClass('is-failed');
-  $el.addClass('is-loading');
+  $parent.removeClass('is-failed').addClass('is-loading');
+  // Clear the aria role alert if the form previously failed
+  $invalidFeedback.removeAttr('role');
 
   $.post(actionURL, $el.serialize(), function() {
     if ($el.find('.js-success-message').length) {
       var $successEmail = $el.find('.js-success-message-email');
       var emailAddress = $el.find('.js-email-input').val();
 
-      $el.removeClass('is-loading');
-      $el.addClass('is-success');
+      $parent.removeClass('is-loading').addClass('is-success');
 
       // Let other functions know a form submission with an email
       // address happened
@@ -34,10 +35,9 @@ export default function(e) {
     }
   }).fail(function(response) {
     var msg = response.responseText;
-    $el.removeClass('is-loading');
-    $el.addClass('is-failed');
+    $parent.removeClass('is-loading').addClass('is-failed');
     if ($invalidFeedback.length && msg.length) {
-      $invalidFeedback.text(msg);
+      $invalidFeedback.attr('role', 'alert').text(msg);
     } else {
       $submitBtn.before(msg);
     }

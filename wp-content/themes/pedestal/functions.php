@@ -19,12 +19,6 @@ use Pedestal\MetricBot\{
     Newsletter_Signups_By_Page_Metric,
     Yesterdays_Email_Metric
 };
-use Pedestal\{
-    Featured_Posts,
-    Icons,
-    Subscribers,
-    Message_Spot
-};
 use Pedestal\Posts\{
     Post,
     Slots
@@ -128,6 +122,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             $constants = apply_filters( 'pedestal_constants', [] );
             $defaults = [
+                'PEDESTAL_API_NAMESPACE' => 'pedestal/v1',
+
                 // Network Details
                 'SPIRITEDMEDIA_LIVE_SITE_URL'    => 'http://spiritedmedia.com',
                 'SPIRITEDMEDIA_STAGING_SITE_URL' => 'http://staging.spiritedmedia.com',
@@ -168,6 +164,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_EMAIL_TIPS'             => '',
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => '',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => '',
+                'PEDESTAL_EMAIL_NEWSLETTER_FROM'  => '',
                 'PEDESTAL_EMAIL_FROM_NAME'        => get_bloginfo( 'name' ),
                 'PEDESTAL_EMAIL_PLACEHOLDER'      => '',
 
@@ -324,7 +321,12 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->cron_management          = Cron_Management::get_instance();
             $this->menus                    = Menus::get_instance();
             $this->menu_icons               = Menu_Icons::get_instance();
+            $this->component_previews       = Component_Previews::get_instance();
+
+            // Messaging
             $this->message_spot             = Message_Spot::get_instance();
+            $this->conversion_prompts       = Conversion_Prompts::get_instance();
+            $this->conversion_prompt_admin  = Conversion_Prompt_Admin::get_instance();
 
             // Metrics
             $this->metricbots                        = MetricBots::get_instance();
@@ -767,12 +769,15 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         }
 
         /**
-         * Filter Timber's default context variables
+         * Setup filtering of Timber's default context variables
          *
-         * Most of this filtering happens in \Pedestal\Frontend but some basic
-         * sitewide variables should be available to Timber across the board.
+         * If a child theme needs to change any of this data, then it should
+         * define its own `filter_timber_context()` method and call
+         * `handle_filter_timber_context()` from there.
          *
-         * This must be called by child themes and not used as a filter directly.
+         * This must not be used as a filter directly. Most of this filtering
+         * happens in \Pedestal\Frontend but some basic sitewide variables
+         * should be available to Timber across the board.
          *
          * @return $context Timber context
          */
@@ -807,14 +812,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             ];
 
             $context['site']->emails = [
-                'contact'                    => PEDESTAL_EMAIL_CONTACT,
-                'news'                       => PEDESTAL_EMAIL_NEWS,
-                'tips'                       => PEDESTAL_EMAIL_TIPS,
-                'placeholder'                => PEDESTAL_EMAIL_PLACEHOLDER,
-                'daily_newsletter_name'      => PEDESTAL_BLOG_NAME . ' Daily',
-                'daily_newsletter_send_time' => '7:00 a.m.',
-                'daily_newsletter_id'        => $this->email_groups->get_newsletter_group_id( 'Daily Newsletter' ),
-                'breaking_newsletter_id'     => $this->email_groups->get_newsletter_group_id( 'Breaking News' ),
+                'contact' => PEDESTAL_EMAIL_CONTACT,
+                'news'    => PEDESTAL_EMAIL_NEWS,
+                'tips'    => PEDESTAL_EMAIL_TIPS,
             ];
 
             $context['site']->live_urls = [
@@ -855,6 +855,16 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
 
             return $context;
+        }
+
+        /**
+         * Filter Timber context
+         *
+         * @param  array $context Timber context
+         * @return array          Filtered Timber context
+         */
+        public function filter_timber_context( $context ) {
+            return self::handle_filter_timber_context( $context );
         }
 
         /**

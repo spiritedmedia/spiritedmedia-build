@@ -1,3 +1,4 @@
+import { debounce, resizeIframe } from 'utils';
 import connectionMetabox from 'connectionMetabox';
 import filterHierarchicalTerms from 'filterHierarchicalTerms';
 import handleEmbedURLChange from 'handleEmbedURLChange';
@@ -64,6 +65,13 @@ import summaryButtons from 'summaryButtons';
       handleEventUI();
       summaryButtons();
 
+      // Handle resizing of responsive iframes on window resize
+      $(window).on('resize', debounce(() => {
+        this.responsiveIframes();
+      }, 300));
+      // And resize the iframes a first time right now
+      this.responsiveIframes();
+
       this.disableDraggingDistributionMetaboxes();
     },
 
@@ -78,7 +86,15 @@ import summaryButtons from 'summaryButtons';
       });
 
       $distSection.find('.postbox .hndle').css('cursor', 'pointer');
-    }
+    },
+
+    /**
+     * Make some iframes responsive
+     */
+    responsiveIframes: function() {
+      const selector = '.pedestal-responsive, .js-responsive-iframe';
+      $(selector).each((i, el) => resizeIframe(el));
+    },
   };
 
   $(document).ready(function() {

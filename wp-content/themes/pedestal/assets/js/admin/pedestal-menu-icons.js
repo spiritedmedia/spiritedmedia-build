@@ -1,9 +1,11 @@
 /* global PedestalIcons */
 
+const icons = PedestalIcons;
+
 jQuery(document).ready(function($) {
   $('.js-pedestal-icon-picker').autocomplete({
     minLength: 0,
-    source: Object.values(PedestalIcons),
+    source: Object.values(icons),
 
     focus: function(e, ui) {
       $(this).val(ui.item.label);

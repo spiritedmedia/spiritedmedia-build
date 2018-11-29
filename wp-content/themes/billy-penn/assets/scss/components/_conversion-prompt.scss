@@ -1,0 +1,43 @@
+.conversion-prompt--emphatic {
+  border-color: $accent-1-color;
+
+  .conversion-prompt__icon,
+  .signup-email__success-icon {
+    color: $accent-2-color;
+  }
+
+  .conversion-prompt__button,
+  .signup-email__button {
+    @include button-color-variant( $brand-1-color );
+
+    .sk-child {
+      background-color:
+        text-contrast(
+          $bg: $brand-1-color,
+          $text-dark: $button-text-color-dark
+        );
+    }
+  }
+
+  .signup-email__input-icon {
+    color: $brand-1-color;
+  }
+}
+
+.conversion-prompt--screamer {
+  border-color: $accent-2-color;
+
+  .conversion-prompt__icon,
+  .signup-email__success-icon {
+    color: $brand-1-color;
+  }
+
+  .conversion-prompt__button,
+  .signup-email__button {
+    @include button-color-variant( $accent-1-color );
+  }
+
+  .signup-email__input-icon {
+    color: $accent-1-color;
+  }
+}

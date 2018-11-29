@@ -198,6 +198,14 @@
         $bg: $bg-color,
         $text-dark: $button-text-color-dark
       );
+
+    .sk-child {
+      background-color:
+        text-contrast(
+          $bg: $bg-color,
+          $text-dark: $button-text-color-dark
+        );
+    }
   }
 }
 

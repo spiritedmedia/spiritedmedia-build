@@ -72,7 +72,6 @@ class Message_Spot {
      * Set up actions
      */
     protected function setup_actions() {
-        add_action( 'init', [ $this, 'action_init_register_rewrites' ] );
         add_action( 'init', [ $this, 'action_init_after_post_types_registered' ], 11 );
         add_action(
             'admin_print_scripts-appearance_page_pedestal_message_spot',
@@ -88,13 +87,6 @@ class Message_Spot {
      * Set up filters
      */
     protected function setup_filters() {
-        add_filter( 'query_vars', function( $query_vars ) {
-            $query_vars[] = 'pedestal-api';
-            $query_vars[] = 'component-name';
-            $query_vars[] = 'component-id';
-            return $query_vars;
-        });
-        add_filter( 'template_include', [ $this, 'filter_template_include' ] );
         add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
         add_filter( 'pre_update_option_pedestal_message_spot', [ $this, 'filter_pre_update_option' ], 10, 2 );
     }
@@ -111,22 +103,10 @@ class Message_Spot {
             true
         );
 
-        $icons = Icons::get_all_icons_svg();
-        wp_localize_script( 'pedestal-message-spot', 'PedestalIcons', $icons );
         $preview_url = home_url() . '/api/component-preview/message-spot/';
         wp_localize_script( 'pedestal-message-spot', 'pedestalPreviewURL', $preview_url );
         wp_localize_script( 'pedestal-message-spot', 'messagePreviewDefaults', self::$model_defaults );
-    }
-
-    /**
-     * Set up rewrites for the component preview
-     */
-    public function action_init_register_rewrites() {
-        add_rewrite_rule(
-            'api/component-preview/([^/]+)/([^/]+)/?$',
-            'index.php?pedestal-api=component-preview&component-name=$matches[1]&component-id=$matches[2]',
-            'top'
-        );
+        wp_localize_script( 'pedestal-message-spot', 'PedestalIcons', Icons::get_all_icons_svg() );
     }
 
     /**
@@ -201,7 +181,7 @@ class Message_Spot {
             'extra_elements'    => 0,
             'collapsible'       => true,
             'collapsed'         => true,
-            'label_macro'    => [
+            'label_macro'       => [
                 '%s',
                 'body',
             ],
@@ -211,7 +191,7 @@ class Message_Spot {
                     'validation_rules'    => 'required',
                     'validation_messages' => 'Required',
                     'default_value'       => 'standard',
-                    'options'           => [
+                    'options'             => [
                         'standard'    => 'Text Paragraph',
                         'with_title'  => 'With Title',
                         'with_button' => 'With Button',
@@ -339,26 +319,6 @@ class Message_Spot {
         ];
         wp_send_json_success( $value );
         die();
-    }
-
-    /**
-     * Load the component preview template
-     *
-     * @param string $template
-     * @return string Template path (maybe modified)
-     */
-    public function filter_template_include( $template ) {
-        if ( 'component-preview' == get_query_var( 'pedestal-api' ) ) {
-            $template_path = sprintf(
-                'component-previews/%s.php',
-                get_query_var( 'component-name' )
-            );
-            $new_template = locate_template( $template_path );
-            if ( ! empty( $new_template ) ) {
-                return $new_template;
-            };
-        }
-        return $template;
     }
 
     /**

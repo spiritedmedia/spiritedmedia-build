@@ -1,86 +1,6 @@
-.signup-email__btn {
+.signup-email__button {
   @include button( 'oval', $include-base-styles: false );
 }
-
-@media #{$medium-up} {
-  .signup-email__header,
-  .signup-email__details {
-    text-align: left;
-  }
-
-  .signup-email__title {
-    // stylelint-disable-next-line selector-max-type
-    br {
-      display: none;
-    }
-  }
-
-  // stylelint-disable-next-line selector-max-type
-  .signup-email__success-message p {
-    text-align: left;
-  }
-}
-
-
-//
-// Daily Newsletter + Breaking News Signup
-// ==========================================================================
-
-.signup-email--daily {
-  border-radius: rem( 4px );
-
-  .signup-email__title {
-    font-family: $font-family-serif;
-    font-weight: 600;
-  }
-
-  .signup-email__btn {
-    @include button-color-variant( $brand-2-color );
-  }
-
-  .signup-email__input-icon {
-    color: $brand-2-color;
-  }
-}
-
-.signup-email--daily {
-  &.signup-email--emphatic {
-    border-color: $brand-1-color;
-
-    .signup-email__icon {
-      color: $brand-2-color;
-    }
-
-    .signup-email__btn {
-      @include button-color-variant( $brand-1-color );
-    }
-
-    .signup-email__input-icon {
-      color: $brand-1-color;
-    }
-  }
-}
-
-.signup-email--daily {
-  &.signup-email--screamer {
-    border-color: $accent-2-color;
-
-    .signup-email__icon {
-      color: $brand-2-color;
-    }
-
-    .signup-email__btn {
-      @include button-color-variant( $accent-1-color );
-      color: $brand-2-color;
-    }
-
-    .signup-email__input-icon {
-      color: $accent-1-color;
-    }
-  }
-}
-
-
 
 //
 // Follow Cluster Signup
@@ -96,8 +16,8 @@
   }
   // stylelint-enable selector-max-type
 
-  .signup-email__btn {
+  .signup-email__button {
     font-weight: 600;
     @include button-color-variant( $white );
   }
-} // end .signup-email--cluster
+}

@@ -1,6 +1,6 @@
 /* global PedVars, localStorageCookie */
 
-import { getURLParams } from 'PedUtils';
+import { getURLParams } from 'utils';
 
 /**
  * Subscriber functionality for the frontend
@@ -93,8 +93,10 @@ export default class Subscriber {
    * Make an AJAX request to fetch data from the server
    * @param  {String} id MailChimp Unique ID or email address to
    * pass to server
+   * @param {Boolean} Whether to trigger the ready event that other
+   * code can hook into
    */
-  fetchData(id) {
+  fetchData(id, triggerReadyEvent = true) {
     var ajaxData = {
       action: 'get_subscriber_data',
       subscriberID: id
@@ -105,7 +107,9 @@ export default class Subscriber {
         return;
       }
       localStorageCookie(storageKey, resp.data);
-      this.triggerEvent('ready', resp.data);
+      if (triggerReadyEvent) {
+        this.triggerEvent('ready', resp.data);
+      }
     });
   }
 
@@ -118,7 +122,7 @@ export default class Subscriber {
     if (!('emailAddress' in data)) {
       return;
     }
-    this.fetchData(data.emailAddress);
+    this.fetchData(data.emailAddress, false);
   }
 
   /**

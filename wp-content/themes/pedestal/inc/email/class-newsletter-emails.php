@@ -11,8 +11,6 @@ use Pedestal\Posts\{
     Newsletter
 };
 
-use Pedestal\Registrations\Post_Types\Types;
-
 use Pedestal\Objects\MailChimp;
 
 use Pedestal\Email\{
@@ -42,26 +40,6 @@ class Newsletter_Emails {
         add_action( 'add_meta_boxes', [ $this, 'action_add_meta_boxes' ], 10, 2 );
         add_action( 'save_post', [ $this, 'action_save_post_maybe_send_email' ], 100 );
         add_action( 'pedestal_email_tester_newsletter', [ $this, 'action_pedestal_email_tester' ] );
-
-        // Render the newsletter signup form after the 3rd item in a stream
-        add_action( 'pedestal_after_stream_item_3', function() {
-            $ignore_post_types = Types::get_original_post_types();
-            $ignore_post_types[] = 'pedestal_story';
-            if ( is_singular( $ignore_post_types ) ) {
-                return;
-            }
-            $signup_source = 'Other stream';
-            if ( is_home() ) {
-                $signup_source = 'Homepage stream';
-            }
-
-            $signup_form = self::get_signup_form([
-                'signup_source' => $signup_source,
-            ]);
-            echo '<div class="stream-item stream-item--signup-email signup-email--daily signup-email--emphatic">';
-            echo $signup_form;
-            echo '</div>';
-        } );
 
         add_action( 'admin_footer', function() {
             $post = get_post();
@@ -303,18 +281,16 @@ class Newsletter_Emails {
             'ga_action'            => 'subscribe',
             'signup_source'        => '',
 
-            'icon'                 => Icons::get_icon( 'envelope-slant' ),
             'input_icon_name'      => 'envelope-o',
             'input_icon'           => '',
-            'success_icon'         => Icons::get_icon( 'check' ),
+            'success_icon_name'    => 'check',
+            'success_icon'         => '',
 
             'name'                 => PEDESTAL_BLOG_NAME,
-            'title'                => '',
-            'body'                 => '',
             'button_text'          => 'Sign Up',
 
-            'sender_email_address' => PEDESTAL_EMAIL_NEWS,
-            'send_time'            => '7:00 a.m.',
+            'sender_email_address' => PEDESTAL_EMAIL_NEWSLETTER_FROM,
+            'send_time'            => '7:30 a.m.',
 
             'group_ids'            => [
                 $email_groups->get_newsletter_group_id( 'Daily Newsletter' ),
@@ -334,6 +310,10 @@ class Newsletter_Emails {
 
         if ( empty( $context['input_icon'] ) && ! empty( $context['input_icon_name'] ) ) {
             $context['input_icon'] = Icons::get_icon( $context['input_icon_name'], 'signup-email__input-icon input-group__addon' );
+        }
+
+        if ( empty( $context['success_icon'] ) && ! empty( $context['success_icon_name'] ) ) {
+            $context['success_icon'] = Icons::get_icon( $context['success_icon_name'] );
         }
 
         ob_start();

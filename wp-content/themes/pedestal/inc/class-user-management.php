@@ -275,9 +275,10 @@ class User_Management {
         $caps_admin_reporters = array_map( '__return_true', $caps_admin_reporters );
         $caps_admin = $caps_admin_reporters + $caps_sales_manager;
         $caps_admin += [
-            'create_users'      => true,
-            'merge_clusters'    => true,
-            'manage_categories' => true,
+            'create_users'              => true,
+            'merge_clusters'            => true,
+            'manage_categories'         => true,
+            'manage_conversion_prompts' => true,
         ];
         $caps_admin = array_map( '__return_true', $caps_admin );
         $this->merge_role_caps( 'administrator', $caps_admin );

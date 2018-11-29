@@ -21,17 +21,8 @@ h2.styleguide {
         </select>
     </p>
 
-    <p>
-        <label for="color-change">Change Colors:</label>
-        <select id="color-change">
-            <option value="">Subtle</option>
-            <option value="emphatic">Emphatic</option>
-            <option value="screamer">Screamer</option>
-        </select>
-    </p>
-
     <h2 class="styleguide">Newsletter Prompt</h2>
-    <div class="signup-email--daily signup-email">
+    <div class="signup-email">
         {{ default_inline_prompt }}
     </div>
 
@@ -46,18 +37,8 @@ h2.styleguide {
             $('#state-change').on('change', function(e) {
                 var newClass = $(this).val();
                 $('.js-signup-email-form')
+                    .parent()
                     .removeClass('is-loading is-success is-failed')
-                    .addClass(newClass);
-            });
-
-            $('#color-change').on('change', function(e) {
-                var val = $(this).val();
-                var newClass = '';
-                if ( val.length > 0 ) {
-                    newClass = 'signup-email--' + val;
-                }
-                $('.signup-email')
-                    .removeClass('signup-email--emphatic signup-email--screamer')
                     .addClass(newClass);
             });
         });

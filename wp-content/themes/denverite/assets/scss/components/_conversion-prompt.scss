@@ -1,0 +1,56 @@
+.conversion-prompt {
+  border-radius: rem( 4px );
+}
+
+.conversion-prompt__title {
+  font-family: $font-family-serif;
+  font-weight: 600;
+}
+
+.conversion-prompt__button,
+.conversion-prompt .signup-email__button {
+  @include button( 'oval', $include-base-styles: false );
+  @include button-color-variant( $brand-2-color );
+}
+
+.conversion-prompt .signup-email__input-icon {
+  color: $brand-2-color;
+}
+
+
+.conversion-prompt--emphatic {
+  border-color: $brand-1-color;
+
+  .conversion-prompt__icon,
+  .signup-email__success-icon {
+    color: $brand-2-color;
+  }
+
+  .conversion-prompt__button,
+  .signup-email__button {
+    @include button-color-variant( $brand-1-color );
+  }
+
+  .signup-email__input-icon {
+    color: $brand-1-color;
+  }
+}
+
+.conversion-prompt--screamer {
+  border-color: $accent-2-color;
+
+  .conversion-prompt__icon,
+  .signup-email__success-icon {
+    color: $brand-2-color;
+  }
+
+  .conversion-prompt__button,
+  .signup-email__button {
+    @include button-color-variant( $accent-1-color );
+    color: $brand-2-color;
+  }
+
+  .signup-email__input-icon {
+    color: $accent-1-color;
+  }
+}

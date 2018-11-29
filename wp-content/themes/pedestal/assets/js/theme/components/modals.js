@@ -1,6 +1,6 @@
 // NOTE: Requires markup found in /views/partials/modals/modal.twig
 
-import { focusAtEnd } from 'PedUtils';
+import { focusAtEnd } from 'utils';
 
 var $body = $('body');
 $body.addClass('has-closed-modal');

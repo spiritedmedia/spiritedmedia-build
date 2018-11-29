@@ -1,0 +1,74 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block head %}
+{# Custom styles for this page #}
+<style>
+  .example {
+      margin-bottom: 45px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+    <p>
+        <label for="state-change">Change Form State:</label>
+        <select id="state-change">
+            <option value="">--</option>
+            <option value="is-loading">Loading</option>
+            <option value="is-success">Success</option>
+            <option value="is-failed">Failed</option>
+        </select>
+    </p>
+
+    <p>
+        <label for="color-change">Change Prompt Colors:</label>
+        <select id="color-change">
+            <option value="">Subtle</option>
+            <option value="emphatic">Emphatic</option>
+            <option value="screamer">Screamer</option>
+        </select>
+    </p>
+
+    <div class="example">
+        {{ prompt_with_signup_form }}
+    </div>
+
+    <div class="example">
+        {{ basic_prompt }}
+    </div>
+
+    <div class="example">
+        {{ no_icon_prompt }}
+    </div>
+
+    <div class="example">
+        {{ no_title_prompt }}
+    </div>
+
+    <script>
+        jQuery(document).ready(function($) {
+            $('#state-change').on('change', function(e) {
+                var newClass = $(this).val();
+                $('.js-signup-email-form')
+                    .parent()
+                    .removeClass('is-loading is-success is-failed')
+                    .addClass(newClass);
+            });
+
+            $('#color-change').on('change', function(e) {
+                var val = $(this).val();
+                var newClass = '';
+                if ( val.length > 0 ) {
+                    newClass = 'conversion-prompt--' + val;
+                }
+                $('.conversion-prompt')
+                    .removeClass('conversion-prompt--emphatic conversion-prompt--screamer')
+                    .addClass(newClass);
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block sidebar %}
+    {# Silence is golden! #}
+{% endblock %}

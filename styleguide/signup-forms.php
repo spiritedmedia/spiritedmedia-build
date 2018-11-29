@@ -31,19 +31,13 @@ if ( ! empty( $stories->posts ) ) {
     }
 }
 
-$shortcode_args = [
-    'input_icon_name' => 'at-symbol',
-    'title'           => '',
-    'icon'            => '',
-    'body'            => '',
-    'success_icon'    => Icons::get_icon( 'heart' ),
-];
+$shortcode_prompt = do_shortcode( '[pedestal-email-signup-form ga_category="newsletter-page" signup_source="Newsletter page" /]' );
 
 $context = [
     'default_inline_prompt'   => Newsletter_Emails::get_signup_form(),
 
     'shortcode_url'           => get_site_url() . '/newsletter-signup/',
-    'shortcode_inline_prompt' => '<div class="signup-email--shortcode">' . Newsletter_Emails::get_signup_form( $shortcode_args ) . '</div>',
+    'shortcode_inline_prompt' => '<div class="signup-email--shortcode">' . $shortcode_prompt . '</div>',
 
     'cluster_url'             => get_permalink( $cluster_id ),
     'cluster_prompt'          => '<div class="signup-email--cluster signup-email">' . $cluster_prompt . '</div>',

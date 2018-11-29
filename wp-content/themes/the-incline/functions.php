@@ -89,6 +89,7 @@ class The_Incline extends Pedestal {
                 'PEDESTAL_EMAIL_TIPS'             => 'tips@theincline.com',
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => 'billypennnews',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => 'gmail.com',
+                'PEDESTAL_EMAIL_NEWSLETTER_FROM'  => 'news@theincline.com',
                 'PEDESTAL_EMAIL_PLACEHOLDER'      => 'the.incline@example.org',
 
                 // Slack
@@ -107,38 +108,9 @@ class The_Incline extends Pedestal {
 
         // Configure newsletter signup form
         add_filter( 'pedestal_newsletter_signup_form_args', function( $args = [] ) {
-            $args['title'] = 'Start every day <span class="u-nowrap">with The Incline</span>';
-            $args['body'] = '<p>Our free morning newsletter helps you plan your day and better understand Pittsburgh &mdash; because <span class="u-nowrap">we love this city, too.</span></p>';
-            $args['icon'] = Icons::get_icon( 'coffee' );
-            $args['send_time'] = '6:30 a.m.';
-
-            if ( is_singular() && Types::is_entity( get_post_type() ) ) {
-                $args['title'] = 'We love you, Pittsburgh.';
-                $args['body'] = '<p>Looks like you\'re the type of person who reads to the end <span class="u-nowrap">of articles.</span></p> <p>Because you love learning about Pittsburgh, you need our free morning newsletter, full of useful news, can’t-miss events, and everything else you need to know about our city.</p>';
-                $args['icon'] = Icons::get_icon( 'heart' );
-            }
+            $args['send_time'] = '6:00 a.m.';
             return $args;
         } );
-    }
-
-    /**
-     * Filter Timber context
-     *
-     * @param  array $context Timber context
-     * @return array          Filtered Timber context
-     */
-    public function filter_timber_context( $context ) {
-        $context = parent::handle_filter_timber_context( $context );
-        $context['pages'] = [
-            'about' => [
-                'statement' => [
-                    'body'     => esc_html__( 'Elevating news in Pittsburgh', 'pedestal' ),
-                ],
-            ],
-        ];
-        $context['site']->emails['daily_newsletter_send_time'] = '6:30 a.m.';
-        $context['member_bar_text'] = 'Expect the best for Pittsburgh. Become a member of <em>The Incline</em> today.';
-        return $context;
     }
 
     /**

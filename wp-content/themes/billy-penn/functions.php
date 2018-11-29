@@ -91,6 +91,7 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_EMAIL_TIPS'             => 'tips@billypenn.com',
                 'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => 'billypennnews',
                 'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => 'gmail.com',
+                'PEDESTAL_EMAIL_NEWSLETTER_FROM'  => 'contact@billypenn.com',
                 'PEDESTAL_EMAIL_PLACEHOLDER'      => 'william.penn@example.org',
 
                 // Slack
@@ -115,42 +116,6 @@ class Billy_Penn extends Pedestal {
             $context['submit_text'] = 'Take my money!';
             return $context;
         } );
-
-        // Configure newsletter signup form
-        add_filter( 'pedestal_newsletter_signup_form_args', function( $args = [] ) {
-            $args['title'] = 'Start your day informed <span class="u-nowrap">with Billy Penn</span>';
-            $args['body'] = '<p>Our quick morning newsletter recaps the interesting, important and exciting things you need to know about Philly. It’s the easy way to stay <span class="u-nowrap">on top of local news.</span></p>';
-            $args['icon'] = Icons::get_icon( 'sun' );
-
-            if ( is_singular() && Types::is_entity( get_post_type() ) ) {
-                $args['title'] = 'Thanks for reading all the way.';
-                $args['body'] = '<p>Seems you\'re the kind of person who really digs in. Want more? Get an update direct to your inbox each morning, with everything you need to stay on top of Philly news.</p>';
-                $args['icon'] = Icons::get_icon( 'heart' );
-            }
-            return $args;
-        } );
-    }
-
-    /**
-     * Filter Timber context
-     *
-     * @param  array $context Timber context
-     * @return array          Filtered Timber context
-     */
-    public function filter_timber_context( $context ) {
-        $context = parent::handle_filter_timber_context( $context );
-        $context['pages'] = [
-            'about' => [
-                'statement' => [
-                    'body'     => esc_html__( 'Knowledge is the treasure of a wise man.', 'pedestal' ),
-                    'speaker'  => 'William Penn',
-                    'is_quote' => true,
-                ],
-            ],
-        ];
-        $context['member_bar_text'] = 'Love this city as much as we do? Become a Billy Penn member today.';
-        $context['site']->emails['daily_newsletter_name'] = PEDESTAL_BLOG_NAME;
-        return $context;
     }
 
     /**

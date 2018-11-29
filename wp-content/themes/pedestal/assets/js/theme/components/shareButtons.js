@@ -1,4 +1,4 @@
-import { throttle } from 'PedUtils';
+import { throttle } from 'utils';
 
 function ShareButtons($) {
   this.result = false;

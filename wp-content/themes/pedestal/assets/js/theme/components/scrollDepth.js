@@ -1,4 +1,4 @@
-import { capFirst, throttle, toCamelCase } from 'PedUtils';
+import { capFirst, throttle, toCamelCase } from 'utils';
 
 /**
  * Scroll Depth

@@ -1,0 +1,121 @@
+.appearance_page_pedestal_message_spot,
+.appearance_page_pedestal_conversion_prompts {
+  .fm-option {
+    display: inline-block;
+    margin-right: 16px;
+  }
+
+  .fm-preview-wrapper {
+    clear: both;
+  }
+
+  // "Message" label should sit snugly above the editor, not hovering far above
+  .fm-richtext .fm-label {
+    float: left;
+    margin-bottom: 0;
+    margin-top: 8px;
+  }
+
+
+  @media #{$wp-admin-bar-breakpoint} {
+    .fm-button_label-wrapper,
+    .fm-button_text-wrapper,
+    .fm-button_url-wrapper,
+    .fm-url-wrapper {
+      float: left;
+    }
+  }
+}
+
+
+
+
+//
+// Message Spot
+// ==========================================================================
+
+.fm-pedestal_message_spot {
+  // stylelint-disable-next-line selector-max-type
+  .fm-label-messages p {
+    margin: 0;
+  }
+
+  .fm-messages-wrapper {
+    .fm-icon-wrapper {
+      clear: both;
+    }
+
+    .fm-url-wrapper {
+      margin-right: 32px;
+    }
+  }
+
+  .message-preview-container {
+    height: 80px;
+    width: 320px;
+    margin: 8px 0;
+  }
+
+  .message-preview-container--large {
+    width: 100%;
+  }
+
+  /*iframe*/.message-preview {
+    width: 100%;
+    height: 100%;
+
+    // https://caniuse.com/#search=focus-within
+    &:focus-within {
+      @include native-outline;
+    }
+  }
+
+
+  @media #{$wp-admin-bar-breakpoint} {
+    .fm-messages-wrapper {
+      .fm-title-wrapper {
+        float: left;
+      }
+    }
+  }
+}
+
+
+.fm-override-wrapper {
+  .fm-enabled-wrapper {
+    .fm-item-description {
+      font-style: normal;
+      color: #444444;
+    }
+  }
+}
+
+
+//
+// Conversion Prompts
+// ==========================================================================
+
+.fm-pedestal_conversion_prompts {
+  .message-preview-container {
+    width: 645px;
+    max-width: 100%;
+  }
+
+
+  @media #{$wp-admin-bar-breakpoint} {
+    .fm-icon_name-wrapper {
+      float: left;
+    }
+
+    .fm-title-wrapper,
+    .fm-button_text-wrapper {
+      margin-right: 32px;
+    }
+
+    .fm-body-wrapper {
+      clear: both;
+    }
+  }
+} // end .fm-pedestal_conversion_prompts
+
+

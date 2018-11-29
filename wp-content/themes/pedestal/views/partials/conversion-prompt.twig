@@ -1,0 +1,31 @@
+<div class="conversion-prompt {{ style_class|esc_attr }} {{ target_audience_class|esc_attr }}">
+    <div class="conversion-prompt__inner">
+
+        <div class="conversion-prompt__the-prompt">
+            <div class="conversion-prompt__header">
+                {{ icon }}
+
+                <h2 class="conversion-prompt__title">
+                    {{ title }}
+                </h2>
+            </div>
+
+            {{ body }}
+
+            {% if not signup_form and button_url and button_text %}
+                <div class="conversion-prompt__button-container">
+                    <a
+                        class="conversion-prompt__button"
+                        href="{{ button_url|esc_url }}"
+                        data-ga-category="inline-prompt"
+                        data-ga-label="{{ target_audience|esc_attr }}"
+                    >
+                        {{ button_text }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        {{ signup_form }}
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import 'foundation-sites/js/foundation/foundation';
-import { focusAtEnd } from 'PedUtils';
+import { focusAtEnd } from 'utils';
 
 import handleAnalytics from 'analytics';
 import handleDonateForm from 'donateForm';
@@ -10,13 +10,15 @@ import handleShareButtons from 'shareButtons';
 import handleSubscriptionForms from 'subscriptionForms';
 
 import Subscriber from 'Subscriber';
+import handleConversionPromptTargeting from 'conversionPrompts';
 
 (function($) {
 
   var Pedestal = {
 
     init: function() {
-      $(document).foundation();
+      var $document = $(document);
+      $document.foundation();
       $('html').removeClass('no-js').addClass('js');
 
       handleAnalytics();
@@ -26,6 +28,7 @@ import Subscriber from 'Subscriber';
       handleShareButtons();
 
       this.Subscriber = new Subscriber;
+      $document.on('pedSubscriber:ready', handleConversionPromptTargeting);
 
       $('.js-signup-email-form').on('submit', handleSubscriptionForms);
       $('.content-wrapper').on(
@@ -33,46 +36,8 @@ import Subscriber from 'Subscriber';
       );
       focusAtEnd($('#search-standalone-input'));
 
-      this.handleWindowResize();
-      this.responsiveIframes();
       this.disabledAnchors();
       this.honeyPotHelper();
-    },
-
-    /**
-     * Handle window resizing
-     */
-    handleWindowResize: function() {
-      var delayedResizeTimer = false;
-      $(window).resize(() => {
-        if (delayedResizeTimer) {
-          clearTimeout(delayedResizeTimer);
-        }
-        delayedResizeTimer = setTimeout(() => {
-          this.responsiveIframes();
-        }, 30);
-      });
-    },
-
-    /**
-     * Make some iframes responsive
-     */
-    responsiveIframes: function() {
-      $('.pedestal-responsive').each(function() {
-        var el          = $(this);
-        var parentWidth = el.parent().width();
-
-        // Inside an iframe
-        if (window.self !== window.top) {
-          parentWidth = parent.innerWidth;
-        }
-
-        var trueHeight = el.data('true-height') ? el.data('true-height') : 360;
-        var trueWidth = el.data('true-width') ? el.data('true-width') : 640;
-        var newHeight = (parentWidth / trueWidth) * trueHeight;
-        $(this).css('height', newHeight + 'px')
-          .css('width', parentWidth + 'px');
-      });
     },
 
     /**

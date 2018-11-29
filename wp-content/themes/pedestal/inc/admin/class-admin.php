@@ -11,6 +11,7 @@ use Pedestal\Posts\Attachment;
 use Pedestal\Posts\Entities\Embed;
 use Pedestal\Posts\Slots\Slots;
 use Pedestal\Posts\Clusters\Person;
+use Pedestal\Icons;
 
 /**
  * Encapsulates customizations for the WordPress admin
@@ -44,6 +45,7 @@ class Admin {
 
         // Needs to happen after post types are registered
         add_action( 'init', [ $this, 'action_init_after_post_types_registered' ], 11 );
+
         add_action( 'admin_enqueue_scripts', [ $this, 'action_admin_enqueue_scripts' ], 11 );
         add_action( 'admin_menu', [ $this, 'action_admin_menu_late' ], 100 );
 

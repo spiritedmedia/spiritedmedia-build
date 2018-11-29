@@ -1,0 +1,103 @@
+.conversion-prompt {
+  border: rem( 4px ) solid $gray-color;
+  padding: rem( 16px ) rem( 12px );
+  text-align: center;
+
+  .is-success .conversion-prompt__the-prompt {
+    display: none;
+  }
+
+  .c-main__footer & {
+    margin-bottom: rem( 32px );
+  }
+}
+
+.conversion-prompt__header {
+  margin-bottom: rem( 12px );
+}
+
+.conversion-prompt__title,
+.conversion-prompt__icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.conversion-prompt__icon,
+.conversion-prompt .signup-email__success-icon {
+  color: $accent-2-color;
+}
+
+.conversion-prompt__icon {
+  font-size: rem( 30px );
+  line-height: 0;
+  margin-bottom: rem( 8px );
+  margin-right: rem( 8px );
+
+}
+
+.conversion-prompt__title {
+  margin-bottom: 0;
+  font-size: rem( 20px );
+  line-height: 1.25;
+}
+
+.conversion-prompt__button-container {
+  text-align: center;
+}
+
+.conversion-prompt__button,
+.conversion-prompt .signup-email__button {
+  text-transform: uppercase;
+  @include button( $include-base-styles: true );
+  @include button-color-variant( $accent-1-color );
+}
+
+.conversion-prompt .signup-email__input-icon {
+  color: $accent-1-color;
+}
+
+@media #{$medium-up} {
+  .conversion-prompt {
+    padding: rem( 32px );
+    text-align: left;
+  }
+
+  .conversion-prompt__header {
+    margin-bottom: rem( 16px );
+  }
+
+  .conversion-prompt__icon,
+  .conversion-prompt__title {
+    width: auto;
+  }
+
+  .conversion-prompt__icon {
+    margin-bottom: 0;
+  }
+
+  .conversion-prompt__button-container {
+    padding-top: rem( 16px );
+  }
+}
+
+
+//
+// Audience Targeting
+// ==========================================================================
+
+.conversion-prompt[class*="target-audience--"] {
+  display: none;
+
+  // The component should always display when loaded as a preview
+  .pedestal-component-preview & {
+    display: block;
+  }
+}
+
+.is-target-audience--unidentified .target-audience--unidentified,
+.is-target-audience--subscriber .target-audience--subscriber,
+.is-target-audience--donor .target-audience--donor,
+.is-target-audience--member .target-audience--member {
+  display: block;
+}

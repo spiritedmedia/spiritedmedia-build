@@ -1,26 +1,11 @@
-/* global PedestalIcons, Twig, jQuery */
-
-import { genStr } from 'PedUtils';
-import { StandardMessage, OverrideMessage, iconButtons } from 'MessageSpot';
+import { genStr } from 'utils';
+import StandardMessage from 'Messaging/MessageSpot/StandardMessage';
+import OverrideMessage from 'Messaging/MessageSpot/OverrideMessage';
 
 jQuery(document).ready(function($) {
-  // Set up the `ped_icon()` Twig function
-  Twig.extendFunction('ped_icon', function(name, classes) {
-    name = name.trim();
-    if (!PedestalIcons.hasOwnProperty(name)) {
-      throw (`[Message Spot] The icon "${name}" doesn't seem to exist!`);
-    }
-    const $icon = $(PedestalIcons[name].svg);
-    $icon.addClass(classes);
-    return $icon[0].outerHTML;
-  });
-
-  // Set up the icon buttons for the proto element and the existing messages
-  $('.fm-icon .fm-option .fm-element').each((i, el) => iconButtons(el));
-
   // Set up existing messages
-  $('.fm-message:not(.fmjs-proto) .fm-group-label-wrapper').each(function() {
-    new StandardMessage($(this).parent());
+  $('.fm-message:not(.fmjs-proto)').each(function() {
+    new StandardMessage($(this));
   });
 
   // Set up newly created messages as they're created

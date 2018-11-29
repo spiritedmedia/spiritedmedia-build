@@ -71,11 +71,7 @@
 
         {% include 'partials/entity-circulation.twig' %}
 
-        {% if newsletter_signup_prompt %}
-            <div class="signup-email--daily signup-email--{{ newsletter_prompt_style|esc_attr }} signup-email">
-                {{ newsletter_signup_prompt }}
-            </div>
-        {% endif %}
+        {{ conversion_prompts }}
 
         {{ cluster_list }}
 

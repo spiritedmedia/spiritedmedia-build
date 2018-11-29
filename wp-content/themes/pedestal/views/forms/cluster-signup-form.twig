@@ -8,7 +8,7 @@
     {% endif %}
 >
 
-    <div class="signup-email__form__inner form-group">
+    <div class="signup-email__inner form-group">
 
         {% if title %}
             <div class="signup-email__header">
@@ -19,6 +19,8 @@
         {% endif %}
 
         {% include 'partials/email-forms/form-honeypot.twig' %}
+
+        <div class="js-fail-message invalid-feedback">Something went wrong!</div>
 
         <div class="signup-email__input-group input-group">
             <label for="{{ id_email_input|esc_attr }}" class="invisible">
@@ -42,17 +44,15 @@
         <input type="hidden" name="signup-source" value="{{ signup_source|esc_attr }}">
         <input type="hidden" name="signup-form-nonce" value="{{ nonce|esc_attr }}">
 
-        <button class="signup-email__btn btn--oval js-form-submit" type="submit">
+        <button class="signup-email__button js-form-submit" type="submit">
             <span class="signup-email__submit-text js-form-submit-text">{{ button_text }}</span>
             <div class="form-submit__loader js-form-submit-loader">{% include 'partials/loading.twig' %}</div>
         </button>
 
     </div>
 
-    <div class="js-fail-message invalid-feedback">Something went wrong!</div>
-
     <div class="signup-email__success-message success-message js-success-message">
-        <div class="signup-email__success-message__details">
+        <div class="signup-email__success-details">
             <p><strong>Thank you.</strong></p>
             <p>You can unsubscribe anytime from a link at the bottom of every email.</p>
         </div>

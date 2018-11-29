@@ -5,6 +5,7 @@ use Pedestal\Message_Spot;
 
 add_filter( 'show_admin_bar', '__return_false' );
 
+// The full context is necessary to set up the page
 $context = Timber::get_context();
 
 $message = [];

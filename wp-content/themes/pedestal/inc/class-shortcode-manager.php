@@ -759,12 +759,12 @@ class Shortcode_Manager {
      */
     public function email_signup_form( $attrs ) {
         $args = [
-            'input_icon_name' => 'at-symbol',
-            'title'           => '',
-            'icon'            => '',
-            'body'            => '',
-            'success_icon'    => Icons::get_icon( 'heart' ),
-            'ga_label'        => 'signup-form',
+            'input_icon_name'   => 'at-symbol',
+            'success_icon_name' => 'heart',
+            'title'             => '',
+            'icon'              => '',
+            'body'              => '',
+            'ga_label'          => 'signup-form',
         ];
         if ( ! empty( $attrs['ga_category'] ) ) {
             $args['ga_category']   = $attrs['ga_category'];

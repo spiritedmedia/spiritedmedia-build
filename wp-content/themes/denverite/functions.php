@@ -141,6 +141,7 @@ class Denverite extends Pedestal {
                 'PEDESTAL_EMAIL_CONTACT'          => 'contact@denverite.com',
                 'PEDESTAL_EMAIL_NEWS'             => 'news@denverite.com',
                 'PEDESTAL_EMAIL_TIPS'             => 'tips@denverite.com',
+                'PEDESTAL_EMAIL_NEWSLETTER_FROM'  => 'tips@denverite.com',
 
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#den-botcountry',
@@ -184,41 +185,9 @@ class Denverite extends Pedestal {
 
         // Configure newsletter signup form
         add_filter( 'pedestal_newsletter_signup_form_args', function( $args = [] ) {
-            $args['title'] = 'Denverite goes great <span class="u-nowrap">with mornings</span>';
-            $args['body'] = '<p>If you’re here, you care about Denver. Our quick, newsy (and sometimes a little funny) morning newsletter is for people like you, <span class="u-nowrap">by people like you.</span></p>';
-            $args['icon'] = Icons::get_icon( 'coffee' );
             $args['send_time'] = '7:20 a.m.';
-
-            if ( is_singular() && Types::is_entity( get_post_type() ) ) {
-                $args['title'] = 'You\'re paying attention';
-                $args['body'] = '<p>Now take the next step. Know the most important (and most fun) stuff going on in Denver and Colorado&mdash;get the Denverite newsletter. It\'s quick, free and delightful.</p>';
-                $args['icon'] = Icons::get_icon( 'check' );
-            }
             return $args;
         } );
-    }
-
-    /**
-     * Filter Timber context
-     *
-     * @param  array $context Timber context
-     * @return array          Filtered Timber context
-     */
-    public function filter_timber_context( $context ) {
-        $context = parent::handle_filter_timber_context( $context );
-        $context['pages'] = [
-            'about' => [
-                'statement' => [
-                    'body'     => esc_html__( 'Knowledge is the treasure of a wise man.', 'pedestal' ),
-                    'speaker'  => 'William Penn',
-                    'is_quote' => true,
-                ],
-            ],
-        ];
-        $context['member_bar_text'] = 'Become a member and be a better Denverite every day.';
-        $context['site']->emails['daily_newsletter_name'] = PEDESTAL_BLOG_NAME;
-        $context['site']->emails['daily_newsletter_send_time'] = '7:20 a.m.';
-        return $context;
     }
 
     /**
