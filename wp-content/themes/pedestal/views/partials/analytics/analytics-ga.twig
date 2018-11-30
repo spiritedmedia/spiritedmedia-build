@@ -74,7 +74,13 @@
                 }
             }
             tracker.set('dimension1', contactEmailDimension);
-            tracker.set('dimension2', memberLevelDimension)
+            tracker.set('dimension2', memberLevelDimension);
+
+            {#
+                Setup a global variable to store the cross-domain linker paramter for use in our own scripts
+                See https://developers.google.com/analytics/devguides/collection/analyticsjs/linker#linkerparam
+            #}
+            window.gaLinkTrackerParam = tracker.get('linkerParam');
         });
 
         ga('send', 'pageview');
