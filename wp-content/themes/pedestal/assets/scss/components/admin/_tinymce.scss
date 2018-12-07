@@ -1,0 +1,15 @@
+// stylelint-disable
+body#tinymce {
+  // `html`/`body` height makes editor go insane
+  height: auto;
+  padding: rem( 16px ) !important;
+  background-color: $white;
+
+  .c-figure {
+    max-width: 50%;
+  }
+
+  .c-figure__content {
+    img { max-width: 100%; }
+  }
+}

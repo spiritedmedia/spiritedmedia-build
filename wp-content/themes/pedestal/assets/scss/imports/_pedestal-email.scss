@@ -1,0 +1,662 @@
+// ==========================================================================
+// Base email styles
+// ==========================================================================
+
+// Base
+@import '../helpers/global-settings';
+@import '../helpers/email-settings';
+@import '../helpers/mixins';
+@import '../helpers/email-mixins';
+
+// Utilities
+@import '../components/utilities';
+
+/* stylelint-disable property-no-unknown, selector-max-type,
+  declaration-no-important */
+
+@include anchorage;
+
+
+// <body>
+.email-body {
+  margin: 0;
+  mso-line-height-rule: exactly;
+}
+
+// <center>
+.email-body-inner {
+  width: 100%;
+  background-color: $email-background-color;
+  text-align: left;
+}
+
+.email-header-preview-text {
+  display: none;
+  font-size: 1px;
+  line-height: 1px;
+  max-height: 0;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  mso-hide: all;
+  font-family: $font-family-sans-serif;
+}
+
+.email-container {
+  max-width: $email-container-width;
+  margin: auto;
+}
+
+.email-stream-item {
+  border-bottom: $email-divider-std;
+  padding-top: $email-stream-item-spacing-v;
+  padding-bottom: $email-stream-item-spacing-v;
+}
+
+.email-stream-item--heading {
+  padding: 20px $email-container-spacing-hoz 0;
+  text-transform: uppercase;
+  border-bottom: 0;
+}
+
+
+
+
+
+//
+// Headings
+// ==========================================================================
+
+.email-heading--title,
+.email-heading--minor {
+  @include email-heading-type;
+
+  text-transform: uppercase;
+}
+
+.email-heading--headline {
+  @include email-heading-type;
+}
+
+.email-heading--minor {
+  color: $dimmed-text-color;
+}
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Emails * // HEADER
+// ==========================================================================
+
+.email-header {
+  width: 100%;
+  max-width: $email-container-width;
+  background-color: $brand-1-color;
+}
+
+.email-header__inner {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.email-header__logo {
+  @include email-body-type;
+
+  height: auto;
+}
+
+
+
+
+
+//
+// Top Bar
+// ==========================================================================
+
+.email-top-bar__inner {
+  padding: 20px $email-container-spacing-hoz;
+
+  > table {
+    width: 100%;
+  }
+}
+
+.email-top-bar__date,
+.email-top-bar__browser-link {
+  @include email-body-type;
+
+  &,
+  a {
+    color: $dimmed-text-color;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.email-top-bar__browser-link {
+  text-align: right;
+}
+
+
+
+
+
+//
+// Content Header
+// ==========================================================================
+
+.email-content-header {
+  @include email-body-type;
+}
+
+.email-content-header__inner {
+  padding: 20px $email-container-spacing-hoz;
+  text-align: center;
+}
+
+.email-content-header__text {
+  padding-bottom: 10px;
+
+  // The divider should only look like a divider when it follows the default
+  // content header text
+  + .email-content-header__divider {
+    @include dash-rule;
+  }
+}
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Emails * // LAYOUT MODULES
+// ==========================================================================
+
+
+// Hero image flush
+.email-hero-img {
+  > td {
+    padding-bottom: 20px;
+  }
+
+  img {
+    @include email-img-base;
+
+    max-width: $email-container-width;
+  }
+}
+
+
+
+
+
+//
+// Single-Column Main Text Layout
+// ==========================================================================
+
+.email-text-main {
+  padding-bottom: 20px;
+}
+
+.email-text-main__item {
+  > td {
+    padding: 0 $email-container-spacing-hoz 10px;
+  }
+
+  &:last-child {
+    > td {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.email-text-main__body,
+.email-text-main__btn {
+  @include email-body-type;
+}
+
+.email-text-main__body {
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+
+//
+// Image Overlaid with Text
+// ==========================================================================
+
+.email-text-overlay__inner {
+  text-align: center;
+  background-position: center center !important;
+  background-size: cover !important;
+}
+
+.email-text-overlay__body {
+  max-width: 500px;
+  margin: auto;
+}
+
+.email-text-overlay__body__inner {
+  @include email-body-type;
+
+  text-align: center;
+  padding: 40px 10px;
+  color: #ffffff;
+
+  p {
+    margin: 0;
+  }
+}
+
+
+
+
+//
+// Grid+Column Layouts
+// ==========================================================================
+
+.email-grid__inner {
+  max-width: $email-container-width-inner;
+}
+
+.email-grid__column {
+  @include email-grid-column;
+}
+
+.email-grid__column__inner {
+  padding: 10px;
+
+  > table {
+    // text-align: left;
+    // font-size: 14px;
+  }
+}
+
+.email-grid__column__img {
+  @include email-img-base;
+}
+
+.email-grid__column__text {
+  @include email-body-type;
+
+  padding-top: 10px;
+
+  p {
+    margin: 0;
+  }
+}
+
+// Two column layout
+.email-grid--2up {
+  $column-max-width: 330px;
+
+  .email-grid__column {
+    min-width: 200px;
+    max-width: $column-max-width;
+  }
+
+  .email-grid__column__img {
+    max-width: $column-max-width - 20px;
+  }
+}
+
+// Three column layout
+.email-grid--3up {
+  $column-max-width: 33.3333333%;
+
+  .email-grid__column {
+    min-width: 220px;
+    max-width: $column-max-width;
+  }
+
+  .email-grid__column__img {
+    max-width: 200px;
+  }
+}
+
+
+
+//
+// Media Object
+// ==========================================================================
+
+.email-media-layout {
+  padding: 10px 0;
+
+  > table {
+    max-width: $email-container-width-inner;
+  }
+}
+
+.email-media-layout__inner {
+  font-size: 0;
+  padding: 10px 0;
+}
+
+.email-media-layout__img {
+  @include email-grid-column;
+
+  max-width: 200px;
+  min-width: 160px;
+}
+
+.email-media-layout__img__inner {
+  padding: 10px;
+  padding-top: 0;
+
+  img {
+    @include email-img-base;
+
+    max-width: 200px;
+  }
+}
+
+.email-media-layout__body {
+  @include email-grid-column;
+
+  max-width: 66.66%;
+  min-width: 320px;
+}
+
+.email-media-layout__body__inner {
+  padding: 10px 10px 0;
+}
+
+.email-media-layout__body__heading {
+  @include email-heading-type;
+
+  margin-bottom: 10px;
+}
+
+.email-media-layout__body__text {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+
+
+
+
+// ==========================================================================
+// Pedestal // * Emails * // COMPONENTS
+// ==========================================================================
+
+
+//
+// Entity Meta Info
+// ==========================================================================
+
+.email-entity-meta {
+  margin: 0 !important;
+  max-width: $email-container-width-inner;
+
+  a {
+    color: $body-font-color;
+    text-decoration: none;
+  }
+}
+
+.email-entity-meta__item {
+  vertical-align: middle;
+}
+
+.email-entity-meta__img {
+  width: $email-entity-meta-img-size;
+
+  &,
+  img {
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    @include email-img-base;
+  }
+
+  .email-avatar {
+    &,
+    img {
+      display: block !important;
+      width: $email-entity-meta-img-size !important;
+      border-radius: 999px;
+    }
+  }
+
+}
+
+.email-entity-meta__text {
+  max-width: 80%;
+
+  &,
+  > table {
+    margin: 0 !important;
+    margin-left: 10px !important;
+  }
+}
+
+.email-entity-meta__source-name,
+.email-entity-meta__timestamp {
+  @include email-body-type;
+
+  font-size: $small-font-size;
+  text-transform: uppercase;
+}
+
+.email-entity-meta__source-name {
+  line-height: 1;
+}
+
+
+
+
+
+//
+// Event
+// ==========================================================================
+
+.email-event {
+  padding-left: $email-container-spacing-hoz;
+  padding-right: $email-container-spacing-hoz;
+}
+
+.email-event__detail {
+  > td {
+    border-bottom: $email-divider-std;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  &:last-child > td {
+    border: 0;
+  }
+}
+
+.email-event__detail__label {
+  padding-bottom: 5px;
+}
+
+.email-event__detail__content {
+  @include email-body-type;
+}
+
+.email-event__btn {
+  > td {
+    padding-top: 10px;
+  }
+}
+
+
+
+
+
+//
+// Instagram of the Day
+// ==========================================================================
+
+.email-daily-insta {
+  text-align: center;
+  border-bottom: $email-divider-wide;
+}
+
+.email-daily-insta__heading h2,
+.email-daily-insta__meta {
+  text-align: center;
+}
+
+.email-daily-insta__heading {
+  padding-top: 20px;
+
+  h2 {
+    padding-bottom: 10px;
+  }
+}
+
+.email-daily-insta__divider {
+  @include dash-rule;
+
+  margin-bottom: 10px;
+}
+
+.email-daily-insta__meta {
+  @include email-body-type;
+}
+
+
+
+
+
+// ==========================================================================
+// Pedestal // Components // SLOTS
+// ==========================================================================
+
+.email-slot__item {
+  padding: 10px 0;
+
+  > table {
+    margin: 0;
+  }
+}
+
+.email-slot__label,
+.email-slot__img {
+  display: inline-block;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.email-slot__label {
+  font-family: $font-family-sans-serif;
+  font-size: $small-font-size;
+  line-height: $base-line-height;
+  // stylelint-disable-next-line unit-blacklist
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $dimmed-text-color;
+  margin-right: $email-slot-item-pd;
+}
+
+.email-slot__img {
+  img {
+    max-width: 150px;
+    display: block;
+  }
+}
+
+[data-slot-position*="shortcode"],
+[data-slot-position*="newsletter_item"],
+[data-slot-position*="component"] {
+  .email-slot__img {
+    img {
+      max-height: 50px;
+    }
+  }
+}
+
+[data-slot-position*="lead"],
+[data-slot-position*="component"] {
+  &.email-slot {
+    text-align: center;
+  }
+}
+
+
+// Supports premium images
+[data-slot-supports-premium] {
+  .email-slot__label {
+    margin-bottom: 2.5px;
+  }
+
+  .email-slot__img {
+    img {
+      max-width: 100%;
+      max-height: 111px;
+    }
+  }
+}
+
+
+// ==========================================================================
+// Pedestal // * Emails * // FOOTER
+// ==========================================================================
+
+
+.email-footer {
+  padding: 0 20px 40px;
+  width: 100%;
+  font-family: $font-family-sans-serif;
+  font-size: $small-font-size;
+  line-height: 1.5;
+  text-align: center;
+  color: $dimmed-text-color;
+}
+
+.email-share-icons {
+  th {
+    padding-top: 40px;
+    padding-bottom: 10px;
+
+    h2 {
+      font-family: $font-family-sans-serif;
+      font-size: $email-heading-size;
+      line-height: $base-line-height;
+      text-transform: uppercase;
+      color: $dimmed-text-color;
+      margin: 0;
+    }
+  }
+
+  td {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  img {
+    display: block;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+
+// ==========================================================================
+// Pedestal // * Emails * // TYPE-SPECIFIC
+// ==========================================================================
+
+
+.email-follow-update {
+  .email-content-header {
+    border-bottom: $email-divider-wide;
+  }
+}
+
+.email-follow-update__btn {
+  padding-left: $email-container-spacing-hoz;
+  padding-right: $email-container-spacing-hoz;
+}

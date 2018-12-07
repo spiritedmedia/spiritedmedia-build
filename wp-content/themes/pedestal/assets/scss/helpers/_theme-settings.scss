@@ -1,0 +1,429 @@
+//
+// Configuration
+// ==========================================================================
+$base-font-size    : rem( 16px );
+$base-line-height  : rem( 22px );
+
+$global-radius: rem( 4px ) !default;
+
+// Enable/disable some visual features
+$enable-italic-footnotes:            true  !default;
+$enable-emboldened-link-underlines:  false !default;
+$enable-figure-credit-distinction:   true  !default;
+$enable-heading-font-size-reduction: true  !default;
+$enable-stream-flush-with-header:    true  !default;
+
+
+//
+// Colors
+// ==========================================================================
+
+$color-dark: $dark-gray-color !default;
+$color-gray: $gray-color      !default;
+
+
+//
+// Typography
+// ==========================================================================
+
+$body-font-family:        $font-family-sans-serif !default;
+// stylelint-disable-next-line unit-blacklist
+$body-font-size:          1em;
+$body-line-height:        $base-line-height / $base-font-size;
+
+$heading-font-family: $body-font-family    !default;
+$heading-line-height: 1.2                  !default;
+$h1-font-size:        rem( 44px )          !default;
+$h1-line-height:      $heading-line-height !default;
+$h2-font-size:        rem( 37px )          !default;
+$h2-line-height:      $heading-line-height !default;
+$h3-font-size:        rem( 27px )          !default;
+$h3-line-height:      $heading-line-height !default;
+$h4-font-size:        rem( 22px )          !default;
+$h4-line-height:      $heading-line-height !default;
+$h5-font-size:        rem( 18px )          !default;
+$h5-line-height:      $heading-line-height !default;
+$h6-font-size:        rem( 16px )          !default;
+$h6-line-height:      $heading-line-height !default;
+
+$small-font-size:     rem( 12.8px );
+
+// We use these to control header size reduction on small screens
+$h1-font-reduction: rem( 10px );
+$h2-font-reduction: rem( 10px );
+$h3-font-reduction: rem( 5px );
+$h4-font-reduction: rem( 5px );
+$h5-font-reduction: 0;
+$h6-font-reduction: 0;
+
+$paragraph-font-size:     rem( 16px ) !default;
+$paragraph-line-height:   rem( 22px ) / $paragraph-font-size !default;
+$paragraph-margin-bottom: rem( 16px );
+
+$header-top-margin:       0;
+
+
+
+
+
+//
+// Iconography
+// ==========================================================================
+
+
+$icon-diameter         : rem( 40px );
+$icon-diameter--med    : rem( 32px );
+$icon-diameter--sm     : rem( 28px );
+$icon-diameter--xs     : rem( 20px );
+$icon-spacing          : rem( 8px );
+
+$avatar-size-sm        : $icon-diameter--sm;
+
+
+
+
+
+//
+// Z-Index
+// ==========================================================================
+
+
+$enabled-z-index   : true;
+
+$z-index-0         : 0;
+$z-index-1         : 9;
+$z-index-2         : 99;
+$z-index-3         : 999;
+$z-index-4         : 9999;
+$z-index-5         : 99999;
+
+$z-action-bar      : $z-index-4;
+$z-c-meta-bar      : $z-index-2;
+$z-entity-body     : $z-index-2;
+$z-stream-item-img : $z-index-1;
+
+
+
+
+
+//
+// Grid / Media Queries
+// ==========================================================================
+
+
+$row-width:                     rem( 1060px );
+$column-gutter:                 rem( 30px );
+
+$content-wrapper-margin-top:    rem( 32px );
+
+$screen:                        'only screen';
+
+// Here we define the lower and upper bounds for each media size
+$xsmall-range:                  0, em( 480px );
+$small-range:                   0, em( 640px );
+$medium-range:                  em( 641px ), em( 1024px );
+$large-range:                   em( 1025px ), em( 1440px );
+$xlarge-range:                  em( 1441px ), em( 1920px );
+$xxlarge-range:                 em( 1921px );
+
+$xsmall-only:                   "#{$screen} and ( max-width: #{upper-bound( $xsmall-range )} )";
+$medium-down:                   "#{$screen} and ( max-width: #{upper-bound( $medium-range )} )";
+
+
+
+
+
+//
+// Main Element
+// ==========================================================================
+
+$main-margin-top:              rem( 16px );
+$main-header-margin-bottom:    rem( 32px );
+$main-title-font-size:         $h2-font-size      !default;
+$main-title-font-weight:       400                !default;
+$main-description-font-size:   $h4-font-size      !default;
+$main-description-font-weight: 400;
+$main-description-text-color:  $dimmed-text-color !default;
+
+
+//
+// Forms + Input Groups
+// ==========================================================================
+
+$input-label-font-family:       $body-font-family                      !default;
+$input-radio-label-font-family: $input-label-font-family               !default;
+
+// Input Groups
+$input-group-addon-color: $brand-1-color !default;
+
+
+//
+// Buttons
+// ==========================================================================
+
+$button-height:          rem( 44px );
+$button-height--small:   rem( 36px );
+$button-border-color:    $brand-1-color   !default;
+$button-text-color-dark: $body-font-color !default;
+
+
+//
+// Site Header + Nav
+// ==========================================================================
+
+$site-header-breakpoint: screen and ( min-width: em( 760px ) );
+
+// Site Header
+$site-header-background-color:           $white                        !default;
+$site-header-box-shadow:                 none                          !default;
+$site-header-box-shadow--bp-up:          none;
+$site-header-border-top-color:           $brand-1-color                !default;
+$site-header-height:                     rem( 40px );
+$site-header-padding-y:                  rem( 6px );
+$site-header-logo-link-width:            fit-content                   !default;
+$site-header-logo-link-padding:          0                             !default;
+$site-header-logo-link-align:            center                        !default;
+$site-header-logo-link-background-color: $site-header-background-color !default;
+$site-header-logo-height--bp-up:                rem( 45px );
+$site-header-logo-color:                 $brand-1-color                !default;
+$site-header-logo-color-hover:           $white                        !default;
+$site-header-logo-color--bp-up:          $brand-1-color                !default;
+$site-header-menu-trigger-color:         $brand-1-color                !default;
+$site-header-menu-trigger-size:          rem( 28px );
+$site-header-social-link-icon-color:     $brand-1-color                !default;
+
+// Primary nav
+$site-nav-font-size:                       rem( 20px );
+$site-nav-primary-background-color--bp-up: $brand-1-color !default;
+$site-nav-secondary-font-size--bp-up:      rem( 16px )    !default;
+
+
+//
+// Content Scope
+// ==========================================================================
+
+$blockquote-background-color: transparent !default;
+$blockquote-padding-y:        0           !default;
+$blockquote-padding-left:     rem( 16px ) !default;
+$blockquote-padding-right:    rem( 8px )  !default;
+
+$content-h1-font-family: $body-font-family !default;
+$content-h2-font-family: $body-font-family !default;
+$content-h3-font-family: $body-font-family !default;
+
+$content-h1-font-size: $h1-font-size !default;
+$content-h2-font-size: $h2-font-size !default;
+$content-h3-font-size: $h3-font-size !default;
+
+$content-h1-color: $body-font-color !default;
+$content-h2-color: $body-font-color !default;
+$content-h3-color: $body-font-color !default;
+
+$content-h1-letter-spacing: 0 !default;
+$content-h2-letter-spacing: 0 !default;
+$content-h3-letter-spacing: 0 !default;
+
+
+// Pullquotes
+// ==========================================================================
+
+$pullquote-spacing-y:             rem( 16px )                                !default;
+$pullquote-border-y:              rem( 2px ) solid $light-gray-color;
+$pullquote-font-family:           $font-family-sans-serif                    !default;
+
+$pullquote-marks-gutter-x:        em( 1px )                                  !default;
+$pullquote-marks-offset-x:        -( $pullquote-marks-gutter-x + em( 1px ) );
+// stylelint-disable-next-line unit-blacklist
+$pullquote-marks-top-offset:      -0.15em;
+// stylelint-disable-next-line unit-blacklist
+$pullquote-marks-bottom-offset:   -0.25em                                    !default;
+$pullquote-marks-color:           $brand-1-color                             !default;
+$pullquote-marks-font-size:       rem( 64px )                                !default;
+$pullquote-marks-font-weight:     normal                                     !default;
+
+$pullquote-content-font-color:    $body-font-color                           !default;
+$pullquote-content-font-size:     rem( 24px )                                !default;
+$pullquote-content-line-height:   rem( 26px ) / $pullquote-content-font-size !default;
+$pullquote-content-font-weight:   normal                                     !default;
+
+$pullquote-credit-font-size:      rem( 18px )                                !default;
+$pullquote-credit-line-height:    rem( 22px ) / $pullquote-credit-font-size  !default;
+$pullquote-credit-font-style:     italic                                     !default;
+$pullquote-credit-letter-spacing: 0                                          !default;
+
+
+//
+// Stream
+// ==========================================================================
+
+// Stream Header
+$stream-header-background-color:               $another-lightish-color !default;
+$stream-header-font-size:                      inherit                 !default;
+
+// Stream Items
+$stream-item-spacing:                          rem( 32px );
+$stream-item-breakpoint:                       em( 585px );
+$stream-item-title-font-size:                  rem( 24px )             !default;
+$stream-item-title-letter-spacing:             em( -0.65px )           !default;
+$stream-item-title-line-height:                1                       !default;
+$stream-item-title-link-text-color-hover:      inherit                 !default;
+$stream-item-title-link-text-decoration-hover: underline               !default;
+$stream-item-footer-font-size:                 rem( 14px );
+$stream-item-footer-line-height:               rem( 16px ) / $stream-item-footer-font-size;
+
+// Larger screens
+$stream-item-title-font-size--lg:              rem( 27px )             !default;
+$stream-item-title-letter-spacing--lg:         rem( -0.8px )           !default;
+
+// Featured Stream Items
+$feat-item-title-font-size: $stream-item-title-font-size !default;
+
+
+//
+// User Card
+// ==========================================================================
+
+// Toggle some elements' visibility
+$user-card-show-hr:             true                 !default;
+$user-card-show-contact-labels: true                 !default;
+
+$user-card-font-color:         $header-font-color    !default;
+$user-card-img-border:         0                     !default;
+$user-card-name-font-size:     $content-h1-font-size !default;
+$user-card-name-line-height:   inherit               !default;
+$user-card-name-font-style:    normal                !default;
+$user-card-title-font-family:  $heading-font-family  !default;
+$user-card-title-font-size:    $content-h3-font-size !default;
+$user-card-title-font-weight:  300                   !default;
+$user-card-title-font-style:   normal                !default;
+$user-card-title-line-height:  inherit               !default;
+$user-card-contact-icon-size:  inherit               !default;
+$user-card-contact-icon-color: inherit               !default;
+
+// Extended format
+$user-card-extended-name-font-size:  $content-h1-font-size;
+$user-card-extended-title-font-size: $content-h3-font-size;
+
+
+//
+// Site Footer
+// ==========================================================================
+
+$site-footer-breakpoint:                  em( 840px );
+$site-footer-logo-size:                   rem( 32px )       !default;
+$site-footer-border-bottom-color:         $brand-1-color    !default;
+$site-footer-nav-bg:                      $dark-gray-color  !default;
+$site-footer-social-link-bg-color--bp-sm: $gray-color       !default;
+$site-footer-social-link-color--bp-sm:    $white            !default;
+$site-footer-links-font-family:           $body-font-family !default;
+$site-footer-links-font-weight:           700               !default;
+$site-footer-links-font-size:             rem( 16px )       !default;
+$site-footer-links-color:                 $light-gray-color !default;
+$site-footer-links-color-hover:           $brand-1-color    !default;
+$site-footer-links-letter-spacing:        0                 !default;
+$site-footer-links-line-height:           1.25              !default;
+$site-footer-links-separator-color:       $brand-1-color    !default;
+$site-footer-colophon-background-color:   $brand-1-color    !default;
+$site-footer-colophon-font-size:          $small-font-size  !default;
+$site-footer-colophon-letter-spacing:     0                 !default;
+$site-footer-colophon-line-height:        inherit           !default;
+$site-footer-newsroom-font-style:         inherit           !default;
+
+
+//
+// Widgets
+// ==========================================================================
+$widget-title-font-size:   rem( 16px )      !default;
+$widget-title-color:       $body-font-color !default;
+$widget-title-line-height: 1.2              !default;
+
+
+//
+// Miscellaneous
+// ==========================================================================
+
+$selection-color: $brand-1-color !default;
+$mark-color: $selection-color !default;
+
+// Message Spot
+$message-spot-font-size: rem( 14px );
+$message-spot-title-font-size: rem( 14px ) !default;
+$message-spot-title-line-height: rem( 20px ) / $message-spot-title-font-size !default;
+$message-spot-title-letter-spacing: 0 !default;
+$message-spot-override-icon-color: $accent-1-color !default;
+$message-spot-override-title-color: $color-dark !default;
+
+// Modals
+$modal-overlay-background-color-light: rgba( $white, 0.7 );
+$modal-close-button-height: rem( 40px );
+$modal-content-padding-bottom: rem( 16px );
+$modal-header-nav-background-color: $brand-1-color !default;
+$modal-search-background-color: $color-dark !default;
+$modal-search-button-background-color: $accent-1-color !default;
+
+// Search Form
+$search-form-standalone-button-background-color: $color-dark !default;
+$search-form-modal-button-background-color: $accent-1-color !default;
+
+// Single Page
+$page-bg-c      : $white;
+$page-bg-c--alt : $sea-foam-green;
+$page-main-m-t  : rem( 48px );
+
+// Border dividers
+$border-divider-spacing         : rem( 24px );
+$border-divider-spacing--inline : rem( 8px );
+$border-divider-color           : $border-std-color;
+
+// Tables
+$table-row-padding              : rem( 8px 12px );
+
+// Spinkit loading indicator
+$spinkit-spinner-margin         : rem( 16px ) auto;
+$spinkit-size                   : rem( 32px );
+$spinkit-spinner-color          : $gray-80;
+
+// Hanging quotation mark nudge
+// stylelint-disable-next-line unit-blacklist
+$nudge-punctuation              : -0.4em;
+
+// WordPress admin bar
+$wp-admin-bar-breakpoint        : 'only screen and (min-width: 783px)';
+$wp-admin-bar-height-mobile     : rem( 46px );
+$wp-admin-bar-height-desktop    : rem( 32px );
+
+// Sitewide CTA icon spacing
+$site-cta-icon-spacing          : $icon-spacing / 2;
+
+// Overline
+$overline-line-height-unit : rem( 16px );
+$overline-margin-bottom    : rem( 8px );
+
+// Single Entity Header + Meta
+$single-header-title-font-size:             rem( 32px )      !default;
+$single-header-title-line-height:           1                !default;
+$single-header-description-font-size:       rem( 24px )      !default;
+$single-header-description-line-height:     1                !default;
+$single-entity-meta-hover-background-color: inherit          !default;
+
+// Brand Headings
+$brand-heading-breakpoint: em( 675px );
+
+// Figures
+$figure-caption-color: $body-font-color !default;
+$figure-text-align: left !default;
+
+// Lists
+$list-side-margin:           em( 32px );
+$list-ordered-side-margin:   $list-side-margin;
+$list-unordered-side-margin: em( 16px );
+$list-item-margin-bottom:    em( 4px );
+$list-counter-color:         $brand-1-color !default;
+$list-bullet-size:           rem( 5px );
+$list-unordered-bullet-type: circle !default;
+
+// Cluster list at bottom of entities
+$cluster-list-heading-font-family: $font-family-sans-serif !default;
+$cluster-list-heading-line-height: 1.2 !default;
+$cluster-list-heading-text-transform: uppercase !default;
+$cluster-list-heading-color: $body-font-color !default;

@@ -76,8 +76,8 @@ function get_brand_color() {
     return str_replace( '#', '', $color );
 }
 
-$parent_file             = get_template_directory() . '/assets/scss/family/_colors.scss';
-$child_file              = get_stylesheet_directory() . '/assets/scss/base/_settings.scss';
+$parent_file             = get_template_directory() . '/assets/scss/helpers/_colors.scss';
+$child_file              = get_stylesheet_directory() . '/assets/scss/helpers/_' . PEDESTAL_THEME_NAME . '-settings.scss';
 $files                   = [ $parent_file, $child_file ];
 $colors                  = get_sass_colors( $files );
 

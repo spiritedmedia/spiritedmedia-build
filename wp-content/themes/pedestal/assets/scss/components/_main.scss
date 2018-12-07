@@ -1,12 +1,3 @@
-// Main encloses the majority of the view. It should only be applied to the
-// `c-main` element.
-//
-// For styling purposes, consider it just a step more specific than the
-// body classes.
-
-
-.c-main {}
-
 .c-main__content {
   @include clearfix;
 

@@ -1,24 +1,12 @@
-// ==========================================================================
-// Pedestal // Components // ADVERTISING
-// ==========================================================================
-
 // Amount to offset 300x50 DFP ad on mobile
 $dfp-mobile-ad-offset           : -( $column-gutter / 4 );
 // Same as above, but for ads within panels
 $dfp-mobile-ad-offset--panelled : -( $column-gutter );
 
-
-// stylelint-disable
-
-
-//
-// Doubleclick For Publishers
-// ==========================================================================
-
-
 .dfp {
   text-align: center;
 
+  // stylelint-disable selector-max-type
   iframe {
     display: block;
     margin: 0 auto;
@@ -26,7 +14,7 @@ $dfp-mobile-ad-offset--panelled : -( $column-gutter );
 }
 
 .dfp--inline {
-    margin: rem( 36px ) auto;
+  margin: rem( 36px ) auto;
 }
 
 .dfp-disclaimer {
@@ -42,7 +30,7 @@ $dfp-mobile-ad-offset--panelled : -( $column-gutter );
 .rail {
   // Prevent rail ad units from firing when .rail is hidden
   .dfp {
-      display: none;
+    display: none;
   }
   .widget_pedestal_dfp_rail_right {
     // Override default widget padding for BP-RailRight

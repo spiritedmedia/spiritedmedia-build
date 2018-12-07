@@ -1,21 +1,17 @@
 @charset 'UTF-8';
 /*!*
- * Pedestal // Emails // Base
+ * Version: 7.11.2
  *
- * Version: 7.11.1
- *
- * Copyright ( c ) 2017 Spirited Media
+ * Copyright ( c ) 2018 Spirited Media
  */
 
 
 /* stylelint-disable selector-max-type, declaration-no-important,
     property-no-vendor-prefix, property-no-unknown, length-zero-no-unit */
-
-
-@import 'base/global/settings';
-@import 'base/global/mixins';
-@import 'base/email/settings';
-@import 'base/email/mixins';
+@import 'helpers/colors';
+@import 'helpers/global-settings';
+@import 'helpers/email-settings';
+@import 'helpers/mixins';
 
 
 // ==========================================================================

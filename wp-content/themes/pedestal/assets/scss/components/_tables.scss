@@ -1,0 +1,30 @@
+// stylelint-disable selector-max-type, selector-max-compound-selectors
+
+table {
+  margin-bottom: rem( 20px );
+  border: $border-standard;
+  background-color: $white;
+}
+
+caption {
+  font-weight: 700;
+}
+
+th,
+td {
+  font-size: rem( 14px );
+  line-height: rem( 18px );
+  padding: $table-row-padding;
+}
+
+thead,
+tfoot {
+  background-color: $light-gray-color;
+  font-weight: 700;
+}
+
+tr {
+  &:nth-of-type( even ) {
+    background: $light-gray-color;
+  }
+}

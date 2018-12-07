@@ -1,4 +1,4 @@
-/*figure*/.c-figure {
+.c-figure {
   margin-bottom: rem( 16px );
 
   &,
@@ -8,21 +8,15 @@
   }
 }
 
-
-.c-figure__content-wrap {}
-
-
 .c-figure__link {
   display: block;
 }
-
 
 .c-figure__content {
   display: block;
   height: auto;
   padding-bottom: rem( 4px );
 }
-
 
 .c-figure__text {
   margin-top: rem( 8px );
@@ -95,8 +89,6 @@
 }
 
 
-
-
 /**
  * Figure for images
  */
@@ -119,30 +111,6 @@
   }
 }
 
-
-
-
-
-/**
- * Figure for social media embeds
- */
-
-.c-figure--social-embed {}
-
-
-
-
-
-/**
- * Figure for regular embeds
- */
-
-.c-figure--embed {}
-
-
-
-
-
 /**
  * Figure for responsive iframes
  *
@@ -160,13 +128,3 @@
     z-index: 1;
   }
 }
-
-
-
-
-
-//
-// Figure for YouTube embeds
-//
-
-.c-figure--youtube {}

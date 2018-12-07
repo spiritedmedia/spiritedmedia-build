@@ -1,14 +1,7 @@
-// ==========================================================================
-// Pedestal // Components // INSTAGRAM OF THE DAY
-// ==========================================================================
-
-
-$c: '.c-daily-insta';
-
 $daily-insta-header-padding-v: rem( 8px );
 
 
-#{$c} {
+.c-daily-insta {
   background-color: $truth-serum;
   margin-left: auto;
   margin-right: auto;
@@ -32,7 +25,7 @@ $daily-insta-header-padding-v: rem( 8px );
     }
   }
 
-  /*figure*/&__body {
+  &__body {
     margin: 0;
 
     &__text {
@@ -52,7 +45,7 @@ $daily-insta-header-padding-v: rem( 8px );
     }
   }
 
-  /*figcaption*/&__caption {
+  &__caption {
     background-color: $truth-serum;
     padding: rem( 8px );
     text-align: left;
@@ -72,24 +65,15 @@ $daily-insta-header-padding-v: rem( 8px );
     font-weight: 700;
   }
 
-  &__date {}
-
   &__author {
     display: block;
   }
-
-
-  //
-  // Context: Newsletter
-  //
-  &--newsletter {}
-
 
   //
   // Context: Widget
   //
   &--widget {
-    #{$c}__body__text {
+    .c-daily-insta__body__text {
       font-size: $small-font-size;
     }
   }

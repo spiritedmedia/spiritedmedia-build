@@ -129,21 +129,6 @@ abstract class Original extends Entity {
     }
 
     /**
-     * Nasty hack to get a live canonical URL for FIAs
-     *
-     * Replaces the home URL with the live site URL constant.
-     *
-     * Allows us to test FIAs on a site with a different URL than the URL
-     * registered for the Facebook Page.
-     *
-     * @return string Live canonical URL
-     */
-    public function get_fias_canonical_url() {
-        $url = $this->get_permalink();
-        return str_replace( home_url( '/' ), $site_config['site_live_domain'], $url );
-    }
-
-    /**
      * Get the Twig context for this post
      *
      * @param array Existing context to filter

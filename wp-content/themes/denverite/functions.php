@@ -11,13 +11,6 @@ use Pedestal\Registrations\Post_Types\Types;
 
 class Denverite extends Pedestal {
 
-    /**
-     * Site config options
-     *
-     * @var array
-     */
-    protected $site_config = [];
-
     protected static $instance;
 
     public static function get_instance() {
@@ -79,25 +72,6 @@ class Denverite extends Pedestal {
             wp_safe_redirect( $redirect_url, 301 );
             die();
         });
-
-        // Redirect to side-by-side compare tool if ?compare is present
-        add_action( 'template_redirect', function() {
-            if ( ! isset( $_GET['compare'] ) ) {
-                return;
-            }
-            $current_url = home_url( $wp->request );
-            if ( is_single() ) {
-                $post = get_post();
-                $path = '/' . $post->post_name . '-' . $post->ID . '/';
-                $current_url = home_url( $path );
-            }
-            $compare_url = home_url( '/qa/side-by-side/' );
-            $compare_url = add_query_arg( [
-                'url' => $current_url,
-            ], $compare_url );
-            wp_safe_redirect( $compare_url );
-            die();
-        });
     }
 
     /**
@@ -107,19 +81,18 @@ class Denverite extends Pedestal {
         add_filter( 'pedestal_constants', function() {
             return [
                 // Site Details
-                'PEDESTAL_BLOG_NAME'                    => 'Denverite',
-                'PEDESTAL_BLOG_DESCRIPTION'             => 'Useful and delightful news for people who care about Denver. What’s happening and why it matters. Plus: Fun stuff.',
-                'PEDESTAL_BLOG_TAGLINE'                 => 'Denverite, the Denver site!',
-                'PEDESTAL_HOMEPAGE_TITLE'               => 'Denverite, the Denver site!',
-                'PEDESTAL_CITY_NAME'                    => 'Denver',
-                'PEDESTAL_CITY_NICKNAME'                => 'Mile High City',
-                'PEDESTAL_STATE_NAME'                   => 'Colorado',
-                'PEDESTAL_STATE'                        => 'CO',
-                'PEDESTAL_ZIPCODE'                      => '80204',
-                'PEDESTAL_BUILDING_NAME'                => '',
-                'PEDESTAL_STREET_ADDRESS'               => '1062 Delaware St',
-                'PEDESTAL_BLOG_URL'                     => 'https://medium.com/billy-penn',
-                'PEDESTAL_SITE_TIMEZONE'                => 'America/Denver',
+                'PEDESTAL_BLOG_NAME'        => 'Denverite',
+                'PEDESTAL_BLOG_DESCRIPTION' => 'Useful and delightful news for people who care about Denver. What’s happening and why it matters. Plus: Fun stuff.',
+                'PEDESTAL_BLOG_TAGLINE'     => 'Denverite, the Denver site!',
+                'PEDESTAL_HOMEPAGE_TITLE'   => 'Denverite, the Denver site!',
+                'PEDESTAL_CITY_NAME'        => 'Denver',
+                'PEDESTAL_CITY_NICKNAME'    => 'Mile High City',
+                'PEDESTAL_STATE_NAME'       => 'Colorado',
+                'PEDESTAL_STATE'            => 'CO',
+                'PEDESTAL_ZIPCODE'          => '80204',
+                'PEDESTAL_BUILDING_NAME'    => '',
+                'PEDESTAL_STREET_ADDRESS'   => '1062 Delaware St',
+                'PEDESTAL_SITE_TIMEZONE'    => 'America/Denver',
 
                 // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-77340868-1',
@@ -131,11 +104,14 @@ class Denverite extends Pedestal {
                 'PEDESTAL_DFP_SITE'   => 'denverite',
 
                 // Social Media
-                'PEDESTAL_TWITTER_USERNAME'    => 'denverite',
-                'PEDESTAL_INSTAGRAM_USERNAME'  => 'dnvrite',
-                'PEDESTAL_FACEBOOK_PAGE'       => 'https://www.facebook.com/dnvrite/',
-                'PEDESTAL_FACEBOOK_PAGE_ID'    => '241487632889156',
-                'PEDESTAL_YOUTUBE_CHANNEL_ID'  => 'UCKjA7SEgXtzIKUFQ4KyOdRw',
+                'PEDESTAL_TWITTER_USERNAME'   => 'denverite',
+                'PEDESTAL_INSTAGRAM_USERNAME' => 'dnvrite',
+                'PEDESTAL_FACEBOOK_PAGE'      => 'https://www.facebook.com/dnvrite/',
+                'PEDESTAL_FACEBOOK_PAGE_ID'   => '241487632889156',
+                'PEDESTAL_YOUTUBE_CHANNEL_ID' => 'UCKjA7SEgXtzIKUFQ4KyOdRw',
+
+                // Branding
+                'PEDESTAL_BRAND_COLOR' => '#210c42',
 
                 // Email
                 'PEDESTAL_EMAIL_CONTACT'          => 'contact@denverite.com',
@@ -151,16 +127,14 @@ class Denverite extends Pedestal {
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':denverite:',
 
                 // Site Features
-                'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY'  => false,
-                'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'     => true,
-                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'    => true,
+                'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY' => false,
+                'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'    => true,
+                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'   => true,
 
                 // Membership
                 'PEDESTAL_NRH_PROPERTY' => 'denverite',
             ];
         } );
-
-        add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
 
         add_filter( 'pedestal_footer_menu', function( $menu ) {
             return [
@@ -188,18 +162,5 @@ class Denverite extends Pedestal {
             $args['send_time'] = '7:20 a.m.';
             return $args;
         } );
-    }
-
-    /**
-     * Set site config options
-     */
-    protected function set_site_config() {
-        if ( empty( $this->site_config ) ) {
-            $this->site_config = [
-                'site_name'           => get_bloginfo( 'name' ),
-                'site_live_url'       => 'https://denverite.com/',
-                'site_branding_color' => '#210c42',
-            ];
-        }
     }
 }

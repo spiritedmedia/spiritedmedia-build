@@ -1,0 +1,233 @@
+// ==========================================================================
+// Pedestal // Base // Global // FUNCTIONS
+// ==========================================================================
+
+// This is the default html and body font-size for the base rem value. We need
+// to set it as its own variable to make `rem()` work.
+$rem-base : 16px;
+
+//
+// Type checking
+//
+// See https://css-tricks.com/snippets/sass/advanced-type-checking/
+// ==========================================================================
+
+// Only used by the h-size mixin
+@function is-number($value) {
+  @return type-of($value) == 'number';
+}
+
+//
+// Units
+// ==========================================================================
+
+/// Strip the unit from a number
+///
+/// @param {number} $num
+@function strip-unit( $num ) {
+  @return $num / ( $num * 0 + 1 );
+}
+
+/// Convert rems or ems to pixels
+///
+/// See documentation for `rem()`
+///
+/// @param {number|list} $values - Values to convert to px, can be up to 4
+/// @param {number}      $base-value [$rem-base] - Base calculation off this unit
+@function _convert-to-px( $values, $base-value: $rem-base ) {
+  $max: length( $values );
+
+  @if $max == 1 {
+    @return strip-unit( nth( $values, 1 ) ) * $base-value;
+  }
+
+  $px-values: ();
+  @for $i from 1 through $max {
+    $px-values: append( $px-values, strip-unit( nth( $values, $i ) ) * $base-value );
+  }
+  @return $px-values;
+}
+
+/// Helper function for rem()
+///
+/// Does calculation for individual unit conversion.
+///
+/// This currently does not support em units as $value or $base-value.
+///
+/// @param {px} $value - Single pixel value to convert to rem. If a rem unit
+///     is passed instead, it will be returned immediately.
+/// @param {px|rem} $base-value [$rem-base] - Base rem calculation off this
+///     pixel unit. If a rem unit is passed instead, then it will be converted
+///     to pixels assuming the base value for that conversion is `$rem-base`.
+@function _convert-to-rem( $value, $base-value: $rem-base ) {
+  @if 'rem' == unit( $value ) {
+    @return $value;
+  }
+  @if 'rem' == unit( $base-value ) {
+    $base-value: _convert-to-px( $base-value );
+  }
+  // stylelint-disable-next-line unit-blacklist
+  $value: strip-unit( $value ) / strip-unit( $base-value ) * 1rem;
+  // stylelint-disable-next-line length-zero-no-unit
+  @if ( $value == 0rem ) {
+    $value: 0;
+  }
+  @return $value;
+}
+
+/// Convert pixels to rems
+///
+/// Call with 1, 2, 3 or 4 parameters -- px is not required but suggested.
+///
+///   rem(10 20 30px 40);
+///
+/// Space delimited, if you want to delimit using comma's, wrap it in another pair of brackets
+///
+///   rem((10, 20, 30, 40px));
+///
+/// Optionally call with a different base (eg: 8px) to calculate rem.
+///
+///   rem(16px 32px 48px, 8px);
+///
+/// @require {function} _convert-to-rem
+/// @param {number|list} $values - Pixel values to convert to rem, can be up to 4
+/// @param {number}      $base-value [$rem-base] - Base rem calculation off this unit
+/// @return {number|list} Single rem, list of rems, or zero
+@function rem( $values, $base-value: $rem-base ) {
+  $max: length( $values );
+
+  @if $max == 1 {
+    @return _convert-to-rem( nth( $values, 1 ), $base-value );
+  }
+
+  $rem-values: ();
+  @for $i from 1 through $max {
+    $rem-values: append( $rem-values, _convert-to-rem( nth( $values, $i ), $base-value ) );
+  }
+  @return $rem-values;
+}
+
+/// Convert pixels to ems
+///
+/// See documentation for `rem()`
+///
+/// @require {function} strip-unit
+/// @require {function} rem
+/// @see {function} rem
+@function em( $values, $base-value: $rem-base ) {
+  $rem-values: rem( $values, $base-value );
+
+  $max: length( $rem-values );
+
+  @if $max == 1 {
+    @return strip-unit( nth( $rem-values, 1 ) ) * 1em;
+  }
+
+  $em-values: ();
+  @for $i from 1 through $max {
+    // stylelint-disable-next-line unit-blacklist
+    $em-values: append( $em-values, strip-unit( nth( $rem-values, $i ) ) * 1em );
+  }
+  @return $em-values;
+}
+
+/// Clamp `$number` between `$min` and `$max`
+///
+/// @link https://css-tricks.com/snippets/sass/clamping-number/
+///
+/// @param {Number} $number - Number to clamp
+/// @param {Number} $min - Minimum value
+/// @param {Number} $max - Maximum value
+/// @return {Number}
+@function clamp($number, $min, $max) {
+  @return min(max($number, $min), $max);
+}
+
+/**
+ * Convert each value in a map of units or numbers to rems
+ *
+ * @param  {map} $map Map where each value is a unit or number
+ * @return {map}
+ */
+@function rem-map-values( $map ) {
+  $new-map: ();
+  @each $key, $value in $map {
+    @if ( number == type-of( $value ) ) {
+      $new-map: map-merge( $new-map, ( $key: rem( $value ) ) );
+    }
+  }
+  @return $new-map;
+}
+
+
+//
+// Colors
+// ==========================================================================
+
+/// Calculate text color with sufficient contrast against a given background color
+///
+/// @param  {color} $bg - $brand-1-color - Background color
+/// @param  {color} $text-light - $white
+/// @param  {color} $text-dark - $body-font-color
+/// @param  {percent} $threshold - Lightness threshold
+@function text-contrast(
+  $bg: $brand-1-color,
+  $text-light: $white,
+  $text-dark: $body-font-color,
+  $threshold: 65%
+) {
+  @return if( lightness( $bg ) > $threshold, $text-dark, $text-light );
+}
+
+/// Encode a hex color for use in a SVG string
+///
+/// Does not work with colors containing alpha.
+///
+/// @link https://gist.github.com/keeperofkeys/45b14189f49017171a3d48f12c6ccf69
+/// @param color $color
+/// @return string|color Encoded color string if successful,
+///     otherwise return the original parameter
+@function encode-color( $color ) {
+  @if type-of( $color ) == 'color' and $color != transparent {
+    $hex: str-slice( ie-hex-str( $color ), 4 );
+    $color: unquote( "#{$hex}" );
+    $color: '%23' + $color;
+  }
+  @return $color;
+}
+
+
+//
+// Maps
+// ==========================================================================
+
+/**
+ * `map-get()` with error checking
+ *
+ * @param  {map}    $map
+ * @param  {string} $key
+ * @return {mixed}
+ */
+@function map-get-strict( $map, $key ) {
+  @if map-has-key( $map, $key ) {
+    @return map-get( $map, $key );
+  } @else {
+    @error 'ERROR: Specified index `#{$key}` does not exist in the map `#{$map}`!';
+  }
+}
+
+/**
+ * Get value from nested map
+ *
+ * @author Hugo Giraudel
+ *
+ * @param  {map}     $map
+ * @param  {arglist} $keys key chain
+ * @return {*}             Desired value
+ */
+@function map-fetch( $map, $keys... ) {
+  @each $key in $keys {
+    $map: map-get-strict( $map, $key );
+  }
+  @return $map;
+}

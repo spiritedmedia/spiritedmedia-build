@@ -11,15 +11,10 @@
   }
 }
 
-
 .single-header__title,
 .single-header__description {
   margin-bottom: rem( 12px );
 }
-
-
-.single-header__sponsorship {}
-
 
 .single-header__title {
   font-family: $heading-font-family;
@@ -28,7 +23,6 @@
   letter-spacing: em( -0.2px );
   line-height: $single-header-title-line-height;
 }
-
 
 .single-header__img {
   margin-top: 0;
@@ -42,7 +36,6 @@
   }
 } // __item__img
 
-
 .single-header__description {
   &,
   > * {
@@ -55,7 +48,6 @@
     margin-bottom: 0;
   }
 }
-
 
 .single-header__meta {
   .single-cluster & {

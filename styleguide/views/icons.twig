@@ -75,32 +75,6 @@ list of the icons we use throughout the sites:
         {% endfor %}
     </tbody>
 </table>
-
-{% markdown %}
----
-
-## Icon + text
-
-{% set icon_text %}
-<p class="o-icon-text">
-    {{ facebook_icon_html }}
-    <span class="o-icon-text__text">Icon Text</span>
-</p>
-
-<!-- Reversed icon text -->
-<p class="o-icon-text o-icon-text--rev">
-    <span class="o-icon-text__text">Icon Text</span>
-    {{ facebook_icon_html }}
-</p>
-{% endset %}
-
-{{ icon_text }}
-
-```html
-{{ icon_text }}
-```
-
-{% endmarkdown %}
 {% endblock %}
 
 {% block sidebar %}

@@ -9,7 +9,7 @@ import handleScrollDepth from 'scrollDepth';
 import handleShareButtons from 'shareButtons';
 import handleSubscriptionForms from 'subscriptionForms';
 
-import Subscriber from 'Subscriber';
+import Contact from 'Contact';
 import handleConversionPromptTargeting from 'conversionPrompts';
 
 (function($) {
@@ -27,8 +27,8 @@ import handleConversionPromptTargeting from 'conversionPrompts';
       handleScrollDepth();
       handleShareButtons();
 
-      this.Subscriber = new Subscriber;
-      $document.on('pedSubscriber:ready', handleConversionPromptTargeting);
+      this.Contact = new Contact;
+      $document.on('pedContact:ready', handleConversionPromptTargeting);
 
       $('.js-signup-email-form').on('submit', handleSubscriptionForms);
       $('.content-wrapper').on(

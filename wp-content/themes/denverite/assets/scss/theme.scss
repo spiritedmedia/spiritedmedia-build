@@ -1,25 +1,16 @@
 @charset 'UTF-8';
 /*!*
- * Pedestal // Denverite // Theme
+ * Version: 7.11.2
  *
- * Version: 7.11.1
- *
- * Copyright ( c ) 2016 Spirited Media
+ * Copyright ( c ) 2018 Spirited Media
  */
-
 
 $site-theme-name: 'denverite';
 
-
-// Set up the child theme functions and variables
-@import 'setup-child';
-@import 'base/settings';
-
-// Set up Pedestal theme styles
+@import 'pedestal';
+@import 'helpers/denverite-settings';
 @import 'pedestal-theme';
 
-// Child theme styles
-@import 'components/404';
 @import 'components/message-spot';
 @import 'components/site-header';
 @import 'components/site-nav';

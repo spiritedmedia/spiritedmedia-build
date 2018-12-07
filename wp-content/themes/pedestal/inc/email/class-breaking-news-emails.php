@@ -145,6 +145,10 @@ class Breaking_News_Emails {
             return;
         }
 
+        if ( wp_is_post_revision( $post_id ) ) {
+            return;
+        }
+
         $post = Post::get( (int) $post_id );
         $args = [];
         if ( $is_test_email ) {
@@ -166,7 +170,7 @@ class Breaking_News_Emails {
      * @param  array $args  Options
      * @return string       MailChimp campaign id if sent successfully
      */
-    public function send_email( $post, $args ) {
+    public function send_email( Post $post, $args ) {
         $html = Email::get_email_template( 'breaking-news', 'mc', [
             'item'       => $post,
             'email_type' => 'Breaking News',

@@ -29,7 +29,6 @@ address the issue.
 - [Colors](colors.php)
 - [Conversion Prompts](conversion-prompts.php)
 - [Forms](forms.php)
-- [Headers](headers.php)
 - [Horizontal Rules](horizontal-rules.php)
 - [Icons](icons.php)
 - [Inline Ads](inline-ads.php)
@@ -57,7 +56,6 @@ Also present on each page are:
 
 These styles are for development convenience -- they probably should never change.
 
-- [Utilities](utilities.php)
 - [Media Object](media-object.php)
 
 ## Other Components

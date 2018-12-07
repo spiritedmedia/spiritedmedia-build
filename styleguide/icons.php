@@ -377,6 +377,5 @@ $icons = [
     ],
 ];
 $context['icons'] = $icons;
-$context['facebook_icon_html'] = Icons::get_icon( 'facebook', 'o-icon-text__icon' );
 
 Timber::render( 'views/icons.twig', $context );

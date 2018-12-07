@@ -1,8 +1,3 @@
-// ==========================================================================
-// Pedestal // Components // SLOTS
-// ==========================================================================
-
-
 $c-slot-item-pd      : rem( 8px );
 $c-slot-item-lead-pd : rem( 16px );
 
@@ -39,12 +34,6 @@ $c-slot-item-lead-pd : rem( 16px );
       max-width: rem( 150px );
     }
   }
-
-
-  //
-  // Slot Item Type: Sponsors & Partners
-  //
-  &--sponsors-partners {}
 
 }
 
@@ -113,9 +102,6 @@ $c-slot-item-lead-pd : rem( 16px );
     }
   }
 }
-
-// Lead Position -- Email Scope
-[data-slot-position="email_lead"] {}
 
 // Single Lead Position -- Site Scope
 [data-slot-position="site_single_lead"] {

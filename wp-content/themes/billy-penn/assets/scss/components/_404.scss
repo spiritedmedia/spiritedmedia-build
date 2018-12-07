@@ -1,15 +1,8 @@
-// ==========================================================================
-// Billy Penn // Components // 404 PAGE
-// ==========================================================================
-
-
-/*figure*/.e404-young-penn {
+.e404-young-penn {
   position: relative;
 }
 
-/*img*/.e404-young-penn__img {}
-
-/*figcaption*/.e404-young-penn__caption {
+.e404-young-penn__caption {
   margin-top: rem( 32px );
 
   @media #{$large-up} {
@@ -27,9 +20,5 @@
       font-size: rem( 14px );
     }
   }
-
-  .description {}
-
-  .source {}
 
 }

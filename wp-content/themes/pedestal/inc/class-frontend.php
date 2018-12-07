@@ -41,11 +41,8 @@ class Frontend {
     private function setup_filters() {
 
         add_filter( 'wp_title', [ $this, 'filter_wp_title' ] );
-
         add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
-
         add_filter( 'template_include', [ $this, 'filter_template_include' ] );
-
         add_filter( 'body_class', function( $body_classes ) {
 
             global $wp_query;
@@ -254,19 +251,19 @@ class Frontend {
     public function filter_timber_context( $context ) {
         $footer_social_icons = [
             [
-                'url'      => $context['site']->social['instagram_url'],
+                'url'      => PEDESTAL_INSTAGRAM_URL,
                 'icon'     => 'instagram',
                 'sr_label' => '@' . PEDESTAL_INSTAGRAM_USERNAME . ' on Instagram',
                 'ga_label' => 'Instagram',
             ],
             [
-                'url'      => $context['site']->social['facebook_url'],
+                'url'      => PEDESTAL_FACEBOOK_PAGE,
                 'icon'     => 'facebook',
                 'sr_label' => PEDESTAL_BLOG_NAME . ' on Facebook',
                 'ga_label' => 'Facebook',
             ],
             [
-                'url'      => $context['site']->social['twitter_url'],
+                'url'      => PEDESTAL_TWITTER_URL,
                 'icon'     => 'twitter',
                 'sr_label' => '@' . PEDESTAL_TWITTER_USERNAME . ' on Twitter',
                 'ga_label' => 'Twitter',
@@ -285,7 +282,7 @@ class Frontend {
 
         $context['footer_menu'] = apply_filters( 'pedestal_footer_menu', [
             'About Us'       => '/about/',
-            'Blog'           => PEDESTAL_BLOG_URL,
+            'Blog'           => 'https://medium.com/billy-penn',
             'Jobs'           => '/jobs/',
             'Press'          => '/press/',
             'Advertising'    => '/advertising/',
@@ -294,17 +291,10 @@ class Frontend {
             'Search'         => '/?s=',
         ] );
 
-        $context['latest_newsletter'] = Newsletter::get_latest_newsletter_link();
         $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) . ' Spirited Media';
 
         if ( is_search() ) {
             $context['search_query'] = get_search_query();
-        }
-
-        if ( wp_get_current_user() ) {
-            $context['current_user'] = new User( wp_get_current_user() );
-        } else {
-            $context['current_user'] = false;
         }
 
         if ( is_singular() ) :
@@ -315,10 +305,6 @@ class Frontend {
                 if ( Types::is_cluster( $post_type ) ) {
                     $context['is_cluster'] = true;
                 }
-
-                if ( 'pedestal_story' == $post_type ) {
-                    $context['is_story'] = true;
-                }
             endif;
         endif;
 
@@ -328,25 +314,9 @@ class Frontend {
                 'Home'   => get_site_url(),
             ];
         }
-
-        $context['is_page_donate'] = is_page( 'support-our-work' ) ?: false;
-
         $context['sidebar_ad'] = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
-
-        // Load some WP conditional functions as Timber context variables
-        $conditionals = [
-            'is_home',
-            'is_single',
-            'is_page',
-            'is_search',
-            'is_feed',
-            'is_archive',
-            'is_tax',
-            'is_post_type_archive',
-        ];
-        foreach ( $conditionals as $func ) {
-            $context[ $func ] = function_exists( $func ) ? $func() : null;
-        }
+        $context['is_page_donate'] = is_page( 'support-our-work' ) ?: false;
+        $context['is_feed'] = is_feed();
 
         return $context;
     }

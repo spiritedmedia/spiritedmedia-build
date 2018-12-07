@@ -66,7 +66,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         protected function load() {
             $this->set_environment();
             $this->define_constants();
-            $this->set_site_config();
             $this->require_files();
             $this->setup_cache();
             $this->setup_theme();
@@ -124,28 +123,23 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $defaults = [
                 'PEDESTAL_API_NAMESPACE' => 'pedestal/v1',
 
-                // Network Details
-                'SPIRITEDMEDIA_LIVE_SITE_URL'    => 'http://spiritedmedia.com',
-                'SPIRITEDMEDIA_STAGING_SITE_URL' => 'http://staging.spiritedmedia.com',
-
                 // Site Details
-                'PEDESTAL_THEME_NAME'                   => wp_get_theme()->get_stylesheet(),
-                'PEDESTAL_BLOG_URL'                     => '',
-                'PEDESTAL_BLOG_NAME'                    => get_bloginfo( 'name' ),
-                'PEDESTAL_BLOG_DESCRIPTION'             => get_bloginfo( 'description' ),
-                'PEDESTAL_BLOG_TAGLINE'                 => '',
-                'PEDESTAL_HOMEPAGE_TITLE'               => '',
-                'PEDESTAL_CITY_NAME'                    => '',
-                'PEDESTAL_CITY_NICKNAME'                => '',
-                'PEDESTAL_STATE_NAME'                   => '',
-                'PEDESTAL_STATE'                        => '',
-                'PEDESTAL_ZIPCODE'                      => '',
-                'PEDESTAL_BUILDING_NAME'                => '',
-                'PEDESTAL_STREET_ADDRESS'               => '',
-                'PEDESTAL_DATE_FORMAT'                  => 'M. d, Y',
-                'PEDESTAL_TIME_FORMAT'                  => 'g:i a',
-                'PEDESTAL_DATETIME_FORMAT'              => 'M. d, Y \a\t g:i a',
-                'PEDESTAL_SITE_TIMEZONE'                => 'America/New_York',
+                'PEDESTAL_THEME_NAME'       => wp_get_theme()->get_stylesheet(),
+                'PEDESTAL_BLOG_NAME'        => get_bloginfo( 'name' ),
+                'PEDESTAL_BLOG_DESCRIPTION' => get_bloginfo( 'description' ),
+                'PEDESTAL_BLOG_TAGLINE'     => '',
+                'PEDESTAL_HOMEPAGE_TITLE'   => '',
+                'PEDESTAL_CITY_NAME'        => '',
+                'PEDESTAL_CITY_NICKNAME'    => '',
+                'PEDESTAL_STATE_NAME'       => '',
+                'PEDESTAL_STATE'            => '',
+                'PEDESTAL_ZIPCODE'          => '',
+                'PEDESTAL_BUILDING_NAME'    => '',
+                'PEDESTAL_STREET_ADDRESS'   => '',
+                'PEDESTAL_DATE_FORMAT'      => 'M. d, Y',
+                'PEDESTAL_TIME_FORMAT'      => 'g:i a',
+                'PEDESTAL_DATETIME_FORMAT'  => 'M. d, Y \a\t g:i a',
+                'PEDESTAL_SITE_TIMEZONE'    => 'America/New_York',
 
                 // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => '',
@@ -162,22 +156,15 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_EMAIL_CONTACT'          => '',
                 'PEDESTAL_EMAIL_NEWS'             => '',
                 'PEDESTAL_EMAIL_TIPS'             => '',
-                'PEDESTAL_EMAIL_INTERNAL_MAILBOX' => '',
-                'PEDESTAL_EMAIL_INTERNAL_DOMAIN'  => '',
                 'PEDESTAL_EMAIL_NEWSLETTER_FROM'  => '',
                 'PEDESTAL_EMAIL_FROM_NAME'        => get_bloginfo( 'name' ),
-                'PEDESTAL_EMAIL_PLACEHOLDER'      => '',
 
                 // Social Media
-                'PEDESTAL_TWITTER_USERNAME'        => '',
-                'PEDESTAL_INSTAGRAM_USERNAME'      => '',
-                'PEDESTAL_FACEBOOK_PAGE'           => '',
-                'PEDESTAL_FACEBOOK_PAGE_ID'        => '',
-                'PEDESTAL_YOUTUBE_CHANNEL_ID'      => '',
-
-                // Users
-                'PEDESTAL_USER_TITLE_MAX_LENGTH' => 72,
-                'PEDESTAL_USER_HASH_PHRASE'      => 'billy penn is so cool ',
+                'PEDESTAL_TWITTER_USERNAME'   => '',
+                'PEDESTAL_INSTAGRAM_USERNAME' => '',
+                'PEDESTAL_FACEBOOK_PAGE'      => '',
+                'PEDESTAL_FACEBOOK_PAGE_ID'   => '',
+                'PEDESTAL_YOUTUBE_CHANNEL_ID' => '',
 
                 // Branding
                 'PEDESTAL_BRAND_COLOR' => '',
@@ -192,9 +179,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_SLACK_BOT_EMOJI'              => '',
 
                 // Site Features
-                'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY'  => true,
-                'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'     => false,
-                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'    => false,
+                'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY' => true,
+                'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'    => false,
+                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'   => false,
 
                 // Membership
                 'PEDESTAL_NRH_PROPERTY' => '',
@@ -211,14 +198,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             if ( ! defined( 'PEDESTAL_BLOG_NAME_SANS_THE' ) && defined( 'PEDESTAL_BLOG_NAME' ) ) {
                 define( 'PEDESTAL_BLOG_NAME_SANS_THE', str_replace( 'The ', '', PEDESTAL_BLOG_NAME ) );
-            }
-
-            if ( ! defined( 'SPIRITEDMEDIA_PEDESTAL_LIVE_DIR' ) ) {
-                define( 'SPIRITEDMEDIA_PEDESTAL_LIVE_DIR', SPIRITEDMEDIA_LIVE_SITE_URL . '/wp-content/themes/pedestal' );
-            }
-
-            if ( ! defined( 'SPIRITEDMEDIA_PEDESTAL_STAGING_DIR' ) ) {
-                define( 'SPIRITEDMEDIA_PEDESTAL_STAGING_DIR', SPIRITEDMEDIA_STAGING_SITE_URL . '/wp-content/themes/pedestal' );
             }
 
             if ( ! defined( 'PEDESTAL_TWITTER_SHARE_TEXT_MAX_LENGTH' ) ) {
@@ -251,24 +230,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         public function set_property( string $name, $value ) {
             $this->$name = $value;
         }
-
-        /**
-         * Get site config options
-         *
-         * @return array
-         */
-        public function get_site_config() {
-            if ( ! empty( $this->site_config ) ) {
-                return $this->site_config;
-            }
-        }
-
-        /**
-         * Set site config options
-         *
-         * Each site must define its own specfic config options.
-         */
-        abstract protected function set_site_config();
 
         /**
          * Require the components we're using
@@ -317,7 +278,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->feeds                    = Feeds::get_instance();
             $this->featured_posts           = Featured_Posts::get_instance();
             $this->icons                    = Icons::get_instance();
-            $this->subscribers              = Subscribers::get_instance();
+            $this->audience                 = Audience::get_instance();
             $this->cron_management          = Cron_Management::get_instance();
             $this->menus                    = Menus::get_instance();
             $this->menu_icons               = Menu_Icons::get_instance();
@@ -398,6 +359,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 }
                 return $original_var;
             });
+
             add_filter( 'wp_mail_from_name', function( $original_var ) {
                 if ( PEDESTAL_EMAIL_FROM_NAME ) {
                     return PEDESTAL_EMAIL_FROM_NAME;
@@ -431,9 +393,11 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             add_filter( 'pre_option_timezone_string', function() {
                 return PEDESTAL_SITE_TIMEZONE;
             });
+
             add_filter( 'pre_option_default_role', function() {
                 return 'subscriber';
             });
+
             add_filter( 'pre_option_rss_use_excerpt', '__return_zero' );
 
             /**
@@ -671,7 +635,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * Register and unregister widgets
          */
         public function action_widgets_init() {
-            global $wp_widget_factory;
 
             // Our widgets
             register_widget( '\Pedestal\Widgets\Recent_Content_Widget' );
@@ -702,7 +665,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             // Unregister widgets added by plugins
             unregister_widget( 'P2P_Widget' );
-
         }
 
         /**
@@ -782,51 +744,28 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * @return $context Timber context
          */
         protected function handle_filter_timber_context( $context ) {
-            $site_config = Pedestal()->get_site_config();
-            $theme_path = PEDESTAL_WP_THEMES_PATH . '/' . wp_get_theme()->get_stylesheet();
-
-            $context['is_email'] = Pedestal()->is_email();
-
             $context['date_format'] = get_option( 'date_format' );
             $context['time_format'] = get_option( 'time_format' );
-            $context['datetime_format'] = PEDESTAL_DATETIME_FORMAT;
 
             $context['site']->social = [
-                'twitter_url'      => PEDESTAL_TWITTER_URL,
-                'facebook_url'     => PEDESTAL_FACEBOOK_PAGE,
                 'facebook_page_id' => PEDESTAL_FACEBOOK_PAGE_ID,
-                'instagram_url'    => PEDESTAL_INSTAGRAM_URL,
             ];
 
             $context['site']->address = [
-                'building_name' => PEDESTAL_BUILDING_NAME,
+                'building_name'  => PEDESTAL_BUILDING_NAME,
                 'street_address' => PEDESTAL_STREET_ADDRESS,
-                'city' => PEDESTAL_CITY_NAME,
-                'state' => PEDESTAL_STATE,
-                'zipcode' => PEDESTAL_ZIPCODE,
+                'city'           => PEDESTAL_CITY_NAME,
+                'state'          => PEDESTAL_STATE,
+                'zipcode'        => PEDESTAL_ZIPCODE,
             ];
 
             $context['site']->city = [
                 'name'     => PEDESTAL_CITY_NAME,
-                'nickname' => PEDESTAL_CITY_NICKNAME,
             ];
 
             $context['site']->emails = [
                 'contact' => PEDESTAL_EMAIL_CONTACT,
-                'news'    => PEDESTAL_EMAIL_NEWS,
                 'tips'    => PEDESTAL_EMAIL_TIPS,
-            ];
-
-            $context['site']->live_urls = [
-                'corporate'    => SPIRITEDMEDIA_LIVE_SITE_URL,
-                'current'      => $site_config['site_live_url'],
-                'theme'        => $site_config['site_live_url'] . $theme_path,
-                'theme_parent' => SPIRITEDMEDIA_PEDESTAL_LIVE_DIR,
-            ];
-
-            $context['site']->branding = [
-                'color'   => PEDESTAL_BRAND_COLOR,
-                'tagline' => PEDESTAL_BLOG_TAGLINE,
             ];
 
             $parsely = new \Pedestal\Objects\Parsely;
@@ -839,20 +778,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                     'data' => $parsely->get_data(),
                 ],
             ];
-
-            if ( ! empty( $context['pages'] ) && is_array( $context['pages'] ) ) {
-                $pages_defaults = [
-                    'about' => [
-                        'statement' => [
-                            'body'     => '',
-                            'is_quote' => false,
-                            'speaker'  => '',
-                        ],
-                    ],
-                    '404' => [],
-                ];
-                $context['pages'] = Utils::array_merge_recursive( $pages_defaults, $context['pages'] );
-            }
 
             return $context;
         }
@@ -903,11 +828,11 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * @return string         Email address
          */
         public function get_internal_email( $suffix = '' ) {
-            $addr = PEDESTAL_EMAIL_INTERNAL_MAILBOX;
+            $addr = 'billypennnews';
             if ( $suffix ) {
                 $addr .= '+' . $suffix;
             }
-            $addr .= '@' . PEDESTAL_EMAIL_INTERNAL_DOMAIN;
+            $addr .= '@gmail.com';
             return $addr;
         }
 

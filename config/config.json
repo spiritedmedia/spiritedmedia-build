@@ -4,24 +4,6 @@
     },
     "pedestal": {
         "path": "wp-content\/themes\/pedestal",
-        "imageSizes": {
-            "thumbnail": {
-                "width": 150,
-                "height": 150
-            },
-            "medium": {
-                "width": 300,
-                "height": 300
-            },
-            "large": {
-                "width": 1024,
-                "height": 1024
-            },
-            "medium-square": {
-                "width": 300,
-                "height": 300
-            }
-        },
         "iconColors": [
             "#9f9f9f"
         ],

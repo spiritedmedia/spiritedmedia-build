@@ -38,9 +38,9 @@
             var contactEmailDimension = 'Unknown';
             var memberLevelDimension = 'Unknown';
 
-            var subscriberData = localStorageCookie('subscriberData');
-            if (subscriberData && 'data' in subscriberData) {
-                var data = subscriberData.data;
+            var contactData = localStorageCookie('contactData');
+            if (contactData && 'data' in contactData) {
+                var data = contactData.data;
 
                 {# Contact Email Dimension #}
                 if ( data.subscribed_to_list ) {

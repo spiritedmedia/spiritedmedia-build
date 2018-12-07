@@ -8,8 +8,8 @@ $checklist_root = 'https://github.com/spiritedmedia/spiritedmedia/tree/master/qa
 <ul>
     <li><a href="ad-checker.php">Ad checker</a> - Count the number of DFP ad postions and compare against the number of expected positions for each type of template.</li>
     <li><a href="email-signup-checker.php">Email Signup checker</a> - Make sure it is possible to signup for emails.</li>
-    <li><a href="subscriber-cookie-checker.php">Subscriber Cookie checker</a> - Make sure subscriber cookies are getting the right data from MailChimp.</li>
-    <li><a href="subscriber-cookie-tool.php">Subscriber Cookie tool</a> - Manually set individual subscriber cookie values for testing purposes.</li>
+    <li><a href="contact-cookie-checker.php">Contact Cookie checker</a> - Make sure contact cookies are getting the right data from MailChimp.</li>
+    <li><a href="contact-cookie-tool.php">Contact Cookie tool</a> - Manually set individual contact cookie values for testing purposes.</li>
     <li><a href="side-by-side/">Side-by-side Comparison Tool</a> - Check a staging and production URL side by side. <a href="side-by-side/help.php">More Info</a></li>
 </ul>
 

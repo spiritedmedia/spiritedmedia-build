@@ -1,0 +1,21 @@
+$hr-height              : rem( 4px );
+$hr-spacing-y           : rem( 4px );
+$hr-color               : $light-gray-color;
+
+
+/// A noticeably thick horizontal rule before an element
+// stylelint-disable-next-line selector-max-type
+hr,
+.hr {
+  border: 0;
+  border-top: $hr-height solid $hr-color;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+} // rule
+
+
+/// A slightly less obtrusive rule
+.hr--slim {
+  margin: rem( 8px ) auto;
+  border-top: $border-standard;
+}

@@ -1,0 +1,622 @@
+/// Visually hide an element
+///
+/// Shows for screen-readers
+///
+/// https://allyjs.io/tutorials/hiding-elements.html#2017-edition-of-visuallyhidden
+@mixin invisible {
+  &:not( :focus ):not( :active ) {
+    border: 0;
+    clip-path: inset( 100% );
+    clip: rect( 0 0 0 0 );
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}
+
+/// Set unhovered and hovered link colors and decoration easily.
+///
+/// Defaults to `a` selector. If included within another selector, just use `&`
+///
+/// Unvisited/visited will be the same, hover/active will be the same.
+@mixin anchorage(
+  $selector: 'a',
+  $unhovered: $brand-1-color,
+  $hovered: $black,
+  $unhovered-decoration: none,
+  $hovered-decoration: none
+) {
+
+  #{$selector} {
+
+    &,
+    &:visited {
+      color: $unhovered;
+      text-decoration: $unhovered-decoration;
+    }
+
+    &:hover,
+    &:active {
+      color: $hovered;
+      text-decoration: $hovered-decoration;
+    }
+
+  }
+}
+
+/// Lighten/dim some links
+@mixin link-light {
+  color: $dimmed-text-color;
+
+  &:hover,
+  &:active {
+    color: $dark-gray-color;
+  }
+}
+
+/// Darken some links arbitrarily
+@mixin link-dark {
+  &,
+  &:hover,
+  &:active {
+    color: $body-font-color;
+  }
+}
+
+/// List without bullet or numbers
+///
+/// @param {bool} $post-content Hide custom bullets/numbers?
+@mixin no-bullet( $post-content: false ) {
+  // stylelint-disable selector-max-type, declaration-no-important
+
+  margin-left: 0;
+
+  &,
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  @if $post-content {
+    li::before {
+      // Must be !important to override `.s-content` styles
+      width: 0 !important;
+      height: 0 !important;
+    }
+  }
+  // stylelint-enable selector-max-type, declaration-no-important
+}
+
+/// Load an image placeholder on the given element
+///
+/// @param  {unit} $size  : $icon-diameter Size of the image
+/// @param  {str}  $shape : square
+@mixin img-placeholder( $size: $icon-diameter, $shape: square ) {
+  display: block;
+
+  @if global-variable-exists( site-theme-name ) {
+    @include iconize(
+      $path: $site-theme-logo-abspath + '/logo-icon-placeholder',
+      $size: $size
+    );
+  }
+}
+
+@mixin dash-rule {
+  // stylelint-disable-next-line unit-blacklist
+  width: 4em;
+  margin: 0 auto;
+  border-bottom: rem( 4px ) solid $border-std-color;
+}
+
+/// Mimic the browser's native focus outline
+///
+/// Optionally apply the outline styles as a border instead.
+///
+/// @link https://ghinda.net/article/mimic-native-focus-css/
+/// @param string $border [false] Apply as border instead of outline?
+@mixin native-outline( $border: false ) {
+  $property: if( $border, 'border', 'outline' );
+
+  #{$property}: rem( 2px ) solid Highlight;
+
+  // WebKit gets its native focus styles
+  // stylelint-disable-next-line media-feature-name-no-vendor-prefix
+  @media ( -webkit-min-device-pixel-ratio: 0 ) {
+    #{$property}-style: auto;
+    #{$property}-color: -webkit-focus-ring-color;
+  }
+}
+
+//
+// Link Underline
+//
+// https://codepen.io/jimmynotjim/pen/EabQjV
+// ==========================================================================
+
+/// Prevent underline from interfering with descenders
+///
+/// Applies a stroke to text, simulated with text-shadow.
+///
+/// @link https://github.com/hudochenkov/sass-text-stroke
+///
+/// @param {number} $width                     Width of the stroke in pixels, without units
+/// @param {color}  $background-color [$white] Background color of the text
+/// @param {number} $correction       [0]      Corrects rounding and reduces text-shadows
+@mixin text-underline-crop( $width: 1.75, $background-color: $white, $correction: 0.2 ) {
+  $radius: $width - $correction;
+  $shadow: ();
+
+  // stylelint-disable-next-line scss/operator-no-unspaced
+  @for $i from -$width through $width {
+    // stylelint-disable-next-line scss/operator-no-unspaced
+    @for $k from -$width through $width {
+      $x: $k;
+      $y: $i;
+
+      @if $k > 0 {
+        $x: $k - 0.5;
+      } @elseif $k < 0 {
+        $x: $k + 0.5;
+      }
+
+      @if $i > 0 {
+        $y: $i - 0.5;
+      } @elseif $i < 0 {
+        $y: $i + 0.5;
+      }
+
+      @if ( $x * $x + $y * $y <= $radius * $radius ) {
+        $shadow: append( $shadow, $i * 1px $k * 1px 0 $background-color, comma );
+      }
+    }
+  }
+
+  text-shadow: $shadow;
+}
+
+@mixin _text-underline( $underline-color, $width: rem( 3px ) ) {
+  box-shadow: inset 0 ( -$width ) 0 $underline-color;
+}
+
+/// Override the effects of the link underline
+@mixin link-underline-revert {
+  box-shadow: none;
+  text-shadow: none;
+  padding-bottom: 0;
+  background: transparent;
+}
+
+/// Link underline placeholder selector
+///
+/// This should only be applied to `a` elements. Be specific to avoid
+/// unintentional side effects!
+%link-underline {
+  @include text-underline-crop;
+  @include _text-underline( rgba( $brand-1-color, 0.6 ) );
+
+  // stylelint-disable-next-line unit-blacklist
+  padding-bottom: 0.05em;
+  text-decoration: none;
+  color: $body-font-color;
+  transition:
+    background-color 300ms ease,
+    box-shadow 300ms ease;
+
+  *,
+  & {
+    &::after,
+    &::before,
+    &::selection {
+      text-shadow: none;
+    }
+
+    &::selection {
+      background-color: $brand-1-color;
+    }
+  }
+
+  &:focus,
+  &:hover,
+  &:active {
+    @include _text-underline( transparent );
+
+    // Use `background` and not `background-color` to override everything set by `link-underline`
+    background: $accent-1-color;
+    // Override the link underline and crop
+    box-shadow: none;
+    text-shadow: none;
+  }
+
+  &:visited {
+    @include _text-underline( rgba( $darkest, 0.4 ) );
+  }
+} // end %link-underline
+
+
+/// Target IE10+ only
+@mixin ie-only {
+  @media all and ( -ms-high-contrast: none ), ( -ms-high-contrast: active ) {
+    @content;
+  }
+}
+
+/// Target Firefox 37+ only
+///
+/// https://jeffclayton.wordpress.com/2015/05/04/css-hacks-for-firefox-37/
+@mixin firefox-only {
+  @supports ( -moz-appearance: none ) and ( display: contents ) {
+    @content;
+  }
+}
+
+
+//
+// Typography
+// ==========================================================================
+
+/// Generate heading font size styles including size reduction
+///
+/// Couples Foundation's `$h*-font-size` and `$h*-font-reduction` variables.
+///
+/// @access public
+/// @param {number} $h-level - Heading level number
+/// @param {bool}   $do-reduction - Include reduction sizing?
+@mixin h-size( $h-level, $do-reduction: $enable-heading-font-size-reduction ) {
+  @if not is-number( $h-level ) {
+    @error 'Parameter `$h-level` with value `#{$h-level}` is not a number!';
+  }
+
+  $h-level-cl: clamp( $h-level, 1, 6 );
+  @if $h-level-cl != $h-level {
+    @error 'Parameter `$h-level` with value `#{$h-level}` is not a valid heading level!';
+  }
+
+  $h-size-vars: (
+    1: $h1-font-size,
+    2: $h2-font-size,
+    3: $h3-font-size,
+    4: $h4-font-size,
+    5: $h5-font-size,
+    6: $h6-font-size,
+  );
+
+  $h-reduction-vars: (
+    1: $h1-font-reduction,
+    2: $h2-font-reduction,
+    3: $h3-font-reduction,
+    4: $h4-font-reduction,
+    5: $h5-font-reduction,
+    6: $h6-font-reduction,
+  );
+
+  $base-size: map-fetch( $h-size-vars, $h-level );
+  $size: $base-size;
+  @if $do-reduction {
+    $size: $size - map-fetch( $h-reduction-vars, $h-level );
+  }
+
+  font-size: $size;
+
+  @media #{$medium-up} {
+    font-size: $base-size;
+  }
+}
+
+/// De-emphasized text
+@mixin de-emphasized {
+  line-height: 1.4;
+  font-family: $body-font-family;
+  font-size: rem( 14px );
+  color: $body-font-color;
+  letter-spacing: em( 0.3px );
+}
+
+
+//
+// Icons
+// ==========================================================================
+
+/**
+ * Generate icons and fallbacks from PNG/SVG
+ *
+ * @param  {string} $path:        null                Absolute URI path to the icon
+ * @param  {unit}   $size:        $icon-diameter--med Size of icons to generate
+ * @param  {bool}   $resize-only: false               Set whether to rezize only
+ * @param  {bool}   $path-only:   false               Set whether to change path without resizing
+ * @param  {bool}   $fallback:    true                Set whether to use SVG
+ * @param  {bool}   $live-url:    false               If set, base the image path off the live URL
+ */
+@mixin iconize(
+  $path: '',
+  $size: $icon-diameter--med,
+  $resize-only: false,
+  $path-only: false,
+  $fallback: true,
+  $live-url: false
+) {
+
+  @if $path-only == false {
+    width: $size;
+    height: $size;
+    background-position: center;
+    background-size: $size;
+    background-repeat: no-repeat;
+  }
+
+  @if $resize-only == false {
+
+    @if $path {
+
+      // Normal icons
+      $png-path: $path + '.png';
+      $svg-path: $path + '.svg';
+
+      @if $live-url {
+        $png-path: $site-live-url + $path + '.png';
+        $svg-path: $site-live-url + $path + '.svg';
+      }
+
+      background-image: url( '#{$png-path}' );
+
+      @if $fallback {
+        background-image: url( '#{$svg-path}' );
+      }
+
+    }
+  }
+}
+
+
+//
+// Buttons
+// ==========================================================================
+
+/// Set up background and text color for a button color variant
+///
+/// Hover and focus text color must be set explicitly in all button variations
+/// to override default anchor element behavior. Any deviation from this pattern
+/// can be handled on a case by case basis.
+///
+/// @param {color} $bg-color - Background color
+@mixin button-color-variant( $bg-color ) {
+  background-color: $bg-color;
+
+  &,
+  &:hover,
+  &:focus {
+    color:
+      text-contrast(
+        $bg: $bg-color,
+        $text-dark: $button-text-color-dark
+      );
+
+    .sk-child {
+      background-color:
+        text-contrast(
+          $bg: $bg-color,
+          $text-dark: $button-text-color-dark
+        );
+    }
+  }
+}
+
+/// Button base styles and shape variant
+///
+/// Allows us to implement button styles without relying on classes.
+///
+/// @param {bool} $variant [false] - Shape/style variant name
+/// @param {bool} $include-base-styles [true] - Include button base styles?
+/// @param {unit} $height [$button-height] - Button height in rems
+@mixin button(
+  $variant: false,
+  $include-base-styles: true,
+  $height: $button-height
+) {
+
+  @if not $variant or $include-base-styles {
+    display: inline-block;
+    min-width: rem( 260px );
+    height: $height;
+    line-height: $height;
+    padding-left: rem( 32px );
+    padding-right: rem( 32px );
+    border-radius: rem( 12px );
+
+    font-family: $font-family-sans-serif;
+    font-weight: 600;
+    font-size: rem( 16px );
+    letter-spacing: em( 1px );
+    text-align: center;
+    vertical-align: middle;
+    text-transform: uppercase;
+
+    @include button-color-variant( $brand-1-color );
+
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+    }
+  }
+
+  @if 'oval' == $variant {
+
+    border-radius: rem( 50px );
+
+  } @else if 'bordered' == $variant {
+
+    border: rem( 3px ) solid $button-border-color;
+    // Account for border in line height to keep text vertically centered
+    line-height: $height - rem( 3px ) * 2;
+
+  } @else if 'angled' == $variant {
+
+    transform: skew( -10deg );
+    border-radius: 0;
+
+    // stylelint-disable-next-line
+    &__inner {
+      display: block;
+      transform: skew( 10deg );
+    }
+
+  }
+}
+
+/// Handle arrow button variations
+///
+/// Color variations need to be handled specifically because we need to
+/// re-colorize the SVG background
+///
+/// @param {color} $bg-color - Background color
+/// @param {bool}  $include-base-styles [true] - Include the base styles?
+/// @param {unit} $height [$button-height] - Button height in rems
+@mixin button-arrow(
+  $bg-color,
+  $include-base-styles: true,
+  $height: $button-height
+) {
+  $color: encode-color( $bg-color );
+  $svg: "data:image/svg+xml;charset=UTF-8,%3csvg preserveAspectRatio='none' viewBox='0 0 275 60' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdesc%3eArrow Shape%3c/desc%3e%3cdefs%3e%3c/defs%3e%3cg id='button-promo' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='button-arrow' fill='#{$color}'%3e%3cpolygon id='shape-copy' transform='translate(137.500000, 30.500000) rotate(90.000000) translate(-137.500000, -30.500000) ' points='107.5 -82 137.486328 -107 167.5 -82 167.5 168 137.5 155.5 107.5 168'%3e%3c/polygon%3e%3c/g%3e%3c/g%3e%3c/svg%3e ";
+
+  @if $include-base-styles {
+    @include button( $include-base-styles: true );
+  }
+
+  border-radius: 0;
+
+  // Adjust text position within SVG background
+  padding: 0 em( 32px );
+  text-align: center;
+  line-height: $height + rem( 1.5px );
+
+  @include button-color-variant( $bg-color );
+
+  // stylelint-disable-next-line function-url-quotes
+  background: url( $svg );
+  // Firefox needs this
+  background-repeat: no-repeat;
+  background-size: 100% $height;
+}
+
+
+//
+// Layout
+// ==========================================================================
+
+/// Block grid layout
+///
+/// Use this when you want a fluid grid layout for an arbitrary number of
+/// similarly-sized items like user cards or videos or photos etc.
+///
+/// @param {number|bool} $per-row [false]            How many items to display per row
+/// @param {number}      $spacing [rem( 16px )] Spacing between items
+/// @param {bool}        $include-spacing [true]     Do you want to include spacing between items?
+/// @param {string}      $child-selector [`> *`]     Selector for the child elements
+/// @param {bool}        $base-style [true]          Include the base styles? Should probably be false if in a media query
+@mixin block-grid(
+  $per-row: false,
+  $spacing: rem( 16px ),
+  $include-spacing: true,
+  $child-selector: '> *',
+  $base-style: true
+) {
+
+  @if $include-spacing {
+    #{$child-selector} {
+      padding: 0 ( $spacing / 2 ) $spacing;
+    }
+  }
+
+  @if $base-style {
+    @include clearfix;
+
+    display: block;
+    margin: 0 ( -$spacing / 2 );
+    padding: 0;
+
+    #{$child-selector} {
+      display: block;
+      float: left;
+      height: auto;
+    }
+  }
+
+  @if $per-row {
+    #{$child-selector} {
+      list-style: none;
+      width: 100% / $per-row;
+
+      &:nth-of-type( 1n ) {
+        clear: none;
+      }
+
+      &:nth-of-type( #{$per-row}n+1 ) {
+        clear: both;
+      }
+    }
+  }
+}
+
+/// Break a component out of the bounds of its parent to edge of viewport width
+///
+/// This requires `body { overflow-x: hidden; }`. Fortunately this declaration
+/// does not affect `position: sticky;`.
+///
+/// The inner element can be constrained to the column width as specified by
+/// `$inner-max-columns`, where column width is calculated by you, the
+/// developer, at the root level of the site's 12-column grid.
+///
+/// For example, at the time of writing, the main element and the sidebar are 8
+/// columns and 4 columns respectively. So if you want to have an exploding
+/// component within the main element, then set `$inner-max-columns` to `8`.
+///
+/// Note that the Codepen linked below includes more code for limiting the
+/// explosion area to something smaller than 100vw, but we currently have no use
+/// case for that so it was omitted.
+///
+/// @link https://codepen.io/tigt/post/bust-elements-out-of-containers-with-one-line-of-css
+///
+/// @param  {string} $side ['both']                Side to explode outwards
+/// @param  {string} $inner-selector ['&__inner']  Inner selector to wrap contents
+/// @param  {number} $inner-max-columns [12]       Grid columns to restrict inner element
+@mixin explode-component(
+  $side: 'both',
+  $inner-selector: '&__inner',
+  $inner-max-columns: 12
+) {
+
+  @include clearfix;
+  box-sizing: border-box;
+
+  @if $side == 'left' or $side == 'both' {
+    margin-left: calc( 50% - 50vw );
+  }
+
+  @if $side == 'right' or $side == 'both' {
+    margin-right: calc( 50% - 50vw );
+  }
+
+  @if $inner-selector and $inner-max-columns {
+    $inner-max-width-percent: grid-calc( $inner-max-columns, $total-columns );
+    $inner-max-width-decimal: $inner-max-width-percent / 100%;
+    $inner-max-width: $row-width * $inner-max-width-decimal - $column-gutter;
+
+    #{$inner-selector} {
+      width: 100%;
+      max-width: $inner-max-width;
+      margin-left: auto;
+      margin-right: auto;
+
+      @if $side == 'left' {
+        float: right;
+      } @elseif $side == 'right' {
+        float: left;
+      }
+    }
+  }
+}

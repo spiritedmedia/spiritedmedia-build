@@ -1,16 +1,10 @@
-// ==========================================================================
-// Pedestal // Components // FOOTNOTES
-//
-// Generated footnotes at the bottom of a post.
-// ==========================================================================
-
 .c-footnotes {
   &__item { @include de-emphasized; }
 
   &__return {
     &__icon {
       transform: rotate( 90deg );
-      margin-left: $icon-spacing;
+      margin-left: rem( 8px );
     }
   }
 }

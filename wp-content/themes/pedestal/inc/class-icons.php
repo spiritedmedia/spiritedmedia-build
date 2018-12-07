@@ -75,11 +75,10 @@ class Icons {
             }
             // Primary colors are set per child theme, so assets must be stored there
             if ( 'primary' == $color ) {
-                $site_config = Pedestal()->get_site_config();
-                if ( empty( $site_config['site_branding_color'] ) ) {
+                if ( ! defined( 'PEDESTAL_BRAND_COLOR' ) ) {
                     return;
                 }
-                $color = $site_config['site_branding_color'];
+                $color = PEDESTAL_BRAND_COLOR;
                 $base = get_stylesheet_directory_uri();
             }
             $icon = $icon . '.' . str_replace( '#', '', $color );

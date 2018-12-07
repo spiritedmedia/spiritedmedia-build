@@ -1,0 +1,24 @@
+.o-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: em( 16px );
+  height: em( 16px );
+  stroke-width: 0;
+  stroke: currentColor;
+
+  .email-social-icon & {
+    // vertical-align: baseline;
+    width: rem( 40px );
+    height: rem( 40px );
+    display: block;
+    padding: rem( 10px );
+  }
+}
+
+
+// Set up prescribed widths from IcoMoon for each icon we're using
+@each $icon-name, $icon-width in $icon-widths {
+  .o-icon--#{$icon-name} {
+    width: $icon-width;
+  }
+}

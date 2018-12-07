@@ -1,13 +1,299 @@
+/*
+stylelint-disable
+  selector-max-type,
+  selector-list-comma-newline-after
+*/
+
+
+// Typography resets
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+
+
+a {
+  color: $brand-1-color;
+  line-height: inherit;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $black;
+  }
+
+  img { border: none; }
+}
+
+
+p {
+  font-size: $paragraph-font-size;
+  line-height: $paragraph-line-height;
+  margin-bottom: $paragraph-margin-bottom;
+  text-rendering: optimizeLegibility;
+}
+
+
+em,
+i {
+  font-style: italic;
+  line-height: inherit;
+}
+
+
+strong,
+b {
+  font-weight: 700;
+  line-height: inherit;
+}
+
+small {
+  font-size: $small-font-size;
+  line-height: inherit;
+}
+
+
+abbr,
+acronym {
+  cursor: help;
+
+  &[title] {
+    text-decoration: none;
+  }
+}
+
+abbr[title] {
+  border-bottom: rem( 1px ) dotted $dimmed-text-color;
+}
+
+acronym {
+  text-transform: uppercase;
+}
+
+
+blockquote {
+  margin: 0 0 $paragraph-margin-bottom;
+
+  &,
+  p {
+    line-height: $paragraph-line-height;
+  }
+
+  cite {
+    display: block;
+  }
+}
+
+mark {
+  background-color: $mark-color;
+  color: text-contrast( $mark-color );
+}
+
+::selection {
+  background-color: $selection-color;
+  color: text-contrast( $selection-color );
+}
+
+.de-emphasized { @include de-emphasized; }
+
+
+
+
+
+//
+// Lists
+// ==========================================================================
+
+
+ul,
+ol,
+dl {
+  font-size: $paragraph-font-size;
+  line-height: $paragraph-line-height;
+  margin-bottom: $paragraph-margin-bottom;
+  list-style-position: outside;
+}
+
+// Nested lists
+ul,
+ol {
+  margin-left: rem( 8px );
+
+  ul,
+  ol {
+    margin-left: rem( 20px );
+    margin-bottom: 0;
+  }
+}
+
+dl {
+  dt {
+    margin-bottom: rem( 4px );
+    font-weight: 700;
+  }
+
+  dd { margin-bottom: rem( 12px ); }
+}
+
+
+
+
+
 //
 // Headings
 // ==========================================================================
 
-.c-heading {}
 
-.c-heading__title {}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $header-font-color;
+  font-weight: 700;
+  line-height: $heading-line-height;
+  margin-bottom: rem( 8px );
+  margin-top: 0;
+  text-rendering: optimizeLegibility;
 
-/*a*/.c-heading__link {}
+  @media #{$medium-up} {
+    line-height: 1.4;
+  }
 
+  small {
+    color: scale-color( $header-font-color, $lightness: 35% );
+    font-size: $small-font-size;
+    line-height: 0;
+  }
+}
+
+h1 {
+  @include h-size( 1 );
+
+  line-height: $h1-line-height;
+}
+
+h2 {
+  @include h-size( 2 );
+
+  line-height: $h2-line-height;
+}
+
+h3 {
+  @include h-size( 3 );
+
+  line-height: $h3-line-height;
+}
+
+h4 {
+  @include h-size( 4 );
+
+  line-height: $h4-line-height;
+}
+
+h5 {
+  @include h-size( 5 );
+
+  line-height: $h5-line-height;
+}
+
+h6 {
+  @include h-size( 6 );
+
+  line-height: $h6-line-height;
+}
+
+
+//
+// Print Styles
+// ==========================================================================
+// Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/
+// Credit to Foundation, Paul Irish, and HTML5 Boilerplate (html5boilerplate.com)
+
+
+// stylelint-disable declaration-no-important
+
+
+@media print {
+  * {
+    background: transparent !important;
+    color: $black !important; /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    // stylelint-disable-next-line function-parentheses-space-inside
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]::after {
+    // stylelint-disable-next-line function-parentheses-space-inside
+    content: " (" attr(title) ")";
+  }
+
+  // Don't show links for images, or javascript/internal links
+  .ir a,
+  a[href^="javascript:"],
+  a[href^="#"] {
+    &::after {
+      content: "";
+    }
+  }
+
+  pre,
+  blockquote {
+    border: rem( 1px ) solid $dimmed-text-color;
+    page-break-inside: avoid;
+  }
+
+  thead { display: table-header-group; /* h5bp.com/t */ }
+
+  tr,
+  img { page-break-inside: avoid; }
+
+  img { max-width: 100% !important; }
+
+  @page { margin: 0.34in; }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 { page-break-after: avoid; }
+}
+
+//
+// Headings
+// ==========================================================================
 
 .c-heading--minor,
 %c-heading--minor,
@@ -36,12 +322,10 @@
 .c-heading--overline {
   margin-bottom: $overline-margin-bottom;
 
-  /* stylelint-disable selector-max-type */
   &,
   a {
     color: $accent-2-color;
   }
-  /* stylelint-enable selector-max-type */
 }
 
 .c-heading--archive {

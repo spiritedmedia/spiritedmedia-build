@@ -1,7 +1,3 @@
-// ==========================================================================
-// Pedestal // Components // SINGLE ENTITY META INFO
-// ==========================================================================
-
 $single-entity-meta-icon-spacing      : $icon-spacing / 2;
 $single-entity-meta-icon-size         : $icon-diameter--sm;
 $single-entity-meta-icon-size--email  : $icon-diameter--xs;
@@ -17,16 +13,13 @@ $single-entity-meta-icon-size--email  : $icon-diameter--xs;
   font-size: $small-font-size;
 
   @media #{$medium-up} {
-    font-size: $base-font-size;
+    font-size: rem( 16px );
   }
 
   // stylelint-disable-next-line selector-max-type
   a {
     @include link-dark;
   }
-
-  // If less than three authors, display normal medium layout
-  &.single-entity-meta--authors-few {}
 
   // If three or more authors, always display stacked layout
   &.single-entity-meta--authors-many {
@@ -68,8 +61,6 @@ $single-entity-meta-icon-size--email  : $icon-diameter--xs;
   }
 }
 
-
-.single-entity-meta__source {}
 
 .single-entity-meta__source__item {
   display: inline-block;

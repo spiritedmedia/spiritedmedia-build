@@ -1,9 +1,4 @@
-// ==========================================================================
-// The Incline // Components // 404 PAGE
-// ==========================================================================
-
-
-/*body*/.error404 {
+.error404 {
   background-image: url( '#{$site-theme-abspath}/assets/images/tunnel-background.jpg' );
   background-size: auto;
   background-position: top center;
@@ -14,11 +9,11 @@
   }
 }
 
-/*main*/.e404-main {
+.e404-main {
   margin-top: 0;
 }
 
-/*figure*/.e404-tunnel-monster {
+.e404-tunnel-monster {
   position: relative;
   z-index: $z-index-3;
   margin: rem( -13px ) 0 0 0;

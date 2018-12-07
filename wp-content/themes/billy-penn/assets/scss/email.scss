@@ -1,8 +1,6 @@
 @charset 'UTF-8';
 /*!*
- * Pedestal // Billy Penn // Emails
- *
- * Version: 7.11.1
+ * Version: 7.11.2
  *
  * Copyright ( c ) 2018 Spirited Media
  *
@@ -10,13 +8,8 @@
  * https://fontawesome.com/license
  */
 
-
 $site-theme-name: 'billy-penn';
 
-
-// Set up the child theme functions and variables
-@import 'setup-child';
-@import 'base/settings';
-
-// Site email styles
+@import 'pedestal';
+@import 'helpers/billy-penn-settings';
 @import 'pedestal-email';

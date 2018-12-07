@@ -1,10 +1,3 @@
-// ==========================================================================
-// Pedestal // Components // WHO'S NEXT
-// ==========================================================================
-
-
-.c-whos-next {}
-
 .c-whos-next__logo__img {
   background: no-repeat top left;
   background-image: url( $site-theme-abspath + '/assets/images/whos-next-partner.svg' );
@@ -16,10 +9,6 @@
 .c-whos-next__items {
   border-top: $border-standard;
 }
-
-
-
-
 
 .c-whos-next-item {
   padding-top: rem( 24px );
@@ -49,12 +38,6 @@
 
   margin-bottom: 0;
 }
-
-.c-whos-next-item__description {}
-
-
-
-
 
 @media #{$medium-up} {
   [data-whos-next-people-multiple] .c-whos-next-item__people {

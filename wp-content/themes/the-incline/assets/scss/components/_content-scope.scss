@@ -1,0 +1,59 @@
+.s-content {
+
+
+  //
+  // Brand Headings
+  // ==========================================================================
+
+
+  $brand-heading-bar-height: rem( 54px );
+
+
+  .brand-heading__logo {
+    // stylelint-disable-next-line selector-max-type
+    path {
+      fill: $gray-46;
+    }
+  }
+
+
+  @media screen and ( min-width: $brand-heading-breakpoint ) {
+    .brand-heading {
+      position: relative;
+      height: $brand-heading-bar-height;
+      overflow: hidden;
+
+      background-color: $brand-1-color;
+
+      &::before {
+        $_size: $brand-heading-bar-height * 4;
+
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 0;
+
+        border-bottom: $_size solid $white;
+        border-left: $_size solid $brand-1-color;
+        content: '';
+      }
+    }
+
+    .brand-heading__inner {
+      padding: rem( 8px 16px );
+    }
+
+    .brand-heading__logo {
+      // stylelint-disable-next-line selector-max-type
+      path {
+        fill: text-contrast();
+      }
+    }
+
+    .brand-heading__text {
+      color: text-contrast();
+    }
+  } // @media screen and ( min-width: $brand-heading-breakpoint )
+
+
+} // end .s-content

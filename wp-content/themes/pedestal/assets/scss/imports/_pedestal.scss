@@ -1,0 +1,26 @@
+// Load Spirited Media configuration from JSON
+@import 'config-sassy.json';
+
+// Functions
+@import 'foundation-sites/scss/foundation/functions';
+@import '../helpers/colors';
+@import '../helpers/functions';
+@import '../helpers/global-settings';
+
+$site-theme-name: 'pedestal' !default;
+
+@function sm-theme-setting-get( $setting ) {
+  @if global-variable-exists( site-theme-name ) {
+    @return map-fetch( $spiritedmedia-pedestal, children, $site-theme-name, $setting );
+  } @else {
+    @error 'The theme name is not defined!';
+  }
+}
+
+// URLs and paths
+$site-live-url            : 'https://' + sm-theme-setting-get( baseDomain ) + '.com/';
+$site-theme-abspath       : '/' + sm-theme-setting-get( themePath );
+$site-theme-logo-abspath  : $site-theme-abspath + '/assets/images/logos';
+
+// Colors
+$brand-1-color: sm-theme-setting-get( brandColor );

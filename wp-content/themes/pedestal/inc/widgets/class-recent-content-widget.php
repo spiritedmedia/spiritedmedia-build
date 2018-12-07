@@ -20,14 +20,6 @@ class Recent_Content_Widget extends \WP_Widget {
             $widget_options
         );
 
-        wp_enqueue_script(
-            'recent-content-widget',
-            PEDESTAL_DIST_DIRECTORY_URI . '/js/recent-content-widget-admin.js',
-            [ 'jquery-ui-autocomplete' ],
-            false,
-            true
-        );
-
         add_action( 'wp_ajax_recent-content-widget-cluster-autocomplete', [ $this, 'handle_ajax' ] );
     }
 
@@ -131,6 +123,13 @@ class Recent_Content_Widget extends \WP_Widget {
      * @param  array $instance Saved data for this widget instance
      */
     public function form( $instance ) {
+        wp_enqueue_script(
+            'recent-content-widget',
+            PEDESTAL_DIST_DIRECTORY_URI . '/js/recent-content-widget-admin.js',
+            [ 'jquery-ui-autocomplete' ],
+            false,
+            true
+        );
 
         $instance = wp_parse_args( $instance, [
             'title'       => esc_html( PEDESTAL_BLOG_NAME . ' Originals' ),

@@ -41,9 +41,6 @@
 # !.browserslistrc
 # !phpcs.ruleset.xml
 
-# Unit Tests
-# !/tests/
-
 # Style Guide
 !/styleguide/
 

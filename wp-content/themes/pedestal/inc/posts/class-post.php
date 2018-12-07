@@ -851,8 +851,7 @@ abstract class Post {
     public function get_the_relative_datetime() {
         $local_time_zone = new \DateTimeZone( PEDESTAL_SITE_TIMEZONE );
         $now = new \DateTime( '', $local_time_zone );
-        $match_date = new \DateTime( '', $local_time_zone );
-        $match_date->setTimestamp( $this->get_post_date() );
+        $match_date = new \DateTime( $this->get_post_date( 'Y-m-d H:i:s' ), $local_time_zone );
 
         // Reset time part, to prevent partial day comparison
         $now->setTime( 0, 0, 0 );

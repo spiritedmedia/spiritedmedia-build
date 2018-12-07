@@ -1,9 +1,4 @@
-// ==========================================================================
-// Pedestal // Components // 404 PAGE
-// ==========================================================================
-
-
-/*body*/.error404 {
+.error404 {
 
   .c-main {
     color: $body-font-color;
@@ -35,28 +30,20 @@
   margin-top: rem( 48px );
 }
 
-.e404-art {}
-
-
-
-/*figure*/.e404-quote {
+.e404-quote {
   margin: 0 0 ( $h3-font-size * 1.2 );
 }
 
-/*blockquote*/.e404-quote__body {
+.e404-quote__body {
   margin-bottom: rem( 8px );
   border-left: 0;
   padding: 0;
 }
 
-/*figcaption*/.e404-quote__caption {
+.e404-quote__caption {
   font-weight: 700;
   font-style: italic;
 }
-
-.e404-message {}
-
-/*small*/.e404-message__hook {}
 
 .e404-message__content {
   font-weight: 900;

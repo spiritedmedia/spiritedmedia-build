@@ -1,0 +1,38 @@
+// ==========================================================================
+// Stylesheet to mimic the frontend styles in the WYSIWYG editor on the backend
+// ==========================================================================
+
+@import '../helpers/theme-settings';
+@import '../helpers/mixins';
+@import 'foundation-sites/scss/foundation/components/grid';
+
+
+// General
+@import '../components/normalize';
+@import '../components/general';
+@import '../components/tables';
+@import '../components/buttons';
+
+// Scopes
+@import '../components/content-scope';
+
+@import '../components/icons';
+@import '../components/media';
+@import '../components/rules';
+@import '../components/main';
+@import '../components/type';
+@import '../components/figure';
+@import '../components/embed';
+@import '../components/event';
+@import '../components/single-entity-meta';
+@import '../components/avatar';
+@import '../components/slots';
+@import '../components/yt-placeholder';
+@import '../components/pullquotes';
+@import '../components/donate-form';
+
+// Utilities
+@import '../components/utilities';
+
+// WYSIWYG Editor Reset
+@import '../components/admin/tinymce';

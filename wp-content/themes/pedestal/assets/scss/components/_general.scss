@@ -1,0 +1,62 @@
+/*
+stylelint-disable selector-no-qualifying-type, selector-max-type
+*/
+
+html,
+body {
+  font-size: $body-font-size;
+  line-height: $body-line-height;
+  position: static;
+}
+
+body {
+  background-color: $white;
+
+  // Required for the `explode-component` mixin to work
+  // Does not affect `position: sticky;`
+  overflow-x: hidden;
+}
+
+.content-wrapper {
+  @include grid-row;
+
+  margin-top: $content-wrapper-margin-top;
+  margin-bottom: rem( 64px );
+
+  .page & {
+    max-width: rem( 865px );
+  }
+}
+
+a.disabled {
+  cursor: default;
+}
+
+.noscroll {
+  overflow: hidden;
+}
+
+
+/// Prevent scrolling of img alt text when an image 404s
+img {
+  overflow: hidden;
+}
+
+// Use cascading SVG fill color
+// https://css-tricks.com/cascading-svg-fill-color/
+svg {
+  fill: currentColor;
+}
+
+// Override Normalize.css figure element margins
+figure {
+  margin: 0 0 rem( 16px ) 0;
+}
+
+
+@media print {
+  .content-wrapper {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
