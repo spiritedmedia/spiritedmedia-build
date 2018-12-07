@@ -106,5 +106,7 @@ class Billy_Penn extends Pedestal {
             $context['submit_text'] = 'Take my money!';
             return $context;
         } );
+
+        add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
     }
 }

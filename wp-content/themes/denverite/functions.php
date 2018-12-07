@@ -136,6 +136,8 @@ class Denverite extends Pedestal {
             ];
         } );
 
+        add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
+
         add_filter( 'pedestal_footer_menu', function( $menu ) {
             return [
                 'Advertising'    => '/advertising/',
