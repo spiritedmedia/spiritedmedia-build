@@ -45,6 +45,9 @@ class Feeds {
         //     `init`. But if hooking to `init`, then theme options and thus
         //     Timber context is unavailable. If not hooking, then this works
         //     fine. Why?
+        if ( 'denverite' == PEDESTAL_THEME_NAME ) {
+            return;
+        }
         add_feed( 'fias', [ $this, 'do_feed_instant_articles' ] );
     }
 

@@ -130,7 +130,7 @@ class Featured_Posts {
         if ( is_array( $data ) && ! empty( $data[ $data_key ]['post'] ) ) {
             $post_id = $data[ $data_key ]['post'];
             $ped_post = Post::get( $post_id );
-            if ( $ped_post ) {
+            if ( Types::is_post( $ped_post ) ) {
                 $placeholder = $ped_post->get_homepage_description();
             }
         }
