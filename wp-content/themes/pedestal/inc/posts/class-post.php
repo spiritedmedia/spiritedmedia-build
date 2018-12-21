@@ -1049,7 +1049,6 @@ abstract class Post {
         $args = wp_parse_args( $args, $defaults );
 
         $size = $size ?: '1024-16x9';
-        $size = is_feed( 'fias' ) ? 'max-4-3' : $size;
 
         $img_atts = [
             'sizes'  => $args['img_sizes'] ?? '',

@@ -132,13 +132,6 @@ class Figure {
                     $is_responsive = false;
                 }
 
-                // @codingStandardsIgnoreStart
-                if ( 'iframe' === $node->nodeName && is_feed( 'fias' ) ) {
-                    // @codingStandardsIgnoreEnd
-                    $atts['element_figure_wrap'] = null;
-                    $this->content = str_replace( 'class="', 'class="column-width ', $this->content );
-                }
-
                 // Is it a YouTube embed?
                 $youtube_id = false;
                 // @codingStandardsIgnoreStart
@@ -191,7 +184,7 @@ class Figure {
             $context['url'] = null;
         }
         // Override YouTube embed content so we can lazy load videos
-        if ( isset( $youtube_id ) && $youtube_id && ! is_feed( 'fias' ) ) {
+        if ( isset( $youtube_id ) && $youtube_id ) {
             $src_sets = [];
             $youtube = new YouTube;
             $youtube_url = $youtube::get_url_from_id( $youtube_id );
@@ -224,15 +217,6 @@ class Figure {
                 'ga_category' => $placeholder_ga_category,
             ] );
             $context['content'] = ob_get_clean();
-        }
-
-        if ( ! empty( $atts['attachment'] ) ) {
-            $obj = Attachment::get( $atts['attachment'] );
-            if ( Types::is_attachment( $obj ) && ! $atts['omit_presentation_mode'] ) {
-                $context['fias_presentation'] = $obj->get_fias_presentation_mode( $atts['allow_fullscreen'] );
-            } else {
-                $context['fias_presentation'] = '';
-            }
         }
 
         ob_start();

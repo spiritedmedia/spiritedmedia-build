@@ -7,7 +7,7 @@ use Pedestal\Email\Email_Groups;
 
 class Audience {
 
-    private $version = 3;
+    private $version = 4;
 
     /**
      * Get an instance of this class

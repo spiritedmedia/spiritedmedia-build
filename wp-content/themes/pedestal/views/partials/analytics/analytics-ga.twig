@@ -28,11 +28,6 @@
         ga('require', 'linker');
         ga('linker:autoLink', ['checkout.fundjournalism.org']);
 
-        {% if is_fias_feed %}
-            ga('set', 'referrer', 'http://instantarticles.fb.com');
-            ga('set', 'title', '{{ item.get_title|addslashes }}');
-        {% endif %}
-
         ga(function(tracker) {
             {# If no cookie is set #}
             var contactEmailDimension = 'Unknown';
@@ -66,7 +61,7 @@
                     this will have us convered
                 #}
                 if ( data.current_member ) {
-                    memberLevelDimension = 'Member';
+                    memberLevelDimension = 'Error';
                 }
 
                 if ( data.current_member && data.member_level > 0 ) {

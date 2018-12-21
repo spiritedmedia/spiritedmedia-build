@@ -142,15 +142,6 @@ class Shortcode_Manager {
         add_filter( 'img_shortcode_send_to_editor_attrs', [ $this, 'filter_img_shortcode_send_to_editor_attrs' ], 10, 4 );
         add_filter( 'img_shortcode_ui_args', [ $this, 'filter_img_shortcode_ui_args' ], 10, 1 );
         add_filter( 'img_shortcode_output_after_captionify', [ $this, 'filter_img_shortcode_output_after_captionify' ], 10, 2 );
-        add_filter( 'shortcode_atts_img', function( $atts, $thing ) {
-            // Instant Articles can't have links wrapped around <img>. It prevents
-            // image captions from rendering.
-            if ( is_feed( 'fias' ) ) {
-                $atts['linkto'] = null;
-                $atts['url'] = null;
-            }
-            return $atts;
-        }, 10 , 2 );
     }
 
     /**
@@ -431,10 +422,6 @@ class Shortcode_Manager {
         // Protocol relative URLs should be replaced with https
         $output = str_replace( 'src="//', 'src="https://', $output );
 
-        if ( is_feed( 'fias' ) ) {
-            $figure_atts['element_figure_wrap'] = 'iframe';
-        }
-
         $figure = new \Pedestal\Objects\Figure( $embed_type, $output, $figure_atts );
         return $figure->get_html();
     }
@@ -485,10 +472,6 @@ class Shortcode_Manager {
                 if ( ! empty( $meta['width'] ) && 1024 < $meta['width'] ) {
                     $size = 'large';
                 }
-            }
-
-            if ( is_feed( 'fias' ) ) {
-                $size = 'full';
             }
 
             return $obj->get_html( $size, $img_atts );

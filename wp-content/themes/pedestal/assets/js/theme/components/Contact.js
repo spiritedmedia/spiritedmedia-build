@@ -18,81 +18,91 @@ export default class Contact {
      * Versioning so we can force clients to update their data if need be
      * @type {Number}
      */
-    this.version = 3;
+    this.version = 4;
+
+    // Capture email address signups to refresh the cookie
+    $('.js-signup-email-form').on('pedFormSubmission:success',
+      (e, data) => {
+        if (!('emailAddress' in data)) {
+          return;
+        }
+        this.fetchData(data.emailAddress, false);
+      }
+    );
+
+    // Migrate from subscriberData cookie to contactData cookie
+    var oldContactData = localStorageCookie('subscriberData');
+    if (oldContactData && 'data' in oldContactData) {
+      localStorageCookie('subscriberData', '');
+      localStorageCookie(this.storageKey, oldContactData);
+    }
+
+    var queryStringId = getURLParams('mc_eid');
+    var contactData = localStorageCookie(this.storageKey);
+
+    // Bail if we have really bad data
+    if (
+      !contactData ||
+      typeof contactData != 'object' ||
+      !('data' in contactData)
+    ) {
+      this.deleteData();
+      this.fetchData(queryStringId);
+      return;
+    }
+
+    // Bail if we don't have the data we expect
+    if (
+      !('mc_id' in contactData.data) ||
+      !('version' in contactData) ||
+      !('updated' in contactData)
+    ) {
+      this.deleteData();
+      this.fetchData(queryStringId);
+      return;
+    }
+
+    var theId = contactData.data.mc_id;
+    // Query string ID takes precedence over ID from cookie
+    if (queryStringId) {
+      theId = queryStringId;
+    }
+
+
+    // Check if the cookie version is out of date
+    if (contactData.version != this.version) {
+      this.deleteData();
+      this.fetchData(theId);
+      return;
+    }
+
+    // Check if the cookie is stale...
+    var validNumberOfDays = 14;
+    // Get now in seconds since epoch
+    var now = new Date().getTime() / 1000;
+    // Get our last updated time in seconds since epoch
+    var updatedCutOff = new Date(contactData.updated).getTime() / 1000;
+    // Add the amount of seconds to determine our cutoff timestamp
+    updatedCutOff += 60 * 60 * 24 * validNumberOfDays;
+
+    // If the cutoff date is in the past we need to refresh the data
+    if (now >= updatedCutOff) {
+      this.deleteData();
+      this.fetchData(theId);
+      return;
+    }
 
     // Make sure we trigger our ready event late enough for other events to
     // listen for it. If the cookie is already present, the ready event is
     // called before other scripts are ready to listen for it.
-    $(document).on('ready', () => {
-      // Migrate from subscriberData cookie to contactData cookie
-      var oldContactData = localStorageCookie('subscriberData');
-      if (oldContactData && 'data' in oldContactData) {
-        localStorageCookie('subscriberData', '');
-        localStorageCookie(this.storageKey, oldContactData);
-      }
-      var contactData = localStorageCookie(this.storageKey);
-      if (contactData && 'data' in contactData) {
-        this.triggerEvent('ready', contactData);
-      }
-    });
-
-    // Capture email address signups to refresh the cookie
-    $('.js-signup-email-form').on('pedFormSubmission:success',
-      (e, data) => this.listenForEmailSignups(e, data)
-    );
-    this.maybeRefresh();
+    $(document).on('ready', () => this.triggerEvent('ready', contactData));
   }
 
   /**
-   * Check if our stored data needs to be refreshed from the server or not
-   *
-   * * @return {bool} Whether it was determined to refresh the data or not
+   * Clear the data for the local cookie key
    */
-  maybeRefresh() {
-    // MailChimp's Unique Email Identifier
-    var mcEid = getURLParams('mc_eid');
-    var contactData = localStorageCookie(this.storageKey);
-    if (contactData && 'data' in contactData) {
-
-      var oldId = false;
-      if ('mc_id' in contactData.data) {
-        oldId = contactData.data.mc_id;
-      }
-
-      // If the cookie version is out of date
-      if ('version' in contactData) {
-        if (contactData.version != this.version) {
-          this.fetchData(oldId);
-          return true;
-        }
-      }
-
-      // If the cookie is stale...
-      if ('updated' in contactData) {
-        var validNumberOfDays = 14;
-        // Get now in seconds since epoch
-        var now = new Date().getTime() / 1000;
-        // Get our last updated time in seconds since epoch
-        var updatedCutOff = new Date(contactData.updated).getTime() / 1000;
-        // Add the amount of seconds to determine our cutoff timestamp
-        updatedCutOff += 60 * 60 * 24 * validNumberOfDays;
-
-        // If the cutoff date is in the past we need to refresh the data
-        if (now >= updatedCutOff) {
-          this.fetchData(oldId);
-          return true;
-        }
-      }
-
-      // Looks like the data is still good
-      this.triggerEvent('ready', contactData);
-    // If there is no cookie but we have a MailChimp ID
-    } else if (mcEid) {
-      this.fetchData(mcEid);
-      return true;
-    }
-
-    return false;
+  deleteData() {
+    localStorageCookie(this.storageKey, '');
   }
 
   /**
@@ -103,13 +113,17 @@ export default class Contact {
    * code can hook into
    */
   fetchData(id, triggerReadyEvent = true) {
+    // Don't bother to make an AJAX request if our id is false
+    if (!id) {
+      return;
+    }
+    var storageKey = this.storageKey;
     var ajaxData = {
       action: 'get_contact_data',
       contactID: id
     };
-    var storageKey = this.storageKey;
     $.post(PedVars.ajaxurl, ajaxData, (resp) => {
-      if (! resp.success) {
+      if (!resp.success) {
         return;
       }
       localStorageCookie(storageKey, resp.data);
@@ -117,18 +131,6 @@ export default class Contact {
         this.triggerEvent('ready', resp.data);
       }
     });
-  }
-
-  /**
-   * Whenver we capture an email address we need to update the cookie
-   * @param  {Object} e    Event data
-   * @param  {Object} data Email address sucessfully submited
-   */
-  listenForEmailSignups(e, data) {
-    if (!('emailAddress' in data)) {
-      return;
-    }
-    this.fetchData(data.emailAddress, false);
   }
 
   /**

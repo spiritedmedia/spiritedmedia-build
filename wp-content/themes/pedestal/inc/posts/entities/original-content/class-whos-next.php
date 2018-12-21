@@ -15,13 +15,6 @@ use Pedestal\Posts\Clusters\{
 
 class Whos_Next extends Original {
 
-    /**
-     * Use automatic placement of ads in Instant Articles?
-     *
-     * @var string true|false
-     */
-    private $fias_use_automatic_ad_placement = 'false';
-
     protected static $post_type = 'pedestal_whosnext';
 
     /**

@@ -92,10 +92,6 @@ class Types {
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts_sortable_columns' ] );
         add_action( 'pre_get_posts', [ $this, 'action_pre_get_posts_originals' ] );
         add_action( 'template_redirect', [ $this, 'action_redirect_found_post_names' ], 10, 2 );
-
-        foreach ( Types::get_original_post_types() as $post_type ) {
-            add_action( "save_post_{$post_type}", [ $this, 'action_save_post_originals' ], 10, 3 );
-        }
     }
 
     /**
@@ -331,42 +327,6 @@ class Types {
         $query->is_archive = true;
         $query->is_home = false;
         $query->set( 'post_type', self::get_original_post_types() );
-    }
-
-    /**
-     * Do stuff when an original post is updated
-     *
-     * @param int $post_id Post ID
-     * @param \WP_Post $post Post object
-     * @param bool $update Whether this is an existing post being updated or not
-     */
-    public function action_save_post_originals( $post_id, $post, $update ) {
-        $accepted_post_statuses = [ 'publish', 'future' ];
-        if ( ! isset( $post->post_status ) || ! in_array( $post->post_status, $accepted_post_statuses ) ) {
-            return;
-        }
-
-        // Set meta to indicate we want to publish this post to Instant
-        // Articles UNLESS any social media or other third-party content is
-        // embedded via a Shortcake Bakery shortcode.
-        //
-        // Not all of the shortcodes loaded by Shortcake Bakery are for
-        // third-party content, so we can exclude those from the blacklisted
-        // shortcodes.
-        $shortcake_bakery_shortcode_tags = Pedestal()->shortcode_manager->get_shortcake_bakery_tags();
-        $fias_blacklisted_shortcodes = $shortcake_bakery_shortcode_tags;
-        unset( $fias_blacklisted_shortcodes['pullquote'] );
-        $has_blacklisted_shortcode = false;
-        foreach ( $fias_blacklisted_shortcodes as $shortcode_tag => $_empty ) {
-            $has_blacklisted_shortcode = has_shortcode( $post->post_content, $shortcode_tag );
-            if ( $has_blacklisted_shortcode ) {
-                break;
-            }
-        }
-        // Reverse the boolean so we can use an affirmative post meta key --
-        // a post will only publish to Instant Articles if this is true
-        $publish_to_ia = ! $has_blacklisted_shortcode;
-        update_post_meta( $post_id, 'publish_fb_instant_article', $publish_to_ia );
     }
 
     /**

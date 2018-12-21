@@ -14,13 +14,7 @@
 
 {% if item.get_ruling %}
 <section class="c-factcheck__ruling">
-    {% if is_fias_feed and item.get_rating %}
-        {{ item.get_meter_html_fias( {
-            'classes': '',
-        } ) }}
-    {% else %}
-        <h1>Our Ruling</h1>
-    {% endif %}
+    <h1>Our Ruling</h1>
     {{ item.get_the_ruling }}
 </section>
 {% endif %}

@@ -117,18 +117,6 @@ abstract class Original extends Entity {
     }
 
     /**
-     * Are ads in Instant Articles placed automatically?
-     *
-     * @return string true|false
-     */
-    public function fias_use_automatic_ad_placement() {
-        if ( empty( $this->fias_use_automatic_ad_placement ) ) {
-            return 'true';
-        }
-        return $this->fias_use_automatic_ad_placement;
-    }
-
-    /**
      * Get the Twig context for this post
      *
      * @param array Existing context to filter

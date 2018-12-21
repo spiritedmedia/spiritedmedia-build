@@ -19,7 +19,6 @@ class Feeds {
         if ( ! isset( self::$instance ) ) {
             self::$instance = new Feeds;
             self::$instance->setup_actions();
-            self::$instance->add_feeds();
             self::$instance->setup_filters();
 
         }
@@ -38,26 +37,10 @@ class Feeds {
     }
 
     /**
-     * Add new feed endpoints
-     */
-    private function add_feeds() {
-        // @TODO According to the Codex, `add_feed()` needs to be hooked to
-        //     `init`. But if hooking to `init`, then theme options and thus
-        //     Timber context is unavailable. If not hooking, then this works
-        //     fine. Why?
-        if ( 'denverite' == PEDESTAL_THEME_NAME ) {
-            return;
-        }
-        add_feed( 'fias', [ $this, 'do_feed_instant_articles' ] );
-    }
-
-    /**
      * Set up filters used on the frontend
      */
     private function setup_filters() {
-
         add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
-
     }
 
     /**
@@ -76,13 +59,6 @@ class Feeds {
     }
 
     /**
-     * Load Facebook Instant Articles feed template
-     */
-    public function do_feed_instant_articles( $for_comments ) {
-        locate_template( [ 'templates/feeds/feed-fias.php' ], true );
-    }
-
-    /**
      * Modify the main query
      */
     public function action_pre_get_posts( $query ) {
@@ -93,20 +69,10 @@ class Feeds {
 
         $post_type = get_query_var( 'post_type' );
 
-        // Return if is an Instant Articles feed type but is not an Original Content feed
-        if ( $query->is_feed( 'fias' ) && in_array( $post_type, Types::get_original_post_types() ) ) {
-            return;
-        }
-
         if ( $query->is_feed() ) {
             $title = get_bloginfo_rss( 'name' );
             if ( ! $query->is_post_type_archive() ) {
                 $query->set( 'post_type', Types::get_entity_post_types() );
-            } elseif ( $query->is_feed( 'fias' ) ) {
-                $title .= ' » ' . 'Instant Articles';
-                // FIAs require at least 100 articles in feed
-                // https://developers.facebook.com/docs/instant-articles/checklist
-                $query->set( 'posts_per_page', '111' );
             } else {
                 $title .= ' » ' . Types::get_post_type_name( $post_type );
             }

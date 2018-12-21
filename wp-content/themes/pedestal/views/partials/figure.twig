@@ -3,7 +3,7 @@
 {% set element_figure_caption = if_email('div', 'figcaption')  %}
 {% set element_figure_wrap = element_figure_wrap|default( 'div' )  %}
 
-<{{ element_figure }} {{ id }} class="c-figure  c-figure--{{ type }}  wp-caption  {{ align }}  {{ classes }}" {{ fias_presentation }}>
+<{{ element_figure }} {{ id }} class="c-figure  c-figure--{{ type }}  wp-caption  {{ align }}  {{ classes }}">
 
     <{{ element_figure_wrap }} {{ style }} class="{{ wrap_classes }} c-figure__content-wrap  column-width">
 

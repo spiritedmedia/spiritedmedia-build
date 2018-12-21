@@ -2,15 +2,6 @@
     {{ item.get_the_content }}
 </div>
 
-{% if is_feed %}
-    {% set people_element = 'div' %}
-    <figure class="op-ad">
-        {% include 'partials/adverts/dfp-fias-auto-300x250.twig' ignore missing %}
-    </figure>
-{% else %}
-    {% set people_element = 'header' %}
-{% endif %}
-
 {% if item.get_items %}
 <section class="c-whos-next__items">
     {% set stream = true %}
@@ -26,7 +17,7 @@
             <div class="c-whos-next-item__img">{{ item.img }}</div>
             {% endif %}
 
-            <{{ people_element }} class="c-whos-next-item__people">
+            <header class="c-whos-next-item__people">
                 {% for person in item.people %}
                     {% if is_feed %}
                         {% include 'partials/whosnext/person-feed.twig' %}
@@ -34,18 +25,12 @@
                         {% include 'partials/whosnext/person.twig' %}
                     {% endif %}
                 {% endfor %}
-            </{{ people_element }}>
+            </header>
 
             <div class="c-whos-next-item__description  s-content">
                 {{ item.description }}
             </div>
         </section>
-
-        {% if is_feed and loop.index is divisible by( 3 ) %}
-        <figure class="op-ad">
-            {% include 'partials/adverts/dfp-fias-auto-300x250.twig' ignore missing %}
-        </figure>
-        {% endif %}
 
     {% endfor %}
 </section>

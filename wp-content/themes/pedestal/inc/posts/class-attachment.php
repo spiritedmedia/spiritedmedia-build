@@ -269,26 +269,6 @@ class Attachment extends Post {
     }
 
     /**
-     * Get the attachment's FIAS presentation mode
-     *
-     * @param  boolean $allow_fullscreen Allow fullscreen mode if attachment is
-     *     large enough? Default is false.
-     *
-     * @return string                    `data-mode` attribute for `<img>`
-     */
-    public function get_fias_presentation_mode( $allow_fullscreen = false ) {
-        $mode = 'non-interactive';
-        $data = $this->get_metadata();
-        if ( $data && 1024 <= $data['width'] && 1024 <= $data['height'] ) {
-            $mode = 'aspect-fit';
-            if ( $allow_fullscreen ) {
-                $mode = 'fullscreen';
-            }
-        }
-        return sprintf( 'data-mode="%s"', $mode );
-    }
-
-    /**
      * Get a `srcset` attribute string from an array of widths
      *
      * @param array $widths Flat array of numeric widths

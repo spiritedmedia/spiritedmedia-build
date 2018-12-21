@@ -160,25 +160,6 @@ class Factcheck extends Original {
     }
 
     /**
-     * Get the FIAS-compatible meter
-     *
-     * This meter image is different in that it includes a white rectangular
-     * background with an "Our Ruling" header because FIAS won't allow the meter
-     * to be anything smaller than the full width of the mobile device.
-     *
-     * @return string Image caption HTML
-     */
-    public function get_meter_html_fias() {
-        $description = $this->get_rating_label_str() . ' Our ruling follows...';
-        $content = $this->get_meter_html( [
-            'src'   => get_template_directory_uri() . '/assets/images/partners/politifact/fias/meter-fias-' . $this->get_rating() . '.jpg',
-            'alt'   => $description,
-            'title' => $description,
-        ] );
-        return Attachment::get_img_caption_html( $content );
-    }
-
-    /**
      * Get the image element for the meter
      *
      * @param  array  $atts    Optional attribute overrides
