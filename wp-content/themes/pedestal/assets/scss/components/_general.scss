@@ -36,10 +36,10 @@ a.disabled {
   overflow: hidden;
 }
 
-
-/// Prevent scrolling of img alt text when an image 404s
 img {
-  overflow: hidden;
+  @include subtle-image-shadow;
+
+  overflow: hidden; // Prevent scrolling of img alt text when an image 404s
 }
 
 // Use cascading SVG fill color

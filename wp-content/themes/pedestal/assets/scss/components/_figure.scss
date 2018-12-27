@@ -16,6 +16,10 @@
   display: block;
   height: auto;
   padding-bottom: rem( 4px );
+
+  .c-figure--img & {
+    padding-bottom: 0;
+  }
 }
 
 .c-figure__text {
@@ -94,12 +98,15 @@
  */
 
 .c-figure--img {
+  @include subtle-image-shadow;
+
   // Image figures must display as table so caption matches the width of non-
   // full-width images
   display: table;
 
   // stylelint-disable-next-line selector-max-type
   img {
+    box-shadow: none;
     display: block;
     // For IE compatability
     width: 100%;

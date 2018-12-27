@@ -9,16 +9,28 @@ export default class Contact {
 
   constructor() {
     /**
-     * The name we use to store/get data
+     * The name we use to store/get contact data
      * @type {String}
      */
-    this.storageKey = 'contactData';
+    this.dataStorageKey = 'contactData';
+
+    /**
+     * The name we use to store/get contact history data
+     * @type {String}
+     */
+    this.historyStorageKey = 'contactHistory';
 
     /**
      * Versioning so we can force clients to update their data if need be
      * @type {Number}
      */
     this.version = 4;
+
+    this.contactData();
+    this.contactHistory();
+  }
+
+  contactData() {
 
     // Capture email address signups to refresh the cookie
     $('.js-signup-email-form').on('pedFormSubmission:success',
@@ -34,11 +46,11 @@ export default class Contact {
     var oldContactData = localStorageCookie('subscriberData');
     if (oldContactData && 'data' in oldContactData) {
       localStorageCookie('subscriberData', '');
-      localStorageCookie(this.storageKey, oldContactData);
+      localStorageCookie(this.dataStorageKey, oldContactData);
     }
 
     var queryStringId = getURLParams('mc_eid');
-    var contactData = localStorageCookie(this.storageKey);
+    var contactData = localStorageCookie(this.dataStorageKey);
 
     // Bail if we have really bad data
     if (
@@ -98,11 +110,35 @@ export default class Contact {
     $(document).on('ready', () => this.triggerEvent('ready', contactData));
   }
 
+  contactHistory() {
+    var history = localStorageCookie(this.historyStorageKey);
+    if (! history || ! Array.isArray(history)) {
+      history = [];
+    }
+
+    // Log the current time stamp and URL path
+    history.unshift({
+      t: Date.now(),
+      u: window.location.pathname
+    });
+
+    // Remove items that are too old
+    var maximumNumberOfDays = 30;
+    var dateCutoff = new Date();
+    dateCutoff.setDate(dateCutoff.getDate() - maximumNumberOfDays);
+    history = history.filter((item) => {
+      return (item.t > dateCutoff.getTime());
+    });
+
+    // Store the result
+    localStorageCookie(this.historyStorageKey, history);
+  }
+
   /**
    * Clear the data for the local cookie key
    */
   deleteData() {
-    localStorageCookie(this.storageKey, '');
+    localStorageCookie(this.dataStorageKey, '');
   }
 
   /**
@@ -117,7 +153,7 @@ export default class Contact {
     if (!id) {
       return;
     }
-    var storageKey = this.storageKey;
+    var storageKey = this.dataStorageKey;
     var ajaxData = {
       action: 'get_contact_data',
       contactID: id

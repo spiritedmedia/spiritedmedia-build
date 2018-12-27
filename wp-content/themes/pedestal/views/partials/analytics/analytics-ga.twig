@@ -71,6 +71,37 @@
             tracker.set('dimension1', contactEmailDimension);
             tracker.set('dimension2', memberLevelDimension);
 
+            var contactFrequency = '0 posts';
+            var contactHistory = localStorageCookie('contactHistory');
+            if ( contactHistory ) {
+                {# Only count posts #}
+                var posts = contactHistory.filter(function(item) {
+                    return ( item.u.slice(0, 3) === '/20' );
+                });
+                var postCount = posts.length;
+                if ( postCount == 1 ) {
+                    contactFrequency = '1 post';
+                } else if ( postCount >= 2 && postCount < 4 ) {
+                    contactFrequency = '2-3 posts';
+                } else if ( postCount >= 4 && postCount < 6 ) {
+                    contactFrequency = '4-5 posts';
+                } else if ( postCount >= 6 && postCount < 9 ) {
+                    contactFrequency = '6-8 posts';
+                } else if ( postCount >= 9 && postCount < 14 ) {
+                    contactFrequency = '9-13 posts';
+                } else if ( postCount >= 14 && postCount < 22 ) {
+                    contactFrequency = '14-21 posts';
+                } else if ( postCount >= 22 && postCount < 35 ) {
+                    contactFrequency = '22-34 posts';
+                } else if ( postCount >= 35 && postCount < 56 ) {
+                    contactFrequency = '35-55 posts';
+                } else if ( postCount >= 56 ) {
+                    contactFrequency = '56+';
+                }
+            }
+            tracker.set('dimension3', contactFrequency);
+
+
             {#
                 Setup a global variable to store the cross-domain linker paramter for use in our own scripts
                 See https://developers.google.com/analytics/devguides/collection/analyticsjs/linker#linkerparam

@@ -22,11 +22,11 @@ import Contact from 'Contact';
 
 jQuery(document).ready(function($) {
   const contact = new Contact;
-  const data = localStorageCookie(contact.storageKey);
+  const data = localStorageCookie(contact.dataStorageKey);
   const $status = $('#status');
 
   function outputRawCookieData() {
-    var rawData = localStorageCookie(contact.storageKey);
+    var rawData = localStorageCookie(contact.dataStorageKey);
     $('#raw-data-output').text(JSON.stringify(rawData, null, 4));
   }
 
@@ -96,7 +96,7 @@ jQuery(document).ready(function($) {
       }
     });
 
-    localStorageCookie(contact.storageKey, {
+    localStorageCookie(contact.dataStorageKey, {
       'version': 3,
       'updated': new Date().toISOString(),
       'data': newData
