@@ -1740,63 +1740,42 @@ class CLI extends \WP_CLI_Command {
     }
 
     /**
-     * Update targeted messages option structure
+     * Update message spot message IDs
      *
-     * This updates the options data for both message spot and conversion prompts.
+     * Generates new IDs for each message spot message and updates them in the
+     * database. This fixes a regression caused by copying old messages without
+     * changing the IDs, introduced in v7.12.0.
      *
      * ## EXAMPLES
      *
-     *     wp pedestal update-targeted-messages-structure
-     *     wp pedestal update-targeted-messages-structure --url=https://billypenn.com/
+     *     wp pedestal update-message-spot-ids
+     *     wp pedestal update-message-spot-ids --url=https://billypenn.com/
      *
-     * @subcommand update-targeted-messages-structure
+     * @subcommand update-message-spot-ids
      */
-    public function update_targeted_messages_structure() {
-        WP_CLI::line( 'Updating message spot structure...' );
+    public function update_message_spot_ids() {
+        WP_CLI::line( 'Updating message spot message IDs...' );
 
-        $old_message_spot_data = get_option( 'pedestal_message_spot' );
+        $message_spot_data = get_option( 'pedestal_message_spot' );
 
-        if ( ! $old_message_spot_data ) {
+        if ( ! $message_spot_data ) {
             WP_CLI::error( 'Existing message spot data cannot be retrieved... is something wrong?' );
         }
 
-        if ( empty( $old_message_spot_data['messages'] ) ) {
-            WP_CLI::error( 'Existing message spot data appears to be empty... is something wrong?' );
+        foreach ( $message_spot_data['standard_messages'] as $audience_key => &$locations_by_audience ) {
+            WP_CLI::line( "Updating IDs for `{$audience_key}`..." );
+            foreach ( $locations_by_audience as $location_key => &$messages_by_location ) {
+                foreach ( $messages_by_location['messages'] as &$message ) {
+                    $old_id = $message['id'];
+                    $new_id = bin2hex( random_bytes( 4 ) );
+                    $message['id'] = $new_id;
+                    WP_CLI::line( "Message updated from `{$old_id}` to `{$new_id}`" );
+                }
+            }
         }
 
-        if ( empty( $old_message_spot_data['messages'][0]['type'] ) ) {
-            WP_CLI::error( 'Existing message spot data is malformed!' );
-        }
-
-        $new_message_spot_data = [
-            'standard_messages' => [],
-            'override_message' => [],
-        ];
-
-        // Copy the existing message spot messages to every available target
-        // group so we can migrate seamlessly
-        foreach ( Message_Spot::get_target_groups() as $group_name => $group_label ) {
-            $new_message_spot_data['standard_messages'][ $group_name ]['default']['messages'] = $old_message_spot_data['messages'];
-        }
-        $new_message_spot_data['override_message'] = $old_message_spot_data['override'];
-
-        update_option( 'pedestal_message_spot', $new_message_spot_data );
-        WP_CLI::success( 'Successfully updated message spot structure!' );
-
-        WP_CLI::line( 'Updating conversion prompt structure...' );
-
-        $old_conversion_prompts_data = get_option( 'pedestal_conversion_prompts' );
-
-        if ( ! $old_conversion_prompts_data ) {
-            WP_CLI::error( 'Existing message spot data cannot be retrieved... is something wrong?' );
-        }
-
-        $new_conversion_prompts_data = [
-            'standard_messages' => $old_conversion_prompts_data,
-            'override_message' => [],
-        ];
-        update_option( 'pedestal_conversion_prompts', $new_conversion_prompts_data );
-        WP_CLI::success( 'Successfully updated conversion prompts structure!' );
+        update_option( 'pedestal_message_spot', $message_spot_data );
+        WP_CLI::success( 'Message spot messages updated!' );
     }
 
     /**
