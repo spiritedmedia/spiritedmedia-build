@@ -48,6 +48,21 @@ Object.assign(PreviewView.prototype, Backbone.View.prototype, {
   },
 
   /**
+   * Debounce all of the functions in the given events object
+   *
+   * @param {object} events Backbone-compatible events object
+   * @returns {object}
+   */
+  debounceEvents(events) {
+    for (const key in events) {
+      if (events.hasOwnProperty(key)) {
+        events[key] = debounce(events[key]);
+      }
+    }
+    return events;
+  },
+
+  /**
    * Set up the frame and width toggling button
    *
    * Get a "unique" ID for this message for loading the static preview on page
@@ -112,7 +127,7 @@ Object.assign(PreviewView.prototype, Backbone.View.prototype, {
     const listen = () => {
       this.editor.on('keyup', debounce(() => {
         this.model.save('body', this.editor.getContent());
-      }, 300));
+      }));
       this.listeningToEditor = true;
     };
 
@@ -144,10 +159,10 @@ Object.assign(PreviewView.prototype, Backbone.View.prototype, {
    *
    * @param {Event} e
    */
-  listenToIconButton: debounce(function(e) {
+  listenToIconButton: function(e) {
     const name = $(e.currentTarget).data('message-icon-value');
     this.model.save('icon_name', name);
-  }, 300),
+  },
 
   /**
    * Completely remove the output iframe from the DOM and unbind view events

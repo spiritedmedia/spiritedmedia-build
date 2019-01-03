@@ -3,7 +3,7 @@
 include 'include.php';
 
 use Timber\Timber;
-use Pedestal\Conversion_Prompts;
+use Pedestal\Audience\Conversion_Prompts;
 use Pedestal\Email\Newsletter_Emails;
 
 // Disable conversion prompt targeting so we can view
@@ -21,17 +21,15 @@ $basic_prompt_args = [
     'button_url'  => 'https://example.com',
 ];
 
-$signup_form_args = [];
-
 $prompt_with_form_args = [
     'title'       => 'This is a Conversion Prompt with a Newsletter Signup Form',
     'body'        => 'This signup form is just like any other but it includes a signup form',
     'icon_name'   => 'envelope-slant',
-    'signup_form' => Newsletter_Emails::get_signup_form( $signup_form_args ),
+    'signup_form' => Newsletter_Emails::get_signup_form(),
 ];
 
 $context = [
-    'basic_prompt'            => Conversion_Prompts::get_prompt( $basic_prompt_args ),
-    'prompt_with_signup_form' => Conversion_Prompts::get_prompt( $prompt_with_form_args ),
+    'basic_prompt'            => Conversion_Prompts::render( $basic_prompt_args ),
+    'prompt_with_signup_form' => Conversion_Prompts::render( $prompt_with_form_args ),
 ] + Timber::get_context();
 Timber::render( 'views/conversion-prompts.twig', $context );

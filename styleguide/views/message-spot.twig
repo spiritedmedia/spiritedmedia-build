@@ -10,12 +10,10 @@
 
 {% block pre_header %}
     {% spaceless %}
-
-    {% include 'partials/header/message-spot.twig' with messages.standard only %}
-    {% include 'partials/header/message-spot.twig' with messages.with_title only %}
-    {% include 'partials/header/message-spot.twig' with messages.with_button only %}
-    {% include 'partials/header/message-spot.twig' with messages.override only %}
-
+        {{ messages.standard }}
+        {{ messages.with_title }}
+        {{ messages.with_button }}
+        {{ messages.override }}
     {% endspaceless %}
 {% endblock %}
 

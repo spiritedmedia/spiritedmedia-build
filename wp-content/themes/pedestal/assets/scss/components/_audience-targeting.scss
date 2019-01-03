@@ -1,0 +1,15 @@
+[class*="show-for-target-audience--"] {
+  display: none;
+
+  // The component should always display when loaded as a preview
+  .pedestal-component-preview & {
+    display: block;
+  }
+}
+
+.is-target-audience--unidentified .show-for-target-audience--unidentified,
+.is-target-audience--subscriber .show-for-target-audience--subscriber,
+.is-target-audience--donor .show-for-target-audience--donor,
+.is-target-audience--member .show-for-target-audience--member {
+  display: block;
+}

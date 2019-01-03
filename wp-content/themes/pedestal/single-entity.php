@@ -1,10 +1,7 @@
 <?php
 use Timber\Timber;
-use Pedestal\{
-    Adverts,
-    Conversion_Prompts,
-    Conversion_Prompt_Admin
-};
+use Pedestal\Adverts;
+use Pedestal\Audience\Conversion_Prompts;
 use Pedestal\Objects\Stream;
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
@@ -39,7 +36,7 @@ if ( Types::is_post( $item ) ) :
         'widths' => [ 320, 480, 640, 676, 700, 800, 1024 ],
     ];
 
-    $context['conversion_prompts'] = Conversion_Prompts::get_prompts( 'entity', [
+    $context['conversion_prompts'] = Conversion_Prompts::get_rendered_messages( 'entity', [
         'signup_source' => 'Post footer',
     ] );
 

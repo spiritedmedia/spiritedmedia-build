@@ -5,7 +5,8 @@ import PreviewView from './PreviewView';
 
 export default class OverrideMessage extends Message {
   constructor() {
-    super($('.fm-override'), PreviewView, messagePreviewDefaults.override);
+    const defaults = messagePreviewDefaults.override;
+    super($('.fm-override_message'), PreviewView, defaults);
 
     this.post = null;
 

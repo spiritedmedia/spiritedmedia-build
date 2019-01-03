@@ -66,9 +66,7 @@ import summaryButtons from 'summaryButtons';
       summaryButtons();
 
       // Handle resizing of responsive iframes on window resize
-      $(window).on('resize', debounce(() => {
-        this.responsiveIframes();
-      }, 300));
+      $(window).on('resize', debounce(() => this.responsiveIframes()));
       // And resize the iframes a first time right now
       this.responsiveIframes();
 

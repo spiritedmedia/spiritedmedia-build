@@ -14,7 +14,11 @@
         <link rel="pingback" href="{{site.pingback_url}}" />
         {% include 'partials/header/header-js.twig' ignore missing %}
         <script src="{{ local_storage_cookie_script_url|esc_url }}"></script>
-        {% include 'partials/analytics/analytics-ga.twig' %}
+
+        {% if site.analytics.ga %}
+            {% include 'partials/analytics/analytics-ga-optimize.twig' %}
+            {% include 'partials/analytics/analytics-ga.twig' %}
+        {% endif %}
 
         {{ function('wp_head') }}
 
@@ -30,10 +34,7 @@
                 {% block pre_header %}
                 {% endblock %}
 
-                {% if not is_page_donate %}
-                {% include 'partials/header/message-spot.twig' with message_spot only %}
-                {% endif %}
-
+                {{ message_spot }}
                 {{ site_header }}
 
                 {% block after_header %}
@@ -54,8 +55,12 @@
 
         {{function('wp_footer')}}
 
-        {% include 'partials/analytics/analytics.twig' %}
-        {% include 'partials/cdn-fallback.twig' %}
+        {% include 'partials/analytics/analytics-parsely.twig' %}
+
+        {% if cdn_fallback_inline_script %}
+        <script>{{ cdn_fallback_inline_script }}</script>
+        {% endif %}
+
         {% include 'partials/modals/modal.twig' %}
 
     </body>

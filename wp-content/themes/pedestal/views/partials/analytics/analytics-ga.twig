@@ -1,115 +1,13 @@
-{% if site.analytics.ga_id and not site.analytics.hide_ga %}
-
-    {% if site.analytics.ga_optimize_id %}
-        <style>.async-hide { opacity: 0 !important} </style>
-        <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
-        h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
-        (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
-        })(window,document.documentElement,'async-hide','dataLayer',4000,
-        {'{{ site.analytics.ga_optimize_id }}':true});</script>
-    {% endif %}
-
+{% if site.analytics.ga.js_data %}
+    <script>var PedestalGAData = {{ site.analytics.ga.js_data }}</script>
     <script>
-        if(document.cookie.indexOf('is_staff=') >= 0) {
-          window['ga-disable-{{ site.analytics.ga_id }}'] = true;
-        }
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        ga('create', '{{ site.analytics.ga_id }}', 'auto', {'allowLinker': true});
-        ga('require', 'displayfeatures');
-
-        {% if site.analytics.ga_optimize_id %}
-            ga('require', '{{ site.analytics.ga_optimize_id }}');
-        {% endif %}
-
-        ga('require', 'linker');
-        ga('linker:autoLink', ['checkout.fundjournalism.org']);
-
-        ga(function(tracker) {
-            {# If no cookie is set #}
-            var contactEmailDimension = 'Unknown';
-            var memberLevelDimension = 'Unknown';
-
-            var contactData = localStorageCookie('contactData');
-            if (contactData && 'data' in contactData) {
-                var data = contactData.data;
-
-                {# Contact Email Dimension #}
-                if ( data.subscribed_to_list ) {
-                    contactEmailDimension = 'Other';
-                }
-
-                if ( data.newsletter_subscriber ) {
-                    contactEmailDimension = 'Daily Newsletter';
-                }
-
-                {# Contact Member Level Dimension #}
-                if ( !data.current_member && !data.donate_365 ) {
-                    memberLevelDimension = 'None';
-                }
-
-                if ( !data.current_member && data.donate_365 ) {
-                    memberLevelDimension = 'Donor';
-                }
-
-                {#
-                    In theory this conditional should never be triggered
-                    but if something goes wrong with data.member_level
-                    this will have us convered
-                #}
-                if ( data.current_member ) {
-                    memberLevelDimension = 'Error';
-                }
-
-                if ( data.current_member && data.member_level > 0 ) {
-                    memberLevelDimension = 'Member ' + data.member_level;
-                }
-            }
-            tracker.set('dimension1', contactEmailDimension);
-            tracker.set('dimension2', memberLevelDimension);
-
-            var contactFrequency = '0 posts';
-            var contactHistory = localStorageCookie('contactHistory');
-            if ( contactHistory ) {
-                {# Only count posts #}
-                var posts = contactHistory.filter(function(item) {
-                    return ( item.u.slice(0, 3) === '/20' );
-                });
-                var postCount = posts.length;
-                if ( postCount == 1 ) {
-                    contactFrequency = '1 post';
-                } else if ( postCount >= 2 && postCount < 4 ) {
-                    contactFrequency = '2-3 posts';
-                } else if ( postCount >= 4 && postCount < 6 ) {
-                    contactFrequency = '4-5 posts';
-                } else if ( postCount >= 6 && postCount < 9 ) {
-                    contactFrequency = '6-8 posts';
-                } else if ( postCount >= 9 && postCount < 14 ) {
-                    contactFrequency = '9-13 posts';
-                } else if ( postCount >= 14 && postCount < 22 ) {
-                    contactFrequency = '14-21 posts';
-                } else if ( postCount >= 22 && postCount < 35 ) {
-                    contactFrequency = '22-34 posts';
-                } else if ( postCount >= 35 && postCount < 56 ) {
-                    contactFrequency = '35-55 posts';
-                } else if ( postCount >= 56 ) {
-                    contactFrequency = '56+';
-                }
-            }
-            tracker.set('dimension3', contactFrequency);
-
-
-            {#
-                Setup a global variable to store the cross-domain linker paramter for use in our own scripts
-                See https://developers.google.com/analytics/devguides/collection/analyticsjs/linker#linkerparam
-            #}
-            window.gaLinkTrackerParam = tracker.get('linkerParam');
-        });
-
-        ga('send', 'pageview');
+        // Disable tracking for staff
+        if (document.cookie.indexOf('is_staff=')>=0){window['ga-disable-'+PedestalGAData.id]=true;}
+        // Set up the `ga()` function
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        // Queue GA commands
+        {{ site.analytics.ga.inline_script }}
     </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <script>if(typeof ga!=='function'){ga=false;}</script>
 {% endif %}
-<script> if( typeof ga !== 'function' ) { ga = false; } </script>

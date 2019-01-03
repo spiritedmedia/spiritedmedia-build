@@ -97,7 +97,7 @@ jQuery(document).ready(function($) {
     });
 
     localStorageCookie(contact.dataStorageKey, {
-      'version': 3,
+      'version': 4,
       'updated': new Date().toISOString(),
       'data': newData
     });

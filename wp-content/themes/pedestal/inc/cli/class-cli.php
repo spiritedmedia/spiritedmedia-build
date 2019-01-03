@@ -18,6 +18,10 @@ use Pedestal\Posts\Slots\Slot_Item;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\User_Management;
 use Pedestal\Utils\Utils;
+use Pedestal\Audience\{
+    Conversion_Prompts,
+    Message_Spot
+};
 
 class CLI extends \WP_CLI_Command {
 
@@ -1736,53 +1740,63 @@ class CLI extends \WP_CLI_Command {
     }
 
     /**
-     * Update message spot option structure
+     * Update targeted messages option structure
+     *
+     * This updates the options data for both message spot and conversion prompts.
      *
      * ## EXAMPLES
      *
-     *     wp pedestal update-message-spot-structure
-     *     wp pedestal update-message-spot-structure --url=https://billypenn.com/
+     *     wp pedestal update-targeted-messages-structure
+     *     wp pedestal update-targeted-messages-structure --url=https://billypenn.com/
      *
-     * @subcommand update-message-spot-structure
+     * @subcommand update-targeted-messages-structure
      */
-    public function update_message_spot_structure() {
-        $messages = get_option( 'pedestal_message_spot' );
-        if ( ! $messages ) {
-            WP_CLI::warning( 'Existing message spot data unavailable... is something wrong?' );
+    public function update_targeted_messages_structure() {
+        WP_CLI::line( 'Updating message spot structure...' );
+
+        $old_message_spot_data = get_option( 'pedestal_message_spot' );
+
+        if ( ! $old_message_spot_data ) {
+            WP_CLI::error( 'Existing message spot data cannot be retrieved... is something wrong?' );
         }
 
-        if ( empty( $messages[0]['type'] ) ) {
+        if ( empty( $old_message_spot_data['messages'] ) ) {
+            WP_CLI::error( 'Existing message spot data appears to be empty... is something wrong?' );
+        }
+
+        if ( empty( $old_message_spot_data['messages'][0]['type'] ) ) {
             WP_CLI::error( 'Existing message spot data is malformed!' );
         }
 
-        foreach ( $messages as &$message ) {
-            // Match the new behavior where we store the model encoded with
-            // JavaScript's `encodeURIComponent()`
-            //
-            // https://stackoverflow.com/a/1734255/1801260
-            // @codingStandardsIgnoreLine
-            $revert = [ '%21' => '!', '%2A' => '*', '%27' => "'", '%28' => '(', '%29' => ')' ];
-            $encoded_model = strtr( rawurlencode( $message['preview_model'] ), $revert );
-            $message['preview_model'] = $encoded_model;
+        $new_message_spot_data = [
+            'standard_messages' => [],
+            'override_message' => [],
+        ];
+
+        // Copy the existing message spot messages to every available target
+        // group so we can migrate seamlessly
+        foreach ( Message_Spot::get_target_groups() as $group_name => $group_label ) {
+            $new_message_spot_data['standard_messages'][ $group_name ]['default']['messages'] = $old_message_spot_data['messages'];
+        }
+        $new_message_spot_data['override_message'] = $old_message_spot_data['override'];
+
+        update_option( 'pedestal_message_spot', $new_message_spot_data );
+        WP_CLI::success( 'Successfully updated message spot structure!' );
+
+        WP_CLI::line( 'Updating conversion prompt structure...' );
+
+        $old_conversion_prompts_data = get_option( 'pedestal_conversion_prompts' );
+
+        if ( ! $old_conversion_prompts_data ) {
+            WP_CLI::error( 'Existing message spot data cannot be retrieved... is something wrong?' );
         }
 
-        $new_data = [
-            'messages' => $messages,
-            'override' => [
-                'enabled'       => 'false',
-                'id'            => 'override',
-                'type'          => 'override',
-                'preview'       => '',
-                'preview_model' => '',
-                'title'         => '',
-                'post'          => 0,
-                'body'          => '',
-                'url'           => '',
-                'icon'          => '',
-            ],
+        $new_conversion_prompts_data = [
+            'standard_messages' => $old_conversion_prompts_data,
+            'override_message' => [],
         ];
-        update_option( 'pedestal_message_spot', $new_data );
-        WP_CLI::success( 'Success!' );
+        update_option( 'pedestal_conversion_prompts', $new_conversion_prompts_data );
+        WP_CLI::success( 'Successfully updated conversion prompts structure!' );
     }
 
     /**

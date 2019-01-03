@@ -589,4 +589,31 @@ class Utils {
             return mb_convert_encoding( $match[1], 'UTF-8', 'HTML-ENTITIES' );
         }, $string );
     }
+
+    /**
+     * Convert an array to a JavaScript object for output directly in a template
+     *
+     * Performs the same function as `wp_localize_script()` but doesn't rely on
+     * registered script handles. This can be useful if we need to make data
+     * available to an inline script.
+     *
+     * @see `\WP_Scripts::localize()`
+     *
+     * @param array $array Array of data to process
+     * @param string $object_name [''] Optional name of JS object variable to output
+     * @return string Sanitized JSON string or JS variable declaration
+     */
+    public static function encode_for_js( array $array, string $object_name = '' ) {
+        foreach ( $array as $key => $value ) {
+            if ( ! is_scalar( $value ) ) {
+                continue;
+            }
+            $array[ $key ] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
+        }
+        $data = wp_json_encode( $array );
+        if ( $object_name ) {
+            return "var {$object_name} = {$data};";
+        }
+        return $data;
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-use Pedestal\Audience;
+use Pedestal\Audience\Audience;
 use Timber\Timber;
 
 include 'include.php';

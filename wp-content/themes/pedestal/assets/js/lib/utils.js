@@ -73,10 +73,10 @@ export function toAttsString(object) {
  * {@link https://medium.com/@TCAS3/debounce-deep-dive-javascript-es6-e6f8d983b7a1}
  *
  * @param  function fn        A callback to be fired
- * @param  int      wait      How long to delay firing the callback
- * @param  bool     immediate Whether to fire the callback immediatly
+ * @param  int      wait      [300] How long to delay firing the callback in ms
+ * @param  bool     immediate [false] Whether to fire the callback immediatly
  */
-export function debounce(fn, wait, immediate) {
+export function debounce(fn, wait = 300, immediate = false) {
   let timeout;
   return function() {
     const functionCall = () => fn.apply(this, arguments);

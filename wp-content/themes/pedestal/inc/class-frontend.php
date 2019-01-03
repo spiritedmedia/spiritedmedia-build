@@ -227,7 +227,7 @@ class Frontend {
         if ( ! defined( 'PEDESTAL_COMSCORE_ID' ) || ! PEDESTAL_COMSCORE_ID ) {
             return;
         }
-        Timber::render( 'partials/analytics/comscore.twig', [
+        Timber::render( 'partials/analytics/analytics-comscore.twig', [
             'comscore_id' => PEDESTAL_COMSCORE_ID,
         ] );
     }

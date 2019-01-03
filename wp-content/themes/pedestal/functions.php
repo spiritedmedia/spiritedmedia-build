@@ -38,6 +38,11 @@ use Pedestal\Menus\{
     Menus,
     Menu_Icons
 };
+use Pedestal\Audience\{
+    Audience,
+    Conversion_Prompts,
+    Message_Spot
+};
 
 if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
@@ -104,8 +109,9 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 define( 'PEDESTAL_VERSION', trim( $version ) );
             }
 
-            // URL to the versioned dist directory
+            define( 'PEDESTAL_DIST_DIRECTORY', get_template_directory() . '/assets/dist/' . PEDESTAL_VERSION );
             define( 'PEDESTAL_DIST_DIRECTORY_URI', get_template_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION );
+            define( 'PEDESTAL_THEME_DIST_DIRECTORY', get_stylesheet_directory() . '/assets/dist/' . PEDESTAL_VERSION );
             define( 'PEDESTAL_THEME_DIST_DIRECTORY_URI', get_stylesheet_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION );
 
             // Define an abbreviated prefix for use in naming
@@ -278,16 +284,15 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->feeds                    = Feeds::get_instance();
             $this->featured_posts           = Featured_Posts::get_instance();
             $this->icons                    = Icons::get_instance();
-            $this->audience                 = Audience::get_instance();
             $this->cron_management          = Cron_Management::get_instance();
             $this->menus                    = Menus::get_instance();
             $this->menu_icons               = Menu_Icons::get_instance();
             $this->component_previews       = Component_Previews::get_instance();
 
-            // Messaging
-            $this->message_spot             = Message_Spot::get_instance();
-            $this->conversion_prompts       = Conversion_Prompts::get_instance();
-            $this->conversion_prompt_admin  = Conversion_Prompt_Admin::get_instance();
+            // Target Audience Messaging
+            $this->audience           = Audience::get_instance();
+            $this->message_spot       = Message_Spot::get_instance();
+            $this->conversion_prompts = Conversion_Prompts::get_instance();
 
             // Metrics
             $this->metricbots                        = MetricBots::get_instance();
@@ -768,16 +773,30 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'tips'    => PEDESTAL_EMAIL_TIPS,
             ];
 
-            $parsely = new \Pedestal\Objects\Parsely;
             $context['site']->analytics = [
-                'ga_id' => PEDESTAL_GOOGLE_ANALYTICS_ID,
-                'ga_optimize_id' => PEDESTAL_GOOGLE_OPTIMIZE_ID,
-                'hide_ga' => current_user_can( 'edit_posts' ),
-                'parsely' => [
+                'ga'      => [],
+                'parsely' => [],
+            ];
+            // Enable analytics for everyone that can't edit posts
+            if ( ! current_user_can( 'edit_posts' ) ) {
+                $ga_data = [
+                    'id'         => PEDESTAL_GOOGLE_ANALYTICS_ID,
+                    'optimizeID' => PEDESTAL_GOOGLE_OPTIMIZE_ID,
+                ];
+                $ga_inline_script = file_get_contents( PEDESTAL_DIST_DIRECTORY . '/js/ga.js' );
+                $parsely = new \Pedestal\Objects\Parsely;
+                $context['site']->analytics['ga'] = [
+                    'optimize_id'   => $ga_data['optimizeID'],
+                    'js_data'       => Utils::encode_for_js( $ga_data ),
+                    'inline_script' => $ga_inline_script,
+                ];
+                $context['site']->analytics['parsely'] = [
                     'site' => parse_url( home_url(), PHP_URL_HOST ),
                     'data' => $parsely->get_data(),
-                ],
-            ];
+                ];
+            }
+
+            $context['cdn_fallback_inline_script'] = file_get_contents( PEDESTAL_DIST_DIRECTORY . '/js/cdn-fallback.js' );
 
             return $context;
         }
