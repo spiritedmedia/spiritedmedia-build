@@ -448,6 +448,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 add_filter( 'script_loader_src', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
                 add_filter( 'template_directory_uri', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
                 add_filter( 'stylesheet_directory_uri', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
+                add_filter( 'compressed_emoji_url', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
+                add_filter( 'compressed_emoji_svg_url', [ $this, 'filter_rewrite_url_for_cdn' ], 10, 1 );
             }
 
             // Add some Twig functions and filters

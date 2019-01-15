@@ -64,7 +64,7 @@ jQuery(function($) {
 
     // Rename artclbox1, artclbox2 targets to m1, m2 etc. for mobile
     if ('mobile' == screenSize) {
-      slotTarget.replace(/artclbox/ig,'m');
+      slotTarget = slotTarget.replace(/artclbox/ig,'m');
     }
 
     var path = '/' + DFP_PATH;
