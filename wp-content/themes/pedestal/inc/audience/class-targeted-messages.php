@@ -81,10 +81,11 @@ abstract class Targeted_Messages {
      * @var array name => label
      */
     protected static $target_groups = [
-        'unidentified' => 'Unidentified',
-        'subscriber'   => 'Subscriber',
-        'donor'        => 'Donor',
-        'member'       => 'Member',
+        'unidentified'    => 'Unidentified',
+        'frequent-reader' => 'Frequent Reader',
+        'subscriber'      => 'Subscriber',
+        'donor'           => 'Donor',
+        'member'          => 'Member',
     ];
 
     /**

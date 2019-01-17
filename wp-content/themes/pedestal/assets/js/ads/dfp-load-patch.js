@@ -1,3 +1,5 @@
+import handleSlotRenderEnded from './components/handleSlotRenderEnded';
+
 var googletag = window.googletag || {};
 googletag.cmd = googletag.cmd || [];
 (function() {
@@ -93,23 +95,7 @@ googletag.cmd.push(function() {
   // with a call to googletag.pubads().refresh();
   googletag.pubads().disableInitialLoad();
 
-  // Add 'ADVERTISEMENT' disclaimer text before all DFP units
-  googletag.pubads().addEventListener('slotRenderEnded', function(e) {
-    var div, html;
-    if (false === e.isEmpty) {
-      var id = e.slot.getSlotElementId();
-      div = document.getElementById(id);
-      if (! div) {
-        return;
-      }
-      // Don't display the advertisement label twice
-      if (div.querySelector('.dfp-disclaimer')) {
-        return;
-      }
-      html = '<div class="dfp-disclaimer">ADVERTISEMENT</div>';
-      div.insertAdjacentHTML('afterbegin', html);
-    }
-  });
+  googletag.pubads().addEventListener('slotRenderEnded', handleSlotRenderEnded);
 
   // Page level targeting
   if (DFP_ARTICLE_ID) {

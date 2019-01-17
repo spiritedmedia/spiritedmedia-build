@@ -8,9 +8,10 @@ import handleModals from 'modals';
 import handleScrollDepth from 'scrollDepth';
 import handleShareButtons from 'shareButtons';
 import handleSubscriptionForms from 'subscriptionForms';
+import { handleTargetedMessages, setTargetAudience } from 'targetedMessages';
 
-import Contact from 'Contact';
-import handleTargetedMessages from 'targetedMessages';
+import adblockerDetection from 'AdblockerDetection';
+import contact from 'Contact';
 
 (function($) {
 
@@ -27,7 +28,9 @@ import handleTargetedMessages from 'targetedMessages';
       handleScrollDepth();
       handleShareButtons();
 
-      this.Contact = new Contact;
+      if (contact.isFrequentReader()) {
+        setTargetAudience('frequent-reader');
+      }
       $document.on('pedContact:ready', handleTargetedMessages);
 
       $('.js-signup-email-form').on('submit', handleSubscriptionForms);
@@ -38,6 +41,12 @@ import handleTargetedMessages from 'targetedMessages';
 
       this.disabledAnchors();
       this.honeyPotHelper();
+
+      // Adblocker detection event listeners must be added before the event is
+      // fired in `AdblockerDetection` to avoid a race condition
+      $document.on('pedABD:positive', () => contact.adblocker = true);
+      $document.on('pedABD:negative', () => contact.adblocker = false);
+      this.AdblockerDetection = adblockerDetection;
     },
 
     /**

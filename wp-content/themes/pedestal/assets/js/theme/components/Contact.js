@@ -5,7 +5,7 @@ import { getURLParams } from 'utils';
 /**
  * Audience/Contact functionality for the frontend
  */
-export default class Contact {
+class Contact {
 
   constructor() {
     /**
@@ -19,6 +19,12 @@ export default class Contact {
      * @type {String}
      */
     this.historyStorageKey = 'contactHistory';
+
+    /**
+     * The name we use to store/get contact adblocker detection status
+     * @type {String}
+     */
+    this.adblockerStorageKey = 'contactAdblocker';
 
     /**
      * Versioning so we can force clients to update their data if need be
@@ -135,6 +141,35 @@ export default class Contact {
   }
 
   /**
+   * Determine if contact is a frequent visitor or not
+   * @return {Boolean}
+   */
+  isFrequentReader() {
+    var history = localStorageCookie(this.historyStorageKey);
+    if (history) {
+      // Only count posts
+      const posts = history.filter((item) => {
+        return (item.u.slice(0, 3) === '/20');
+      });
+      if (posts.length >= 6) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Setter for adblocker detection status
+   *
+   * @type {?Boolean}
+   * @param {Boolean} detected Adblocker detection status to set
+   */
+  set adblocker(detected) {
+    const value = (typeof detected === 'boolean') ? detected : null;
+    localStorageCookie(this.adblockerStorageKey, value);
+  }
+
+  /**
    * Clear the data for the local cookie key
    */
   deleteData() {
@@ -179,3 +214,5 @@ export default class Contact {
     $(document).trigger(evt, [data]);
   }
 }
+
+export default new Contact();

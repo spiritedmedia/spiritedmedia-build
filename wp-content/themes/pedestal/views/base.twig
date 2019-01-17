@@ -12,6 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="fb:pages" content="{{ site.social.facebook_page_id }}" />
         <link rel="pingback" href="{{site.pingback_url}}" />
+
+        <script>var PEDESTAL_VERSION = "{{ PEDESTAL_VERSION }}";</script>
         {% include 'partials/header/header-js.twig' ignore missing %}
         <script src="{{ local_storage_cookie_script_url|esc_url }}"></script>
 

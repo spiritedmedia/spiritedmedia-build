@@ -11,6 +11,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <script>var PEDESTAL_VERSION = "{{ PEDESTAL_VERSION }}";</script>
+
+        {# The local storage cookie script is loaded only to prevent errors --
+        it doesn't currently have any real use in component previews #}
+        <script src="{{ local_storage_cookie_script_url|esc_url }}"></script>
+
         {{ function('wp_head') }}
 
         {% block head %}

@@ -113,6 +113,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             define( 'PEDESTAL_DIST_DIRECTORY_URI', get_template_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION );
             define( 'PEDESTAL_THEME_DIST_DIRECTORY', get_stylesheet_directory() . '/assets/dist/' . PEDESTAL_VERSION );
             define( 'PEDESTAL_THEME_DIST_DIRECTORY_URI', get_stylesheet_directory_uri() . '/assets/dist/' . PEDESTAL_VERSION );
+            $spirited_media_root = network_site_url() . 'wp-content/themes/spirited-media/assets/dist/' . PEDESTAL_VERSION;
+            define( 'SPIRITED_MEDIA_THEME_DIST_DIRECTORY_URI', $spirited_media_root );
 
             // Define an abbreviated prefix for use in naming
             if ( ! defined( 'PEDESTAL_PREFIX' ) ) {
@@ -751,6 +753,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * @return $context Timber context
          */
         protected function handle_filter_timber_context( $context ) {
+            $context['PEDESTAL_VERSION'] = PEDESTAL_VERSION;
+
             $context['date_format'] = get_option( 'date_format' );
             $context['time_format'] = get_option( 'time_format' );
 

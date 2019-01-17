@@ -1,5 +1,5 @@
 import localStorageCookie from 'localStorageCookie';
-import Contact from 'Contact';
+import contact from 'Contact';
 
 // Serialize a form to JSON
 (function ($) {
@@ -21,7 +21,6 @@ import Contact from 'Contact';
 })(jQuery);
 
 jQuery(document).ready(function($) {
-  const contact = new Contact;
   const data = localStorageCookie(contact.dataStorageKey);
   const $status = $('#status');
 

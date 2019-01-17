@@ -1,8 +1,8 @@
-Build [#6477](https://circleci.com/gh/spiritedmedia/spiritedmedia/6477) by kingkool68 at 2019-01-15 05:53 PM UTC
+Build [#6488](https://circleci.com/gh/spiritedmedia/spiritedmedia/6488) by montchr at 2019-01-17 05:42 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v7.12.2](https://github.com/spiritedmedia/spiritedmedia/compare/v7.12.2)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v7.13.0](https://github.com/spiritedmedia/spiritedmedia/compare/v7.13.0)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.12.1...v7.12.2)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.12.2...v7.13.0)
 
- - [#3074](git@github.com:spiritedmedia/spiritedmedia.git/pull/3074): Add the Compressed Emoji Plugin So We Can Serve Emoji SVGs From Our Own CDN
- - [#3078](git@github.com:spiritedmedia/spiritedmedia.git/pull/3078): Ensure the slotTarget Variable in dfp-load-patch.js Is Renamed For Mobile Viewports
+ - [#3054](git@github.com:spiritedmedia/spiritedmedia.git/pull/3054): Detect Adblockers and Send Result to GA as Custom Dimension
+ - [#3073](git@github.com:spiritedmedia/spiritedmedia.git/pull/3073): Create a Frequent Reader Target Group

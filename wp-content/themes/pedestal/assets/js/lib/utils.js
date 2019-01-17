@@ -1,3 +1,5 @@
+/* global PEDESTAL_VERSION */
+
 /**
  * Convert a string to camelCase
  *
@@ -234,4 +236,15 @@ export function isTrue(value) {
     default:
       return false;
   }
+}
+
+/**
+ * Get the site's assets URL with the version number
+ *
+ * @returns {string}
+ */
+export function siteAssetsURL() {
+  const domain = window.location.protocol + '//' + window.location.hostname;
+  const path = '/wp-content/themes/pedestal/assets/dist/' + PEDESTAL_VERSION;
+  return domain + path;
 }

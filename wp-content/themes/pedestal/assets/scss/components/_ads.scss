@@ -3,6 +3,33 @@ $dfp-mobile-ad-offset           : -( $column-gutter / 4 );
 // Same as above, but for ads within panels
 $dfp-mobile-ad-offset--panelled : -( $column-gutter );
 
+%adinfo-text {
+  text-align: center;
+  color: $dark-gray-color;
+  font-size: rem( 10px );
+  font-family: Arial, sans-serif;
+  letter-spacing: em( 1px, 10px );
+  line-height: (12px / 10px);
+  margin-bottom: 0;
+}
+
+// We need to use a class name that won't be blocked by an ad blocker
+.abd-debug {
+  /* stylelint-disable selector-max-type */
+  &,
+  p {
+    @extend %adinfo-text;
+    color: $accent-2-color;
+  }
+
+  p {
+    margin-bottom: rem( 8px );
+  }
+
+  margin: rem( 36px ) auto;
+  /* stylelint-enable selector-max-type */
+}
+
 .dfp {
   text-align: center;
 
@@ -18,13 +45,7 @@ $dfp-mobile-ad-offset--panelled : -( $column-gutter );
 }
 
 .dfp-disclaimer {
-  text-align: center;
-  color: $dark-gray-color;
-  font-size: rem( 10px );
-  font-family: Arial, sans-serif;
-  letter-spacing: em( 1px, 10px );
-  line-height: (12px / 10px);
-  margin-bottom: 0;
+  @extend %adinfo-text;
 }
 
 .rail {

@@ -1,3 +1,5 @@
+import handleSlotRenderEnded from './components/handleSlotRenderEnded';
+
 var googletag = window.googletag || {};
 googletag.cmd = googletag.cmd || [];
 (function() {
@@ -70,46 +72,8 @@ googletag.cmd.push(function() {
   googletag.pubads().enableSingleRequest();
   googletag.pubads().collapseEmptyDivs(true);
 
-  /**
-   * Get the ID of the ad unit so it can be selected in the DOM
-   * and manipulated
-   *
-   * @param  {object} slot Slot object returned from the slotRenderEnded
-   *                       event listener
-   * @return {string}      HTML ID of the slot
-   */
-  function getGoogleDFPUnitID(slot) {
-    if (typeof slot !== 'object') {
-      return;
-    }
-    for (var prop in slot) {
-      var item = slot[prop];
-      if (typeof item == 'object' && item) {
-        for (var childProp in item) {
-          if (
-            typeof item[childProp] == 'string' &&
-            item[childProp].indexOf('div-') > -1
-          ) {
-            return item[childProp];
-          }
-        }
-      }
-    }
-    return false;
-  }
-  // Add 'ADVERTISEMENT' disclaimer text before all DFP units
-  googletag.pubads().addEventListener('slotRenderEnded', function(e) {
-    var div, html;
-    if (false === e.isEmpty) {
-      var id = getGoogleDFPUnitID(e.slot);
-      div = document.getElementById(id);
-      if (! div) {
-        return;
-      }
-      html = '<div class="dfp-disclaimer">ADVERTISEMENT</div>';
-      div.insertAdjacentHTML('afterbegin', html);
-    }
-  });
+  googletag.pubads().addEventListener('slotRenderEnded', handleSlotRenderEnded);
+
   googletag.enableServices();
 });
 

@@ -164,6 +164,11 @@ class Adverts {
         if ( ! $show_ad_unit ) {
             return;
         }
+        // If `?show-dev-ads` is present in the URL, always display house ads.
+        // Useful as a sanity check if you need to force a real ad to display.
+        if ( isset( $_GET['show-dev-ads'] ) && defined( 'WP_ENV' ) && 'development' === WP_ENV ) {
+            $ad_context['id'] = 'dev-test-a';
+        }
         ob_start();
         Timber::render( 'partials/adverts/dfp-unit.twig', $ad_context );
         return ob_get_clean();

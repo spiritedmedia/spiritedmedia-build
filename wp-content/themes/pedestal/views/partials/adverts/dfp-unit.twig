@@ -1,6 +1,9 @@
 {% spaceless %}
 
 {% if id and sizes %}
+
+<div class="abd-debug js-abd-debug"></div>
+
 <div
     class="dfp js-dfp {{ additional_classes|esc_attr }}"
     data-dfp-sizes="{{ sizes|esc_attr }}"

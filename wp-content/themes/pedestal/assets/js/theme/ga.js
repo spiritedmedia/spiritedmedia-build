@@ -12,10 +12,9 @@ ga('linker:autoLink', ['checkout.fundjournalism.org']);
 
 // Set up custom dimensions
 ga((tracker) => {
-  // If no cookie is set
+
   let contactEmailDimension = 'Unknown';
   let memberLevelDimension = 'Unknown';
-
   const contactData = localStorageCookie('contactData');
   if (contactData && 'data' in contactData) {
     const data = contactData.data;
@@ -77,6 +76,18 @@ ga((tracker) => {
     }
   }
   tracker.set('dimension3', contactFrequency);
+
+  // Contact Ad Blocker Detection
+  let adblockerDimension = 'Unknown';
+  const contactAdblocker = localStorageCookie('contactAdblocker');
+  // Only boolean values are valid, otherwise we assume there was a problem and
+  // leave the value as `Unknown`.
+  if (typeof contactAdblocker === 'boolean') {
+    adblockerDimension = contactAdblocker
+      ? 'Detected'
+      : 'Not detected';
+  }
+  tracker.set('dimension4', adblockerDimension);
 
   // Set up a global variable to store the cross-domain linker parameter for
   // use in our own scripts

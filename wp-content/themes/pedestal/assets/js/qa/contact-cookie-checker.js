@@ -1,14 +1,13 @@
 /* global contactExpectedMergeFields, contactEmail */
 
 import localStorageCookie from 'localStorageCookie';
-import Contact from 'Contact';
+import contact from 'Contact';
 
 // Delete the contact cookie
 // Prevent a race condition
 localStorageCookie('contactData', '');
 
 jQuery(document).ready(function($) {
-  const contact = new Contact;
   const expectedMergeFields = contactExpectedMergeFields.data;
 
   // Fetch contact details for the email
