@@ -1,5 +1,10 @@
 export default (e) => {
   const $title = $('#title');
+
+  if ($title.length === 0) {
+    return;
+  }
+
   if ($title.val().length < 1) {
     $(`
       <div class="notice notice-error">

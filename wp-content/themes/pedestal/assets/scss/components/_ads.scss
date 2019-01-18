@@ -16,6 +16,8 @@ $dfp-mobile-ad-offset--panelled : -( $column-gutter );
 // We need to use a class name that won't be blocked by an ad blocker
 .abd-debug {
   /* stylelint-disable selector-max-type */
+  display: none;
+
   &,
   p {
     @extend %adinfo-text;
