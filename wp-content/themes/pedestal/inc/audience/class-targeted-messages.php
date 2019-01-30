@@ -6,6 +6,7 @@ use Pedestal\Utils\Utils;
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Icons;
+use Pedestal\Page_Cache;
 
 abstract class Targeted_Messages {
 
@@ -80,13 +81,36 @@ abstract class Targeted_Messages {
      *
      * @var array name => label
      */
+    // phpcs:disable
     protected static $target_groups = [
-        'unidentified'    => 'Unidentified',
-        'frequent-reader' => 'Frequent Reader',
-        'subscriber'      => 'Subscriber',
-        'donor'           => 'Donor',
-        'member'          => 'Member',
+        'unidentified' => [
+            'label'       => 'Unidentified',
+            'description' => 'People we know nothing about. They might be a new
+                reader, or somebody using the site in an in-app browser.
+                <em>Ask them to subscribe</em>.',
+        ],
+        'frequent-reader' => [
+            'label'       => 'Frequent Reader',
+            'description' => 'People who have read more than <strong>five</strong>
+                articles in the last 30 days, and do not subscribe to our
+                daily newsletter. <em>Ask them for money</em>.',
+        ],
+        'subscriber' => [
+            'label'       => 'Subscriber',
+            'description' => 'People who get our daily newsletter. <em>Ask them for money</em>.',
+        ],
+        'donor' => [
+            'label'       => 'Donor',
+            'description' => 'People who have given us money, but are not
+                members. <em>Ask them for more money</em>.',
+        ],
+        'member' => [
+            'label'       => 'Member',
+            'description' => 'People who are members. <em>Ask them for more
+                money. Or thank them. Or invite them to an event. Have fun.</em>',
+        ],
     ];
+    // phpcs:enable
 
     /**
      * Field to base the message field group's label upon in the admin UI
@@ -173,7 +197,7 @@ abstract class Targeted_Messages {
             [ $this, 'action_admin_print_scripts' ]
         );
         add_action( "update_option_{$option_name}", function() {
-            do_action( 'rt_nginx_helper_purge_all' );
+            Page_Cache::purge_all();
         } );
         add_action( 'rest_api_init', function() {
             register_rest_route( PEDESTAL_API_NAMESPACE, "/{$this->api_component_name}/render", [
@@ -247,9 +271,12 @@ abstract class Targeted_Messages {
         }
 
         $target_group_field_groups = [];
-        foreach ( static::get_target_groups() as $target_group_key => $target_group_label ) {
-            $target_group_field_groups[ $target_group_key ] = new \Fieldmanager_Group( $target_group_label, [
-                'children' => $location_field_groups,
+        foreach ( static::get_target_groups() as $target_group_key => $target_group_data ) {
+            $target_group_field_groups[ $target_group_key ] = new \Fieldmanager_Group( $target_group_data['label'], [
+                'description'               => $target_group_data['description'],
+                'description_after_element' => false,
+                'escape'                    => [ 'description' => 'wp_kses_post' ], // phpcs:ignore
+                'children'                  => $location_field_groups,
             ] );
         }
 
@@ -335,7 +362,7 @@ abstract class Targeted_Messages {
     /**
      * Get the target groups
      *
-     * @return array Group key => group label
+     * @return array Group key => group data (label, description)
      */
     public static function get_target_groups() {
         return static::$target_groups;

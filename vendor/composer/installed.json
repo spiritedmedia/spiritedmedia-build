@@ -1524,6 +1524,48 @@
         ]
     },
     {
+        "name": "spiritedmedia/redis-full-page-cache-purger",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/spiritedmedia/redis-full-page-cache-purger.git",
+            "reference": "e3601dde6c43e2b4c960a6a49c3a3576cacc6c63"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/spiritedmedia/redis-full-page-cache-purger/zipball/e3601dde6c43e2b4c960a6a49c3a3576cacc6c63",
+            "reference": "e3601dde6c43e2b4c960a6a49c3a3576cacc6c63",
+            "shasum": ""
+        },
+        "require": {
+            "composer/installers": ">=1.0.0",
+            "php": ">=5.3.2"
+        },
+        "require-dev": {
+            "dealerdirect/phpcodesniffer-composer-installer": "dev-master",
+            "wp-coding-standards/wpcs": "dev-master"
+        },
+        "time": "2019-01-30T16:48:52+00:00",
+        "type": "wordpress-plugin",
+        "installation-source": "source",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Russell Heimlich",
+                "email": "russell@spiritedmedia.com"
+            },
+            {
+                "name": "Chris Montgomery",
+                "email": "montchr@spiritedmedia.com"
+            }
+        ],
+        "description": "Purges keys from Redis when certain WordPress events happen. Pairs well with EasyEngine."
+    },
+    {
         "name": "spiritedmedia/tablepress-responsive-tables",
         "version": "dev-spiritedmedia",
         "version_normalized": "dev-spiritedmedia",
@@ -2162,28 +2204,6 @@
         "type": "wordpress-plugin",
         "installation-source": "dist",
         "homepage": "https://wordpress.org/plugins/documentcloud/"
-    },
-    {
-        "name": "wpackagist-plugin/nginx-helper",
-        "version": "1.9.11",
-        "version_normalized": "1.9.11.0",
-        "source": {
-            "type": "svn",
-            "url": "https://plugins.svn.wordpress.org/nginx-helper/",
-            "reference": "tags/1.9.11"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://downloads.wordpress.org/plugin/nginx-helper.1.9.11.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "composer/installers": "~1.0"
-        },
-        "type": "wordpress-plugin",
-        "installation-source": "dist",
-        "homepage": "https://wordpress.org/plugins/nginx-helper/"
     },
     {
         "name": "wpackagist-plugin/posts-to-posts",

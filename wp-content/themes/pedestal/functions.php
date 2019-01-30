@@ -290,6 +290,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->menus                    = Menus::get_instance();
             $this->menu_icons               = Menu_Icons::get_instance();
             $this->component_previews       = Component_Previews::get_instance();
+            $this->page_cache               = Page_Cache::get_instance();
 
             // Target Audience Messaging
             $this->audience           = Audience::get_instance();

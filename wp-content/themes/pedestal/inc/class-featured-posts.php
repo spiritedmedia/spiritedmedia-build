@@ -8,6 +8,7 @@ use Pedestal\Posts\Post;
 use Pedestal\Objects\Stream;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Utils\Utils;
+use Pedestal\Page_Cache;
 
 class Featured_Posts {
 
@@ -51,7 +52,7 @@ class Featured_Posts {
             wp_enqueue_script( 'featured-posts-admin', PEDESTAL_DIST_DIRECTORY_URI . '/js/featured-posts-admin.js', [ 'jquery' ], PEDESTAL_VERSION );
         });
         add_action( 'update_option_' . $this->option_key, function() {
-            do_action( 'rt_nginx_helper_purge_all' );
+            Page_Cache::purge_all();
         } );
     }
 

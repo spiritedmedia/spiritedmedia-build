@@ -61,83 +61,53 @@ add_action( 'wp_footer', function() {
 
 add_filter( 'pre_option_bwp_gxs_generator', function( $value ) {
     $bwp_option = [
-      'input_cache_dir' => '',
-      'input_item_limit' => 5005,
-      'input_split_limit_post' => 0,
-      'input_custom_xslt' => '',
-      'input_ping_limit' => 100,
-      'enable_sitemap_date' => '',
-      'enable_sitemap_taxonomy' => 'yes',
-      'enable_sitemap_external' => '',
-      'enable_sitemap_author' => 'yes',
-      'enable_sitemap_site' => 'yes',
-      'enable_exclude_posts_by_terms' => '',
-      'enable_sitemap_split_post' => 'yes',
-      'enable_ping' => 'yes',
-      'enable_ping_google' => 'yes',
-      'enable_ping_bing' => 'yes',
-      'enable_xslt' => '',
-      'enable_credit' => '',
-      'select_default_freq' => 'daily',
-      'select_default_pri' => '1',
-      'select_min_pri' => '0.1',
-      'input_exclude_post_type' => 'pedestal_link',
-      'input_exclude_post_type_ping' => '',
-      'input_exclude_taxonomy' => 'category,post_tag,pedestal_story_type,pedestal_slot_item_type',
+        'input_cache_dir'               => '',
+        'input_item_limit'              => 5005,
+        'input_split_limit_post'        => 0,
+        'input_custom_xslt'             => '',
+        'input_ping_limit'              => 100,
+        'enable_sitemap_date'           => '',
+        'enable_sitemap_taxonomy'       => 'yes',
+        'enable_sitemap_external'       => '',
+        'enable_sitemap_author'         => 'yes',
+        'enable_sitemap_site'           => 'yes',
+        'enable_exclude_posts_by_terms' => '',
+        'enable_sitemap_split_post'     => 'yes',
+        'enable_ping'                   => 'yes',
+        'enable_ping_google'            => 'yes',
+        'enable_ping_bing'              => 'yes',
+        'enable_xslt'                   => '',
+        'enable_credit'                 => '',
+        'select_default_freq'           => 'daily',
+        'select_default_pri'            => '1',
+        'select_min_pri'                => '0.1',
+        'input_exclude_post_type'       => 'pedestal_link',
+        'input_exclude_post_type_ping'  => '',
+        'input_exclude_taxonomy'        => 'category,post_tag,pedestal_story_type,pedestal_slot_item_type',
     ];
     return $bwp_option;
 });
 
 add_filter( 'pre_option_bwp_gxs_extensions', function( $value ) {
     $bwp_option = [
-      'enable_image_sitemap' => 'yes',
-      'enable_news_sitemap' => 'yes',
-      'enable_news_ping' => 'yes',
-      'enable_news_keywords' => '',
-      'enable_news_multicat' => '',
-      'select_news_post_type' => 'pedestal_article',
-      'select_news_taxonomy' => '',
-      'select_news_lang' => 'en',
-      'select_news_keyword_source' => '',
-      'select_news_cat_action' => 'inc',
-      'select_news_cats' => '',
-      'input_news_name' => '',
-      'input_news_age' => 3,
-      'input_news_genres' => [],
-      'input_image_post_types' => 'page,pedestal_article,pedestal_event,pedestal_link,pedestal_factcheck,pedestal_whosnext,pedestal_story,pedestal_topic,pedestal_person,pedestal_org,pedestal_place,pedestal_locality',
+        'enable_image_sitemap'       => 'yes',
+        'enable_news_sitemap'        => 'yes',
+        'enable_news_ping'           => 'yes',
+        'enable_news_keywords'       => '',
+        'enable_news_multicat'       => '',
+        'select_news_post_type'      => 'pedestal_article',
+        'select_news_taxonomy'       => '',
+        'select_news_lang'           => 'en',
+        'select_news_keyword_source' => '',
+        'select_news_cat_action'     => 'inc',
+        'select_news_cats'           => '',
+        'input_news_name'            => '',
+        'input_news_age'             => 3,
+        'input_news_genres'          => [],
+        'input_image_post_types'     => 'page,pedestal_article,pedestal_event,pedestal_link,pedestal_factcheck,pedestal_whosnext,pedestal_story,pedestal_topic,pedestal_person,pedestal_org,pedestal_place,pedestal_locality',
     ];
     return $bwp_option;
 });
-
-/**
- * Change the site_url to http:// from https:// when being applied from the nginx helper
- * plugin. This is necessary for the cache purging to work due to other system issues.
- * @var string
- * @see https://github.com/rtCamp/nginx-helper/issues/132
- */
-function sm_switch_to_http_for_cache_purging( $url = '' ) {
-    $backtrace = wp_debug_backtrace_summary();
-    if ( stripos( $backtrace, 'rtCamp\WP\Nginx\Helper' ) ) {
-        $url = str_replace( 'https://', 'http://', $url );
-    }
-    return $url;
-}
-
-$filters = [
-    'site_url',
-    'home_url',
-    'post_link',
-    'term_link',
-    'day_link',
-    'month_link',
-    'year_link',
-    'post_type_archive_link',
-    'author_link',
-    'attachment_link',
-];
-foreach ( $filters as $filter ) {
-    add_filter( $filter, 'sm_switch_to_http_for_cache_purging' );
-}
 
 /**
  * Remove the Image Magick graphic library which seems to cause HTML errors when uploading media

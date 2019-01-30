@@ -7996,6 +7996,7 @@ return array(
     'Pedestal\\Objects\\Stream' => $baseDir . '/wp-content/themes/pedestal/inc/objects/class-stream.php',
     'Pedestal\\Objects\\User' => $baseDir . '/wp-content/themes/pedestal/inc/objects/class-user.php',
     'Pedestal\\Objects\\YouTube' => $baseDir . '/wp-content/themes/pedestal/inc/objects/class-youtube.php',
+    'Pedestal\\Page_Cache' => $baseDir . '/wp-content/themes/pedestal/inc/class-page-cache.php',
     'Pedestal\\Pedestal' => $baseDir . '/wp-content/themes/pedestal/functions.php',
     'Pedestal\\Posts\\Attachment' => $baseDir . '/wp-content/themes/pedestal/inc/posts/class-attachment.php',
     'Pedestal\\Posts\\Clusters\\Cluster' => $baseDir . '/wp-content/themes/pedestal/inc/posts/clusters/class-cluster.php',

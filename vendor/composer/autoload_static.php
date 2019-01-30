@@ -8194,6 +8194,7 @@ class ComposerStaticInit3fd466591cad51673a17d29c372efc2f
         'Pedestal\\Objects\\Stream' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-stream.php',
         'Pedestal\\Objects\\User' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-user.php',
         'Pedestal\\Objects\\YouTube' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/objects/class-youtube.php',
+        'Pedestal\\Page_Cache' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-page-cache.php',
         'Pedestal\\Pedestal' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/functions.php',
         'Pedestal\\Posts\\Attachment' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/class-attachment.php',
         'Pedestal\\Posts\\Clusters\\Cluster' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/posts/clusters/class-cluster.php',
