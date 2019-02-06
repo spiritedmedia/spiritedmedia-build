@@ -81,15 +81,15 @@ class Ad_Kill_Switch {
     public function handle_meta_box( $post ) {
         $ped_post = Post::get( (int) $post->ID );
 
-        $name = $this->nonce;
-        $referer = true;
-        $echo = false;
+        $name        = $this->nonce;
+        $referer     = true;
+        $echo        = false;
         $nonce_field = wp_nonce_field( $this->action, $name, $referer, $echo );
 
         $context = [
-            'content_type'    => $ped_post->get_type_name(),
-            'nonce_field'     => $nonce_field,
-            'are_ads_hidden'  => $this->are_ads_hidden( $post->ID ),
+            'content_type'   => $ped_post->get_type_name(),
+            'nonce_field'    => $nonce_field,
+            'are_ads_hidden' => $this->are_ads_hidden( $post->ID ),
         ];
         Timber::render( 'partials/admin/metabox-inline-ads.twig', $context );
     }

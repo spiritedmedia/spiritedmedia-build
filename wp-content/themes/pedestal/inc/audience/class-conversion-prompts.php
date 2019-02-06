@@ -42,7 +42,7 @@ class Conversion_Prompts extends Targeted_Messages {
 
         // Render the newsletter signup conversion prompt after the 3rd item in a stream
         add_action( 'pedestal_after_stream_item_3', function() {
-            $ignore_post_types = Types::get_original_post_types();
+            $ignore_post_types   = Types::get_original_post_types();
             $ignore_post_types[] = 'pedestal_story';
             if ( is_singular( $ignore_post_types ) ) {
                 return;
@@ -83,8 +83,8 @@ class Conversion_Prompts extends Targeted_Messages {
 
     protected function message_fields() {
         return [
-            'id'    => new \Fieldmanager_Hidden(),
-            'title' => new \Fieldmanager_TextField( 'Message Title', [
+            'id'            => new \Fieldmanager_Hidden(),
+            'title'         => new \Fieldmanager_TextField( 'Message Title', [
                 'description'         => 'Use to draw attention (succinctly); use Message to describe',
                 'validation_rules'    => 'required',
                 'validation_messages' => 'Required',
@@ -93,18 +93,18 @@ class Conversion_Prompts extends Targeted_Messages {
                     'size'        => 50,
                 ],
             ] ),
-            'icon_name' => new \Fieldmanager_Radios( 'Icon', [
+            'icon_name'     => new \Fieldmanager_Radios( 'Icon', [
                 'default_value' => 'link',
                 'options'       => $this->icon_buttons,
             ] ),
-            'body' => new \Fieldmanager_RichTextArea( 'Message', [
+            'body'          => new \Fieldmanager_RichTextArea( 'Message', [
                 'editor_settings' => [
                     'media_buttons' => false,
                 ],
-                'buttons_1' => [ 'bold', 'italic', 'underline', 'link', 'unlink' ],
-                'buttons_2' => [],
+                'buttons_1'       => [ 'bold', 'italic', 'underline', 'link', 'unlink' ],
+                'buttons_2'       => [],
             ] ),
-            'type' => new \Fieldmanager_Radios( 'Include newsletter email signup fields', [
+            'type'          => new \Fieldmanager_Radios( 'Include newsletter email signup fields', [
                 'validation_rules'    => 'required',
                 'validation_messages' => 'Required',
                 'default_value'       => 'with_button',
@@ -113,24 +113,24 @@ class Conversion_Prompts extends Targeted_Messages {
                     'with_signup_form' => 'With email signup form',
                 ],
             ] ),
-            'button_text' => new \Fieldmanager_TextField( 'Button Label', [
+            'button_text'   => new \Fieldmanager_TextField( 'Button Label', [
                 'validation_rules'    => 'required',
                 'validation_messages' => 'Required',
-                'display_if' => [
+                'display_if'          => [
                     'src'   => 'type',
                     'value' => 'with_button',
                 ],
-                'attributes' => [
+                'attributes'          => [
                     'placeholder' => '…',
                     'size'        => 50,
                 ],
             ] ),
-            'button_url' => new \Fieldmanager_Link( 'Destination URL', [
-                'display_if' => [
+            'button_url'    => new \Fieldmanager_Link( 'Destination URL', [
+                'display_if'          => [
                     'src'   => 'type',
                     'value' => 'with_button',
                 ],
-                'validation_rules' => [
+                'validation_rules'    => [
                     'required' => true,
                     'url'      => true,
                 ],
@@ -138,12 +138,12 @@ class Conversion_Prompts extends Targeted_Messages {
                     'required' => true,
                     'url'      => 'This is not a URL!',
                 ],
-                'attributes' => [
+                'attributes'          => [
                     'placeholder' => 'https://',
                     'size'        => 50,
                 ],
             ] ),
-            'preview' => new \Fieldmanager_TextField( 'Preview', [
+            'preview'       => new \Fieldmanager_TextField( 'Preview', [
                 'description'               => 'How the message will look to readers',
                 'description_after_element' => false,
                 'template'                  => $this->preview_template,
@@ -151,7 +151,7 @@ class Conversion_Prompts extends Targeted_Messages {
             'preview_model' => new \Fieldmanager_Hidden( false, [
                 'sanitize' => [ '\Pedestal\Utils\Utils', 'return_same' ],
             ] ),
-            'style' => new \Fieldmanager_Radios( 'Presentation style', [
+            'style'         => new \Fieldmanager_Radios( 'Presentation style', [
                 'validation_rules'    => 'required',
                 'validation_messages' => 'Required',
                 'default_value'       => 'subtle',
@@ -176,9 +176,9 @@ class Conversion_Prompts extends Targeted_Messages {
         if ( 'appearance_page_pedestal_conversion_prompts' !== $screen->base ) {
             return $out;
         }
-         // If the name attribute of the parent group isn't right then bail
+        // If the name attribute of the parent group isn't right then bail
         $fm_tree = $fm->get_form_tree();
-        $parent = array_pop( $fm_tree );
+        $parent  = array_pop( $fm_tree );
         if (
             empty( $parent->name )
             || 'pedestal_conversion_prompts' != $parent->name
@@ -192,7 +192,7 @@ class Conversion_Prompts extends Targeted_Messages {
     }
 
     public static function render( $args = [] ) {
-        $defaults = [
+        $defaults      = [
             'target_audience' => 'unidentified',
             'style'           => '',
             'icon_name'       => '',
@@ -217,7 +217,7 @@ class Conversion_Prompts extends Targeted_Messages {
             $context['body'] = apply_filters( 'the_content', $context['body'] );
 
             // Add custom analytics events to track links in the body
-            $replacement = sprintf(
+            $replacement     = sprintf(
                 'data-ga-category="inline-prompt" data-ga-label="%s" href=',
                 esc_attr( $context['target_audience'] )
             );
@@ -229,14 +229,14 @@ class Conversion_Prompts extends Targeted_Messages {
         }
 
         if ( ! empty( $context['target_audience'] ) ) {
-            $target_audience = sanitize_title( $context['target_audience'] );
+            $target_audience                  = sanitize_title( $context['target_audience'] );
             $context['target_audience_class'] = 'show-for-target-audience--' . $target_audience;
         }
 
         if ( empty( $context['target_audience'] ) ) {
             $target_audience = $defaults['target_audience'];
         } else {
-            $target_audience = sanitize_title( $context['target_audience'] );
+            $target_audience                  = sanitize_title( $context['target_audience'] );
             $context['target_audience_class'] = 'show-for-target-audience--' . $target_audience;
         }
 

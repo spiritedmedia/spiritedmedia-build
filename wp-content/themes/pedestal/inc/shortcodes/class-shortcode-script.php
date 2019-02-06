@@ -8,14 +8,14 @@ class Script extends Shortcode {
 
     public static function get_shortcode_ui_args() {
         $args = [
-            'label'          => esc_html__( 'Script', 'shortcake-bakery' ),
-            'listItemImage'  => 'dashicons-media-code',
-            'attrs'          => [
+            'label'         => esc_html__( 'Script', 'shortcake-bakery' ),
+            'listItemImage' => 'dashicons-media-code',
+            'attrs'         => [
                 [
-                    'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-                    'attr'         => 'src',
-                    'type'         => 'text',
-                    'description'  => esc_html__( 'Full URL to the script file.', 'shortcake-bakery' ),
+                    'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+                    'attr'        => 'src',
+                    'type'        => 'text',
+                    'description' => esc_html__( 'Full URL to the script file.', 'shortcake-bakery' ),
                 ],
             ],
         ];
@@ -27,7 +27,7 @@ class Script extends Shortcode {
         if ( ! $scripts ) {
             return $content;
         }
-        $replacements = [];
+        $replacements  = [];
         $shortcode_tag = static::get_shortcode_tag();
         foreach ( $scripts as $script ) {
             $shortcode_attrs = $script->attrs;

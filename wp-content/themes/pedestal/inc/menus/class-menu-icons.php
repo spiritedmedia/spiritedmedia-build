@@ -54,12 +54,12 @@ class Menu_Icons {
      */
     public function action_wp_nav_menu_item_custom_fields( $id = 0, $item ) {
         $value = '';
-        $icon = '';
+        $icon  = '';
 
         $icon_name = get_post_meta( $item->ID, 'menu-item-icon', true );
         if ( $icon_name ) {
             $value = $icon_name;
-            $icon = Icons::get_icon( $icon_name );
+            $icon  = Icons::get_icon( $icon_name );
         }
 
         $context = [
@@ -85,8 +85,8 @@ class Menu_Icons {
         check_admin_referer( 'update-nav_menu', 'update-nav-menu-nonce' );
 
         $meta_key = 'menu-icon';
-        $key = 'menu-item-icon';
-        $value = null;
+        $key      = 'menu-item-icon';
+        $value    = null;
         if ( ! empty( $_POST[ $key ][ $menu_item_db_id ] ) ) {
             $value = $_POST[ $key ][ $menu_item_db_id ];
         }
@@ -118,7 +118,7 @@ class Menu_Icons {
      */
     public function filter_wp_setup_nav_menu_item( $post ) {
         $post->icon = '';
-        $icon_name = get_post_meta( $post->ID, 'menu-item-icon', true );
+        $icon_name  = get_post_meta( $post->ID, 'menu-item-icon', true );
         if ( $icon_name ) {
             $post->icon = $icon_name;
         }

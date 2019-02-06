@@ -58,14 +58,14 @@ class Newsletter_Signups_By_Page_Metric {
      * @return array              Newsletter signup data
      */
     public function get_newsletter_signups_by_page_data( $start_date = 'yesterday', $end_date = 'yesterday' ) {
-        $ga = Google_Analytics::get_instance();
+        $ga         = Google_Analytics::get_instance();
         $date_range = $ga->get_date_range( $start_date, $end_date );
 
-        $metric_args = [
+        $metric_args             = [
             'ga:totalEvents' => '',
         ];
-        $metrics = $ga->get_metrics( $metric_args );
-        $dimension_filter_args = [
+        $metrics                 = $ga->get_metrics( $metric_args );
+        $dimension_filter_args   = [
             [
                 'name'        => 'ga:eventCategory',
                 'operator'    => 'EXACT',
@@ -97,13 +97,13 @@ class Newsletter_Signups_By_Page_Metric {
      * @return array              Session data
      */
     public function get_sessions_by_page( $start_date = 'yesterday', $end_date = 'yesterday', $page_paths = [] ) {
-        $ga = Google_Analytics::get_instance();
+        $ga         = Google_Analytics::get_instance();
         $date_range = $ga->get_date_range( $start_date, $end_date );
 
         $metric_args = [
             'ga:sessions' => '',
         ];
-        $metrics = $ga->get_metrics( $metric_args );
+        $metrics     = $ga->get_metrics( $metric_args );
 
         // Construct a regular expression of page paths
         // to limit the data returned to just those pages
@@ -111,16 +111,16 @@ class Newsletter_Signups_By_Page_Metric {
         foreach ( $page_paths as $path ) {
             $dimension_filter_expression .= '^' . $path . '$|';
         }
-        $dimension_filter_expression = rtrim( $dimension_filter_expression, '|' );
+        $dimension_filter_expression  = rtrim( $dimension_filter_expression, '|' );
         $dimension_filter_expression .= ')';
-        $dimension_filter_args = [
+        $dimension_filter_args        = [
             [
                 'name'        => 'ga:pagePath',
                 'operator'    => 'REGEXP',
                 'expressions' => [ $dimension_filter_expression ],
             ],
         ];
-        $dimension_filter_clause = $ga->get_dimension_filters( $dimension_filter_args );
+        $dimension_filter_clause      = $ga->get_dimension_filters( $dimension_filter_args );
 
         $data = $ga->make_request([
             'date_range'              => [ $date_range ],
@@ -155,22 +155,22 @@ class Newsletter_Signups_By_Page_Metric {
      * @return object              Newsletter subscriber data
      */
     public function get_newsletter_subscriber_stats( $start_date = '', $end_date = '' ) {
-        $mc = MailChimp::get_instance();
+        $mc              = MailChimp::get_instance();
         $since_send_time = new \DateTime( $start_date );
-        $campaign_args = [
+        $campaign_args   = [
             'since_send_time' => $since_send_time->format( 'c' ),
             'sort_field'      => 'send_time',
             'sort_dir'        => 'DESC',
             'count'           => 100,
         ];
-        $group_name = 'Daily Newsletter';
-        $group_category = 'Newsletters';
-        $raw_campaigns = $mc->get_campaigns_by_group(
+        $group_name      = 'Daily Newsletter';
+        $group_category  = 'Newsletters';
+        $raw_campaigns   = $mc->get_campaigns_by_group(
             $group_name,
             $group_category,
             $campaign_args
         );
-        $campaigns = [];
+        $campaigns       = [];
         foreach ( $raw_campaigns as $campaign ) {
             $report_url = $mc->get_admin_url( '/reports/summary?id=' . $campaign->web_id );
 
@@ -199,9 +199,9 @@ class Newsletter_Signups_By_Page_Metric {
         $latest_campaign    = $campaigns[0];
         $last_campaign      = $campaigns_reversed[0];
 
-        $total_subscribers  = intval( $latest_campaign->sent_to );
-        $diff               = $total_subscribers - intval( $last_campaign->sent_to );
-        $trend              = 'up';
+        $total_subscribers = intval( $latest_campaign->sent_to );
+        $diff              = $total_subscribers - intval( $last_campaign->sent_to );
+        $trend             = 'up';
 
         if ( $diff < 0 ) {
             $trend = 'down';
@@ -217,23 +217,23 @@ class Newsletter_Signups_By_Page_Metric {
     }
 
     public function get_data( $start_date = '7daysAgo', $end_date = 'yesterday' ) {
-        $ga_data          = $this->get_newsletter_signups_by_page_data( $start_date, $end_date );
-        $page_paths       = [];
+        $ga_data    = $this->get_newsletter_signups_by_page_data( $start_date, $end_date );
+        $page_paths = [];
         foreach ( $ga_data as $item ) {
             $page_paths[] = $item->{'ga:pagePath'};
         }
-        $sessions         = $this->get_sessions_by_page( $start_date, $end_date, $page_paths );
+        $sessions = $this->get_sessions_by_page( $start_date, $end_date, $page_paths );
 
-        $total_signups    = 0;
-        $output = [];
+        $total_signups = 0;
+        $output        = [];
         foreach ( $ga_data as $item ) {
-            $path          = $item->{'ga:pagePath'};
-            $page_paths[]  = $path;
-            $signups       = intval( $item->{'ga:totalEvents'} );
+            $path           = $item->{'ga:pagePath'};
+            $page_paths[]   = $path;
+            $signups        = intval( $item->{'ga:totalEvents'} );
             $total_signups += $signups;
-            $pageview      = 0;
-            $ratio         = 0;
-            $conversion    = 0;
+            $pageview       = 0;
+            $ratio          = 0;
+            $conversion     = 0;
 
             if ( isset( $sessions[ $path ] ) ) {
                 $pageview = intval( $sessions[ $path ] );
@@ -246,14 +246,14 @@ class Newsletter_Signups_By_Page_Metric {
                 }
             }
 
-            $link_url   = untrailingslashit( get_site_url() ) . $path;
-            $link_text  = $path;
+            $link_url  = untrailingslashit( get_site_url() ) . $path;
+            $link_text = $path;
             if ( '/' == $link_text ) {
                 $link_text = get_site_url();
             }
             $link_cutoff = 30;
             if ( strlen( $link_text ) > $link_cutoff ) {
-                $link_text = substr( $link_text, 0 , $link_cutoff ) . '...';
+                $link_text = substr( $link_text, 0, $link_cutoff ) . '...';
             }
             $link = '<' . $link_url . '|' . $link_text . '>';
 
@@ -272,8 +272,8 @@ class Newsletter_Signups_By_Page_Metric {
     }
 
     public function get_message() {
-        $start_date            = '7daysAgo';
-        $end_date              = 'yesterday';
+        $start_date = '7daysAgo';
+        $end_date   = 'yesterday';
 
         $output                = $this->get_data( $start_date, $end_date );
         $output_by_signups     = array_reverse( Utils::sort_obj_array_by_prop( $output, 'signups' ) );
@@ -321,14 +321,14 @@ class Newsletter_Signups_By_Page_Metric {
      */
     public function send() {
         $notifications = new Notifications;
-        $message = $this->get_message();
+        $message       = $this->get_message();
         if ( ! $message ) {
             return;
         }
         $slack_args = [
-            'username'    => 'Spirit',
-            'icon_emoji'  => ':ghost:',
-            'channel'     => PEDESTAL_SLACK_CHANNEL_NEWSLETTER,
+            'username'   => 'Spirit',
+            'icon_emoji' => ':ghost:',
+            'channel'    => PEDESTAL_SLACK_CHANNEL_NEWSLETTER,
         ];
         return $notifications->send( $message, $slack_args );
     }

@@ -7,8 +7,8 @@ use Pedestal\Email\Follow_Updates;
 use Pedestal\Adverts;
 
 $cluster_id = get_the_ID();
-$item = Post::get( $cluster_id );
-$context = Timber::get_context();
+$item       = Post::get( $cluster_id );
+$context    = Timber::get_context();
 
 if ( Types::is_post( $item ) ) :
 
@@ -27,7 +27,7 @@ if ( Types::is_post( $item ) ) :
         } );
     }
 
-    $cluster_stream = new Stream( $item->get_entities_query() );
+    $cluster_stream    = new Stream( $item->get_posts_query() );
     $context['stream'] = $cluster_stream->get_the_stream();
 
     if ( $cluster_stream->is_last_page() ) {
@@ -45,7 +45,7 @@ if ( Types::is_post( $item ) ) :
     if ( ! $cluster_stream->is_first_page() ) {
         $context['upper_pagination'] = $cluster_stream->get_pagination( [
             'show_text' => true,
-            'show_nav' => false,
+            'show_nav'  => false,
         ] );
     }
 

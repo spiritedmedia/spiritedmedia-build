@@ -36,7 +36,7 @@ class Placement extends Post {
      */
     public function get_date_subrange_days() {
         $item_days_nums = [];
-        $item_days = $this->get_meta( 'date_subrange_days', false );
+        $item_days      = $this->get_meta( 'date_subrange_days', false );
 
         if ( empty( $item_days ) ) {
             return [];

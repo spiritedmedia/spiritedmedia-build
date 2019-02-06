@@ -57,15 +57,15 @@ class Weekly_Traffic_Metric {
      * @return object             Session data
      */
     public function get_session_data( $start_date = 'yesterday', $end_date = 'yesterday' ) {
-        $ga          = Google_Analytics::get_instance();
-        $date_range  = $ga->get_date_range( $start_date, $end_date );
+        $ga         = Google_Analytics::get_instance();
+        $date_range = $ga->get_date_range( $start_date, $end_date );
 
         $metric_args = [
             'ga:sessions' => '',
         ];
         $metrics     = $ga->get_metrics( $metric_args );
 
-        $data        = $ga->make_request([
+        $data               = $ga->make_request([
             'date_range' => [ $date_range ],
             'metrics'    => [ $metrics ],
             'dimensions' => [ $ga->get_dimension( 'ga:userType' ) ],
@@ -89,20 +89,20 @@ class Weekly_Traffic_Metric {
      * @return integer            Pageviews
      */
     public function get_pageviews( $start_date = 'yesterday', $end_date = 'yesterday' ) {
-        $ga          = Google_Analytics::get_instance();
-        $date_range  = $ga->get_date_range( $start_date, $end_date );
+        $ga         = Google_Analytics::get_instance();
+        $date_range = $ga->get_date_range( $start_date, $end_date );
 
         $metric_args = [
             'ga:pageviews' => '',
         ];
         $metrics     = $ga->get_metrics( $metric_args );
-        $data = $ga->make_request([
+        $data        = $ga->make_request([
             'date_range' => [ $date_range ],
-            'metrics' => [ $metrics ],
-            'page_size' => '',
-            'order_by' => '',
+            'metrics'    => [ $metrics ],
+            'page_size'  => '',
+            'order_by'   => '',
         ]);
-        $output = $ga->format_output( $data );
+        $output      = $ga->format_output( $data );
         return $output[0]->{'ga:pageviews'};
     }
 
@@ -114,18 +114,18 @@ class Weekly_Traffic_Metric {
      * @return object             Pageveiw data
      */
     public function get_top_pageview_data( $start_date = 'yesterday', $end_date = 'yesterday' ) {
-        $ga          = Google_Analytics::get_instance();
-        $date_range  = $ga->get_date_range( $start_date, $end_date );
+        $ga         = Google_Analytics::get_instance();
+        $date_range = $ga->get_date_range( $start_date, $end_date );
 
         $metric_args = [
             'ga:pageviews' => '',
         ];
-        $metrics = $ga->get_metrics( $metric_args );
+        $metrics     = $ga->get_metrics( $metric_args );
 
         $date_range_arr        = $this->get_date_period( $start_date, $end_date );
         $dimension_filter_args = [];
         foreach ( $date_range_arr as $date ) {
-            $expression = '/' . $date->format( 'Y/m/d' );
+            $expression              = '/' . $date->format( 'Y/m/d' );
             $dimension_filter_args[] = [
                 'name'        => 'ga:pagePath',
                 'operator'    => 'BEGINS_WITH',
@@ -156,18 +156,18 @@ class Weekly_Traffic_Metric {
      * @return array              Engagement data
      */
     public function get_engaged_completion_data( $start_date = 'yesterday', $end_date = 'yesterday' ) {
-        $ga          = Google_Analytics::get_instance();
-        $date_range  = $ga->get_date_range( $start_date, $end_date );
+        $ga         = Google_Analytics::get_instance();
+        $date_range = $ga->get_date_range( $start_date, $end_date );
 
         $metric_args = [
             'ga:totalEvents' => '',
         ];
-        $metrics = $ga->get_metrics( $metric_args );
+        $metrics     = $ga->get_metrics( $metric_args );
 
         $date_range_arr        = $this->get_date_period( $start_date, $end_date );
         $dimension_filter_args = [];
         foreach ( $date_range_arr as $date ) {
-            $expression = '/' . $date->format( 'Y/m/d' );
+            $expression              = '/' . $date->format( 'Y/m/d' );
             $dimension_filter_args[] = [
                 'name'        => 'ga:pagePath',
                 'operator'    => 'BEGINS_WITH',
@@ -213,10 +213,10 @@ class Weekly_Traffic_Metric {
         // Transform and tabulate the output
         $output = [];
         foreach ( $raw_data as $row ) {
-            $page                       = $row->{'ga:pagePath'};
-            $page = explode( '?', $page )[0];
-            $action                     = $row->{'ga:eventAction'};
-            $value                      = $row->{'ga:totalEvents'};
+            $page   = $row->{'ga:pagePath'};
+            $page   = explode( '?', $page )[0];
+            $action = $row->{'ga:eventAction'};
+            $value  = $row->{'ga:totalEvents'};
             if ( ! isset( $output[ $page ][ $action ] ) ) {
                 $output[ $page ][ $action ] = 0;
             }
@@ -290,7 +290,7 @@ class Weekly_Traffic_Metric {
      */
     public function truncate_string( $str = '', $cutoff = 30 ) {
         if ( strlen( $str ) > $cutoff ) {
-            $str = substr( $str, 0 , $cutoff ) . '...';
+            $str = substr( $str, 0, $cutoff ) . '...';
         }
         return $str;
     }
@@ -334,15 +334,15 @@ class Weekly_Traffic_Metric {
             'total_pageviews'         => $total_pageviews,
             'new_visitors_percentage' => $new_visitors_percentage,
             'completion_rate'         => $completion_rate,
-            'top_page_views'           => [],
+            'top_page_views'          => [],
         ];
         foreach ( $top_page_views as $item ) {
-            $path      = $item->{'ga:pagePath'};
+            $path = $item->{'ga:pagePath'};
 
             $output['top_page_views'][] = (object) [
-                'path' => $path,
+                'path'      => $path,
                 'pageviews' => intval( $item->{'ga:pageviews'} ),
-                'link_url' => untrailingslashit( get_site_url() ) . $path,
+                'link_url'  => untrailingslashit( get_site_url() ) . $path,
                 'link_text' => $this->truncate_string( $path, 30 ),
             ];
         }
@@ -366,7 +366,7 @@ class Weekly_Traffic_Metric {
         ];
 
         $message[] = 'By page views, the top ten stories';
-        $items = array_slice( $data->top_page_views, 0, 10 );
+        $items     = array_slice( $data->top_page_views, 0, 10 );
         foreach ( $items as $item ) {
             $link      = '<' . $item->link_url . '|' . $item->link_text . '>';
             $message[] = $item->pageviews . ' ' . $link;
@@ -374,9 +374,9 @@ class Weekly_Traffic_Metric {
 
         $message[] = '';
 
-        $what_link            = '<https://docs.google.com/a/spiritedmedia.com/document/d/1tA8owu22ucLyxS9RQuAeTT_L4bAKMJcU1d1uqaHTtYo/edit?usp=sharing|what>';
-        $message[]            = 'By engaged completion rate (' . $what_link . '?), the top ten stories';
-        $completion_rate      = array_slice( $data->completion_rate, 0, 10 );
+        $what_link       = '<https://docs.google.com/a/spiritedmedia.com/document/d/1tA8owu22ucLyxS9RQuAeTT_L4bAKMJcU1d1uqaHTtYo/edit?usp=sharing|what>';
+        $message[]       = 'By engaged completion rate (' . $what_link . '?), the top ten stories';
+        $completion_rate = array_slice( $data->completion_rate, 0, 10 );
         foreach ( $completion_rate as $path => $item ) {
             $rate        = round( $item['percentage'] ) . '%';
             $numerator   = $this->truncate_number( $item['100%'] );
@@ -396,14 +396,14 @@ class Weekly_Traffic_Metric {
      */
     public function send() {
         $notifications = new Notifications;
-        $message = $this->get_message();
+        $message       = $this->get_message();
         if ( ! $message ) {
             return;
         }
         $slack_args = [
-            'username'    => 'Spirit',
-            'icon_emoji'  => ':ghost:',
-            'channel'     => PEDESTAL_SLACK_CHANNEL_CITY,
+            'username'   => 'Spirit',
+            'icon_emoji' => ':ghost:',
+            'channel'    => PEDESTAL_SLACK_CHANNEL_CITY,
         ];
         $slack_args = apply_filters( 'pedestal_weekly_traffic_slack_args', $slack_args );
         return $notifications->send( $message, $slack_args );

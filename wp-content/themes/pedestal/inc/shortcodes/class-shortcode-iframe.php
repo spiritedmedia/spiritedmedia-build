@@ -8,38 +8,38 @@ class Iframe extends Shortcode {
 
     public static function get_shortcode_ui_args() {
         return [
-            'label'          => esc_html__( 'Iframe', 'pedestal' ),
-            'listItemImage'  => 'dashicons-admin-site',
-            'attrs'          => [
+            'label'         => esc_html__( 'Iframe', 'pedestal' ),
+            'listItemImage' => 'dashicons-admin-site',
+            'attrs'         => [
                 [
-                    'label'        => esc_html__( 'URL', 'pedestal' ),
-                    'attr'         => 'src',
-                    'type'         => 'text',
-                    'description'  => esc_html__( 'Full URL to the iFrame source. Host must be whitelisted.', 'pedestal' ),
+                    'label'       => esc_html__( 'URL', 'pedestal' ),
+                    'attr'        => 'src',
+                    'type'        => 'text',
+                    'description' => esc_html__( 'Full URL to the iFrame source. Host must be whitelisted.', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Height', 'pedestal' ),
-                    'attr'         => 'height',
-                    'type'         => 'text',
-                    'description'  => esc_html__( 'Pixel height of the iframe. Defaults to 600.', 'pedestal' ),
+                    'label'       => esc_html__( 'Height', 'pedestal' ),
+                    'attr'        => 'height',
+                    'type'        => 'text',
+                    'description' => esc_html__( 'Pixel height of the iframe. Defaults to 600.', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Width', 'pedestal' ),
-                    'attr'         => 'width',
-                    'type'         => 'text',
-                    'description'  => esc_html__( 'Pixel width of the iframe. Defaults to 670.', 'pedestal' ),
+                    'label'       => esc_html__( 'Width', 'pedestal' ),
+                    'attr'        => 'width',
+                    'type'        => 'text',
+                    'description' => esc_html__( 'Pixel width of the iframe. Defaults to 670.', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Disable Responsiveness', 'pedestal' ),
-                    'attr'         => 'disableresponsiveness',
-                    'type'         => 'checkbox',
-                    'description'  => esc_html__( 'By default, height/width ratio of iframe will be maintained regardless of container width. Check this to keep constant height/width.', 'pedestal' ),
+                    'label'       => esc_html__( 'Disable Responsiveness', 'pedestal' ),
+                    'attr'        => 'disableresponsiveness',
+                    'type'        => 'checkbox',
+                    'description' => esc_html__( 'By default, height/width ratio of iframe will be maintained regardless of container width. Check this to keep constant height/width.', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Allow Scrolling', 'pedestal' ),
-                    'attr'         => 'allowscrolling',
-                    'type'         => 'checkbox',
-                    'description'  => esc_html__( 'By default, scrolling is disabled because it\'s usually unnecessary. Some embeds don\'t resize to fit the iframe properly, so sometimes it is necessary.', 'pedestal' ),
+                    'label'       => esc_html__( 'Allow Scrolling', 'pedestal' ),
+                    'attr'        => 'allowscrolling',
+                    'type'        => 'checkbox',
+                    'description' => esc_html__( 'By default, scrolling is disabled because it\'s usually unnecessary. Some embeds don\'t resize to fit the iframe properly, so sometimes it is necessary.', 'pedestal' ),
                 ],
             ],
         ];
@@ -77,13 +77,13 @@ class Iframe extends Shortcode {
         $attrs['src'] = trim( $attrs['src'] );
 
         $defaults = [
-            'height'                  => 600,
-            'width'                   => 670,
-            'disableresponsiveness'   => false,
-            'allowscrolling'          => false,
-            'class'                   => '',
+            'height'                => 600,
+            'width'                 => 670,
+            'disableresponsiveness' => false,
+            'allowscrolling'        => false,
+            'class'                 => '',
         ];
-        $attrs = array_merge( $defaults, $attrs );
+        $attrs    = array_merge( $defaults, $attrs );
 
         if ( $attrs['allowscrolling'] ) {
             $scrolling = 'auto';

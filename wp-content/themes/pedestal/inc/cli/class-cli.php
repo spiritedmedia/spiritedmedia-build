@@ -87,7 +87,7 @@ class CLI extends \WP_CLI_Command {
             'post_type'      => 'pedestal_org',
             'posts_per_page' => -1,
         ] );
-        $orgs = $orgs->get_stream();
+        $orgs = $orgs->get_posts();
         foreach ( $orgs as $org ) {
             $old_title = $org->get_title();
             $alias = $org->get_org_details_field( 'alias' );
@@ -155,16 +155,16 @@ class CLI extends \WP_CLI_Command {
         extract( $assoc_args );
         // @codingStandardsIgnoreEnd
 
-        $lipsum = new LoremIpsum;
-        $type = $post_type;
-        $admins = get_users( [
+        $lipsum      = new LoremIpsum;
+        $type        = $post_type;
+        $admins      = get_users( [
             'role' => 'administrator',
         ] );
-        $sources = get_terms( 'pedestal_source', [
+        $sources     = get_terms( 'pedestal_source', [
             'fields' => 'ids',
         ] );
         $post_status = $post_status ? $post_status : 'publish';
-        $count = $count ? $count : 1;
+        $count       = $count ? $count : 1;
 
         if ( in_array( 'pedestal_' . $post_type, Types::get_post_types() ) ) {
             $post_type = 'pedestal_' . $post_type;
@@ -194,7 +194,7 @@ class CLI extends \WP_CLI_Command {
                 case 'entity':
                     // Get a random entity post type
                     $entity_types = Types::get_entity_post_types();
-                    $post_type = $entity_types[ mt_rand( 0, count( $entity_types ) - 1 ) ];
+                    $post_type    = $entity_types[ mt_rand( 0, count( $entity_types ) - 1 ) ];
                     break;
 
             }
@@ -206,7 +206,7 @@ class CLI extends \WP_CLI_Command {
             }
 
             $post_type_class = Types::get_post_type_class( $post_type );
-            $post = $post_type_class::create( [
+            $post            = $post_type_class::create( [
                 'post_title'   => $post_title,
                 'post_status'  => $post_status,
                 'post_content' => $post_content,
@@ -353,22 +353,23 @@ class CLI extends \WP_CLI_Command {
         // The array we're going to store for each item
         $meta_value = [
             'bucket' => $bucket_name,
-            'key' => '',
+            'key'    => '',
             'region' => '',
         ];
 
         // Get the path prefix for the S3 key value
         // i.e. /wp-content/uploads/sites/2
         $wp_upload_dir = wp_upload_dir();
-        $path_prefix = str_replace( trailingslashit( get_site_url() ), '', $wp_upload_dir['baseurl'] );
-        $path_prefix = trailingslashit( $path_prefix );
+        $path_prefix   = str_replace( trailingslashit( get_site_url() ), '', $wp_upload_dir['baseurl'] );
+        $path_prefix   = trailingslashit( $path_prefix );
         if ( '/' == $path_prefix[0] ) {
             $path_prefix = ltrim( $path_prefix . '/' );
         }
 
         // Get all of the items that have a '_wp_attached_file' meta_key set and
         // don't have the  'amazonS3_info' already set
-        $rows = $wpdb->get_results( $wpdb->prepare( "
+        // phpcs:disable
+        $rows       = $wpdb->get_results( $wpdb->prepare( "
             SELECT `post_id`, `meta_key`, `meta_value`
             FROM `$wpdb->postmeta`
             WHERE `meta_key` = '_wp_attached_file'
@@ -378,14 +379,15 @@ class CLI extends \WP_CLI_Command {
                     WHERE `meta_key` = '%s'
                 )
         ", [ 'amazonS3_info' ] ) );
+        // phpcs:enable
         $total_rows = count( $rows );
         foreach ( $rows as $index => $row ) {
             if ( '_wp_attached_file' != $row->meta_key ) {
                 continue;
             }
             $meta_value['key'] = $path_prefix . $row->meta_value;
-            $post_id = intval( $row->post_id );
-            $updated = update_post_meta( $post_id, 'amazonS3_info', $meta_value );
+            $post_id           = intval( $row->post_id );
+            $updated           = update_post_meta( $post_id, 'amazonS3_info', $meta_value );
 
             // Provide some indication the script is working
             if ( 0 === $index % 500 ) {
@@ -451,20 +453,20 @@ class CLI extends \WP_CLI_Command {
      */
     public function restore_attachment_meta() {
         global $wpdb;
-        $data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}attachment_meta;" ) );
+        $data  = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}attachment_meta;" ) ); // phpcs:ignore
         $count = 0;
         foreach ( $data as $obj ) :
-            $post_id = intval( $obj->post_id );
+            $post_id  = intval( $obj->post_id );
             $old_meta = maybe_unserialize( $obj->meta_value );
             if ( empty( $old_meta['image_meta'] ) ) {
                 continue;
             }
             $old_image_meta = $old_meta['image_meta'];
-            $old_credit = '';
+            $old_credit     = '';
             if ( empty( $old_image_meta['credit'] ) ) {
                 continue;
             }
-            $old_credit = $old_image_meta['credit'];
+            $old_credit      = $old_image_meta['credit'];
             $old_credit_link = '';
             if ( ! empty( $old_image_meta['credit_link'] ) ) {
                 $old_credit_link = $old_image_meta['credit_link'];
@@ -487,7 +489,7 @@ class CLI extends \WP_CLI_Command {
             if ( $new_credit != $old_credit ) {
                 $count++;
                 WP_CLI::line( $post_id . ' - ' . $old_credit );
-                $new_meta['image_meta']['credit'] = $old_credit;
+                $new_meta['image_meta']['credit']      = $old_credit;
                 $new_meta['image_meta']['credit_link'] = $old_credit_link;
                 update_post_meta( $post_id, '_wp_attachment_metadata', $new_meta );
             }
@@ -507,21 +509,21 @@ class CLI extends \WP_CLI_Command {
      */
     public function convert_credits() {
         global $wpdb;
-        $credit_count = 0;
+        $credit_count      = 0;
         $credit_link_count = 0;
-        $data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->postmeta} WHERE `meta_key` = '_wp_attachment_metadata'" ) );
+        $data              = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->postmeta} WHERE `meta_key` = '_wp_attachment_metadata'" ) ); // phpcs:ignore
         foreach ( $data as $obj ) {
-            $post_id = intval( $obj->post_id );
+            $post_id  = intval( $obj->post_id );
             $old_meta = maybe_unserialize( $obj->meta_value );
             if ( empty( $old_meta['image_meta'] ) ) {
                 continue;
             }
             $old_image_meta = $old_meta['image_meta'];
-            $old_credit = '';
+            $old_credit     = '';
             if ( empty( $old_image_meta['credit'] ) ) {
                 continue;
             }
-            $old_credit = $old_image_meta['credit'];
+            $old_credit      = $old_image_meta['credit'];
             $old_credit_link = '';
             if ( ! empty( $old_image_meta['credit_link'] ) ) {
                 $old_credit_link = $old_image_meta['credit_link'];
@@ -554,7 +556,7 @@ class CLI extends \WP_CLI_Command {
      * @subcommand normalize-event-link-meta
      */
     public function normalize_event_link_meta() {
-        $args = [
+        $args  = [
             'post_type'      => 'pedestal_event',
             'posts_per_page' => -1,
             'post_status'    => 'any',
@@ -562,7 +564,7 @@ class CLI extends \WP_CLI_Command {
         $posts = new \WP_Query( $args );
         WP_CLI::line( number_format( count( $posts->posts ) ) . ' found' );
         foreach ( $posts->posts as $post ) {
-            $event_link = get_post_meta( $post->ID, 'event_link', true );
+            $event_link    = get_post_meta( $post->ID, 'event_link', true );
             $event_details = get_post_meta( $post->ID, 'event_details', true );
             if ( empty( $event_details['url'] ) ) {
                 $event_details['url'] = '';
@@ -571,7 +573,7 @@ class CLI extends \WP_CLI_Command {
                 $event_details['text'] = '';
             }
             if ( ! empty( $event_link ) ) {
-                $event_details['url'] = $event_link['url'];
+                $event_details['url']  = $event_link['url'];
                 $event_details['text'] = $event_link['text'];
             }
             update_post_meta( $post->ID, 'event_details', $event_details );
@@ -604,12 +606,12 @@ class CLI extends \WP_CLI_Command {
         foreach ( $post_types as $post_type ) {
             $plural_name = Types::get_post_type_name( $post_type );
             $post_titles = [];
-            $args = [
+            $args        = [
                 'post_type'      => $post_type,
                 'posts_per_page' => -1,
                 'post_status'    => 'publish',
             ];
-            $posts = new \WP_Query( $args );
+            $posts       = new \WP_Query( $args );
             foreach ( $posts->posts as $post ) {
                 $post_titles[] = $post->post_title;
             }
@@ -645,7 +647,7 @@ class CLI extends \WP_CLI_Command {
      */
     public function denverite_user_migration( $args, $assoc_args ) {
         global $wpdb;
-        $original_user_table = 'wp_iq43vv_users_original';
+        $original_user_table     = 'wp_iq43vv_users_original';
         $original_usermeta_table = 'wp_iq43vv_usermeta_original';
 
         // Does the site have denverite in the URL somewhere? Otherwise we could be in a world of hurt
@@ -680,11 +682,11 @@ class CLI extends \WP_CLI_Command {
                 'display_name'    => $old_user->display_name,
                 'role'            => 'reporter',
             ];
-            $new_id = wp_insert_user( $user_data );
+            $new_id    = wp_insert_user( $user_data );
             if ( is_wp_error( $new_id ) ) {
                 if ( 'existing_user_login' == $new_id->get_error_code() ) {
                     $existing_user = get_user_by( 'email', $old_user->user_email );
-                    $new_id = $existing_user->ID;
+                    $new_id        = $existing_user->ID;
                 } else {
                     WP_CLI::error( 'Error inserting new user: ' . $new_id->get_error_message() );
                 }
@@ -719,7 +721,7 @@ class CLI extends \WP_CLI_Command {
 
                 if ( isset( $meta_keys_to_transform[ $old->meta_key ] ) ) {
                     $new_key = $meta_keys_to_transform[ $old->meta_key ];
-                    $value = $old->meta_value;
+                    $value   = $old->meta_value;
                     if ( 'user_bio_extended' == $new_key ) {
                         $value = wpautop( $value );
                     }
@@ -767,7 +769,7 @@ class CLI extends \WP_CLI_Command {
         global $wpdb;
 
         // [irp]
-        $like = '%' . $wpdb->esc_like( '[irp' ) . '%';
+        $like  = '%' . $wpdb->esc_like( '[irp' ) . '%';
         $posts = $wpdb->get_results( $wpdb->prepare(
             "SELECT * FROM `{$wpdb->posts}` WHERE `post_content` LIKE %s",
             [
@@ -778,8 +780,8 @@ class CLI extends \WP_CLI_Command {
         foreach ( $posts as $post ) {
             $new_content = preg_replace( '/\[irp.+\](\s+)?/im', '', $post->post_content );
             $new_content = preg_replace( '/\[irp\]/im', '', $new_content );
-            $new_post = [
-                'ID' => $post->ID,
+            $new_post    = [
+                'ID'           => $post->ID,
                 'post_content' => trim( $new_content ),
             ];
             wp_update_post( $new_post );
@@ -788,7 +790,7 @@ class CLI extends \WP_CLI_Command {
         }
 
         // [denverite_inline_post]
-        $like = '%' . $wpdb->esc_like( '[denverite_inline_post' ) . '%';
+        $like  = '%' . $wpdb->esc_like( '[denverite_inline_post' ) . '%';
         $posts = $wpdb->get_results( $wpdb->prepare(
             "SELECT * FROM `{$wpdb->posts}` WHERE `post_content` LIKE %s",
             [
@@ -804,9 +806,9 @@ class CLI extends \WP_CLI_Command {
                 if ( ! empty( $matches[1] ) ) {
                     $meta_ids = [];
                     foreach ( $matches[1] as $attr ) {
-                        $meta_id = str_replace( [ 'posts=', '"' ], '', $attr );
-                        $meta_id = trim( $meta_id );
-                        $meta_id = intval( $meta_id );
+                        $meta_id    = str_replace( [ 'posts=', '"' ], '', $attr );
+                        $meta_id    = trim( $meta_id );
+                        $meta_id    = intval( $meta_id );
                         $meta_ids[] = $meta_id;
                     }
                     if ( ! empty( $meta_ids ) ) {
@@ -818,8 +820,8 @@ class CLI extends \WP_CLI_Command {
 
             // Strip the shortcode
             $new_content = preg_replace( '/\[denverite_inline_post.+\](\s+)?/im', '', $post->post_content );
-            $new_post = [
-                'ID' => $post->ID,
+            $new_post    = [
+                'ID'           => $post->ID,
                 'post_content' => trim( $new_content ),
             ];
             wp_update_post( $new_post );
@@ -838,11 +840,11 @@ class CLI extends \WP_CLI_Command {
      * @subcommand denverite-add-featured-images
      */
     public function denverite_add_featured_images( $args, $assoc_args ) {
-        $args = [
+        $args  = [
             'post_type'      => [ 'pedestal_article' ],
             'posts_per_page' => -1,
             'post_status'    => 'publish',
-            'meta_query' => [
+            'meta_query'     => [
                 [
                     'key'     => '_thumbnail_id',
                     'value'   => '',
@@ -870,17 +872,17 @@ class CLI extends \WP_CLI_Command {
                         $attachment_id = intval( $attachment_id );
 
                         // Make sure the attachment isn't a gif, which is probably animated
-                        $url = wp_get_attachment_url( $attachment_id );
+                        $url      = wp_get_attachment_url( $attachment_id );
                         $filetype = wp_check_filetype( $url );
                         if ( 'gif' != $filetype['ext'] ) {
                             update_post_meta( $post->ID, '_thumbnail_id', $attachment_id );
 
                             // Strip the shortcode
                             $shortcode_to_replace = '[img' . $attr . ']';
-                            $delimiter = '/';
-                            $regex = '/' . preg_quote( $shortcode_to_replace, $delimiter ) . '(\s+)?/i';
-                            $new_content = preg_replace( $regex, '', $post->post_content );
-                            $new_post = [
+                            $delimiter            = '/';
+                            $regex                = '/' . preg_quote( $shortcode_to_replace, $delimiter ) . '(\s+)?/i';
+                            $new_content          = preg_replace( $regex, '', $post->post_content );
+                            $new_post             = [
                                 'ID'           => $post->ID,
                                 'post_content' => trim( $new_content ),
                             ];
@@ -934,9 +936,9 @@ class CLI extends \WP_CLI_Command {
                 'Hillary Clinton Denver visit',
                 'Hillary Clinton emails',
             ],
-            'hobbies'            => 'hobby',
-            'Republicans'        => 'republicansr',
-            'Betsy Devos'        => [
+            'hobbies'             => 'hobby',
+            'Republicans'         => 'republicansr',
+            'Betsy Devos'         => [
                 'betsy devos',
                 'Besty DeVos',
             ],
@@ -971,7 +973,7 @@ class CLI extends \WP_CLI_Command {
         // Download the CSV of data so we don't need to worry about storing it anywhere
         // See https://stackoverflow.com/a/33727897/1119655
         $spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1gyH1Py7KuBn2s-bJTnhSaiHEAJlx9PlTubCLVqG2q8k/gviz/tq?tqx=out:csv&sheet=denverite-tags-frequency-20180219';
-        $filename = wp_tempnam( $spreadsheet_url );
+        $filename        = wp_tempnam( $spreadsheet_url );
         wp_remote_get( $spreadsheet_url, [
             'timeout'  => 15,
             'stream'   => true,
@@ -986,7 +988,7 @@ class CLI extends \WP_CLI_Command {
 
         // Open the csv
         $file_handle = fopen( $filename, 'r' );
-        $count = 0;
+        $count       = 0;
         // phpcs:ignore
         while ( false !== ( $row = fgetcsv( $file_handle, 0, ',') ) ) {
             $count++;
@@ -1005,7 +1007,7 @@ class CLI extends \WP_CLI_Command {
                 'post_status'    => 'public',
                 'fields'         => 'ids',
                 'posts_per_page' => 999,
-                'tax_query' => [
+                'tax_query'      => [
                     [
                         'taxonomy' => 'post_tag',
                         'field'    => 'slug',
@@ -1033,7 +1035,7 @@ class CLI extends \WP_CLI_Command {
                 $args['tax_query']['relation'] = 'OR';
             }
 
-            $query = new \WP_Query( $args );
+            $query    = new \WP_Query( $args );
             $post_ids = $query->posts;
 
             if ( empty( $post_ids ) ) {
@@ -1089,7 +1091,7 @@ class CLI extends \WP_CLI_Command {
                     'post_name'   => $slug,
                     'guid'        => $url,
                 ];
-                $new_cluster_id = wp_insert_post( $new_cluster_args );
+                $new_cluster_id   = wp_insert_post( $new_cluster_args );
                 if ( is_wp_error( $new_cluster_id ) ) {
                     $message = $new_cluster_id->get_error_message();
                     WP_CLI::warning( $count . ') "' . $tag_name . '": failed to insert cluster' );
@@ -1109,7 +1111,7 @@ class CLI extends \WP_CLI_Command {
 
             // Associate posts with cluster
             $connection_type = Types::get_connection_type( 'entity', $cluster_obj );
-            $p2p = p2p_type( $connection_type );
+            $p2p             = p2p_type( $connection_type );
             if ( ! $p2p ) {
                 WP_CLI::warning( 'Bad connection type: ' . $connection_type );
             }
@@ -1145,12 +1147,12 @@ class CLI extends \WP_CLI_Command {
      * @subcommand denverite-setup-homestream-exclusions
      */
     public function denverite_setup_homestream_exclusions( $args, $assoc_args ) {
-        $args = [
+        $args  = [
             'post_type'      => [ 'pedestal_article' ],
             'posts_per_page' => -1,
             'post_status'    => 'publish',
             'fields'         => 'ids',
-            'meta_query' => [
+            'meta_query'     => [
                 [
                     'key'     => 'exclude_from_home_stream',
                     'value'   => '',
@@ -1182,14 +1184,14 @@ class CLI extends \WP_CLI_Command {
         global $wpdb;
         $user_img_key = $wpdb->prefix . 'user_img';
 
-        $skipped_count = 0;
+        $skipped_count  = 0;
         $migrated_count = 0;
         $no_image_count = 0;
-        $users = get_users( [
+        $users          = get_users( [
             'fields' => [ 'ID' ],
         ] );
         foreach ( $users as $user ) {
-            $user_id = $user->ID;
+            $user_id       = $user->ID;
             $site_user_img = get_user_meta( $user_id, $user_img_key, true );
             if ( $site_user_img ) {
                 $skipped_count++;
@@ -1271,7 +1273,7 @@ class CLI extends \WP_CLI_Command {
     public function excerpt_to_summary() {
         global $wpdb;
 
-        $args = [
+        $args          = [
             'post_type'              => get_post_types(),
             'posts_per_page'         => -1,
             'fields'                 => 'ids',
@@ -1279,16 +1281,16 @@ class CLI extends \WP_CLI_Command {
             'update_post_term_cache' => false,
             'update_post_meta_cache' => false,
         ];
-        $post_ids = new \WP_Query( $args );
-        $post_ids = $post_ids->posts;
-        $total_posts = count( $post_ids );
+        $post_ids      = new \WP_Query( $args );
+        $post_ids      = $post_ids->posts;
+        $total_posts   = count( $post_ids );
         $current_count = 0;
 
         WP_CLI::line( "Copying excerpt to summary field for {$total_posts} posts..." );
         foreach ( $post_ids as $post_id ) {
             $current_count++;
             $progress_str = "[{$current_count}/{$total_posts}]";
-            $post = get_post( $post_id );
+            $post         = get_post( $post_id );
 
             $excerpt = $post->post_excerpt;
             if ( $excerpt ) {
@@ -1312,7 +1314,7 @@ class CLI extends \WP_CLI_Command {
     public function update_admin_ui_post_meta() {
         global $wpdb;
 
-        $args = [
+        $args          = [
             'post_type'              => get_post_types(),
             'posts_per_page'         => -1,
             'fields'                 => 'ids',
@@ -1320,16 +1322,16 @@ class CLI extends \WP_CLI_Command {
             'update_post_term_cache' => false,
             'update_post_meta_cache' => false,
         ];
-        $post_ids = new \WP_Query( $args );
-        $post_ids = $post_ids->posts;
-        $total_posts = count( $post_ids );
+        $post_ids      = new \WP_Query( $args );
+        $post_ids      = $post_ids->posts;
+        $total_posts   = count( $post_ids );
         $current_count = 0;
 
         WP_CLI::line( "Copying excerpt to summary field for {$total_posts} posts..." );
         foreach ( $post_ids as $post_id ) {
             $current_count++;
             $progress_str = "[{$current_count}/{$total_posts}]";
-            $post = get_post( $post_id );
+            $post         = get_post( $post_id );
 
             $excerpt = $post->post_excerpt;
             if ( $excerpt ) {
@@ -1339,12 +1341,14 @@ class CLI extends \WP_CLI_Command {
         }
         WP_CLI::success( 'Done copying excerpt to summary field.' );
 
+        // phpcs:disable
         $hide_from_home_stream = $wpdb->get_results( $wpdb->prepare( "
             SELECT meta_id, meta_value
             FROM $wpdb->postmeta
             WHERE meta_key = 'exclude_from_home_stream'
                 AND meta_value = 1
         " ) );
+        // phpcs:enable
         foreach ( $hide_from_home_stream as $row ) {
             $wpdb->update(
                 $wpdb->postmeta,
@@ -1357,12 +1361,14 @@ class CLI extends \WP_CLI_Command {
             );
         }
 
+        // phpcs:disable
         $show_in_home_stream = $wpdb->get_results( $wpdb->prepare( "
             SELECT meta_id, meta_value
             FROM $wpdb->postmeta
             WHERE meta_key = 'exclude_from_home_stream'
                 AND meta_value != 'hide'
         " ) );
+        // phpcs:enable
         foreach ( $show_in_home_stream as $row ) {
             $wpdb->update(
                 $wpdb->postmeta,
@@ -1389,7 +1395,7 @@ class CLI extends \WP_CLI_Command {
      * @subcommand content-analysis
      */
     public function content_analysis() {
-        $args = [
+        $args      = [
             'post_type'              => Types::get_original_post_types(),
             'post_status'            => 'public',
             'posts_per_page'         => -1,
@@ -1398,10 +1404,10 @@ class CLI extends \WP_CLI_Command {
             'update_post_term_cache' => false,
             'update_post_meta_cache' => false,
         ];
-        $posts = new \WP_Query( $args );
+        $posts     = new \WP_Query( $args );
         $file_name = PEDESTAL_BLOG_NAME . '--original-content-analysis--' . date( 'Y-m-d' );
         $file_name = sanitize_title( $file_name ) . '.csv';
-        $file = fopen( $file_name, 'w' );
+        $file      = fopen( $file_name, 'w' );
         fputcsv( $file, [
             'Paragraphs',
             'Word Count',
@@ -1421,9 +1427,9 @@ class CLI extends \WP_CLI_Command {
 
             // Count the number of paragraphs
             $graf_count = 0;
-            $dom = HtmlDomParser::str_get_html( $html );
+            $dom        = HtmlDomParser::str_get_html( $html );
             if ( is_object( $dom ) ) {
-                $nodes = $dom->find( 'p' );
+                $nodes      = $dom->find( 'p' );
                 $graf_count = count( $nodes );
             }
 
@@ -1491,10 +1497,10 @@ class CLI extends \WP_CLI_Command {
                 return [];
             }
 
-            $post_types = Types::get_cluster_post_types();
+            $post_types      = Types::get_cluster_post_types();
             $in_placeholders = array_fill( 0, count( $post_types ), '%s' );
             $in_placeholders = implode( ', ', $in_placeholders );
-            $args = array_merge( [
+            $args            = array_merge( [
                 $wpdb->esc_like( $name ),
             ], $post_types );
 
@@ -1533,12 +1539,12 @@ class CLI extends \WP_CLI_Command {
                 WP_CLI::error( 'Couldn\'t get category id for ' . $category_name );
             }
             $cluster_id = get_ids_from_cluster_name( $cluster_name );
-            $ped_post = Post::get( $cluster_id );
+            $ped_post   = Post::get( $cluster_id );
             if ( ! Types::is_cluster( $ped_post ) ) {
                 // WP_CLI::error( $name . ' is not a cluster!' );
                 return;
             }
-            $connected = $ped_post->get_entities_query([
+            $connected = $ped_post->get_posts_query([
                 'posts_per_page' => -1,
                 'post_status'    => 'publish',
                 'post_type'      => Types::get_entity_post_types(),
@@ -1558,15 +1564,15 @@ class CLI extends \WP_CLI_Command {
         $sheet_name = '';
         switch ( get_current_blog_id() ) {
             case 2:
-                $sheet_name = 'Billy+Penn';
+                $sheet_name      = 'Billy+Penn';
                 $category_column = 1;
-                $cluster_column = 2;
+                $cluster_column  = 2;
                 break;
 
             case 3:
-                $sheet_name = 'The+Incline';
+                $sheet_name      = 'The+Incline';
                 $category_column = 1;
-                $cluster_column = 3;
+                $cluster_column  = 3;
                 break;
 
             default:
@@ -1608,7 +1614,7 @@ class CLI extends \WP_CLI_Command {
 
         // Open the csv
         $file_handle = fopen( $filename, 'r' );
-        $count = 0;
+        $count       = 0;
         // phpcs:ignore
         while ( false !== ( $row = fgetcsv( $file_handle, 0, ',') ) ) {
             $count++;
@@ -1639,7 +1645,7 @@ class CLI extends \WP_CLI_Command {
 
         // Open the csv
         $file_handle = fopen( $filename, 'r' );
-        $count = 0;
+        $count       = 0;
         // phpcs:ignore
         while ( false !== ( $row = fgetcsv( $file_handle, 0, ',') ) ) {
             $count++;
@@ -1670,24 +1676,24 @@ class CLI extends \WP_CLI_Command {
         $term_ids = get_terms( $taxonomy, [
             'fields' => 'ids',
         ] );
-        $args = [
+        $args     = [
             'post_type'      => 'pedestal_article',
             'posts_per_page' => 3000,
             'post_status'    => 'publish',
             'tax_query'      => [
                 [
-                    'taxonomy'    => $taxonomy,
-                    'field'       => 'id',
-                    'terms'       => $term_ids,
-                    'operator'    => 'NOT IN',
+                    'taxonomy' => $taxonomy,
+                    'field'    => 'id',
+                    'terms'    => $term_ids,
+                    'operator' => 'NOT IN',
                 ],
             ],
         ];
-        $query = new \WP_Query( $args );
+        $query    = new \WP_Query( $args );
 
         $file_name = PEDESTAL_BLOG_NAME . '--uncategorized--' . date( 'Y-m-d' );
         $file_name = sanitize_title( $file_name ) . '.csv';
-        $file = fopen( $file_name, 'w' );
+        $file      = fopen( $file_name, 'w' );
         fputcsv( $file, [
             'Title',
             'Post Type',
@@ -1699,14 +1705,14 @@ class CLI extends \WP_CLI_Command {
 
         foreach ( $query->posts as $post ) {
             // WP_CLI::line( $post->post_title );
-            $ped_post = Post::get( $post->ID );
-            $permalink = $ped_post->get_the_permalink();
-            $permalink = str_replace( '.dev', '.com', $permalink );
-            $cluster_args = [
+            $ped_post      = Post::get( $post->ID );
+            $permalink     = $ped_post->get_the_permalink();
+            $permalink     = str_replace( '.dev', '.com', $permalink );
+            $cluster_args  = [
                 'types'   => Types::get_cluster_post_types(),
                 'flatten' => true,
             ];
-            $clusters = $ped_post->get_clusters( $cluster_args );
+            $clusters      = $ped_post->get_clusters( $cluster_args );
             $cluster_names = [];
             $cluster_links = [];
             if ( ! empty( $clusters ) ) {
@@ -1766,8 +1772,8 @@ class CLI extends \WP_CLI_Command {
             WP_CLI::line( "Updating IDs for `{$audience_key}`..." );
             foreach ( $locations_by_audience as $location_key => &$messages_by_location ) {
                 foreach ( $messages_by_location['messages'] as &$message ) {
-                    $old_id = $message['id'];
-                    $new_id = bin2hex( random_bytes( 4 ) );
+                    $old_id        = $message['id'];
+                    $new_id        = bin2hex( random_bytes( 4 ) );
                     $message['id'] = $new_id;
                     WP_CLI::line( "Message updated from `{$old_id}` to `{$new_id}`" );
                 }
@@ -1800,14 +1806,14 @@ class CLI extends \WP_CLI_Command {
      * @subcommand encode-img-shortcode-captions
      */
     public function encode_img_shortcode_captions( $args, $assoc_args ) {
-        $save = $assoc_args['save'] ?? false;
+        $save  = $assoc_args['save'] ?? false;
         $debug = $assoc_args['debug'] ?? false;
 
         $encode_attributes = [
             'alt',
             'caption',
         ];
-        $query_args = [
+        $query_args        = [
             'post_type'              => Types::get_original_post_types(),
             'post_status'            => 'public',
             'posts_per_page'         => -1,
@@ -1822,8 +1828,8 @@ class CLI extends \WP_CLI_Command {
                 'before' => '2018-06-13',
             ],
         ];
-        $query = new \WP_Query( $query_args );
-        $post_count = count( $query->posts );
+        $query             = new \WP_Query( $query_args );
+        $post_count        = count( $query->posts );
 
         WP_CLI::line( "$post_count total posts found containing `[img]` shortcodes..." );
         $progress = \WP_CLI\Utils\make_progress_bar( 'Encoding image shortcode attributes', $post_count );
@@ -1842,15 +1848,15 @@ class CLI extends \WP_CLI_Command {
                 continue;
             }
 
-            $permalink = $post->get_the_permalink();
+            $permalink   = $post->get_the_permalink();
             $ignore_caps = true;
-            $edit_link = $post->get_edit_link( $ignore_caps );
+            $edit_link   = $post->get_edit_link( $ignore_caps );
 
             // Find all the shortcodes in the post content
             preg_match_all( '/' . get_shortcode_regex() . '/', $post_content, $shortcode_matches, PREG_SET_ORDER );
 
-            $exception = false;
-            $num_images = 0;
+            $exception       = false;
+            $num_images      = 0;
             $updated_content = $post_content;
             foreach ( $shortcode_matches as $match ) :
                 $shortcode_tag = $match[2];
@@ -1859,7 +1865,7 @@ class CLI extends \WP_CLI_Command {
                     continue;
                 }
 
-                $full_shortcode = $match[0];
+                $full_shortcode  = $match[0];
                 $shortcode_order = Utils::add_ordinal_suffix( $num_images + 1 );
 
                 foreach ( $encode_attributes as $attribute_name ) :
@@ -1871,7 +1877,7 @@ class CLI extends \WP_CLI_Command {
                         continue;
                     }
 
-                    $orig_attr = $orig_attr_matches[0][1];
+                    $orig_attr    = $orig_attr_matches[0][1];
                     $decoded_attr = Utils::decode_html_entities( $orig_attr );
 
                     // Convert <br> tags to spaces
@@ -1915,7 +1921,7 @@ class CLI extends \WP_CLI_Command {
                     // Compare the original decoded attribute content with the
                     // new attribute content -- there should be no differences
                     $re_decoded_attr = rawurldecode( $encoded_attr );
-                    $attr_identical = ( $re_decoded_attr === $decoded_attr );
+                    $attr_identical  = ( $re_decoded_attr === $decoded_attr );
                     if ( ! $attr_identical ) {
                         $exception = true;
                         WP_CLI::error( "The `$attribute_name` attribute for the $shortcode_order image shortcode in $post_id mutated during encoding:" );

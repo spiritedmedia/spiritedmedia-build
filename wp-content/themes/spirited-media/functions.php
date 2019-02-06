@@ -49,10 +49,10 @@ function get_svg( $path, $args = [] ) {
         return;
     }
     $defaults = [
-        'role' => 'image',
+        'role'      => 'image',
         'css_class' => '',
     ];
-    $args = wp_parse_args( $args, $defaults );
+    $args     = wp_parse_args( $args, $defaults );
 
     $role_attr = $args['role'];
     $css_class = $args['css_class'];

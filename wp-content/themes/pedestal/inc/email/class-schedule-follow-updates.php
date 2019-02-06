@@ -89,10 +89,10 @@ class Schedule_Follow_Updates {
         if ( ! $this->can_show_meta_box() ) {
             return;
         }
-        $id = 'pedestal-schedule-follow-updates';
-        $title = 'Schedule Sending of Updates';
-        $screen = $post->post_type;
-        $context = 'side';
+        $id       = 'pedestal-schedule-follow-updates';
+        $title    = 'Schedule Sending of Updates';
+        $screen   = $post->post_type;
+        $context  = 'side';
         $priority = 'default';
 
         add_meta_box(
@@ -111,7 +111,7 @@ class Schedule_Follow_Updates {
      * @param  WP_Post $post WordPress post object of the edit screen
      */
     public function render_metabox( $post ) {
-        $data = $this->get_data( $post->ID );
+        $data    = $this->get_data( $post->ID );
         $context = [
             'radio_name'     => $this->radio_button_name,
             'days_of_week'   => $this->days_of_week,
@@ -133,11 +133,11 @@ class Schedule_Follow_Updates {
                     $normalized_value = $this->normalize_minutes( $value );
                     break;
             }
-            $context_key = $data->frequency . '_' . $key;
+            $context_key             = $data->frequency . '_' . $key;
             $context[ $context_key ] = $normalized_value;
         }
-        $referer = true;
-        $echo = false;
+        $referer                = true;
+        $echo                   = false;
         $context['nonce_field'] = wp_nonce_field( $this->nonce_action, $this->nonce_name, $referer, $echo );
         Timber::render( 'partials/admin/metabox-schedule-follow-update-emails.twig', $context );
     }
@@ -222,23 +222,23 @@ class Schedule_Follow_Updates {
         }
 
         $frequency = $_POST['pedestal-schedule-follow-updates'];
-        $values = [];
+        $values    = [];
         switch ( $frequency ) {
             case 'weekly':
-                $day_key = $this->radio_button_name . '-weekly-day';
+                $day_key       = $this->radio_button_name . '-weekly-day';
                 $values['day'] = $this->sanitize_day( $day_key );
 
-                $time_key = $this->radio_button_name . '-weekly-time';
+                $time_key       = $this->radio_button_name . '-weekly-time';
                 $values['time'] = $this->sanitize_time( $time_key );
                 break;
 
             case 'daily':
-                $time_key = $this->radio_button_name . '-daily-time';
+                $time_key       = $this->radio_button_name . '-daily-time';
                 $values['time'] = $this->sanitize_time( $time_key );
                 break;
 
             case 'hourly':
-                $minute_key = $this->radio_button_name . '-hourly-minutes';
+                $minute_key        = $this->radio_button_name . '-hourly-minutes';
                 $values['minutes'] = $this->sanitize_minutes( $minute_key );
                 break;
         }
@@ -251,10 +251,10 @@ class Schedule_Follow_Updates {
             'time'    => '',
             'minutes' => '',
         ];
-        $values = wp_parse_args( $values, $defaults );
+        $values   = wp_parse_args( $values, $defaults );
 
         // Get old data for comparisons
-        $old_data = $this->get_data( $post->ID );
+        $old_data      = $this->get_data( $post->ID );
         $old_timestamp = $this->get_cron_timestamp( $post->ID );
 
         // Update post meta
@@ -262,13 +262,13 @@ class Schedule_Follow_Updates {
         update_post_meta( $post->ID, 'schedule_timing', $values );
 
         // Get new data for comparisons
-        $new_data = $this->get_data( $post->ID );
+        $new_data      = $this->get_data( $post->ID );
         $new_timestamp = $this->get_cron_timestamp( $post->ID );
 
         // Schedule cron event
         $recurrence = $frequency;
-        $hook = $this->cron_action;
-        $args = [
+        $hook       = $this->cron_action;
+        $args       = [
             'post_id' => $post->ID,
         ];
 
@@ -308,7 +308,7 @@ class Schedule_Follow_Updates {
         if ( ! Types::is_followable_post_type( $cluster->get_post_type() ) ) {
             return;
         }
-        $email = Follow_Updates::get_instance();
+        $email  = Follow_Updates::get_instance();
         $result = $email->send_email_to_group( $cluster );
         if ( $result ) {
             // Set the last sent email date
@@ -324,7 +324,7 @@ class Schedule_Follow_Updates {
      */
     public function action_manage_posts_custom_column( $column_name = '', $post_id = 0 ) {
         if ( 'update_frequency' == $column_name ) {
-            $data = $this->get_data( $post_id );
+            $data      = $this->get_data( $post_id );
             $frequency = ucfirst( $data->frequency );
             if ( 'None' == $frequency ) {
                 $frequency = '--';
@@ -353,7 +353,7 @@ class Schedule_Follow_Updates {
             // Add our new columns before the date column
             if ( 'date' == $key ) {
                 $new_columns['update_frequency'] = 'Update Frequency';
-                $new_columns['next_send_date'] = 'Next Send Date';
+                $new_columns['next_send_date']   = 'Next Send Date';
             }
             $new_columns[ $key ] = $label;
         }
@@ -434,7 +434,7 @@ class Schedule_Follow_Updates {
      * @return object           Data
      */
     public function get_data( $post_id = 0 ) {
-        $post_id = absint( $post_id );
+        $post_id   = absint( $post_id );
         $frequency = get_post_meta( $post_id, 'schedule_frequency', true );
         if ( ! $frequency ) {
             $frequency = 'none';
@@ -491,7 +491,7 @@ class Schedule_Follow_Updates {
                 ];
                 // UTC version time
                 $time = strtotime( implode( ' ', $pieces ) );
-                $now = strtotime( 'now UTC' );
+                $now  = strtotime( 'now UTC' );
                 if ( $time < $now ) {
                     $time = strtotime( '+1 week', $time );
                 }
@@ -500,14 +500,14 @@ class Schedule_Follow_Updates {
             case 'daily':
                 // UTC version time
                 $time = strtotime( $this->normalize_time( $data->time ) . ' ' . $tz );
-                $now = strtotime( 'now UTC' );
+                $now  = strtotime( 'now UTC' );
                 if ( $time < $now ) {
                     $time = strtotime( '+1 day', $time );
                 }
                 break;
 
             case 'hourly':
-                $hour = intval( date( 'H' ) );
+                $hour           = intval( date( 'H' ) );
                 $current_minute = intval( date( 'i' ) );
                 if ( $data->minutes < $current_minute ) {
                     $hour++;
@@ -530,7 +530,7 @@ class Schedule_Follow_Updates {
      * @return integer          Unix time of the next send date
      */
     public function get_cron_timestamp( $post_id = 0 ) {
-        $post_id = absint( $post_id );
+        $post_id   = absint( $post_id );
         $timestamp = $this->get_next_send_date( $post_id, 'Y-m-d H:i:s' ); // Local time
         if ( ! $timestamp ) {
             return 0;
@@ -549,8 +549,8 @@ class Schedule_Follow_Updates {
     public function unschedule_cron_event( $post_id = 0 ) {
         // Unschedule any cron events
         $post_id = absint( $post_id );
-        $hook = $this->cron_action;
-        $args = [
+        $hook    = $this->cron_action;
+        $args    = [
             'post_id' => $post_id,
         ];
         // Get the Unix timestamp of the next time the scheduled hook will occur

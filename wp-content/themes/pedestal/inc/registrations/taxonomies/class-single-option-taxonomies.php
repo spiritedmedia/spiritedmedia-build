@@ -43,7 +43,7 @@ class Single_Option_Taxonomies {
      * Get the taxonomies that should be displayed
      */
     public function action_init_set_taxonomies() {
-        $output = 'objects';
+        $output           = 'objects';
         $this->taxonomies = get_taxonomies( [
             'single_option_taxonomy' => true,
         ], $output );
@@ -94,15 +94,15 @@ class Single_Option_Taxonomies {
             return;
         }
         foreach ( $this->taxonomies as $tax_key => $tax ) {
-            $id = 'radio-' . $tax_key . 'div';
-            $title = $tax->labels->singular_name;
-            $post_type = $tax->object_type;
+            $id            = 'radio-' . $tax_key . 'div';
+            $title         = $tax->labels->singular_name;
+            $post_type     = $tax->object_type;
             $callback_args = [
                 'taxonomy' => $tax_key,
             ];
-            $context = 'side';
-            $priority = 'core';
-            add_meta_box( $id, $title, [ $this, 'render_metabox' ], $post_type , $context, $priority, $callback_args );
+            $context       = 'side';
+            $priority      = 'core';
+            add_meta_box( $id, $title, [ $this, 'render_metabox' ], $post_type, $context, $priority, $callback_args );
         }
     }
 
@@ -116,8 +116,8 @@ class Single_Option_Taxonomies {
         if ( ! isset( $box['args']['taxonomy'] ) || ! is_array( $box['args'] ) ) {
             return;
         }
-        $taxonomy = $box['args']['taxonomy'];
-        $selected_term = [
+        $taxonomy       = $box['args']['taxonomy'];
+        $selected_term  = [
             'term_id'          => 0,
             'name'             => '',
             'slug'             => '',
@@ -133,7 +133,7 @@ class Single_Option_Taxonomies {
         if ( ! empty( $selected_terms ) ) {
             $selected_term = $selected_terms[0];
         }
-        $terms = get_terms( [
+        $terms   = get_terms( [
             'taxonomy'   => $taxonomy,
             'hide_empty' => false,
         ] );
@@ -178,7 +178,7 @@ class Single_Option_Taxonomies {
         foreach ( $taxonomies_to_check as $taxonomy ) {
             $terms = wp_get_object_terms( $post->ID, $taxonomy, [] );
             if ( empty( $terms ) ) {
-                $args = [
+                $args    = [
                     'ID'          => $post->ID,
                     'post_status' => 'draft',
                 ];
@@ -212,10 +212,10 @@ class Single_Option_Taxonomies {
             if ( ! isset( $this->taxonomies[ $tax_key ] ) ) {
                 continue;
             }
-            $tax = $this->taxonomies[ $tax_key ];
-            $tax_label = $tax->labels->singular_name;
+            $tax        = $this->taxonomies[ $tax_key ];
+            $tax_label  = $tax->labels->singular_name;
             $metabox_id = 'radio-' . $tax_key . 'div';
-            $context = [
+            $context    = [
                 'tax_label'  => $tax_label,
                 'metabox_id' => $metabox_id,
             ];

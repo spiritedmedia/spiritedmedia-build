@@ -21,11 +21,11 @@ abstract class Cluster extends Post {
     protected $email_type = 'cluster updates';
 
     /**
-     * Cached stream
+     * Cached Pedestal Post objects
      *
-     * @var Stream
+     * @var array Pedestal Post objects
      */
-    private $cached_stream = [];
+    private $cached_posts = [];
 
     /**
      * Get CSS classes
@@ -45,39 +45,11 @@ abstract class Cluster extends Post {
      */
     protected function set_data_atts() {
         parent::set_data_atts();
-        $atts = parent::get_data_atts();
-        $new_atts = [
+        $atts                  = parent::get_data_atts();
+        $new_atts              = [
             'cluster' => '',
         ];
         $this->data_attributes = array_merge( $atts, $new_atts );
-    }
-
-    /**
-     * Get the entities associated with an Cluster
-     *
-     * @param array $args
-     * @return array
-     */
-    public function get_entities( $args = [] ) {
-        $args = wp_parse_args( $args, [
-            'post_type'      => Types::get_entity_post_types(),
-            'connected_type' => $this->get_cluster_entity_connection_type(),
-        ] );
-        return $this->get_stream( $args );
-    }
-
-    /**
-     * Get a WP_Query object for the entities connected to this cluster
-     *
-     * @param  array  $args  Args for modifying the query
-     * @return WP_Query      WP_Query object
-     */
-    public function get_entities_query( $args = [] ) {
-        $args = wp_parse_args( $args, [
-            'post_type'      => Types::get_entity_post_types(),
-            'connected_type' => $this->get_cluster_entity_connection_type(),
-        ] );
-        return $this->get_stream_query( $args );
     }
 
     /**
@@ -87,31 +59,33 @@ abstract class Cluster extends Post {
      * can be a performance-heavy query.
      *
      * @param  array $args
-     * @return array Stream
+     * @return array Pedestal Post objects
      */
     public function get_connected( $args = [] ) {
         $args = wp_parse_args( $args, [
             'connected_type' => Types::get_cluster_connection_types(),
             'posts_per_page' => 500,
         ] );
-        return $this->get_stream( $args );
+        return $this->get_posts( $args );
     }
 
     /**
-     * Get the cluster stream object
+     * Get the cluster posts
+     *
+     * Defaults to entities connected to this cluster.
      *
      * @param  array  $args WP_Query args
-     * @return Stream
+     * @return array        Pedestal Post objects
      */
-    public function get_stream( $args = [] ) {
-        $query = $this->get_stream_query( $args );
+    public function get_posts( $args = [] ) {
+        $query     = $this->get_posts_query( $args );
         $args_hash = md5( serialize( $query->query_vars ) );
-        if ( ! empty( $this->cached_stream[ $args_hash ] ) ) {
-            return $this->cached_stream[ $args_hash ];
+        if ( ! empty( $this->cached_posts[ $args_hash ] ) ) {
+            return $this->cached_posts[ $args_hash ];
         }
-        $ped_posts = Post::get_posts_from_query( $query );
-        $this->cached_stream[ $args_hash ] = $ped_posts;
-        return $this->cached_stream[ $args_hash ];
+        $ped_posts                        = Post::get_posts_from_query( $query );
+        $this->cached_posts[ $args_hash ] = $ped_posts;
+        return $this->cached_posts[ $args_hash ];
     }
 
     /**
@@ -120,16 +94,15 @@ abstract class Cluster extends Post {
      * @param  array  $args  Args to modify the query
      * @return WP_Query      WP_Query object
      */
-    public function get_stream_query( $args = [] ) {
-        $defaults = [
-            'post_type'      => Types::get_post_types(),
+    public function get_posts_query( $args = [] ) {
+        $args                    = wp_parse_args( $args, [
+            'post_type'      => Types::get_entity_post_types(),
+            'connected_type' => $this->get_cluster_entity_connection_type(),
             'post_status'    => 'publish',
             'posts_per_page' => 20,
-        ];
-        $args = wp_parse_args( $args, $defaults );
-
-        $paged = get_query_var( 'paged' );
-        $args['paged'] = $paged ? $paged : 1;
+        ] );
+        $paged                   = get_query_var( 'paged' );
+        $args['paged']           = $paged ? $paged : 1;
         $args['connected_items'] = $this->post;
         return new \WP_Query( $args );
     }
@@ -149,7 +122,7 @@ abstract class Cluster extends Post {
      * @return int
      */
     public function get_subscriber_count() {
-        $email_groups = Email_Groups::get_instance();
+        $email_groups   = Email_Groups::get_instance();
         $group_category = $this->get_mailchimp_group_category();
         return $email_groups->get_subscriber_count( $this->get_title(), $group_category );
     }
@@ -215,9 +188,9 @@ abstract class Cluster extends Post {
      * @return array
      */
     public function get_unsent_entities( $args = [] ) {
-        $key = 'pedestal_cluster_unsent_entities_count_' . $this->get_id();
+        $key        = 'pedestal_cluster_unsent_entities_count_' . $this->get_id();
         $expiration = Utils::get_fuzzy_expire_time( HOUR_IN_SECONDS / 2 );
-        $count = get_transient( $key );
+        $count      = get_transient( $key );
 
         $args = wp_parse_args( $args, [
             'posts_per_page' => 99,
@@ -236,13 +209,13 @@ abstract class Cluster extends Post {
         $last_date = $this->get_last_email_notification_date( 'Y-m-d H:i:s' );
         if ( $last_date ) {
             $args['date_query'] = [
-                'after'         => $last_date,
-                'column'        => 'post_date_gmt',
+                'after'  => $last_date,
+                'column' => 'post_date_gmt',
             ];
         }
 
-        $entities = $this->get_entities( $args );
-        $count = count( $entities );
+        $entities = $this->get_posts( $args );
+        $count    = count( $entities );
 
         // Store this as post meta to make sortable admin columns possible
         $this->set_meta( 'unsent_entities_count', $count );
@@ -306,7 +279,7 @@ abstract class Cluster extends Post {
      * @return array Twig context
      */
     public function get_context( $context = [] ) {
-        $context = parent::get_context( $context );
+        $context         = parent::get_context( $context );
         $context['slug'] = $this->get_slug();
         return $context;
     }

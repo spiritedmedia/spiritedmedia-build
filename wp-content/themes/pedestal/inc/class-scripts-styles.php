@@ -85,7 +85,7 @@ class Scripts_Styles {
 
         $google_fonts_string = 'Overpass:300,300i,400,400i,600,700,700i';
         $google_fonts_string = apply_filters( 'pedestal_google_fonts_string', $google_fonts_string );
-        $google_fonts_src = 'https://fonts.googleapis.com/css?family=' . $google_fonts_string;
+        $google_fonts_src    = 'https://fonts.googleapis.com/css?family=' . $google_fonts_string;
         wp_register_style( 'google-fonts', $google_fonts_src, [], null );
 
         // Functionality-specific assets
@@ -93,7 +93,7 @@ class Scripts_Styles {
         wp_register_style( 'soundcite', 'https://cdn.knightlab.com/libs/soundcite/latest/css/player.css', [], null );
 
         if ( is_single() && is_a( $post, 'WP_Post' ) ) {
-            $post_obj = Post::get( $post->ID );
+            $post_obj           = Post::get( $post->ID );
             $post_published_ver = $post_obj->get_published_pedestal_ver();
 
             // Load SoundCite assets only if shortcode is present in the current post content
@@ -125,7 +125,7 @@ class Scripts_Styles {
             wp_enqueue_script( 'dfp-placeholders', PEDESTAL_DIST_DIRECTORY_URI . '/js/dfp-placeholders.js', [ 'jquery' ], PEDESTAL_VERSION );
         }
 
-        wp_register_script( 'pedestal-footnotes', PEDESTAL_DIST_DIRECTORY_URI . '/js/pedestal-footnotes.js', [ 'jquery' ],  PEDESTAL_VERSION, true );
+        wp_register_script( 'pedestal-footnotes', PEDESTAL_DIST_DIRECTORY_URI . '/js/pedestal-footnotes.js', [ 'jquery' ], PEDESTAL_VERSION, true );
     }
 
     /**
@@ -168,9 +168,9 @@ class Scripts_Styles {
         }
 
         // Remove the 'ver' query var: ?ver=0.1
-        $src = remove_query_arg( 'ver', $src );
+        $src   = remove_query_arg( 'ver', $src );
         $regex = '/' . preg_quote( $base_url, '/' ) . '/';
-        $path = preg_replace( $regex, '', $src );
+        $path  = preg_replace( $regex, '', $src );
         // If the folder starts with wp- then we can figure out where it lives on the filesystem.
         if ( strstr( $path, '/wp-' ) ) {
             $file = untrailingslashit( ABSPATH ) . $path;
@@ -179,13 +179,13 @@ class Scripts_Styles {
             return $src;
         }
 
-        $time_format = apply_filters( 'cache_busting_path_time_format', 'Y-m-d_G-i' );
-        $modified_time = filemtime( $file );
+        $time_format     = apply_filters( 'cache_busting_path_time_format', 'Y-m-d_G-i' );
+        $modified_time   = filemtime( $file );
         $timezone_string = get_option( 'timezone_string' );
-        $dt = new \DateTime( '@' . $modified_time );
+        $dt              = new \DateTime( '@' . $modified_time );
         $dt->setTimeZone( new \DateTimeZone( $timezone_string ) );
         $time = $dt->format( $time_format );
-        $src = add_query_arg( 'ver', $time, $src );
+        $src  = add_query_arg( 'ver', $time, $src );
         return $src;
     }
 
@@ -209,6 +209,9 @@ class Scripts_Styles {
     public function has_tablepress_shortcode( $post_id = 0 ) {
         if ( is_single() ) {
             $post = get_post( $post_id );
+            if ( ! is_object( $post ) || ! property_exists( $post, 'post_content' ) ) {
+                return false;
+            }
             if ( has_shortcode( $post->post_content, 'table' ) ) {
                 return true;
             }
@@ -236,8 +239,8 @@ class Scripts_Styles {
             $new_script_element .= $script_element;
             $new_script_element .= '<![endif]-->';
             // jQuery 2.x gets served to everyone else...
-            $jquery2_path = PEDESTAL_DIST_DIRECTORY_URI . '/js/vendor/jquery.min.js';
-            $jquery2_src = apply_filters( 'script_loader_src', $jquery2_path );
+            $jquery2_path        = PEDESTAL_DIST_DIRECTORY_URI . '/js/vendor/jquery.min.js';
+            $jquery2_src         = apply_filters( 'script_loader_src', $jquery2_path );
             $new_script_element .= '<!--[if (gte IE 9) | (!IE)]><!-->';
             $new_script_element .= "<script type='text/javascript' src='" . $jquery2_src . "'></script>";
             $new_script_element .= '<!--<![endif]-->';
@@ -309,14 +312,14 @@ class Scripts_Styles {
 
             // Transform cluster permalinks into the cluster slug
             // https://denverite.com/topics/foo/ ==> foo
-            $tags = array_map( function( $permalink ) {
-                $path = str_replace( get_site_url(), '', $permalink );
+            $tags       = array_map( function( $permalink ) {
+                $path  = str_replace( get_site_url(), '', $permalink );
                 $parts = explode( '/', $path );
                 return $parts[2];
             }, $tag_permalinks);
             $dfp_topics = implode( ' ', $tags );
 
-            $new_attrs = sprintf(
+            $new_attrs      = sprintf(
                 '
                     id="%s"
                     data-dfp-id="%s"

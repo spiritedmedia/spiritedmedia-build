@@ -28,7 +28,7 @@ $context = [
 ] + Timber::get_context();
 
 // Copied from author.php
-$author_stream = new Stream( $user->get_stream_query() );
+$author_stream = new Stream( $user->get_posts_query() );
 $context['stream'] = $author_stream->get_the_stream();
 if ( $author_stream->is_last_page() ) {
     $context['show_closure_rule'] = true;

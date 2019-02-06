@@ -1,8 +1,9 @@
-Build [#6575](https://circleci.com/gh/spiritedmedia/spiritedmedia/6575) by kingkool68 at 2019-01-30 06:44 PM UTC
+Build [#6600](https://circleci.com/gh/spiritedmedia/spiritedmedia/6600) by montchr at 2019-02-06 04:11 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v7.13.2](https://github.com/spiritedmedia/spiritedmedia/compare/v7.13.2)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v7.13.3](https://github.com/spiritedmedia/spiritedmedia/compare/v7.13.3)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.13.1...v7.13.2)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.13.2...v7.13.3)
 
- - [#3083](git@github.com:spiritedmedia/spiritedmedia.git/pull/3083): Add descriptions to target group tabs in targeted messaging admin UI
- - [#3086](git@github.com:spiritedmedia/spiritedmedia.git/pull/3086): Improve Cache HIT Rate for Requests with Certain Query Strings
+ - [#3097](git@github.com:spiritedmedia/spiritedmedia.git/pull/3097): Set the Number of Items to Show in an RSS Feed to 50
+ - [#3092](git@github.com:spiritedmedia/spiritedmedia.git/pull/3092): Make Cluster RSS Feeds Functional
+ - [#3091](git@github.com:spiritedmedia/spiritedmedia.git/pull/3091): Improve PHPCS workflow

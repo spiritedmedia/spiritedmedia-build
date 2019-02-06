@@ -52,7 +52,7 @@ class Figure {
 
     public function __construct( $type, $content, $atts = [] ) {
         $this->content = $content;
-        $this->hash = substr( md5( $this->content ), 0, 8 );
+        $this->hash    = substr( md5( $this->content ), 0, 8 );
 
         $this->setup_figure( $type, $content, $atts );
     }
@@ -81,13 +81,13 @@ class Figure {
         if ( ! empty( $atts['attachment'] ) ) {
             $id .= '_' . $atts['attachment'];
         }
-        $id = esc_attr( $id );
-        $capid = 'id="figcaption_' . $id . '" ';
-        $id_str = sprintf( 'id="figure_%s" ', $id );
-        $classes = $atts['classes'];
+        $id           = esc_attr( $id );
+        $capid        = 'id="figcaption_' . $id . '" ';
+        $id_str       = sprintf( 'id="figure_%s" ', $id );
+        $classes      = $atts['classes'];
         $wrap_classes = $atts['wrap_classes'];
-        $style = $atts['style'];
-        $youtube_id = false;
+        $style        = $atts['style'];
+        $youtube_id   = false;
 
         // Only use `aria-labelledby` if caption is present
         if ( ! empty( $atts['caption'] ) ) {
@@ -97,14 +97,14 @@ class Figure {
         if ( 'embed' === $type || 'social-embed' === $type ) :
 
             // Let's figure out an aspect ratio...
-            $width = '';
+            $width  = '';
             $height = '';
 
             // via http://stackoverflow.com/a/3820783/1119655
             $dom = new \DOMDocument;
             $dom->loadHTML( $this->content );
-            $xpath = new \DOMXPath( $dom );
-            $nodes = $xpath->query( '//*[@width]' );
+            $xpath                = new \DOMXPath( $dom );
+            $nodes                = $xpath->query( '//*[@width]' );
             $whitelisted_elements = [ 'script', 'iframe' ];
 
             foreach ( $nodes as $node ) :
@@ -138,15 +138,15 @@ class Figure {
                 if ( 'iframe' === $node->nodeName && stristr( $node->getAttribute( 'src' ), 'youtube.com' ) ) {
                     // @codingStandardsIgnoreEnd
                     $youtube_url = $node->getAttribute( 'src' );
-                    $parts = explode( '/embed/', $youtube_url );
-                    $youtube_id = untrailingslashit( $parts[1] );
+                    $parts       = explode( '/embed/', $youtube_url );
+                    $youtube_id  = untrailingslashit( $parts[1] );
                 }
 
             endforeach;
 
             if ( $width && $height && $is_responsive ) {
                 $classes = 'c-figure--responsive-iframe ' . $classes;
-                $ratio = $height / $width * 100;
+                $ratio   = $height / $width * 100;
                 if ( $height > $width ) {
                     $ratio = $width / $height * 100;
                 }
@@ -185,10 +185,10 @@ class Figure {
         }
         // Override YouTube embed content so we can lazy load videos
         if ( isset( $youtube_id ) && $youtube_id ) {
-            $src_sets = [];
-            $youtube = new YouTube;
+            $src_sets    = [];
+            $youtube     = new YouTube;
             $youtube_url = $youtube::get_url_from_id( $youtube_id );
-            $thumbnails = $youtube->get_video_thumbnails( $youtube_url );
+            $thumbnails  = $youtube->get_video_thumbnails( $youtube_url );
             if ( empty( $thumbnails ) || empty( $thumbnails['src'] ) || empty( $thumbnails['srcset'] ) ) {
                 return;
             }
@@ -197,7 +197,7 @@ class Figure {
             }
             $srcset_attr = implode( ', ', $src_sets );
 
-            $context['classes'] .= ' c-figure--youtube';
+            $context['classes']      .= ' c-figure--youtube';
             $context['wrap_classes'] .= ' yt-placeholder';
 
             $placeholder_ga_category = $atts['content_ga_category'];

@@ -40,7 +40,7 @@ class YouTube {
      */
     public function get_latest_site_channel_video_id() {
         $transient_key = $this->transient_key_latest_channel_video;
-        $video_id = get_transient( $transient_key );
+        $video_id      = get_transient( $transient_key );
 
         if ( $video_id ) {
             return $video_id;
@@ -51,7 +51,7 @@ class YouTube {
             'channelId'  => PEDESTAL_YOUTUBE_CHANNEL_ID,
             'maxResults' => 1,
         ] );
-        $data = $this->get_data_from_response( $response );
+        $data     = $this->get_data_from_response( $response );
 
         if ( empty( $data ) || empty( $data->id ) || empty( $data->id->videoId ) ) {
             return false;
@@ -76,7 +76,7 @@ class YouTube {
      * @return array|false
      */
     public function get_video_thumbnails( string $url ) {
-        $thumbnails = [
+        $thumbnails    = [
             'src'    => '',
             'srcset' => [],
         ];
@@ -122,7 +122,7 @@ class YouTube {
             return false;
         }
         $cache_key = 'yt_video_data_' . $id;
-        $response = get_site_option( $cache_key );
+        $response  = get_site_option( $cache_key );
         if ( ! $response || empty( $response['success'] ) ) {
             $response = $this->get_api_request( 'videos', [
                 'id' => $id,
@@ -185,13 +185,13 @@ class YouTube {
      * @return array            Response details
      */
     private function get_api_request( string $endpoint, array $args = [] ) {
-        $args = wp_parse_args( $args, [
+        $args        = wp_parse_args( $args, [
             'key'  => YOUTUBE_DATA_API_KEY,
             'part' => 'snippet',
         ] );
-        $url = 'https://www.googleapis.com/youtube/v3/' . $endpoint;
+        $url         = 'https://www.googleapis.com/youtube/v3/' . $endpoint;
         $request_url = add_query_arg( $args, $url );
-        $response = wp_remote_get( $request_url, [] );
+        $response    = wp_remote_get( $request_url, [] );
         return Utils::handle_api_request_response( $response );
     }
 
@@ -245,8 +245,8 @@ class YouTube {
      * @return array
      */
     public static function get_data_from_url( $url ) {
-        $query = [];
-        $host = parse_url( $url, PHP_URL_HOST );
+        $query     = [];
+        $host      = parse_url( $url, PHP_URL_HOST );
         $query_str = str_replace( '&amp;', '&', Utils::parse_url( $url, PHP_URL_QUERY ) );
         parse_str( $query_str, $query_args );
 
@@ -285,7 +285,7 @@ class YouTube {
      */
     public static function get_embeddable_url( string $url ) {
         $embed_id = static::get_video_id_from_url( $url );
-        $list_id = static::get_list_id_from_url( $url );
+        $list_id  = static::get_list_id_from_url( $url );
 
         if ( empty( $embed_id ) ) {
             return '';

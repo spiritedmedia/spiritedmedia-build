@@ -56,10 +56,10 @@ class Frontend {
             }
 
             if ( is_single() ) {
-                $post_type = get_post_type();
+                $post_type      = get_post_type();
                 $body_classes[] = 'single-' . Utils::remove_name_prefix( $post_type );
-                $is_entity = Types::is_entity( $post_type );
-                $is_cluster = Types::is_cluster( $post_type );
+                $is_entity      = Types::is_entity( $post_type );
+                $is_cluster     = Types::is_cluster( $post_type );
 
                 if ( $is_cluster ) {
                     $body_classes[] = 'single-cluster';
@@ -75,7 +75,7 @@ class Frontend {
         add_filter( 'the_footnotes', [ $this, 'filter_the_footnotes_render' ], 10, 2 );
         add_filter( 'nav_menu_link_attributes', function( $attrs = [], $item, $args = [], $depth ) {
             $attrs['data-ga-category'] = 'sidebar';
-            $attrs['data-ga-label'] = 'link';
+            $attrs['data-ga-label']    = 'link';
             return $attrs;
         }, 10, 4 );
 
@@ -128,20 +128,7 @@ class Frontend {
             $query->set( 'posts_per_page', 20 );
         }
 
-        if ( $query->is_feed() ) {
-            if ( $query->is_post_type_archive() ) {
-                $post_type_name = Types::get_post_type_name( $query->get( 'post_type' ) );
-                add_filter( 'wp_title_rss', function( $title, $sep ) use ( $post_type_name ) {
-                    echo ' ' . $sep . ' ';
-                    echo $post_type_name;
-                }, 10, 2);
-            } else {
-                $query->set( 'post_type', Types::get_entity_post_types() );
-                add_filter( 'wp_title_rss', function( $title, $sep ) {
-                    echo '';
-                }, 10, 2);
-            }
-        } elseif ( $query->is_archive() && ! $query->is_author() ) {
+        if ( $query->is_archive() && ! $query->is_author() ) {
             if (
                 $query->is_post_type_archive( Types::get_cluster_post_types() )
             ) {
@@ -169,8 +156,8 @@ class Frontend {
     public function action_wp_head_meta_tags() {
 
         $meta_description = $this->get_current_meta_description();
-        $facebook_tags = $this->get_facebook_open_graph_meta_tags();
-        $twitter_tags = $this->get_twitter_card_meta_tags();
+        $facebook_tags    = $this->get_facebook_open_graph_meta_tags();
+        $twitter_tags     = $this->get_twitter_card_meta_tags();
 
         $tags = array_merge( [
             'description' => $meta_description,
@@ -314,9 +301,9 @@ class Frontend {
                 'Home'   => get_site_url(),
             ];
         }
-        $context['sidebar_ad'] = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
+        $context['sidebar_ad']     = '<li class="widget widget_pedestal_dfp_rail_right">' . Adverts::render_sidebar_ad_unit() . '</li>';
         $context['is_page_donate'] = is_page( 'support-our-work' ) ?: false;
-        $context['is_feed'] = is_feed();
+        $context['is_feed']        = is_feed();
 
         return $context;
     }
@@ -330,7 +317,7 @@ class Frontend {
         if ( is_home() ) {
             return PEDESTAL_HOMEPAGE_TITLE;
         } elseif ( is_singular() ) {
-            $title = $wp_title;
+            $title    = $wp_title;
             $ped_post = Post::get( get_queried_object_id() );
             if ( Types::is_post( $ped_post ) ) {
                 $title = $ped_post->get_seo_title();
@@ -389,7 +376,7 @@ class Frontend {
         if ( preg_match_all( '/\[(\d+\.((\s+)?numoffset="(\d+)+")? (.*?))\]/s', $content, $matches ) ) :
             foreach ( $matches[0] as $index => $target ) {
                 $offset_value = (int) $matches[4][ $index ];
-                $text = trim( $matches[5][ $index ] );
+                $text         = trim( $matches[5][ $index ] );
 
                 // Footnotes that have [ or ] in the text break. Use double
                 // curly quotes as an escape to workaround this.
@@ -405,11 +392,11 @@ class Frontend {
 
             $n = $start;
             foreach ( $matches[0] as $index => $target ) {
-                $context = [
+                $context     = [
                     'token' => $post_id . '-' . $n,
                     'num'   => $n,
                 ];
-                $replacement  = '';
+                $replacement = '';
                 ob_start();
                 $replacement = Timber::render( 'partials/footnotes/footnote-link.twig', $context );
                 ob_get_clean();
@@ -428,7 +415,7 @@ class Frontend {
             $content .= "\n\n";
         endif;
 
-        return $content ;
+        return $content;
     }
 
     /**
@@ -484,17 +471,17 @@ class Frontend {
 
         // Defaults
         $tags = [
-            'og:site_name'        => get_bloginfo( 'name' ),
-            'og:type'             => 'website',
-            'og:title'            => get_bloginfo( 'name' ),
-            'og:description'      => $this->get_current_meta_description(),
-            'og:url'              => esc_url( home_url( Utils::get_request_uri() ) ),
-            'og:image'            => get_stylesheet_directory_uri() . '/assets/images/logos/logo-icon-placeholder.png',
+            'og:site_name'   => get_bloginfo( 'name' ),
+            'og:type'        => 'website',
+            'og:title'       => get_bloginfo( 'name' ),
+            'og:description' => $this->get_current_meta_description(),
+            'og:url'         => esc_url( home_url( Utils::get_request_uri() ) ),
+            'og:image'       => get_stylesheet_directory_uri() . '/assets/images/logos/logo-icon-placeholder.png',
         ];
 
         // Single posts
         if ( is_singular() ) {
-            $obj = Post::get( get_queried_object_id() );
+            $obj                       = Post::get( get_queried_object_id() );
             $tags['og:title']          = $obj->get_facebook_open_graph_tag( 'title' );
             $tags['og:type']           = 'article';
             $tags['og:description']    = $obj->get_facebook_open_graph_tag( 'description' );
@@ -535,7 +522,7 @@ class Frontend {
             $post_obj = Post::get( get_queried_object_id() );
             if ( Types::is_post( $post_obj ) ) {
                 $tags['twitter:title'] = $post_obj->get_twitter_card_tag( 'title' );
-                $tags['twitter:url'] = $post_obj->get_twitter_card_tag( 'url' );
+                $tags['twitter:url']   = $post_obj->get_twitter_card_tag( 'url' );
 
                 $post_description = $post_obj->get_twitter_card_tag( 'description' );
                 if ( ! empty( $post_description ) ) {
@@ -581,14 +568,14 @@ class Frontend {
             }
         } elseif ( is_tax() ) {
             $taxonomy_singular_name = '';
-            $term_title = single_term_title( '', false );
+            $term_title             = single_term_title( '', false );
             if ( isset( get_queried_object()->taxonomy ) ) {
                 $tax = get_taxonomy( get_queried_object()->taxonomy );
                 if ( 'pedestal_category' === $tax->name ) {
                     $title .= $term_title;
                 } elseif ( isset( $tax->labels->singular_name ) ) {
                     $taxonomy_singular_name = $tax->labels->singular_name;
-                    $title .= sprintf(
+                    $title                 .= sprintf(
                         __( '%1$s: %2$s' ),
                         $taxonomy_singular_name,
                         $term_title
@@ -611,13 +598,13 @@ class Frontend {
      */
     public static function get_post_ids_excluded_from_home_stream( $force_refresh = false ) {
         $option_name = 'exclude_from_home_stream';
-        $ids = get_option( $option_name );
+        $ids         = get_option( $option_name );
         if ( ! empty( $ids ) && ! $force_refresh ) {
             return $ids;
         }
 
-        $args = [
-            'meta_query' => [
+        $args  = [
+            'meta_query'     => [
                 [
                     'key'     => $option_name,
                     'value'   => 'hide',

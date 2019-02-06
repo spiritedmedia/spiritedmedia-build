@@ -128,26 +128,26 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
 
             $constants = apply_filters( 'pedestal_constants', [] );
-            $defaults = [
-                'PEDESTAL_API_NAMESPACE' => 'pedestal/v1',
+            $defaults  = [
+                'PEDESTAL_API_NAMESPACE'                => 'pedestal/v1',
 
                 // Site Details
-                'PEDESTAL_THEME_NAME'       => wp_get_theme()->get_stylesheet(),
-                'PEDESTAL_BLOG_NAME'        => get_bloginfo( 'name' ),
-                'PEDESTAL_BLOG_DESCRIPTION' => get_bloginfo( 'description' ),
-                'PEDESTAL_BLOG_TAGLINE'     => '',
-                'PEDESTAL_HOMEPAGE_TITLE'   => '',
-                'PEDESTAL_CITY_NAME'        => '',
-                'PEDESTAL_CITY_NICKNAME'    => '',
-                'PEDESTAL_STATE_NAME'       => '',
-                'PEDESTAL_STATE'            => '',
-                'PEDESTAL_ZIPCODE'          => '',
-                'PEDESTAL_BUILDING_NAME'    => '',
-                'PEDESTAL_STREET_ADDRESS'   => '',
-                'PEDESTAL_DATE_FORMAT'      => 'M. d, Y',
-                'PEDESTAL_TIME_FORMAT'      => 'g:i a',
-                'PEDESTAL_DATETIME_FORMAT'  => 'M. d, Y \a\t g:i a',
-                'PEDESTAL_SITE_TIMEZONE'    => 'America/New_York',
+                'PEDESTAL_THEME_NAME'                   => wp_get_theme()->get_stylesheet(),
+                'PEDESTAL_BLOG_NAME'                    => get_bloginfo( 'name' ),
+                'PEDESTAL_BLOG_DESCRIPTION'             => get_bloginfo( 'description' ),
+                'PEDESTAL_BLOG_TAGLINE'                 => '',
+                'PEDESTAL_HOMEPAGE_TITLE'               => '',
+                'PEDESTAL_CITY_NAME'                    => '',
+                'PEDESTAL_CITY_NICKNAME'                => '',
+                'PEDESTAL_STATE_NAME'                   => '',
+                'PEDESTAL_STATE'                        => '',
+                'PEDESTAL_ZIPCODE'                      => '',
+                'PEDESTAL_BUILDING_NAME'                => '',
+                'PEDESTAL_STREET_ADDRESS'               => '',
+                'PEDESTAL_DATE_FORMAT'                  => 'M. d, Y',
+                'PEDESTAL_TIME_FORMAT'                  => 'g:i a',
+                'PEDESTAL_DATETIME_FORMAT'              => 'M. d, Y \a\t g:i a',
+                'PEDESTAL_SITE_TIMEZONE'                => 'America/New_York',
 
                 // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => '',
@@ -156,26 +156,26 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_COMSCORE_ID'                  => '',
 
                 // DFP
-                'PEDESTAL_DFP_ID'     => '104495818',
-                'PEDESTAL_DFP_PREFIX' => '',
-                'PEDESTAL_DFP_SITE'   => '',
+                'PEDESTAL_DFP_ID'                       => '104495818',
+                'PEDESTAL_DFP_PREFIX'                   => '',
+                'PEDESTAL_DFP_SITE'                     => '',
 
                 // Email
-                'PEDESTAL_EMAIL_CONTACT'          => '',
-                'PEDESTAL_EMAIL_NEWS'             => '',
-                'PEDESTAL_EMAIL_TIPS'             => '',
-                'PEDESTAL_EMAIL_NEWSLETTER_FROM'  => '',
-                'PEDESTAL_EMAIL_FROM_NAME'        => get_bloginfo( 'name' ),
+                'PEDESTAL_EMAIL_CONTACT'                => '',
+                'PEDESTAL_EMAIL_NEWS'                   => '',
+                'PEDESTAL_EMAIL_TIPS'                   => '',
+                'PEDESTAL_EMAIL_NEWSLETTER_FROM'        => '',
+                'PEDESTAL_EMAIL_FROM_NAME'              => get_bloginfo( 'name' ),
 
                 // Social Media
-                'PEDESTAL_TWITTER_USERNAME'   => '',
-                'PEDESTAL_INSTAGRAM_USERNAME' => '',
-                'PEDESTAL_FACEBOOK_PAGE'      => '',
-                'PEDESTAL_FACEBOOK_PAGE_ID'   => '',
-                'PEDESTAL_YOUTUBE_CHANNEL_ID' => '',
+                'PEDESTAL_TWITTER_USERNAME'             => '',
+                'PEDESTAL_INSTAGRAM_USERNAME'           => '',
+                'PEDESTAL_FACEBOOK_PAGE'                => '',
+                'PEDESTAL_FACEBOOK_PAGE_ID'             => '',
+                'PEDESTAL_YOUTUBE_CHANNEL_ID'           => '',
 
                 // Branding
-                'PEDESTAL_BRAND_COLOR' => '',
+                'PEDESTAL_BRAND_COLOR'                  => '',
 
                 // Slack
                 'PEDESTAL_SLACK_WEBHOOK_ENDPOINT'       => 'https://hooks.slack.com/services/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',
@@ -187,12 +187,12 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_SLACK_BOT_EMOJI'              => '',
 
                 // Site Features
-                'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY' => true,
-                'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'    => false,
-                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'   => false,
+                'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY'  => true,
+                'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'     => false,
+                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'    => false,
 
                 // Membership
-                'PEDESTAL_NRH_PROPERTY' => '',
+                'PEDESTAL_NRH_PROPERTY'                 => '',
             ];
             $constants = wp_parse_args( $constants, $defaults );
             foreach ( $constants as $constant => $value ) {
@@ -214,7 +214,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
 
             if ( ! defined( 'PEDESTAL_DOMAIN_PRETTY' ) ) {
-                $site_name = str_replace( ' ', '', PEDESTAL_BLOG_NAME );
+                $site_name   = str_replace( ' ', '', PEDESTAL_BLOG_NAME );
                 $domain_name = parse_url( get_site_url(), PHP_URL_HOST );
                 $domain_name = str_replace( mb_strtolower( $site_name ), $site_name, $domain_name );
                 define( 'PEDESTAL_DOMAIN_PRETTY', $domain_name );
@@ -263,14 +263,14 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             }
 
             if ( is_admin() ) {
-                $this->admin              = Admin\Admin::get_instance();
-                $this->homepage_settings  = Admin\Homepage_Settings::get_instance();
-                $this->cluster_tools      = Admin\Cluster_Tools::get_instance();
-                $this->taxonomy_tools     = Admin\Taxonomy_Tools::get_instance();
+                $this->admin             = Admin\Admin::get_instance();
+                $this->homepage_settings = Admin\Homepage_Settings::get_instance();
+                $this->cluster_tools     = Admin\Cluster_Tools::get_instance();
+                $this->taxonomy_tools    = Admin\Taxonomy_Tools::get_instance();
                 // Will be reimplemented after our move to MailChimp. See #2426
                 // $this->newsletter_testing = Newsletter_Testing::get_instance();
             } else {
-                $this->frontend       = Frontend::get_instance();
+                $this->frontend = Frontend::get_instance();
             }
 
             $this->scripts_styles           = Scripts_Styles::get_instance();
@@ -427,7 +427,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 if ( ! empty( $metadata['width'] ) && ! empty( $metadata['height'] ) ) {
 
                     // Calculate the max width and height for the 4:3 ratio
-                    $ratio = new \Pedestal\Utils\Image_Ratio( 4, 3 );
+                    $ratio                  = new \Pedestal\Utils\Image_Ratio( 4, 3 );
                     list( $width, $height ) = $ratio->get_largest_size(
                         $metadata['width'],
                         $metadata['height']
@@ -772,7 +772,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             ];
 
             $context['site']->city = [
-                'name'     => PEDESTAL_CITY_NAME,
+                'name' => PEDESTAL_CITY_NAME,
             ];
 
             $context['site']->emails = [
@@ -786,13 +786,13 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             ];
             // Enable analytics for everyone that can't edit posts
             if ( ! current_user_can( 'edit_posts' ) ) {
-                $ga_data = [
+                $ga_data                               = [
                     'id'         => PEDESTAL_GOOGLE_ANALYTICS_ID,
                     'optimizeID' => PEDESTAL_GOOGLE_OPTIMIZE_ID,
                 ];
-                $ga_inline_script = file_get_contents( PEDESTAL_DIST_DIRECTORY . '/js/ga.js' );
-                $parsely = new \Pedestal\Objects\Parsely;
-                $context['site']->analytics['ga'] = [
+                $ga_inline_script                      = file_get_contents( PEDESTAL_DIST_DIRECTORY . '/js/ga.js' );
+                $parsely                               = new \Pedestal\Objects\Parsely;
+                $context['site']->analytics['ga']      = [
                     'optimize_id'   => $ga_data['optimizeID'],
                     'js_data'       => Utils::encode_for_js( $ga_data ),
                     'inline_script' => $ga_inline_script,
@@ -888,7 +888,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                     return false;
                 }
                 $post_id = $posts->posts[0]->ID;
-                $post = Post::get( $post_id );
+                $post    = Post::get( $post_id );
             }
             // If the Spotlight post is the same as the currently requested post then bail
             if ( $post->get_id() == get_the_ID() ) {
@@ -947,8 +947,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
      */
     function Pedestal() {
         $theme_name = wp_get_theme()->get_stylesheet();
-        $class_map = Pedestal::get_theme_class_map();
-        $class = '\\Pedestal\\' . $class_map[ $theme_name ];
+        $class_map  = Pedestal::get_theme_class_map();
+        $class      = '\\Pedestal\\' . $class_map[ $theme_name ];
         return $class::get_instance();
     }
     add_action( 'after_setup_theme', '\\Pedestal\\Pedestal', 10 );

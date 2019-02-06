@@ -20,7 +20,7 @@ class Recent_Video_Widget extends \WP_Widget {
     public $youtube;
 
     public function __construct() {
-        $this->youtube = new YouTube;
+        $this->youtube  = new YouTube;
         $widget_options = [
             'description' => 'Display a recent video from YouTube.',
         ];
@@ -38,7 +38,7 @@ class Recent_Video_Widget extends \WP_Widget {
             // description, we need to perform a new API request to get the full
             // description.
             $latest_video_id = $this->youtube->get_latest_site_channel_video_id();
-            $url = YouTube::get_url_from_id( $latest_video_id );
+            $url             = YouTube::get_url_from_id( $latest_video_id );
         }
         $data = $this->youtube->get_single_video_data( $url );
 
@@ -90,8 +90,8 @@ class Recent_Video_Widget extends \WP_Widget {
         }
 
         $embed_url = esc_url( $embed_url );
-        $content = sprintf( '<iframe src="%s" width="640" height="360" frameborder="0"></iframe>', $embed_url );
-        $figure = new Figure( 'embed', $content, [
+        $content   = sprintf( '<iframe src="%s" width="640" height="360" frameborder="0"></iframe>', $embed_url );
+        $figure    = new Figure( 'embed', $content, [
             'caption_html'        => $caption_html,
             'classes'             => 'c-video-widget',
             'figcaption_classes'  => 'c-video-widget__caption',
@@ -210,11 +210,11 @@ class Recent_Video_Widget extends \WP_Widget {
     }
 
     public function update( $new_instance, $old_instance ) {
-        $instance = $old_instance;
-        $instance['title'] = sanitize_text_field( $new_instance['title'] );
-        $instance['title_link'] = esc_url_raw( $new_instance['title_link'] );
+        $instance                        = $old_instance;
+        $instance['title']               = sanitize_text_field( $new_instance['title'] );
+        $instance['title_link']          = esc_url_raw( $new_instance['title_link'] );
         $instance['display_description'] = $new_instance['display_description'];
-        $instance['display_author'] = $new_instance['display_author'];
+        $instance['display_author']      = $new_instance['display_author'];
 
         // Only allow YouTube video URLs
         $instance['video_url'] = '';
@@ -227,7 +227,7 @@ class Recent_Video_Widget extends \WP_Widget {
         if ( ! $url ) {
             $this->youtube->flush_latest_channel_video();
             $latest_video_id = $this->youtube->get_latest_site_channel_video_id();
-            $url = YouTube::get_url_from_id( $latest_video_id );
+            $url             = YouTube::get_url_from_id( $latest_video_id );
         }
         $this->youtube->flush_single_video_data( $url );
 

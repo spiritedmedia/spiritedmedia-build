@@ -51,14 +51,14 @@ class Homepage_Settings {
         ] );
 
         $summary_field = new \Fieldmanager_TextArea( 'Summary (optional)', [
-            'name' => 'summary',
+            'name'        => 'summary',
             'description' => 'Optional short paragraph(s) capturing the article in a nutshell; help readers get caught up on the news at-a-glance. This will appear on the homepage below the headline, and defaults to the subhead, unless you override it here.',
         ] );
 
         $exclude_field = new \Fieldmanager_Radios( [
-            'name' => $this->exclude_stream_meta_key,
+            'name'          => $this->exclude_stream_meta_key,
             'default_value' => 'show',
-            'options' => [
+            'options'       => [
                 'show' => 'Show on homepage stream',
                 'hide' => 'Hide from homepage stream',
             ],
@@ -94,7 +94,7 @@ class Homepage_Settings {
 
         // If the name attribute of the parent group isn't 'summary' then bail
         $fm_tree = $fm->get_form_tree();
-        $parent = array_pop( $fm_tree );
+        $parent  = array_pop( $fm_tree );
         if (
             empty( $parent->name )
             || 'summary' != $parent->name
@@ -119,7 +119,7 @@ class Homepage_Settings {
             return $out;
         }
 
-        $buttons = '<div class="wp-media-buttons fm-summary-buttons js-fm-summary-buttons">';
+        $buttons  = '<div class="wp-media-buttons fm-summary-buttons js-fm-summary-buttons">';
         $buttons .=
             '<button type="button" class="button js-pedestal-summary-copy-subhead">' .
                 '<span class="wp-media-buttons-icon dashicons dashicons-admin-page"></span> ' .
@@ -135,8 +135,8 @@ class Homepage_Settings {
         $buttons .= '</div>';
 
         // Insert the buttons after the <label> element
-        $dom = HtmlDomParser::str_get_html( $out );
-        $node = $dom->find( '.fm-label-summary', 0 );
+        $dom             = HtmlDomParser::str_get_html( $out );
+        $node            = $dom->find( '.fm-label-summary', 0 );
         $node->innertext = $node->innertext . $buttons;
 
         return $dom->save();

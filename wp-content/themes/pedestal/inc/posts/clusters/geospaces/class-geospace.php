@@ -120,11 +120,11 @@ abstract class Geospace extends Cluster {
      * @return Stream
      */
     private function get_connected_geospaces_stream( $dir ) {
-        $post_type_name_plural = true;
+        $post_type_name_plural   = true;
         $post_type_name_sanitize = true;
-        $sanitized_name = $this->get_post_type_name( $post_type_name_plural, $post_type_name_sanitize );
-        $connection_type = $sanitized_name . '_to_' . $sanitized_name;
-        $query = new \WP_Query( [
+        $sanitized_name          = $this->get_post_type_name( $post_type_name_plural, $post_type_name_sanitize );
+        $connection_type         = $sanitized_name . '_to_' . $sanitized_name;
+        $query                   = new \WP_Query( [
             'post_type'           => static::$post_type,
             'posts_per_page'      => -1,
             'connected_type'      => $connection_type,

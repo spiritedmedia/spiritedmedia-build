@@ -149,17 +149,17 @@ class Adverts {
         if ( empty( $id ) || empty( $sizes ) ) {
             return;
         }
-        $defaults = [
+        $defaults     = [
             'additional_classes' => '',
         ];
-        $args = wp_parse_args( $args, $defaults );
-        $ad_context = [
+        $args         = wp_parse_args( $args, $defaults );
+        $ad_context   = [
             'id'          => $id,
             'sizes'       => $sizes,
             'slot_target' => $slot_target,
             'unique_id'   => uniqid(),
         ];
-        $ad_context = wp_parse_args( $ad_context, $args );
+        $ad_context   = wp_parse_args( $ad_context, $args );
         $show_ad_unit = (bool) apply_filters( 'pedestal_show_dfp_unit', true, $id, $sizes, $args );
         if ( ! $show_ad_unit ) {
             return;
@@ -205,7 +205,7 @@ class Adverts {
         $data = $slots->get_fm_field( 'slot_item_type', 'sponsored-stream-items' );
         // Whitelisted keys to ensure a consistent output
         $whitelisted_keys = [ 'position', 'url', 'title', 'sponsored_by', 'image', 'featured_image' ];
-        $output = [];
+        $output           = [];
         foreach ( $whitelisted_keys as $key ) {
             $output[ $key ] = '';
             if ( ! empty( $data[ $key ] ) ) {
@@ -243,7 +243,7 @@ class Adverts {
         }
 
         $context = [
-            'type'          => 'sponsored',
+            'type'            => 'sponsored',
             '__context'       => 'standard',
             'stream_index'    => $index,
             'thumbnail_image' => '',
@@ -277,7 +277,7 @@ class Adverts {
             'max_ads'      => 3,   // Maximum number of ads to inject
             'selector'     => 'p', // Selector to insert ads after
         ];
-        $args = wp_parse_args( $args, $defaults );
+        $args     = wp_parse_args( $args, $defaults );
 
         $debug_ads = false;
         if ( isset( $_GET['debug-inline-ads'] ) ) {
@@ -297,7 +297,7 @@ class Adverts {
             return $html;
         }
 
-        $dom = HtmlDomParser::str_get_html( $html );
+        $dom   = HtmlDomParser::str_get_html( $html );
         $nodes = $dom->find( $args['selector'] );
 
         // Weed out nodes that are children of another element
@@ -326,7 +326,7 @@ class Adverts {
             }
 
             $ad_unit_id = PEDESTAL_DFP_PREFIX . '_Inline';
-            $ad_unit = self::render_dfp_unit(
+            $ad_unit    = self::render_dfp_unit(
                 $ad_unit_id,
                 '300x250',
                 [

@@ -15,7 +15,7 @@ class Article extends Original {
      * @return array Twig context
      */
     public function get_context( $context = [] ) {
-        $context = parent::get_context( $context );
+        $context                      = parent::get_context( $context );
         $context['content_classes'][] = 's-content';
         return $context;
     }

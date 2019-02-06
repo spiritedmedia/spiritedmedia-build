@@ -39,7 +39,7 @@
 # !.stylelintrc.json
 # !.editorconfig
 # !.browserslistrc
-# !phpcs.ruleset.xml
+# !.phpcs.xml
 
 # Style Guide
 !/styleguide/

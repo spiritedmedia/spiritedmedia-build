@@ -95,7 +95,7 @@ class Email {
             'follow-update-story',
         ];
         echo $this->get_email_template( 'tests-index', 'ac', [
-            'items' => $templates,
+            'items'     => $templates,
             'shareable' => false,
         ] );
 
@@ -111,9 +111,9 @@ class Email {
      * @return string
      */
     public static function get_email_template( string $template_name, string $email_provider = 'ac', $vars = [] ) {
-        $vars['template_name'] = $template_name;
+        $vars['template_name']  = $template_name;
         $vars['email_provider'] = $email_provider;
-        $full_path = get_template_directory() . '/email.php';
+        $full_path              = get_template_directory() . '/email.php';
         if ( ! file_exists( $full_path ) ) {
             return '';
         }
@@ -204,13 +204,13 @@ class Email {
      */
     public static function send_mailchimp_email( $args = [] ) {
         $default_args = [
-            'messages'              => false,
-            'groups'                => [],
-            'group_category'        => false,
-            'test_email_addresses'  => [],
-            'email_type'            => 'Unknown', // What type of email campaign is being sent? Newsletter, Breaking News, Folow Update etc.
+            'messages'             => false,
+            'groups'               => [],
+            'group_category'       => false,
+            'test_email_addresses' => [],
+            'email_type'           => 'Unknown', // What type of email campaign is being sent? Newsletter, Breaking News, Folow Update etc.
         ];
-        $args = wp_parse_args( $args, $default_args );
+        $args         = wp_parse_args( $args, $default_args );
 
         if ( ! is_array( $args['groups'] ) ) {
             $args['groups'] = [ $args['groups'] ];
@@ -233,22 +233,22 @@ class Email {
         if ( ! empty( $test_emails ) ) {
             // Ensure product@spiritedmedia.com gets sent the test emails for every send
             $test_emails[] = 'product@spiritedmedia.com';
-            $to = implode( ',', $test_emails );
+            $to            = implode( ',', $test_emails );
             add_filter( 'wp_mail_content_type', function() {
                 return 'text/html';
             } );
             $args['test_email_addresses'] = $test_emails;
             foreach ( $args['messages'] as $message ) {
                 $subject = '[TEST] ' . $message['subject'];
-                $resp = wp_mail( $to, $subject, $message['html'] );
+                $resp    = wp_mail( $to, $subject, $message['html'] );
             }
             do_action( 'pedestal_sent_test_email_campaign', $args );
             return true;
         }
 
-        $mc = MailChimp::get_instance();
+        $mc          = MailChimp::get_instance();
         $the_message = $args['messages'][0];
-        $mc_args = [
+        $mc_args     = [
             'groups'         => $args['groups'],
             'group_category' => $args['group_category'],
             'message'        => $the_message['html'],

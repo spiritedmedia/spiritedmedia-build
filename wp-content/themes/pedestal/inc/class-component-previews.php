@@ -60,7 +60,7 @@ class Component_Previews {
                 'component-previews/%s.php',
                 get_query_var( 'component-name' )
             );
-            $new_template = locate_template( $template_path );
+            $new_template  = locate_template( $template_path );
             if ( ! empty( $new_template ) ) {
                 return $new_template;
             };

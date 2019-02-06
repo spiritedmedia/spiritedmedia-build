@@ -40,25 +40,25 @@ class Stream {
             'featured_image'           => '',
             'featured_image_src_width' => 267,
             'featured_image_sizes'     => '267px',
-            'featured_image_srcset' => [
+            'featured_image_srcset'    => [
                 'ratio'  => 16 / 9,
                 'widths' => 267,
             ],
-            'thumbnail_image'       => '',
-            'thumbnail_image_sizes' => [],
-            'overline'              => '',
-            'overline_url'          => '',
-            'title'                 => '',
-            'permalink'             => '',
-            'date_time'             => '',
-            'machine_time'          => '',
-            'description'           => '',
-            'author_names'          => '',
-            'author_image'          => '',
-            'author_link'           => '',
-            'source_name'           => '',
-            'source_image'          => '',
-            'source_link'           => '',
+            'thumbnail_image'          => '',
+            'thumbnail_image_sizes'    => [],
+            'overline'                 => '',
+            'overline_url'             => '',
+            'title'                    => '',
+            'permalink'                => '',
+            'date_time'                => '',
+            'machine_time'             => '',
+            'description'              => '',
+            'author_names'             => '',
+            'author_image'             => '',
+            'author_link'              => '',
+            'source_name'              => '',
+            'source_image'             => '',
+            'source_link'              => '',
         ];
     }
 
@@ -70,7 +70,7 @@ class Stream {
     public function get_the_stream() {
         Pedestal()->set_property( 'is_stream', true );
         $wp_query = $this->query_obj;
-        $html = '';
+        $html     = '';
         foreach ( $wp_query->posts as $index => $post ) {
             $index++;
             $ped_post = Post::get( $post );
@@ -78,16 +78,16 @@ class Stream {
                 continue;
             }
             $context = [
-                '__context'         => 'standard', // Where is this stream item going to be displayed?
-                'post'              => $post,
-                'type'              => $ped_post->get_type(),
-                'stream_index'      => $index,
-                'title'             => $ped_post->get_the_title(),
-                'permalink'         => $ped_post->get_the_permalink(),
-                'date_time'         => $ped_post->get_the_relative_datetime(),
-                'machine_time'      => $ped_post->get_post_date( 'c' ),
-                'description'       => $ped_post->get_homepage_description(),
-                'show_meta_info'    => true,
+                '__context'      => 'standard', // Where is this stream item going to be displayed?
+                'post'           => $post,
+                'type'           => $ped_post->get_type(),
+                'stream_index'   => $index,
+                'title'          => $ped_post->get_the_title(),
+                'permalink'      => $ped_post->get_the_permalink(),
+                'date_time'      => $ped_post->get_the_relative_datetime(),
+                'machine_time'   => $ped_post->get_post_date( 'c' ),
+                'description'    => $ped_post->get_homepage_description(),
+                'show_meta_info' => true,
             ] + $this->get_default_stream_item_context();
             $context = apply_filters( 'pedestal_stream_item_context', $context, $ped_post );
 
@@ -139,7 +139,7 @@ class Stream {
      */
     public function get_the_stream_item( $context = [] ) {
         $stream_item_template = apply_filters( 'pedestal_stream_item_template', 'partials/stream/standard-stream-item.twig', $context );
-        $full_template_path = get_template_directory() . '/views/' . $stream_item_template;
+        $full_template_path   = get_template_directory() . '/views/' . $stream_item_template;
         if ( file_exists( $full_template_path ) ) {
             ob_start();
             Timber::render( $stream_item_template, $context );
@@ -174,7 +174,7 @@ class Stream {
         }
 
         $pagenum_link = html_entity_decode( get_pagenum_link() );
-        $url_parts = explode( '?', $pagenum_link );
+        $url_parts    = explode( '?', $pagenum_link );
 
         // Append the format placeholder to the base URL
         $pagenum_link = trailingslashit( $url_parts[0] ) . '%_%';
@@ -199,7 +199,7 @@ class Stream {
             'range'        => 5,
             'add_args'     => [], // array of query args to add
         ];
-        $args = wp_parse_args( $args, $defaults );
+        $args     = wp_parse_args( $args, $defaults );
 
         // Who knows what else people pass in $args
         $output['total_pages'] = intval( $args['total_pages'] );
@@ -208,7 +208,7 @@ class Stream {
             return (object) $output;
         }
 
-        $current_page = intval( $args['current_page'] );
+        $current_page           = intval( $args['current_page'] );
         $output['current_page'] = $current_page;
 
         $range = intval( $args['range'] ); // Out of bounds?  Make it the default
@@ -223,7 +223,7 @@ class Stream {
         // Merge additional query vars found in the original URL into 'add_args' array
         if ( isset( $url_parts[1] ) ) {
             // Find the format argument
-            $format = explode( '?', str_replace( '%_%', $args['format'], $args['base'] ) );
+            $format       = explode( '?', str_replace( '%_%', $args['format'], $args['base'] ) );
             $format_query = isset( $format[1] ) ? $format[1] : '';
             wp_parse_str( $format_query, $format_args );
 
@@ -241,27 +241,27 @@ class Stream {
         $prev_page_num = $current_page - 1;
         if ( $prev_page_num > 0 ) {
             $output['prev_page_num'] = $prev_page_num;
-            $output['prev_url'] = $this->get_pagination_link( $prev_page_num, $args['base'], $args['format'], $args['add_args'] );
+            $output['prev_url']      = $this->get_pagination_link( $prev_page_num, $args['base'], $args['format'], $args['add_args'] );
         }
 
         $next_page_num = $current_page + 1;
         if ( $next_page_num <= $total_pages ) {
             $output['next_page_num'] = $next_page_num;
-            $output['next_url'] = $this->get_pagination_link( $next_page_num, $args['base'], $args['format'], $args['add_args'] );
+            $output['next_url']      = $this->get_pagination_link( $next_page_num, $args['base'], $args['format'], $args['add_args'] );
         }
 
         if ( $current_page > ( $total_pages - $range ) ) {
             // We're near the end
             $start = max( $total_pages - $range + 1, 1 );
-            $end = $total_pages;
+            $end   = $total_pages;
         } elseif ( $current_page < $range ) {
             // We're near the beginning
             $start = 1;
-            $end = $range;
+            $end   = $range;
         } else {
             // The Rest
             $start = $current_page - floor( $range / 2 );
-            $end = $current_page + floor( $range / 2 );
+            $end   = $current_page + floor( $range / 2 );
         }
         for ( $i = $start; $i <= $end; $i++ ) {
             $is_current = false;
@@ -269,8 +269,8 @@ class Stream {
                 $is_current = true;
             }
             $output['links'][] = (object) [
-                'num' => intval( $i ),
-                'url' => $this->get_pagination_link( $i, $args['base'], $args['format'], $args['add_args'] ),
+                'num'        => intval( $i ),
+                'url'        => $this->get_pagination_link( $i, $args['base'], $args['format'], $args['add_args'] ),
                 'is_current' => $is_current,
             ];
         }
@@ -294,8 +294,8 @@ class Stream {
                 break;
         }
         $output['range_fraction'] = $range_fraction;
-        $output['range'] = $range;
-        $output = apply_filters( 'pedestal_get_pagination_data', $output, $args );
+        $output['range']          = $range;
+        $output                   = apply_filters( 'pedestal_get_pagination_data', $output, $args );
         return (object) $output;
     }
 
@@ -331,9 +331,9 @@ class Stream {
             return;
         }
 
-        $default_next_text = Icons::get_icon( 'angle-right', 'c-pagination__dir__icon' ) . ' ';
+        $default_next_text  = Icons::get_icon( 'angle-right', 'c-pagination__dir__icon' ) . ' ';
         $default_next_text .= '<span class="c-pagination__dir__label">Next Page</span>';
-        $default_prev_text = Icons::get_icon( 'angle-left', 'c-pagination__dir__icon' ) . ' ';
+        $default_prev_text  = Icons::get_icon( 'angle-left', 'c-pagination__dir__icon' ) . ' ';
         $default_prev_text .= '<span class="c-pagination__dir__label">Previous Page</span>';
 
         $defaults = [
@@ -342,7 +342,7 @@ class Stream {
             'next_text' => $default_next_text,
             'prev_text' => $default_prev_text,
         ];
-        $args = wp_parse_args( $args, $defaults );
+        $args     = wp_parse_args( $args, $defaults );
 
         if ( 1 > $pagination->total_pages ) {
             return;
@@ -393,7 +393,7 @@ class Stream {
             'url'  => $pagination->next_url,
             'text' => 'More stories',
         ];
-        $context = wp_parse_args( $args, $defaults );
+        $context  = wp_parse_args( $args, $defaults );
 
         if ( empty( $context['url'] ) ) {
             return;

@@ -189,7 +189,7 @@ abstract class Targeted_Messages {
      * Set up actions
      */
     protected function setup_actions() {
-        $option_name = static::$option_name;
+        $option_name                 = static::$option_name;
         $after_post_types_registered = 11;
         add_action( 'init', [ $this, 'action_init_setup_fields' ], $after_post_types_registered );
         add_action(
@@ -251,7 +251,7 @@ abstract class Targeted_Messages {
             $location_field_groups[ $location_key ] = new \Fieldmanager_Group( $location_label, [
                 'children' => [
                     'messages' => new \Fieldmanager_Group( 'Message', [
-                        'label_macro' => [
+                        'label_macro'       => [
                             '%s',
                             $this->message_label_token,
                         ],
@@ -283,7 +283,7 @@ abstract class Targeted_Messages {
         // The override fields must be first in the layout, so we set its
         // position ahead of time and determine its actual value later
         $targeted_messages_children = [
-            'override_message' => false,
+            'override_message'  => false,
             'standard_messages' => new \Fieldmanager_Group( false, [
                 'children'           => $target_group_field_groups,
                 'tabbed'             => 'horizontal',
@@ -445,7 +445,7 @@ abstract class Targeted_Messages {
         }
 
         $return_message_data = [];
-        $raw_data = get_option( static::$option_name ) ?: [];
+        $raw_data            = get_option( static::$option_name ) ?: [];
 
         // Return the override message if active, regardless of queried location
         if (
@@ -475,8 +475,8 @@ abstract class Targeted_Messages {
 
                 // Just work with the first message in the array so we only
                 // return one message per target audience group
-                $message = reset( $messages );
-                $message['target_audience'] = $audience_key;
+                $message                               = reset( $messages );
+                $message['target_audience']            = $audience_key;
                 $return_message_data[ $message['id'] ] = $message;
             }
         }
@@ -492,11 +492,11 @@ abstract class Targeted_Messages {
      * @return string Rendered messages
      */
     public static function get_rendered_messages( $location = 'default', $args = [] ) {
-        $output = '';
+        $output   = '';
         $messages = static::get_message_data( $location );
         foreach ( $messages as $message_data ) {
             $message_data = wp_parse_args( $args, $message_data );
-            $output .= static::render( $message_data );
+            $output      .= static::render( $message_data );
         }
         return $output;
     }

@@ -52,24 +52,24 @@ class Yesterdays_Email_Metric {
     }
 
     public function get_data() {
-        $mc = MailChimp::get_instance();
+        $mc              = MailChimp::get_instance();
         $since_send_time = new \DateTime( '1dayAgo' );
-        $campaign_args = [
+        $campaign_args   = [
             'since_send_time' => $since_send_time->format( 'c' ),
             'sort_field'      => 'send_time',
             'sort_dir'        => 'DESC',
             'count'           => 100,
         ];
-        $group_name = 'Daily Newsletter';
-        $group_category = 'Newsletters';
-        $raw_campaigns = $mc->get_campaigns_by_group(
+        $group_name      = 'Daily Newsletter';
+        $group_category  = 'Newsletters';
+        $raw_campaigns   = $mc->get_campaigns_by_group(
             $group_name,
             $group_category,
             $campaign_args
         );
-        $campaigns = [];
+        $campaigns       = [];
         foreach ( $raw_campaigns as $campaign ) {
-            $report_url = $mc->get_admin_url( '/reports/summary?id=' . $campaign->web_id );
+            $report_url      = $mc->get_admin_url( '/reports/summary?id=' . $campaign->web_id );
             $raw_link_clicks = $mc->get_campaign_link_clicks( $campaign->id, [
                 'count' => 100,
             ] );
@@ -87,7 +87,7 @@ class Yesterdays_Email_Metric {
                         'campaign_id'   => $campaign->id,
                     ];
                 }
-                $link_clicks[ $de_duped_url ]->total_clicks += $link->total_clicks;
+                $link_clicks[ $de_duped_url ]->total_clicks  += $link->total_clicks;
                 $link_clicks[ $de_duped_url ]->unique_clicks += $link->unique_clicks;
             }
 
@@ -124,12 +124,12 @@ class Yesterdays_Email_Metric {
         }
         $campaign = $data[0];
 
-        $open_rate = $campaign->unique_opens / $campaign->recipient_count * 100;
-        $click_rate = $campaign->click_rate * 100;
+        $open_rate   = $campaign->unique_opens / $campaign->recipient_count * 100;
+        $click_rate  = $campaign->click_rate * 100;
         $link_clicks = array_slice( $campaign->link_clicks, 0, 10 );
 
         $newsletter_link = Newsletter::get_yesterdays_newsletter_link();
-        $label = 'yesterday\'s newsletter';
+        $label           = 'yesterday\'s newsletter';
         if ( $newsletter_link ) {
             $label = '<' . $newsletter_link . '|' . $label . '>';
         }
@@ -161,7 +161,7 @@ class Yesterdays_Email_Metric {
             $link_text = $link_url;
             $link_text = str_replace( $needles, '', $link_text );
             if ( strlen( $link_url ) > $link_cutoff ) {
-                $link_text = substr( $link_text, 0, $link_cutoff );
+                $link_text  = substr( $link_text, 0, $link_cutoff );
                 $link_text .= '...';
             }
 
@@ -178,14 +178,14 @@ class Yesterdays_Email_Metric {
      */
     public function send() {
         $notifications = new Notifications;
-        $message = $this->get_message();
+        $message       = $this->get_message();
         if ( ! $message ) {
             return;
         }
         $slack_args = [
-            'username'    => 'Spirit',
-            'icon_emoji'  => ':ghost:',
-            'channel'     => PEDESTAL_SLACK_CHANNEL_NEWSLETTER,
+            'username'   => 'Spirit',
+            'icon_emoji' => ':ghost:',
+            'channel'    => PEDESTAL_SLACK_CHANNEL_NEWSLETTER,
         ];
         $notifications->send( $message, $slack_args );
     }

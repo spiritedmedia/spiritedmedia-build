@@ -16,8 +16,8 @@ class Notifications {
             return;
         }
         // Prepare the data / payload to be posted to Slack
-        $data = [];
-        $defaults = [
+        $data            = [];
+        $defaults        = [
             'username'       => PEDESTAL_SLACK_BOT_NAME,
             'icon_emoji'     => PEDESTAL_SLACK_BOT_EMOJI,
             'channel'        => PEDESTAL_SLACK_CHANNEL_BOTS_PRODUCT,
@@ -25,7 +25,7 @@ class Notifications {
             'link_names'     => true,
             'allow_markdown' => true,
         ];
-        $payload = wp_parse_args( $args, $defaults );
+        $payload         = wp_parse_args( $args, $defaults );
         $payload['text'] = $msg;
         $data['payload'] = json_encode( $payload );
 

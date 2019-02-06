@@ -66,7 +66,7 @@ class Icons {
 
         if ( Pedestal()->is_email() ) {
             $color = $color ?: 'primary';
-            $base = get_template_directory_uri();
+            $base  = get_template_directory_uri();
             // Border must be removed for MSO
             $atts['border'] = '0';
             // Size must be set explicitly for MSO
@@ -79,14 +79,14 @@ class Icons {
                     return;
                 }
                 $color = PEDESTAL_BRAND_COLOR;
-                $base = get_stylesheet_directory_uri();
+                $base  = get_stylesheet_directory_uri();
             }
-            $icon = $icon . '.' . str_replace( '#', '', $color );
+            $icon     = $icon . '.' . str_replace( '#', '', $color );
             $location = "{$base}/assets/images/icons/png/{$icon}.png";
             return static::get_png( $location, $atts );
         }
 
-        $base = get_template_directory();
+        $base     = get_template_directory();
         $location = "{$base}/assets/images/icons/svg/{$icon}.svg";
         return static::get_svg( $location, $atts );
     }
@@ -114,7 +114,7 @@ class Icons {
         ];
 
         if ( Pedestal()->is_email() ) {
-            $base = get_stylesheet_directory_uri();
+            $base     = get_stylesheet_directory_uri();
             $location = "{$base}/assets/images/logos/{$logo}.png";
             // Border must be removed for MSO
             $atts['border'] = '0';
@@ -125,7 +125,7 @@ class Icons {
             return static::get_png( $location, $atts );
         }
 
-        $base = get_stylesheet_directory();
+        $base     = get_stylesheet_directory();
         $location = "{$base}/assets/images/logos/{$logo}.svg";
         return static::get_svg( $location, $atts );
     }
@@ -174,11 +174,11 @@ class Icons {
      */
     private static function handle_element_atts( $atts = [] ) {
         $defaults = [
-            'alt'       => '',
-            'role'      => 'image',
+            'alt'   => '',
+            'role'  => 'image',
             'class' => '',
         ];
-        $atts = wp_parse_args( $atts, $defaults );
+        $atts     = wp_parse_args( $atts, $defaults );
         if ( is_array( $atts['class'] ) ) {
             $atts['class'] = implode( ' ', $atts['class'] );
         }
@@ -195,8 +195,8 @@ class Icons {
             return self::$icon_svgs;
         }
         $directory = get_template_directory() . '/assets/images/icons/svg/';
-        $icons = [];
-        $iterator = new \DirectoryIterator( $directory );
+        $icons     = [];
+        $iterator  = new \DirectoryIterator( $directory );
         foreach ( $iterator as $file ) {
             if ( ! $file->isFile() ) {
                 continue;
@@ -205,8 +205,8 @@ class Icons {
             if ( empty( $parts[1] ) || 'svg' != $parts[1] ) {
                 continue;
             }
-            $icon_name = $parts[0];
-            $icon = static::get_icon( $icon_name );
+            $icon_name           = $parts[0];
+            $icon                = static::get_icon( $icon_name );
             $icons[ $icon_name ] = (object) [
                 'svg'   => $icon,
                 'label' => $icon_name,

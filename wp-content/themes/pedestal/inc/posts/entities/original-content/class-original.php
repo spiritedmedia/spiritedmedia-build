@@ -36,8 +36,8 @@ abstract class Original extends Entity {
      */
     public function set_data_atts() {
         parent::set_data_atts();
-        $atts = parent::get_data_atts();
-        $new_atts = [
+        $atts                  = parent::get_data_atts();
+        $new_atts              = [
             'original' => '',
         ];
         $this->data_attributes = array_merge( $atts, $new_atts );

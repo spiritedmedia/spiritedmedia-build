@@ -8,7 +8,7 @@ use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Email\Newsletter_Emails;
 
 $post_id = get_the_ID();
-$item = Post::get( $post_id );
+$item    = Post::get( $post_id );
 $context = Timber::get_context();
 
 $templates = [];
@@ -17,15 +17,15 @@ if ( Types::is_post( $item ) ) :
 
     if ( $item->is_password_required() ) {
         $context['form_action'] = site_url( 'wp-login.php?action=postpass', 'login_post' );
-        $context['input_id'] = 'password-form-' . $post_id;
+        $context['input_id']    = 'password-form-' . $post_id;
         Timber::render( 'single-entity-protected.twig', $context );
         return;
     }
 
     $templates[] = 'single-' . $item->get_type() . '.twig';
 
-    $context['cluster'] = $item->get_primary_story();
-    $context['featured_image_sizes'] = [
+    $context['cluster']               = $item->get_primary_story();
+    $context['featured_image_sizes']  = [
         '(max-width: 640px) 95vw',
         '(max-width: 1024px) 97vw',
         '(min-width: 1025px) 676px',
@@ -42,7 +42,7 @@ if ( Types::is_post( $item ) ) :
 
     $context['entity_circulation_hook'] = 'Want some more?';
 
-    $adverts = new Adverts;
+    $adverts        = new Adverts;
     $sponsored_item = $adverts->get_the_sponsored_item();
     if ( $sponsored_item ) {
         $context['sponsored_item'] = $sponsored_item;
@@ -50,7 +50,7 @@ if ( Types::is_post( $item ) ) :
 
     // Handle the footer recirculation stream
     if ( Types::is_original_content( $item ) ) {
-        $query_args = [
+        $query_args               = [
             'posts_per_page'         => 20,
             'paged'                  => 1,
             'post_status'            => 'publish',
@@ -61,8 +61,8 @@ if ( Types::is_post( $item ) ) :
             'update_post_meta_cache' => false,
             'update_post_term_cache' => false,
         ];
-        $query = new \WP_Query( $query_args );
-        $stream = new Stream( $query );
+        $query                    = new \WP_Query( $query_args );
+        $stream                   = new Stream( $query );
         $context['recirc_stream'] = $stream->get_the_stream();
 
         ob_start();
@@ -93,7 +93,7 @@ endif;
 if ( 'denverite' == PEDESTAL_THEME_NAME ) :
 
     $arbitrary_cutoff = date( 'U', strtotime( '2018-06-13' ) );
-    $published_time = time();
+    $published_time   = time();
     if ( Types::is_post( $item ) ) {
         $published_time = $item->get_post_date( 'U' );
     }

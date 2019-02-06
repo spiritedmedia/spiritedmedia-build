@@ -9,28 +9,28 @@ use Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
 class Taxonomies {
 
     private static $ptypes_types_tax = [
-        'pedestal_story_type' => [
-            'post_type'    => 'pedestal_story',
+        'pedestal_story_type'     => [
+            'post_type'     => 'pedestal_story',
             'name'          => 'Stories',
             'singular_name' => 'Story',
         ],
-        'pedestal_org_type' => [
-            'post_type'    => 'pedestal_org',
+        'pedestal_org_type'       => [
+            'post_type'     => 'pedestal_org',
             'name'          => 'Organizations',
             'singular_name' => 'Organization',
         ],
-        'pedestal_place_type' => [
-            'post_type'    => 'pedestal_place',
+        'pedestal_place_type'     => [
+            'post_type'     => 'pedestal_place',
             'name'          => 'Places',
             'singular_name' => 'Place',
         ],
-        'pedestal_locality_type' => [
-            'post_type'    => 'pedestal_locality',
+        'pedestal_locality_type'  => [
+            'post_type'     => 'pedestal_locality',
             'name'          => 'Localities',
             'singular_name' => 'Locality',
         ],
         'pedestal_slot_item_type' => [
-            'post_type'    => 'pedestal_slot_item',
+            'post_type'     => 'pedestal_slot_item',
             'name'          => 'Slot Items',
             'singular_name' => 'Slot Item',
         ],
@@ -84,22 +84,22 @@ class Taxonomies {
         foreach ( self::$ptypes_types_tax as $tax_name => $tax_settings ) :
 
             $singular = sprintf( '%s Type', $tax_settings['singular_name'] );
-            $plural = sprintf( '%s Types', $tax_settings['singular_name'] );
+            $plural   = sprintf( '%s Types', $tax_settings['singular_name'] );
 
             $args = [
-                'hierarchical'      => true,
-                'query_var'         => true,
-                'rewrite'           => [
+                'hierarchical' => true,
+                'query_var'    => true,
+                'rewrite'      => [
                     'slug'       => strtolower( $tax_settings['name'] ) . '/types',
                     'with_front' => false,
                 ],
-                'capabilities'      => [
-                    'manage_terms'  => 'manage_terms',
-                    'edit_terms'    => 'manage_terms',
-                    'delete_terms'  => 'manage_terms',
-                    'assign_terms'  => 'manage_terms',
+                'capabilities' => [
+                    'manage_terms' => 'manage_terms',
+                    'edit_terms'   => 'manage_terms',
+                    'delete_terms' => 'manage_terms',
+                    'assign_terms' => 'manage_terms',
                 ],
-                'labels'            => [
+                'labels'       => [
                     'name'                       => __( $plural, 'pedestal' ),
                     'singular_name'              => _x( $singular, 'taxonomy general name', 'pedestal' ),
                     'search_items'               => __( "Search {$plural}", 'pedestal' ),
@@ -134,15 +134,15 @@ class Taxonomies {
             'show_admin_column' => true,
             'query_var'         => true,
             'rewrite'           => [
-                'slug'              => 'sources',
-                'with_front'        => true,
-                'hierarchical'      => false,
+                'slug'         => 'sources',
+                'with_front'   => true,
+                'hierarchical' => false,
             ],
             'capabilities'      => [
-                'manage_terms'  => 'manage_terms',
-                'edit_terms'    => 'edit_entities',
-                'delete_terms'  => 'manage_terms',
-                'assign_terms'  => 'edit_entities',
+                'manage_terms' => 'manage_terms',
+                'edit_terms'   => 'edit_entities',
+                'delete_terms' => 'manage_terms',
+                'assign_terms' => 'edit_entities',
             ],
             'labels'            => [
                 'name'                       => __( 'Sources', 'pedestal' ),
@@ -186,26 +186,26 @@ class Taxonomies {
             'items_list'                 => 'Categories list',
             'items_list_navigation'      => 'Categories list navigation',
         ];
-        $args = [
-            'labels'                     => $labels,
-            'hierarchical'               => false,
-            'rewrite'                    => [
-                'slug'                       => 'categories',
-                'with_front'                 => true,
-                'hierarchical'               => false,
+        $args   = [
+            'labels'                 => $labels,
+            'hierarchical'           => false,
+            'rewrite'                => [
+                'slug'         => 'categories',
+                'with_front'   => true,
+                'hierarchical' => false,
             ],
-            'capabilities'               => [
-                'manage_terms'           => 'manage_categories',
-                'edit_terms'             => 'manage_categories',
-                'delete_terms'           => 'manage_categories',
-                'assign_terms'           => 'edit_entities',
+            'capabilities'           => [
+                'manage_terms' => 'manage_categories',
+                'edit_terms'   => 'manage_categories',
+                'delete_terms' => 'manage_categories',
+                'assign_terms' => 'edit_entities',
             ],
-            'public'                     => true,
-            'show_ui'                    => true,
-            'show_admin_column'          => true,
-            'show_in_nav_menus'          => true,
-            'show_tagcloud'              => true,
-            'single_option_taxonomy'     => true, // Make this taxonomy use radio buttons
+            'public'                 => true,
+            'show_ui'                => true,
+            'show_admin_column'      => true,
+            'show_in_nav_menus'      => true,
+            'show_tagcloud'          => true,
+            'single_option_taxonomy' => true, // Make this taxonomy use radio buttons
         ];
         register_taxonomy( 'pedestal_category', Types::get_entity_post_types(), $args );
         // Remove the built in Categroy taxonomy which causes confusion
@@ -250,7 +250,7 @@ class Taxonomies {
      */
     public function action_template_redirect() {
         $queried_locality_type = get_query_var( 'pedestal_locality_type' );
-        $name = get_query_var( 'name' );
+        $name                  = get_query_var( 'name' );
 
         if ( ! $queried_locality_type || ! $name ) {
             return;
@@ -307,10 +307,10 @@ class Taxonomies {
         ] );
         $query->set( 'tax_query', [
             [
-                'taxonomy'    => $taxonomy,
-                'field'       => 'id',
-                'terms'       => $term_ids,
-                'operator'    => $operator,
+                'taxonomy' => $taxonomy,
+                'field'    => 'id',
+                'terms'    => $term_ids,
+                'operator' => $operator,
             ],
         ] );
     }

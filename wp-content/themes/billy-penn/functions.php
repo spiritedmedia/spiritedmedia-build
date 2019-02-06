@@ -49,17 +49,17 @@ class Billy_Penn extends Pedestal {
         add_filter( 'pedestal_constants', function() {
             return [
                 // Site Details
-                'PEDESTAL_BLOG_NAME'        => 'Billy Penn',
-                'PEDESTAL_BLOG_DESCRIPTION' => 'Original reporting plus a carefully curated mix of important and fun news about Philadelphia.',
-                'PEDESTAL_BLOG_TAGLINE'     => 'On top of Philly news',
-                'PEDESTAL_HOMEPAGE_TITLE'   => 'Billy Penn: Philly\'s source for local news, info and things to do',
-                'PEDESTAL_CITY_NAME'        => 'Philadelphia',
-                'PEDESTAL_CITY_NICKNAME'    => 'Philly',
-                'PEDESTAL_STATE_NAME'       => 'Pennsylvania',
-                'PEDESTAL_STATE'            => 'PA',
-                'PEDESTAL_ZIPCODE'          => '19102',
-                'PEDESTAL_BUILDING_NAME'    => '',
-                'PEDESTAL_STREET_ADDRESS'   => '30 S. 15th St., The Graham Building, 15th Fl.',
+                'PEDESTAL_BLOG_NAME'                    => 'Billy Penn',
+                'PEDESTAL_BLOG_DESCRIPTION'             => 'Original reporting plus a carefully curated mix of important and fun news about Philadelphia.',
+                'PEDESTAL_BLOG_TAGLINE'                 => 'On top of Philly news',
+                'PEDESTAL_HOMEPAGE_TITLE'               => 'Billy Penn: Philly\'s source for local news, info and things to do',
+                'PEDESTAL_CITY_NAME'                    => 'Philadelphia',
+                'PEDESTAL_CITY_NICKNAME'                => 'Philly',
+                'PEDESTAL_STATE_NAME'                   => 'Pennsylvania',
+                'PEDESTAL_STATE'                        => 'PA',
+                'PEDESTAL_ZIPCODE'                      => '19102',
+                'PEDESTAL_BUILDING_NAME'                => '',
+                'PEDESTAL_STREET_ADDRESS'               => '30 S. 15th St., The Graham Building, 15th Fl.',
 
                 // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-54099407-1',
@@ -68,23 +68,23 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_COMSCORE_ID'                  => '23083389',
 
                 // DFP
-                'PEDESTAL_DFP_PREFIX' => 'PHL',
+                'PEDESTAL_DFP_PREFIX'                   => 'PHL',
 
                 // Social Media
-                'PEDESTAL_TWITTER_USERNAME'   => 'billy_penn',
-                'PEDESTAL_INSTAGRAM_USERNAME' => 'billy_penn',
-                'PEDESTAL_FACEBOOK_PAGE'      => 'https://www.facebook.com/billypennnews',
-                'PEDESTAL_FACEBOOK_PAGE_ID'   => '666155016815882',
-                'PEDESTAL_YOUTUBE_CHANNEL_ID' => 'UC-wbUUytMNII9M-hF8U5IDA',
+                'PEDESTAL_TWITTER_USERNAME'             => 'billy_penn',
+                'PEDESTAL_INSTAGRAM_USERNAME'           => 'billy_penn',
+                'PEDESTAL_FACEBOOK_PAGE'                => 'https://www.facebook.com/billypennnews',
+                'PEDESTAL_FACEBOOK_PAGE_ID'             => '666155016815882',
+                'PEDESTAL_YOUTUBE_CHANNEL_ID'           => 'UC-wbUUytMNII9M-hF8U5IDA',
 
                 // Branding
-                'PEDESTAL_BRAND_COLOR' => '#268a8c',
+                'PEDESTAL_BRAND_COLOR'                  => '#268a8c',
 
                 // Email
-                'PEDESTAL_EMAIL_CONTACT'          => 'contact@billypenn.com',
-                'PEDESTAL_EMAIL_NEWS'             => 'news@billypenn.com',
-                'PEDESTAL_EMAIL_TIPS'             => 'tips@billypenn.com',
-                'PEDESTAL_EMAIL_NEWSLETTER_FROM'  => 'contact@billypenn.com',
+                'PEDESTAL_EMAIL_CONTACT'                => 'contact@billypenn.com',
+                'PEDESTAL_EMAIL_NEWS'                   => 'news@billypenn.com',
+                'PEDESTAL_EMAIL_TIPS'                   => 'tips@billypenn.com',
+                'PEDESTAL_EMAIL_NEWSLETTER_FROM'        => 'contact@billypenn.com',
 
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#phl-botcountry',
@@ -94,10 +94,10 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':billypenn:',
 
                 // Membership
-                'PEDESTAL_NRH_PROPERTY' => 'billypenn',
+                'PEDESTAL_NRH_PROPERTY'                 => 'billypenn',
 
                 // Site Features
-                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR' => true,
+                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'    => true,
             ];
         } );
 

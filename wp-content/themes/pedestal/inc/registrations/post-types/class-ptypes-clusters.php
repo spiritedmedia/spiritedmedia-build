@@ -115,8 +115,8 @@ class Cluster_Types {
             }
 
             // Check for a query string
-            $parts = explode( '?', $redirect_url );
-            $url = $parts[0];
+            $parts        = explode( '?', $redirect_url );
+            $url          = $parts[0];
             $query_string = '';
             if ( isset( $parts[1] ) ) {
                 $query_string = '?' . $parts[1];
@@ -127,7 +127,7 @@ class Cluster_Types {
                 $paged = false;
             }
 
-            $id = $post->ID;
+            $id       = $post->ID;
             $post_obj = Post::get( $id );
             if (
                 Types::is_post( $post_obj ) &&
@@ -161,12 +161,12 @@ class Cluster_Types {
             switch ( $post_type ) {
 
                 case 'pedestal_story':
-                    $singular = esc_html__( 'Story', 'pedestal' );
-                    $plural = esc_html__( 'Stories', 'pedestal' );
-                    $class = 'Posts\\Clusters\\Story';
+                    $singular              = esc_html__( 'Story', 'pedestal' );
+                    $plural                = esc_html__( 'Stories', 'pedestal' );
+                    $class                 = 'Posts\\Clusters\\Story';
                     $args['menu_position'] = 101;
-                    $args['menu_icon'] = 'dashicons-book';
-                    $args['supports'] = [
+                    $args['menu_icon']     = 'dashicons-book';
+                    $args['supports']      = [
                         'title',
                         'thumbnail',
                         'editor',
@@ -174,92 +174,92 @@ class Cluster_Types {
                         'mailchimp-integration',
                         'follow-updates',
                     ];
-                    $args['rewrite'] = [
+                    $args['rewrite']       = [
                         'slug' => 'stories',
                     ];
                     break;
 
                 case 'pedestal_topic':
-                    $singular = esc_html__( 'Topic', 'pedestal' );
-                    $plural = esc_html__( 'Topics', 'pedestal' );
-                    $class = 'Posts\\Clusters\\Topic';
+                    $singular              = esc_html__( 'Topic', 'pedestal' );
+                    $plural                = esc_html__( 'Topics', 'pedestal' );
+                    $class                 = 'Posts\\Clusters\\Topic';
                     $args['menu_position'] = 102;
-                    $args['menu_icon'] = 'dashicons-pressthis';
-                    $args['supports'] = [
+                    $args['menu_icon']     = 'dashicons-pressthis';
+                    $args['supports']      = [
                         'title',
                         'thumbnail',
                     ];
-                    $args['rewrite'] = [
-                        'slug' => 'topics',
+                    $args['rewrite']       = [
+                        'slug'       => 'topics',
                         'with_front' => false,
                     ];
                     break;
 
                 case 'pedestal_person':
-                    $singular = esc_html__( 'Person', 'pedestal' );
-                    $plural = esc_html__( 'People', 'pedestal' );
-                    $class = 'Posts\\Clusters\\Person';
+                    $singular              = esc_html__( 'Person', 'pedestal' );
+                    $plural                = esc_html__( 'People', 'pedestal' );
+                    $class                 = 'Posts\\Clusters\\Person';
                     $args['menu_position'] = 103;
-                    $args['menu_icon'] = 'dashicons-id-alt';
-                    $args['supports'] = [
+                    $args['menu_icon']     = 'dashicons-id-alt';
+                    $args['supports']      = [
                         'title',
                         'thumbnail',
                     ];
-                    $args['rewrite'] = [
-                        'slug' => 'people',
+                    $args['rewrite']       = [
+                        'slug'       => 'people',
                         'with_front' => false,
                     ];
                     break;
 
                 case 'pedestal_org':
-                    $singular = esc_html__( 'Organization', 'pedestal' );
-                    $plural = esc_html__( 'Organizations', 'pedestal' );
-                    $class = 'Posts\\Clusters\\Org';
+                    $singular              = esc_html__( 'Organization', 'pedestal' );
+                    $plural                = esc_html__( 'Organizations', 'pedestal' );
+                    $class                 = 'Posts\\Clusters\\Org';
                     $args['menu_position'] = 104;
-                    $args['menu_icon'] = 'dashicons-admin-multisite';
-                    $args['supports'] = [
+                    $args['menu_icon']     = 'dashicons-admin-multisite';
+                    $args['supports']      = [
                         'title',
                         'thumbnail',
                     ];
-                    $args['rewrite'] = [
-                        'slug' => 'organizations',
+                    $args['rewrite']       = [
+                        'slug'       => 'organizations',
                         'with_front' => false,
                     ];
                     break;
 
                 case 'pedestal_place':
-                    $singular = esc_html__( 'Place', 'pedestal' );
-                    $plural = esc_html__( 'Places', 'pedestal' );
-                    $class = 'Posts\\Clusters\\Geospaces\\Place';
+                    $singular              = esc_html__( 'Place', 'pedestal' );
+                    $plural                = esc_html__( 'Places', 'pedestal' );
+                    $class                 = 'Posts\\Clusters\\Geospaces\\Place';
                     $args['menu_position'] = 105;
-                    $args['menu_icon'] = 'dashicons-location';
-                    $args['supports'] = [
+                    $args['menu_icon']     = 'dashicons-location';
+                    $args['supports']      = [
                         'title',
                         'thumbnail',
                     ];
-                    $args['rewrite'] = [
-                        'slug' => 'places',
+                    $args['rewrite']       = [
+                        'slug'       => 'places',
                         'with_front' => false,
                     ];
                     break;
 
                 case 'pedestal_locality':
-                    $singular = esc_html__( 'Locality', 'pedestal' );
-                    $plural = esc_html__( 'Localities', 'pedestal' );
-                    $class = 'Posts\\Clusters\\Geospaces\\Localities\\Locality';
+                    $singular              = esc_html__( 'Locality', 'pedestal' );
+                    $plural                = esc_html__( 'Localities', 'pedestal' );
+                    $class                 = 'Posts\\Clusters\\Geospaces\\Localities\\Locality';
                     $args['menu_position'] = 106;
-                    $args['menu_icon'] = 'dashicons-location-alt';
-                    $args['supports'] = [
+                    $args['menu_icon']     = 'dashicons-location-alt';
+                    $args['supports']      = [
                         'title',
                         'thumbnail',
                         'editor',
                         'excerpt',
                     ];
-                    $args['rewrite'] = [
-                        'slug' => '%locality_type%',
+                    $args['rewrite']       = [
+                        'slug'       => '%locality_type%',
                         'with_front' => false,
                     ];
-                    $args['has_archive'] = false;
+                    $args['has_archive']   = false;
                     break;
 
             }// End switch().
@@ -283,9 +283,9 @@ class Cluster_Types {
 
         foreach ( $this->post_types as $post_type => $settings ) :
 
-            $labels = Types::get_post_type_labels( $post_type );
+            $labels         = Types::get_post_type_labels( $post_type );
             $sanitized_name = Types::get_post_type_name( $post_type, true, true );
-            $geo_fields = [
+            $geo_fields     = [
                 'rel' => [
                     'title'   => 'Relation',
                     'type'    => 'select',
@@ -296,18 +296,18 @@ class Cluster_Types {
 
             // Connect all clusters to entities
             $this->setup_cluster_connection_type( [
-                'name'           => 'entities_to_' . $sanitized_name,
-                'from'           => Types::get_entity_post_types(),
-                'to'             => $post_type,
-                'sortable'       => 'from',
-                'admin_box'      => [
+                'name'        => 'entities_to_' . $sanitized_name,
+                'from'        => Types::get_entity_post_types(),
+                'to'          => $post_type,
+                'sortable'    => 'from',
+                'admin_box'   => [
                     'context' => 'advanced',
                 ],
-                'title'          => [
+                'title'       => [
                     'from' => $labels['name'],
                     'to'   => __( 'Entities', 'pedestal' ),
                 ],
-                'from_labels'      => [
+                'from_labels' => [
                     'singular_name' => __( 'Entity', 'pedestal' ),
                     'search_items'  => __( 'Search entities', 'pedestal' ),
                     'not_found'     => __( 'No entities found.', 'pedestal' ),
@@ -318,14 +318,14 @@ class Cluster_Types {
             if ( 'pedestal_story' != $post_type ) {
                 // Connect non-story clusters to Stories
                 $this->setup_cluster_connection_type( [
-                    'name'           => 'stories_to_' . $sanitized_name,
-                    'from'           => 'pedestal_story',
-                    'to'             => $post_type,
-                    'sortable'       => 'from',
-                    'admin_box'      => [
+                    'name'      => 'stories_to_' . $sanitized_name,
+                    'from'      => 'pedestal_story',
+                    'to'        => $post_type,
+                    'sortable'  => 'from',
+                    'admin_box' => [
                         'context' => 'advanced',
                     ],
-                    'title'          => [
+                    'title'     => [
                         'from' => $labels['name'],
                         'to'   => __( 'Stories', 'pedestal' ),
                     ],
@@ -333,14 +333,14 @@ class Cluster_Types {
 
                 // Connect all non-Story clusters to Topics (including Topics)
                 $data_connection_topics_to = [
-                    'name'           => 'topics_to_' . $sanitized_name,
-                    'from'           => 'pedestal_topic',
-                    'to'             => $post_type,
-                    'sortable'       => 'from',
-                    'admin_box'      => [
+                    'name'      => 'topics_to_' . $sanitized_name,
+                    'from'      => 'pedestal_topic',
+                    'to'        => $post_type,
+                    'sortable'  => 'from',
+                    'admin_box' => [
                         'context' => 'advanced',
                     ],
-                    'title'          => [
+                    'title'     => [
                         'from' => $labels['name'],
                         'to'   => __( 'Topics', 'pedestal' ),
                     ],
@@ -354,17 +354,17 @@ class Cluster_Types {
             if ( in_array( $post_type, Types::get_geospace_post_types() ) ) {
                 // Connect geospaces to themselves, with metadata
                 $this->setup_cluster_connection_type( [
-                    'name'           => $sanitized_name . '_to_' . $sanitized_name,
-                    'from'           => $post_type,
-                    'to'             => $post_type,
-                    'admin_box'      => [
+                    'name'      => $sanitized_name . '_to_' . $sanitized_name,
+                    'from'      => $post_type,
+                    'to'        => $post_type,
+                    'admin_box' => [
                         'context' => 'advanced',
                         'show'    => 'from',
                     ],
-                    'title'          => [
-                        'from'          => __( sprintf( 'Connected %s: Active', $labels['name'] ), 'pedestal' ),
+                    'title'     => [
+                        'from' => __( sprintf( 'Connected %s: Active', $labels['name'] ), 'pedestal' ),
                     ],
-                    'fields'         => $geo_fields,
+                    'fields'    => $geo_fields,
                 ] );
             }
 
@@ -372,14 +372,14 @@ class Cluster_Types {
 
         // Connect People to Organizations
         $this->setup_cluster_connection_type( [
-            'name'           => 'people_to_organizations',
-            'from'           => 'pedestal_person',
-            'to'             => 'pedestal_org',
-            'sortable'       => 'from',
-            'admin_box'      => [
+            'name'      => 'people_to_organizations',
+            'from'      => 'pedestal_person',
+            'to'        => 'pedestal_org',
+            'sortable'  => 'from',
+            'admin_box' => [
                 'context' => 'advanced',
             ],
-            'title'          => [
+            'title'     => [
                 'from' => __( 'Organizations', 'pedestal' ),
                 'to'   => __( 'People', 'pedestal' ),
             ],
@@ -387,14 +387,14 @@ class Cluster_Types {
 
         // Connect Organizations to Places
         $this->setup_cluster_connection_type( [
-            'name'           => 'organizations_to_places',
-            'from'           => 'pedestal_org',
-            'to'             => 'pedestal_place',
-            'sortable'       => 'from',
-            'admin_box'      => [
+            'name'      => 'organizations_to_places',
+            'from'      => 'pedestal_org',
+            'to'        => 'pedestal_place',
+            'sortable'  => 'from',
+            'admin_box' => [
                 'context' => 'advanced',
             ],
-            'title'          => [
+            'title'     => [
                 'from' => __( 'Places', 'pedestal' ),
                 'to'   => __( 'Organizations', 'pedestal' ),
             ],
@@ -402,18 +402,18 @@ class Cluster_Types {
 
         // Connect Localities to Places with metadata
         $this->setup_cluster_connection_type( [
-            'name'           => 'places_to_localities',
-            'from'           => 'pedestal_place',
-            'to'             => 'pedestal_locality',
-            'sortable'       => 'from',
-            'admin_box'      => [
+            'name'      => 'places_to_localities',
+            'from'      => 'pedestal_place',
+            'to'        => 'pedestal_locality',
+            'sortable'  => 'from',
+            'admin_box' => [
                 'context' => 'advanced',
             ],
-            'title'          => [
+            'title'     => [
                 'from' => __( 'Localities', 'pedestal' ),
                 'to'   => __( 'Places', 'pedestal' ),
             ],
-            'fields'         => $geo_fields,
+            'fields'    => $geo_fields,
         ] );
     }
 
@@ -450,11 +450,11 @@ class Cluster_Types {
      */
     public function action_add_meta_boxes() {
         foreach ( Types::get_geospace_post_types() as $post_type ) {
-            $name = Types::get_post_type_name( $post_type );
-            $sanitized_name = Utils::sanitize_name( $name );
+            $name            = Types::get_post_type_name( $post_type );
+            $sanitized_name  = Utils::sanitize_name( $name );
             $connection_type = $sanitized_name . '_to_' . $sanitized_name;
-            $metabox_id = "pedestal-metabox-p2p-connections-{$connection_type}";
-            $metabox_label = sprintf( 'Connected %s: Passive', $name );
+            $metabox_id      = "pedestal-metabox-p2p-connections-{$connection_type}";
+            $metabox_label   = sprintf( 'Connected %s: Passive', $name );
             add_meta_box(
                 $metabox_id,
                 $metabox_label,
@@ -499,7 +499,7 @@ class Cluster_Types {
     public function filter_p2p_item_title( $title, $post, $ctype ) {
         if ( 'pedestal_locality' === get_post_type( $post ) ) {
             $locality = Locality::get( $post->ID );
-            $title .= ' (' . $locality->get_type_name() . ')';
+            $title   .= ' (' . $locality->get_type_name() . ')';
         }
         return $title;
     }
@@ -583,10 +583,10 @@ class Cluster_Types {
      */
     private function register_story_fields() {
 
-        $headline = new \Fieldmanager_TextField( false, [
-            'name'         => 'headline',
-            'attributes'   => [
-                'placeholder'       => esc_html__( 'Headline (optional)', 'pedestal' ),
+        $headline                        = new \Fieldmanager_TextField( false, [
+            'name'       => 'headline',
+            'attributes' => [
+                'placeholder' => esc_html__( 'Headline (optional)', 'pedestal' ),
             ],
         ] );
         $this->pedestal_headline_context = new \Fieldmanager_Context_Post(
@@ -598,15 +598,15 @@ class Cluster_Types {
         );
 
         $signup_form_settings = new \Fieldmanager_Group( false, [
-            'name' => 'signup_form_settings',
+            'name'     => 'signup_form_settings',
             'children' => [
-                'cta_text' => new \Fieldmanager_RichTextArea( 'Call to action', [
+                'cta_text'    => new \Fieldmanager_RichTextArea( 'Call to action', [
                     'description'     => 'Customize the call to action readers see in the email subscription signup form. Leave empty for the default text.',
                     'editor_settings' => [
                         'media_buttons' => false,
                     ],
-                    'buttons_1' => [ 'bold', 'italic', 'underline' ],
-                    'buttons_2' => [],
+                    'buttons_1'       => [ 'bold', 'italic', 'underline' ],
+                    'buttons_2'       => [],
                 ] ),
                 'button_text' => new \Fieldmanager_TextField( 'Signup button', [
                     'description' => 'Customize the button text readers see in the email subscription signup form.',
@@ -627,32 +627,32 @@ class Cluster_Types {
 
         // Name fields
         $name_children = [
-            'prefix' => new \Fieldmanager_Textfield( esc_html__( 'Prefix', 'pedestal' ), [
+            'prefix'   => new \Fieldmanager_Textfield( esc_html__( 'Prefix', 'pedestal' ), [
                 'name' => 'prefix',
             ] ),
-            'first' => new \Fieldmanager_Textfield( esc_html__( 'First Name', 'pedestal' ), [
-                'name' => 'first',
-                'required' => true,
-                'validation_rules' => 'required',
+            'first'    => new \Fieldmanager_Textfield( esc_html__( 'First Name', 'pedestal' ), [
+                'name'                => 'first',
+                'required'            => true,
+                'validation_rules'    => 'required',
                 'validation_messages' => esc_html__( 'Required', 'pedestal' ),
             ] ),
-            'middle' => new \Fieldmanager_Textfield( esc_html__( 'Middle Name', 'pedestal' ), [
+            'middle'   => new \Fieldmanager_Textfield( esc_html__( 'Middle Name', 'pedestal' ), [
                 'name' => 'middle',
             ] ),
             'nickname' => new \Fieldmanager_Textfield( esc_html__( 'Nickname', 'pedestal' ), [
                 'name' => 'nickname',
             ] ),
-            'last' => new \Fieldmanager_Textfield( esc_html__( 'Last Name', 'pedestal' ), [
-                'name' => 'last',
-                'required' => true,
-                'validation_rules' => 'required',
+            'last'     => new \Fieldmanager_Textfield( esc_html__( 'Last Name', 'pedestal' ), [
+                'name'                => 'last',
+                'required'            => true,
+                'validation_rules'    => 'required',
                 'validation_messages' => esc_html__( 'Required', 'pedestal' ),
             ] ),
-            'suffix' => new \Fieldmanager_Textfield( esc_html__( 'Suffix', 'pedestal' ), [
+            'suffix'   => new \Fieldmanager_Textfield( esc_html__( 'Suffix', 'pedestal' ), [
                 'name' => 'suffix',
             ] ),
         ];
-        $name = new \Fieldmanager_Group( false, [
+        $name          = new \Fieldmanager_Group( false, [
             'name'           => 'person_name',
             'children'       => $name_children,
             'serialize_data' => false,
@@ -663,11 +663,11 @@ class Cluster_Types {
             'known_for' => new \Fieldmanager_Textfield( esc_html__( 'Known For', 'pedestal' ), [
                 'name' => 'known_for',
             ] ),
-            'url' => new \Fieldmanager_Link( esc_html__( 'Website URL', 'pedestal' ), [
-                'name' => 'url',
+            'url'       => new \Fieldmanager_Link( esc_html__( 'Website URL', 'pedestal' ), [
+                'name'     => 'url',
                 'required' => false,
             ] ),
-            'dob' => new \Fieldmanager_Datepicker( esc_html__( 'Birthdate', 'pedestal' ), [
+            'dob'       => new \Fieldmanager_Datepicker( esc_html__( 'Birthdate', 'pedestal' ), [
                 'js_opts' => [
                     'changeMonth' => true,
                     'changeYear'  => true,
@@ -678,7 +678,7 @@ class Cluster_Types {
                 ],
             ] ),
         ];
-        $details = new \Fieldmanager_Group( false, [
+        $details          = new \Fieldmanager_Group( false, [
             'name'           => 'person_details',
             'children'       => $details_children,
             'serialize_data' => false,
@@ -686,28 +686,28 @@ class Cluster_Types {
 
         // Social media fields
         $social_children = [
-            'twitter' => new \Fieldmanager_Link( esc_html__( 'Twitter URL', 'pedestal' ), [
-                'name' => 'twitter',
+            'twitter'   => new \Fieldmanager_Link( esc_html__( 'Twitter URL', 'pedestal' ), [
+                'name'       => 'twitter',
                 'attributes' => [
                     'placeholder' => 'https://twitter.com/someone',
-                    'size' => 50,
+                    'size'        => 50,
                 ],
             ] ),
             'instagram' => new \Fieldmanager_Link( esc_html__( 'Instagram URL', 'pedestal' ), [
-                'name' => 'instagram',
+                'name'       => 'instagram',
                 'attributes' => [
                     'placeholder' => 'https://www.instagram.com/someone/',
-                    'size' => 50,
+                    'size'        => 50,
                 ],
             ] ),
-            'linkedin' => new \Fieldmanager_Link( esc_html__( 'LinkedIn URL', 'pedestal' ), [
+            'linkedin'  => new \Fieldmanager_Link( esc_html__( 'LinkedIn URL', 'pedestal' ), [
                 'attributes' => [
                     'placeholder' => 'https://www.linkedin.com/in/someone',
-                    'size' => 50,
+                    'size'        => 50,
                 ],
             ] ),
         ];
-        $social = new \Fieldmanager_Group( false, [
+        $social          = new \Fieldmanager_Group( false, [
             'name'           => 'person_social',
             'children'       => $social_children,
             'serialize_data' => false,
@@ -725,11 +725,11 @@ class Cluster_Types {
     private function register_organization_fields() {
 
         $details_children = [
-            'url' => new \Fieldmanager_Link( esc_html__( 'URL', 'pedestal' ), [
+            'url'           => new \Fieldmanager_Link( esc_html__( 'URL', 'pedestal' ), [
                 'name'     => 'url',
                 'required' => false,
             ] ),
-            'full_name' => new \Fieldmanager_Textfield( esc_html__( 'Full Name', 'pedestal' ), [
+            'full_name'     => new \Fieldmanager_Textfield( esc_html__( 'Full Name', 'pedestal' ), [
                 'name'        => 'full_name',
                 'description' => esc_html__( 'The full name of the organization, if it\'s not the common name / title.', 'pedestal' ),
             ] ),
@@ -740,7 +740,7 @@ class Cluster_Types {
                 'name' => 'founding_date',
             ] ),
         ];
-        $details = new \Fieldmanager_Group( false, [
+        $details          = new \Fieldmanager_Group( false, [
             'name'           => 'org_details',
             'children'       => $details_children,
             'serialize_data' => false,
@@ -755,17 +755,17 @@ class Cluster_Types {
                 'name'        => 'full_name',
                 'description' => esc_html__( 'The full name of the cluster, if it\'s not the common name / title.', 'pedestal' ),
             ] ),
-            'url' => new \Fieldmanager_Link( esc_html__( 'URL', 'pedestal' ), [
+            'url'       => new \Fieldmanager_Link( esc_html__( 'URL', 'pedestal' ), [
                 'name'     => 'url',
                 'required' => false,
             ] ),
-            'map_url' => new \Fieldmanager_Link( esc_html__( 'Map URL', 'pedestal' ), [
+            'map_url'   => new \Fieldmanager_Link( esc_html__( 'Map URL', 'pedestal' ), [
                 'name'        => 'map_url',
                 'required'    => false,
                 'description' => esc_html__( 'A URL to a map of the place. Preferably Google Maps. OpenStreetMap is okay too.', 'pedestal' ),
             ] ),
         ];
-        $details = new \Fieldmanager_Group( false, [
+        $details          = new \Fieldmanager_Group( false, [
             'name'           => 'geospace_details',
             'children'       => $details_children,
             'serialize_data' => false,
@@ -779,13 +779,13 @@ class Cluster_Types {
     private function register_place_fields() {
 
         $address_children = [
-            'street_01' => new \Fieldmanager_Textfield( esc_html__( 'Street Address', 'pedestal' ), [
+            'street_01'   => new \Fieldmanager_Textfield( esc_html__( 'Street Address', 'pedestal' ), [
                 'name' => 'street_01',
             ] ),
-            'street_02' => new \Fieldmanager_Textfield( esc_html__( 'Street Address (Line 2)', 'pedestal' ), [
+            'street_02'   => new \Fieldmanager_Textfield( esc_html__( 'Street Address (Line 2)', 'pedestal' ), [
                 'name' => 'street_02',
             ] ),
-            'po_box' => new \Fieldmanager_Textfield( esc_html__( 'P.O. Box Number', 'pedestal' ), [
+            'po_box'      => new \Fieldmanager_Textfield( esc_html__( 'P.O. Box Number', 'pedestal' ), [
                 'name'        => 'po_box',
                 'description' => esc_html__( 'Include number only (no "P.O." needed).', 'pedestal' ),
             ] ),
@@ -793,7 +793,7 @@ class Cluster_Types {
                 'name' => 'postal_code',
             ] ),
         ];
-        $address = new \Fieldmanager_Group( false, [
+        $address          = new \Fieldmanager_Group( false, [
             'name'           => 'place_address',
             'children'       => $address_children,
             'description'    => esc_html__( 'Street address only. City info is entered in the Locality box below.', 'pedestal' ),
@@ -806,10 +806,10 @@ class Cluster_Types {
 
     private function register_locality_fields() {
         $locality_type = new \Fieldmanager_Select( false, [
-            'name'           => 'locality_type',
-            'description'    => esc_html__( 'Select the type of Locality.', 'pedestal' ),
-            'first_empty'    => true,
-            'datasource'     => new \Fieldmanager_Datasource_Term( [
+            'name'        => 'locality_type',
+            'description' => esc_html__( 'Select the type of Locality.', 'pedestal' ),
+            'first_empty' => true,
+            'datasource'  => new \Fieldmanager_Datasource_Term( [
                 'taxonomy'                    => 'pedestal_locality_type',
                 'taxonomy_hierarchical'       => true,
                 'taxonomy_hierarchical_depth' => 0,
@@ -874,28 +874,28 @@ class Cluster_Types {
 
         // Standard cluster groups
         $group_entities_to_clusters = new \Fieldmanager_Group( '', [
-            'name'        => 'pedestal_entities_to_clusters_connections',
-            'tabbed'      => true,
+            'name'   => 'pedestal_entities_to_clusters_connections',
+            'tabbed' => true,
         ] );
-        $group_stories_to_clusters = new \Fieldmanager_Group( '', [
-            'name'        => 'pedestal_stories_to_clusters_connections',
-            'tabbed'      => true,
+        $group_stories_to_clusters  = new \Fieldmanager_Group( '', [
+            'name'   => 'pedestal_stories_to_clusters_connections',
+            'tabbed' => true,
         ] );
 
         // Locality cluster groups
         $group_entities_to_localities = new \Fieldmanager_Group( '', [
-            'name'        => 'pedestal_entities_to_localities_connections',
-            'tabbed'      => true,
+            'name'   => 'pedestal_entities_to_localities_connections',
+            'tabbed' => true,
         ] );
-        $group_stories_to_localities = new \Fieldmanager_Group( '', [
-            'name'        => 'pedestal_stories_to_localities_connections',
-            'tabbed'      => true,
+        $group_stories_to_localities  = new \Fieldmanager_Group( '', [
+            'name'   => 'pedestal_stories_to_localities_connections',
+            'tabbed' => true,
         ] );
 
         foreach ( Types::get_cluster_post_types( false ) as $post_type ) {
-            $name = Types::get_post_type_name( $post_type );
+            $name           = Types::get_post_type_name( $post_type );
             $sanitized_name = Utils::sanitize_name( $name );
-            $child = new \Fieldmanager_Group( esc_html__( $name, 'pedestal' ), [
+            $child          = new \Fieldmanager_Group( esc_html__( $name, 'pedestal' ), [
                 'name' => $sanitized_name,
             ] );
 
@@ -918,8 +918,8 @@ class Cluster_Types {
      */
     public function render_meta_box_p2p_connections_geospaces_to_geospaces( $post ) {
         $geospace_id = $post->ID;
-        $geospace = Geospace::get( $geospace_id );
-        $context = [
+        $geospace    = Geospace::get( $geospace_id );
+        $context     = [
             'geospace'  => $geospace,
             'connected' => $geospace->get_connected_geospaces_passive(),
         ];
@@ -937,7 +937,7 @@ class Cluster_Types {
         if ( ! $data['name'] || ! $data['from'] || ! $data['to'] ) {
             return false;
         }
-        $name = $data['name'];
+        $name                            = $data['name'];
         $this->connection_types[ $name ] = $data;
         foreach ( [ $data['from'], $data['to'] ] as $dir_types ) {
             if ( is_string( $dir_types ) ) {

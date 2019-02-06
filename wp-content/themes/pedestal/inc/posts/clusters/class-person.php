@@ -132,9 +132,9 @@ class Person extends Cluster {
         $age = $this->get_person_details_field( 'age' );
         $dob = $this->get_person_details_field( 'dob' );
         if ( ! empty( $dob ) ) {
-            $dob = new DateTime( date( 'Y-m-d', $dob ) );
+            $dob   = new DateTime( date( 'Y-m-d', $dob ) );
             $today = new DateTime( 'today' );
-            $age = $dob->diff( $today )->y;
+            $age   = $dob->diff( $today )->y;
         }
         return $age;
     }
@@ -191,7 +191,7 @@ class Person extends Cluster {
      * @return string
      */
     public function get_short_name( $middle_initial = true ) {
-        $name = '';
+        $name  = '';
         $name .= $this->get_first_name() . ' ';
         if ( $middle_initial ) {
             $middle = $this->get_middle_name();
@@ -212,11 +212,11 @@ class Person extends Cluster {
      * @return string
      */
     public function get_full_name( $sortable = false ) {
-        $name = '';
-        $prefix = $this->get_name_prefix();
-        $middle = $this->get_middle_name();
+        $name     = '';
+        $prefix   = $this->get_name_prefix();
+        $middle   = $this->get_middle_name();
         $nickname = $this->get_nickname();
-        $suffix = $this->get_name_suffix();
+        $suffix   = $this->get_name_suffix();
 
         if ( $prefix ) {
             $name .= $prefix . ' ';

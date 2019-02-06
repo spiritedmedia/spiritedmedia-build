@@ -56,8 +56,8 @@ class Denverite extends Pedestal {
             if ( ! is_404() ) {
                 return;
             }
-            $current_url = home_url( $wp->request );
-            $parts = explode( '-', $current_url );
+            $current_url   = home_url( $wp->request );
+            $parts         = explode( '-', $current_url );
             $maybe_post_id = end( $parts );
             if ( ! is_numeric( $maybe_post_id ) ) {
                 return;
@@ -81,43 +81,43 @@ class Denverite extends Pedestal {
         add_filter( 'pedestal_constants', function() {
             return [
                 // Site Details
-                'PEDESTAL_BLOG_NAME'        => 'Denverite',
-                'PEDESTAL_BLOG_DESCRIPTION' => 'Useful and delightful news for people who care about Denver. What’s happening and why it matters. Plus: Fun stuff.',
-                'PEDESTAL_BLOG_TAGLINE'     => 'Denverite, the Denver site!',
-                'PEDESTAL_HOMEPAGE_TITLE'   => 'Denverite, the Denver site!',
-                'PEDESTAL_CITY_NAME'        => 'Denver',
-                'PEDESTAL_CITY_NICKNAME'    => 'Mile High City',
-                'PEDESTAL_STATE_NAME'       => 'Colorado',
-                'PEDESTAL_STATE'            => 'CO',
-                'PEDESTAL_ZIPCODE'          => '80204',
-                'PEDESTAL_BUILDING_NAME'    => '',
-                'PEDESTAL_STREET_ADDRESS'   => '1062 Delaware St',
-                'PEDESTAL_SITE_TIMEZONE'    => 'America/Denver',
+                'PEDESTAL_BLOG_NAME'                    => 'Denverite',
+                'PEDESTAL_BLOG_DESCRIPTION'             => 'Useful and delightful news for people who care about Denver. What’s happening and why it matters. Plus: Fun stuff.',
+                'PEDESTAL_BLOG_TAGLINE'                 => 'Denverite, the Denver site!',
+                'PEDESTAL_HOMEPAGE_TITLE'               => 'Denverite, the Denver site!',
+                'PEDESTAL_CITY_NAME'                    => 'Denver',
+                'PEDESTAL_CITY_NICKNAME'                => 'Mile High City',
+                'PEDESTAL_STATE_NAME'                   => 'Colorado',
+                'PEDESTAL_STATE'                        => 'CO',
+                'PEDESTAL_ZIPCODE'                      => '80204',
+                'PEDESTAL_BUILDING_NAME'                => '',
+                'PEDESTAL_STREET_ADDRESS'               => '1062 Delaware St',
+                'PEDESTAL_SITE_TIMEZONE'                => 'America/Denver',
 
                 // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-77340868-1',
                 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '121553308',
 
                 // DFP
-                'PEDESTAL_DFP_ID'     => '270360483',
-                'PEDESTAL_DFP_PREFIX' => 'DEN',
-                'PEDESTAL_DFP_SITE'   => 'denverite',
+                'PEDESTAL_DFP_ID'                       => '270360483',
+                'PEDESTAL_DFP_PREFIX'                   => 'DEN',
+                'PEDESTAL_DFP_SITE'                     => 'denverite',
 
                 // Social Media
-                'PEDESTAL_TWITTER_USERNAME'   => 'denverite',
-                'PEDESTAL_INSTAGRAM_USERNAME' => 'dnvrite',
-                'PEDESTAL_FACEBOOK_PAGE'      => 'https://www.facebook.com/dnvrite/',
-                'PEDESTAL_FACEBOOK_PAGE_ID'   => '241487632889156',
-                'PEDESTAL_YOUTUBE_CHANNEL_ID' => 'UCKjA7SEgXtzIKUFQ4KyOdRw',
+                'PEDESTAL_TWITTER_USERNAME'             => 'denverite',
+                'PEDESTAL_INSTAGRAM_USERNAME'           => 'dnvrite',
+                'PEDESTAL_FACEBOOK_PAGE'                => 'https://www.facebook.com/dnvrite/',
+                'PEDESTAL_FACEBOOK_PAGE_ID'             => '241487632889156',
+                'PEDESTAL_YOUTUBE_CHANNEL_ID'           => 'UCKjA7SEgXtzIKUFQ4KyOdRw',
 
                 // Branding
-                'PEDESTAL_BRAND_COLOR' => '#210c42',
+                'PEDESTAL_BRAND_COLOR'                  => '#210c42',
 
                 // Email
-                'PEDESTAL_EMAIL_CONTACT'          => 'contact@denverite.com',
-                'PEDESTAL_EMAIL_NEWS'             => 'news@denverite.com',
-                'PEDESTAL_EMAIL_TIPS'             => 'tips@denverite.com',
-                'PEDESTAL_EMAIL_NEWSLETTER_FROM'  => 'tips@denverite.com',
+                'PEDESTAL_EMAIL_CONTACT'                => 'contact@denverite.com',
+                'PEDESTAL_EMAIL_NEWS'                   => 'news@denverite.com',
+                'PEDESTAL_EMAIL_TIPS'                   => 'tips@denverite.com',
+                'PEDESTAL_EMAIL_NEWSLETTER_FROM'        => 'tips@denverite.com',
 
                 // Slack
                 'PEDESTAL_SLACK_CHANNEL_BOTS_EDITORIAL' => '#den-botcountry',
@@ -127,12 +127,12 @@ class Denverite extends Pedestal {
                 'PEDESTAL_SLACK_BOT_EMOJI'              => ':denverite:',
 
                 // Site Features
-                'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY' => false,
-                'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'    => true,
-                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'   => true,
+                'PEDESTAL_ENABLE_INSTAGRAM_OF_THE_DAY'  => false,
+                'PEDESTAL_ENABLE_FOOTER_EMAIL_ICON'     => true,
+                'PEDESTAL_ENABLE_STREAM_ITEM_AVATAR'    => true,
 
                 // Membership
-                'PEDESTAL_NRH_PROPERTY' => 'denverite',
+                'PEDESTAL_NRH_PROPERTY'                 => 'denverite',
             ];
         } );
 

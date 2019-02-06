@@ -173,7 +173,7 @@ class Factcheck extends Original {
                 'title' => $this->get_rating_label_str(),
                 'class' => 'factcheck-meter-img',
             ];
-            $atts = wp_parse_args( $atts, $defaults );
+            $atts     = wp_parse_args( $atts, $defaults );
             return Attachment::get_img_html( $atts );
         }
         return '';

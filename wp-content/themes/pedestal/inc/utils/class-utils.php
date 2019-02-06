@@ -109,7 +109,7 @@ class Utils {
      * @return array
      */
     public static function sort_obj_array_by_prop( $array, $property ) {
-        $cur = 1;
+        $cur           = 1;
         $stack[1]['l'] = 0;
         $stack[1]['r'] = count( $array ) - 1;
 
@@ -119,8 +119,8 @@ class Utils {
             $cur--;
 
             do {
-                $i = $l;
-                $j = $r;
+                $i   = $l;
+                $j   = $r;
                 $tmp = $array[ (int) ( ( $l + $r ) / 2 ) ];
 
                 // split the array into parts
@@ -136,7 +136,7 @@ class Utils {
 
                     // Swap elements of two parts if necesary
                     if ( $i <= $j ) {
-                        $w = $array[ $i ];
+                        $w           = $array[ $i ];
                         $array[ $i ] = $array[ $j ];
                         $array[ $j ] = $w;
 
@@ -189,7 +189,7 @@ class Utils {
     public static function parse_url( $url, $component = -1 ) {
         $added_protocol = false;
         if ( 0 === strpos( $url, '//' ) ) {
-            $url = 'http:' . $url;
+            $url            = 'http:' . $url;
             $added_protocol = true;
         }
         $ret = parse_url( $url, $component );
@@ -256,14 +256,14 @@ class Utils {
      * @return string           String formatted as an English list e.g. 'foo, bar and baz'
      */
     public static function get_byline_list( $items, $args = [] ) {
-        $out = '';
-        $args = wp_parse_args( $args, [
+        $out      = '';
+        $args     = wp_parse_args( $args, [
             'pretext'       => '',
             'posttext'      => 'and',
             'truncate'      => false,
             'truncated_str' => get_bloginfo( 'name' ),
         ] );
-        $pretext = esc_html__( $args['pretext'] . ' %s', 'pedestal' );
+        $pretext  = esc_html__( $args['pretext'] . ' %s', 'pedestal' );
         $posttext = esc_html__( ' ' . $args['posttext'] . ' ', 'pedestal' );
 
         if ( 1 == count( $items ) ) {
@@ -302,7 +302,7 @@ class Utils {
         if ( strlen( $str ) > $len ) {
             $parts = wordwrap( $str, $len, $end );
             $parts = explode( $end, $parts );
-            $val = array_shift( $parts );
+            $val   = array_shift( $parts );
             return $val;
         } else {
             return $str;
@@ -322,7 +322,7 @@ class Utils {
         $str_len = strlen( $str );
         if ( $str_len > $len ) {
             $trim_len = strrpos( $str, '. ', $len - $str_len ) + 1;
-            $str = substr( $str, 0, $trim_len );
+            $str      = substr( $str, 0, $trim_len );
         }
         return $str;
     }
@@ -436,7 +436,7 @@ class Utils {
         }
 
         if (
-               ! isset( $response['response'] )
+            ! isset( $response['response'] )
             || ! isset( $response['response']['code'] )
             || ! isset( $response['body'] )
         ) {
@@ -448,7 +448,7 @@ class Utils {
         }
         $response_code = $response['response']['code'];
         $response_body = $response['body'];
-        $success = false;
+        $success       = false;
         if ( 200 == $response_code ) {
             $success = true;
         }
@@ -495,7 +495,7 @@ class Utils {
 
         $url_domain = parse_url( $url, PHP_URL_HOST );
         $url_domain = str_replace( 'www.', '', $url_domain );
-        $services = static::$service_domain_map;
+        $services   = static::$service_domain_map;
 
         if ( ! isset( $services[ $url_domain ] ) ) {
             return false;

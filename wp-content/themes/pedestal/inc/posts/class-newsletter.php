@@ -112,9 +112,9 @@ class Newsletter extends Post {
 
             elseif ( strpos( $type, 'heading_' ) !== false && isset( $types[ $type ] ) ) :
 
-                $item['type'] = 'heading';
+                $item['type']            = 'heading';
                 $item['heading_variant'] = str_replace( 'heading_', '', $type );
-                $item['title'] = str_replace( esc_html( 'Heading: ', 'pedestal' ), '', $types[ $type ] );
+                $item['title']           = str_replace( esc_html( 'Heading: ', 'pedestal' ), '', $types[ $type ] );
 
             elseif ( 'heading' === $type ) :
 
@@ -138,7 +138,7 @@ class Newsletter extends Post {
      */
     public static function get_yesterdays_newsletter_link() {
         $yesterday = strtotime( 'yesterday' );
-        $args = [
+        $args      = [
             'year'                   => date( 'Y', $yesterday ),
             'monthnum'               => date( 'n', $yesterday ),
             'day'                    => date( 'j', $yesterday ),
@@ -149,8 +149,8 @@ class Newsletter extends Post {
             'update_post_meta_cache' => false,
             'update_post_term_cache' => false,
         ];
-        $query = new \WP_Query( $args );
-        $post = static::get_posts_from_query( $query );
+        $query     = new \WP_Query( $args );
+        $post      = static::get_posts_from_query( $query );
         if ( ! empty( $post[0] ) && Types::is_post( $post[0] ) ) {
             return $post[0]->get_the_permalink();
         }

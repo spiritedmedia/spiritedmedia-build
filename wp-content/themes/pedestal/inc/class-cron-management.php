@@ -87,7 +87,7 @@ class Cron_Management {
      * @return integer           Rounded Unix time in seconds
      */
     public function round_time_up( $time = '', $interval = 60 ) {
-        $time = strtotime( $time );
+        $time  = strtotime( $time );
         $round = $interval * 60;
         return ceil( $time / $round ) * $round;
     }

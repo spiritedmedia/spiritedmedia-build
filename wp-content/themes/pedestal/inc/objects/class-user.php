@@ -145,7 +145,7 @@ class User extends Author {
 
         $img = $attachment->get_html( $size, $img_atts );
 
-        $output = '<div class="c-avatar">';
+        $output  = '<div class="c-avatar">';
         $output .= '<div class="c-avatar__img">';
         $output .= $img;
         $output .= '</div>';
@@ -270,7 +270,7 @@ class User extends Author {
      * @return string Phone number in `123-456-7890` or `(123) 456-7890` format
      */
     public function get_phone_number( $parens = false ) {
-        $number = $this->get_meta( 'phone_number' );
+        $number  = $this->get_meta( 'phone_number' );
         $replace = $parens ? '($1) $2-$3' : '$1-$2-$3';
         return preg_replace( '~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', $replace, $number );
     }
@@ -302,7 +302,7 @@ class User extends Author {
         }
 
         $name = sanitize_title( $name );
-        $url = $base . '/' . $name . '/';
+        $url  = $base . '/' . $name . '/';
         return home_url( $url );
     }
 
@@ -325,15 +325,15 @@ class User extends Author {
     }
 
     /**
-     * Get the user's stream object
+     * Get the user's Pedestal Post objects
      *
-     * Default includes articles only.
+     * By default includes articles only.
      *
      * @param  array  $args WP_Query args
-     * @return array
+     * @return array Pedestal Post objects
      */
-    public function get_stream( $args = [] ) {
-        $query = $this->get_stream_query( $args );
+    public function get_posts( $args = [] ) {
+        $query = $this->get_posts_query( $args );
         return Post::get_posts_from_query( $query );
     }
 
@@ -343,12 +343,12 @@ class User extends Author {
      * @param  array  $args  Args to modify the query
      * @return WP_Query      WP_Query object
      */
-    public function get_stream_query( $args = [] ) {
-        $defaults = [
+    public function get_posts_query( $args = [] ) {
+        $defaults      = [
             'author_name' => $this->get_user_login(),
             'post_type'   => Types::get_original_post_types(),
         ];
-        $args = wp_parse_args( $args, $defaults );
+        $args          = wp_parse_args( $args, $defaults );
         $args['paged'] = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
         return new \WP_Query( $args );
     }
@@ -366,12 +366,12 @@ class User extends Author {
      */
     public function get_public_role() {
         $public_role = [
-            'name' => '',
+            'name'  => '',
             'label' => '',
         ];
-        $role = $this->get_primary_role();
+        $role        = $this->get_primary_role();
         if ( 'feat_contributor' == $role ) {
-            $public_role['name'] = 'contributor';
+            $public_role['name']  = 'contributor';
             $public_role['label'] = 'Featured Contributor';
         }
         return $public_role;
@@ -477,7 +477,7 @@ class User extends Author {
         ];
         foreach ( get_post_types() as $post_type ) {
             $option_name = 'closedpostboxes_' . $post_type;
-            $global = true;
+            $global      = true;
             update_user_option( $this->get_id(), $option_name, $collapsed_metabox_ids, $global );
         }
     }

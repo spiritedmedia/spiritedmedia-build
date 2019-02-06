@@ -27,9 +27,9 @@ class CLI_Clusters extends \WP_CLI_Command {
         $args = [
             'slug' => $slug,
         ];
-        $msg = "Added type {$term['singular']}.";
+        $msg  = "Added type {$term['singular']}.";
         if ( 0 !== $parent ) {
-            $msg = "Added type {$term['singular']} with parent {$parent}.";
+            $msg            = "Added type {$term['singular']} with parent {$parent}.";
             $args['parent'] = $parent;
         }
         $new_term = wp_insert_term( $term['singular'], $tax, $args );
@@ -51,8 +51,8 @@ class CLI_Clusters extends \WP_CLI_Command {
     private function _set_locality_type( $post_id, $locality_type ) {
         wp_set_object_terms( $post_id, $locality_type, 'pedestal_locality_type' );
         $term_obj = get_term_by( 'slug', $locality_type, 'pedestal_locality_type' );
-         // Although `term_id` is a numeric string, FM also stores the term
-         // id as a numeric string
+        // Although `term_id` is a numeric string, FM also stores the term
+        // id as a numeric string
         $term_id = $term_obj->term_id;
         update_post_meta( $post_id, 'locality_type', $term_id );
     }
@@ -66,9 +66,9 @@ class CLI_Clusters extends \WP_CLI_Command {
         global $wpdb;
 
         WP_CLI::line( 'Loading default clusters and merging with site-specific clusters...' );
-        $defaults = json_decode( file_get_contents( get_template_directory() . '/clusters-default.json' ), true );
+        $defaults      = json_decode( file_get_contents( get_template_directory() . '/clusters-default.json' ), true );
         $site_clusters = json_decode( file_get_contents( get_stylesheet_directory() . '/clusters.json' ), true );
-        $data = Utils::array_merge_recursive( $defaults, $site_clusters );
+        $data          = Utils::array_merge_recursive( $defaults, $site_clusters );
 
         // Register types for those clusters that have them
         WP_CLI::line( 'Registering Cluster Types...' );
@@ -97,12 +97,12 @@ class CLI_Clusters extends \WP_CLI_Command {
             }
         }
 
-        $count_data = 0;
+        $count_data  = 0;
         $connectable = [];
-        $data_len = count( $data );
+        $data_len    = count( $data );
         foreach ( $data as $k => $v ) :
 
-            $post_type = 'pedestal_' . $k;
+            $post_type   = 'pedestal_' . $k;
             $count_items = 0;
             WP_CLI::line( "Creating {$post_type} posts..." );
             foreach ( $v['items'] as $item_slug => $item ) :
@@ -190,8 +190,8 @@ class CLI_Clusters extends \WP_CLI_Command {
         WP_CLI::line( 'Creating connections between localities and other clusters...' );
         foreach ( $connectable as $item ) :
 
-            $post = Post::get( $item['id'] );
-            $post_type = $post->get_type();
+            $post       = Post::get( $item['id'] );
+            $post_type  = $post->get_type();
             $post_title = $post->get_title();
 
             foreach ( $item['connections'] as $connection ) :
@@ -219,7 +219,7 @@ class CLI_Clusters extends \WP_CLI_Command {
                         break;
                 }
 
-                $from = $from . '_to_localities';
+                $from   = $from . '_to_localities';
                 $to_obj = new \WP_Query( [
                     'name'           => $connection['to'],
                     'post_type'      => 'pedestal_locality',
@@ -252,7 +252,7 @@ class CLI_Clusters extends \WP_CLI_Command {
     public function flip_p2p_direction( $args, $assoc_args ) {
         WP_CLI::confirm( 'Do you want to update the P2P direction IDs in the database?' );
 
-        $count_rows = 0;
+        $count_rows          = 0;
         $stories_to_entities = $wpdb->get_results( "
             SELECT *
             FROM `wp_p2p`
@@ -260,7 +260,7 @@ class CLI_Clusters extends \WP_CLI_Command {
             ORDER BY `p2p_id` ASC
         " );
         foreach ( $stories_to_entities as $row ) {
-            $wpdb_update_data = [
+            $wpdb_update_data  = [
                 'p2p_from' => $row->p2p_to,
                 'p2p_to'   => $row->p2p_from,
             ];

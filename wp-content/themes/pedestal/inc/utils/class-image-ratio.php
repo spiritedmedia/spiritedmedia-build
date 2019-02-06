@@ -39,7 +39,7 @@ class Image_Ratio {
         if ( $new_size > $img_h ) {
             // If the calculated height is bigger than actual size let's keep
             // current height and calculate new width
-            $inverse = true;
+            $inverse  = true;
             $new_size = round( ( $this->ratio[0] * $img_h ) / $this->ratio[1] );
         }
 
@@ -59,7 +59,7 @@ class Image_Ratio {
             $old_dimensions = [ $old_dimensions, null ];
         }
         list( $old_width, $old_height ) = $old_dimensions;
-        $aspect_ratio = $this->ratio[0] / $this->ratio[1];
+        $aspect_ratio                   = $this->ratio[0] / $this->ratio[1];
         if ( $aspect_ratio < 1 ) {
             return false;
         }
@@ -68,7 +68,7 @@ class Image_Ratio {
             if ( $old_height ) {
                 return false;
             }
-            $width = $old_width;
+            $width  = $old_width;
             $height = $old_width / $aspect_ratio;
         }
         if ( $old_height && is_numeric( $old_height ) ) {
@@ -76,7 +76,7 @@ class Image_Ratio {
                 return false;
             }
             $height = $old_height;
-            $width = $old_height * $aspect_ratio;
+            $width  = $old_height * $aspect_ratio;
         }
 
         $round_dimensions = function( $dimension ) {

@@ -65,7 +65,7 @@ class Featured_Posts {
         }
 
         $fm_featured = new \Fieldmanager_Group( esc_html__( 'Featured Posts', 'pedestal' ), [
-            'name' => $this->option_key,
+            'name'     => $this->option_key,
             'children' => [
                 'feat-1' => $this->get_child_fields( 'Featured 1', 'feat-1' ),
                 'feat-2' => $this->get_child_fields( 'Featured 2', 'feat-2' ),
@@ -108,7 +108,7 @@ class Featured_Posts {
             die();
         }
 
-        $post_id = absint( $_POST['post_id'] );
+        $post_id  = absint( $_POST['post_id'] );
         $ped_post = Post::get( $post_id );
         if ( ! Types::is_post( $ped_post ) ) {
             wp_send_json_error( null, 500 );
@@ -127,9 +127,9 @@ class Featured_Posts {
      */
     private function get_child_fields( $label = '', $data_key = '' ) {
         $placeholder = '';
-        $data = get_option( $this->option_key );
+        $data        = get_option( $this->option_key );
         if ( is_array( $data ) && ! empty( $data[ $data_key ]['post'] ) ) {
-            $post_id = $data[ $data_key ]['post'];
+            $post_id  = $data[ $data_key ]['post'];
             $ped_post = Post::get( $post_id );
             if ( Types::is_post( $ped_post ) ) {
                 $placeholder = $ped_post->get_homepage_description();
@@ -143,7 +143,7 @@ class Featured_Posts {
             'collapsible' => true,
             'collapsed'   => true,
             'children'    => [
-                'post' => new \Fieldmanager_Autocomplete( 'Post Selection', [
+                'post'        => new \Fieldmanager_Autocomplete( 'Post Selection', [
                     'name'           => 'post',
                     'description'    => 'Select a Post (anything except Events)',
                     'show_edit_link' => true,
@@ -155,7 +155,7 @@ class Featured_Posts {
                         ],
                     ] ),
                 ] ),
-                'post_title' => new \Fieldmanager_Textfield( esc_html__( 'Title Override', 'pedestal' ), [
+                'post_title'  => new \Fieldmanager_Textfield( esc_html__( 'Title Override', 'pedestal' ), [
                     'name'        => 'post_title',
                     'description' => 'Customize the display title.',
                 ] ),
@@ -179,15 +179,15 @@ class Featured_Posts {
      */
     public function get_featured_data() {
         $output = [];
-        $data = get_option( $this->option_key );
+        $data   = get_option( $this->option_key );
         if ( ! empty( $data ) ) {
             // Keep track of the index so we know what position this featured post
             // should go to
             $index = 0;
             foreach ( $data as $item ) {
                 if ( isset( $item['post'] ) && $item['post'] ) {
-                    $key = $item['post'];
-                    $item['index'] = $index;
+                    $key            = $item['post'];
+                    $item['index']  = $index;
                     $output[ $key ] = $item;
                 }
                 $index++;
@@ -216,24 +216,24 @@ class Featured_Posts {
             $num = 3;
         }
         // Get most recent original content
-        $args = [
+        $args     = [
             'post__not_in'   => Frontend::get_post_ids_excluded_from_home_stream(),
             'post_type'      => Types::get_original_post_types(),
             'post_status'    => 'publish',
             'posts_per_page' => $num,
             'fields'         => 'ids',
         ];
-        $posts = new \WP_Query( $args );
+        $posts    = new \WP_Query( $args );
         $post_ids = $posts->posts;
 
         // Weave in featured posts
         // If the 2nd featured spot is manually overriden then we should reflect
         // that positioning here
-        $featured_data = $this->get_featured_data();
+        $featured_data     = $this->get_featured_data();
         $featured_post_ids = [];
         foreach ( $featured_data as $data ) {
             if ( ! empty( $data['post'] ) && is_int( $data['post'] ) ) {
-                $index = absint( $data['index'] );
+                $index       = absint( $data['index'] );
                 $new_post_id = $data['post'];
 
                 // Prevent duplicate post IDs
@@ -255,11 +255,11 @@ class Featured_Posts {
      * @return array Post data
      */
     protected function get_posts() {
-        $args = [
-            'post_type' => $this->post_types,
+        $args  = [
+            'post_type'   => $this->post_types,
             'post_status' => 'publish',
-            'post__in' => $this->get_featured_post_ids(),
-            'orderby' => 'post__in',
+            'post__in'    => $this->get_featured_post_ids(),
+            'orderby'     => 'post__in',
         ];
         $posts = new \WP_Query( $args );
         if ( empty( $posts->posts ) ) {
@@ -274,10 +274,10 @@ class Featured_Posts {
      * @return array  Set of HTML strings for each of the featured posts
      */
     public function get_the_featured_posts() {
-        $posts = $this->get_posts();
+        $posts         = $this->get_posts();
         $featured_data = $this->get_featured_data();
-        $stream = new Stream;
-        $items = [];
+        $stream        = new Stream;
+        $items         = [];
 
         foreach ( $posts as $index => $post ) :
             if ( empty( $post ) ) {
@@ -303,31 +303,31 @@ class Featured_Posts {
                     '(min-width: 1025px) 308px',
                     '44vw',
                 ],
-                'featured_image_srcset' => [
+                'featured_image_srcset'    => [
                     'ratio'  => 16 / 9,
                     'widths' => [ 308, 320, 480, 640, 800, 1024 ],
                 ],
-                'thumbnail_image'       => '',
-                'thumbnail_image_sizes' => [],
-                'overline'              => '',
-                'overline_url'          => '',
-                'title'                 => $ped_post->get_the_title(),
-                'permalink'             => $ped_post->get_the_permalink(),
-                'date_time'             => '',
-                'machine_time'          => '',
-                'description'           => $ped_post->get_homepage_description(),
-                'show_meta_info'        => true,
-                'author_names'          => '',
-                'author_image'          => '',
-                'author_link'           => '',
-                'source_name'           => '',
-                'source_image'          => '',
-                'source_link'           => '',
+                'thumbnail_image'          => '',
+                'thumbnail_image_sizes'    => [],
+                'overline'                 => '',
+                'overline_url'             => '',
+                'title'                    => $ped_post->get_the_title(),
+                'permalink'                => $ped_post->get_the_permalink(),
+                'date_time'                => '',
+                'machine_time'             => '',
+                'description'              => $ped_post->get_homepage_description(),
+                'show_meta_info'           => true,
+                'author_names'             => '',
+                'author_image'             => '',
+                'author_link'              => '',
+                'source_name'              => '',
+                'source_image'             => '',
+                'source_link'              => '',
             ];
 
             if ( 1 == $index ) {
                 $default_context['featured_image_src_width'] = 942;
-                $default_context['featured_image_sizes'] = [
+                $default_context['featured_image_sizes']     = [
                     '(max-width: 584px) 100vw',
                     '(min-width: 1025px) 640px',
                     '92vw',
@@ -355,7 +355,7 @@ class Featured_Posts {
             do_action( 'pedestal_before_featured_item_' . $index, $post );
             echo $stream->get_the_stream_item( $context );
             do_action( 'pedestal_after_featured_item_' . $index, $post );
-            $html = ob_get_clean();
+            $html    = ob_get_clean();
             $items[] = compact( 'context', 'html' );
         endforeach;
         return $items;

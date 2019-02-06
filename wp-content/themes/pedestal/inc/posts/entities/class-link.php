@@ -13,12 +13,12 @@ class Link extends Entity {
      */
     public function set_data_atts() {
         parent::set_data_atts();
-        $atts = parent::get_data_atts();
+        $atts   = parent::get_data_atts();
         $source = $this->get_source();
         if ( ! $source ) {
             return;
         }
-        $new_atts = [
+        $new_atts              = [
             'source-name' => $source->get_name(),
         ];
         $this->data_attributes = array_merge( $atts, $new_atts );

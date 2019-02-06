@@ -29,57 +29,57 @@ class Shortcode_Manager {
     private $shortcake_bakery_tags = [];
 
     private $shortcodes = [
-        'brand-heading'      => [
-            'inner_content'  => [
-                'label'      => 'Content',
+        'brand-heading'     => [
+            'inner_content' => [
+                'label' => 'Content',
             ],
-            'label'          => 'Brand Heading',
-            'description'    => 'A section heading featuring the mini site logo next to some text.',
-            'listItemImage'  => 'dashicons-list-view',
+            'label'         => 'Brand Heading',
+            'description'   => 'A section heading featuring the mini site logo next to some text.',
+            'listItemImage' => 'dashicons-list-view',
         ],
-        'checklist'          => [],
-        'cta-button'         => [
-            'attrs'          => [
-                'label'      => 'URL',
-                'attr'       => 'url',
-                'type'       => 'url',
+        'checklist'         => [],
+        'cta-button'        => [
+            'attrs'         => [
+                'label' => 'URL',
+                'attr'  => 'url',
+                'type'  => 'url',
             ],
-            'inner_content'  => [
-                'label'      => 'Button Text',
+            'inner_content' => [
+                'label' => 'Button Text',
             ],
-            'label'          => 'Call to Action Button',
-            'listItemImage'  => 'dashicons-lightbulb',
+            'label'         => 'Call to Action Button',
+            'listItemImage' => 'dashicons-lightbulb',
         ],
-        'donate-form'        => [
-            'label'          => 'Donation Form',
-            'listItemImage'  => 'dashicons-money',
-            'attrs'          => [
-                'label'      => 'Submit Button Text',
-                'attr'       => 'submit_text',
-                'type'       => 'text',
-            ],
-        ],
-        'email-signup-form'  => [],
-        'embed'              => [
-            'label'          => 'Embed',
-            'listItemImage'  => 'dashicons-twitter',
-            'attrs'          => [
-                'label'      => 'Embed ID',
-                'attr'       => 'id',
-                'type'       => 'text',
+        'donate-form'       => [
+            'label'         => 'Donation Form',
+            'listItemImage' => 'dashicons-money',
+            'attrs'         => [
+                'label' => 'Submit Button Text',
+                'attr'  => 'submit_text',
+                'type'  => 'text',
             ],
         ],
-        'event'              => [
-            'label'          => 'Event',
-            'listItemImage'  => 'dashicons-calendar-alt',
-            'attrs'          => [
-                'label'      => 'Event ID',
-                'attr'       => 'id',
-                'type'       => 'text',
+        'email-signup-form' => [],
+        'embed'             => [
+            'label'         => 'Embed',
+            'listItemImage' => 'dashicons-twitter',
+            'attrs'         => [
+                'label' => 'Embed ID',
+                'attr'  => 'id',
+                'type'  => 'text',
             ],
         ],
-        'user-grid'          => [],
-        'search-form'        => [],
+        'event'             => [
+            'label'         => 'Event',
+            'listItemImage' => 'dashicons-calendar-alt',
+            'attrs'         => [
+                'label' => 'Event ID',
+                'attr'  => 'id',
+                'type'  => 'text',
+            ],
+        ],
+        'user-grid'         => [],
+        'search-form'       => [],
     ];
 
     public static function get_instance() {
@@ -158,140 +158,140 @@ class Shortcode_Manager {
 
     public function action_init_register_tablepress_shortcode_ui() {
         $ui_arguments = [
-            'label'          => esc_html__( 'Table', 'pedestal' ),
-            'listItemImage'  => 'dashicons-media-spreadsheet',
-            'attrs'          => [
+            'label'         => esc_html__( 'Table', 'pedestal' ),
+            'listItemImage' => 'dashicons-media-spreadsheet',
+            'attrs'         => [
                 [
-                    'label'        => esc_html__( 'ID', 'pedestal' ),
-                    'attr'         => 'id',
-                    'type'         => 'number',
-                    'description'  => esc_html__( 'Table ID. Required.', 'pedestal' ),
+                    'label'       => esc_html__( 'ID', 'pedestal' ),
+                    'attr'        => 'id',
+                    'type'        => 'number',
+                    'description' => esc_html__( 'Table ID. Required.', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Responsive Mode', 'pedestal' ),
-                    'attr'         => 'responsive',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'Responsive Mode', 'pedestal' ),
+                    'attr'        => 'responsive',
+                    'type'        => 'select',
+                    'options'     => [
                         'scroll'   => esc_html__( 'Scroll', 'pedestal' ),
                         'collapse' => esc_html__( 'Collapse', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Select the responsive mode. In most cases Scroll mode will suffice.', 'pedestal' ),
+                    'description' => esc_html__( 'Select the responsive mode. In most cases Scroll mode will suffice.', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Column Widths', 'pedestal' ),
-                    'attr'         => 'column_widths',
-                    'type'         => 'text',
-                    'description'  => esc_html__( 'String with column widths, separated by the |-symbol (pipe). E.G. "40px|50px|30px|40px" or "20%|60%|20%"', 'pedestal' ),
+                    'label'       => esc_html__( 'Column Widths', 'pedestal' ),
+                    'attr'        => 'column_widths',
+                    'type'        => 'text',
+                    'description' => esc_html__( 'String with column widths, separated by the |-symbol (pipe). E.G. "40px|50px|30px|40px" or "20%|60%|20%"', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Alternating Row Colors', 'pedestal' ),
-                    'attr'         => 'alternating_row_colors',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'Alternating Row Colors', 'pedestal' ),
+                    'attr'        => 'alternating_row_colors',
+                    'type'        => 'select',
+                    'options'     => [
                         'empty' => '',
                         'true'  => esc_html__( 'True', 'pedestal' ),
                         'false' => esc_html__( 'False', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Whether the table will get alternating row colors (“zebra striping”)', 'pedestal' ),
+                    'description' => esc_html__( 'Whether the table will get alternating row colors (“zebra striping”)', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Row Hover Effect', 'pedestal' ),
-                    'attr'         => 'row_hover',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'Row Hover Effect', 'pedestal' ),
+                    'attr'        => 'row_hover',
+                    'type'        => 'select',
+                    'options'     => [
                         'empty' => '',
                         'true'  => esc_html__( 'True', 'pedestal' ),
                         'false' => esc_html__( 'False', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Whether table rows will be highlighted with a different background color if the mouse hovers over them', 'pedestal' ),
+                    'description' => esc_html__( 'Whether table rows will be highlighted with a different background color if the mouse hovers over them', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Table Header', 'pedestal' ),
-                    'attr'         => 'table_head',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'Table Header', 'pedestal' ),
+                    'attr'        => 'table_head',
+                    'type'        => 'select',
+                    'options'     => [
                         'empty' => '',
                         'true'  => esc_html__( 'True', 'pedestal' ),
                         'false' => esc_html__( 'False', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Whether the first row will be treated as a header', 'pedestal' ),
+                    'description' => esc_html__( 'Whether the first row will be treated as a header', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'First Column Header', 'pedestal' ),
-                    'attr'         => 'first_column_th',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'First Column Header', 'pedestal' ),
+                    'attr'        => 'first_column_th',
+                    'type'        => 'select',
+                    'options'     => [
                         'empty' => '',
                         'true'  => esc_html__( 'True', 'pedestal' ),
                         'false' => esc_html__( 'False', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Whether the first column will be treated as a header', 'pedestal' ),
+                    'description' => esc_html__( 'Whether the first column will be treated as a header', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Table Footer', 'pedestal' ),
-                    'attr'         => 'table_foot',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'Table Footer', 'pedestal' ),
+                    'attr'        => 'table_foot',
+                    'type'        => 'select',
+                    'options'     => [
                         'empty' => '',
                         'true'  => esc_html__( 'True', 'pedestal' ),
                         'false' => esc_html__( 'False', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Whether the last row will be treated as a footer', 'pedestal' ),
+                    'description' => esc_html__( 'Whether the last row will be treated as a footer', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Display Table Name', 'pedestal' ),
-                    'attr'         => 'print_name',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'Display Table Name', 'pedestal' ),
+                    'attr'        => 'print_name',
+                    'type'        => 'select',
+                    'options'     => [
                         'empty' => '',
                         'true'  => esc_html__( 'True', 'pedestal' ),
                         'false' => esc_html__( 'False', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Whether the name of the table shall be printed above/below the table', 'pedestal' ),
+                    'description' => esc_html__( 'Whether the name of the table shall be printed above/below the table', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Table Name Position', 'pedestal' ),
-                    'attr'         => 'print_name_position',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'Table Name Position', 'pedestal' ),
+                    'attr'        => 'print_name_position',
+                    'type'        => 'select',
+                    'options'     => [
                         'empty' => '',
-                        'above'  => esc_html__( 'Above', 'pedestal' ),
+                        'above' => esc_html__( 'Above', 'pedestal' ),
                         'below' => esc_html__( 'Below', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Position for displaying table name, if it is set to display', 'pedestal' ),
+                    'description' => esc_html__( 'Position for displaying table name, if it is set to display', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Display Table Description', 'pedestal' ),
-                    'attr'         => 'print_description',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'Display Table Description', 'pedestal' ),
+                    'attr'        => 'print_description',
+                    'type'        => 'select',
+                    'options'     => [
                         'empty' => '',
                         'true'  => esc_html__( 'True', 'pedestal' ),
                         'false' => esc_html__( 'False', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Whether the description of the table shall be printed above/below the table', 'pedestal' ),
+                    'description' => esc_html__( 'Whether the description of the table shall be printed above/below the table', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Table Description Position', 'pedestal' ),
-                    'attr'         => 'print_description_position',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'Table Description Position', 'pedestal' ),
+                    'attr'        => 'print_description_position',
+                    'type'        => 'select',
+                    'options'     => [
                         'empty' => '',
-                        'above'  => esc_html__( 'Above', 'pedestal' ),
+                        'above' => esc_html__( 'Above', 'pedestal' ),
                         'below' => esc_html__( 'Below', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Position for displaying table description, if it is set to display', 'pedestal' ),
+                    'description' => esc_html__( 'Position for displaying table description, if it is set to display', 'pedestal' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Use DataTables JS Library', 'pedestal' ),
-                    'attr'         => 'use_datatables',
-                    'type'         => 'select',
-                    'options'      => [
+                    'label'       => esc_html__( 'Use DataTables JS Library', 'pedestal' ),
+                    'attr'        => 'use_datatables',
+                    'type'        => 'select',
+                    'options'     => [
                         'empty' => '',
                         'true'  => esc_html__( 'True', 'pedestal' ),
                         'false' => esc_html__( 'False', 'pedestal' ),
                     ],
-                    'description'  => esc_html__( 'Whether the DataTables JavaScript library will be used with this table (will only work if the first row is treated as a header, either by the setting on the table’s “Edit” screen or by setting manually here)', 'pedestal' ),
+                    'description' => esc_html__( 'Whether the DataTables JavaScript library will be used with this table (will only work if the first row is treated as a header, either by the setting on the table’s “Edit” screen or by setting manually here)', 'pedestal' ),
                 ],
             ],
         ];
@@ -303,13 +303,13 @@ class Shortcode_Manager {
      */
     public function action_init_register_documentcloud_shortcode_ui() {
         $ui_arguments = [
-            'label'          => 'DocumentCloud',
-            'listItemImage'  => 'dashicons-media-document',
-            'attrs'          => [
+            'label'         => 'DocumentCloud',
+            'listItemImage' => 'dashicons-media-document',
+            'attrs'         => [
                 [
-                    'label'      => 'URL to document, page, or note (Required)',
-                    'attr'       => 'url',
-                    'type'       => 'text',
+                    'label' => 'URL to document, page, or note (Required)',
+                    'attr'  => 'url',
+                    'type'  => 'text',
                 ],
             ],
         ];
@@ -320,7 +320,7 @@ class Shortcode_Manager {
      * Remove unwanted or overridden Bakery shortcodes
      */
     public function filter_shortcake_bakery_shortcode_classes( $classes ) {
-        $remove = [
+        $remove   = [
             'Shortcake_Bakery\Shortcodes\ABC_News',
             'Shortcake_Bakery\Shortcodes\Guardian',
             'Shortcake_Bakery\Shortcodes\Livestream',
@@ -338,8 +338,8 @@ class Shortcode_Manager {
             'Shortcake_Bakery\Shortcodes\GoogleDocs',
             'Shortcake_Bakery\Shortcodes\Instagram',
         ];
-        $classes = array_diff( $classes, $remove, $override );
-        $new = [
+        $classes  = array_diff( $classes, $remove, $override );
+        $new      = [
             // Order matters here.
             // Iframe class should be last as it is more generic then other embed code.
             '\Pedestal\Shortcodes\Pullquote',
@@ -350,7 +350,7 @@ class Shortcode_Manager {
             '\Pedestal\Shortcodes\Instagram',
             '\Pedestal\Shortcodes\Iframe',
         ];
-        $classes = array_merge( $classes, $new );
+        $classes  = array_merge( $classes, $new );
 
         foreach ( $classes as $class ) {
             $this->shortcake_bakery_tags[ $class::get_shortcode_tag() ] = '';
@@ -381,7 +381,7 @@ class Shortcode_Manager {
     public function filter_shortcake_bakery_shortcode_callback( $output, $shortcode_tag, $attrs, $content ) {
 
         $default_classes = 'pedestal-shortcode shortcake-bakery-shortcode shortcake-bakery-shortcode-' . $shortcode_tag;
-        $embed_type = 'embed';
+        $embed_type      = 'embed';
 
         switch ( $shortcode_tag ) {
             case 'instagram':
@@ -398,7 +398,7 @@ class Shortcode_Manager {
                 }
                 $embed_url = YouTube::get_embeddable_url( $attrs['url'] );
                 $embed_url = apply_filters( 'shortcake_bakery_youtube_embed_url', $embed_url, $attrs );
-                $output = sprintf( '<iframe class="%s shortcake-bakery-responsive" width="640" height="360" src="%s" frameborder="0"></iframe>', $default_classes, $embed_url );
+                $output    = sprintf( '<iframe class="%s shortcake-bakery-responsive" width="640" height="360" src="%s" frameborder="0"></iframe>', $default_classes, $embed_url );
                 break;
 
             case 'soundcite':
@@ -438,9 +438,9 @@ class Shortcode_Manager {
         if ( 'instagram' != $shortcode_tag ) {
             return $output;
         }
-        $output = str_replace( '<script async defer src="https://www.instagram.com/embed.js"></script>', '', $output );
-        $deps = [];
-        $ver = null;
+        $output    = str_replace( '<script async defer src="https://www.instagram.com/embed.js"></script>', '', $output );
+        $deps      = [];
+        $ver       = null;
         $in_footer = true;
         wp_enqueue_script( 'instagram-embed', 'https://www.instagram.com/embed.js', $deps, $ver, $in_footer );
         return $output;
@@ -451,16 +451,16 @@ class Shortcode_Manager {
      */
     public function filter_img_shortcode_output_img_tag( $html, $attrs ) {
         $attachment = $attrs['attachment'];
-        $size = $attrs['size'];
-        $src = $attrs['src'];
+        $size       = $attrs['size'];
+        $src        = $attrs['src'];
 
         $img_classes = 'c-figure__content';
-        $img_atts = [
+        $img_atts    = [
             'class' => $img_classes,
         ];
         if ( isset( $attrs['ignore_srcset'] ) && 'true' === $attrs['ignore_srcset'] ) {
             $img_atts['srcset'] = '';
-            $img_atts['sizes'] = '';
+            $img_atts['sizes']  = '';
         }
         if ( ! empty( $attachment ) && ! empty( $size ) ) {
             $obj = Attachment::get( (int) $attachment );
@@ -493,7 +493,7 @@ class Shortcode_Manager {
             return $shortcode_attrs;
         }
 
-        $credit = $obj->get_credit();
+        $credit      = $obj->get_credit();
         $credit_link = $obj->get_credit_link();
         if ( $credit ) {
             $shortcode_attrs = wp_parse_args( [
@@ -542,9 +542,9 @@ class Shortcode_Manager {
             'description' => esc_html__( 'Must be a valid URL', 'pedestal' ),
         ];
         $shortcode_ui_args['attrs'][] = [
-            'label'       => esc_html__( 'Ignore srcset', 'pedestal' ),
-            'attr'        => 'ignore_srcset',
-            'type'        => 'checkbox',
+            'label' => esc_html__( 'Ignore srcset', 'pedestal' ),
+            'attr'  => 'ignore_srcset',
+            'type'  => 'checkbox',
         ];
         return $shortcode_ui_args;
     }
@@ -661,7 +661,7 @@ class Shortcode_Manager {
             return '';
         }
 
-        $context = $ped_event->get_context( Timber::get_context() );
+        $context         = $ped_event->get_context( Timber::get_context() );
         $context['slot'] = 'shortcode';
 
         $html = '<div class="pedestal-shortcode--event pedestal-shortcode">';
@@ -701,10 +701,10 @@ class Shortcode_Manager {
         }
 
         $context = [
-            'item'               => $embed,
-            'datetime_format'    => PEDESTAL_DATETIME_FORMAT,
+            'item'            => $embed,
+            'datetime_format' => PEDESTAL_DATETIME_FORMAT,
         ];
-        $files = [
+        $files   = [
             'partials/shortcode/embed-' . $embed_type . '.twig',
             'partials/shortcode/embed.twig',
         ];
@@ -718,19 +718,19 @@ class Shortcode_Manager {
      * Do the donation form
      */
     public function donate_form( $attrs, $content ) {
-        $attrs = wp_parse_args( $attrs, [
+        $attrs       = wp_parse_args( $attrs, [
             'submit_text' => 'Support ' . PEDESTAL_BLOG_NAME,
         ] );
         $stripe_logo = get_template_directory() . '/assets/images/membership/stripe-logo-white.svg';
         $stripe_logo = file_get_contents( $stripe_logo );
-        $context = [
+        $context     = [
             'nrh_endpoint_domain' => 'https://checkout.fundjournalism.org',
             'nrh_property'        => PEDESTAL_NRH_PROPERTY,
             'campaign'            => $_GET['campaign'] ?? '',
             'submit_text'         => $attrs['submit_text'],
             'stripe_logo'         => $stripe_logo,
         ];
-        $context = apply_filters( 'pedestal_donate_form_context', $context );
+        $context     = apply_filters( 'pedestal_donate_form_context', $context );
 
         ob_start();
         $out = Timber::render( 'partials/shortcode/donate-form.twig', $context );
@@ -750,10 +750,10 @@ class Shortcode_Manager {
             'ga_label'          => 'signup-form',
         ];
         if ( ! empty( $attrs['ga_category'] ) ) {
-            $args['ga_category']   = $attrs['ga_category'];
+            $args['ga_category'] = $attrs['ga_category'];
         }
         if ( ! empty( $attrs['ga_label'] ) ) {
-            $args['ga_label']   = $attrs['ga_label'];
+            $args['ga_label'] = $attrs['ga_label'];
         }
         $args['signup_source'] = 'Shortcode Signup Form';
         if ( ! empty( $attrs['signup_source'] ) ) {
@@ -771,7 +771,7 @@ class Shortcode_Manager {
      * - `url` : Specify the URL to link the button to
      */
     public function cta_button( $attrs, $content = '' ) {
-        $context = wp_parse_args( $attrs, [
+        $context            = wp_parse_args( $attrs, [
             'url' => '',
         ] );
         $context['content'] = $content;
@@ -805,7 +805,7 @@ class Shortcode_Manager {
      * - `el` : Specify the element of the heading
      */
     public function brand_heading( $attrs, $content = '' ) {
-        $context = wp_parse_args( $attrs, [
+        $context            = wp_parse_args( $attrs, [
             'el' => 'h2',
         ] );
         $context['content'] = $content;

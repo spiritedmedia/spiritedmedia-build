@@ -98,12 +98,12 @@ class Entity_Types {
             switch ( $post_type ) {
 
                 case 'pedestal_article':
-                    $singular = esc_html__( 'Article', 'pedestal' );
-                    $plural = esc_html__( 'Articles', 'pedestal' );
-                    $class = 'Posts\\Entities\\Originals\\Article';
-                    $args['menu_position'] = 7;
-                    $args['menu_icon'] = 'dashicons-welcome-write-blog';
-                    $args['supports'] = [
+                    $singular                    = esc_html__( 'Article', 'pedestal' );
+                    $plural                      = esc_html__( 'Articles', 'pedestal' );
+                    $class                       = 'Posts\\Entities\\Originals\\Article';
+                    $args['menu_position']       = 7;
+                    $args['menu_icon']           = 'dashicons-welcome-write-blog';
+                    $args['supports']            = [
                         'title',
                         'thumbnail',
                         'editor',
@@ -112,53 +112,53 @@ class Entity_Types {
                         'slots',
                         'breaking',
                     ];
-                    $args['rewrite'] = [
+                    $args['rewrite']             = [
                         'slug' => 'articles',
                     ];
-                    $args['capability_type'] = 'article';
+                    $args['capability_type']     = 'article';
                     $this->original_post_types[] = $post_type;
                     break;
 
                 case 'pedestal_link':
-                    $singular = esc_html__( 'Link', 'pedestal' );
-                    $plural = esc_html__( 'Links', 'pedestal' );
-                    $class = 'Posts\\Entities\\Link';
-                    $args['menu_position'] = 8;
-                    $args['menu_icon'] = 'dashicons-admin-links';
+                    $singular                = esc_html__( 'Link', 'pedestal' );
+                    $plural                  = esc_html__( 'Links', 'pedestal' );
+                    $class                   = 'Posts\\Entities\\Link';
+                    $args['menu_position']   = 8;
+                    $args['menu_icon']       = 'dashicons-admin-links';
                     $args['capability_type'] = [ 'link', 'links' ];
-                    $args['supports'] = [
+                    $args['supports']        = [
                         'title',
                         'thumbnail',
                     ];
-                    $args['rewrite'] = [
+                    $args['rewrite']         = [
                         'slug' => 'links',
                     ];
                     break;
 
                 case 'pedestal_embed':
-                    $singular = esc_html__( 'Embed', 'pedestal' );
-                    $plural = esc_html__( 'Embeds', 'pedestal' );
-                    $class = 'Posts\\Entities\\Embed';
-                    $args['menu_position'] = 9;
-                    $args['menu_icon'] = 'dashicons-twitter';
+                    $singular                = esc_html__( 'Embed', 'pedestal' );
+                    $plural                  = esc_html__( 'Embeds', 'pedestal' );
+                    $class                   = 'Posts\\Entities\\Embed';
+                    $args['menu_position']   = 9;
+                    $args['menu_icon']       = 'dashicons-twitter';
                     $args['capability_type'] = [ 'embed', 'embeds' ];
-                    $args['supports'] = [
+                    $args['supports']        = [
                         'title',
                         'excerpt',
                         'slots',
                     ];
-                    $args['rewrite'] = [
+                    $args['rewrite']         = [
                         'slug' => 'embeds',
                     ];
                     break;
 
                 case 'pedestal_factcheck':
-                    $singular = esc_html__( 'Factcheck', 'pedestal' );
-                    $plural = esc_html__( 'Factchecks', 'pedestal' );
-                    $class = 'Posts\\Entities\\Originals\\Factcheck';
-                    $args['menu_position'] = 10;
-                    $args['menu_icon'] = 'dashicons-forms';
-                    $args['supports'] = [
+                    $singular                    = esc_html__( 'Factcheck', 'pedestal' );
+                    $plural                      = esc_html__( 'Factchecks', 'pedestal' );
+                    $class                       = 'Posts\\Entities\\Originals\\Factcheck';
+                    $args['menu_position']       = 10;
+                    $args['menu_icon']           = 'dashicons-forms';
+                    $args['supports']            = [
                         'title',
                         'excerpt',
                         'thumbnail',
@@ -166,44 +166,44 @@ class Entity_Types {
                         'slots',
                         'breaking',
                     ];
-                    $args['rewrite'] = [
+                    $args['rewrite']             = [
                         'slug' => 'factchecks',
                     ];
                     $this->original_post_types[] = $post_type;
                     break;
 
                 case 'pedestal_event':
-                    $singular = esc_html__( 'Event', 'pedestal' );
-                    $plural = esc_html__( 'Events', 'pedestal' );
-                    $class = 'Posts\\Entities\\Event';
-                    $args['menu_position'] = 11;
-                    $args['menu_icon'] = 'dashicons-calendar-alt';
-                    $args['supports'] = [
+                    $singular                = esc_html__( 'Event', 'pedestal' );
+                    $plural                  = esc_html__( 'Events', 'pedestal' );
+                    $class                   = 'Posts\\Entities\\Event';
+                    $args['menu_position']   = 11;
+                    $args['menu_icon']       = 'dashicons-calendar-alt';
+                    $args['supports']        = [
                         'title',
                         'thumbnail',
                         'author',
                         'slots',
                     ];
-                    $args['rewrite'] = [
+                    $args['rewrite']         = [
                         'slug' => 'events',
                     ];
                     $args['capability_type'] = 'event';
                     break;
 
                 case 'pedestal_whosnext':
-                    $singular = esc_html__( 'Who’s Next', 'pedestal' );
-                    $plural = esc_html__( 'Who’s Next', 'pedestal' );
-                    $class = 'Posts\\Entities\\Originals\\Whos_Next';
-                    $args['menu_position'] = 13;
-                    $args['menu_icon'] = 'dashicons-universal-access-alt';
-                    $args['supports'] = [
+                    $singular                    = esc_html__( 'Who’s Next', 'pedestal' );
+                    $plural                      = esc_html__( 'Who’s Next', 'pedestal' );
+                    $class                       = 'Posts\\Entities\\Originals\\Whos_Next';
+                    $args['menu_position']       = 13;
+                    $args['menu_icon']           = 'dashicons-universal-access-alt';
+                    $args['supports']            = [
                         'title',
                         'thumbnail',
                         'editor',
                         'excerpt',
                         'author',
                     ];
-                    $args['rewrite'] = [
+                    $args['rewrite']             = [
                         'slug' => 'whos-next',
                     ];
                     $this->original_post_types[] = $post_type;
@@ -237,13 +237,13 @@ class Entity_Types {
 
         $story = $entity->get_primary_story();
         if ( $story ) {
-            $context['overline'] = $story->get_the_title();
+            $context['overline']     = $story->get_the_title();
             $context['overline_url'] = $story->get_the_permalink();
         }
 
-        $ratio = new Image_Ratio;
-        $featured_image_size = $ratio->calc_unknown_dimension( $context['featured_image_src_width'] );
-        $featured_image_size = $featured_image_size ?: '1024-16x9';
+        $ratio                     = new Image_Ratio;
+        $featured_image_size       = $ratio->calc_unknown_dimension( $context['featured_image_src_width'] );
+        $featured_image_size       = $featured_image_size ?: '1024-16x9';
         $context['featured_image'] = $entity->get_featured_image_html( $featured_image_size, [
             'sizes'  => $context['featured_image_sizes'] ?? '',
             'srcset' => $context['featured_image_srcset'] ?? '',
@@ -317,7 +317,7 @@ class Entity_Types {
 
         // Who's Next posts must always be connected to the Who's Next story
         $whos_next_story_id = $post::get_whosnext_story()->get_id();
-        $wrong_story_id = ( ! empty( $post->get_primary_story() ) && $post->get_primary_story()->get_id() !== $whos_next_story_id );
+        $wrong_story_id     = ( ! empty( $post->get_primary_story() ) && $post->get_primary_story()->get_id() !== $whos_next_story_id );
         if ( empty( $post->get_primary_story() ) || $wrong_story_id ) {
             p2p_type( 'entities_to_stories' )->connect( $post_id, $whos_next_story_id );
         }
@@ -370,8 +370,8 @@ class Entity_Types {
      */
     private function register_entity_fields() {
         $footnotes = new \Fieldmanager_RichTextArea( [
-            'name'     => 'footnotes',
-            'label'    => false,
+            'name'        => 'footnotes',
+            'label'       => false,
             'description' => esc_html__( 'Add any additional footnotes here, such as corrections, contributors, other acknowledgements.', 'pedestal' ),
         ] );
         $footnotes->add_meta_box( esc_html__( 'Footnotes', 'pedestal' ), Types::get_original_post_types(), 'normal', 'high' );
@@ -382,16 +382,16 @@ class Entity_Types {
      */
     private function register_embed_fields() {
 
-        $services = array_values( Embed::get_embeddable_services() );
-        $services = Utils::get_byline_list( $services, [
+        $services    = array_values( Embed::get_embeddable_services() );
+        $services    = Utils::get_byline_list( $services, [
             'pretext' => '',
         ] );
         $description = sprintf( 'Only %s URLs are supported at this time. Other URLs will not save and your post will be blocked from publishing.', $services );
-        $fm = new \Fieldmanager_Textfield( [
-            'name'     => 'embed_url',
-            'label'    => false,
+        $fm          = new \Fieldmanager_Textfield( [
+            'name'        => 'embed_url',
+            'label'       => false,
             'description' => esc_html__( $description, 'pedestal' ),
-            'sanitize' => function( $url ) {
+            'sanitize'    => function( $url ) {
                 if ( empty( $url ) ) {
                     return '';
                 }
@@ -414,7 +414,7 @@ class Entity_Types {
             $daily_insta_description = esc_html__( "If you'd like this Instagram Embed to
             be featured as Instagram of the Day, set the date here. To cancel, just
             clear the contents of the date field.", 'pedestal' );
-            $daily_insta = new \Fieldmanager_Datepicker( false, [
+            $daily_insta             = new \Fieldmanager_Datepicker( false, [
                 'name'        => 'daily_insta_date',
                 'description' => $daily_insta_description,
                 'js_opts'     => [
@@ -425,7 +425,7 @@ class Entity_Types {
         }
 
         $twitter_embed_options_children = [];
-        $shortcode_args = Twitter::get_shortcode_ui_args();
+        $shortcode_args                 = Twitter::get_shortcode_ui_args();
         foreach ( $shortcode_args['attrs'] as $shortcode_attr ) {
             $shortcode_attr_name = $shortcode_attr['attr'];
 
@@ -448,18 +448,18 @@ class Entity_Types {
             ];
             foreach ( $shortcode_attr as $attr_key => $attr_value ) {
                 if ( strpos( $attr_key, 'fm_' ) === 0 ) {
-                    $class_attr_key = str_replace( 'fm_', '', $attr_key );
+                    $class_attr_key                = str_replace( 'fm_', '', $attr_key );
                     $class_atts[ $class_attr_key ] = $attr_value;
                 }
             }
 
-            $class = '\\Fieldmanager_' . $class;
+            $class          = '\\Fieldmanager_' . $class;
             $field_instance = new $class( $shortcode_attr['label'], $class_atts );
             $twitter_embed_options_children[ $shortcode_attr_name ] = $field_instance;
         }
 
         $twitter_embed_options = new \Fieldmanager_Group( false, [
-            'name' => 'embed_options',
+            'name'     => 'embed_options',
             'children' => $twitter_embed_options_children,
         ] );
         $twitter_embed_options->add_meta_box( 'Twitter Options', [ 'pedestal_embed' ], 'normal', 'high' );
@@ -472,9 +472,9 @@ class Entity_Types {
     private function register_event_fields() {
 
         $details = new \Fieldmanager_Group( false, [
-            'name'       => 'event_details',
-            'children'   => [
-                'what'                => new \Fieldmanager_RichTextArea( esc_html__( 'What', 'pedestal' ), [
+            'name'     => 'event_details',
+            'children' => [
+                'what'       => new \Fieldmanager_RichTextArea( esc_html__( 'What', 'pedestal' ), [
                     'name'            => 'what',
                     'editor_settings' => [
                         'teeny'         => true,
@@ -482,38 +482,38 @@ class Entity_Types {
                         'editor_height' => 300,
                     ],
                 ] ),
-                'all_day' => new \Fieldmanager_Checkbox( [
+                'all_day'    => new \Fieldmanager_Checkbox( [
                     'label' => 'All Day? (Times will not be displayed)',
                 ] ),
-                'start_time'     => new \Fieldmanager_Datepicker( esc_html__( 'Start Time', 'pedestal' ), [
-                    'name'       => 'start_time',
-                    'use_time'   => true,
-                    'js_opts'    => [
+                'start_time' => new \Fieldmanager_Datepicker( esc_html__( 'Start Time', 'pedestal' ), [
+                    'name'     => 'start_time',
+                    'use_time' => true,
+                    'js_opts'  => [
                         'firstDay' => 0,
                     ],
                 ] ),
-                'end_time'     => new \Fieldmanager_Datepicker( esc_html__( 'End Time', 'pedestal' ), [
-                    'name'       => 'end_time',
+                'end_time'   => new \Fieldmanager_Datepicker( esc_html__( 'End Time', 'pedestal' ), [
+                    'name'        => 'end_time',
                     'description' => 'If the end time is the same as the start time, then only the start time will be shown.',
-                    'use_time'   => true,
-                    'js_opts'    => [
+                    'use_time'    => true,
+                    'js_opts'     => [
                         'firstDay' => 0,
                     ],
                 ] ),
-                'venue_name'     => new \Fieldmanager_Textfield( esc_html__( 'Venue Name', 'pedestal' ), [
-                    'name'       => 'venue_name',
+                'venue_name' => new \Fieldmanager_Textfield( esc_html__( 'Venue Name', 'pedestal' ), [
+                    'name' => 'venue_name',
                 ] ),
-                'address'     => new \Fieldmanager_Textfield( esc_html__( 'Address', 'pedestal' ), [
-                    'name'       => 'address',
+                'address'    => new \Fieldmanager_Textfield( esc_html__( 'Address', 'pedestal' ), [
+                    'name' => 'address',
                 ] ),
-                'cost'        => new \Fieldmanager_Textfield( esc_html__( 'Cost', 'pedestal' ), [
-                    'name'       => 'cost',
+                'cost'       => new \Fieldmanager_Textfield( esc_html__( 'Cost', 'pedestal' ), [
+                    'name' => 'cost',
                 ] ),
-                'url' => new \Fieldmanager_Link( esc_html__( 'Event URL', 'pedestal' ), [
+                'url'        => new \Fieldmanager_Link( esc_html__( 'Event URL', 'pedestal' ), [
                     'description' => esc_html__( 'If URL isn\'t set, the link will not display.', 'pedestal' ),
                 ] ),
-                'text'     => new \Fieldmanager_Textfield( esc_html__( 'Event Link Text', 'pedestal' ), [
-                    'name'       => 'text',
+                'text'       => new \Fieldmanager_Textfield( esc_html__( 'Event Link Text', 'pedestal' ), [
+                    'name'          => 'text',
                     'default_value' => esc_html__( 'Find out more', 'pedestal' ),
                 ] ),
                 'cta_source' => new \Fieldmanager_Textfield( esc_html__( 'Link Source Name', 'pedestal' ), [
@@ -530,8 +530,8 @@ class Entity_Types {
     private function register_link_fields() {
 
         $fm = new \Fieldmanager_Textfield( [
-            'name'    => 'external_url',
-            'label'   => false,
+            'name'  => 'external_url',
+            'label' => false,
         ] );
         $fm->add_meta_box( esc_html__( 'External URL', 'pedestal' ), [ 'pedestal_link' ], 'normal', 'high' );
 
@@ -546,10 +546,10 @@ class Entity_Types {
             'name'           => 'factcheck_statement',
             'serialize_data' => false,
             'children'       => [
-                'type' => new \Fieldmanager_Radios( esc_html__( 'Statement Type', 'pedestal' ), [
-                    'name'              => 'type',
-                    'default_value'     => 'quote',
-                    'options'           => [
+                'type'       => new \Fieldmanager_Radios( esc_html__( 'Statement Type', 'pedestal' ), [
+                    'name'                => 'type',
+                    'default_value'       => 'quote',
+                    'options'             => [
                         'quote'   => esc_html__( 'Quote', 'pedestal' ),
                         'summary' => esc_html__( 'Summary', 'pedestal' ),
                     ],
@@ -564,11 +564,11 @@ class Entity_Types {
                     'validation_rules'    => 'required',
                     'validation_messages' => esc_html__( 'Required', 'pedestal' ),
                 ] ),
-                'text_full' => new \Fieldmanager_RichTextArea( esc_html__( 'Full Statement', 'pedestal' ), [
-                    'name'                => 'text_full',
-                    'description'         => esc_html__( 'The statement as it will appear directly above the post content, without quotation marks.', 'pedestal' ),
+                'text_full'  => new \Fieldmanager_RichTextArea( esc_html__( 'Full Statement', 'pedestal' ), [
+                    'name'        => 'text_full',
+                    'description' => esc_html__( 'The statement as it will appear directly above the post content, without quotation marks.', 'pedestal' ),
                 ] ),
-                'speaker' => new \Fieldmanager_Autocomplete( esc_html__( 'Speaker', 'pedestal' ), [
+                'speaker'    => new \Fieldmanager_Autocomplete( esc_html__( 'Speaker', 'pedestal' ), [
                     'name'                => 'speaker',
                     'description'         => esc_html__( 'Select a Person or Organization.', 'pedestal' ),
                     'required'            => true,
@@ -583,11 +583,11 @@ class Entity_Types {
                         ],
                     ] ),
                 ] ),
-                'setting' => new \Fieldmanager_TextField( esc_html__( 'Setting / Context', 'pedestal' ), [
-                    'name'                => 'setting',
-                    'description'         => esc_html__( 'Where / in what context did the speaker make the statement?', 'pedestal' ),
+                'setting'    => new \Fieldmanager_TextField( esc_html__( 'Setting / Context', 'pedestal' ), [
+                    'name'        => 'setting',
+                    'description' => esc_html__( 'Where / in what context did the speaker make the statement?', 'pedestal' ),
                 ] ),
-                'date' => new \Fieldmanager_Datepicker( esc_html__( 'Date', 'pedestal' ), [
+                'date'       => new \Fieldmanager_Datepicker( esc_html__( 'Date', 'pedestal' ), [
                     'name'    => 'date',
                     'js_opts' => [
                         'firstDay' => 0,
@@ -597,9 +597,9 @@ class Entity_Types {
         ] );
 
         $rating = new \Fieldmanager_Select( false, [
-            'name'                => 'factcheck_rating',
-            'first_empty'         => true,
-            'options'             => [
+            'name'        => 'factcheck_rating',
+            'first_empty' => true,
+            'options'     => [
                 'data' => static::$politifact_ratings,
             ],
         ] );
@@ -609,13 +609,13 @@ class Entity_Types {
             'required'            => true,
             'validation_rules'    => 'required',
             'validation_messages' => esc_html__( 'Required', 'pedestal' ),
-            'editor_settings' => [
+            'editor_settings'     => [
                 'editor_height' => 600,
             ],
         ] );
 
         $ruling = new \Fieldmanager_RichTextArea( false, [
-            'name'                => 'factcheck_ruling',
+            'name'            => 'factcheck_ruling',
             'editor_settings' => [
                 'editor_height' => 300,
             ],
@@ -626,13 +626,13 @@ class Entity_Types {
             'required'            => true,
             'validation_rules'    => 'required',
             'validation_messages' => esc_html__( 'Required', 'pedestal' ),
-            'editor_settings' => [
+            'editor_settings'     => [
                 'editor_height' => 300,
             ],
         ] );
 
         $editor = new \Fieldmanager_TextField( false, [
-            'name'                => 'factcheck_editor',
+            'name' => 'factcheck_editor',
         ] );
 
         $statement->add_meta_box( esc_html__( 'Statement', 'pedestal' ), [ 'pedestal_factcheck' ], 'normal', 'high' );
@@ -650,7 +650,7 @@ class Entity_Types {
     private function register_whosnext_fields() {
 
         $items = new \Fieldmanager_Group( esc_html__( 'Item', 'pedestal' ), [
-            'display_if'  => [
+            'display_if'     => [
                 'src'   => 'type',
                 'value' => 'list',
             ],
@@ -660,18 +660,18 @@ class Entity_Types {
             'add_more_label' => esc_html__( 'Add List Item', 'pedestal' ),
             'children'       => [
                 'description' => new \Fieldmanager_RichTextArea( esc_html__( 'Why are these People featured on this list?', 'pedestal' ), [
-                    'name'        => 'description',
-                    'label_element' => 'p',
+                    'name'            => 'description',
+                    'label_element'   => 'p',
                     'editor_settings' => [
                         'teeny'         => true,
                         'media_buttons' => false,
                         'editor_height' => 300,
                     ],
                 ] ),
-                'img' => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
+                'img'         => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
                     'label_element' => 'p',
                 ] ),
-                'people' => new \Fieldmanager_Group( esc_html__( 'Person', 'pedestal' ), [
+                'people'      => new \Fieldmanager_Group( esc_html__( 'Person', 'pedestal' ), [
                     'name'           => 'people',
                     'minimum_count'  => 1,
                     'limit'          => 6,
@@ -701,14 +701,14 @@ class Entity_Types {
         ] );
 
         $details = new \Fieldmanager_Group( false, [
-            'name'           => 'whosnext_details',
-            'children'       => [
-                'type' => new \Fieldmanager_Radios( esc_html__( 'Type', 'pedestal' ), [
-                    'options'           => [
+            'name'     => 'whosnext_details',
+            'children' => [
+                'type'  => new \Fieldmanager_Radios( esc_html__( 'Type', 'pedestal' ), [
+                    'options'             => [
                         'nomination' => esc_html__( 'Nomination', 'pedestal' ),
                         'list'       => esc_html__( 'List', 'pedestal' ),
                     ],
-                    'default_value'     => 'nomination',
+                    'default_value'       => 'nomination',
                     'required'            => true,
                     'validation_rules'    => 'required',
                     'validation_messages' => esc_html__( 'Required', 'pedestal' ),

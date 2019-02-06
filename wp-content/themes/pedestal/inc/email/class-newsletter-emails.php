@@ -99,7 +99,7 @@ class Newsletter_Emails {
      * @param  object $post WP_Post
      */
     public function handle_meta_box( $post ) {
-        $post = Post::get( (int) $post->ID );
+        $post      = Post::get( (int) $post->ID );
         $sent_date = $post->get_sent_date();
 
         $context = [
@@ -117,8 +117,8 @@ class Newsletter_Emails {
         ];
 
         if ( $sent_date ) {
-            $sent_date = get_date_from_gmt( date( 'Y-m-d H:i:s', $sent_date ), PEDESTAL_DATETIME_FORMAT );
-            $sent_confirm = sprintf( 'The newsletter email was sent on %s.',
+            $sent_date          = get_date_from_gmt( date( 'Y-m-d H:i:s', $sent_date ), PEDESTAL_DATETIME_FORMAT );
+            $sent_confirm       = sprintf( 'The newsletter email was sent on %s.',
                 $sent_date
             );
             $context['message'] = esc_html__( $sent_confirm, 'pedestal' );
@@ -137,11 +137,11 @@ class Newsletter_Emails {
         if ( 'pedestal_newsletter' !== $post_type ) {
             return;
         }
-        $newsletter = Newsletter::get( (int) $post_id );
+        $newsletter    = Newsletter::get( (int) $post_id );
         $is_test_email = false;
-        $args = [];
+        $args          = [];
         if ( ! empty( $_POST['pedestal-newsletter-send-test-email'] ) ) {
-            $is_test_email = true;
+            $is_test_email                = true;
             $args['test_email_addresses'] = Email::sanitize_test_email_addresses( $_POST['test-email-addresses'] );
         }
 
@@ -172,12 +172,12 @@ class Newsletter_Emails {
      * @return Boolean                 Did the camapign send successfully?
      */
     public function send_email( $newsletter, $args ) {
-        $newsletter_post = get_post( $newsletter->get_id() );
+        $newsletter_post   = get_post( $newsletter->get_id() );
         $parent_newsletter = $newsletter_post;
         while ( 0 != $parent_newsletter->post_parent ) {
             $parent_newsletter = get_post( $parent_newsletter->post_parent );
         }
-        $query_args = [
+        $query_args    = [
             'post_type'      => 'pedestal_newsletter',
             'post_parent'    => $parent_newsletter->ID,
             'posts_per_page' => 5,
@@ -185,15 +185,15 @@ class Newsletter_Emails {
         ];
         $message_posts = new \WP_Query( $query_args );
         $message_posts = array_merge( [ $parent_newsletter ], $message_posts->posts );
-        $messages = [];
+        $messages      = [];
         foreach ( $message_posts as $message_post ) {
             $newsletter = Newsletter::get( $message_post );
-            $body = Email::get_email_template( 'newsletter', 'mc', [
+            $body       = Email::get_email_template( 'newsletter', 'mc', [
                 'item'       => $newsletter,
                 'email_type' => 'Daily',
                 'shareable'  => true,
             ] );
-            $subject = $newsletter->get_title();
+            $subject    = $newsletter->get_title();
             $messages[] = [
                 'html'    => $body,
                 'subject' => $subject,
@@ -272,8 +272,8 @@ class Newsletter_Emails {
      *                             if the form can't be rendered
      */
     public static function get_signup_form( $args = [] ) {
-        $email_groups = Email_Groups::get_instance();
-        $defaults = [
+        $email_groups  = Email_Groups::get_instance();
+        $defaults      = [
             'action_url'           => get_site_url() . '/subscribe-to-email-group/',
             'nonce'                => wp_create_nonce( PEDESTAL_THEME_NAME ),
 

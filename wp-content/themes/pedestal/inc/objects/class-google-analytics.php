@@ -82,14 +82,14 @@ class Google_Analytics {
         $request->setViewId( PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID );
 
         $default_args = [
-            'date_range' => '',
-            'metrics' => '',
+            'date_range'              => '',
+            'metrics'                 => '',
             'dimension_filter_clause' => '',
-            'order_by' => '',
-            'page_size' => 100,
-            'dimensions' => '',
+            'order_by'                => '',
+            'page_size'               => 100,
+            'dimensions'              => '',
         ];
-        $args = wp_parse_args( $args, $default_args );
+        $args         = wp_parse_args( $args, $default_args );
 
         if ( ! empty( $args['date_range'] ) ) {
             $request->setDateRanges( $args['date_range'] );
@@ -153,7 +153,7 @@ class Google_Analytics {
                 if ( empty( $more[1] ) ) {
                     $more[1] = $this->default_metric_format;
                 }
-                $alias = $more[0];
+                $alias  = $more[0];
                 $format = strtoupper( $more[1] );
                 if ( ! in_array( $format, $this->metric_formats ) ) {
                     $format = $this->default_metric_format;
@@ -208,7 +208,7 @@ class Google_Analytics {
             $args = [ $args ];
         }
 
-        $default_args = [
+        $default_args   = [
             'name'           => '',
             'operator'       => 'REGEXP', // For list of possible values see https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet#Operator
             'expressions'    => [],
@@ -249,11 +249,11 @@ class Google_Analytics {
      * @return array       An array of objects with the metrics/dimensions and values
      */
     public function format_output( $data = [] ) {
-        $report      = $data->reports[0];
-        $rows        = $report->data->rows;
-        $output      = [];
+        $report = $data->reports[0];
+        $rows   = $report->data->rows;
+        $output = [];
 
-        $headers     = [];
+        $headers = [];
         // @codingStandardsIgnoreStart
         $header_data = $report->columnHeader;
         // @codingStandardsIgnoreEnd

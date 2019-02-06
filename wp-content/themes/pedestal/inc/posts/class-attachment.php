@@ -52,13 +52,13 @@ class Attachment extends Post {
         if ( is_array( $size ) || 'full' === $size ) {
             // Get the original URL without query args
             $url_parts = explode( '?', $src[0] );
-            $src_url = $url_parts[0];
+            $src_url   = $url_parts[0];
 
             if ( is_array( $size ) ) {
                 list( $new_width, $new_height ) = $size;
-                $src_url = add_query_arg( 'resize', "{$new_width},{$new_height}", $src_url );
-                $src[1] = $new_width;
-                $src[2] = $new_height;
+                $src_url                        = add_query_arg( 'resize', "{$new_width},{$new_height}", $src_url );
+                $src[1]                         = $new_width;
+                $src[2]                         = $new_height;
             }
 
             $src[0] = $src_url;
@@ -85,7 +85,7 @@ class Attachment extends Post {
      * @return string|HTML
      */
     public static function get_img_caption_html( $content, $atts = [] ) {
-        $atts = wp_parse_args(
+        $atts   = wp_parse_args(
             $atts, [
                 'attachment'  => 0,
                 'caption'     => '',
@@ -115,12 +115,12 @@ class Attachment extends Post {
             return '';
         }
 
-        $html = '';
+        $html                         = '';
         list( $src, $width, $height ) = $image;
         // Apply default classes to the user-specified classes
-        $size_str = is_array( $size ) ? $size[0] . '-' . $size[1] : $size;
+        $size_str        = is_array( $size ) ? $size[0] . '-' . $size[1] : $size;
         $default_classes = "attachment-$size_str";
-        $id = $this->get_id();
+        $id              = $this->get_id();
 
         // Set alt text with fallbacks
         $alt_text = '';
@@ -134,18 +134,18 @@ class Attachment extends Post {
         $alt_text = trim( strip_tags( $alt_text ) );
 
         $default_attr = [
-            'src'    => $src,
-            'class'  => $default_classes,
-            'alt'    => $alt_text,
+            'src'   => $src,
+            'class' => $default_classes,
+            'alt'   => $alt_text,
         ];
         if ( Pedestal()->is_email() ) {
             $default_attr['border'] = 0;
             if ( is_numeric( $size ) ) {
-                $default_attr['width'] = $size;
+                $default_attr['width']  = $size;
                 $default_attr['height'] = $size;
             }
         } else {
-            $default_attr['sizes'] = wp_get_attachment_image_sizes( $id, $size );
+            $default_attr['sizes']  = wp_get_attachment_image_sizes( $id, $size );
             $default_attr['srcset'] = wp_get_attachment_image_srcset( $id, $size );
         }
 
@@ -170,7 +170,7 @@ class Attachment extends Post {
             if ( is_array( $args['srcset'] ) ) {
                 // Accept either a flat array of widths, or a multidimensional
                 // array containing a ratio float and an array of widths
-                $ratio = $args['srcset']['ratio'] ?? null;
+                $ratio  = $args['srcset']['ratio'] ?? null;
                 $widths = $args['srcset']['widths'] ?? null;
                 if ( ! $ratio && ! $widths ) {
                     $widths = $args['srcset'];
@@ -281,7 +281,7 @@ class Attachment extends Post {
         }
 
         list( $orig_url, $orig_width, $orig_height ) = $this->get_src();
-        $aspect_ratio = $aspect_ratio ?: $orig_width / $orig_height;
+        $aspect_ratio                                = $aspect_ratio ?: $orig_width / $orig_height;
 
         $srcset = [];
         foreach ( $widths as $key => $width ) :
@@ -290,12 +290,12 @@ class Attachment extends Post {
             }
 
             for ( $multiplier = 1; $multiplier < 4; $multiplier++ ) {
-                $current_width = floor( $width * $multiplier );
+                $current_width  = floor( $width * $multiplier );
                 $current_height = floor( $current_width / $aspect_ratio );
 
                 if ( $current_width <= $orig_width && $current_height <= $orig_height ) {
                     // Prevent duplicates in a performant way by assigning as key
-                    $key = add_query_arg( 'resize', "{$current_width},{$current_height}", $orig_url ) . " {$current_width}w";
+                    $key            = add_query_arg( 'resize', "{$current_width},{$current_height}", $orig_url ) . " {$current_width}w";
                     $srcset[ $key ] = '';
                 }
             }

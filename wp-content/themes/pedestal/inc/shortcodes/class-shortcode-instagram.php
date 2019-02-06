@@ -10,20 +10,20 @@ class Instagram extends Shortcode {
 
     public static function get_shortcode_ui_args() {
         return [
-            'label'          => esc_html__( 'Instagram', 'shortcake-bakery' ),
-            'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-instagram.svg' ) . '" />',
-            'attrs'          => [
+            'label'         => esc_html__( 'Instagram', 'shortcake-bakery' ),
+            'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-instagram.svg' ) . '" />',
+            'attrs'         => [
                 [
-                    'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-                    'attr'         => 'url',
-                    'type'         => 'text',
-                    'description'  => esc_html__( 'URL to an Instagram', 'shortcake-bakery' ),
+                    'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+                    'attr'        => 'url',
+                    'type'        => 'text',
+                    'description' => esc_html__( 'URL to an Instagram', 'shortcake-bakery' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Hide Caption', 'shortcake-bakery' ),
-                    'attr'         => 'hidecaption',
-                    'type'         => 'checkbox',
-                    'description'  => esc_html__( 'By default, the Instagram embed will include the caption. Check this box to hide the caption.', 'shortcake-bakery' ),
+                    'label'       => esc_html__( 'Hide Caption', 'shortcake-bakery' ),
+                    'attr'        => 'hidecaption',
+                    'type'        => 'checkbox',
+                    'description' => esc_html__( 'By default, the Instagram embed will include the caption. Check this box to hide the caption.', 'shortcake-bakery' ),
                 ],
             ],
         ];
@@ -38,7 +38,7 @@ class Instagram extends Shortcode {
 
         $needle = '#<blockquote class="instagram-media.+<a href="(https://instagram\.com/p/[^/]+/)"[^>]+>.+(?=</blockquote>)</blockquote>\n?(<script[^>]+src="//platform\.instagram\.com/[^>]+></script>)?#';
         if ( preg_match_all( $needle, $content, $matches ) ) {
-            $replacements = [];
+            $replacements  = [];
             $shortcode_tag = self::get_shortcode_tag();
             foreach ( $matches[0] as $key => $value ) {
                 $replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[1][ $key ] ) . '"]';
@@ -81,7 +81,7 @@ class Instagram extends Shortcode {
             'width'       => isset( $content_width ) ? $content_width : $max_width,
             'hidecaption' => false,
         ];
-        $attrs = array_merge( $defaults, $attrs );
+        $attrs    = array_merge( $defaults, $attrs );
 
         $attrs['width'] = absint( $attrs['width'] );
         if ( $attrs['width'] > $max_width || $min_width > $attrs['width'] ) {
@@ -117,16 +117,16 @@ class Instagram extends Shortcode {
             return;
         }
         $post_id = $post->ID;
-        $tag = self::get_shortcode_tag();
+        $tag     = self::get_shortcode_tag();
 
         if ( empty( $post_id ) || empty( $url ) ) {
             return;
         }
 
         // Check for a cached result (stored in the post meta)
-        $key_prefix = "_shortcake_bakery_{$tag}_oembed_";
-        $key_suffix = md5( $url . serialize( $args ) );
-        $cachekey = $key_prefix . $key_suffix;
+        $key_prefix    = "_shortcake_bakery_{$tag}_oembed_";
+        $key_suffix    = md5( $url . serialize( $args ) );
+        $cachekey      = $key_prefix . $key_suffix;
         $cachekey_time = $key_prefix . 'time_' . $key_suffix;
 
         /**
@@ -136,8 +136,8 @@ class Instagram extends Shortcode {
          * @param array  $attr    An array of shortcode attributes.
          * @param int    $post_id Post ID.
          */
-        $ttl = apply_filters( 'shortcake_bakery_oembed_ttl', DAY_IN_SECONDS, $args, $post_id );
-        $cache = get_post_meta( $post_id, $cachekey, true );
+        $ttl        = apply_filters( 'shortcake_bakery_oembed_ttl', DAY_IN_SECONDS, $args, $post_id );
+        $cache      = get_post_meta( $post_id, $cachekey, true );
         $cache_time = get_post_meta( $post_id, $cachekey_time, true );
 
         if ( ! $cache_time ) {

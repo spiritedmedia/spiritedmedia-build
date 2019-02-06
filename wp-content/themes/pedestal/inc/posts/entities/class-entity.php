@@ -46,7 +46,7 @@ abstract class Entity extends Post {
      */
     protected function set_data_atts() {
         parent::set_data_atts();
-        $atts = parent::get_data_atts();
+        $atts     = parent::get_data_atts();
         $new_atts = [
             'entity'          => '',
             'source-external' => '',
@@ -103,7 +103,7 @@ abstract class Entity extends Post {
             return $this->primary_story;
         }
 
-        $args = [
+        $args    = [
             'flatten' => true,
             'types'   => 'story',
             'count'   => 1,
@@ -172,7 +172,7 @@ abstract class Entity extends Post {
      * @return array Array of Clusters
      */
     public function get_clusters( array $args = [] ) {
-        $args = wp_parse_args( $args, [
+        $args       = wp_parse_args( $args, [
             'types'      => Types::get_cluster_post_types_sans_story(),
             'flatten'    => false,
             'paginate'   => false,
@@ -180,8 +180,8 @@ abstract class Entity extends Post {
             'count_only' => false,
             'paged'      => 1,
         ] );
-        $types = $args['types'];
-        $count = $args['count'];
+        $types      = $args['types'];
+        $count      = $args['count'];
         $count_only = $args['count_only'];
 
         // Allow passing both full post type names and short post type names
@@ -193,7 +193,7 @@ abstract class Entity extends Post {
             return 'pedestal_' . $type;
         }, $types );
 
-        $defaults = [
+        $defaults   = [
             'post_type'       => $types,
             'post_status'     => 'publish',
             'posts_per_page'  => $count,
@@ -210,7 +210,7 @@ abstract class Entity extends Post {
         if ( $count_only ) {
             $query_args['update_post_meta_cache'] = false;
             $query_args['update_post_term_cache'] = false;
-            $query_args['fields'] = 'ids';
+            $query_args['fields']                 = 'ids';
         }
 
         // Reduce the strain of the query by narrowing the post IDs to search for
@@ -258,7 +258,7 @@ abstract class Entity extends Post {
             return $this->all_connected_object_ids;
         }
 
-        $post_ids = $wpdb->get_col(
+        $post_ids                       = $wpdb->get_col(
             $wpdb->prepare(
                 "SELECT `p2p_to` FROM {$wpdb->p2p} WHERE `p2p_from` = %s",
                 $this->get_id()
@@ -279,7 +279,7 @@ abstract class Entity extends Post {
 
         $story = $this->get_primary_story();
         if ( $story ) {
-            $context['overline'] = $story->get_the_title();
+            $context['overline']     = $story->get_the_title();
             $context['overline_url'] = $story->get_the_permalink();
         }
 

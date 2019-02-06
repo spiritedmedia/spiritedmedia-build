@@ -4,11 +4,9 @@ namespace Pedestal;
 
 use Timber\Timber;
 
-use \Pedestal\Utils\Utils;
-
+use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
-
-use \Pedestal\Posts\Post;
+use Pedestal\Posts\Post;
 
 class Feeds {
 
@@ -41,6 +39,9 @@ class Feeds {
      */
     private function setup_filters() {
         add_filter( 'timber_context', [ $this, 'filter_timber_context' ] );
+        add_filter( 'option_posts_per_rss', function( $val = '' ) {
+            return '50';
+        } );
     }
 
     /**
@@ -50,8 +51,13 @@ class Feeds {
         $templates = [];
         $post_type = get_query_var( 'post_type' );
 
-        if ( ! empty( $post_type ) && ! is_array( $post_type ) ) {
+        if ( ! empty( $post_type ) && ! is_array( $post_type ) && ! is_archive() ) {
             $templates[] = "templates/feeds/feed-{$post_type}.php";
+            if ( Types::is_entity( $post_type ) ) {
+                $templates[] = 'templates/feeds/feed-entity.php';
+            } elseif ( Types::is_cluster( $post_type ) ) {
+                $templates[] = 'templates/feeds/feed-cluster.php';
+            }
         }
         $templates[] = 'templates/feeds/feed.php';
 
@@ -71,10 +77,17 @@ class Feeds {
 
         if ( $query->is_feed() ) {
             $title = get_bloginfo_rss( 'name' );
-            if ( ! $query->is_post_type_archive() ) {
-                $query->set( 'post_type', Types::get_entity_post_types() );
-            } else {
+            if ( $query->is_post_type_archive() ) {
                 $title .= ' » ' . Types::get_post_type_name( $post_type );
+            } elseif ( $query->is_single() ) {
+                $post = Post::get_by_post_name( get_query_var( 'name' ), [
+                    'post_type' => get_query_var( 'post_type' ),
+                ] );
+                if ( Types::is_cluster( $post ) ) {
+                    $title .= ' » ' . $post->get_title();
+                }
+            } else {
+                $query->set( 'post_type', Types::get_entity_post_types() );
             }
             $this->set_feed_title( $query, $title );
         }
@@ -86,7 +99,7 @@ class Feeds {
      */
     public function filter_timber_context( $context ) {
 
-        $context['feed'] = [];
+        $context['feed']                  = [];
         $context['feed']['title']         = $this->get_feed_title();
         $context['feed']['self_link']     = $this->get_feed_self_link();
         $context['feed']['site_link']     = $this->get_feed_site_link();

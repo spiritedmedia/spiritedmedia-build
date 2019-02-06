@@ -43,7 +43,7 @@ class Pedestal_Factcheck {
         }
         if ( 'featured' != $where_is_it_shown ) {
             // Don't show a featured image which is set in class-pedestal-entity.php
-            $context['featured_image'] = '';
+            $context['featured_image']  = '';
             $context['thumbnail_image'] = $factcheck->get_statement_img();
         }
         return $context;

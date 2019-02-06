@@ -48,7 +48,7 @@ class Taxonomy_Tools {
                 $this->page_title,
                 $this->page_title,
                 'merge_clusters',
-                $this->admin_page_slug ,
+                $this->admin_page_slug,
                 [ $this, 'render_taxonomy_tools_page' ]
             );
         } );
@@ -62,33 +62,33 @@ class Taxonomy_Tools {
         if ( ! $taxonomy ) {
             return;
         }
-        $tax_slug = $taxonomy->name;
-        $plural_label = $taxonomy->label;
-        $singular_label = $taxonomy->labels->singular_name;
+        $tax_slug                 = $taxonomy->name;
+        $plural_label             = $taxonomy->label;
+        $singular_label           = $taxonomy->labels->singular_name;
         $source_autocomplete_args = [
-            'name'                => 'term_id',
-            'description'         => esc_html__( 'Select a ' . $singular_label, 'pedestal' ),
-            'show_edit_link'      => true,
-            'datasource'          => new \Fieldmanager_Datasource_Term( [
+            'name'           => 'term_id',
+            'description'    => esc_html__( 'Select a ' . $singular_label, 'pedestal' ),
+            'show_edit_link' => true,
+            'datasource'     => new \Fieldmanager_Datasource_Term( [
                 // This is a hacky way to send the taxonomy slug to our AJAX event handler so callbacks work and stuff.
-                'ajax_action'     => 'fm_datasource_term_for_' . $tax_slug,
-                'taxonomy'        => $tax_slug,
+                'ajax_action' => 'fm_datasource_term_for_' . $tax_slug,
+                'taxonomy'    => $tax_slug,
             ] ),
         ];
-        $fm = new \Fieldmanager_Group( esc_html__( 'Merge ' . $plural_label, 'pedestal' ), [
-            'name'                => 'pedestal-taxonomy-tools-merge-terms',
-            'tabbed'              => 'vertical',
-            'persist_active_tab'  => false,
-            'children'            => [
+        $fm                       = new \Fieldmanager_Group( esc_html__( 'Merge ' . $plural_label, 'pedestal' ), [
+            'name'               => 'pedestal-taxonomy-tools-merge-terms',
+            'tabbed'             => 'vertical',
+            'persist_active_tab' => false,
+            'children'           => [
                 'old' => new \Fieldmanager_Group( '1. Merge these terms&hellip;', [
                     'description' => esc_html( "Select the old $singular_label you wish to merge into the new $singular_label. OLD " . strtoupper( $plural_label ) . ' WILL BE DELETED!', 'pedestal' ),
                     'children'    => [
-                        'terms'   => new \Fieldmanager_Group( false, [
+                        'terms' => new \Fieldmanager_Group( false, [
                             'minimum_count'  => 1,
                             'limit'          => 100,
                             'add_more_label' => esc_html__( 'Add Another Term', 'pedestal' ),
                             'children'       => [
-                                'term_id'    => new \Fieldmanager_Autocomplete( false, [
+                                'term_id' => new \Fieldmanager_Autocomplete( false, [
                                     'description' => esc_html__( 'Select a ' . $singular_label . ' to Merge', 'pedestal' ),
                                 ] + $source_autocomplete_args ),
                             ],
@@ -103,8 +103,8 @@ class Taxonomy_Tools {
                 ] ),
             ],
         ] );
-        $this->fields = $fm;
-        $this->form = $fm->add_page_form( 'pedestal-term-merge-fields' );
+        $this->fields             = $fm;
+        $this->form               = $fm->add_page_form( 'pedestal-term-merge-fields' );
     }
 
     /**
@@ -120,9 +120,9 @@ class Taxonomy_Tools {
         $fm_validation->add_field( $this->fields );
 
         $context = [
-            'unique_id' => sanitize_title( $this->form->uniqid ),
-            'nonce_field' => wp_nonce_field( 'fieldmanager-save-' . $this->fields->name, 'fieldmanager-' . $this->fields->name . '-nonce' ),
-            'form_body' => $this->fields->element_markup( $current ),
+            'unique_id'     => sanitize_title( $this->form->uniqid ),
+            'nonce_field'   => wp_nonce_field( 'fieldmanager-save-' . $this->fields->name, 'fieldmanager-' . $this->fields->name . '-nonce' ),
+            'form_body'     => $this->fields->element_markup( $current ),
             'submit_button' => get_submit_button( 'Submit' ),
         ];
         ob_start();
@@ -147,9 +147,9 @@ class Taxonomy_Tools {
                 // This array index isn't used and messes up our loop later on
                 unset( $data['old']['terms']['proto'] );
 
-                $tax = $taxonomy->name;
-                $to_term_id = $data['new']['term_id'];
-                $to_term = get_term( $to_term_id, $tax );
+                $tax          = $taxonomy->name;
+                $to_term_id   = $data['new']['term_id'];
+                $to_term      = get_term( $to_term_id, $tax );
                 $to_term_name = $to_term->name;
 
                 $from = [];
@@ -158,7 +158,7 @@ class Taxonomy_Tools {
                         $from[] = $term['term_id'];
                     }
                 }
-                $from = array_unique( $from );
+                $from  = array_unique( $from );
                 $count = 0;
                 foreach ( $from as $from_term_id ) {
                     $this->migrate_term( $from_term_id, $to_term_id, $tax );
@@ -169,10 +169,10 @@ class Taxonomy_Tools {
         } else {
             // No taxonomy was selected so show the screen to select one
             $taxonomy_options = [];
-            $args = [
+            $args             = [
                 'public' => true,
             ];
-            $taxonomies = get_taxonomies( $args, 'objects' );
+            $taxonomies       = get_taxonomies( $args, 'objects' );
             foreach ( $taxonomies as $tax ) {
                 $taxonomy_options[ $tax->name ] = $tax->label;
             }
@@ -195,23 +195,23 @@ class Taxonomy_Tools {
      */
     public function action_edit_tag_form_fields( $term ) {
         $dropdown = wp_dropdown_categories( [
-            'show_option_none'   => ' ',
-            'option_none_value'  => '-1',
-            'taxonomy'           => $term->taxonomy,
-            'hide_empty'         => false,
-            'exclude'            => [ $term->term_id ],
-            'orderby'            => 'name',
-            'echo'               => false,
-            'name'               => 'term-migration',
-            'id'                 => 'term-migration',
-            'hide_if_empty'      => true,
+            'show_option_none'  => ' ',
+            'option_none_value' => '-1',
+            'taxonomy'          => $term->taxonomy,
+            'hide_empty'        => false,
+            'exclude'           => [ $term->term_id ],
+            'orderby'           => 'name',
+            'echo'              => false,
+            'name'              => 'term-migration',
+            'id'                => 'term-migration',
+            'hide_if_empty'     => true,
         ] );
         if ( ! $dropdown ) {
             return;
         }
         $context = [
             'term_name' => $term->name,
-            'dropdown' => $dropdown,
+            'dropdown'  => $dropdown,
         ];
         Timber::render( 'partials/admin/taxonomy-tools/taxonomy-tools-edit-term-row.twig', $context );
     }
@@ -286,14 +286,14 @@ class Taxonomy_Tools {
     public function migrate_term( $source_id = 0, $target_id = 0, $tax = '' ) {
         $source_term = get_term( $source_id, $tax );
         $target_term = get_term( $target_id, $tax );
-        $post_ids = get_objects_in_term( $source_id, $tax, [
+        $post_ids    = get_objects_in_term( $source_id, $tax, [
             'order' => 'ASC',
         ] );
 
         $args = [
             'orderby' => 'name',
-            'order' => 'ASC',
-            'fields' => 'all',
+            'order'   => 'ASC',
+            'fields'  => 'all',
         ];
         foreach ( $post_ids as $id ) {
             $new_terms = [];
@@ -304,7 +304,7 @@ class Taxonomy_Tools {
                 }
             }
             $new_terms[] = $target_term->term_id;
-            $append = false;
+            $append      = false;
             wp_set_post_terms( (int) $id, $new_terms, $tax, $append );
         }
         wp_delete_term( $source_id, $tax );

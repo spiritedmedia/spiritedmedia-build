@@ -72,17 +72,17 @@ class Cluster_Tools {
 
     private function setup_cluster_merge_field() {
         $cluster_autocomplete_args = [
-            'name'                => 'post',
-            'description'         => esc_html__( 'Select a Cluster', 'pedestal' ),
-            'show_edit_link'      => true,
-            'datasource'          => new \Fieldmanager_Datasource_Post( [
+            'name'           => 'post',
+            'description'    => esc_html__( 'Select a Cluster', 'pedestal' ),
+            'show_edit_link' => true,
+            'datasource'     => new \Fieldmanager_Datasource_Post( [
                 'query_args' => [
                     'post_type'      => Types::get_cluster_post_types(),
                     'posts_per_page' => 30,
                 ],
             ] ),
         ];
-        $fm = new \Fieldmanager_Group( esc_html__( 'Merge Clusters', 'pedestal' ), [
+        $fm                        = new \Fieldmanager_Group( esc_html__( 'Merge Clusters', 'pedestal' ), [
             'name'               => 'pedestal_cluster_merge',
             'tabbed'             => 'vertical',
             'persist_active_tab' => false,
@@ -94,9 +94,9 @@ class Cluster_Tools {
                             'minimum_count'  => 1,
                             'limit'          => 5,
                             'add_more_label' => esc_html__( 'Merge Additional Cluster', 'pedestal' ),
-                            'children' => [
+                            'children'       => [
                                 'post' => new \Fieldmanager_Autocomplete( false, $cluster_autocomplete_args + [
-                                    'description'         => esc_html__( 'Select a Cluster to Merge', 'pedestal' ),
+                                    'description' => esc_html__( 'Select a Cluster to Merge', 'pedestal' ),
                                 ] ),
                             ],
                         ]),
@@ -110,20 +110,20 @@ class Cluster_Tools {
                 ] ),
             ],
         ] );
-        $this->fields = $fm;
+        $this->fields              = $fm;
     }
 
     public function render_page_form() {
         $current = apply_filters( 'fm_' . $this->form->uniqid . '_load', [], $this->fields );
-        $html = '<form method="POST" id="' . esc_attr( $this->form->uniqid ) . '">';
-        $html .= '<div class="fm-page-form-wrapper">';
-        $html .= sprintf( '<input type="hidden" name="fm-page-action" value="%s" />', esc_attr( sanitize_title( $this->form->uniqid ) ) );
-        $html .= wp_nonce_field( 'fieldmanager-save-' . $this->fields->name, 'fieldmanager-' . $this->fields->name . '-nonce' );
-        $html .= $this->fields->element_markup( $current );
-        $html .= '</div>';
-        $html .= get_submit_button( esc_html( 'Submit' ) );
-        $html .= '</form>';
-        $html .= '</div>';
+        $html    = '<form method="POST" id="' . esc_attr( $this->form->uniqid ) . '">';
+        $html   .= '<div class="fm-page-form-wrapper">';
+        $html   .= sprintf( '<input type="hidden" name="fm-page-action" value="%s" />', esc_attr( sanitize_title( $this->form->uniqid ) ) );
+        $html   .= wp_nonce_field( 'fieldmanager-save-' . $this->fields->name, 'fieldmanager-' . $this->fields->name . '-nonce' );
+        $html   .= $this->fields->element_markup( $current );
+        $html   .= '</div>';
+        $html   .= get_submit_button( esc_html( 'Submit' ) );
+        $html   .= '</form>';
+        $html   .= '</div>';
 
         // Check if any validation is required
         $fm_validation = Fieldmanager_Util_Validation( $this->form->uniqid, 'page' );
@@ -145,7 +145,7 @@ class Cluster_Tools {
             $data = $_POST['pedestal_cluster_merge'];
             unset( $data['old']['post']['proto'] );
             $this->handle_cluster_merge( $data );
-            $context['notice'] = $this->notice;
+            $context['notice']   = $this->notice;
             $context['messages'] = '<p>' . implode( '</p><p>', $this->log ) . '</p>';
         }
 
@@ -163,7 +163,7 @@ class Cluster_Tools {
         if ( $type ) {
             $classes .= 'notice-' . $type;
         }
-        $classes .= ' notice fade is-dismissible ';
+        $classes     .= ' notice fade is-dismissible ';
         $this->notice = sprintf( '<div class="%s"><p>%s</p></div>', esc_attr( $classes ), esc_html( $msg ) );
     }
 
@@ -178,16 +178,16 @@ class Cluster_Tools {
             return;
         }
 
-        $_post_types = [];
+        $_post_types        = [];
         $include_proto_data = true;
-        $connection_types = Types::get_cluster_connection_types( $_post_types, $include_proto_data );
-        $msg_report = 'What a strange occurrence! Best report to #product...';
+        $connection_types   = Types::get_cluster_connection_types( $_post_types, $include_proto_data );
+        $msg_report         = 'What a strange occurrence! Best report to #product...';
 
-        $merge_clusters = [];
+        $merge_clusters    = [];
         $target_cluster_id = $data['new']['post'];
         foreach ( $data['old']['post'] as $post ) {
             $merge_cluster_id = $post['post'];
-            $cluster = Post::get( $merge_cluster_id );
+            $cluster          = Post::get( $merge_cluster_id );
             if ( Types::is_cluster( $cluster ) ) {
                 $merge_clusters[] = $cluster;
             } else {
@@ -212,14 +212,14 @@ class Cluster_Tools {
 
         $target_cluster_log_msg = $this->handle_post_log_identifier( $target_cluster );
 
-        $new_connections = [];
+        $new_connections            = [];
         $total_new_connection_count = 0;
         foreach ( $merge_clusters as $i => $merge_cluster ) :
             $merge_cluster_log_msg = $this->handle_post_log_identifier( $merge_cluster );
 
             // Don't merge any clusters that are identical to the target
             if ( $merge_cluster->get_id() == $target_cluster_id ) {
-                $msg = '<b>%s is identical to the target cluster, so it was not
+                $msg         = '<b>%s is identical to the target cluster, so it was not
                 merged or deleted.</b>';
                 $this->log[] = sprintf( $msg, ucfirst( $merge_cluster_log_msg ) );
                 unset( $merge_clusters[ $i ] );
@@ -232,7 +232,7 @@ class Cluster_Tools {
             );
 
             $new_connection_count = 0;
-            $old_connected = $merge_cluster->get_connected();
+            $old_connected        = $merge_cluster->get_connected();
             foreach ( $old_connected as $connected ) :
                 $connected_log_message = $this->handle_post_log_identifier( $connected );
                 // If this is empty, something is very wrong, because we already
@@ -244,11 +244,11 @@ class Cluster_Tools {
                 // Replace the sanitized name of the original cluster to be
                 // merged with the sanitized name of the target cluster, with
                 // the hopes that the results equal a valid connection type
-                $post_type_name_plural = true;
-                $post_type_name_sanitize = true;
-                $merge_cluster_sanitized_name = $merge_cluster->get_post_type_name( $post_type_name_plural, $post_type_name_sanitize );
+                $post_type_name_plural         = true;
+                $post_type_name_sanitize       = true;
+                $merge_cluster_sanitized_name  = $merge_cluster->get_post_type_name( $post_type_name_plural, $post_type_name_sanitize );
                 $target_cluster_sanitized_name = $target_cluster->get_post_type_name( $post_type_name_plural, $post_type_name_sanitize );
-                $new_connection_type = str_replace( $merge_cluster_sanitized_name, $target_cluster_sanitized_name, $p2p_type );
+                $new_connection_type           = str_replace( $merge_cluster_sanitized_name, $target_cluster_sanitized_name, $p2p_type );
 
                 $connect = p2p_type( $new_connection_type );
                 if ( false === $connect ) {

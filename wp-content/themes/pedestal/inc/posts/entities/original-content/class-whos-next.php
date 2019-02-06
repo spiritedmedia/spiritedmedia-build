@@ -56,7 +56,7 @@ class Whos_Next extends Original {
                 continue;
             }
 
-            $_people = $item['people'];
+            $_people        = $item['people'];
             $item['people'] = [];
             foreach ( $_people as $person_k => $person_v ) {
                 $person = Person::get( $person_v['person'] );
@@ -66,13 +66,13 @@ class Whos_Next extends Original {
                 $item['people'][] = $person;
             }
 
-            $_img = Attachment::get( $item['img'] );
+            $_img        = Attachment::get( $item['img'] );
             $item['img'] = '';
             if ( ! $_img instanceof Attachment ) {
                 continue;
             }
 
-            $atts = [
+            $atts        = [
                 'caption'                => $_img->get_caption(),
                 'credit'                 => $_img->get_credit(),
                 'credit_link'            => $_img->get_credit_link(),
@@ -101,11 +101,11 @@ class Whos_Next extends Original {
      * @return array Posts
      */
     public function get_archive_items() {
-        $args = [
+        $args           = [
             'posts_per_page' => 50,
-            'post_type' => self::$post_type,
+            'post_type'      => self::$post_type,
         ];
-        $query = new \WP_Query( $args );
+        $query          = new \WP_Query( $args );
         $whosnext_posts = Post::get_posts_from_query( $query );
 
         $whosnext_story = self::get_whosnext_story();
@@ -113,7 +113,7 @@ class Whos_Next extends Original {
             return $whosnext_posts;
         }
 
-        $whosnext_story_entities = $whosnext_story->get_entities( [
+        $whosnext_story_entities = $whosnext_story->get_posts( [
             'post_type' => 'pedestal_article',
         ] );
 

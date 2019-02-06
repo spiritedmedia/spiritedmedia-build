@@ -5,12 +5,12 @@ use Pedestal\Adverts;
 
 $stream = new Stream;
 
-$context = Timber::get_context();
-$context['archive_title'] = Pedestal\Frontend::get_archive_title();
+$context                        = Timber::get_context();
+$context['archive_title']       = Pedestal\Frontend::get_archive_title();
 $context['archive_description'] = get_queried_object()->description ?? '';
 
 if ( $stream->is_stream_list() ) {
-    $context['stream'] = $stream->get_the_stream_list();
+    $context['stream']                         = $stream->get_the_stream_list();
     $context['extra_stream_container_classes'] = 'stream--list';
 } else {
     $context['stream'] = $stream->get_the_stream();

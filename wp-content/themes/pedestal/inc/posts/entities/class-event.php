@@ -65,8 +65,8 @@ class Event extends Entity {
      * @return string
      */
     public function get_where() {
-        $where = '';
-        $venue = $this->get_venue_name();
+        $where   = '';
+        $venue   = $this->get_venue_name();
         $address = $this->get_address();
         if ( $venue ) {
             $where .= $venue;
@@ -87,8 +87,8 @@ class Event extends Entity {
      * @return string           The location in "venue (address)" format"
      */
     public function get_ics_location( $escape = false ) {
-        $venue = $this->get_venue_name();
-        $address = $this->get_address();
+        $venue    = $this->get_venue_name();
+        $address  = $this->get_address();
         $location = "$venue ($address)";
 
         if ( $escape ) {
@@ -133,18 +133,18 @@ class Event extends Entity {
         }
 
         $end_timestamp = (int) $this->get_end_time();
-        $all_day = $this->is_all_day();
-        $display_end = (bool) $end_timestamp;
-        $start_date = date( 'Y-m-d', $start_timestamp );
-        $end_date = date( 'Y-m-d', $end_timestamp );
-        $same_day_end = $start_date === $end_date;
+        $all_day       = $this->is_all_day();
+        $display_end   = (bool) $end_timestamp;
+        $start_date    = date( 'Y-m-d', $start_timestamp );
+        $end_date      = date( 'Y-m-d', $end_timestamp );
+        $same_day_end  = $start_date === $end_date;
 
-        $date_format = 'F j, Y';
+        $date_format     = 'F j, Y';
         $datetime_format = $date_format . ' \a\t ' . PEDESTAL_TIME_FORMAT;
 
         if ( $all_day ) {
             $start_format = $date_format;
-            $end_format = $date_format;
+            $end_format   = $date_format;
 
             // If the event lasts all day and it ends on the same day then we
             // shouldn't display an end date
@@ -153,11 +153,11 @@ class Event extends Entity {
             }
         } else {
             $start_format = $datetime_format;
-            $end_format = $datetime_format;
+            $end_format   = $datetime_format;
 
             if ( $same_day_end ) {
                 $start_time = date( $start_format, $start_timestamp );
-                $end_time = date( $end_format, $end_timestamp );
+                $end_time   = date( $end_format, $end_timestamp );
                 if ( $start_time === $end_time ) {
                     // Hide the end time if it's identical to the start time
                     $display_end = false;
@@ -177,7 +177,7 @@ class Event extends Entity {
         $out = $start_time;
         if ( $display_end ) {
             $end_time = date( $end_format, $end_timestamp );
-            $out .= ' to ' . $end_time;
+            $out     .= ' to ' . $end_time;
         }
 
         return apply_filters( 'pedestal_event_get_when', $out );
@@ -252,8 +252,8 @@ class Event extends Entity {
      */
     public function get_google_calendar_link() {
         $endpoint = 'https://www.google.com/calendar/render?';
-        $dates = $this->get_dtstart() . '/' . $this->get_dtend();
-        $params = [
+        $dates    = $this->get_dtstart() . '/' . $this->get_dtend();
+        $params   = [
             'action'   => 'TEMPLATE',
             'text'     => $this->get_ics_title(),
             'dates'    => $dates,
@@ -284,7 +284,7 @@ class Event extends Entity {
     }
 
     private function to_ics_string( $string ) {
-        return preg_replace( '/([\,;])/','\\\$1' , $string );
+        return preg_replace( '/([\,;])/', '\\\$1', $string );
     }
 
     /**
@@ -308,7 +308,7 @@ class Event extends Entity {
         $end = $this->get_fm_field( 'event_details', 'end_time' );
         if ( ! $end ) {
             $start = $this->get_fm_field( 'event_details', 'start_time' );
-            $end = $start + 60 * 60;
+            $end   = $start + 60 * 60;
         }
         return $this->to_ics_datetime( $end );
     }
@@ -376,17 +376,17 @@ class Event extends Entity {
      */
     public function get_context( $context = [] ) {
         $context = [
-            'what'            => $this->get_what(),
-            'where'           => $this->get_where(),
-            'when'            => $this->get_when(),
-            'cost'            => $this->get_cost(),
-            'cta_link'        => $this->get_details_link_url(),
-            'cta_label'       => $this->get_details_link_text(),
-            'cta_source'      => $this->get_fm_field( 'event_details', 'cta_source' ),
-            'show_meta_info'  => false,
-            'content'         => '',
-            'show_header'     => true,
-            'ga_category'     => 'post-content',
+            'what'           => $this->get_what(),
+            'where'          => $this->get_where(),
+            'when'           => $this->get_when(),
+            'cost'           => $this->get_cost(),
+            'cta_link'       => $this->get_details_link_url(),
+            'cta_label'      => $this->get_details_link_text(),
+            'cta_source'     => $this->get_fm_field( 'event_details', 'cta_source' ),
+            'show_meta_info' => false,
+            'content'        => '',
+            'show_header'    => true,
+            'ga_category'    => 'post-content',
         ] + parent::get_context( $context );
         if ( is_singular( static::$post_type ) ) {
             $context['show_header'] = false;

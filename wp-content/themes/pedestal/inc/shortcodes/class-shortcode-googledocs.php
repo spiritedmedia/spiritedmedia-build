@@ -10,57 +10,57 @@ class GoogleDocs extends Shortcode {
 
     public static function get_shortcode_ui_args() {
         return [
-            'label'          => esc_html__( 'Google Docs', 'shortcake-bakery' ),
-            'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-googledocs.svg' ) . '" />',
-            'attrs'          => [
+            'label'         => esc_html__( 'Google Docs', 'shortcake-bakery' ),
+            'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-googledocs.svg' ) . '" />',
+            'attrs'         => [
                 [
-                    'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-                    'attr'         => 'url',
-                    'type'         => 'text',
-                    'description'  => esc_html__( 'Full document URL', 'shortcake-bakery' ),
+                    'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+                    'attr'        => 'url',
+                    'type'        => 'text',
+                    'description' => esc_html__( 'Full document URL', 'shortcake-bakery' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Height', 'shortcake-bakery' ),
-                    'attr'         => 'height',
-                    'type'         => 'text',
-                    'description'  => esc_html__( 'Pixel/percentage height of the iframe.', 'shortcake-bakery' ),
+                    'label'       => esc_html__( 'Height', 'shortcake-bakery' ),
+                    'attr'        => 'height',
+                    'type'        => 'text',
+                    'description' => esc_html__( 'Pixel/percentage height of the iframe.', 'shortcake-bakery' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Width', 'shortcake-bakery' ),
-                    'attr'         => 'width',
-                    'type'         => 'text',
-                    'description'  => esc_html__( 'Pixel/percentage width of the iframe.', 'shortcake-bakery' ),
+                    'label'       => esc_html__( 'Width', 'shortcake-bakery' ),
+                    'attr'        => 'width',
+                    'type'        => 'text',
+                    'description' => esc_html__( 'Pixel/percentage width of the iframe.', 'shortcake-bakery' ),
                 ],
                 [
-                    'label'        => esc_html__( 'Disable Responsiveness', 'shortcake-bakery' ),
-                    'attr'         => 'disableresponsiveness',
-                    'type'         => 'checkbox',
-                    'description'  => esc_html__( 'By default, height/width ratio of the embedded document will be maintained regardless of container width. Check this to keep constant height/width.', 'shortcake-bakery' ),
+                    'label'       => esc_html__( 'Disable Responsiveness', 'shortcake-bakery' ),
+                    'attr'        => 'disableresponsiveness',
+                    'type'        => 'checkbox',
+                    'description' => esc_html__( 'By default, height/width ratio of the embedded document will be maintained regardless of container width. Check this to keep constant height/width.', 'shortcake-bakery' ),
                 ],
 
                 /* Options specific to "spreadsheet" document type */
                 [
-                    'label'        => esc_html__( 'Display spreadsheet header rows?', 'shortcake-bakery' ),
-                    'attr'         => 'headers',
-                    'type'         => 'checkbox',
+                    'label' => esc_html__( 'Display spreadsheet header rows?', 'shortcake-bakery' ),
+                    'attr'  => 'headers',
+                    'type'  => 'checkbox',
                 ],
 
                 /* Options specific to "presentation" document type */
                 [
-                    'label'        => esc_html__( 'Autostart?', 'shortcake-bakery' ),
-                    'attr'         => 'start',
-                    'type'         => 'checkbox',
+                    'label' => esc_html__( 'Autostart?', 'shortcake-bakery' ),
+                    'attr'  => 'start',
+                    'type'  => 'checkbox',
                 ],
                 [
-                    'label'        => esc_html__( 'Loop?', 'shortcake-bakery' ),
-                    'attr'         => 'loop',
-                    'type'         => 'checkbox',
+                    'label' => esc_html__( 'Loop?', 'shortcake-bakery' ),
+                    'attr'  => 'loop',
+                    'type'  => 'checkbox',
                 ],
                 [
-                    'label'        => esc_html__( 'Delay between slides (ms)', 'shortcake-bakery' ),
-                    'attr'         => 'delayms',
-                    'type'         => 'number',
-                    'default'      => 3000,
+                    'label'   => esc_html__( 'Delay between slides (ms)', 'shortcake-bakery' ),
+                    'attr'    => 'delayms',
+                    'type'    => 'number',
+                    'default' => 3000,
                 ],
             ],
         ];
@@ -85,7 +85,7 @@ class GoogleDocs extends Shortcode {
 
             switch ( $parsed_from_url['doc_type'] ) :
                 case 'document':
-                    $replacement_url = 'https://docs.google.com/document/d/' . $parsed_from_url['embed_id'];
+                    $replacement_url                   = 'https://docs.google.com/document/d/' . $parsed_from_url['embed_id'];
                     $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
                         ' url="' . esc_url_raw( $replacement_url ) . '"' .
                         ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
@@ -95,7 +95,7 @@ class GoogleDocs extends Shortcode {
                 case 'spreadsheet':
                 case 'spreadsheets':
                     parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
-                    $replacement_url = 'https://docs.google.com/spreadsheets/d/' . $parsed_from_url['embed_id'];
+                    $replacement_url                   = 'https://docs.google.com/spreadsheets/d/' . $parsed_from_url['embed_id'];
                     $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
                         ' url="' . esc_url_raw( $replacement_url ) . '"' .
                         ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
@@ -105,7 +105,7 @@ class GoogleDocs extends Shortcode {
                     break;
                 case 'presentation':
                     parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
-                    $replacement_url = 'https://docs.google.com/presentation/d/' . $parsed_from_url['embed_id'];
+                    $replacement_url                   = 'https://docs.google.com/presentation/d/' . $parsed_from_url['embed_id'];
                     $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
                         ' url="' . esc_url_raw( $replacement_url ) . '"' .
                         ( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
@@ -117,7 +117,7 @@ class GoogleDocs extends Shortcode {
                     break;
                 case 'form':
                 case 'forms':
-                    $replacement_url = $iframe->attrs['src'];
+                    $replacement_url                   = $iframe->attrs['src'];
                     $replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
                         ' url="' . esc_url_raw( $replacement_url ) . '"' .
                         ( ! empty( $iframe->attrs['height'] ) ? ' height=' . esc_attr( $iframe->attrs['height'] ) : '' ) .
@@ -130,7 +130,7 @@ class GoogleDocs extends Shortcode {
                     if ( empty( $query_vars['mid'] ) ) {
                         return;
                     }
-                    $replacement_url = add_query_arg(
+                    $replacement_url                   = add_query_arg(
                         [
                             'mid' => $query_vars['mid'],
                         ],
@@ -156,16 +156,16 @@ class GoogleDocs extends Shortcode {
             return '';
         }
 
-        $url = '';
-        $inner_content = '';
-        $width_attr  = ! empty( $attrs['width'] ) ? $attrs['width'] : '';
-        $height_attr = ! empty( $attrs['height'] ) ? $attrs['height'] : '';
+        $url                   = '';
+        $inner_content         = '';
+        $width_attr            = ! empty( $attrs['width'] ) ? $attrs['width'] : '';
+        $height_attr           = ! empty( $attrs['height'] ) ? $attrs['height'] : '';
         $additional_attributes = [
-            'frameborder' => '0',
+            'frameborder'  => '0',
             'marginheight' => '0',
-            'marginwidth' => '0',
+            'marginwidth'  => '0',
         ];
-        $iframe_classes = "shortcake-bakery-googledocs-{$type}";
+        $iframe_classes        = "shortcake-bakery-googledocs-{$type}";
         if ( ! empty( $attrs['disableresponsiveness'] ) ) {
             $iframe_classes .= ' disable-responsiveness';
         }
@@ -182,29 +182,29 @@ class GoogleDocs extends Shortcode {
             case 'spreadsheet':
                 $url = add_query_arg(
                     [
-                        'widget' => 'true',
+                        'widget'  => 'true',
                         'headers' => ! empty( $attrs['headers'] ) ? 'true' : 'false',
                     ],
                     $attrs['url'] . '/pubhtml'
                 );
                 break;
             case 'presentation':
-                $url = add_query_arg(
+                $url                   = add_query_arg(
                     [
-                        'start' => ! empty( $attrs['start'] ) ? 'true' : 'false',
-                        'loop' => ! empty( $attrs['loop'] ) ? 'true' : 'false',
+                        'start'   => ! empty( $attrs['start'] ) ? 'true' : 'false',
+                        'loop'    => ! empty( $attrs['loop'] ) ? 'true' : 'false',
                         'delayms' => ! empty( $attrs['delayms'] ) ? intval( $attrs['delayms'] ) : '3000',
                     ],
                     $attrs['url'] . '/embed'
                 );
                 $additional_attributes = [
-                    'allowfullscreen' => 'true',
-                    'mozallowfullscreen' => 'true',
+                    'allowfullscreen'       => 'true',
+                    'mozallowfullscreen'    => 'true',
                     'webkitallowfullscreen' => 'true',
                 ];
                 break;
             case 'form':
-                $url = add_query_arg(
+                $url           = add_query_arg(
                     [
                         'embedded' => 'true',
                     ],
@@ -219,9 +219,9 @@ class GoogleDocs extends Shortcode {
                 return '';
         }// End switch().
 
-        $additional_attributes['width'] = $width_attr;
+        $additional_attributes['width']  = $width_attr;
         $additional_attributes['height'] = $height_attr;
-        $attrs = [];
+        $attrs                           = [];
         foreach ( $additional_attributes as $key => $val ) {
             $key = sanitize_key( $key );
             $val = esc_attr( $val );
@@ -231,11 +231,11 @@ class GoogleDocs extends Shortcode {
         }
         $attrs = implode( ' ', $attrs );
 
-        $iframe = '<iframe';
+        $iframe      = '<iframe';
             $iframe .= ' class="' . esc_attr( $iframe_classes ) . '"';
             $iframe .= ' src="' . esc_url( $url ) . '"';
             $iframe .= ' ' . $attrs;
-        $iframe .= '>';
+        $iframe     .= '>';
         if ( $inner_content ) {
             $iframe .= esc_html( $inner_content );
         }

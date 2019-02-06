@@ -94,7 +94,7 @@ class Audience {
         if ( empty( $id ) ) {
             return false;
         }
-        $mc = MailChimp::get_instance();
+        $mc      = MailChimp::get_instance();
         $contact = false;
         // If ID is an email, use a different API
         if ( strpos( $id, '@' ) ) {
@@ -155,8 +155,8 @@ class Audience {
         }
         $output['rating'] = intval( $contact->member_rating );
 
-        $merge_fields = $contact->merge_fields;
-        $output['current_member'] = $this->get_multiprop_bool_value(
+        $merge_fields                         = $contact->merge_fields;
+        $output['current_member']             = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPCURMEM',
@@ -164,7 +164,7 @@ class Audience {
                 'DENCURMEM',
             ]
         );
-        $output['member_level'] = (int) $this->get_multiprop_value(
+        $output['member_level']               = (int) $this->get_multiprop_value(
             $merge_fields,
             [
                 'BPMEMLVL',
@@ -173,7 +173,7 @@ class Audience {
             ],
             0
         );
-        $output['recurring_member'] = $this->get_multiprop_bool_value(
+        $output['recurring_member']           = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPRECRMEM',
@@ -190,19 +190,19 @@ class Audience {
             ],
             0
         );
-        $output['no_promote'] = $this->get_multiprop_bool_value(
+        $output['no_promote']                 = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'NOPROMOTE',
             ]
         );
-        $output['major_donor'] = $this->get_multiprop_bool_value(
+        $output['major_donor']                = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 '500DONOR',
             ]
         );
-        $output['member_expiration'] = $this->get_multiprop_value(
+        $output['member_expiration']          = $this->get_multiprop_value(
             $merge_fields,
             [
                 'BPEXPDATE',
@@ -211,7 +211,7 @@ class Audience {
             ],
             0
         );
-        $output['donate_7'] = $this->get_multiprop_bool_value(
+        $output['donate_7']                   = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPDONA7',
@@ -219,7 +219,7 @@ class Audience {
                 'DENDONA7',
             ]
         );
-        $output['donate_14'] = $this->get_multiprop_bool_value(
+        $output['donate_14']                  = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPDONA14',
@@ -227,7 +227,7 @@ class Audience {
                 'DENDONA14',
             ]
         );
-        $output['donate_30'] = $this->get_multiprop_bool_value(
+        $output['donate_30']                  = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPDONA30',
@@ -235,7 +235,7 @@ class Audience {
                 'DENDONA30',
             ]
         );
-        $output['donate_365'] = $this->get_multiprop_bool_value(
+        $output['donate_365']                 = $this->get_multiprop_bool_value(
             $merge_fields,
             [
                 'BPDONA365',

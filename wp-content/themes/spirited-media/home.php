@@ -11,108 +11,108 @@ function sent_home_contact_form() {
         return false;
     }
 
-    $their_name = sanitize_text_field( $_POST['contact-name'] );
-    $their_email = sanitize_email( $_POST['contact-email'] );
+    $their_name    = sanitize_text_field( $_POST['contact-name'] );
+    $their_email   = sanitize_email( $_POST['contact-email'] );
     $their_subject = sanitize_text_field( $_POST['contact-subject'] );
     if ( ! $their_subject ) {
         $their_subject = '(no subject)';
     }
     $their_message = sanitize_text_field( $_POST['contact-message'] );
-    $headers = [ "From: $their_name <$their_email>" ];
+    $headers       = [ "From: $their_name <$their_email>" ];
 
     return wp_mail( 'contact@spiritedmedia.com', $their_subject, $their_message, $headers );
 }
 
 $press_links = [
     [
-        'title' => 'With a cross-country merger, Spirited Media aims to build a nationwide digital local news chain',
+        'title'       => 'With a cross-country merger, Spirited Media aims to build a nationwide digital local news chain',
         'publication' => 'Nieman Journalism Lab',
-        'date' => 'March 8, 2017',
-        'url' => 'http://www.niemanlab.org/2017/03/newsonomics-with-a-cross-country-merger-spirited-media-aims-to-build-a-nationwide-digital-local-news-chain/',
+        'date'        => 'March 8, 2017',
+        'url'         => 'http://www.niemanlab.org/2017/03/newsonomics-with-a-cross-country-merger-spirited-media-aims-to-build-a-nationwide-digital-local-news-chain/',
     ],
     [
-        'title' => 'Billy Penn taking its formula to Pittsburgh with help from Gannett investment',
+        'title'       => 'Billy Penn taking its formula to Pittsburgh with help from Gannett investment',
         'publication' => 'CNN Money',
-        'date' => 'May 9, 2016',
-        'url' => 'http://money.cnn.com/2016/05/09/media/billy-penn-gannett-pittsburgh/index.html',
+        'date'        => 'May 9, 2016',
+        'url'         => 'http://money.cnn.com/2016/05/09/media/billy-penn-gannett-pittsburgh/index.html',
     ],
     [
-        'title' => 'Former Post editor gets Gannett investment in Philadelphia news website',
+        'title'       => 'Former Post editor gets Gannett investment in Philadelphia news website',
         'publication' => 'The Washington Post',
-        'date' => 'March 22, 2016',
-        'url' => 'https://www.washingtonpost.com/business/capitalbusiness/former-post-editor-gets-gannett-investment-in-philadelphia-news-website/2016/03/22/7d351986-f058-11e5-85a6-2132cf446d0a_story.html?wprss=rss_social-postbusinessonly',
+        'date'        => 'March 22, 2016',
+        'url'         => 'https://www.washingtonpost.com/business/capitalbusiness/former-post-editor-gets-gannett-investment-in-philadelphia-news-website/2016/03/22/7d351986-f058-11e5-85a6-2132cf446d0a_story.html?wprss=rss_social-postbusinessonly',
     ],
     [
-        'title' => 'Philadelphia’s Billy Penn — live events and all — may soon be coming to a city near you',
+        'title'       => 'Philadelphia’s Billy Penn — live events and all — may soon be coming to a city near you',
         'publication' => 'Nieman Journalism Lab',
-        'date' => 'March 22, 2016',
-        'url' => 'http://www.niemanlab.org/2016/03/philadelphias-billy-penn-live-events-and-all-may-soon-be-coming-to-a-city-near-you/',
+        'date'        => 'March 22, 2016',
+        'url'         => 'http://www.niemanlab.org/2016/03/philadelphias-billy-penn-live-events-and-all-may-soon-be-coming-to-a-city-near-you/',
     ],
     [
-        'title' => 'Amid big changes in Philly media, startup Billy Penn sticks to its vision',
-        'url' => 'http://www.cjr.org/united_states_project/billy_penn.php',
+        'title'       => 'Amid big changes in Philly media, startup Billy Penn sticks to its vision',
+        'url'         => 'http://www.cjr.org/united_states_project/billy_penn.php',
         'publication' => 'Columbia Journalism Review',
-        'date' => 'Feb. 4, 2016',
+        'date'        => 'Feb. 4, 2016',
     ],
     [
-        'title' => 'Coming soon: PolitiFact Pennsylvania!',
-        'url' => 'http://www.politifact.com/truth-o-meter/article/2016/jan/13/coming-soon-politifact-pennsylania/',
+        'title'       => 'Coming soon: PolitiFact Pennsylvania!',
+        'url'         => 'http://www.politifact.com/truth-o-meter/article/2016/jan/13/coming-soon-politifact-pennsylania/',
         'publication' => 'PolitiFact.com',
-        'date' => 'Jan. 13, 2015',
+        'date'        => 'Jan. 13, 2015',
     ],
     [
-        'title' => 'Billy Penn and Knight Foundation to create mobile journalism guide',
-        'url' => 'http://www.knightfoundation.org/press-room/press-release/news-startup-billy-penn-create-mobile-journalism-g/',
+        'title'       => 'Billy Penn and Knight Foundation to create mobile journalism guide',
+        'url'         => 'http://www.knightfoundation.org/press-room/press-release/news-startup-billy-penn-create-mobile-journalism-g/',
         'publication' => 'KnightFoundation.org',
-        'date' => 'Dec. 10, 2015',
+        'date'        => 'Dec. 10, 2015',
     ],
     [
-        'title' => 'Billy Penn wins Startup of the Year',
-        'url' => 'http://www.geekadelphia.com/2015/08/17/the-philadelphia-geek-awards-2015-thank-you/',
+        'title'       => 'Billy Penn wins Startup of the Year',
+        'url'         => 'http://www.geekadelphia.com/2015/08/17/the-philadelphia-geek-awards-2015-thank-you/',
         'publication' => 'Geekadelphia',
-        'date' => 'Aug. 17, 2015',
+        'date'        => 'Aug. 17, 2015',
     ],
     [
-        'title' => 'The Billy Penn guide to local news that doesn’t suck',
-        'url' => 'http://digiday.com/publishers/billy-penn-guide-local-news-doesnt-suck/',
+        'title'       => 'The Billy Penn guide to local news that doesn’t suck',
+        'url'         => 'http://digiday.com/publishers/billy-penn-guide-local-news-doesnt-suck/',
         'publication' => 'Digiday',
-        'date' => 'June 8, 2015',
+        'date'        => 'June 8, 2015',
     ],
     [
-        'title' => 'Inside Billy Penn with CEO Jim Brady',
-        'url' => 'http://ajr.org/2015/05/18/inside-billy-penn-with-ceo-jim-brady/',
+        'title'       => 'Inside Billy Penn with CEO Jim Brady',
+        'url'         => 'http://ajr.org/2015/05/18/inside-billy-penn-with-ceo-jim-brady/',
         'publication' => 'American Journalism Review',
-        'date' => 'May 18, 2015',
+        'date'        => 'May 18, 2015',
     ],
     [
-        'title' => 'Jim Brady’s mobile-millennial Philadelphia local-news adventure',
-        'url' => 'http://www.politico.com/media/story/2015/03/what-are-they-thinking-jim-bradys-mobile-millennial-philadelphia-local-news-adventure-003550',
+        'title'       => 'Jim Brady’s mobile-millennial Philadelphia local-news adventure',
+        'url'         => 'http://www.politico.com/media/story/2015/03/what-are-they-thinking-jim-bradys-mobile-millennial-philadelphia-local-news-adventure-003550',
         'publication' => 'Capital New York',
-        'date' => 'March 10, 2015',
+        'date'        => 'March 10, 2015',
     ],
     [
-        'title' => 'Billy Penn Is Brady’s Biggest Digital Bet',
-        'url' => 'http://www.netnewscheck.com/article/39078/billy-penn-is-bradys-biggest-digital-bet',
+        'title'       => 'Billy Penn Is Brady’s Biggest Digital Bet',
+        'url'         => 'http://www.netnewscheck.com/article/39078/billy-penn-is-bradys-biggest-digital-bet',
         'publication' => 'NetNewsCheck',
-        'date' => 'Feb. 25, 2015',
+        'date'        => 'Feb. 25, 2015',
     ],
     [
-        'title' => 'A New Philly Website With an Activist Streak',
-        'url' => 'http://www.usatoday.com/story/money/columnist/rieder/2014/11/25/billy-penn-gets-underway-in-philly/70086222/',
+        'title'       => 'A New Philly Website With an Activist Streak',
+        'url'         => 'http://www.usatoday.com/story/money/columnist/rieder/2014/11/25/billy-penn-gets-underway-in-philly/70086222/',
         'publication' => 'USA Today',
-        'date' => 'Nov. 25, 2014',
+        'date'        => 'Nov. 25, 2014',
     ],
     [
-        'title' => 'The Billy Pulpit',
-        'url' => 'http://www.phillymag.com/articles/jim-brady-profile-billy-pulpit/',
+        'title'       => 'The Billy Pulpit',
+        'url'         => 'http://www.phillymag.com/articles/jim-brady-profile-billy-pulpit/',
         'publication' => 'Philadelphia Magazine',
-        'date' => 'Sept. 25, 2014',
+        'date'        => 'Sept. 25, 2014',
     ],
     [
-        'title' => 'Brady Takes Another Shot at Local Journalism With New Venture',
-        'url' => 'http://www.poynter.org/2014/brady-takes-another-shot-at-local-journalism-with-new-venture/258898/',
+        'title'       => 'Brady Takes Another Shot at Local Journalism With New Venture',
+        'url'         => 'http://www.poynter.org/2014/brady-takes-another-shot-at-local-journalism-with-new-venture/258898/',
         'publication' => 'Poynter',
-        'date' => 'July 16, 2014',
+        'date'        => 'July 16, 2014',
     ],
 ];
 

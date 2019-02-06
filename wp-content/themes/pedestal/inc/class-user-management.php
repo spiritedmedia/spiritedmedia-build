@@ -152,7 +152,7 @@ class User_Management {
                 return $template;
             }
             $users = get_users( [
-                'meta_key' => 'display_name_slug',
+                'meta_key'   => 'display_name_slug',
                 'meta_value' => $display_name_slug,
             ] );
 
@@ -216,7 +216,7 @@ class User_Management {
         foreach ( static::$rename_roles as $old_role => $new_role ) {
             $get_users_args = [
                 'fields' => [ 'ID' ],
-                'role' => $old_role,
+                'role'   => $old_role,
             ];
             if ( ! get_role( $new_role ) ) {
                 $this->duplicate_role( $old_role, $new_role, self::$roles_labels[ $new_role ], [] );
@@ -252,7 +252,7 @@ class User_Management {
         ] );
 
         // Administrators and Reporters
-        $caps_admin_reporters = [
+        $caps_admin_reporters   = [
             'send_emails'           => '',
             'manage_featured_posts' => '',
             'manage_message_spot'   => '',
@@ -273,14 +273,14 @@ class User_Management {
             $caps_admin_reporters += $caps;
         }
         $caps_admin_reporters = array_map( '__return_true', $caps_admin_reporters );
-        $caps_admin = $caps_admin_reporters + $caps_sales_manager;
-        $caps_admin += [
+        $caps_admin           = $caps_admin_reporters + $caps_sales_manager;
+        $caps_admin          += [
             'create_users'              => true,
             'merge_clusters'            => true,
             'manage_categories'         => true,
             'manage_conversion_prompts' => true,
         ];
-        $caps_admin = array_map( '__return_true', $caps_admin );
+        $caps_admin           = array_map( '__return_true', $caps_admin );
         $this->merge_role_caps( 'administrator', $caps_admin );
         $this->merge_role_caps( 'reporter', $caps_admin_reporters );
 
@@ -324,7 +324,7 @@ class User_Management {
             ];
             if ( 'subscriber' !== $role_name ) {
                 $basic_caps['upload_files'] = true;
-                $basic_caps['edit_posts'] = true;
+                $basic_caps['edit_posts']   = true;
             }
             $this->merge_role_caps( $role_name, $basic_caps );
 
@@ -412,7 +412,7 @@ class User_Management {
 
         $user_id = wp_insert_user( [
             'user_login' => $user_login,
-            'user_pass' => wp_generate_password(),
+            'user_pass'  => wp_generate_password(),
         ] );
         if ( is_wp_error( $user_id ) ) {
             return $user_id;
@@ -445,7 +445,7 @@ class User_Management {
      */
     public static function get_users_from_csv( $ids ) {
         $user_ids = array_map( 'trim', explode( ',', $ids ) );
-        $users = get_users( [
+        $users    = get_users( [
             'include' => array_map( 'intval', $user_ids ),
         ] );
         return [
@@ -495,7 +495,7 @@ class User_Management {
      * @return array Array of caps for the role
      */
     private function get_role_caps( $role ) {
-        $caps = [];
+        $caps     = [];
         $role_obj = get_role( $role );
 
         if ( $role_obj && isset( $role_obj->capabilities ) ) {
@@ -526,7 +526,7 @@ class User_Management {
 
             if ( ! isset( $wp_user_roles[ $role ] ) ) {
                 $wp_user_roles[ $role ] = [
-                    'name' => $name,
+                    'name'         => $name,
                     'capabilities' => $capabilities,
                 ];
             }
@@ -557,7 +557,7 @@ class User_Management {
         }
 
         $current_caps = (array) $this->get_role_caps( $role );
-        $new_caps = array_merge( $current_caps, (array) $caps );
+        $new_caps     = array_merge( $current_caps, (array) $caps );
 
         foreach ( $new_caps as $cap => $role_can ) {
             if ( $role_can ) {

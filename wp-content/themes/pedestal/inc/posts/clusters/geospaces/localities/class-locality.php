@@ -60,7 +60,7 @@ class Locality extends Place {
         // Although a Locality Type class will be in the same namespace,
         // `class_exists()` requires the full namespace specified
         $class_name = self::get_class_name( $post->ID );
-        $class = '\\' . __NAMESPACE__ . '\\' . $class_name;
+        $class      = '\\' . __NAMESPACE__ . '\\' . $class_name;
         if ( empty( $class_name ) || ! class_exists( $class ) ) {
             $class = static::class;
         }
@@ -95,8 +95,8 @@ class Locality extends Place {
      */
     protected function set_data_atts() {
         parent::set_data_atts();
-        $atts = parent::get_data_atts();
-        $new_atts = [
+        $atts                  = parent::get_data_atts();
+        $new_atts              = [
             'locality-type' => $this->get_locality_type_term_property( 'slug' ),
         ];
         $this->data_attributes = array_merge( $atts, $new_atts );
@@ -170,7 +170,7 @@ class Locality extends Place {
      * Set up the Locality's Type ID
      */
     public function set_locality_type_id() {
-        $errors = new \WP_Error;
+        $errors  = new \WP_Error;
         $type_id = $this->get_meta( 'locality_type' );
         if ( is_numeric( $type_id ) ) {
             $this->locality_type_id = (int) $type_id;

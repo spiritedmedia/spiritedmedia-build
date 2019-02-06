@@ -57,14 +57,14 @@ class Menus {
 
         // Redirect /navigation to /navigation/
         $requested_path = explode( '?', $_SERVER['REQUEST_URI'] )[0];
-        if ( '/' !== substr( $requested_path , -1 ) ) {
+        if ( '/' !== substr( $requested_path, -1 ) ) {
             $redirect = trailingslashit( home_url( $wp->request ) );
             $redirect = add_query_arg( $_GET, $redirect );
             wp_safe_redirect( $redirect );
             die();
         }
 
-        $wp_query->is_404 = false;
+        $wp_query->is_404  = false;
         $wp_query->is_page = true;
         // Add a fake queried_object to prevent PHP notices
         $wp_query->queried_object = (object) [
@@ -85,7 +85,7 @@ class Menus {
      */
     public function filter_timber_context( $context ) {
         $context['header_navigation_disabled'] = false;
-        $context['site_header'] = $this->get_header_menu_html();
+        $context['site_header']                = $this->get_header_menu_html();
         return $context;
     }
 
@@ -139,19 +139,19 @@ class Menus {
      * @return array                 Menu data
      */
     public function get_menu_data( $menu_location = '' ) {
-        $output = [];
+        $output    = [];
         $locations = get_nav_menu_locations();
         if ( empty( $locations[ $menu_location ] ) ) {
             return $output;
         }
-        $menu = get_term( $locations[ $menu_location ], 'nav_menu' );
+        $menu  = get_term( $locations[ $menu_location ], 'nav_menu' );
         $items = wp_get_nav_menu_items( $menu );
         foreach ( $items as $item ) {
             $icon = '';
             if ( isset( $item->icon ) ) {
                 $icon = $item->icon;
             }
-            $slug = sanitize_title( $item->title );
+            $slug            = sanitize_title( $item->title );
             $output[ $slug ] = (object) [
                 'title' => $item->title,
                 'slug'  => $slug,

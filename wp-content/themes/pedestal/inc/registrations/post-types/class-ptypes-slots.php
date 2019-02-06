@@ -75,36 +75,36 @@ class Slot_Types {
             switch ( $post_type ) {
 
                 case 'pedestal_slot_item':
-                    $singular = esc_html__( 'Slot Item', 'pedestal' );
-                    $plural = esc_html__( 'Slot Items', 'pedestal' );
-                    $class = 'Posts\\Slots\\Slot_Item';
-                    $args['menu_position'] = 61;
-                    $args['menu_icon'] = 'dashicons-businessman';
-                    $args['supports'] = [
+                    $singular                  = esc_html__( 'Slot Item', 'pedestal' );
+                    $plural                    = esc_html__( 'Slot Items', 'pedestal' );
+                    $class                     = 'Posts\\Slots\\Slot_Item';
+                    $args['menu_position']     = 61;
+                    $args['menu_icon']         = 'dashicons-businessman';
+                    $args['supports']          = [
                         'title',
                     ];
-                    $args['rewrite'] = false;
-                    $args['public'] = false;
-                    $args['show_in_menu'] = 'slots';
+                    $args['rewrite']           = false;
+                    $args['public']            = false;
+                    $args['show_in_menu']      = 'slots';
                     $args['show_in_admin_bar'] = false;
-                    $args['has_archive'] = false;
+                    $args['has_archive']       = false;
                     break;
 
                 case '_slot_item_placement':
-                    $singular = esc_html__( 'Slot Item Placement', 'pedestal' );
-                    $plural = esc_html__( 'Slot Item Placements', 'pedestal' );
-                    $class = 'Posts\\Slots\\Placement';
-                    $args['menu_position'] = 61;
-                    $args['menu_icon'] = 'dashicons-businessman';
-                    $args['supports'] = [
+                    $singular                  = esc_html__( 'Slot Item Placement', 'pedestal' );
+                    $plural                    = esc_html__( 'Slot Item Placements', 'pedestal' );
+                    $class                     = 'Posts\\Slots\\Placement';
+                    $args['menu_position']     = 61;
+                    $args['menu_icon']         = 'dashicons-businessman';
+                    $args['supports']          = [
                         'title',
                     ];
-                    $args['rewrite'] = false;
-                    $args['public'] = false;
-                    $args['show_ui'] = false;
+                    $args['rewrite']           = false;
+                    $args['public']            = false;
+                    $args['show_ui']           = false;
                     $args['show_in_nav_menus'] = false;
                     $args['show_in_admin_bar'] = false;
-                    $args['has_archive'] = false;
+                    $args['has_archive']       = false;
                     break;
 
             }// End switch().
@@ -138,7 +138,7 @@ class Slot_Types {
         $post_type_support = Types::get_post_types_with_label(
             Types::get_post_types_by_supported_feature( 'slots' )
         );
-        $placement_types = $post_type_support + static::$component_support;
+        $placement_types   = $post_type_support + static::$component_support;
 
         $label_desc = 'The text to display alongside the image. Defaults to "Sponsored By" if unset.';
 
@@ -165,19 +165,19 @@ class Slot_Types {
         unchecked.';
 
         // Slot Item Type specific fields
-        $boxes['type'] = [];
-        $boxes['type']['name'] = 'Item Type';
+        $boxes['type']           = [];
+        $boxes['type']['name']   = 'Item Type';
         $boxes['type']['fields'] = new \Fieldmanager_Group( false, [
-            'name'           => 'slot_item_type',
-            'children'       => [
-                'type' => new \Fieldmanager_Select( false, [
-                    'name'           => 'type',
-                    'description'    => esc_html__( 'Select the type of Slot Item.', 'pedestal' ),
-                    'first_empty'    => true,
+            'name'     => 'slot_item_type',
+            'children' => [
+                'type'                   => new \Fieldmanager_Select( false, [
+                    'name'                => 'type',
+                    'description'         => esc_html__( 'Select the type of Slot Item.', 'pedestal' ),
+                    'first_empty'         => true,
                     'required'            => true,
                     'validation_rules'    => 'required',
                     'validation_messages' => esc_html__( 'Required', 'pedestal' ),
-                    'datasource'     => new \Fieldmanager_Datasource_Term( [
+                    'datasource'          => new \Fieldmanager_Datasource_Term( [
                         'taxonomy'                    => 'pedestal_slot_item_type',
                         'taxonomy_hierarchical'       => true,
                         'taxonomy_hierarchical_depth' => 0,
@@ -185,25 +185,25 @@ class Slot_Types {
                         'taxonomy_save_to_terms'      => true,
                     ] ),
                 ] ),
-                'sponsorship' => new \Fieldmanager_Group( false, [
-                    'name'           => 'sponsorship',
-                    'display_if'  => [
+                'sponsorship'            => new \Fieldmanager_Group( false, [
+                    'name'       => 'sponsorship',
+                    'display_if' => [
                         'src'   => 'type',
                         'value' => $term_id_sponsors,
                     ],
-                    'children'       => [
-                        'url' => new \Fieldmanager_Link( esc_html__( 'Link URL', 'pedestal' ), [
+                    'children'   => [
+                        'url'    => new \Fieldmanager_Link( esc_html__( 'Link URL', 'pedestal' ), [
                             'required'            => true,
                             'validation_rules'    => 'required',
                             'validation_messages' => esc_html__( 'Required', 'pedestal' ),
                         ] ),
                         'label'  => new \Fieldmanager_TextField( esc_html__( 'Label', 'pedestal' ), [
-                            'name'          => 'label',
-                            'description'   => $label_desc,
+                            'name'                => 'label',
+                            'description'         => $label_desc,
                             'required'            => true,
                             'validation_rules'    => 'required',
                             'validation_messages' => esc_html__( 'Required', 'pedestal' ),
-                            'default_value' => esc_html__( 'Sponsored By', 'pedestal' ),
+                            'default_value'       => esc_html__( 'Sponsored By', 'pedestal' ),
                         ] ),
                         'upload' => new \Fieldmanager_Media( esc_html__( 'Upload Image', 'pedestal' ), [
                             'description'        => esc_html__( $media_desc, 'pedestal' ),
@@ -215,19 +215,19 @@ class Slot_Types {
                 ] ),
 
                 'sponsored-stream-items' => new \Fieldmanager_Group( false, [
-                    'name' => 'sponsored-stream-items',
+                    'name'       => 'sponsored-stream-items',
                     'display_if' => [
-                        'src' => 'type',
+                        'src'   => 'type',
                         'value' => $term_id_sponsored_stream_items,
                     ],
-                    'children' => [
-                        'url' => new \Fieldmanager_Link( esc_html__( 'Link URL', 'pedestal' ), [
+                    'children'   => [
+                        'url'          => new \Fieldmanager_Link( esc_html__( 'Link URL', 'pedestal' ), [
                             'required'            => true,
                             'validation_rules'    => 'required',
                             'validation_messages' => esc_html__( 'Required', 'pedestal' ),
                         ] ),
-                        'title'  => new \Fieldmanager_TextField( esc_html__( 'Title', 'pedestal' ), [
-                            'name'          => 'title',
+                        'title'        => new \Fieldmanager_TextField( esc_html__( 'Title', 'pedestal' ), [
+                            'name'                => 'title',
                             'required'            => true,
                             'validation_rules'    => 'required',
                             'validation_messages' => esc_html__( 'Required', 'pedestal' ),
@@ -239,7 +239,7 @@ class Slot_Types {
                             'validation_rules'    => 'required',
                             'validation_messages' => esc_html__( 'Required', 'pedestal' ),
                         ] ),
-                        'image' => new \Fieldmanager_Media( esc_html__( 'Upload Image', 'pedestal' ), [
+                        'image'        => new \Fieldmanager_Media( esc_html__( 'Upload Image', 'pedestal' ), [
                             'button_label'       => esc_html__( 'Select an image', 'pedestal' ),
                             'modal_button_label' => esc_html__( 'Select image', 'pedestal' ),
                             'modal_title'        => esc_html__( 'Choose image', 'pedestal' ),
@@ -259,18 +259,18 @@ class Slot_Types {
 
         // Add post selection fields for each supported post type
         foreach ( $post_type_support as $post_type => $post_type_label ) {
-            $field_name = 'select_' . Utils::remove_name_prefix( $post_type );
+            $field_name                      = 'select_' . Utils::remove_name_prefix( $post_type );
             $placement_fields[ $field_name ] = new \Fieldmanager_Autocomplete( esc_html__( $post_type_label, 'pedestal' ), [
-                'name' => $field_name,
-                'attributes' => [
-                    'placeholder'  => esc_html__( 'Search by post title or leave blank for all/any', 'pedestal' ),
-                    'size'         => 50,
+                'name'           => $field_name,
+                'attributes'     => [
+                    'placeholder' => esc_html__( 'Search by post title or leave blank for all/any', 'pedestal' ),
+                    'size'        => 50,
                 ],
-                'display_if'  => [
+                'display_if'     => [
                     'src'   => 'type',
                     'value' => $post_type,
                 ],
-                'datasource' => new \Fieldmanager_Datasource_Post( [
+                'datasource'     => new \Fieldmanager_Datasource_Post( [
                     'query_args' => [
                         'post_type' => $post_type,
                     ],
@@ -280,8 +280,8 @@ class Slot_Types {
         }
 
         // Add the date fields after everything else
-        $datepicker_opts = [
-            'js_opts'    => [
+        $datepicker_opts                        = [
+            'js_opts' => [
                 'firstDay' => 0,
             ],
         ];
@@ -293,8 +293,8 @@ class Slot_Types {
         ] );
 
         // Setup Placement Default fields
-        $boxes['placement_defaults'] = [];
-        $boxes['placement_defaults']['name'] = 'Slot Placement Defaults';
+        $boxes['placement_defaults']           = [];
+        $boxes['placement_defaults']['name']   = 'Slot Placement Defaults';
         $boxes['placement_defaults']['fields'] = new \Fieldmanager_Group( [
             'name'        => 'slot_item_placement_defaults',
             'description' => esc_html__( $slot_placement_defaults_desc, 'pedestal' ),
@@ -302,8 +302,8 @@ class Slot_Types {
         ] );
 
         // Setup additional Placement Rules fields
-        $boxes['placement_rules'] = [];
-        $boxes['placement_rules']['name'] = 'Additional Placement Rules';
+        $boxes['placement_rules']           = [];
+        $boxes['placement_rules']['name']   = 'Additional Placement Rules';
         $boxes['placement_rules']['fields'] = new \Fieldmanager_Group( [
             'name'           => 'slot_item_placement_rules',
             'description'    => esc_html__( $additional_slot_rules_desc, 'pedestal' ),

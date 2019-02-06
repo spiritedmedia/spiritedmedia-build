@@ -94,8 +94,8 @@ class Email_Groups {
      * Handles rendering the admin screen
      */
     public function render_settings_page() {
-        $mc = MailChimp::get_instance();
-        $total_groups = count( $mc->get_all_groups() );
+        $mc                    = MailChimp::get_instance();
+        $total_groups          = count( $mc->get_all_groups() );
         $remaining_groups_left = 60 - absint( $total_groups );
         $this->save_settings_page();
 
@@ -103,28 +103,28 @@ class Email_Groups {
         if ( ! Types::is_mailchimp_integrated_post_type( $post_type ) ) {
             wp_die( $post_type . ' is not integrated with MailChimp' );
         }
-        $group_category = $this->get_group_category_from_post_type( $post_type );
+        $group_category   = $this->get_group_category_from_post_type( $post_type );
         $post_type_labels = (object) Types::get_post_type_labels( $post_type );
-        $admin_page_slug = $this->get_admin_page_slug( $post_type );
-        $group_data = $this->get_groups( $group_category );
-        $groups = $group_data->groups;
-        $last_updated = human_time_diff( $group_data->last_updated );
+        $admin_page_slug  = $this->get_admin_page_slug( $post_type );
+        $group_data       = $this->get_groups( $group_category );
+        $groups           = $group_data->groups;
+        $last_updated     = human_time_diff( $group_data->last_updated );
 
-        $context = [];
-        $context['singular_name'] = $post_type_labels->singular_name;
-        $context['plural_name'] = $post_type_labels->name;
-        $context['post_type'] = $post_type;
-        $context['form'] = [
+        $context                          = [];
+        $context['singular_name']         = $post_type_labels->singular_name;
+        $context['plural_name']           = $post_type_labels->name;
+        $context['post_type']             = $post_type;
+        $context['form']                  = [
             'action' => '?post_type=' . esc_attr( $post_type ) . '&page=' . esc_attr( $admin_page_slug ),
         ];
-        $context['groups_left'] = $remaining_groups_left;
-        $context['mailchimp_admin_url'] = $mc->get_admin_url( '/lists/' );
+        $context['groups_left']           = $remaining_groups_left;
+        $context['mailchimp_admin_url']   = $mc->get_admin_url( '/lists/' );
         $context['last_fetched_from_api'] = $last_updated;
-        $context['fields'] = [];
+        $context['fields']                = [];
         foreach ( $groups as $group ) {
-            $id = $group->id;
+            $id    = $group->id;
             $label = $group->name;
-            $key = 'field-' . $id;
+            $key   = 'field-' . $id;
 
             $context['fields'][] = [
                 'id'          => $group->id,
@@ -134,7 +134,7 @@ class Email_Groups {
             ];
         }
 
-        $context['nonce_field'] = wp_nonce_field( $admin_page_slug, '_wpnonce', true, false );
+        $context['nonce_field']    = wp_nonce_field( $admin_page_slug, '_wpnonce', true, false );
         $context['primary_button'] = get_submit_button( 'Sync & Save', 'primary', 'sync-and-save', false );
 
         Timber::render( 'partials/admin/email-group-settings.twig', $context );
@@ -178,9 +178,9 @@ class Email_Groups {
      * Render the Newsletter Groups dashboard widget
      */
     public function handle_dashboard_widget() {
-        $group_data = $this->get_groups( 'Newsletters' );
-        $last_updated = $group_data->last_updated;
-        $context = [];
+        $group_data       = $this->get_groups( 'Newsletters' );
+        $last_updated     = $group_data->last_updated;
+        $context          = [];
         $context['items'] = [];
         foreach ( $group_data->groups as $group ) {
             $context['items'][] = [
@@ -226,18 +226,18 @@ class Email_Groups {
         if ( empty( $group_category ) ) {
             throw new \Exception( 'No name of $group_category passed!' );
         }
-        $key = $this->get_groups_option_key( $group_category );
+        $key    = $this->get_groups_option_key( $group_category );
         $groups = get_option( $key );
         if ( ! empty( $groups ) ) {
             return $groups;
         }
 
         // Not cached locally so we need to fetch it
-        $mc = MailChimp::get_instance();
+        $mc         = MailChimp::get_instance();
         $group_data = $mc->get_groups( $group_category );
-        $groups = (object) [
+        $groups     = (object) [
             'last_updated' => time(),
-            'groups' => $group_data,
+            'groups'       => $group_data,
         ];
         update_option( $key, $groups );
         return $groups;

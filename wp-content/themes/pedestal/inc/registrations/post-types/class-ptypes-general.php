@@ -54,17 +54,17 @@ class General_Types {
                 case 'pedestal_newsletter':
                     $cap_manage = 'send_emails';
 
-                    $singular = esc_html__( 'Newsletter', 'pedestal' );
-                    $plural = esc_html__( 'Newsletters', 'pedestal' );
-                    $class = 'Posts\\Newsletter';
+                    $singular              = esc_html__( 'Newsletter', 'pedestal' );
+                    $plural                = esc_html__( 'Newsletters', 'pedestal' );
+                    $class                 = 'Posts\\Newsletter';
                     $args['menu_position'] = 12;
-                    $args['menu_icon'] = 'dashicons-email-alt';
-                    $args['supports'] = [
+                    $args['menu_icon']     = 'dashicons-email-alt';
+                    $args['supports']      = [
                         'title',
                         'slots',
                         'mailchimp-integration',
                     ];
-                    $args['capabilities'] = [
+                    $args['capabilities']  = [
                         'read'                   => 'read',
                         'edit_post'              => 'edit_newsletter',
                         'read_post'              => 'read_newsletter',
@@ -81,7 +81,7 @@ class General_Types {
                         'edit_private_posts'     => $cap_manage,
                         'delete_private_posts'   => $cap_manage,
                     ];
-                    $args['rewrite'] = [
+                    $args['rewrite']       = [
                         'slug' => 'newsletters',
                     ];
                     break;
@@ -103,10 +103,10 @@ class General_Types {
      */
     private function setup_item_types() {
         static::$newsletter_item_types = [
-            'post'    => esc_html__( 'Post', 'pedestal' ),
-            'heading' => esc_html__( 'Heading', 'pedestal' ),
-            'heading_likes' => esc_html__( sprintf( 'Heading: %s Likes', PEDESTAL_BLOG_NAME ), 'pedestal' ),
-            'heading_event_feat' => esc_html__( 'Heading: Featured Event', 'pedestal' ),
+            'post'                => esc_html__( 'Post', 'pedestal' ),
+            'heading'             => esc_html__( 'Heading', 'pedestal' ),
+            'heading_likes'       => esc_html__( sprintf( 'Heading: %s Likes', PEDESTAL_BLOG_NAME ), 'pedestal' ),
+            'heading_event_feat'  => esc_html__( 'Heading: Featured Event', 'pedestal' ),
             'heading_on_calendar' => esc_html__( 'Heading: On the Calendar', 'pedestal' ),
         ];
     }
@@ -156,12 +156,12 @@ class General_Types {
         );
 
         $description = 'Aim for 140 characters and test it!';
-        $field = new \Fieldmanager_Textarea( false, [
+        $field       = new \Fieldmanager_Textarea( false, [
             'name'        => 'email_preview_text',
             'description' => $description,
-            'attributes' => [
+            'attributes'  => [
                 'placeholder' => '(Optional)',
-                'width' => '100%',
+                'width'       => '100%',
             ],
         ] );
         $field->add_meta_box(
@@ -192,18 +192,18 @@ class General_Types {
                 'post',
             ],
             'children'       => [
-                'type' => new \Fieldmanager_Select( esc_html__( 'Type', 'pedestal' ), [
-                    'options' => static::get_newsletter_item_types(),
+                'type'          => new \Fieldmanager_Select( esc_html__( 'Type', 'pedestal' ), [
+                    'options'             => static::get_newsletter_item_types(),
                     'default_value'       => 'post',
                     'first_empty'         => false,
                     'required'            => true,
                     'validation_rules'    => 'required',
                     'validation_messages' => esc_html__( 'Required', 'pedestal' ),
                 ] ),
-                'post' => new \Fieldmanager_Autocomplete( esc_html__( 'Post Selection (Required)', 'pedestal' ), [
-                    'name'        => 'post',
-                    'description' => esc_html__( 'Select an Entity', 'pedestal' ),
-                    'display_if'  => [
+                'post'          => new \Fieldmanager_Autocomplete( esc_html__( 'Post Selection (Required)', 'pedestal' ), [
+                    'name'                => 'post',
+                    'description'         => esc_html__( 'Select an Entity', 'pedestal' ),
+                    'display_if'          => [
                         'src'   => 'type',
                         'value' => 'post',
                     ],
@@ -220,7 +220,7 @@ class General_Types {
                     ] ),
 
                 ] ),
-                'post_title'     => new \Fieldmanager_Textfield( esc_html__( 'Title (Optional)', 'pedestal' ), [
+                'post_title'    => new \Fieldmanager_Textfield( esc_html__( 'Title (Optional)', 'pedestal' ), [
                     'name'        => 'post_title',
                     'description' => esc_html__( 'Customize the display title. Defaults to the Entity\'s original title. Not used for Events.', 'pedestal' ),
                     'display_if'  => [
@@ -228,18 +228,18 @@ class General_Types {
                         'value' => 'post',
                     ],
                 ] ),
-                'url' => new \Fieldmanager_Link( esc_html__( 'Title Link (Optional)', 'pedestal' ), [
-                    'name' => 'url',
+                'url'           => new \Fieldmanager_Link( esc_html__( 'Title Link (Optional)', 'pedestal' ), [
+                    'name'        => 'url',
                     'description' => esc_html__( 'Customize the URL the item title links to. Defaults to the Entity\'s original permalink. Not used for Events.', 'pedestal' ),
                     'display_if'  => [
                         'src'   => 'type',
                         'value' => 'post',
                     ],
                 ] ),
-                'description' => new \Fieldmanager_RichTextArea( esc_html__( 'Description', 'pedestal' ), [
-                    'name'        => 'description',
-                    'description' => esc_html__( 'Customize the blurb. Not used for Events.', 'pedestal' ),
-                    'display_if'  => [
+                'description'   => new \Fieldmanager_RichTextArea( esc_html__( 'Description', 'pedestal' ), [
+                    'name'            => 'description',
+                    'description'     => esc_html__( 'Customize the blurb. Not used for Events.', 'pedestal' ),
+                    'display_if'      => [
                         'src'   => 'type',
                         'value' => 'post',
                     ],
@@ -249,9 +249,9 @@ class General_Types {
                         'editor_height' => 300,
                     ],
                 ] ),
-                'heading_title'     => new \Fieldmanager_Textfield( esc_html__( 'Heading Text', 'pedestal' ), [
-                    'name'        => 'heading_title',
-                    'display_if'  => [
+                'heading_title' => new \Fieldmanager_Textfield( esc_html__( 'Heading Text', 'pedestal' ), [
+                    'name'                => 'heading_title',
+                    'display_if'          => [
                         'src'   => 'type',
                         'value' => 'heading',
                     ],

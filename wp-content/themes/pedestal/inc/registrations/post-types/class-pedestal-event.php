@@ -48,7 +48,7 @@ class Pedestal_Event {
         if ( empty( $context['type'] ) || 'event' != $context['type'] ) {
             return $context;
         }
-        $post = $context['post'];
+        $post      = $context['post'];
         $ped_event = Event::get( $post );
         if ( method_exists( $ped_event, 'get_context' ) ) {
             $context = $ped_event->get_context( $context );

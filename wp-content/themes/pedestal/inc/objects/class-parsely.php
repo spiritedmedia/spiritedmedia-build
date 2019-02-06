@@ -58,10 +58,10 @@ class Parsely {
      */
     private function setup_args( $args ) {
         $scope = '';
-        $id = 0;
+        $id    = 0;
         if ( is_single() || is_page() ) {
             $scope = 'post';
-            $id = get_queried_object_id();
+            $id    = get_queried_object_id();
         } elseif ( is_author() ) {
             $scope = 'user';
         } elseif ( is_archive() ) {
@@ -77,8 +77,8 @@ class Parsely {
 
         $args = wp_parse_args( $args, $defaults );
 
-        $this->args = $args;
-        $this->scope = $args['scope'];
+        $this->args   = $args;
+        $this->scope  = $args['scope'];
         $this->obj_id = $args['id'];
     }
 
@@ -97,9 +97,9 @@ class Parsely {
      * Set up data based on page context
      */
     private function set_data() {
-        $args = $this->args;
+        $args      = $this->args;
         $base_data = $this->base_data;
-        $scope = $args['scope'];
+        $scope     = $args['scope'];
 
         if ( ! isset( $args['scope'] ) || empty( $args['scope'] ) ) {
             return '';
@@ -114,12 +114,12 @@ class Parsely {
         switch ( $scope ) {
             case 'post':
                 $keywords = [];
-                $post = Post::get( (int) $args['id'] );
+                $post     = Post::get( (int) $args['id'] );
                 if ( ! is_a( $post, '\\Pedestal\\Posts\\Post' ) ) {
                     return '';
                 }
-                $headline = $this->str_sanitize( $post->get_title() );
-                $schema = ( 'page' == $post->get_type() ) ? 'WebPage' : 'NewsArticle';
+                $headline        = $this->str_sanitize( $post->get_title() );
+                $schema          = ( 'page' == $post->get_type() ) ? 'WebPage' : 'NewsArticle';
                 $article_section = '';
                 if ( $post->is_entity() ) {
                     $clusters = $post->get_clusters( [
@@ -128,8 +128,8 @@ class Parsely {
                     ] );
                     if ( ! empty( $clusters ) ) {
                         foreach ( $clusters as $cluster ) {
-                            $type = $cluster->get_type_name();
-                            $type = strtolower( $type );
+                            $type       = $cluster->get_type_name();
+                            $type       = strtolower( $type );
                             $keywords[] = $type . ' :: ' . $cluster->get_title();
                         }
                     }
@@ -154,25 +154,25 @@ class Parsely {
                 break;
 
             case 'user':
-                $user = new User( $args['id'] );
+                $user     = new User( $args['id'] );
                 $headline = $this->str_sanitize( 'Author — ' . $user->get_display_name() );
-                $data = array_merge( $base_data, [
-                    'headline'       => $headline,
-                    'url'            => $user->get_permalink(),
+                $data     = array_merge( $base_data, [
+                    'headline' => $headline,
+                    'url'      => $user->get_permalink(),
                 ] );
                 break;
 
             case 'archive':
                 $headline = $this->str_sanitize( \Pedestal\Frontend::get_archive_title() );
-                $data = array_merge( $base_data, [
-                    'headline'       => $headline,
+                $data     = array_merge( $base_data, [
+                    'headline' => $headline,
                 ] );
                 break;
 
             default:
                 $data = array_merge( $base_data, [
-                    'headline'       => $this->str_sanitize( get_bloginfo( 'name', 'raw' ) ),
-                    'url'            => home_url(),
+                    'headline' => $this->str_sanitize( get_bloginfo( 'name', 'raw' ) ),
+                    'url'      => home_url(),
                 ] );
                 break;
         }// End switch().
@@ -186,7 +186,7 @@ class Parsely {
      * @return string A JSON-LD string surrounded by script tags
      */
     public function get_data() {
-        $output = '<script type="application/ld+json">';
+        $output  = '<script type="application/ld+json">';
         $output .= json_encode( $this->data, JSON_UNESCAPED_SLASHES );
         $output .= '</script>';
         return $output;
@@ -200,7 +200,7 @@ class Parsely {
      */
     private function str_sanitize( $val ) {
         if ( is_string( $val ) ) {
-            $val = str_replace( "\n" , '', $val );
+            $val = str_replace( "\n", '', $val );
             $val = str_replace( "\r", '', $val );
             $val = strip_tags( $val );
             $val = trim( $val );

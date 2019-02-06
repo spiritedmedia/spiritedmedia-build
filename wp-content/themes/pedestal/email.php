@@ -7,8 +7,8 @@ use Pedestal\Posts\Slots\Slots;
 
 
 $dist_ver_path = '/assets/dist/' . PEDESTAL_VERSION;
-$base_css = file_get_contents( get_template_directory() . $dist_ver_path . '/css/email-base.css' );
-$css = file_get_contents( get_stylesheet_directory() . $dist_ver_path . '/css/email.css' );
+$base_css      = file_get_contents( get_template_directory() . $dist_ver_path . '/css/email-base.css' );
+$css           = file_get_contents( get_stylesheet_directory() . $dist_ver_path . '/css/email.css' );
 
 $debug_styles = false;
 if ( defined( 'PEDESTAL_DEBUG_EMAIL_CSS' ) && true === PEDESTAL_DEBUG_EMAIL_CSS ) {
@@ -22,9 +22,9 @@ add_filter( 'timber_context', function( $context ) use (
     $base_css
     ) {
 
-    $template_name = str_replace( '_', '-', $template_name );
+    $template_name     = str_replace( '_', '-', $template_name );
     $base_spacing_unit = 10;
-    $context = array_merge( $context, [
+    $context           = array_merge( $context, [
         'template_name'                   => $template_name,
         'is_home'                         => false,
         'show_content_header'             => true,
@@ -51,7 +51,7 @@ $html = ob_get_clean();
 
 if ( false === $debug_styles ) {
     $inliner = new CssToInlineStyles();
-    $html = $inliner->convert( $html, $css );
+    $html    = $inliner->convert( $html, $css );
     // The CSS inliner escapes MailChimp tags like *|UNSUB|* to *%7CUNSUB%7C*
     // causing MailChimp to ignore them
     $html = str_replace( [ '*%7C', '%7C*' ], [ '*|', '|*' ], $html );

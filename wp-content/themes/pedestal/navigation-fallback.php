@@ -11,9 +11,9 @@ add_filter( 'body_class', function( $class = [] ) {
 
 $context = Timber::get_context();
 
-$menus = Menus::get_instance();
-$context['primary_nav'] = $menus->get_menu_data( 'header-navigation' );
-$context['secondary_nav'] = $menus->get_menu_data( 'header-secondary-navigation' );
+$menus                           = Menus::get_instance();
+$context['primary_nav']          = $menus->get_menu_data( 'header-navigation' );
+$context['secondary_nav']        = $menus->get_menu_data( 'header-secondary-navigation' );
 $context['secondary_nav_mobile'] = $menus->get_menu_data( 'header-secondary-navigation-mobile' );
 
 Timber::render( 'navigation-fallback.twig', $context );

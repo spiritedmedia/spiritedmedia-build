@@ -133,9 +133,9 @@ abstract class Post {
             'update_post_meta_cache' => false,
             'update_post_term_cache' => false,
         ];
-        $args = wp_parse_args( $args, $defaults );
-        $query = new \WP_Query( $args );
-        $posts = $query->posts;
+        $args     = wp_parse_args( $args, $defaults );
+        $query    = new \WP_Query( $args );
+        $posts    = $query->posts;
         if ( ! is_array( $posts ) || ! isset( $posts[0] ) ) {
             return false;
         }
@@ -436,11 +436,11 @@ abstract class Post {
      */
     public function get_the_content_rss() {
 
-        $type = static::$post_type;
-        $type_obj = get_post_type_object( $type );
+        $type          = static::$post_type;
+        $type_obj      = get_post_type_object( $type );
         $singular_name = strtolower( $type_obj->labels->singular_name );
-        $url = esc_url( $this->get_the_permalink() );
-        $source = false;
+        $url           = esc_url( $this->get_the_permalink() );
+        $source        = false;
         switch ( $type ) {
             case 'pedestal_link':
                 $source = $this->get_source();
@@ -450,7 +450,7 @@ abstract class Post {
                 break;
 
             case 'pedestal_embed':
-                $url = esc_url( $this->get_embed_url() );
+                $url    = esc_url( $this->get_embed_url() );
                 $source = esc_html( $this->get_source() );
                 break;
 
@@ -498,7 +498,7 @@ abstract class Post {
             'ga_label'    => '',
         ] );
 
-        $pretext = esc_html__( '%s', 'pedestal' );
+        $pretext  = esc_html__( '%s', 'pedestal' );
         $posttext = esc_html__( 'and', 'pedestal' );
 
         $authors = $this->get_authors();
@@ -617,7 +617,7 @@ abstract class Post {
 
         if ( 1 == count( $authors ) ) {
             $img = $this->get_single_author()->get_avatar( $size, [
-                'sizes' => '28px',
+                'sizes'  => '28px',
                 'srcset' => [
                     'ratio'  => 1,
                     'widths' => $size,
@@ -652,7 +652,7 @@ abstract class Post {
      * @return string  URL of the authors permalink or site's about page
      */
     public function get_author_permalink() {
-        $authors = $this->get_authors();
+        $authors        = $this->get_authors();
         $num_of_authors = count( $authors );
         if ( 1 == $num_of_authors ) {
             return $this->get_single_author()->get_permalink();
@@ -850,16 +850,16 @@ abstract class Post {
      */
     public function get_the_relative_datetime() {
         $local_time_zone = new \DateTimeZone( PEDESTAL_SITE_TIMEZONE );
-        $now = new \DateTime( '', $local_time_zone );
-        $match_date = new \DateTime( $this->get_post_date( 'Y-m-d H:i:s' ), $local_time_zone );
+        $now             = new \DateTime( '', $local_time_zone );
+        $match_date      = new \DateTime( $this->get_post_date( 'Y-m-d H:i:s' ), $local_time_zone );
 
         // Reset time part, to prevent partial day comparison
         $now->setTime( 0, 0, 0 );
         $match_date->setTime( 0, 0, 0 );
 
         // Extract days count in interval
-        $diff = $now->diff( $match_date );
-        $diff_days = (integer) $diff->format( '%R%a' );
+        $diff        = $now->diff( $match_date );
+        $diff_days   = (int) $diff->format( '%R%a' );
         $time_string = ', ' . $this->get_post_date( PEDESTAL_TIME_FORMAT );
         switch ( $diff_days ) {
             case 0:
@@ -893,14 +893,14 @@ abstract class Post {
      * @return string  Datetime of the post separated by a comma
      */
     public function get_the_datetime( $args = [] ) {
-        $args = wp_parse_args( $args, [
+        $args        = wp_parse_args( $args, [
             'year' => true,
             'time' => true,
         ] );
         $date_format = $args['year']
             ? PEDESTAL_DATE_FORMAT
             : str_replace( ', Y', '', PEDESTAL_DATE_FORMAT );
-        $datetime = $this->get_post_date( $date_format );
+        $datetime    = $this->get_post_date( $date_format );
         if ( $args['time'] ) {
             $datetime .= ', ' . $this->get_post_date( PEDESTAL_TIME_FORMAT );
         }
@@ -945,8 +945,8 @@ abstract class Post {
         }
 
         $upload_dir = wp_upload_dir();
-        $file_size = false;
-        $path = path_join( $upload_dir['basedir'], $thumbnail['path'] );
+        $file_size  = false;
+        $path       = path_join( $upload_dir['basedir'], $thumbnail['path'] );
 
         /**
          * In production images uploaded may not be on the same file system as
@@ -984,7 +984,6 @@ abstract class Post {
      */
     public function has_featured_image() {
         return (bool) $this->get_featured_image();
-        ;
     }
 
     /**
@@ -1038,11 +1037,11 @@ abstract class Post {
         $attachment = $this->get_featured_image();
         if ( $attachment instanceof Attachment ) {
             $defaults = [
-                'attachment'             => $this->get_featured_image_id(),
-                'url'                    => '',
-                'caption'                => $attachment->get_caption(),
-                'credit'                 => $attachment->get_credit(),
-                'credit_link'            => $attachment->get_credit_link(),
+                'attachment'  => $this->get_featured_image_id(),
+                'url'         => '',
+                'caption'     => $attachment->get_caption(),
+                'credit'      => $attachment->get_credit(),
+                'credit_link' => $attachment->get_credit_link(),
             ];
         }
 
@@ -1054,7 +1053,7 @@ abstract class Post {
             'sizes'  => $args['img_sizes'] ?? '',
             'srcset' => $args['img_srcset'] ?? '',
         ];
-        $content = $this->get_featured_image_html( $size, $img_atts );
+        $content  = $this->get_featured_image_html( $size, $img_atts );
         return Attachment::get_img_caption_html( $content, $args );
     }
 
@@ -1078,7 +1077,7 @@ abstract class Post {
      * @return Attachment|false
      */
     public function get_featured_image() {
-        $id = $this->get_featured_image_id();
+        $id         = $this->get_featured_image_id();
         $attachment = Attachment::get( $id );
         if ( Types::is_attachment( $attachment ) ) {
             return $attachment;
@@ -1169,8 +1168,8 @@ abstract class Post {
 
             case 'image':
                 $image_id = $this->get_fm_field( 'pedestal_distribution', 'facebook', 'image' );
-                $src = wp_get_attachment_image_src( $image_id, 'facebook-open-graph' );
-                $val = '';
+                $src      = wp_get_attachment_image_src( $image_id, 'facebook-open-graph' );
+                $val      = '';
                 if ( $src ) {
                     $val = $src[0];
                 } else {
@@ -1182,7 +1181,7 @@ abstract class Post {
                 $val = [];
                 foreach ( $this->get_authors() as $author ) {
                     $val[] = [
-                        'name' => $author->get_display_name(),
+                        'name'    => $author->get_display_name(),
                         'profile' => $author->get_facebook_profile_url(),
                     ];
                 }
@@ -1222,7 +1221,7 @@ abstract class Post {
 
             case 'image':
                 $image_id = $this->get_fm_field( 'pedestal_distribution', 'twitter', 'image' );
-                $src = wp_get_attachment_image_src( $image_id, 'twitter-card' );
+                $src      = wp_get_attachment_image_src( $image_id, 'twitter-card' );
                 if ( $src ) {
                     return $src[0];
                 } else {
@@ -1286,12 +1285,12 @@ abstract class Post {
      * @return string
      */
     public function get_twitter_share_link() {
-        $share_link = rawurldecode( $this->get_permalink() );
-        $text = rawurlencode( $this->get_twitter_share_text() );
+        $share_link   = rawurldecode( $this->get_permalink() );
+        $text         = rawurlencode( $this->get_twitter_share_text() );
         $twitter_args = [
-            'url'        => $share_link,
-            'text'       => $text,
-            'via'        => PEDESTAL_TWITTER_USERNAME,
+            'url'  => $share_link,
+            'text' => $text,
+            'via'  => PEDESTAL_TWITTER_USERNAME,
         ];
         return add_query_arg( $twitter_args, 'https://twitter.com/share' );
     }
@@ -1302,10 +1301,10 @@ abstract class Post {
      * @return string
      */
     public function get_linkedin_share_link() {
-        $share_link = rawurldecode( $this->get_permalink() );
-        $title = rawurldecode( $this->get_linkedin_title() );
-        $source = rawurlencode( get_bloginfo( 'name' ) );
-        $description = rawurlencode( $this->get_linkedin_description() );
+        $share_link    = rawurldecode( $this->get_permalink() );
+        $title         = rawurldecode( $this->get_linkedin_title() );
+        $source        = rawurlencode( get_bloginfo( 'name' ) );
+        $description   = rawurlencode( $this->get_linkedin_description() );
         $linkedin_args = [
             'mini'    => 'true',
             'url'     => $share_link,
@@ -1322,8 +1321,8 @@ abstract class Post {
      * @return string
      */
     public function get_mailto_share_string() {
-        $title = $this->get_title();
-        $body = rawurlencode( $title ) . '%0A' . $this->get_permalink();
+        $title   = $this->get_title();
+        $body    = rawurlencode( $title ) . '%0A' . $this->get_permalink();
         $excerpt = $this->get_excerpt();
         if ( $excerpt ) {
             $body .= '%0A%0A' . rawurlencode( $excerpt );
@@ -1354,11 +1353,11 @@ abstract class Post {
     public static function create( $args = [] ) {
 
         $defaults = [
-            'post_type'     => static::$post_type,
-            'post_status'   => 'draft',
-            'post_author'   => get_current_user_id(),
+            'post_type'   => static::$post_type,
+            'post_status' => 'draft',
+            'post_author' => get_current_user_id(),
         ];
-        $args = array_merge( $defaults, $args );
+        $args     = array_merge( $defaults, $args );
         add_filter( 'wp_insert_post_empty_content', '__return_false' );
         $post_id = wp_insert_post( $args );
         remove_filter( 'wp_insert_post_empty_content', '__return_false' );
@@ -1645,10 +1644,10 @@ abstract class Post {
     protected function set_p2p_data() {
         if ( property_exists( $this->post, 'p2p_id' ) ) {
             if ( $this->get_id() == $this->post->p2p_from ) {
-                $dir = 'from';
+                $dir          = 'from';
                 $connected_id = $this->post->p2p_to;
             } elseif ( $this->get_id() == $this->post->p2p_to ) {
-                $dir = 'to';
+                $dir          = 'to';
                 $connected_id = $this->post->p2p_from;
             } else {
                 return;
@@ -1720,34 +1719,34 @@ abstract class Post {
         // See standard-item.twig for descriptions of these values
         $context = [
             // N.B.: `__context` needs two underscores to avoid conflict with Twig's `_context` variable
-            '__context'          => 'standard',
-            'item'               => $this,
-            'post'               => $this->post,
-            'type'               => $this->get_type(),
-            'type_name'          => $this->get_type_name(),
-            'overline'           => '',
-            'overline_url'       => '',
-            'title'              => $this->get_the_title(),
-            'headline'           => '',
-            'permalink'          => $this->get_the_permalink(),
-            'date_time'          => $this->get_the_datetime(),
-            'machine_time'       => $this->get_post_date( 'c' ),
-            'description'        => $this->get_the_excerpt(),
-            'show_meta_info'     => true,
-            'author_names'       => '',
-            'author_image'       => '',
-            'author_link'        => '',
-            'author_bio'         => '',
-            'source_name'        => '',
-            'source_image'       => '',
-            'source_link'        => '',
-            'content_classes'    => [],
-            'content'            => $this->get_the_content(),
-            'footnotes'          => '',
+            '__context'       => 'standard',
+            'item'            => $this,
+            'post'            => $this->post,
+            'type'            => $this->get_type(),
+            'type_name'       => $this->get_type_name(),
+            'overline'        => '',
+            'overline_url'    => '',
+            'title'           => $this->get_the_title(),
+            'headline'        => '',
+            'permalink'       => $this->get_the_permalink(),
+            'date_time'       => $this->get_the_datetime(),
+            'machine_time'    => $this->get_post_date( 'c' ),
+            'description'     => $this->get_the_excerpt(),
+            'show_meta_info'  => true,
+            'author_names'    => '',
+            'author_image'    => '',
+            'author_link'     => '',
+            'author_bio'      => '',
+            'source_name'     => '',
+            'source_image'    => '',
+            'source_link'     => '',
+            'content_classes' => [],
+            'content'         => $this->get_the_content(),
+            'footnotes'       => '',
         ] + $context;
 
-        $ratio = new Image_Ratio;
-        $featured_image_size = $ratio->calc_unknown_dimension( 994 ) ?: '1024-16x9';
+        $ratio                     = new Image_Ratio;
+        $featured_image_size       = $ratio->calc_unknown_dimension( 994 ) ?: '1024-16x9';
         $context['featured_image'] = $this->get_featured_image_figure_html( $featured_image_size, [
             'classes'    => 'c-main__lead-img ',
             'linkto'     => false,

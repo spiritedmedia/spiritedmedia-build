@@ -173,16 +173,16 @@ class Admin {
             // If the User's public email address needs to be different than the
             // address registered to their account, then this field can be used
             // to override.
-            $methods['public_email'] = esc_html__( 'Public Email', 'pedestal' );
-            $methods['twitter_username'] = esc_html__( 'Twitter Username', 'pedestal' );
-            $methods['facebook_profile'] = esc_html__( 'Facebook Profile', 'pedestal' );
+            $methods['public_email']       = esc_html__( 'Public Email', 'pedestal' );
+            $methods['twitter_username']   = esc_html__( 'Twitter Username', 'pedestal' );
+            $methods['facebook_profile']   = esc_html__( 'Facebook Profile', 'pedestal' );
             $methods['instagram_username'] = esc_html__( 'Instagram Username', 'pedestal' );
             return $methods;
         });
 
         // Remove default avatars
         add_filter( 'avatar_defaults', function ( $avatar_defaults ) {
-            $avatar_url = '404';
+            $avatar_url                     = '404';
             $avatar_defaults[ $avatar_url ] = 'No Avatar';
             return $avatar_defaults;
         } );
@@ -220,7 +220,7 @@ class Admin {
             }
             foreach ( $allowed_tags as $tag => $attrs ) {
                 $allowed_tags[ $tag ]['style'] = false;
-                $allowed_tags[ $tag ]['dir'] = false;
+                $allowed_tags[ $tag ]['dir']   = false;
             }
             return $allowed_tags;
         }, 10, 2 );
@@ -239,7 +239,7 @@ class Admin {
                 return $metadata;
             }
             $img_meta = $metadata['image_meta'];
-            $credit = '';
+            $credit   = '';
             if ( ! empty( $img_meta['copyright'] ) ) {
                 $credit = $img_meta['copyright'];
             }
@@ -268,7 +268,7 @@ class Admin {
 
         // Remove smart characters before inserting into the database
         add_filter( 'content_save_pre', [ $this, 'filter_fix_characters_before_save' ] );
-        add_filter( 'title_save_pre',   [ $this, 'filter_fix_characters_before_save' ] );
+        add_filter( 'title_save_pre', [ $this, 'filter_fix_characters_before_save' ] );
         // Restore smart characters before displaying in WYSIWYG editor
         add_filter( 'content_edit_pre', 'wptexturize' );
         add_filter( 'title_edit_pre', 'wptexturize' );
@@ -335,8 +335,8 @@ class Admin {
         ] );
 
         $bio_extended = new \Fieldmanager_RichTextArea( [
-            'name'      => 'user_bio_extended',
-            'buttons_1' => [
+            'name'            => 'user_bio_extended',
+            'buttons_1'       => [
                 'bold',
                 'italic',
                 'bullist',
@@ -352,7 +352,7 @@ class Admin {
 
         // We need a dynamic field name because the value is site specifc
         $img_name = $wpdb->prefix . 'user_img';
-        $img = new \Fieldmanager_Media( [
+        $img      = new \Fieldmanager_Media( [
             'name'               => $img_name,
             'button_label'       => 'Add Image',
             'modal_title'        => 'Select Image',
@@ -380,7 +380,7 @@ class Admin {
      */
     public function action_admin_notice_unembeddable_url() {
         $add_link_url = admin_url( '/post-new.php?post_type=pedestal_link' );
-        $message = sprintf( 'You\'ve entered an invalid embed URL. Perhaps you meant to <a href="%s">post a Link</a>?', $add_link_url );
+        $message      = sprintf( 'You\'ve entered an invalid embed URL. Perhaps you meant to <a href="%s">post a Link</a>?', $add_link_url );
         self::handle_admin_notice_error( 'unembeddable_url', $message );
     }
 
@@ -476,21 +476,21 @@ class Admin {
             switch ( $parent->name ) {
                 case 'twitter':
                     $placeholders = [
-                        'title'        => $post->get_twitter_card_tag( 'title' ),
-                        'description'  => $post->get_twitter_card_tag( 'description' ),
+                        'title'       => $post->get_twitter_card_tag( 'title' ),
+                        'description' => $post->get_twitter_card_tag( 'description' ),
                     ];
                     break;
                 case 'facebook':
                     $placeholders = [
-                        'title'        => $post->get_facebook_open_graph_tag( 'title' ),
-                        'description'  => $post->get_facebook_open_graph_tag( 'description' ),
+                        'title'       => $post->get_facebook_open_graph_tag( 'title' ),
+                        'description' => $post->get_facebook_open_graph_tag( 'description' ),
                     ];
                     break;
                 case 'linkedin':
                 case 'seo':
                     $placeholders = [
-                        'title'        => $post->get_default_seo_title(),
-                        'description'  => $post->get_default_seo_description(),
+                        'title'       => $post->get_default_seo_title(),
+                        'description' => $post->get_default_seo_description(),
                     ];
                     break;
             }
@@ -519,7 +519,7 @@ class Admin {
 
             // Append the post type name to the post title
             $plurals = false;
-            $type = $ped_post->get_post_type_name( $plurals );
+            $type    = $ped_post->get_post_type_name( $plurals );
             if ( $ped_post->is_locality() ) {
                 $type = $ped_post->get_type_name();
             }
@@ -555,11 +555,11 @@ class Admin {
         }
 
         // Set-up custom CSS classes to add to the Formats dropwdown
-        $style_formats = [
+        $style_formats             = [
             [
-                'title' => 'Site Color',
+                'title'    => 'Site Color',
                 'selector' => '*', // Add this class to every element
-                'classes' => 'u-text-color-primary',
+                'classes'  => 'u-text-color-primary',
             ],
         ];
         $settings['style_formats'] = json_encode( $style_formats );
@@ -583,18 +583,18 @@ class Admin {
         if ( ! Types::is_attachment( $attachment ) ) {
             return $metadata;
         }
-        $credit = $attachment->get_credit();
+        $credit      = $attachment->get_credit();
         $credit_link = $attachment->get_credit_link();
 
-        $fields['pedestal_credit'] = [
-            'label'              => esc_html__( 'Credit', 'pedestal' ),
-            'input'              => 'text',
-            'value'              => $credit,
+        $fields['pedestal_credit']      = [
+            'label' => esc_html__( 'Credit', 'pedestal' ),
+            'input' => 'text',
+            'value' => $credit,
         ];
         $fields['pedestal_credit_link'] = [
-            'label'              => esc_html__( 'Credit Link', 'pedestal' ),
-            'input'              => 'url',
-            'value'              => $credit_link,
+            'label' => esc_html__( 'Credit Link', 'pedestal' ),
+            'input' => 'url',
+            'value' => $credit_link,
         ];
 
         return $fields;
@@ -711,77 +711,77 @@ class Admin {
      */
     private function register_distribution_fields() {
         $distribution_group = new \Fieldmanager_Group( '', [
-            'name'        => 'pedestal_distribution',
-            'tabbed'      => true,
+            'name'   => 'pedestal_distribution',
+            'tabbed' => true,
         ] );
 
         $twitter_group = new \Fieldmanager_Group( esc_html__( 'Twitter', 'pedestal' ), [
-            'name'                    => 'twitter',
-            'children'                => [
-                'title'               => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
-                    'description'     => esc_html__( 'Title truncates after 70 characters', 'pedestal' ),
-                    'attributes'      => [
-                        'style'           => 'width:100%',
-                        'maxlength'       => 70,
-                        'rows'            => 2,
+            'name'     => 'twitter',
+            'children' => [
+                'title'       => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
+                    'description' => esc_html__( 'Title truncates after 70 characters', 'pedestal' ),
+                    'attributes'  => [
+                        'style'     => 'width:100%',
+                        'maxlength' => 70,
+                        'rows'      => 2,
                     ],
                 ] ),
-                'image'               => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
-                    'description'     => esc_html__( 'Twitter minimum size is 120x120 pixels', 'pedestal' ),
-                    'button_label'    => esc_html__( 'Select Alternate Image', 'pedestal' ),
+                'image'       => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
+                    'description'        => esc_html__( 'Twitter minimum size is 120x120 pixels', 'pedestal' ),
+                    'button_label'       => esc_html__( 'Select Alternate Image', 'pedestal' ),
                     'modal_button_label' => esc_html__( 'Select image', 'pedestal' ),
-                    'modal_title'     => esc_html__( 'Choose image', 'pedestal' ),
+                    'modal_title'        => esc_html__( 'Choose image', 'pedestal' ),
                 ] ),
-                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
-                    'description'     => esc_html__( 'Description text will be truncated at 200 characters.', 'pedestal' ),
-                    'attributes'      => [
-                        'style'           => 'width:100%',
-                        'maxlength'       => 200,
-                        'rows'            => 3,
+                'description' => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
+                    'description' => esc_html__( 'Description text will be truncated at 200 characters.', 'pedestal' ),
+                    'attributes'  => [
+                        'style'     => 'width:100%',
+                        'maxlength' => 200,
+                        'rows'      => 3,
                     ],
                 ] ),
             ],
         ] );
 
         $facebook_group = new \Fieldmanager_Group( esc_html__( 'Facebook', 'pedestal' ), [
-            'name'                    => 'facebook',
-            'children'                => [
-                'title'               => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
-                    'description'     => esc_html__( 'The title of your article, excluding any branding.', 'pedestal' ),
-                    'attributes'      => [
+            'name'     => 'facebook',
+            'children' => [
+                'title'       => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
+                    'description' => esc_html__( 'The title of your article, excluding any branding.', 'pedestal' ),
+                    'attributes'  => [
                         'style' => 'width:100%',
                         'rows'  => 2,
                     ],
                 ] ),
-                'image'               => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
-                    'description'     => esc_html__( 'Override the featured image with an image specific to Facebook. We suggest that you use an image of at least 1200x630 pixels.', 'pedestal' ),
-                    'button_label'    => esc_html__( 'Select Alternate Image', 'pedestal' ),
+                'image'       => new \Fieldmanager_Media( esc_html__( 'Image', 'pedestal' ), [
+                    'description'        => esc_html__( 'Override the featured image with an image specific to Facebook. We suggest that you use an image of at least 1200x630 pixels.', 'pedestal' ),
+                    'button_label'       => esc_html__( 'Select Alternate Image', 'pedestal' ),
                     'modal_button_label' => esc_html__( 'Select image', 'pedestal' ),
-                    'modal_title'     => esc_html__( 'Choose image', 'pedestal' ),
+                    'modal_title'        => esc_html__( 'Choose image', 'pedestal' ),
                 ] ),
-                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
-                    'description'     => esc_html__( 'A detailed description of the piece of content, usually between 2 and 4 sentences.', 'pedestal' ),
-                    'attributes'      => [
-                        'style'           => 'width:100%',
-                        'rows'            => 4,
+                'description' => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
+                    'description' => esc_html__( 'A detailed description of the piece of content, usually between 2 and 4 sentences.', 'pedestal' ),
+                    'attributes'  => [
+                        'style' => 'width:100%',
+                        'rows'  => 4,
                     ],
                 ] ),
             ],
         ] );
 
         $linkedin_group = new \Fieldmanager_Group( esc_html__( 'LinkedIn', 'pedestal' ), [
-            'name'                    => 'linkedin',
-            'children'                => [
-                'title'               => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
-                    'description'     => esc_html__( 'The title of your article, excluding any branding. Max 200 characters.', 'pedestal' ),
-                    'attributes'      => [
+            'name'     => 'linkedin',
+            'children' => [
+                'title'       => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
+                    'description' => esc_html__( 'The title of your article, excluding any branding. Max 200 characters.', 'pedestal' ),
+                    'attributes'  => [
                         'style' => 'width:100%',
                         'rows'  => 2,
                     ],
                 ] ),
-                'description'         => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
-                    'description'     => esc_html__( 'A detailed description of the piece of content, usually between 2 and 4 sentences. Longer titles will be truncated gracefully with ellipses.', 'pedestal' ),
-                    'attributes'      => [
+                'description' => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
+                    'description' => esc_html__( 'A detailed description of the piece of content, usually between 2 and 4 sentences. Longer titles will be truncated gracefully with ellipses.', 'pedestal' ),
+                    'attributes'  => [
                         'style' => 'width:100%',
                         'rows'  => 4,
                     ],
@@ -790,16 +790,16 @@ class Admin {
         ] );
 
         $seo_group = new \Fieldmanager_Group( esc_html__( 'Google Search', 'pedestal' ), [
-            'name'        => 'seo',
-            'children'                => [
-                'title'          => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
-                    'description'     => esc_html__( 'Suggested length of up to 60 characters.', 'pedestal' ),
-                    'attributes'      => [
+            'name'     => 'seo',
+            'children' => [
+                'title'       => new \Fieldmanager_TextArea( esc_html__( 'Alt Headline', 'pedestal' ), [
+                    'description' => esc_html__( 'Suggested length of up to 60 characters.', 'pedestal' ),
+                    'attributes'  => [
                         'style' => 'width:100%',
                         'rows'  => 2,
                     ],
                 ] ),
-                'description'     => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
+                'description' => new \Fieldmanager_TextArea( esc_html__( 'Alt Description', 'pedestal' ), [
                     'description' => esc_html__( 'Suggested length of up to 150 characters. Defaults to summary or subhead.', 'pedestal' ),
                     'attributes'  => [
                         'style' => 'width:100%',
@@ -814,7 +814,7 @@ class Admin {
         $distribution_group->add_child( $linkedin_group );
         $distribution_group->add_child( $seo_group );
 
-        $distributable_post_types = get_post_types( [
+        $distributable_post_types         = get_post_types( [
             'public'   => true,
             '_builtin' => false,
         ] );
@@ -834,8 +834,8 @@ class Admin {
      * Handle the display of the Scheduled Posts dashboard widget
      */
     public function handle_dashboard_widget_scheduled_posts() {
-        $post_types = Types::get_entity_post_types();
-        $post_types[] = 'pedestal_newsletter';
+        $post_types         = Types::get_entity_post_types();
+        $post_types[]       = 'pedestal_newsletter';
         $future_posts_query = new \WP_Query( [
             'post_type'      => $post_types,
             'posts_per_page' => 15,
@@ -843,7 +843,7 @@ class Admin {
             'orderby'        => 'date',
             'order'          => 'ASC',
         ] );
-        $context = array_merge( Timber::get_context(), [
+        $context            = array_merge( Timber::get_context(), [
             'items' => Post::get_posts_from_query( $future_posts_query ),
         ] );
         Timber::render( 'partials/admin/dash-widget-scheduled-posts.twig', $context );

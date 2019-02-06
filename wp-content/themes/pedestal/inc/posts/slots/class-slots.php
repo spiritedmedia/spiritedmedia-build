@@ -46,7 +46,7 @@ class Slots {
             'site'  => [ 'single_lead' ],
             'email' => [ 'lead' ],
         ],
-        'event' => [
+        'event'      => [
             'site'  => [
                 'single_lead',
                 'shortcode',
@@ -60,20 +60,20 @@ class Slots {
                 'newsletter_promoted_event',
             ],
         ],
-        'article' => [
+        'article'    => [
             'site'  => [ 'single_lead', 'shortcode' ],
             'email' => [],
         ],
-        'embed' => [
+        'embed'      => [
             'site'  => [ 'single_lead', 'shortcode' ],
             'email' => [],
         ],
-        'factcheck' => [
+        'factcheck'  => [
             'site'  => [ 'single_lead', 'shortcode' ],
             'email' => [],
         ],
-        'stream' => [
-            'site' => [ 'stream_item' ],
+        'stream'     => [
+            'site'  => [ 'stream_item' ],
             'email' => [],
         ],
     ];
@@ -154,7 +154,7 @@ class Slots {
         }
 
         $placement_defaults = $_POST['slot_item_placement_defaults'];
-        $placement_rules = $_POST['slot_item_placement_rules'];
+        $placement_rules    = $_POST['slot_item_placement_rules'];
 
         // Handle missing start/end dates
         if (
@@ -170,7 +170,7 @@ class Slots {
         }
 
         $_POST['slot_item_placement_defaults'] = $placement_defaults;
-        $default_placement_data = $placement_defaults + [
+        $default_placement_data                = $placement_defaults + [
             'index' => 0,
         ];
         $setup_dates( $default_placement_data );
@@ -183,7 +183,7 @@ class Slots {
                 if ( empty( $placement_rule['date_end']['date'] ) ) {
                     if ( empty( $placement_rule['date_start']['date'] ) ) {
                         $placement_rule['date_start'] = $placement_defaults['date_start'];
-                        $placement_rule['date_end'] = $placement_defaults['date_end'];
+                        $placement_rule['date_end']   = $placement_defaults['date_end'];
                     } else {
                         $placement_rule['date_end'] = $placement_rule['date_start'];
                     }
@@ -260,7 +260,7 @@ class Slots {
             }
         }
 
-        $type = $placement_data['type'];
+        $type       = $placement_data['type'];
         $short_type = Utils::remove_name_prefix( $type );
 
         // If the post select field is not set, then quit and delete...
@@ -319,13 +319,13 @@ class Slots {
             return false;
         }
 
-        $today = date( self::$day_format );
+        $today                 = date( self::$day_format );
         $today_day_of_week_num = date( 'w' );
 
         $args = [
-            'post_type' => '_slot_item_placement',
-            'posts_per_page'         => 100,
-            'meta_query' => [
+            'post_type'      => '_slot_item_placement',
+            'posts_per_page' => 100,
+            'meta_query'     => [
                 'relation' => 'AND',
                 [
                     'key'     => 'date_start',
@@ -354,11 +354,11 @@ class Slots {
         // Sort the $args for caching consistency
         ksort( $args );
         // json_encode is faster than serialize()
-        $cache_key = md5( json_encode( $args ) );
+        $cache_key   = md5( json_encode( $args ) );
         $cache_group = 'ped_slots';
-        $placements = wp_cache_get( $cache_key, $cache_group );
+        $placements  = wp_cache_get( $cache_key, $cache_group );
         if ( ! $placements ) {
-            $query = new \WP_Query( $args );
+            $query      = new \WP_Query( $args );
             $placements = $query->posts;
             wp_cache_set( $cache_key, $placements, $cache_group );
         }
@@ -374,10 +374,10 @@ class Slots {
                 continue;
             }
 
-            $placement_type = $placement_obj->get_placement_type();
+            $placement_type          = $placement_obj->get_placement_type();
             $placement_selected_post = $placement_obj->get_selected_post_id();
-            $placement_date_start = $placement_obj->get_date_start();
-            $placement_date_end = $placement_obj->get_date_end();
+            $placement_date_start    = $placement_obj->get_date_start();
+            $placement_date_end      = $placement_obj->get_date_end();
             $placement_subrange_days = $placement_obj->get_date_subrange_days();
 
             // Omit some placements that don't fit within our date / day of week criteria
@@ -412,7 +412,7 @@ class Slots {
             return false;
         }
 
-        $post_type = 'pedestal_' . $return_type;
+        $post_type  = 'pedestal_' . $return_type;
         $post_class = Types::get_post_type_class( $post_type );
 
         if ( 'slot_item' !== $return_type ) {
@@ -425,7 +425,7 @@ class Slots {
         }
 
         foreach ( $placements as $k => $placement ) {
-            $post_id = 0;
+            $post_id                 = 0;
             $placement_selected_post = $placement->get_selected_post_id();
 
             if ( 'slot_item' === $return_type ) {
@@ -471,7 +471,7 @@ class Slots {
         }
 
         $default_options = [];
-        $data_atts = [];
+        $data_atts       = [];
 
         $slot_data_return_type = 'slot_item';
         if ( 'newsletter_promoted_event' === $slot_position ) {
@@ -498,33 +498,33 @@ class Slots {
         }
 
         if ( false !== strpos( $slot_position, 'lead' ) ) {
-            $data_atts['supports-premium'] = '';
+            $data_atts['supports-premium']        = '';
             $context['slots']['supports_premium'] = true;
         }
 
         // Set slot position name according to the scope
-        $scope = Pedestal()->is_email() ? 'email' : 'site';
-        $scoped_slot_position = $scope . '_' . $slot_position;
+        $scope                              = Pedestal()->is_email() ? 'email' : 'site';
+        $scoped_slot_position               = $scope . '_' . $slot_position;
         $placement_options['slot_position'] = $scoped_slot_position;
 
         $slot_data = self::get_slot_data( $slot_data_return_type, $placement_options );
         if ( Types::is_post( $slot_data ) ) {
             $context['template'] = '';
-            $item_type = '';
-            $slots_path = 'partials/slots/';
-            $css_class = 'c-slot';
+            $item_type           = '';
+            $slots_path          = 'partials/slots/';
+            $css_class           = 'c-slot';
 
             if ( Pedestal()->is_email() ) {
-                $css_class = 'email-slot';
+                $css_class  = 'email-slot';
                 $slots_path = 'emails/messages/partials/slots/';
             }
 
             if ( $slot_data instanceof Slot_Item ) {
-                $item_type = $slot_data->get_slot_item_type_slug();
+                $item_type           = $slot_data->get_slot_item_type_slug();
                 $context['template'] = $slots_path . $item_type . '.twig';
             } elseif ( 'newsletter_promoted_event' === $slot_position ) {
-                $context['item'] = $slot_data;
-                $item_type = $slot_data->get_type();
+                $context['item']     = $slot_data;
+                $item_type           = $slot_data->get_type();
                 $context['template'] = $slots_path . str_replace( '_', '-', $slot_position ) . '.twig';
                 if ( Pedestal()->is_email() ) {
                     $context['template'] = 'emails/messages/partials/stream/event.twig';
@@ -537,7 +537,7 @@ class Slots {
 
             $context['slots']['active'] = $slot_data;
 
-            $data_atts = $data_atts + [
+            $data_atts     = $data_atts + [
                 'position'   => $scoped_slot_position,
                 'item-id'    => $slot_data->get_id(),
                 'item-type'  => $item_type,

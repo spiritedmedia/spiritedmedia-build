@@ -56,7 +56,7 @@ class Follow_Updates {
         if ( 'publish' !== $post->post_status ) {
             return;
         }
-        $email_type = Types::get_post_type_labels( $post_type )['singular_name'];
+        $email_type     = Types::get_post_type_labels( $post_type )['singular_name'];
         $email_template = sanitize_title( $email_type );
 
         add_meta_box( 'pedestal-cluster-notify-subscribers',
@@ -79,19 +79,19 @@ class Follow_Updates {
         if ( ! Types::is_cluster( $cluster ) ) {
             return;
         }
-        $type = $cluster->get_type();
-        $entities = $cluster->get_unsent_entities( true );
+        $type         = $cluster->get_type();
+        $entities     = $cluster->get_unsent_entities( true );
         $entity_count = count( $entities );
 
-        $last_sent = '';
+        $last_sent            = '';
         $last_sent_human_diff = 'N/A';
-        $last_sent_date = $cluster->get_last_email_notification_date();
+        $last_sent_date       = $cluster->get_last_email_notification_date();
         if ( $last_sent_date ) {
-            $last_sent = get_date_from_gmt( date( 'Y-m-d H:i:s', $last_sent_date ), 'm/d/Y g:i a' );
+            $last_sent            = get_date_from_gmt( date( 'Y-m-d H:i:s', $last_sent_date ), 'm/d/Y g:i a' );
             $last_sent_human_diff = human_time_diff( $last_sent_date ) . ' ago';
         }
 
-        $attributes = [
+        $attributes  = [
             'style' => 'display: block; width: 100%;',
         ];
         $test_button = '';
@@ -102,14 +102,14 @@ class Follow_Updates {
                 'Send Test Email',
                 'secondary',
                 'pedestal-cluster-send-test-email',
-                $wrap = false,
+                $wrap    = false,
                 $attributes
             );
         }
 
-        $send_button = '';
+        $send_button    = '';
         $follower_label = 'Followers';
-        $cluster_count = $cluster->get_subscriber_count();
+        $cluster_count  = $cluster->get_subscriber_count();
         if ( 0 == $cluster_count ) {
             $attributes['disabled'] = 'disabled';
         }
@@ -120,7 +120,7 @@ class Follow_Updates {
             sprintf( esc_html__( 'Send Email To %d %s', 'pedestal' ), $cluster_count, $follower_label ),
             'primary',
             'pedestal-cluster-notify-subscribers',
-            $wrap = true,
+            $wrap    = true,
             $attributes
         );
 
@@ -151,14 +151,14 @@ class Follow_Updates {
         }
 
         $cluster = Cluster::get( $post_id );
-        $group = $cluster->get_mailchimp_group();
+        $group   = $cluster->get_mailchimp_group();
         // We already have a group, all is well
         if ( is_object( $group ) ) {
             return;
         }
 
-        $mc = MailChimp::get_instance();
-        $group_name = $cluster->get_title();
+        $mc             = MailChimp::get_instance();
+        $group_name     = $cluster->get_title();
         $group_category = $cluster->get_mailchimp_group_category();
         $mc->add_group( $group_name, $group_category );
 
@@ -178,11 +178,11 @@ class Follow_Updates {
             return;
         }
 
-        $cluster = Cluster::get( (int) $post_id );
+        $cluster       = Cluster::get( (int) $post_id );
         $is_test_email = false;
-        $args = [];
+        $args          = [];
         if ( ! empty( $_POST['pedestal-cluster-send-test-email'] ) ) {
-            $is_test_email = true;
+            $is_test_email                = true;
             $args['test_email_addresses'] = Email::sanitize_test_email_addresses( $_POST['test-email-addresses'] );
         }
         $result = $this->send_email_to_group( $cluster, $args );
@@ -208,13 +208,13 @@ class Follow_Updates {
             // Nothing to send
             return false;
         }
-        $body = Email::get_email_template( 'follow-update', 'mc', [
+        $body         = Email::get_email_template( 'follow-update', 'mc', [
             'item'       => $cluster,
             'entities'   => $entities,
             'email_type' => $cluster->get_email_type(),
             'shareable'  => true,
         ] );
-        $subject = sprintf( 'Update: %s', $cluster->get_title() );
+        $subject      = sprintf( 'Update: %s', $cluster->get_title() );
         $sending_args = [
             'messages'       => [
                 [
@@ -228,7 +228,7 @@ class Follow_Updates {
             'folder_name'    => 'Story updates',
         ];
         $sending_args = wp_parse_args( $sending_args, $args );
-        $sent = Email::send_mailchimp_email( $sending_args );
+        $sent         = Email::send_mailchimp_email( $sending_args );
         if ( $sent ) {
             $expiration = Utils::get_fuzzy_expire_time( HOUR_IN_SECONDS / 2 );
             set_transient( 'pedestal_cluster_unsent_entities_count_' . $cluster->get_id(), 0, $expiration );
@@ -281,10 +281,10 @@ class Follow_Updates {
             return;
         }
 
-        $cluster = Cluster::get( $post_id );
-        $mc = MailChimp::get_instance();
-        $new_name = $post_after->post_title;
-        $old_name = $post_before->post_title;
+        $cluster        = Cluster::get( $post_id );
+        $mc             = MailChimp::get_instance();
+        $new_name       = $post_after->post_title;
+        $old_name       = $post_before->post_title;
         $group_category = $cluster->get_mailchimp_group_category();
         $mc->edit_group_name( $new_name, $old_name, $group_category );
     }
@@ -305,7 +305,7 @@ class Follow_Updates {
         if ( ! Types::is_cluster( $cluster ) ) {
             return;
         }
-        $defaults = [
+        $defaults      = [
             'action_url'      => get_site_url() . '/subscribe-to-email-group/',
             'nonce'           => wp_create_nonce( PEDESTAL_THEME_NAME ),
 
@@ -355,7 +355,7 @@ class Follow_Updates {
      */
     public static function get_submit_button_text( $cluster_id = 0 ) {
         $default_text = 'Get Alerts';
-        $cluster = Post::get( $cluster_id );
+        $cluster      = Post::get( $cluster_id );
         if ( ! Types::is_cluster( $cluster ) ) {
             return $default_text;
         }
@@ -371,12 +371,12 @@ class Follow_Updates {
      */
     public static function get_cta_text( $cluster_id = 0 ) {
         $default_text = 'Get email notifications';
-        $cluster = Post::get( $cluster_id );
+        $cluster      = Post::get( $cluster_id );
         if ( ! Types::is_cluster( $cluster ) ) {
             return $default_text;
         }
         $default_text = "Get email notifications whenever we write about <strong>{$cluster->get_the_title()}</strong>";
-        $custom_text = $cluster->get_fm_field( 'signup_form_settings', 'cta_text' );
+        $custom_text  = $cluster->get_fm_field( 'signup_form_settings', 'cta_text' );
         return $custom_text ?: $default_text;
     }
 }

@@ -45,7 +45,7 @@ class Embed extends Entity {
      * Add the embed type to the classes
      */
     public function get_css_classes() {
-        $classes = parent::get_css_classes();
+        $classes    = parent::get_css_classes();
         $embed_type = $this->get_embed_type();
         if ( $embed_type ) {
             $classes = array_merge( [
@@ -60,8 +60,8 @@ class Embed extends Entity {
      */
     public function set_data_atts() {
         parent::set_data_atts();
-        $atts = parent::get_data_atts();
-        $new_atts = [
+        $atts                  = parent::get_data_atts();
+        $new_atts              = [
             'source-name' => $this->get_source(),
         ];
         $this->data_attributes = array_merge( $atts, $new_atts );
@@ -159,7 +159,7 @@ class Embed extends Entity {
      */
     public function get_featured_image_url( $size = 'full' ) {
 
-        $image_url = '';
+        $image_url  = '';
         $embed_data = $this->get_embed_data();
         switch ( $this->get_embed_type() ) {
             case 'youtube':
@@ -209,7 +209,7 @@ class Embed extends Entity {
         $html = self::do_embed( $args );
         if ( ! empty( $html ) ) {
             $classes = 'embed embed--' . $this->get_embed_type();
-            $html = sprintf(
+            $html    = sprintf(
                 '<div class="%s"><div class="embed__inner">%s</div></div>',
                 esc_attr( $classes ),
                 $html
@@ -226,7 +226,7 @@ class Embed extends Entity {
      */
     public static function do_embed( $args ) {
         $html = '';
-        $url = $args['url'];
+        $url  = $args['url'];
 
         $embed_type = static::get_embed_type_from_url( $url );
         if ( ! $embed_type ) {
@@ -313,7 +313,7 @@ class Embed extends Entity {
      * @return object|false Object of oEmbed data if successful, false if not
      */
     public static function get_oembed_data( string $url ) {
-        $cache_key = false;
+        $cache_key  = false;
         $embed_type = self::get_embed_type_from_url( $url );
         if ( 'documentcloud' !== $embed_type ) {
             $cache_key = 'oembed_' . $url;
@@ -327,7 +327,7 @@ class Embed extends Entity {
         }
 
         $wp_oembed = new \WP_oEmbed;
-        $data = $wp_oembed->fetch( static::get_oembed_provider_url( $url ), $url );
+        $data      = $wp_oembed->fetch( static::get_oembed_provider_url( $url ), $url );
 
         if ( $cache_key ) {
             wp_cache_set( $cache_key, $data );
@@ -443,14 +443,14 @@ class Embed extends Entity {
 
                 $youtube_url = YouTube::get_url_from_id( $id );
                 $request_url = 'http://www.youtube.com/oembed?format=json&maxheight=9999&maxwidth=9999&url=' . urlencode( $youtube_url );
-                $response = wp_remote_get( $request_url );
+                $response    = wp_remote_get( $request_url );
                 if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
                     break;
                 }
 
                 $body = json_decode( wp_remote_retrieve_body( $response ) );
                 // See if there's a high-res version
-                $high_res = str_replace( 'hqdefault.jpg', 'maxresdefault.jpg', $body->thumbnail_url );
+                $high_res         = str_replace( 'hqdefault.jpg', 'maxresdefault.jpg', $body->thumbnail_url );
                 $high_res_request = wp_remote_head( $high_res );
                 if ( 200 === wp_remote_retrieve_response_code( $high_res_request ) ) {
                     $thumbnail_url = $high_res;
@@ -459,8 +459,8 @@ class Embed extends Entity {
                 }
 
                 return [
-                    'youtube_id'      => $id,
-                    'thumbnail_url'   => $thumbnail_url,
+                    'youtube_id'    => $id,
+                    'thumbnail_url' => $thumbnail_url,
                 ];
                 break;
 
@@ -471,21 +471,21 @@ class Embed extends Entity {
                 }
 
                 $embed_data = [
-                    'instagram_id'      => $id,
+                    'instagram_id' => $id,
                 ];
-                $image_url = sprintf( 'http://instagram.com/p/%s/media/?size=l', $id );
-                $response = wp_remote_get( $image_url, [
+                $image_url  = sprintf( 'http://instagram.com/p/%s/media/?size=l', $id );
+                $response   = wp_remote_get( $image_url, [
                     'redirection' => 0,
                 ] );
 
                 // If the image URL is not redirected to the actual image, then
                 // bail and return nothing
                 if ( 301 || 302 == wp_remote_retrieve_response_code( $response ) ) {
-                    $image_url_large = wp_remote_retrieve_header( $response, 'location' );
-                    $size = getimagesize( $image_url_large );
+                    $image_url_large               = wp_remote_retrieve_header( $response, 'location' );
+                    $size                          = getimagesize( $image_url_large );
                     $embed_data['image_url_large'] = $image_url_large;
-                    $embed_data['width'] = $size[0];
-                    $embed_data['height'] = $size[1];
+                    $embed_data['width']           = $size[0];
+                    $embed_data['height']          = $size[1];
                     return $embed_data;
                 }
 
@@ -661,10 +661,10 @@ class Embed extends Entity {
             'fallback_previous' => false,
             'context'           => '',
         ] );
-        $date = strtotime( $options['date'] );
+        $date    = strtotime( $options['date'] );
 
         $date_query_args = [
-            'key' => 'daily_insta_date',
+            'key'   => 'daily_insta_date',
             'value' => $date,
         ];
 
@@ -673,7 +673,7 @@ class Embed extends Entity {
                 'relation' => 'OR',
                 $date_query_args,
                 [
-                    'key' => 'daily_insta_date',
+                    'key'   => 'daily_insta_date',
                     'value' => $date - DAY_IN_SECONDS,
                 ],
             ];
@@ -682,7 +682,7 @@ class Embed extends Entity {
         $meta_query = [
             'relation' => 'AND',
             [
-                'key' => 'embed_type',
+                'key'   => 'embed_type',
                 'value' => 'instagram',
             ],
             $date_query_args,
@@ -715,7 +715,7 @@ class Embed extends Entity {
             return '';
         }
 
-        $context = \Timber\Timber::get_context();
+        $context         = \Timber\Timber::get_context();
         $context['item'] = $daily_insta;
 
         $context['classes'] = '';

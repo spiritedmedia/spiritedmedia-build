@@ -63,7 +63,7 @@ class Recent_Content_Widget extends \WP_Widget {
 
         if ( ! empty( $instance['clusters'] ) && is_array( $instance['clusters'] ) ) {
             $query_args['connected_items'] = $instance['clusters'];
-            $query_args['connected_type'] = Types::get_cluster_connection_types( $post_types );
+            $query_args['connected_type']  = Types::get_cluster_connection_types( $post_types );
         }
 
         $posts = new \WP_Query( $query_args );
@@ -86,8 +86,8 @@ class Recent_Content_Widget extends \WP_Widget {
             ];
             if ( $instance['show_thumbs'] ) {
                 $feat_image = $ped_post->get_featured_image_html( 48, [
-                    'class' => 'o-media__img recent-content-widget__thumbnail',
-                    'sizes' => '48px',
+                    'class'  => 'o-media__img recent-content-widget__thumbnail',
+                    'sizes'  => '48px',
                     'srcset' => [
                         'ratio'  => 1,
                         'widths' => 48,
@@ -148,7 +148,7 @@ class Recent_Content_Widget extends \WP_Widget {
         ];
 
         // Escape field ids and names
-        $field_ids = $instance;
+        $field_ids   = $instance;
         $field_names = $instance;
         array_walk( $field_ids, function( &$v, $k ) {
             $v = $this->get_field_id( $k );
@@ -158,7 +158,7 @@ class Recent_Content_Widget extends \WP_Widget {
         } );
 
         $has_cluster_filter = false;
-        $selected_clusters = '';
+        $selected_clusters  = '';
         if ( ! empty( $instance['clusters'] ) ) {
             $has_cluster_filter = true;
             foreach ( $instance['clusters'] as $cluster_id ) {
@@ -202,11 +202,11 @@ class Recent_Content_Widget extends \WP_Widget {
      * @return array               Update widget data to be saved to the database
      */
     public function update( $new_instance, $instance ) {
-        $instance['title'] = sanitize_text_field( $new_instance['title'] );
-        $instance['title_link'] = esc_url_raw( $new_instance['title_link'] );
-        $instance['number'] = (int) $new_instance['number'];
+        $instance['title']       = sanitize_text_field( $new_instance['title'] );
+        $instance['title_link']  = esc_url_raw( $new_instance['title_link'] );
+        $instance['number']      = (int) $new_instance['number'];
         $instance['show_thumbs'] = $new_instance['show_thumbs'];
-        $instance['type'] = sanitize_key( $new_instance['type'] );
+        $instance['type']        = sanitize_key( $new_instance['type'] );
 
         $instance['clusters'] = [];
         if ( ! empty( $_REQUEST['recent-content-widget-clusters'] ) ) {
@@ -244,7 +244,7 @@ class Recent_Content_Widget extends \WP_Widget {
             if ( ! Types::is_post( $ped_post ) ) {
                 continue;
             }
-            $label = $ped_post->get_the_title();
+            $label  = $ped_post->get_the_title();
             $label .= ' (' . $ped_post->get_type_name() . ')';
 
             $output[] = (object) [

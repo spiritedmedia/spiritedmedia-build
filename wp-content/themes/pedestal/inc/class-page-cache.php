@@ -57,7 +57,7 @@ class Page_Cache {
 
             // Filter out URLs that don't contain the current site's hostname
             $site_host_name = parse_url( get_site_url(), PHP_URL_HOST );
-            $urls = array_filter( $urls, function( $url ) use ( $site_host_name ) {
+            $urls           = array_filter( $urls, function( $url ) use ( $site_host_name ) {
                 return ( stripos( $url, $site_host_name ) );
             } );
 

@@ -19,12 +19,12 @@ class Message_Spot extends Targeted_Messages {
             'button_label' => 'Default Label',
         ],
         'override' => [
-            'enabled'      => 'false',
-            'type'         => 'override',
-            'url'          => '#',
-            'icon'         => 'bolt-solid',
-            'title'        => 'Breaking News',
-            'body'         => 'This is the default message body',
+            'enabled' => 'false',
+            'type'    => 'override',
+            'url'     => '#',
+            'icon'    => 'bolt-solid',
+            'title'   => 'Breaking News',
+            'body'    => 'This is the default message body',
         ],
     ];
 
@@ -70,40 +70,40 @@ class Message_Spot extends Targeted_Messages {
      */
     protected function override_fields() {
         return [
-            'enabled' => new \Fieldmanager_Radios( false, [
+            'enabled'       => new \Fieldmanager_Radios( false, [
                 'description'   => 'The override is shown to <strong>every reader on every page</strong> and suppresses other messages specified below. Use sparingly.',
-                'escape' => [
+                'escape'        => [
                     'description' => 'wp_kses_post',
                 ],
                 'default_value' => 'false',
-                'options' => [
+                'options'       => [
                     'false' => 'Override Off',
-                    'true' => 'Override On',
+                    'true'  => 'Override On',
                 ],
             ] ),
-            'id' => new \Fieldmanager_Hidden( false, [
+            'id'            => new \Fieldmanager_Hidden( false, [
                 'default_value' => 'override',
             ] ),
-            'type' => new \Fieldmanager_Hidden( [
+            'type'          => new \Fieldmanager_Hidden( [
                 'default_value' => 'override',
             ] ),
-            'preview' => new \Fieldmanager_TextField( 'Preview', [
+            'preview'       => new \Fieldmanager_TextField( 'Preview', [
                 'template' => $this->preview_template,
             ] ),
             'preview_model' => new \Fieldmanager_Hidden( false, [
                 'sanitize' => [ '\Pedestal\Utils\Utils', 'return_same' ],
             ] ),
-            'title' => new \Fieldmanager_TextField( 'Message Title', [
+            'title'         => new \Fieldmanager_TextField( 'Message Title', [
                 'default_value' => 'Breaking News',
                 'description'   => '“Breaking News”, “Developing Story”, etc.',
             ] ),
-            'post' => new \Fieldmanager_Autocomplete( 'Article', [
+            'post'          => new \Fieldmanager_Autocomplete( 'Article', [
                 'description' => 'Start typing to retrieve a post',
                 'attributes'  => [
                     'placeholder' => '…',
                     'size'        => 75,
                 ],
-                'datasource' => new \Fieldmanager_Datasource_Post( [
+                'datasource'  => new \Fieldmanager_Datasource_Post( [
                     'query_args' => [
                         'post_type'      => Types::get_post_types(),
                         'posts_per_page' => 15,
@@ -111,15 +111,15 @@ class Message_Spot extends Targeted_Messages {
                     ],
                 ] ),
             ] ),
-            'post_title' => new \Fieldmanager_Hidden(),
-            'body' => new \Fieldmanager_Textfield( 'Headline', [
+            'post_title'    => new \Fieldmanager_Hidden(),
+            'body'          => new \Fieldmanager_Textfield( 'Headline', [
                 'description' => 'Adjust headline for this message',
                 'attributes'  => [
                     'size' => 75,
                 ],
             ] ),
-            'url' => new \Fieldmanager_Hidden(),
-            'icon' => new \Fieldmanager_Hidden( [
+            'url'           => new \Fieldmanager_Hidden(),
+            'icon'          => new \Fieldmanager_Hidden( [
                 'default_value' => 'bolt-solid',
             ] ),
         ];
@@ -127,8 +127,8 @@ class Message_Spot extends Targeted_Messages {
 
     protected function message_fields() {
         return [
-            'id'   => new \Fieldmanager_Hidden(),
-            'type' => new \Fieldmanager_Radios( 'Message type', [
+            'id'            => new \Fieldmanager_Hidden(),
+            'type'          => new \Fieldmanager_Radios( 'Message type', [
                 'validation_rules'    => 'required',
                 'validation_messages' => 'Required',
                 'default_value'       => 'standard',
@@ -138,7 +138,7 @@ class Message_Spot extends Targeted_Messages {
                     'with_button' => 'With Button',
                 ],
             ] ),
-            'preview' => new \Fieldmanager_TextField( 'Preview', [
+            'preview'       => new \Fieldmanager_TextField( 'Preview', [
                 'description'               => 'How the message will look to readers',
                 'description_after_element' => false,
                 'template'                  => $this->preview_template,
@@ -146,14 +146,14 @@ class Message_Spot extends Targeted_Messages {
             'preview_model' => new \Fieldmanager_Hidden( false, [
                 'sanitize' => [ '\Pedestal\Utils\Utils', 'return_same' ],
             ] ),
-            'body'  => new \Fieldmanager_RichTextArea( 'Message (under 90 characters)', [
+            'body'          => new \Fieldmanager_RichTextArea( 'Message (under 90 characters)', [
                 'editor_settings' => [
                     'media_buttons' => false,
                 ],
-                'buttons_1' => [ 'bold', 'italic', 'underline' ],
-                'buttons_2' => [],
+                'buttons_1'       => [ 'bold', 'italic', 'underline' ],
+                'buttons_2'       => [],
             ] ),
-            'url' => new \Fieldmanager_Link( 'Destination URL', [
+            'url'           => new \Fieldmanager_Link( 'Destination URL', [
                 'description'         => 'All messages are linked to a destination page',
                 'validation_rules'    => [
                     'required' => true,
@@ -163,41 +163,41 @@ class Message_Spot extends Targeted_Messages {
                     'required' => 'Required',
                     'url'      => 'This is not a URL!',
                 ],
-                'attributes' => [
+                'attributes'          => [
                     'placeholder' => 'https://',
                     'size'        => 50,
                 ],
             ] ),
-            'title' => new \Fieldmanager_TextField( 'Message Title', [
+            'title'         => new \Fieldmanager_TextField( 'Message Title', [
                 'validation_rules'    => 'required',
                 'validation_messages' => 'Required',
-                'display_if' => [
+                'display_if'          => [
                     'src'   => 'type',
                     'value' => 'with_title',
                 ],
-                'attributes' => [
+                'attributes'          => [
                     'placeholder' => '…',
                     'size'        => 50,
                 ],
             ] ),
-            'button_label' => new \Fieldmanager_TextField( 'Button Label', [
+            'button_label'  => new \Fieldmanager_TextField( 'Button Label', [
                 'validation_rules'    => 'required',
                 'validation_messages' => 'Required',
-                'display_if' => [
+                'display_if'          => [
                     'src'   => 'type',
                     'value' => 'with_button',
                 ],
-                'attributes' => [
+                'attributes'          => [
                     'placeholder' => '…',
                     'size'        => 50,
                 ],
             ] ),
-            'icon' => new \Fieldmanager_Radios( 'Icon', [
+            'icon'          => new \Fieldmanager_Radios( 'Icon', [
                 'default_value'       => 'link',
                 'validation_rules'    => 'required',
                 'validation_messages' => 'Required',
                 'options'             => $this->icon_buttons,
-                'display_if' => [
+                'display_if'          => [
                     'src'   => 'type',
                     'value' => 'standard,with_title',
                 ],
@@ -214,7 +214,7 @@ class Message_Spot extends Targeted_Messages {
             die();
         }
 
-        $post_id = absint( $_POST['post_id'] );
+        $post_id  = absint( $_POST['post_id'] );
         $ped_post = Post::get( $post_id );
         if ( ! Types::is_post( $ped_post ) ) {
             wp_send_json_error( null, 500 );
@@ -250,11 +250,11 @@ class Message_Spot extends Targeted_Messages {
 
         $context = $args;
 
-        $type = str_replace( '_', '-', $context['type'] );
-        $target_audience = 'unidentified';
+        $type                          = str_replace( '_', '-', $context['type'] );
+        $target_audience               = 'unidentified';
         $context['additional_classes'] = "message-spot--{$type} js-message-spot-{$type}";
         if ( ! empty( $context['target_audience'] ) ) {
-            $target_audience = sanitize_title( $context['target_audience'] );
+            $target_audience                = sanitize_title( $context['target_audience'] );
             $context['additional_classes'] .= ' show-for-target-audience--' . $target_audience;
         }
 
@@ -262,25 +262,25 @@ class Message_Spot extends Targeted_Messages {
 
         switch ( $context['type'] ) {
             case 'standard':
-                $context['title'] = false;
+                $context['title']        = false;
                 $context['button_label'] = false;
                 break;
             case 'with_title':
                 $context['button_label'] = false;
                 break;
             case 'with_button':
-                $context['icon'] = false;
+                $context['icon']  = false;
                 $context['title'] = false;
                 break;
             case 'override':
                 $context['additional_classes'] .= ' message-spot--with-title';
-                $context['icon'] = 'bolt-solid';
-                $context['button_label'] = false;
-                $context['ga_label'] = 'override';
+                $context['icon']                = 'bolt-solid';
+                $context['button_label']        = false;
+                $context['ga_label']            = 'override';
                 if ( ! empty( $context['post'] ) ) {
                     $post = Post::get( $context['post'] );
                     if ( Types::is_post( $post ) ) {
-                        $context['url'] = $post->get_permalink();
+                        $context['url']  = $post->get_permalink();
                         $context['body'] = $context['body'] ?: $post->get_the_title();
                     }
                 }

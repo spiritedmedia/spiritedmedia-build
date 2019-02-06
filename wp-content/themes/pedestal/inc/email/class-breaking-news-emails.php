@@ -73,8 +73,8 @@ class Breaking_News_Emails {
      * @param  object $post WP_Post
      */
     public function handle_meta_box( $post ) {
-        $post = Post::get( (int) $post->ID );
-        $sent_date = $post->get_sent_date();
+        $post         = Post::get( (int) $post->ID );
+        $sent_date    = $post->get_sent_date();
         $email_groups = Email_Groups::get_instance();
 
         $send_button_text = sprintf(
@@ -102,8 +102,8 @@ class Breaking_News_Emails {
         ];
 
         if ( $sent_date ) {
-            $sent_date = get_date_from_gmt( date( 'Y-m-d H:i:s', $sent_date ), PEDESTAL_DATETIME_FORMAT );
-            $sent_confirm = sprintf( 'The breaking news email was sent on %s.',
+            $sent_date          = get_date_from_gmt( date( 'Y-m-d H:i:s', $sent_date ), PEDESTAL_DATETIME_FORMAT );
+            $sent_confirm       = sprintf( 'The breaking news email was sent on %s.',
                 $sent_date
             );
             $context['message'] = wpautop( esc_html( $sent_confirm ) );
@@ -171,12 +171,12 @@ class Breaking_News_Emails {
      * @return string       MailChimp campaign id if sent successfully
      */
     public function send_email( Post $post, $args ) {
-        $html = Email::get_email_template( 'breaking-news', 'mc', [
+        $html         = Email::get_email_template( 'breaking-news', 'mc', [
             'item'       => $post,
             'email_type' => 'Breaking News',
             'shareable'  => true,
         ] );
-        $subject = sprintf( 'BREAKING NEWS: %s', $post->get_title() );
+        $subject      = sprintf( 'BREAKING NEWS: %s', $post->get_title() );
         $sending_args = [
             'messages'       => [
                 [

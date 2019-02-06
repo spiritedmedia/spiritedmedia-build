@@ -37,9 +37,9 @@ class Types {
      * @var array
      */
     protected static $class_map = [
-        'post'         => 'Posts\\Post',
-        'page'         => 'Posts\\Page',
-        'attachment'   => 'Posts\\Attachment',
+        'post'       => 'Posts\\Post',
+        'page'       => 'Posts\\Page',
+        'attachment' => 'Posts\\Attachment',
     ];
 
     /**
@@ -156,22 +156,22 @@ class Types {
                 }
 
                 $args['labels'] = [
-                    'name'                => $plural,
-                    'singular_name'       => $singular,
-                    'all_items'           => $plural,
-                    'new_item'            => sprintf( esc_html__( 'New %s', 'pedestal' ), $singular ),
-                    'add_new'             => sprintf( esc_html__( 'Add New', 'pedestal' ), $singular ),
-                    'add_new_item'        => sprintf( esc_html__( 'Add New %s', 'pedestal' ), $singular ),
-                    'edit_item'           => sprintf( esc_html__( 'Edit %s', 'pedestal' ), $singular ),
-                    'view_item'           => sprintf( esc_html__( 'View %s', 'pedestal' ), $singular ),
-                    'search_items'        => sprintf( esc_html__( 'Search %s', 'pedestal' ), $plural ),
-                    'not_found'           => sprintf( esc_html__( 'No %s found', 'pedestal' ), $plural ),
-                    'not_found_in_trash'  => sprintf( esc_html__( 'No %s found in trash', 'pedestal' ), $plural ),
-                    'parent_item_colon'   => sprintf( esc_html__( 'Parent %s', 'pedestal' ), $singular ),
-                    'menu_name'           => $plural,
+                    'name'               => $plural,
+                    'singular_name'      => $singular,
+                    'all_items'          => $plural,
+                    'new_item'           => sprintf( esc_html__( 'New %s', 'pedestal' ), $singular ),
+                    'add_new'            => sprintf( esc_html__( 'Add New', 'pedestal' ), $singular ),
+                    'add_new_item'       => sprintf( esc_html__( 'Add New %s', 'pedestal' ), $singular ),
+                    'edit_item'          => sprintf( esc_html__( 'Edit %s', 'pedestal' ), $singular ),
+                    'view_item'          => sprintf( esc_html__( 'View %s', 'pedestal' ), $singular ),
+                    'search_items'       => sprintf( esc_html__( 'Search %s', 'pedestal' ), $plural ),
+                    'not_found'          => sprintf( esc_html__( 'No %s found', 'pedestal' ), $plural ),
+                    'not_found_in_trash' => sprintf( esc_html__( 'No %s found in trash', 'pedestal' ), $plural ),
+                    'parent_item_colon'  => sprintf( esc_html__( 'Parent %s', 'pedestal' ), $singular ),
+                    'menu_name'          => $plural,
                 ];
 
-                $this->post_types[] = $post_type;
+                $this->post_types[]            = $post_type;
                 self::$class_map[ $post_type ] = $class;
                 register_post_type( $post_type, $args );
 
@@ -188,9 +188,9 @@ class Types {
      */
     public function action_init_disable_default_post_type() {
         global $wp_post_types;
-        $wp_post_types['post']->public = false;
-        $wp_post_types['post']->show_ui = false;
-        $wp_post_types['post']->show_in_menu = false;
+        $wp_post_types['post']->public            = false;
+        $wp_post_types['post']->show_ui           = false;
+        $wp_post_types['post']->show_in_menu      = false;
         $wp_post_types['post']->show_in_admin_bar = false;
         $wp_post_types['post']->show_in_nav_menus = false;
     }
@@ -200,7 +200,7 @@ class Types {
      */
     public function action_init_register_rewrites() {
         // Rewrite rules for our custom post types
-        $post_types = '';
+        $post_types                    = '';
         $date_based_pagination_pattern = '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/([^/]+)/page/?([0-9]{1,})/?$';
         foreach ( self::get_entity_post_types() as $ptype ) {
             $post_types .= '&post_type[]=' . $ptype;
@@ -325,7 +325,7 @@ class Types {
 
         // Need to override the conditionals set by WordPress to better describe this request
         $query->is_archive = true;
-        $query->is_home = false;
+        $query->is_home    = false;
         $query->set( 'post_type', self::get_original_post_types() );
     }
 
@@ -337,7 +337,7 @@ class Types {
     public function filter_manage_posts_columns( $columns ) {
 
         $new_columns = [];
-        $post_type = get_current_screen()->post_type;
+        $post_type   = get_current_screen()->post_type;
         foreach ( $columns as $key => $label ) :
             $new_columns[ $key ] = $label;
 
@@ -350,7 +350,7 @@ class Types {
             if ( 'pedestal_event' == $post_type ) {
                 if ( 'title' == $key ) {
                     $new_columns['pedestal_event_start_time'] = esc_html__( 'Start Time', 'pedestal' );
-                    $new_columns['pedestal_event_end_time'] = esc_html__( 'End Time', 'pedestal' );
+                    $new_columns['pedestal_event_end_time']   = esc_html__( 'End Time', 'pedestal' );
                     $new_columns['pedestal_event_venue_name'] = esc_html__( 'Venue Name', 'pedestal' );
                 }
                 if ( 'coauthors' == $key ) {
@@ -361,7 +361,7 @@ class Types {
             // Entity columns
             if ( self::is_entity( $post_type ) ) {
                 if ( 'coauthors' === $key ) {
-                    $new_columns['pedestal_entity_story_connections'] = esc_html__( 'Stories', 'pedestal' );
+                    $new_columns['pedestal_entity_story_connections']   = esc_html__( 'Stories', 'pedestal' );
                     $new_columns['pedestal_entity_cluster_connections'] = esc_html__( 'Clusters', 'pedestal' );
                 }
             }
@@ -372,7 +372,7 @@ class Types {
                 && self::is_followable_post_type( $post_type )
             ) {
                 if ( 'title' === $key ) {
-                    $new_columns['pedestal_cluster_subscribers_count'] = '№ of Subscribers';
+                    $new_columns['pedestal_cluster_subscribers_count']     = '№ of Subscribers';
                     $new_columns['pedestal_cluster_unsent_entities_count'] = '№ of Unsent Entities';
                 }
             }
@@ -427,17 +427,17 @@ class Types {
                 $post_name = '%' . $post->post_type . '%';
             }
 
-            $unixtime = strtotime( $post->post_date );
-            $date = explode( ' ', date( 'Y m d H i s', $unixtime ) );
+            $unixtime       = strtotime( $post->post_date );
+            $date           = explode( ' ', date( 'Y m d H i s', $unixtime ) );
             $search_replace = [
-                '%year%'       => $date[0],
-                '%monthnum%'   => $date[1],
-                '%day%'        => $date[2],
-                '%postname%'   => $post_name,
+                '%year%'     => $date[0],
+                '%monthnum%' => $date[1],
+                '%day%'      => $date[2],
+                '%postname%' => $post_name,
             ];
 
             $permalink_struct = '%year%/%monthnum%/%day%/%postname%/';
-            $link = home_url( str_replace( array_keys( $search_replace ), array_values( $search_replace ), $permalink_struct ) );
+            $link             = home_url( str_replace( array_keys( $search_replace ), array_values( $search_replace ), $permalink_struct ) );
         }
 
         return $link;
@@ -466,7 +466,7 @@ class Types {
         }
 
         $post_type_permastruct = array_diff( self::get_post_types(), self::get_date_based_post_types() );
-        $permastruct_groups = [
+        $permastruct_groups    = [
             'date_based' => self::get_date_based_post_types(),
             'post_type'  => $post_type_permastruct,
         ];
@@ -534,7 +534,7 @@ class Types {
 
         $author_image_size = 28;
         if ( PEDESTAL_ENABLE_STREAM_ITEM_AVATAR ) {
-            $display_link = false;
+            $display_link            = false;
             $context['author_image'] = $ped_post->get_meta_info_img( $author_image_size, $display_link );
         } else {
             $context['author_image'] = Icons::get_logo( 'logo-icon', '', $author_image_size );
@@ -564,7 +564,7 @@ class Types {
         $original_post_types = implode( ',', self::get_original_post_types() );
         add_rewrite_tag( '%pedestal_orignals%', '(originals)', 'pedestal_originals=' );
         $new_rules = $wp_rewrite->generate_rewrite_rules( $wp_rewrite->root . '%pedestal_orignals%' );
-        $rules = $new_rules + $rules;
+        $rules     = $new_rules + $rules;
         return $rules;
     }
 
@@ -636,8 +636,8 @@ class Types {
      * @return array
      */
     public static function get_cluster_connection_types( $post_types = [], $proto = false ) {
-        $clusters = self::$groups['clusters'];
-        $types = $clusters->connection_types;
+        $clusters           = self::$groups['clusters'];
+        $types              = $clusters->connection_types;
         $types_by_post_type = $clusters->connection_types_by_post_type;
 
         if ( ! empty( $post_types ) ) {
@@ -730,7 +730,7 @@ class Types {
             if ( ! post_type_exists( $type ) ) {
                 continue;
             }
-            $labels = self::get_post_type_labels( $type );
+            $labels                     = self::get_post_type_labels( $type );
             $types_with_labels[ $type ] = $labels[ $label ];
         }
         return $types_with_labels;
@@ -776,7 +776,7 @@ class Types {
      */
     public static function get_post_type_name( $post_type, $plural = true, $sanitize = false ) {
         $labels = self::get_post_type_labels( $post_type );
-        $name = $labels['singular_name'];
+        $name   = $labels['singular_name'];
         if ( $plural ) {
             $name = $labels['name'];
         }
@@ -1067,8 +1067,8 @@ class Types {
      */
     public static function get_original_post_types( $sort = true ) {
         $general_types = self::$groups['general']->original_post_types;
-        $entity_types = self::$groups['entities']->original_post_types;
-        $types = array_merge( $general_types, $entity_types );
+        $entity_types  = self::$groups['entities']->original_post_types;
+        $types         = array_merge( $general_types, $entity_types );
         if ( $sort ) {
             sort( $types );
         }

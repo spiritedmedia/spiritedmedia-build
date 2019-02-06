@@ -57,14 +57,14 @@ class MailChimp {
         }
 
         $this->sender_info = [
-            'company'     => PEDESTAL_BLOG_NAME,
-            'address1'    => PEDESTAL_STREET_ADDRESS,
-            'address2'    => '',
-            'city'        => PEDESTAL_CITY_NAME,
-            'state'       => PEDESTAL_STATE,
-            'zip'         => PEDESTAL_ZIPCODE,
-            'country'     => 'US',
-            'phone'       => '',
+            'company'  => PEDESTAL_BLOG_NAME,
+            'address1' => PEDESTAL_STREET_ADDRESS,
+            'address2' => '',
+            'city'     => PEDESTAL_CITY_NAME,
+            'state'    => PEDESTAL_STATE,
+            'zip'      => PEDESTAL_ZIPCODE,
+            'country'  => 'US',
+            'phone'    => '',
         ];
     }
 
@@ -94,9 +94,9 @@ class MailChimp {
             $default_request_args['body'] = json_encode( $body_args );
         }
         $request_args = wp_parse_args( $request_args, $default_request_args );
-        $url = MAILCHIMP_API_ENDPOINT . $endpoint;
-        $response = wp_remote_request( $url, $request_args );
-        $response = Utils::handle_api_request_response( $response, 'json' );
+        $url          = MAILCHIMP_API_ENDPOINT . $endpoint;
+        $response     = wp_remote_request( $url, $request_args );
+        $response     = Utils::handle_api_request_response( $response, 'json' );
         if ( $response['body'] ) {
             // Trim _links key from response
             if ( is_object( $response['body'] ) && isset( $response['body']->_links ) ) {
@@ -126,21 +126,21 @@ class MailChimp {
             // all the values of the array which are equal to FALSE
             // will be removed, such as an empty string or a NULL value.
             // MailChimp doesn't like empty query vars.
-            $args = array_filter( $args );
+            $args     = array_filter( $args );
             $endpoint = add_query_arg( $args, $endpoint );
         }
 
         $cache_args = [
-            'endpoint' => $endpoint,
+            'endpoint'     => $endpoint,
             'request_args' => ksort( $request_args ),
         ];
-        $cache_key = md5( json_encode( $cache_args ) );
+        $cache_key  = md5( json_encode( $cache_args ) );
         if ( ! empty( $this->get_request_cache[ $cache_key ] ) ) {
             return $this->get_request_cache[ $cache_key ];
         }
 
-        $body_args = [];
-        $resp = $this->request( 'GET', $endpoint, $body_args, $request_args );
+        $body_args                             = [];
+        $resp                                  = $this->request( 'GET', $endpoint, $body_args, $request_args );
         $this->get_request_cache[ $cache_key ] = $resp;
         return $resp;
     }
@@ -212,7 +212,7 @@ class MailChimp {
      * @return object             An individual list object
      */
     public function get_list( $list_id = '', $query_args = [] ) {
-        $list_id = $this->sanitize_list_id( $list_id );
+        $list_id  = $this->sanitize_list_id( $list_id );
         $response = $this->get_request( "/lists/$list_id", $query_args );
 
         // Uh oh! Response is not found!
@@ -240,7 +240,7 @@ class MailChimp {
             'fields'         => '',
             'exclude_fields' => '',
         ];
-        $args = wp_parse_args( $args, $default_args );
+        $args         = wp_parse_args( $args, $default_args );
         return $this->get_request( '/lists', $args );
     }
 
@@ -254,7 +254,7 @@ class MailChimp {
      */
     public function get_site_list() {
         $option_name = 'mailchimp_site_list';
-        $list = get_option( $option_name );
+        $list        = get_option( $option_name );
         if ( $list ) {
             return $list;
         }
@@ -314,20 +314,20 @@ class MailChimp {
      */
     public function add_list( $args = [] ) {
         $default_args = [
-            'name' => '',
-            'contact' => $this->sender_info,
+            'name'                => '',
+            'contact'             => $this->sender_info,
             'permission_reminder' => 'You signed up for updates at ' . get_site_url(),
-            'use_archive_bar' => false,
-            'email_type_option' => false,
-            'campaign_defaults' => [
-                'from_name' => PEDESTAL_BLOG_NAME,
+            'use_archive_bar'     => false,
+            'email_type_option'   => false,
+            'campaign_defaults'   => [
+                'from_name'  => PEDESTAL_BLOG_NAME,
                 'from_email' => PEDESTAL_EMAIL_NEWS,
-                'subject' => 'Update',
-                'language' => 'English',
+                'subject'    => 'Update',
+                'language'   => 'English',
             ],
-            'visibility' => 'pub',
+            'visibility'          => 'pub',
         ];
-        $args = wp_parse_args( $args, $default_args );
+        $args         = wp_parse_args( $args, $default_args );
         if ( empty( $args['name'] ) ) {
             return false;
         }
@@ -394,22 +394,22 @@ class MailChimp {
         if ( ! $email ) {
             return false;
         }
-        $email = sanitize_email( $email );
+        $email   = sanitize_email( $email );
         $list_id = $this->sanitize_list_id( $list_id );
         if ( empty( $list_id ) ) {
             return false;
         }
-        $member_hash = $this->get_email_hash( $email );
-        $endpoint = "/lists/$list_id/members/$member_hash";
+        $member_hash  = $this->get_email_hash( $email );
+        $endpoint     = "/lists/$list_id/members/$member_hash";
         $default_args = [
-            'email_address'      => $email,
-            'email_type'         => 'html',
-            'status'             => 'subscribed',
-            'status_if_new'      => 'subscribed',
-            'ip_signup'          => $_SERVER['REMOTE_ADDR'],
-            'interests'          => [],
+            'email_address' => $email,
+            'email_type'    => 'html',
+            'status'        => 'subscribed',
+            'status_if_new' => 'subscribed',
+            'ip_signup'     => $_SERVER['REMOTE_ADDR'],
+            'interests'     => [],
         ];
-        $args = wp_parse_args( $args, $default_args );
+        $args         = wp_parse_args( $args, $default_args );
         return $this->put_request( $endpoint, $args );
     }
 
@@ -425,13 +425,13 @@ class MailChimp {
         if ( ! $email ) {
             return false;
         }
-        $email = sanitize_email( $email );
+        $email   = sanitize_email( $email );
         $list_id = $this->sanitize_list_id( $list_id );
         if ( empty( $list_id ) ) {
             return false;
         }
         $member_hash = $this->get_email_hash( $email );
-        $endpoint = "/lists/$list_id/members/$member_hash";
+        $endpoint    = "/lists/$list_id/members/$member_hash";
         return $this->delete_request( $endpoint );
     }
 
@@ -447,13 +447,13 @@ class MailChimp {
         if ( ! $email ) {
             return false;
         }
-        $email = sanitize_email( $email );
+        $email   = sanitize_email( $email );
         $list_id = $this->sanitize_list_id( $list_id );
         if ( empty( $list_id ) ) {
             return false;
         }
         $member_hash = $this->get_email_hash( $email );
-        $endpoint = "/lists/$list_id/members/$member_hash";
+        $endpoint    = "/lists/$list_id/members/$member_hash";
         return $this->get_request( $endpoint );
     }
 
@@ -497,7 +497,7 @@ class MailChimp {
             'merge_fields'   => [],
             'add_to_groups'  => true, // Setting to false unsubscribes contact from group
         ];
-        $args = wp_parse_args( $args, $default_args );
+        $args         = wp_parse_args( $args, $default_args );
         if ( ! is_array( $args['groups'] ) ) {
             $args['groups'] = [ $args['groups'] ];
         }
@@ -542,13 +542,13 @@ class MailChimp {
      * @return object          HTTP response
      */
     public function add_contact_to_groups( $email = '', $args = [] ) {
-        $default_args = [
+        $default_args          = [
             'groups'         => [],
             'group_category' => '',
             'list_id'        => '',
             'signup_source'  => '',
         ];
-        $args = wp_parse_args( $args, $default_args );
+        $args                  = wp_parse_args( $args, $default_args );
         $args['add_to_groups'] = true;
         return $this->modify_contact_groups( $email, $args );
     }
@@ -561,12 +561,12 @@ class MailChimp {
      * @return object          HTTP response
      */
     public function remove_contact_from_groups( $email = '', $args = [] ) {
-        $default_args = [
+        $default_args          = [
             'groups'         => [],
             'group_category' => '',
             'list_id'        => '',
         ];
-        $args = wp_parse_args( $args, $default_args );
+        $args                  = wp_parse_args( $args, $default_args );
         $args['add_to_groups'] = false;
         return $this->modify_contact_groups( $email, $args );
     }
@@ -593,14 +593,14 @@ class MailChimp {
         if ( ! $title ) {
             return false;
         }
-        $list_id = $this->sanitize_list_id( $list_id );
+        $list_id      = $this->sanitize_list_id( $list_id );
         $default_args = [
             'title' => $title,
             'type'  => 'checkboxes',
         ];
-        $args = wp_parse_args( $args, $default_args );
-        $endpoint = "/lists/$list_id/interest-categories";
-        $resp = $this->post_request( $endpoint, $args );
+        $args         = wp_parse_args( $args, $default_args );
+        $endpoint     = "/lists/$list_id/interest-categories";
+        $resp         = $this->post_request( $endpoint, $args );
         if ( ! is_object( $resp ) ) {
             return false;
         }
@@ -639,8 +639,8 @@ class MailChimp {
         $list_id = $this->sanitize_list_id( $list_id );
 
         $endpoint = "/lists/$list_id/interest-categories";
-        $resp = $this->get_request( $endpoint );
-        $output = [];
+        $resp     = $this->get_request( $endpoint );
+        $output   = [];
         if ( ! is_object( $resp ) || ! isset( $resp->categories ) || ! is_array( $resp->categories ) ) {
             return $output;
         }
@@ -665,7 +665,7 @@ class MailChimp {
      * @return array                 Array of group objects
      */
     public function get_groups( $group_category = '', $list_id = '' ) {
-        $output = [];
+        $output  = [];
         $list_id = $this->sanitize_list_id( $list_id );
         if ( ! $list_id ) {
             return $output;
@@ -675,11 +675,11 @@ class MailChimp {
             return $output;
         }
         $group_category_id = $group_category->id;
-        $endpoint = "/lists/$list_id/interest-categories/$group_category_id/interests";
-        $args = [
+        $endpoint          = "/lists/$list_id/interest-categories/$group_category_id/interests";
+        $args              = [
             'count' => 60,
         ];
-        $resp = $this->get_request( $endpoint, $args );
+        $resp              = $this->get_request( $endpoint, $args );
         if ( ! is_object( $resp ) || ! isset( $resp->interests ) ) {
             return $output;
         }
@@ -701,9 +701,9 @@ class MailChimp {
      * @return array          Flat array of group objects
      */
     public function get_all_groups( $list_id = '' ) {
-        $list_id = $this->sanitize_list_id( $list_id );
+        $list_id    = $this->sanitize_list_id( $list_id );
         $categories = $this->get_group_categories( $list_id );
-        $output = [];
+        $output     = [];
         foreach ( $categories as $cat ) {
             if ( ! is_object( $cat ) || ! isset( $cat->id ) ) {
                 continue;
@@ -805,10 +805,10 @@ class MailChimp {
         $group_category_id = $group_category->id;
 
         $endpoint = "/lists/$list_id/interest-categories/$group_category_id/interests";
-        $args = [
+        $args     = [
             'name' => $name,
         ];
-        $resp = $this->post_request( $endpoint, $args );
+        $resp     = $this->post_request( $endpoint, $args );
         if ( ! is_object( $resp ) ) {
             return false;
         }
@@ -834,15 +834,15 @@ class MailChimp {
             return false;
         }
 
-        $list_id = $group->list_id;
+        $list_id     = $group->list_id;
         $category_id = $group->category_id;
-        $group_id = $group->id;
+        $group_id    = $group->id;
 
         $endpoint = "/lists/$list_id/interest-categories/$category_id/interests/$group_id";
-        $args = [
+        $args     = [
             'name' => $name,
         ];
-        $resp = $this->patch_request( $endpoint, $args );
+        $resp     = $this->patch_request( $endpoint, $args );
         if ( ! is_object( $resp ) ) {
             return false;
         }
@@ -864,12 +864,12 @@ class MailChimp {
             return false;
         }
 
-        $list_id = $group->list_id;
+        $list_id     = $group->list_id;
         $category_id = $group->category_id;
-        $group_id = $group->id;
+        $group_id    = $group->id;
 
         $endpoint = "/lists/$list_id/interest-categories/$category_id/interests/$group_id";
-        $resp = $this->delete_request( $endpoint );
+        $resp     = $this->delete_request( $endpoint );
         return $resp;
     }
 
@@ -888,12 +888,12 @@ class MailChimp {
      */
     public function get_campaign_folders( $args = [] ) {
         $defaults = [
-            'count' => 10,
+            'count'  => 10,
             'offset' => 0,
         ];
-        $args = wp_parse_args( $args, $defaults );
+        $args     = wp_parse_args( $args, $defaults );
         $endpoint = '/campaign-folders';
-        $output = $this->get_request( $endpoint, $args );
+        $output   = $this->get_request( $endpoint, $args );
 
         // Remove the _links items
         if ( ! empty( $output->folders ) ) {
@@ -957,7 +957,7 @@ class MailChimp {
      * @return object        Folder details
      */
     public function create_campaign_folder( $name ) {
-        $args = [
+        $args     = [
             'name' => $name,
         ];
         $endpoint = '/campaign-folders';
@@ -973,7 +973,7 @@ class MailChimp {
      * @return object            Folder details
      */
     public function rename_campaign_folder( $folder_id, $new_name ) {
-        $args = [
+        $args     = [
             'name' => $new_name,
         ];
         $endpoint = "/campaign-folders/$folder_id/";
@@ -1010,9 +1010,9 @@ class MailChimp {
             'list_id' => $this->get_site_list_id(),
             'status'  => 'sent',
         ];
-        $args = wp_parse_args( $args, $defaults );
+        $args     = wp_parse_args( $args, $defaults );
         $endpoint = '/campaigns';
-        $output = $this->get_request( $endpoint, $args );
+        $output   = $this->get_request( $endpoint, $args );
         if ( isset( $output->campaigns ) ) {
             return $output->campaigns;
         }
@@ -1030,13 +1030,13 @@ class MailChimp {
      */
     public function get_campaigns_by_group( $group = '', $group_category = '', $args = [] ) {
         $campaigns = [];
-        $group = $this->get_group( $group, $group_category );
+        $group     = $this->get_group( $group, $group_category );
         if ( ! $group || ! isset( $group->id ) ) {
             return $campaigns;
         }
         $all_campaigns = $this->get_campaigns( $args );
         foreach ( $all_campaigns as $campaign ) {
-            $in_group = false;
+            $in_group   = false;
             $conditions = $campaign->recipients->segment_opts->conditions;
             foreach ( $conditions as $condition ) {
                 if ( is_array( $condition->value ) && in_array( $group->id, $condition->value ) ) {
@@ -1108,7 +1108,7 @@ class MailChimp {
             'html_clicks'      => true,
             'text_clicks'      => true,
         ];
-        $args = wp_parse_args( $args, $defaults );
+        $args     = wp_parse_args( $args, $defaults );
 
         // Sanitize/process values
         if ( empty( $args['message'] ) ) {
@@ -1147,13 +1147,13 @@ class MailChimp {
 
             if ( ! empty( $group_ids ) ) {
                 $segment_opts = [
-                    'match' => 'any', // or 'all'
+                    'match'      => 'any', // or 'all'
                     'conditions' => [
                         [
                             'condition_type' => 'Interests',
-                            'op' => 'interestcontains',
-                            'field' => 'interests-' . $group_category_id, // See https://stackoverflow.com/a/35810125/1119655
-                            'value' => $group_ids,
+                            'op'             => 'interestcontains',
+                            'field'          => 'interests-' . $group_category_id, // See https://stackoverflow.com/a/35810125/1119655
+                            'value'          => $group_ids,
                         ],
                     ],
                 ];
@@ -1178,7 +1178,7 @@ class MailChimp {
                 'auto_footer'      => $args['auto_footer'],
             ],
             // 'variate_settings' => [],
-            'tracking'  => [
+            'tracking'   => [
                 'opens'       => $args['opens'],
                 'html_clicks' => $args['html_clicks'],
                 'text_clicks' => $args['text_clicks'],
@@ -1198,21 +1198,21 @@ class MailChimp {
             return false;
         }
         $campaign_args['recipients']['segment_opts'] = $segment_opts;
-        $campaign = $this->create_campaign( $campaign_args );
+        $campaign                                    = $this->create_campaign( $campaign_args );
         if ( ! is_object( $campaign ) || ! isset( $campaign->id ) ) {
             // Something went wrong!
             return false;
         }
-        $campaign_id = $campaign->id;
-        $message_args = [
+        $campaign_id      = $campaign->id;
+        $message_args     = [
             'html' => $args['message'],
         ];
-        $endpoint = "/campaigns/$campaign_id/content";
+        $endpoint         = "/campaigns/$campaign_id/content";
         $campaign_message = $this->put_request( $endpoint, $message_args );
 
         // Send the campaign
         $endpoint = "/campaigns/$campaign_id/actions/send";
-        $sent = $this->post_request( $endpoint );
+        $sent     = $this->post_request( $endpoint );
         return $campaign_id;
     }
 
@@ -1229,8 +1229,8 @@ class MailChimp {
         $defaults = [
             'count' => 25,
         ];
-        $args = wp_parse_args( $args, $defaults );
-        $data = $this->get_request( $endpoint, $args );
+        $args     = wp_parse_args( $args, $defaults );
+        $data     = $this->get_request( $endpoint, $args );
         if ( isset( $data->urls_clicked ) ) {
             return $data->urls_clicked;
         }
@@ -1250,8 +1250,8 @@ class MailChimp {
         $defaults = [
             'count' => 100,
         ];
-        $args = wp_parse_args( $args, $defaults );
-        $data = $this->get_request( $endpoint, $args );
+        $args     = wp_parse_args( $args, $defaults );
+        $data     = $this->get_request( $endpoint, $args );
         if ( isset( $data->unsubscribes ) ) {
             return $data->unsubscribes;
         }

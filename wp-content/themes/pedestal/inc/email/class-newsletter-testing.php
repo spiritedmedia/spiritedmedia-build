@@ -57,7 +57,7 @@ class Newsletter_Testing {
         // If it is a child post then link to the parent post
         if ( 0 != $post->post_parent ) {
             $parent_post = get_post( $post->post_parent );
-            $edit_link = get_edit_post_link( $parent_post->ID );
+            $edit_link   = get_edit_post_link( $parent_post->ID );
             echo '<p>This is a copy of <a href="' . esc_url( $edit_link ) . '">' . $parent_post->post_title . '</a>.</p>';
             // Hide the publish button for child posts
             ?>
@@ -67,18 +67,18 @@ class Newsletter_Testing {
         }
 
         // List cloned versions
-        $args = [
-            'post_type' => 'pedestal_newsletter',
-            'post_parent' => $post->ID,
+        $args         = [
+            'post_type'      => 'pedestal_newsletter',
+            'post_parent'    => $post->ID,
             'posts_per_page' => 5,
-            'post_status' => [ 'draft', 'publish', 'future' ],
+            'post_status'    => [ 'draft', 'publish', 'future' ],
         ];
         $cloned_posts = new \WP_Query( $args );
         $cloned_posts = $cloned_posts->posts;
         foreach ( $cloned_posts as $cloned_post ) :
             $edit_link = get_edit_post_link( $cloned_post->ID );
-            $date = get_the_date( 'M d Y g:i a', $cloned_post );
-            $title = get_the_title( $cloned_post );
+            $date      = get_the_date( 'M d Y g:i a', $cloned_post );
+            $title     = get_the_title( $cloned_post );
             echo '<p><a href="' . esc_url( $edit_link ) . '">' . $title . '</a> - ' . $date . '</p>';
         endforeach;
         ?>
@@ -100,7 +100,7 @@ class Newsletter_Testing {
 
         // If we don't do this then we're sent on an infinite loop
         $_POST['save'] = 'Made a Copy';
-        $all_meta = get_post_meta( $post_id );
+        $all_meta      = get_post_meta( $post_id );
         // Unset meta keys
         unset( $all_meta['_edit_lock'] );
         unset( $all_meta['_edit_last'] );
@@ -111,7 +111,7 @@ class Newsletter_Testing {
             if ( is_array( $val ) ) {
                 $val = $val[0];
             }
-            $val = maybe_unserialize( $val );
+            $val              = maybe_unserialize( $val );
             $new_meta[ $key ] = $val;
         }
 
@@ -125,10 +125,10 @@ class Newsletter_Testing {
 
         // Update some values
         $new_post['post_parent'] = $post_id;
-        $new_post['meta_input'] = $new_meta;
+        $new_post['meta_input']  = $new_meta;
         $new_post['post_status'] = 'draft';
         // Ensure a unique slug
-        $new_slug = $new_post['post_title'] . ' ' . current_time( 'mysql' );
+        $new_slug              = $new_post['post_title'] . ' ' . current_time( 'mysql' );
         $new_post['post_name'] = '-' . sanitize_title( $new_slug );
 
         wp_insert_post( $new_post );

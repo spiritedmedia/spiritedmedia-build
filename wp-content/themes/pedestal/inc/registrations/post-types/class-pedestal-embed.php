@@ -34,15 +34,15 @@ class Pedestal_Embed {
         if ( empty( $context['type'] ) || 'embed' != $context['type'] ) {
             return $context;
         }
-        $post = $context['post'];
+        $post  = $context['post'];
         $embed = Embed::get( $post );
         if ( ! method_exists( $embed, 'get_embed_type' ) ) {
             return $context;
         }
         $context['embed_html'] = $embed->get_embed_html();
         if ( 'youtube' == $embed->get_embed_type() ) {
-            $context['source_name']  = $embed->get_embed_author_name();
-            $context['source_link']  = $embed->get_embed_url();
+            $context['source_name'] = $embed->get_embed_author_name();
+            $context['source_link'] = $embed->get_embed_url();
         } else {
             $context['show_meta_info'] = false;
         }
