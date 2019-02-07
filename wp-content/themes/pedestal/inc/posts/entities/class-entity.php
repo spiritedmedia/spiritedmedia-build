@@ -104,9 +104,8 @@ abstract class Entity extends Post {
         }
 
         $args    = [
-            'flatten' => true,
-            'types'   => 'story',
-            'count'   => 1,
+            'types' => 'story',
+            'count' => 1,
         ] + $this->story_connection_order_vars;
         $stories = $this->get_clusters( $args );
         if ( ! empty( $stories ) ) {
@@ -130,7 +129,6 @@ abstract class Entity extends Post {
         $clusters_with_links = [];
 
         $args = wp_parse_args( $args, [
-            'flatten'        => true,
             'accent_primary' => false,
         ] );
 
@@ -173,21 +171,23 @@ abstract class Entity extends Post {
      */
     public function get_clusters( array $args = [] ) {
         $args       = wp_parse_args( $args, [
-            'types'      => Types::get_cluster_post_types_sans_story(),
-            'flatten'    => false,
-            'paginate'   => false,
-            'count'      => 99,
-            'count_only' => false,
-            'paged'      => 1,
+            'types'           => Types::get_cluster_post_types_sans_story(),
+            'include_stories' => false,
+            'flatten'         => true,
+            'paginate'        => false,
+            'count'           => 99,
+            'count_only'      => false,
+            'paged'           => 1,
         ] );
         $types      = $args['types'];
         $count      = $args['count'];
         $count_only = $args['count_only'];
 
-        // Allow passing both full post type names and short post type names
         if ( is_string( $types ) ) {
             $types = [ $types ];
         }
+
+        // Allow passing both full post type names and short post type names
         $types = array_map( [ '\Pedestal\Utils\Utils', 'remove_name_prefix' ], $types );
         $types = array_map( function( $type ) {
             return 'pedestal_' . $type;
@@ -211,6 +211,10 @@ abstract class Entity extends Post {
             $query_args['update_post_meta_cache'] = false;
             $query_args['update_post_term_cache'] = false;
             $query_args['fields']                 = 'ids';
+        }
+
+        if ( $args['include_stories'] ) {
+            $query_args['post_type'][] = 'pedestal_story';
         }
 
         // Reduce the strain of the query by narrowing the post IDs to search for

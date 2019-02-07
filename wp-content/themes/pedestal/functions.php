@@ -193,6 +193,12 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
                 // Membership
                 'PEDESTAL_NRH_PROPERTY'                 => '',
+
+                // Corporate
+                'SPIRITED_MEDIA_THEME_NAME'             => 'spirited-media',
+                'SPIRITED_MEDIA_SITE_URL'               => get_blog_details( 1, true )->siteurl,
+                'SPIRITED_MEDIA_TAGLINE'                => 'Reimagining local news',
+                'SPIRITED_MEDIA_EMAIL_CONTACT'          => 'contact@spiritedmedia.com',
             ];
             $constants = wp_parse_args( $constants, $defaults );
             foreach ( $constants as $constant => $value ) {
@@ -786,22 +792,35 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             ];
             // Enable analytics for everyone that can't edit posts
             if ( ! current_user_can( 'edit_posts' ) ) {
-                $ga_data                               = [
+                $ga_data          = [
                     'id'         => PEDESTAL_GOOGLE_ANALYTICS_ID,
                     'optimizeID' => PEDESTAL_GOOGLE_OPTIMIZE_ID,
                 ];
-                $ga_inline_script                      = file_get_contents( PEDESTAL_DIST_DIRECTORY . '/js/ga.js' );
-                $parsely                               = new \Pedestal\Objects\Parsely;
-                $context['site']->analytics['ga']      = [
+                $ga_inline_script = file_get_contents( PEDESTAL_DIST_DIRECTORY . '/js/ga.js' );
+
+                $context['site']->analytics['ga'] = [
                     'optimize_id'   => $ga_data['optimizeID'],
                     'js_data'       => Utils::encode_for_js( $ga_data ),
                     'inline_script' => $ga_inline_script,
                 ];
+
                 $context['site']->analytics['parsely'] = [
                     'site' => parse_url( home_url(), PHP_URL_HOST ),
-                    'data' => $parsely->get_data(),
                 ];
+
+                if ( is_singular() ) {
+                    $parsely_metadata                                  = [
+                        'post_id' => get_queried_object_id(),
+                    ];
+                    $parsely_metadata                                  = htmlspecialchars( json_encode( $parsely_metadata ), ENT_NOQUOTES );
+                    $context['site']->analytics['parsely']['metadata'] = $parsely_metadata;
+                }
             }
+
+            // `Schema_Metadata` needs to be loaded as late as possible so
+            // conditional functions like `is_singular()` work
+            $this->schema_metadata      = Schema_Metadata::get_instance();
+            $context['schema_metadata'] = $this->schema_metadata->get_markup();
 
             $context['cdn_fallback_inline_script'] = file_get_contents( PEDESTAL_DIST_DIRECTORY . '/js/cdn-fallback.js' );
 
@@ -913,7 +932,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
         /**
          * Returns the CDN URL if defined by S3_UPLOADS_BUCKET_URL constant in wp-config.php
          *
-         * @return string|false The CDN URL
+         * @return string|false The CDN URL without a trailing slash e.g. `https://a.spirited.media`
          */
         public function get_cdn_url() {
             if ( defined( 'S3_UPLOADS_BUCKET_URL' ) && ! empty( S3_UPLOADS_BUCKET_URL ) ) {

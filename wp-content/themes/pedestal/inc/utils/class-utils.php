@@ -520,6 +520,29 @@ class Utils {
     }
 
     /**
+     * Sanitize string for JSON
+     *
+     * @param  string $val The string to sanitize
+     * @return string
+     */
+    public static function sanitize_string_for_json( $val ) {
+        if ( ! is_string( $val ) ) {
+            return $val;
+        }
+
+        // Remove LF line breaks (*nix)
+        $val = str_replace( "\n", '', $val );
+        // Remove CR line breaks (Windows)
+        $val = str_replace( "\r", '', $val );
+        // Remove HTML and PHP tags
+        $val = strip_tags( $val );
+        // Remove leading/trailing whitespace
+        $val = trim( $val );
+
+        return $val;
+    }
+
+    /**
      * Load a Twig template's source without rendering it
      *
      * Variables will not be expanded, control statements will be visible, etc.

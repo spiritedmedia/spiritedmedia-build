@@ -1708,11 +1708,9 @@ class CLI extends \WP_CLI_Command {
             $ped_post      = Post::get( $post->ID );
             $permalink     = $ped_post->get_the_permalink();
             $permalink     = str_replace( '.dev', '.com', $permalink );
-            $cluster_args  = [
-                'types'   => Types::get_cluster_post_types(),
-                'flatten' => true,
-            ];
-            $clusters      = $ped_post->get_clusters( $cluster_args );
+            $clusters      = $ped_post->get_clusters( [
+                'include_stories' => true,
+            ] );
             $cluster_names = [];
             $cluster_links = [];
             if ( ! empty( $clusters ) ) {

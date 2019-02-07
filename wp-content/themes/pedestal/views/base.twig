@@ -22,12 +22,17 @@
             {% include 'partials/analytics/analytics-ga.twig' %}
         {% endif %}
 
+        {% if site.analytics.parsely.metadata %}
+            <meta name="parsely-metadata" content='{{ site.analytics.parsely.metadata }}'>
+        {% endif %}
+
         {{ function('wp_head') }}
 
         {% block head %}
         {% endblock %}
         {% include 'partials/header/favicons.twig' ignore missing %}
-        {{ site.analytics.parsely.data }}
+
+        {{ schema_metadata }}
     </head>
     <body class="{{ body_class }} {{ layout_class }}" data-template="{{ template_name ?: 'base.twig' }}">
         <div class="sticky-footer-container">

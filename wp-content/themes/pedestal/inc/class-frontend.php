@@ -286,13 +286,9 @@ class Frontend {
 
         if ( is_singular() ) :
             $post = Post::get( get_queried_object_id() );
-            if ( is_a( $post, '\\Pedestal\\Posts\\Post' ) ) :
-                $post_type = $post->get_post_type();
-
-                if ( Types::is_cluster( $post_type ) ) {
-                    $context['is_cluster'] = true;
-                }
-            endif;
+            if ( Types::is_cluster( $post ) ) {
+                $context['is_cluster'] = true;
+            }
         endif;
 
         if ( is_404() ) {

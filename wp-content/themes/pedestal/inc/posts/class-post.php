@@ -679,13 +679,19 @@ abstract class Post {
     }
 
     /**
-     * Get the author names in a JSON string
+     * Get the Schema.org structured data for the authors
      *
-     * @return string JSON
+     * @return array
      */
-    public function get_author_json() {
-        $authors = $this->get_author_names();
-        return json_encode( $authors );
+    public function get_authors_schema_data() {
+        $data = [];
+        foreach ( $this->get_authors() as $author ) {
+            if ( ! User::is_user( $author ) ) {
+                continue;
+            }
+            $data[] = $author->get_schema_data();
+        }
+        return $data;
     }
 
     /**
@@ -1330,19 +1336,6 @@ abstract class Post {
         $subject = $title . ' (' . PEDESTAL_DOMAIN_PRETTY . ')';
         $subject = rawurlencode( $subject );
         return "mailto:?subject=$subject&body=$body";
-    }
-
-    /**
-     * Get the post's Parsely data
-     *
-     * @return string JSON-LD Parsely data
-     */
-    public function get_parsely_data() {
-        $parsely = new \Pedestal\Objects\Parsely( [
-            'scope' => 'post',
-            'id'    => $this->get_id(),
-        ] );
-        return $parsely->get_data();
     }
 
     /**

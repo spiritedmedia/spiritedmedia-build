@@ -1,9 +1,8 @@
-Build [#6600](https://circleci.com/gh/spiritedmedia/spiritedmedia/6600) by montchr at 2019-02-06 04:11 PM UTC
+Build [#6609](https://circleci.com/gh/spiritedmedia/spiritedmedia/6609) by montchr at 2019-02-07 04:02 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v7.13.3](https://github.com/spiritedmedia/spiritedmedia/compare/v7.13.3)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v7.13.4](https://github.com/spiritedmedia/spiritedmedia/compare/v7.13.4)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.13.2...v7.13.3)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.13.3...v7.13.4)
 
- - [#3097](git@github.com:spiritedmedia/spiritedmedia.git/pull/3097): Set the Number of Items to Show in an RSS Feed to 50
- - [#3092](git@github.com:spiritedmedia/spiritedmedia.git/pull/3092): Make Cluster RSS Feeds Functional
- - [#3091](git@github.com:spiritedmedia/spiritedmedia.git/pull/3091): Improve PHPCS workflow
+ - [#3089](git@github.com:spiritedmedia/spiritedmedia.git/pull/3089): Improve Schema.org Metadata
+ - [#3102](git@github.com:spiritedmedia/spiritedmedia.git/pull/3102): [2019-02-06] Bring visual QA checklist up to date

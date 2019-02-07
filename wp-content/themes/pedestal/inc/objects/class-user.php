@@ -3,6 +3,8 @@
 namespace Pedestal\Objects;
 
 use function Pedestal\Pedestal;
+
+use Pedestal\Utils\Utils;
 use Pedestal\Icons;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\User_Management;
@@ -137,13 +139,13 @@ class User extends Author {
      * @return string|false Image HTML or logo icon SVG or false if fallback disabled
      */
     public function get_avatar( $size, $img_atts = [], $fallback = true ) {
-        $attachment = $this->get_image_attachment();
+        $image = $this->get_user_image();
 
-        if ( ! Types::is_attachment( $attachment ) ) {
+        if ( ! Types::is_attachment( $image ) ) {
             return $fallback ? Icons::get_logo( 'logo-icon' ) : false;
         }
 
-        $img = $attachment->get_html( $size, $img_atts );
+        $img = $image->get_html( $size, $img_atts );
 
         $output  = '<div class="c-avatar">';
         $output .= '<div class="c-avatar__img">';
@@ -158,7 +160,7 @@ class User extends Author {
      *
      * @return \Pedestal\Posts\Attachment|false
      */
-    protected function get_image_attachment() {
+    public function get_user_image() {
         global $wpdb;
         $meta_name = $wpdb->prefix . 'user_img';
         return Attachment::get( $this->get_meta( $meta_name ) );
@@ -198,19 +200,6 @@ class User extends Author {
      */
     public function get_short_bio() {
         return $this->get_meta( 'user_bio_short' );
-    }
-
-    /**
-     * Get the User's Parsely data
-     *
-     * @return string JSON-LD Parsely data
-     */
-    public function get_parsely_data() {
-        $parsely = new \Pedestal\Objects\Parsely( [
-            'scope' => 'user',
-            'id'    => $this->get_id(),
-        ] );
-        return $parsely->get_data();
     }
 
     /**
@@ -480,5 +469,44 @@ class User extends Author {
             $global      = true;
             update_user_option( $this->get_id(), $option_name, $collapsed_metabox_ids, $global );
         }
+    }
+
+    /**
+     * Get data about this user formatted as a Schema.org Person
+     *
+     * @link https://schema.org/Person
+     *
+     * @return array
+     */
+    public function get_schema_data() {
+        $image     = $this->get_user_image();
+        $image_url = '';
+        if ( Types::is_attachment( $image ) ) {
+            $image_url = $image->get_url( 'thumbnail' );
+        }
+        $data = [
+            '@type' => 'Person',
+            'name'  => $this->get_display_name(),
+            'email' => $this->get_public_email(),
+            'image' => $image_url,
+            'url'   => $this->get_permalink(),
+        ];
+        array_walk( $data, function( &$v ) {
+            $v = Utils::sanitize_string_for_json( $v );
+        } );
+        return $data;
+    }
+
+    /**
+     * Check if the argument is a valid User object
+     *
+     * @param mixed $maybe_user
+     * @return boolean
+     */
+    public static function is_user( $maybe_user ) {
+        if ( is_object( $maybe_user ) && is_a( $maybe_user, __CLASS__ ) ) {
+            return true;
+        }
+        return false;
     }
 }

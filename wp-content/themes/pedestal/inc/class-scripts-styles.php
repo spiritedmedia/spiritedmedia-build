@@ -298,8 +298,7 @@ class Scripts_Styles {
                     $ped_post = Post::get( get_the_ID() );
                     if ( Types::is_entity( $ped_post ) ) {
                         $clusters = $ped_post->get_clusters([
-                            'types'   => Types::get_cluster_post_types(),
-                            'flatten' => true,
+                            'include_stories' => true,
                         ]);
                         if ( ! empty( $clusters ) ) {
                             foreach ( $clusters as $cluster ) {

@@ -40,7 +40,7 @@ class Icons {
     }
 
     /**
-     * Helper for fetching icons
+     * Helper for fetching icon markup
      *
      * @param  string     $icon    Name of the file in the icons directory
      * @param  string     $classes Additional classes to apply to the SVG element
@@ -92,7 +92,7 @@ class Icons {
     }
 
     /**
-     * Helper for fetching logos
+     * Helper for fetching logo markup
      *
      * @param  string     $logo    Name of the file in the logos directory
      * @param  string     $classes Additional CSS classes

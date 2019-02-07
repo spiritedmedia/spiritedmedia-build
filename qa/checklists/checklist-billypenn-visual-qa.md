@@ -16,15 +16,15 @@
 - [ ] [Embed: YouTube](https://staging.billypenn.com/2017/09/03/heres-what-it-was-like-to-check-in-at-phl-airport-in-the-1970s/)
 - [ ] [Event](https://staging.billypenn.com/2017/03/10/drink-local-stouts-instead-of-guinness/)
 - [ ] [Factcheck](https://staging.billypenn.com/2017/09/01/why-the-black-lives-matter-protest-outside-a-philly-police-officers-home-was-not-illegal-occupation/)
+- [ ] [Factcheck: No Ruling](https://staging.billypenn.com/2016/11/23/why-wolf-and-the-senate-gop-are-at-fighting-over-unemployment-center-layoffs/)
 
 #### Single Entities (With Story)
 
 - [ ] [Article](https://staging.billypenn.com/2017/09/15/philly-parking-day-50-parking-spots-become-pop-up-plazas-today/)
-- [ ] [Embed: Twitter](https://staging.billypenn.com/2017/03/04/this-drone-photo-provides-a-striking-view-of-the-broken-and-toppled-headstones-at-the-mount-carmel-jewish-cemetery/)
-- [ ] [Embed: Instagram](https://staging.billypenn.com/2017/03/10/this-is-how-we-roll/)
+- [ ] [Embed: Twitter](https://staging.billypenn.com/2018/07/29/reminder-as-of-this-wednesday-paper-transfers-are-dead/)
+- [ ] [Embed: Instagram](https://staging.billypenn.com/2018/07/19/stock-the-fishtown-byo-specializing-in-viet-cambodian-cuisine-is-opening-a-second-spot-on-chestnut-street-in-rittenhouse/)
 - [ ] [Event](https://staging.billypenn.com/2017/09/15/making-technology-work-for-returning-citizens/)
-- [ ] [Factcheck](http://staging.billypenn.com/2017/02/21/whats-missing-from-amtraks-claim-that-we-rely-more-than-ever-on-trains/)
-- [ ] [Factcheck: No Ruling](https://staging.billypenn.com/2016/09/02/does-pennsylvania-really-have-the-power-to-decide-the-president/)
+- [ ] [Factcheck](https://staging.billypenn.com/2018/07/23/record-low-unemployment-in-the-philly-area-pence-is-right-with-some-needed-context/)
 - [ ] [Who's Next](https://staging.billypenn.com/2017/03/01/whos-next-bartenders-15-young-drink-maestros-elevating-phillys-booze-game/)
 
 
@@ -34,7 +34,7 @@
 
 #### Single Clusters
 
-- [ ] [Story](https://staging.billypenn.com/stories/muslim-travel-ban/)
+- [ ] [Story](https://staging.billypenn.com/stories/medical-cannabis-in-pa/)
 - [ ] [Organization](http://staging.billypenn.com/organizations/city-council/)
 - [ ] [Organization (Page 2)](http://staging.billypenn.com/organizations/city-council/page/2/)
 - [ ] [Person](http://staging.billypenn.com/people/kathleen-kane/)
@@ -51,6 +51,7 @@
 
 #### Archives
 
+- [ ] [Category Archive: News](https://staging.billypenn.com/categories/news/)
 - [ ] [Post Type Archive: Stories](http://staging.billypenn.com/stories/)
 - [ ] [Post Type Archive: Articles](https://staging.billypenn.com/articles)
 - [ ] [Post Type Archive: Factchecks](https://staging.billypenn.com/factchecks/)
