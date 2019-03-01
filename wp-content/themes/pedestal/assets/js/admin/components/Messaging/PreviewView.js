@@ -89,6 +89,7 @@ Object.assign(PreviewView.prototype, Backbone.View.prototype, {
   setupFrameWidthToggle() {
     this.$toggleWidthButton = $(`
       <button
+        type="button"
         title="Change preview width"
         class="js-message-preview-toggle-width button-secondary"
       >${this.widthButtonLabels.toDesktop}</button>

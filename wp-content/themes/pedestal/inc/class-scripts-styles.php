@@ -157,9 +157,9 @@ class Scripts_Styles {
      */
     public function filter_cache_busting_file_src( $src = '' ) {
         global $wp_scripts;
-        // If $wp_scripts hasn't been initialized
+        // If $wp_scripts hasn't been initialized then bail
         if ( ! $wp_scripts instanceof \WP_Scripts ) {
-            $wp_scripts = new \WP_Scripts();
+            return;
         }
         $base_url = apply_filters( 'cache_busting_path_base_url', $wp_scripts->base_url, $src );
         // Check if script lives on this domain. Can't rewrite external scripts, they won't work.
