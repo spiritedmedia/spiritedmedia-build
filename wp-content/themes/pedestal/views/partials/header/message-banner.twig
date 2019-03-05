@@ -1,0 +1,24 @@
+<section class="message-banner">
+    <a href="{{ url|esc_url }}"
+       class="message-banner__inner"
+       data-ga-category="message-banner"
+    >
+        {% if title %}
+            <h1 class="message-banner__title">{{ title }}</h1>
+        {% endif %}
+
+        {% if body %}
+            <div class="message-banner__body">
+                {{ body }}
+            </div>
+        {% endif %}
+
+        {% if button_text %}
+            <div class="message-banner__button">
+                <span class="btn--arrow btn--bg-accent">
+                    {{ button_text }}
+                </span>
+            </div>
+        {% endif %}
+    </a>
+</section>

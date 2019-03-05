@@ -8168,6 +8168,7 @@ class ComposerStaticInit3fd466591cad51673a17d29c372efc2f
         'Pedestal\\Adverts' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/class-adverts.php',
         'Pedestal\\Audience\\Audience' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/audience/class-audience.php',
         'Pedestal\\Audience\\Conversion_Prompts' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/audience/class-conversion-prompts.php',
+        'Pedestal\\Audience\\Message_Banner' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/audience/class-message-banner.php',
         'Pedestal\\Audience\\Message_Spot' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/audience/class-message-spot.php',
         'Pedestal\\Audience\\Targeted_Messages' => __DIR__ . '/../..' . '/wp-content/themes/pedestal/inc/audience/class-targeted-messages.php',
         'Pedestal\\Billy_Penn' => __DIR__ . '/../..' . '/wp-content/themes/billy-penn/functions.php',

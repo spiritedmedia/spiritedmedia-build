@@ -7962,6 +7962,7 @@ return array(
     'Pedestal\\Adverts' => $baseDir . '/wp-content/themes/pedestal/inc/class-adverts.php',
     'Pedestal\\Audience\\Audience' => $baseDir . '/wp-content/themes/pedestal/inc/audience/class-audience.php',
     'Pedestal\\Audience\\Conversion_Prompts' => $baseDir . '/wp-content/themes/pedestal/inc/audience/class-conversion-prompts.php',
+    'Pedestal\\Audience\\Message_Banner' => $baseDir . '/wp-content/themes/pedestal/inc/audience/class-message-banner.php',
     'Pedestal\\Audience\\Message_Spot' => $baseDir . '/wp-content/themes/pedestal/inc/audience/class-message-spot.php',
     'Pedestal\\Audience\\Targeted_Messages' => $baseDir . '/wp-content/themes/pedestal/inc/audience/class-targeted-messages.php',
     'Pedestal\\Billy_Penn' => $baseDir . '/wp-content/themes/billy-penn/functions.php',

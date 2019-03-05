@@ -41,6 +41,7 @@ use Pedestal\Menus\{
 use Pedestal\Audience\{
     Audience,
     Conversion_Prompts,
+    Message_Banner,
     Message_Spot
 };
 
@@ -302,6 +303,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $this->audience           = Audience::get_instance();
             $this->message_spot       = Message_Spot::get_instance();
             $this->conversion_prompts = Conversion_Prompts::get_instance();
+            $this->message_banner     = Message_Banner::get_instance();
 
             // Metrics
             $this->metricbots                        = MetricBots::get_instance();
