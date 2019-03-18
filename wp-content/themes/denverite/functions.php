@@ -85,6 +85,8 @@ class Denverite extends Pedestal {
                 'PEDESTAL_BLOG_DESCRIPTION'             => 'Useful and delightful news for people who care about Denver. What’s happening and why it matters. Plus: Fun stuff.',
                 'PEDESTAL_BLOG_TAGLINE'                 => 'Denverite, the Denver site!',
                 'PEDESTAL_HOMEPAGE_TITLE'               => 'Denverite, the Denver site!',
+                'PEDESTAL_SITE_OWNER'                   => 'Colorado Public Radio',
+                'PEDESTAL_SITE_OWNER_URL'               => 'https://www.cpr.org/',
                 'PEDESTAL_CITY_NAME'                    => 'Denver',
                 'PEDESTAL_CITY_NICKNAME'                => 'Mile High City',
                 'PEDESTAL_STATE_NAME'                   => 'Colorado',

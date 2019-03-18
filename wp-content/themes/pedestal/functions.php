@@ -138,6 +138,8 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
                 'PEDESTAL_BLOG_DESCRIPTION'             => get_bloginfo( 'description' ),
                 'PEDESTAL_BLOG_TAGLINE'                 => '',
                 'PEDESTAL_HOMEPAGE_TITLE'               => '',
+                'PEDESTAL_SITE_OWNER'                   => 'Spirited Media',
+                'PEDESTAL_SITE_OWNER_URL'               => 'https://spiritedmedia.com/',
                 'PEDESTAL_CITY_NAME'                    => '',
                 'PEDESTAL_CITY_NICKNAME'                => '',
                 'PEDESTAL_STATE_NAME'                   => '',
@@ -766,6 +768,11 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             $context['date_format'] = get_option( 'date_format' );
             $context['time_format'] = get_option( 'time_format' );
+
+            $context['site']->owner = [
+                'name' => PEDESTAL_SITE_OWNER,
+                'url'  => PEDESTAL_SITE_OWNER_URL,
+            ];
 
             $context['site']->social = [
                 'facebook_page_id' => PEDESTAL_FACEBOOK_PAGE_ID,

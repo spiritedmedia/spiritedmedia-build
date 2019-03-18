@@ -278,8 +278,6 @@ class Frontend {
             'Search'         => '/?s=',
         ] );
 
-        $context['copyright_text'] = 'Copyright &copy; ' . date( 'Y' ) . ' Spirited Media';
-
         if ( is_search() ) {
             $context['search_query'] = get_search_query();
         }

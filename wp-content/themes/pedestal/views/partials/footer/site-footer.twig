@@ -59,9 +59,11 @@
             <div class="columns small-12">
                 <span class="site-footer__newsroom">
                     {{ ped_logo( 'logo-icon', 'logo--icon--light site-footer__logo' ) }}
-                    {{ site.name }} is a <a href="https://spiritedmedia.com/" data-ga-category="navigation" data-ga-label="footer">Spirited Newsroom</a>
+                    {% include 'partials/footer/newsroom.twig' %}
                 </span>
-                <span class="site-footer__copyright">{{ copyright_text }}</span>
+                <span class="site-footer__copyright">
+                    {% include 'partials/footer/copyright.twig' %}
+                </span>
             </div>
         </div>
     </div>
