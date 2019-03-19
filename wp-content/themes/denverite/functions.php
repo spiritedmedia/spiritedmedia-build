@@ -142,11 +142,11 @@ class Denverite extends Pedestal {
 
         add_filter( 'pedestal_footer_menu', function( $menu ) {
             return [
-                'Advertising'    => '/advertising/',
-                'Terms of Use'   => '/terms-of-use/',
-                'Privacy Policy' => '/privacy-policy/',
-                'About'          => '/about-denverite-staff/',
-                'Search'         => '/?s=',
+                'Corporate Support' => '/corporate-support/',
+                'Terms of Use'      => '/terms-of-use/',
+                'Privacy Policy'    => '/privacy-policy/',
+                'About'             => '/about-denverite-staff/',
+                'Search'            => '/?s=',
             ];
         } );
 

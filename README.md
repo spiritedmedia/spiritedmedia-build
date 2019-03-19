@@ -1,7 +1,7 @@
-Build [#6643](https://circleci.com/gh/spiritedmedia/spiritedmedia/6643) by montchr at 2019-03-18 03:45 PM UTC
+Build [#6648](https://circleci.com/gh/spiritedmedia/spiritedmedia/6648) by montchr at 2019-03-19 10:20 PM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v7.14.1](https://github.com/spiritedmedia/spiritedmedia/compare/v7.14.1)
+[https://github.com/spiritedmedia/spiritedmedia/compare/v7.14.2](https://github.com/spiritedmedia/spiritedmedia/compare/v7.14.2)
 ## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.14.0...v7.14.1)
+[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.14.1...v7.14.2)
 
- - [#3111](git@github.com:spiritedmedia/spiritedmedia.git/pull/3111): Update Denverite newsroom and copyright in site footer
+ - [#3116](git@github.com:spiritedmedia/spiritedmedia.git/pull/3116): [Denverite] Replace 'Advertising' footer link with 'Corporate Support'
