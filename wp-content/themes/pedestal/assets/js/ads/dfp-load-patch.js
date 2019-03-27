@@ -91,9 +91,6 @@ googletag.cmd.push(function() {
   // Additional options
   googletag.pubads().enableSingleRequest();
   googletag.pubads().collapseEmptyDivs(true);
-  // Displaying ads happens in the prebid script
-  // with a call to googletag.pubads().refresh();
-  googletag.pubads().disableInitialLoad();
 
   googletag.pubads().addEventListener('slotRenderEnded', handleSlotRenderEnded);
 
