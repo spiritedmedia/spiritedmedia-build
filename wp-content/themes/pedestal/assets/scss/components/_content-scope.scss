@@ -36,9 +36,20 @@
   // Images + Captions
   // ==========================================================================
 
+  .c-figure--img {
+    // Remove effects of `subtle-image-shadow`
+    box-shadow: none;
+  }
+
   img {
     max-width: 100%;
     height: auto;
+
+    // Remove effects of `subtle-image-shadow` for images in post content.
+    // Images inserted from the media library (and thus Image Shortcake) will
+    // already lack a box-shadow, but this effect should be removed for image
+    // HTML inserted manually into the post content.
+    box-shadow: none;
   }
 
   .aligncenter {

@@ -106,10 +106,13 @@
 
   // stylelint-disable-next-line selector-max-type
   img {
-    box-shadow: none;
     display: block;
     // For IE compatability
     width: 100%;
+
+    // Remove effects of `subtle-image-shadow` because it's applied on the
+    // figure element
+    box-shadow: none;
   }
 
   .c-figure__text {

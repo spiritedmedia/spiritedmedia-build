@@ -6,3 +6,8 @@
   display: block;
   height: rem( 48px );
 }
+
+.factcheck-meter-img {
+  // Remove effects of `subtle-image-shadow` for factcheck meters
+  box-shadow: none;
+}
