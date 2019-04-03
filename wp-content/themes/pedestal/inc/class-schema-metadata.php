@@ -4,6 +4,7 @@ namespace Pedestal;
 
 use Pedestal\Utils\Utils;
 use Pedestal\Frontend;
+use Pedestal\Objects\User;
 use Pedestal\Posts\Post;
 use Pedestal\Registrations\Post_Types\Types;
 
