@@ -10,6 +10,7 @@ use Pedestal\Posts\Clusters\Cluster;
 use Pedestal\Posts\Clusters\Geospaces\Geospace;
 use Pedestal\Posts\Clusters\Geospaces\Localities\Locality;
 use Pedestal\Registrations\Taxonomies\Taxonomies;
+use Pedestal\Utils\Services;
 use Pedestal\Utils\Utils;
 
 class Cluster_Types {
@@ -540,21 +541,21 @@ class Cluster_Types {
 
         switch ( $obj->label ) {
             case 'Twitter URL':
-                if ( 'twitter' != Utils::get_service_name_from_url( $value ) ) {
+                if ( 'twitter' != Services::get_service_name_from_url( $value ) ) {
                     $value = 'https://twitter.com/' . $value;
                 }
                 $value = untrailingslashit( $value );
                 break;
 
             case 'Instagram URL':
-                if ( 'instagram' != Utils::get_service_name_from_url( $value ) ) {
+                if ( 'instagram' != Services::get_service_name_from_url( $value ) ) {
                     $value = 'https://www.instagram.com/' . $value;
                 }
                 $value = trailingslashit( $value );
                 break;
 
             case 'LinkedIn URL':
-                if ( 'linkedin' != Utils::get_service_name_from_url( $value ) ) {
+                if ( 'linkedin' != Services::get_service_name_from_url( $value ) ) {
                     $value = 'https://www.linkedin.com/in/' . $value;
                 }
                 break;

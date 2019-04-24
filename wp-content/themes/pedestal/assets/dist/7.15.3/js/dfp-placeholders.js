@@ -1,1 +1,52 @@
-!function(){"use strict";var t=window.googletag||{};t.cmd=t.cmd||[],t.cmd.push(function(){t.pubads().addEventListener("slotRenderEnded",function(){jQuery(document).ready(function(h){var m=h('meta[name="theme-color"]').attr("content");(m=m.replace("#",""))||(m="ccc"),h(".js-dfp").each(function(t,e){for(var n=h(e),a=n.data("dfp-sizes").split(","),o=n.data("dfp-name"),i="",p=0;p<a.length;p++){var s=a[p],d=s.split("x")[0],c=s.split("x")[1],r='<img src="'.concat("https://dummyimage.com/"+s+"/"+m+"/fff/.png",'">'),l="none";0===p&&(l="block;");var f="";1<a.length&&(f=p+1+"/"+a.length);var g=h("<div></div>").css({width:d+"px",height:c+"px",marginLeft:"auto",marginRight:"auto",position:"relative",display:l});g.append(h('<a href="#" class="js-dfp-placeholder">'+r+"</a>"),h("<p>"+o+"</p>").css({position:"absolute",top:"5px",right:"5px",margin:0,padding:0,color:"#fff",fontSize:"10px"}),h('<p class="">'+f+"</p>").css({position:"absolute",top:"18px",right:"5px",margin:0,padding:0,color:"#fff",fontSize:"10px"})),i+=g[0].outerHTML}n.html(i).show()}).on("click",".js-dfp-placeholder",function(t){t.preventDefault();var e=h(this),n=e.parents(".js-dfp").children(),a=n.length;if(!(a<2)){var o=e.parent().index()+1;a-1<o&&(o=0),n.hide(),n.eq(o).show()}})})})}),window.googletag=t}();
+!function() {
+    "use strict";
+    var googletag = window.googletag || {};
+    googletag.cmd = googletag.cmd || [], googletag.cmd.push(function() {
+        googletag.pubads().addEventListener("slotRenderEnded", function() {
+            jQuery(document).ready(function($) {
+                var themeColor = $('meta[name="theme-color"]').attr("content");
+                (themeColor = themeColor.replace("#", "")) || (themeColor = "ccc"), $(".js-dfp").each(function(index, ad) {
+                    for (var $ad = $(ad), adSizes = $ad.data("dfp-sizes").split(","), adName = $ad.data("dfp-name"), newHTML = "", i = 0; i < adSizes.length; i++) {
+                        var adSize = adSizes[i], adWidth = adSize.split("x")[0], adHeight = adSize.split("x")[1], imgHTML = '<img src="'.concat("https://dummyimage.com/" + adSize + "/" + themeColor + "/fff/.png", '">'), displayVal = "none";
+                        0 === i && (displayVal = "block;");
+                        var counterText = "";
+                        1 < adSizes.length && (counterText = i + 1 + "/" + adSizes.length);
+                        var $placeholder = $("<div></div>").css({
+                            width: adWidth + "px",
+                            height: adHeight + "px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                            position: "relative",
+                            display: displayVal
+                        });
+                        $placeholder.append($('<a href="#" class="js-dfp-placeholder">' + imgHTML + "</a>"), $("<p>" + adName + "</p>").css({
+                            position: "absolute",
+                            top: "5px",
+                            right: "5px",
+                            margin: 0,
+                            padding: 0,
+                            color: "#fff",
+                            fontSize: "10px"
+                        }), $('<p class="">' + counterText + "</p>").css({
+                            position: "absolute",
+                            top: "18px",
+                            right: "5px",
+                            margin: 0,
+                            padding: 0,
+                            color: "#fff",
+                            fontSize: "10px"
+                        })), newHTML += $placeholder[0].outerHTML;
+                    }
+                    $ad.html(newHTML).show();
+                }).on("click", ".js-dfp-placeholder", function(e) {
+                    e.preventDefault();
+                    var $this = $(this), $children = $this.parents(".js-dfp").children(), numOfSizes = $children.length;
+                    if (!(numOfSizes < 2)) {
+                        var nextIndex = $this.parent().index() + 1;
+                        numOfSizes - 1 < nextIndex && (nextIndex = 0), $children.hide(), $children.eq(nextIndex).show();
+                    }
+                });
+            });
+        });
+    }), window.googletag = googletag;
+}();

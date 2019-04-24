@@ -303,4 +303,46 @@ class Attachment extends Post {
 
         return implode( ', ', array_keys( $srcset ) );
     }
+
+    /**
+     * Get the Media RSS markup for this attachment
+     *
+     * @link http://www.rssboard.org/media-rss
+     * @link https://support.google.com/news/producer/answer/6170026?hl=en#images
+     * @return string
+     */
+    public function get_mrss_markup() {
+        $thumbnail = image_get_intermediate_size( $this->get_id(), 'medium' );
+        if ( empty( $thumbnail ) ) {
+            return '';
+        }
+
+        $url = $thumbnail['url'] ?? false;
+        if ( ! $url ) {
+            return '';
+        }
+
+        $skip_empty   = true;
+        $content_atts = Utils::array_to_atts_str( [
+            'url'    => esc_url( $url ),
+            'type'   => esc_attr( get_post_mime_type( $this->get_id() ) ),
+            'width'  => esc_attr( $thumbnail['width'] ?? '' ),
+            'height' => esc_attr( $thumbnail['height'] ?? '' ),
+        ], $skip_empty );
+        $output       = "<media:content {$content_atts}>";
+
+        $description = $this->get_caption();
+        if ( $description ) {
+            $output .= "<media:description type=\"plain\"><![CDATA[{$description}]]></media:description>";
+        }
+
+        $credit = $this->get_credit();
+        if ( $credit ) {
+            // http://www.rssboard.org/media-rss#media-credit
+            $output .= "<media:credit role=\"author\" scheme=\"urn:ebu\"><![CDATA[{$credit}]]></media:credit>";
+        }
+
+        $output .= '</media:content>';
+        return $output;
+    }
 }

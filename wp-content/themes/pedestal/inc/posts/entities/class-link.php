@@ -3,6 +3,7 @@
 namespace Pedestal\Posts\Entities;
 
 use Pedestal\Objects\Source;
+use Pedestal\Utils\Utils;
 
 class Link extends Entity {
 
@@ -68,13 +69,28 @@ class Link extends Entity {
     /**
      * Get the source name for the link
      *
-     * @return string
+     * @return string Source name if available, or domain name if Source is
+     * unavailable, or empty string
      */
     public function get_source_name() {
         $source = $this->get_source();
         if ( method_exists( $source, 'get_name' ) ) {
             return $source->get_name();
+        } else {
+            return Utils::get_domain_from_url( $this->get_permalink() );
         }
-        return '';
+    }
+
+    /**
+     * Get a link to the original source for the RSS feed
+     *
+     * @return string
+     */
+    public function get_the_content_rss() {
+        return sprintf(
+            'Read it at <a href="%s">%s</a>',
+            esc_url( $this->get_the_permalink() ),
+            esc_html( $this->get_source_name() )
+        );
     }
 }

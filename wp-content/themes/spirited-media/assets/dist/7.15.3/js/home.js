@@ -1,1 +1,7 @@
-!function(){"use strict";jQuery(document).ready(function(t){var a=(new Date).getFullYear();t("input.js-contact-year").val(a),t(".js-contact-year").addClass("hide")})}();
+!function() {
+    "use strict";
+    jQuery(document).ready(function($) {
+        var currentYear = new Date().getFullYear();
+        $("input.js-contact-year").val(currentYear), $(".js-contact-year").addClass("hide");
+    });
+}();

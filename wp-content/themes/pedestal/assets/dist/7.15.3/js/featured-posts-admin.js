@@ -1,1 +1,17 @@
-!function(){"use strict";jQuery(document).ready(function(o){o("body").on("change",".fm-autocomplete-hidden",function(){var e=o(this),t=parseInt(e.val()),a=e.closest(".fm-group-inner").find(".fm-description textarea");if(t){var n={post_id:t,action:"pedestal-featured-entities-placeholder"};o.post(ajaxurl,n,function(e){e.data&&a.attr("placeholder",e.data)})}else a.attr("placeholder","")})})}();
+!function() {
+    "use strict";
+    jQuery(document).ready(function($) {
+        $("body").on("change", ".fm-autocomplete-hidden", function() {
+            var $this = $(this), postId = parseInt($this.val()), $textarea = $this.closest(".fm-group-inner").find(".fm-description textarea");
+            if (postId) {
+                var data = {
+                    post_id: postId,
+                    action: "pedestal-featured-entities-placeholder"
+                };
+                $.post(ajaxurl, data, function(response) {
+                    response.data && $textarea.attr("placeholder", response.data);
+                });
+            } else $textarea.attr("placeholder", "");
+        });
+    });
+}();

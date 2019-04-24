@@ -27,7 +27,7 @@
                     <td class="email-entity-meta__source-name">
                         {% if item.get_type == 'link' %}
                             <a href="{{ item.get_the_permalink }}">
-                                {{ item.get_source.get_name }}
+                                {{ item.get_source_name }}
                             </a>
                         {% elseif item.get_type == 'event' %}
                             <a href="{{ item.get_the_permalink }}">
@@ -35,7 +35,7 @@
                             </a>
                         {% elseif item.get_type == 'embed' %}
                             <a href="{{ item.get_embed_url }}">
-                                {{ item.get_source }}
+                                {{ item.get_source_name }}
                             </a>
                         {% else %}
                             {{ item.get_the_authors_truncated }}

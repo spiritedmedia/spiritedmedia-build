@@ -5,7 +5,10 @@ namespace Pedestal;
 use Timber\Timber;
 
 use Pedestal\Icons;
+use Pedestal\Utils\Services;
+use Pedestal\Utils\Utils;
 use Pedestal\Objects\{
+    Figure,
     User,
     YouTube
 };
@@ -381,15 +384,12 @@ class Shortcode_Manager {
     public function filter_shortcake_bakery_shortcode_callback( $output, $shortcode_tag, $attrs, $content ) {
 
         $default_classes = 'pedestal-shortcode shortcake-bakery-shortcode shortcake-bakery-shortcode-' . $shortcode_tag;
-        $embed_type      = 'embed';
 
         switch ( $shortcode_tag ) {
             case 'instagram':
                 if ( empty( $attrs['url'] ) ) {
                     return '';
                 }
-                $embed_type = 'script';
-
                 break;
 
             case 'youtube':
@@ -403,6 +403,11 @@ class Shortcode_Manager {
 
             case 'soundcite':
             case 'pullquote':
+                // These may have a detrimental effect on RSS feeds, so remove
+                // them entirely
+                if ( is_feed() ) {
+                    return '';
+                }
                 // These shortcodes need no additional processing, so just return
                 return $output;
                 break;
@@ -411,18 +416,33 @@ class Shortcode_Manager {
                 break;
         }
 
+        if ( is_feed() ) {
+            $url = '';
+            if ( ! empty( $attrs['url'] ) ) {
+                $url = $attrs['url'];
+            } elseif ( ! empty( $attrs['src'] ) ) {
+                $url = $attrs['src'];
+            } else {
+                return '';
+            }
+            $output = Embed::get_embed_rss_content_string( $url );
+            // If there's no RSS content string available then bail because we
+            // don't want an empty figure element
+            if ( empty( $output ) ) {
+                return '';
+            }
+        }
+
         $figure_atts = [
             'caption' => isset( $attrs['caption'] )
                 ? rawurldecode( $attrs['caption'] )
                 : '',
         ];
 
-        $figure_atts['classes'] = 'op-interactive';
-
         // Protocol relative URLs should be replaced with https
         $output = str_replace( 'src="//', 'src="https://', $output );
 
-        $figure = new \Pedestal\Objects\Figure( $embed_type, $output, $figure_atts );
+        $figure = new Figure( 'embed', $output, $figure_atts, $shortcode_tag );
         return $figure->get_html();
     }
 
@@ -696,7 +716,7 @@ class Shortcode_Manager {
         }
 
         $embed_type = $embed->get_embed_type();
-        if ( ! Embed::is_embeddable_service( $embed_type ) ) {
+        if ( ! $embed_type ) {
             return '';
         }
 

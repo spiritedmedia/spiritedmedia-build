@@ -6,12 +6,11 @@
 
 <description><![CDATA[{{ item.get_excerpt }}]]></description>
 
+{{ item.get_featured_image_enclosure }}
+{{ item.get_featured_image_mrss_markup }}
+
 {% if item.get_the_content_rss %}
 <content:encoded><![CDATA[{{ item.get_the_content_rss }}]]></content:encoded>
 {% else %}
 <content:encoded><![CDATA[{{ item.get_excerpt }}]]></content:encoded>
-{% endif %}
-
-{% if item.get_featured_image_enclosure %}
-{{ item.get_featured_image_enclosure }}
 {% endif %}

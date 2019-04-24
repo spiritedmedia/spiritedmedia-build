@@ -4,6 +4,7 @@ namespace Pedestal\Posts\Entities;
 
 use function Pedestal\Pedestal;
 use Pedestal\Icons;
+use Pedestal\Utils\Services;
 use Pedestal\Utils\Utils;
 use Pedestal\Posts\Post;
 use Pedestal\Posts\Clusters\Story;
@@ -21,25 +22,6 @@ class Embed extends Entity {
     protected $embed_type = '';
 
     protected static $post_type = 'pedestal_embed';
-
-    /**
-     * Services whose embeds we support, with labels
-     *
-     * @var array
-     */
-    protected static $embeddable_services = [
-        'youtube'       => 'YouTube',
-        'twitter'       => 'Twitter',
-        'instagram'     => 'Instagram',
-        'vine'          => 'Vine',
-        'facebook'      => 'Facebook',
-        'scribd'        => 'Scribd',
-        'flickr'        => 'Flickr',
-        'giphy'         => 'Giphy',
-        'infogram'      => 'Infogram',
-        'soundcloud'    => 'SoundCloud',
-        'documentcloud' => 'DocumentCloud',
-    ];
 
     /**
      * Add the embed type to the classes
@@ -62,19 +44,12 @@ class Embed extends Entity {
         parent::set_data_atts();
         $atts                  = parent::get_data_atts();
         $new_atts              = [
-            'source-name' => $this->get_source(),
+            'source-name' => $this->get_source_name(),
         ];
         $this->data_attributes = array_merge( $atts, $new_atts );
     }
 
-    /**
-     * Get the embeddable services
-     *
-     * @return array
-     */
-    public static function get_embeddable_services() {
-        return self::$embeddable_services;
-    }
+
 
     /**
      * Get the Instagram of the Day date as Unix timestamp
@@ -201,6 +176,10 @@ class Embed extends Entity {
      * @return string
      */
     public function get_embed_html() {
+        if ( is_feed() ) {
+            return $this->get_the_content_rss();
+        }
+
         $args = wp_parse_args( [
             'url'     => $this->get_embed_url(),
             'caption' => $this->get_embed_caption(),
@@ -314,7 +293,7 @@ class Embed extends Entity {
      */
     public static function get_oembed_data( string $url ) {
         $cache_key  = false;
-        $embed_type = self::get_embed_type_from_url( $url );
+        $embed_type = static::get_embed_type_from_url( $url );
         if ( 'documentcloud' !== $embed_type ) {
             $cache_key = 'oembed_' . $url;
         }
@@ -370,17 +349,13 @@ class Embed extends Entity {
     }
 
     /**
-     * Get the source for the embed
+     * Get the source name for the embed
      *
-     * @return string
+     * @see Services::get_service_label()
+     * @return string Embed's service label or empty string
      */
-    public function get_source() {
-        $embed_type = $this->get_embed_type();
-        if ( $embed_type ) {
-            $sources = self::get_embeddable_services();
-            return $sources[ $embed_type ];
-        }
-        return '';
+    public function get_source_name() {
+        return Services::get_service_label( $this->get_embed_type() );
     }
 
     /**
@@ -465,7 +440,7 @@ class Embed extends Entity {
                 break;
 
             case 'instagram':
-                $id = static::get_instagram_id_from_url( $url );
+                $id = Services::get_instagram_id_from_url( $url );
                 if ( ! $id ) {
                     break;
                 }
@@ -500,19 +475,7 @@ class Embed extends Entity {
      * @return string Twitter username
      */
     public function get_twitter_username() {
-        return static::get_twitter_username_from_url( $this->get_embed_url() );
-    }
-
-    /**
-     * Get a Twitter username from a URL
-     *
-     * @param  string $url Twitter URL
-     * @return string      Twitter username
-     */
-    public static function get_twitter_username_from_url( $url ) {
-        $pattern = self::get_embed_type_url_pattern( 'twitter' );
-        preg_match( $pattern, $url, $matches );
-        return isset( $matches[3] ) ? $matches[3] : '';
+        return Services::get_twitter_username_from_url( $this->get_embed_url() );
     }
 
     /**
@@ -521,19 +484,7 @@ class Embed extends Entity {
      * @return string Twitter status ID
      */
     protected function get_twitter_status_id() {
-        return self::get_twitter_status_id_from_url( $this->get_embed_url() );
-    }
-
-    /**
-     * Get a Twitter status ID from a URL
-     *
-     * @param  string $url Twitter URL
-     * @return int         Twitter status ID
-     */
-    public static function get_twitter_status_id_from_url( $url ) {
-        $pattern = self::get_embed_type_url_pattern( 'twitter' );
-        preg_match( $pattern, $url, $matches );
-        return isset( $matches[3] ) ? $matches[3] : 0;
+        return Services::get_twitter_status_id_from_url( $this->get_embed_url() );
     }
 
     /**
@@ -542,36 +493,7 @@ class Embed extends Entity {
      * @return string
      */
     protected function get_instagram_id() {
-        return self::get_instagram_id_from_url( $this->get_embed_url() );
-    }
-
-    /**
-     * Get an Instagram ID from a URL
-     *
-     * @param  string $url Instagram post URL
-     * @return string      Instagram ID
-     */
-    public static function get_instagram_id_from_url( $url ) {
-        $pattern = self::get_embed_type_url_pattern( 'instagram' );
-        preg_match( $pattern, $url, $matches );
-        if ( ! empty( $matches[3] ) ) {
-            return $matches[3];
-        } else {
-            return '';
-        }
-    }
-
-    /**
-     * Get an Instagram username from a URL
-     *
-     * @param string $url URL to an Instagram post or user profile
-     * @return string
-     */
-    public static function get_instagram_username_from_url( $url ) {
-        $handle = str_ireplace( 'https://www.instagram.com/', '', $url );
-        // Strip whitespace characters and / from both ends of the string
-        $handle = trim( $handle, " \t\n\r\0\x0B\/" );
-        return $handle;
+        return Services::get_instagram_id_from_url( $this->get_embed_url() );
     }
 
     /**
@@ -587,9 +509,9 @@ class Embed extends Entity {
      * Get a valid embed type from a URL
      *
      * An embed type is a service that is embeddable as defined in
-     * static::$embeddable_services
+     * Services::$embeddable_services
      *
-     * @see Utils::get_service_name_from_url()
+     * @see Services::get_service_name_from_url()
      *
      * @param  string       $url URL
      * @return string|false      Embed type / service name
@@ -599,52 +521,12 @@ class Embed extends Entity {
             return false;
         }
 
-        $service_name = Utils::get_service_name_from_url( $url );
-        if ( ! static::is_embeddable_service( $service_name ) ) {
+        $service_name = Services::get_service_name_from_url( $url );
+        if ( ! Services::is_embeddable_service( $service_name ) ) {
             return false;
         }
 
         return $service_name;
-    }
-
-    /**
-     * Is the supplied service's URL embeddable?
-     *
-     * Embeddable services are defined in static::$embeddable_services
-     *
-     * @see Utils::get_service_name_from_url()
-     *
-     * @param  string  $service_name Provider name as returned by
-     *     Utils::get_service_name_from_url()
-     * @return boolean
-     */
-    public static function is_embeddable_service( string $service_name ) {
-        if ( array_key_exists( $service_name, static::get_embeddable_services() ) ) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Given an embed type, get the URL pattern for getting embed ID
-     *
-     * @param  string $embed_type Embed type
-     * @return string             Regexp for getting embed ID
-     */
-    public static function get_embed_type_url_pattern( $embed_type ) {
-        switch ( $embed_type ) {
-            case 'twitter':
-                return '|https?://(www\.)?twitter\.com/(#!/)?@?([^/\?]*)|';
-                break;
-
-            case 'instagram':
-                return '/https?:\/\/(www\.)?instagr(\.am|am\.com)\/p\/([a-zA-Z0-9-_]+)/i';
-                break;
-
-            case 'youtube':
-                return '/https?:\/\/youtu\.be\/([a-zA-Z0-9-]+)/i';
-                break;
-        }
     }
 
     /**
@@ -760,10 +642,44 @@ class Embed extends Entity {
         $context = [
             'content'        => $this->get_embed_html(),
             'featured_image' => '',
-            'source_name'    => $this->get_source(),
+            'source_name'    => $this->get_source_name(),
             'source_image'   => Icons::get_icon( $this->get_embed_type() ),
             'source_link'    => $this->get_embed_url(),
         ] + parent::get_context( $context );
         return $context;
+    }
+
+    /**
+     * Get a string for displaying embed content in RSS feeds
+     *
+     * @see Services::get_service_name_from_url()
+     * @see Services::get_service_label()
+     * @see Utils::get_domain_from_url()
+     * @param string $url
+     * @return string
+     */
+    public static function get_embed_rss_content_string( $url ) {
+        if ( ! is_string( $url ) || empty( $url ) ) {
+            return '';
+        }
+        $service_name  = Services::get_service_name_from_url( $url );
+        $service_label = Services::get_service_label( $service_name );
+        $source_name   = $service_label ?: Utils::get_domain_from_url( $url );
+
+        return sprintf(
+            '[ <a href="%s">Embedded content from %s</a> ]',
+            esc_url( $url ),
+            esc_attr( $source_name )
+        );
+    }
+
+    /**
+     * Get a link to the original source for the RSS feed
+     *
+     * @see Embed::get_embed_rss_content_string()
+     * @return string
+     */
+    public function get_the_content_rss() {
+        return static::get_embed_rss_content_string( $this->get_embed_url() );
     }
 }

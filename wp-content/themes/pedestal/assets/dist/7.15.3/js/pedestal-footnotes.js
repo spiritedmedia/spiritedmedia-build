@@ -1,1 +1,15 @@
-!function(){"use strict";jQuery(document).ready(function(r){r(".js-main").on("click",".js-footnote-link",function(t){var e=r(".js-entity-share.fixed"),o=this.href.split("#")[1],n=r("#"+o),i=0;0<e.length&&(i=e.height());var s,a=n.offset().top-i,c=(s=a,Math.abs(r(document.body).scrollTop()-s)/1200*1e3);r("html, body").animate({scrollTop:a},c),t.preventDefault(),n.attr("tabindex",0).focus()})})}();
+!function() {
+    "use strict";
+    jQuery(document).ready(function($) {
+        $(".js-main").on("click", ".js-footnote-link", function(e) {
+            var $entityShareBar = $(".js-entity-share.fixed"), targetID = this.href.split("#")[1], $target = $("#" + targetID), offsetPadding = 0;
+            0 < $entityShareBar.length && (offsetPadding = $entityShareBar.height());
+            var offset = $target.offset().top - offsetPadding, duration = function(offset) {
+                return Math.abs($(document.body).scrollTop() - offset) / 1200 * 1e3;
+            }(offset);
+            $("html, body").animate({
+                scrollTop: offset
+            }, duration), e.preventDefault(), $target.attr("tabindex", 0).focus();
+        });
+    });
+}();

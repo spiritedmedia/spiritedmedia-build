@@ -458,6 +458,38 @@ class MailChimp {
     }
 
     /**
+     * Get a contact from a list by their unique email id
+     *
+     * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/
+     * @param  string $unique_email_id  Unique email id for the contact provided by Mailchimp
+     * @param  string $list_id          List to get the contact for
+     * @return object                   Member object if found, false if nothing found
+     */
+    public function get_contact_by_unique_email_id( $unique_email_id = '', $list_id = '' ) {
+        if ( ! $unique_email_id ) {
+            return false;
+        }
+        $list_id = $this->sanitize_list_id( $list_id );
+        if ( empty( $list_id ) ) {
+            return false;
+        }
+
+        $endpoint = "/lists/$list_id/members";
+        $args     = [
+            'unique_email_id' => $unique_email_id,
+        ];
+        $result   = $this->get_request( $endpoint, $args );
+        if ( ! empty( $result->members ) && is_array( $result->members ) ) {
+            foreach ( $result->members as $contact ) {
+                if ( $contact->unique_email_id == $unique_email_id ) {
+                    return $contact;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Get one or more contacts from a list
      *
      * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/
@@ -473,6 +505,7 @@ class MailChimp {
         if ( empty( $list_id ) ) {
             return false;
         }
+
         $endpoint = "/lists/$list_id/members";
         return $this->get_request( $endpoint, $args );
     }

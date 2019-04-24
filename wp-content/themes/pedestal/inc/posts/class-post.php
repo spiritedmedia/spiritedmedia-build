@@ -432,48 +432,10 @@ abstract class Post {
     /**
      * Get the filtered content for the RSS feed
      *
-     * @return string
+     * @return string Empty string
      */
     public function get_the_content_rss() {
-
-        $type          = static::$post_type;
-        $type_obj      = get_post_type_object( $type );
-        $singular_name = strtolower( $type_obj->labels->singular_name );
-        $url           = esc_url( $this->get_the_permalink() );
-        $source        = false;
-        switch ( $type ) {
-            case 'pedestal_link':
-                $source = $this->get_source();
-                if ( method_exists( $source, 'get_name' ) ) {
-                    $source = esc_html( $source->get_name() );
-                }
-                break;
-
-            case 'pedestal_embed':
-                $url    = esc_url( $this->get_embed_url() );
-                $source = esc_html( $this->get_source() );
-                break;
-
-            case 'pedestal_event':
-                break;
-
-            default:
-                return $this->get_the_content();
-                break;
-        }
-
-        $out = '';
-        if ( $source ) {
-            $out .= esc_html( 'See it at ', 'pedestal' );
-            $out .= '<a href="' . $url . '">' . $source . '</a>.';
-        } else {
-            $out .= sprintf( esc_html( 'See the original %s ', 'pedestal' ), $singular_name );
-            $out .= '<a href="' . $url . '">';
-            $out .= esc_html( 'here', 'pedestal' );
-            $out .= '</a>.';
-        }
-        return $out;
-
+        return '';
     }
 
     /**
@@ -941,17 +903,17 @@ abstract class Post {
     public function get_featured_image_enclosure() {
 
         if ( ! $this->has_featured_image() ) {
-            return false;
+            return '';
         }
 
         $thumbnail = image_get_intermediate_size( $this->get_featured_image_id(), 'medium' );
 
         if ( empty( $thumbnail ) ) {
-            return false;
+            return '';
         }
 
         $upload_dir = wp_upload_dir();
-        $file_size  = false;
+        $file_size  = 0;
         $path       = path_join( $upload_dir['basedir'], $thumbnail['path'] );
 
         /**
@@ -961,7 +923,7 @@ abstract class Post {
          */
         if ( file_exists( $path ) ) {
             $file_size = filesize( $path );
-        } elseif ( ! empty( $thumbnail['url'] ) ) {
+        } elseif ( PEDESTAL_ENV !== 'dev' && ! empty( $thumbnail['url'] ) ) {
             $request = wp_remote_head( $thumbnail['url'] );
             if ( ! is_wp_error( $request ) ) {
                 if ( ! empty( $request['headers']['content-length'] ) ) {
@@ -970,9 +932,6 @@ abstract class Post {
             }
         }
 
-        if ( ! $file_size ) {
-            return false;
-        }
         $mime_type = get_post_mime_type( $this->get_featured_image_id() );
         return sprintf(
             '<enclosure url="%s" length="%s" type="%s" />',
@@ -981,6 +940,19 @@ abstract class Post {
             esc_attr( $mime_type )
         );
 
+    }
+
+    /**
+     * Get the Media RSS markup for the featured image
+     *
+     * @return string
+     */
+    public function get_featured_image_mrss_markup() {
+        $attachment = $this->get_featured_image();
+        if ( ! $attachment ) {
+            return '';
+        }
+        return $attachment->get_mrss_markup();
     }
 
     /**
@@ -1034,10 +1006,9 @@ abstract class Post {
      */
     public function get_featured_image_figure_html( $size = '1024-16x9', $args = [] ) {
         $defaults = [
-            'url'                    => $this->get_permalink(),
-            'omit_presentation_mode' => true,
-            'img_sizes'              => [],
-            'img_srcset'             => [],
+            'url'        => $this->get_permalink(),
+            'img_sizes'  => [],
+            'img_srcset' => [],
         ];
 
         $attachment = $this->get_featured_image();

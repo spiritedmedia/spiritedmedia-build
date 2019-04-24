@@ -1,7 +1,3 @@
-Build [#6661](https://circleci.com/gh/spiritedmedia/spiritedmedia/6661) by montchr at 2019-04-03 05:42 PM UTC
+Build [#6665](https://circleci.com/gh/spiritedmedia/spiritedmedia/6665) by kingkool68 at 2019-04-24 12:43 AM UTC
 
-[https://github.com/spiritedmedia/spiritedmedia/compare/v7.15.3](https://github.com/spiritedmedia/spiritedmedia/compare/v7.15.3)
-## Change log
-[Full Changelog](git@github.com:spiritedmedia/spiritedmedia.git/compare/v7.15.2...v7.15.3)
-
- - [#3121](git@github.com:spiritedmedia/spiritedmedia.git/pull/3121): Add a `use` statement for `Pedestal\Objects\User` in `Schema_Metadata`
+[https://github.com/spiritedmedia/spiritedmedia/compare/8b0c5e573722...2a9c08c43d5e](https://github.com/spiritedmedia/spiritedmedia/compare/8b0c5e573722...2a9c08c43d5e)

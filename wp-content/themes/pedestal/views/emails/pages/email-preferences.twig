@@ -1,0 +1,46 @@
+{% extends 'layouts/layout--content.twig' %}
+
+{% block content %}
+<div class="email-preferences-page">
+
+    {% if result_message %}
+        <div class="email-preferences__result-message">
+            {{ result_message }}
+        </div>
+    {% endif %}
+
+    {% if email_address %}
+        <p>Update email preferences for <strong>{{ email_address }}</strong></p>
+    {% endif %}
+
+    <form method="post">
+        {% if groups %}
+            {% for title, group in groups %}
+                <h2>{{ title }}</h2>
+                {# Ensure $_POST['pedestal-email-preferences'] will never be empty so everything can be unchecked #}
+                <input type="hidden" name="pedestal-email-preferences[]" value="0">
+                <ul class="email-preferences__list">
+                    {% for item in group %}
+                        <li class="email-preferences__list-item">
+                            <label class="form-label implicit">
+                                <input
+                                    type="checkbox"
+                                    name="pedestal-email-preferences[]"
+                                    value="{{ item.id|esc_attr }}"
+                                    {{ checked( item.subscribed ) }}
+                                >
+                                {{ item.name }}
+                            </label>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+
+            {{ email_preferences_nonce_field }}
+            <input type="hidden" name="email-preferences-mc-email-id" value="{{ email_id }}">
+            <input type="submit" value="Save" class="btn">
+        {% endif %}
+    </form>
+
+</div>
+{% endblock %}

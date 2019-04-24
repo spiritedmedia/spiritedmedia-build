@@ -2,6 +2,7 @@
 
 namespace Pedestal\Objects;
 
+use Pedestal\Utils\Services;
 use Pedestal\Utils\Utils;
 use Pedestal\Posts\Entities\Embed;
 
@@ -251,7 +252,7 @@ class YouTube {
         parse_str( $query_str, $query_args );
 
         if ( 'youtu.be' == $host ) {
-            $pattern = Embed::get_embed_type_url_pattern( 'youtube' );
+            $pattern = Services::get_service_url_pattern( 'youtube' );
             preg_match( $pattern, $url, $matches );
             if ( ! empty( $matches[1] ) ) {
                 $query['id'] = $matches[1];

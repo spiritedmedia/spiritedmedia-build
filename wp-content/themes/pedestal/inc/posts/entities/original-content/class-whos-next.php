@@ -73,10 +73,9 @@ class Whos_Next extends Original {
             }
 
             $atts        = [
-                'caption'                => $_img->get_caption(),
-                'credit'                 => $_img->get_credit(),
-                'credit_link'            => $_img->get_credit_link(),
-                'omit_presentation_mode' => true,
+                'caption'     => $_img->get_caption(),
+                'credit'      => $_img->get_credit(),
+                'credit_link' => $_img->get_credit_link(),
             ];
             $item['img'] = $_img::get_img_caption_html( $_img->get_html( 'large' ), $atts );
         }

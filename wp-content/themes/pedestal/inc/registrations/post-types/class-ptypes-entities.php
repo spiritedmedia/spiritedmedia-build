@@ -6,7 +6,8 @@ use Timber\Timber;
 
 use Pedestal\Utils\{
     Image_Ratio,
-    Utils
+    Utils,
+    Services
 };
 use Pedestal\Posts\{
     Attachment,
@@ -382,7 +383,7 @@ class Entity_Types {
      */
     private function register_embed_fields() {
 
-        $services    = array_values( Embed::get_embeddable_services() );
+        $services    = array_values( Services::get_embeddable_services() );
         $services    = Utils::get_byline_list( $services, [
             'pretext' => '',
         ] );
@@ -396,7 +397,7 @@ class Entity_Types {
                     return '';
                 }
 
-                if ( Utils::get_service_name_from_url( $url ) ) {
+                if ( Services::get_service_name_from_url( $url ) ) {
                     return esc_url_raw( $url );
                 } else {
                     return '';

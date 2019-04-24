@@ -1,1 +1,43 @@
-!function(){"use strict";function l(t){return(l="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}window.localStorageCookie=function(t,e){var o=!1;if(function(t){try{var e=window[t],o="__storage_test__";return e.setItem(o,o),e.removeItem(o),!0}catch(t){return!1}}("localStorage")&&(o=!0),null!=e&&("object"===l(e)&&(e=JSON.stringify(e)),o?localStorage.setItem(t,e):i(t,e,30)),void 0===e){if(o)var r=localStorage.getItem(t);else r=function(t){for(var e=t+"=",o=document.cookie.split(";"),r=0,n=o.length;r<n;r++){for(var i=o[r];" "===i.charAt(0);)i=i.substring(1,i.length);if(0===i.indexOf(e))return i.substring(e.length,i.length)}return null}(t);try{var n=JSON.parse(r)}catch(t){n=r}return n}function i(t,e,o){var r=new Date;r.setTime(r.getTime()+24*o*60*60*1e3);var n="; expires="+r.toGMTString();document.cookie=t+"="+e+n+"; path=/"}null===e&&(o?localStorage.removeItem(t):i(t,"",-1))}}();
+!function() {
+    "use strict";
+    function _typeof(obj) {
+        return (_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+            return typeof obj;
+        } : function(obj) {
+            return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+        })(obj);
+    }
+    window.localStorageCookie = function(key, value) {
+        var lsSupport = !1;
+        if (function(type) {
+            try {
+                var storage = window[type], x = "__storage_test__";
+                return storage.setItem(x, x), storage.removeItem(x), !0;
+            } catch (e) {
+                return !1;
+            }
+        }("localStorage") && (lsSupport = !0), null != value && ("object" === _typeof(value) && (value = JSON.stringify(value)), 
+        lsSupport ? localStorage.setItem(key, value) : createCookie(key, value, 30)), void 0 === value) {
+            if (lsSupport) var data = localStorage.getItem(key); else data = function(key) {
+                for (var nameEQ = key + "=", ca = document.cookie.split(";"), i = 0, max = ca.length; i < max; i++) {
+                    for (var c = ca[i]; " " === c.charAt(0); ) c = c.substring(1, c.length);
+                    if (0 === c.indexOf(nameEQ)) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }(key);
+            try {
+                var returnData = JSON.parse(data);
+            } catch (e) {
+                returnData = data;
+            }
+            return returnData;
+        }
+        function createCookie(key, value, exp) {
+            var date = new Date();
+            date.setTime(date.getTime() + 24 * exp * 60 * 60 * 1e3);
+            var expires = "; expires=" + date.toGMTString();
+            document.cookie = key + "=" + value + expires + "; path=/";
+        }
+        null === value && (lsSupport ? localStorage.removeItem(key) : createCookie(key, "", -1));
+    };
+}();

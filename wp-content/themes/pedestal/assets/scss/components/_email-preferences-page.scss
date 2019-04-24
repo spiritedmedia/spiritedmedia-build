@@ -1,0 +1,15 @@
+// stylelint-disable-next-line selector-max-type
+.email-preferences__result-message p {
+  color: $brand-1-color;
+  font-size: rem( 24px );
+}
+
+.email-preferences__list {
+  list-style-type: none;
+}
+
+.email-preferences__list-item {
+  .form-label {
+    font-weight: 400;
+  }
+}

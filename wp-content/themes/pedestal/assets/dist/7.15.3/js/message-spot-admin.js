@@ -1,1 +1,297 @@
-!function(){"use strict";function o(o){var r,s=1<arguments.length&&void 0!==arguments[1]?arguments[1]:300,a=2<arguments.length&&void 0!==arguments[2]&&arguments[2];return function(){var t=this,e=arguments,n=function(){return o.apply(t,e)},i=a&&!r;clearTimeout(r),r=setTimeout(n,s),i&&n()}}function s(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function i(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,i.key,i)}}function e(t,e,n){return e&&i(t.prototype,e),n&&i(t,n),t}function r(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&n(t,e)}function a(t){return(a=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function n(t,e){return(n=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function u(t,e){return!e||"object"!=typeof e&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}var t=function(){function r(t,e,n){if(s(this,r),this.$el=t,this.$modelStorage=this.$el.find(".fm-preview_model .fm-element"),this.modelDefaults=n,0<this.$modelStorage.length){var i=decodeURIComponent(this.$modelStorage.val());i&&(this.modelDefaults=JSON.parse(i))}var o=Backbone.Model.extend({defaults:this.modelDefaults,$storage:this.$modelStorage,sync:function(){var t=encodeURIComponent(JSON.stringify(this));this.$storage.val(t)}});this.Model=new o,this.View=new e({el:this.$el,model:this.Model})}return e(r,[{key:"destroy",value:function(){this.View.destroy()}}]),r}(),l=function(){function i(t,e,n){s(this,i),this.$el=t,this.previewView=e,this.defaults=n,this.createPreview()}return e(i,[{key:"createPreview",value:function(){this.Preview=new t(this.$el,this.previewView,this.defaults)}},{key:"destroyPreview",value:function(){"destroy"in this.Preview&&this.Preview.destroy(),this.Preview=null}},{key:"setPreviewAttribute",value:function(t,e){this.Preview.View.model.save(t,e)}},{key:"getPreviewFrame",value:function(){return this.Preview.View.$output}}]),i}(),c=function(t){var e=this;this.editor=null,this.editorID=!1,this.$el=$(t.el),this.model=t.model,this.setupFrame(),this.$output.on("load",function(){var t=e.$el.find(".fm-body .fm-element");t.hasClass("fm-richtext")&&(e.editorID=t.attr("id"),e.listenToBodyEditor()),e.render()}),this.listenTo(this.model,"change",this.render),Backbone.View.apply(this,arguments)};c.extend=Backbone.View.extend,Object.assign(c.prototype,Backbone.View.prototype,{listeningToEditor:!1,widthButtonLabels:{toDesktop:"Switch to desktop preview",toMobile:"Switch to mobile preview"},debounceEvents:function(t){for(var e in t)t.hasOwnProperty(e)&&(t[e]=o(t[e]));return t},setupFrame:function(){var t=this.$el.find(".fm-id .fm-element").val();this.$outputContainer=this.$el.find(".js-message-preview-container"),this.$outputContainer.html('\n      <iframe src="'.concat(pedestalPreviewURL).concat(t,'/"\n        class="message-preview js-message-preview js-responsive-iframe"\n        data-true-width="645"\n        data-true-height="260"\n      ></iframe>\n    ')),this.$output=this.$outputContainer.find(".js-message-preview")},setupFrameWidthToggle:function(){this.$toggleWidthButton=$('\n      <button\n        type="button"\n        title="Change preview width"\n        class="js-message-preview-toggle-width button-secondary"\n      >'.concat(this.widthButtonLabels.toDesktop,"</button>\n    ")),this.$toggleWidthButton.insertAfter(this.$outputContainer)},onToggleWidthClick:function(t){var e=$(t.target),n="message-preview-container--large";e.text()===this.widthButtonLabels.toDesktop?(e.text(this.widthButtonLabels.toMobile),this.$outputContainer.addClass(n)):(e.text(this.widthButtonLabels.toDesktop),this.$outputContainer.removeClass(n)),t.preventDefault()},listenToBodyEditor:function(){var n=this;if("undefined"!=typeof tinyMCE&&this.editorID){var i=function(){n.editor.on("keyup",o(function(){n.model.save("body",n.editor.getContent())})),n.listeningToEditor=!0};tinyMCE.hasOwnProperty("editors")&&$.each(tinyMCE.editors,function(t,e){!n.listeningToEditor&&e.hasOwnProperty("id")&&e.id.trim()===n.editorID&&(n.editor=e,i())}),tinyMCE.on("AddEditor",function(t){n.listeningToEditor||t.editor.id!==n.editorID||(n.editor=t.editor,i())})}},listenToIconButton:function(t){var e=$(t.currentTarget).data("message-icon-value");this.model.save("icon_name",e)},destroy:function(){this.undelegateEvents(),this.editor&&"off"in this.editor&&this.editor.off(),this.$el.removeData().unbind(),this.$output.remove(),this.$toggleWidthButton&&this.$toggleWidthButton.remove()}});var d=c.extend({initialize:function(){var t=this;this.setupFrameWidthToggle(),this.$output.contents().on("focus",".js-message-spot",function(){t.$output.focus()})},render:function(){var e=this,t=wpApiSettings.root+"pedestal/v1/message-spot/render",n=this.model.toJSON();return $.get(t,n).done(function(t){e.$output.contents().find("body").html(t)}),this},events:function(){return this.debounceEvents({"change .fm-type .fm-element":function(t){this.model.save("type",t.target.value)},"keyup .fm-body .fm-element":function(t){this.model.save("body",t.target.value)},"input .fm-url .fm-element":function(t){this.model.save("url",t.target.value)},"input .fm-title .fm-element":function(t){this.model.save("title",t.target.value)},"input .fm-button_label .fm-element":function(t){this.model.save("button_label",t.target.value)},"click .js-ped-icon-button":function(t){this.model.save("icon",$(t.currentTarget).data("message-icon-value"))},"click .js-message-preview-toggle-width":function(t){this.onToggleWidthClick(t)}})},getVariantClass:function(){var t=this.model.get("type");if("standard"===t)return"";var e="message-spot--".concat(t.replace("_","-"));return"override"===t&&(e+=" message-spot--with-title"),e}}),f=PedestalIcons,h=function(){function n(t){var e=this;s(this,n),this.$el=$(t),this.$iconOptions=this.$el.find(".fm-option .fm-element"),this.createButtons(),this.$buttons=this.$el.find(".js-ped-icon-button"),this.$buttons.on("click",function(t){return e.onClick(t)}),this.$buttons.on("keydown",function(t){return e.onKeydown(t)})}return e(n,[{key:"createButtons",value:function(){this.$iconOptions.each(function(t,e){var n=$('label[for="'.concat(e.id,'"]')),i=$.trim(n.text()),o=e.value,r=e.checked?" is-checked":"",s=f[o].svg,a='\n        <a href="#"\n          title="'.concat(i,'"\n          class="js-ped-icon-button ped-icon-button button-secondary ').concat(r,'"\n          data-message-icon-value="').concat(o,'"\n        >\n          ').concat(s,"\n        </a>\n      ");e.style.display="none",n.hide(),$(a).insertAfter(e)})}},{key:"onClick",value:function(t){var e=$(t.currentTarget);this.$buttons.removeClass("is-checked"),this.$buttons.find(".fm-element:radio").attr("checked",!1),e.addClass("is-checked"),e.prev(".fm-element:radio").attr("checked",!0),t.preventDefault()}},{key:"onKeydown",value:function(t){32==t.which&&$(t.currentTarget).trigger("click")}}]),n}(),m=function(t){function n(t){var e;return s(this,n),(e=u(this,a(n).call(this,t,d,messagePreviewDefaults.standard))).iconButtons=new h(t.find(".fm-icon")),e}return r(n,l),n}(),v=function(t){function n(){var e;s(this,n);var t=messagePreviewDefaults.override;return(e=u(this,a(n).call(this,$(".fm-override_message"),d,t))).post=null,e.$el.on("change",".fm-autocomplete-hidden",function(t){return e.onPostSelection(t)}),e}return r(n,l),e(n,[{key:"onPostSelection",value:function(t){var n=this,e=$(t.target),i=parseInt(e.val()),o=e.closest(".fm-group-inner"),r=o.find(".fm-body .fm-element"),s=o.find(".fm-url .fm-element");if(!i)return r.val(""),void s.val("");var a={post_id:i,action:"pedestal-message-spot-override"};$.post(ajaxurl,a,function(t){if(t.data){n.post=t.data,r.val(n.post.title),n.setPreviewAttribute("body",n.post.title),o.find(".fm-post_title .fm-element").val(n.post.title),n.setPreviewAttribute("postTitle",n.post.title);var e=encodeURI(n.post.url);s.val(e),n.setPreviewAttribute("url",e)}})}}]),n}();jQuery(document).ready(function(i){i(".fm-message:not(.fmjs-proto)").each(function(){new m(i(this))}),i(document).on("fm_added_element",function(t){var e=i(t.target),n=function(){for(var t=0<arguments.length&&void 0!==arguments[0]?arguments[0]:8,e="",n="23456789abdegjkmnpqrvwxyz",i=0;i<t;i++)e+=n.charAt(Math.floor(Math.random()*n.length));return e}();e.find(".fm-id .fm-element").val(n),new m(e)});var e=function(t){var e=i(t),n=e.closest(".fm-group-inner").find(".fm-wrapper:not(.fm-enabled-wrapper)");"true"===e.val()?(window.MessageSpotOverride=new v,n.show()):(n.hide(),window.MessageSpotOverride instanceof v&&window.MessageSpotOverride.destroyPreview(),window.MessageSpotOverride=null)};e(".fm-enabled .fm-element:checked"),i(document).on("change",".fm-enabled .fm-element",function(t){return e(t.target)})})}();
+!function() {
+    "use strict";
+    function debounce(fn) {
+        var timeout, wait = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : 300, immediate = 2 < arguments.length && void 0 !== arguments[2] && arguments[2];
+        return function() {
+            var _this = this, _arguments = arguments, functionCall = function() {
+                return fn.apply(_this, _arguments);
+            }, callNow = immediate && !timeout;
+            clearTimeout(timeout), timeout = setTimeout(functionCall, wait), callNow && functionCall();
+        };
+    }
+    function _classCallCheck(instance, Constructor) {
+        if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+    }
+    function _defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || !1, descriptor.configurable = !0, 
+            "value" in descriptor && (descriptor.writable = !0), Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }
+    function _createClass(Constructor, protoProps, staticProps) {
+        return protoProps && _defineProperties(Constructor.prototype, protoProps), staticProps && _defineProperties(Constructor, staticProps), 
+        Constructor;
+    }
+    function _inherits(subClass, superClass) {
+        if ("function" != typeof superClass && null !== superClass) throw new TypeError("Super expression must either be null or a function");
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+            constructor: {
+                value: subClass,
+                writable: !0,
+                configurable: !0
+            }
+        }), superClass && _setPrototypeOf(subClass, superClass);
+    }
+    function _getPrototypeOf(o) {
+        return (_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function(o) {
+            return o.__proto__ || Object.getPrototypeOf(o);
+        })(o);
+    }
+    function _setPrototypeOf(o, p) {
+        return (_setPrototypeOf = Object.setPrototypeOf || function(o, p) {
+            return o.__proto__ = p, o;
+        })(o, p);
+    }
+    function _possibleConstructorReturn(self, call) {
+        return !call || "object" != typeof call && "function" != typeof call ? function(self) {
+            if (void 0 === self) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+            return self;
+        }(self) : call;
+    }
+    var Preview = function() {
+        function Preview($el, View, defaults) {
+            if (_classCallCheck(this, Preview), this.$el = $el, this.$modelStorage = this.$el.find(".fm-preview_model .fm-element"), 
+            this.modelDefaults = defaults, 0 < this.$modelStorage.length) {
+                var stored = decodeURIComponent(this.$modelStorage.val());
+                stored && (this.modelDefaults = JSON.parse(stored));
+            }
+            var Model = Backbone.Model.extend({
+                defaults: this.modelDefaults,
+                $storage: this.$modelStorage,
+                sync: function() {
+                    var encodedData = encodeURIComponent(JSON.stringify(this));
+                    this.$storage.val(encodedData);
+                }
+            });
+            this.Model = new Model(), this.View = new View({
+                el: this.$el,
+                model: this.Model
+            });
+        }
+        return _createClass(Preview, [ {
+            key: "destroy",
+            value: function() {
+                this.View.destroy();
+            }
+        } ]), Preview;
+    }(), Message = function() {
+        function Message($el, previewView, defaults) {
+            _classCallCheck(this, Message), this.$el = $el, this.previewView = previewView, 
+            this.defaults = defaults, this.createPreview();
+        }
+        return _createClass(Message, [ {
+            key: "createPreview",
+            value: function() {
+                this.Preview = new Preview(this.$el, this.previewView, this.defaults);
+            }
+        }, {
+            key: "destroyPreview",
+            value: function() {
+                "destroy" in this.Preview && this.Preview.destroy(), this.Preview = null;
+            }
+        }, {
+            key: "setPreviewAttribute",
+            value: function(attr, val) {
+                this.Preview.View.model.save(attr, val);
+            }
+        }, {
+            key: "getPreviewFrame",
+            value: function() {
+                return this.Preview.View.$output;
+            }
+        } ]), Message;
+    }(), PreviewView = function(options) {
+        var _this = this;
+        this.editor = null, this.editorID = !1, this.$el = $(options.el), this.model = options.model, 
+        this.setupFrame(), this.$output.on("load", function() {
+            var $bodyEl = _this.$el.find(".fm-body .fm-element");
+            $bodyEl.hasClass("fm-richtext") && (_this.editorID = $bodyEl.attr("id"), _this.listenToBodyEditor()), 
+            _this.render();
+        }), this.listenTo(this.model, "change", this.render), Backbone.View.apply(this, arguments);
+    };
+    PreviewView.extend = Backbone.View.extend, Object.assign(PreviewView.prototype, Backbone.View.prototype, {
+        listeningToEditor: !1,
+        widthButtonLabels: {
+            toDesktop: "Switch to desktop preview",
+            toMobile: "Switch to mobile preview"
+        },
+        debounceEvents: function(events) {
+            for (var key in events) events.hasOwnProperty(key) && (events[key] = debounce(events[key]));
+            return events;
+        },
+        setupFrame: function() {
+            var messageID = this.$el.find(".fm-id .fm-element").val();
+            this.$outputContainer = this.$el.find(".js-message-preview-container"), this.$outputContainer.html('\n      <iframe src="'.concat(pedestalPreviewURL).concat(messageID, '/"\n        class="message-preview js-message-preview js-responsive-iframe"\n        data-true-width="645"\n        data-true-height="260"\n      ></iframe>\n    ')), 
+            this.$output = this.$outputContainer.find(".js-message-preview");
+        },
+        setupFrameWidthToggle: function() {
+            this.$toggleWidthButton = $('\n      <button\n        type="button"\n        title="Change preview width"\n        class="js-message-preview-toggle-width button-secondary"\n      >'.concat(this.widthButtonLabels.toDesktop, "</button>\n    ")), 
+            this.$toggleWidthButton.insertAfter(this.$outputContainer);
+        },
+        onToggleWidthClick: function(e) {
+            var $this = $(e.target), largeClass = "message-preview-container--large";
+            $this.text() === this.widthButtonLabels.toDesktop ? ($this.text(this.widthButtonLabels.toMobile), 
+            this.$outputContainer.addClass(largeClass)) : ($this.text(this.widthButtonLabels.toDesktop), 
+            this.$outputContainer.removeClass(largeClass)), e.preventDefault();
+        },
+        listenToBodyEditor: function() {
+            var _this2 = this;
+            if ("undefined" != typeof tinyMCE && this.editorID) {
+                var listen = function() {
+                    _this2.editor.on("keyup", debounce(function() {
+                        _this2.model.save("body", _this2.editor.getContent());
+                    })), _this2.listeningToEditor = !0;
+                };
+                tinyMCE.hasOwnProperty("editors") && $.each(tinyMCE.editors, function(i, ed) {
+                    !_this2.listeningToEditor && ed.hasOwnProperty("id") && ed.id.trim() === _this2.editorID && (_this2.editor = ed, 
+                    listen());
+                }), tinyMCE.on("AddEditor", function(e) {
+                    _this2.listeningToEditor || e.editor.id !== _this2.editorID || (_this2.editor = e.editor, 
+                    listen());
+                });
+            }
+        },
+        listenToIconButton: function(e) {
+            var name = $(e.currentTarget).data("message-icon-value");
+            this.model.save("icon_name", name);
+        },
+        destroy: function() {
+            this.undelegateEvents(), this.editor && "off" in this.editor && this.editor.off(), 
+            this.$el.removeData().unbind(), this.$output.remove(), this.$toggleWidthButton && this.$toggleWidthButton.remove();
+        }
+    });
+    var PreviewView$1 = PreviewView.extend({
+        initialize: function() {
+            var _this = this;
+            this.setupFrameWidthToggle(), this.$output.contents().on("focus", ".js-message-spot", function() {
+                _this.$output.focus();
+            });
+        },
+        render: function() {
+            var _this2 = this, endpoint = wpApiSettings.root + "pedestal/v1/message-spot/render", context = this.model.toJSON();
+            return $.get(endpoint, context).done(function(data) {
+                _this2.$output.contents().find("body").html(data);
+            }), this;
+        },
+        events: function() {
+            return this.debounceEvents({
+                "change .fm-type .fm-element": function(e) {
+                    this.model.save("type", e.target.value);
+                },
+                "keyup .fm-body .fm-element": function(e) {
+                    this.model.save("body", e.target.value);
+                },
+                "input .fm-url .fm-element": function(e) {
+                    this.model.save("url", e.target.value);
+                },
+                "input .fm-title .fm-element": function(e) {
+                    this.model.save("title", e.target.value);
+                },
+                "input .fm-button_label .fm-element": function(e) {
+                    this.model.save("button_label", e.target.value);
+                },
+                "click .js-ped-icon-button": function(e) {
+                    this.model.save("icon", $(e.currentTarget).data("message-icon-value"));
+                },
+                "click .js-message-preview-toggle-width": function(e) {
+                    this.onToggleWidthClick(e);
+                }
+            });
+        },
+        getVariantClass: function() {
+            var type = this.model.get("type");
+            if ("standard" === type) return "";
+            var classStr = "message-spot--".concat(type.replace("_", "-"));
+            return "override" === type && (classStr += " message-spot--with-title"), classStr;
+        }
+    }), icons = PedestalIcons, IconButtons = function() {
+        function IconButtons(el) {
+            var _this = this;
+            _classCallCheck(this, IconButtons), this.$el = $(el), this.$iconOptions = this.$el.find(".fm-option .fm-element"), 
+            this.createButtons(), this.$buttons = this.$el.find(".js-ped-icon-button"), this.$buttons.on("click", function(e) {
+                return _this.onClick(e);
+            }), this.$buttons.on("keydown", function(e) {
+                return _this.onKeydown(e);
+            });
+        }
+        return _createClass(IconButtons, [ {
+            key: "createButtons",
+            value: function() {
+                this.$iconOptions.each(function(i, el) {
+                    var $label = $('label[for="'.concat(el.id, '"]')), labelText = $.trim($label.text()), iconName = el.value, checkedClass = el.checked ? " is-checked" : "", icon = icons[iconName].svg, button = '\n        <a href="#"\n          title="'.concat(labelText, '"\n          class="js-ped-icon-button ped-icon-button button-secondary ').concat(checkedClass, '"\n          data-message-icon-value="').concat(iconName, '"\n        >\n          ').concat(icon, "\n        </a>\n      ");
+                    el.style.display = "none", $label.hide(), $(button).insertAfter(el);
+                });
+            }
+        }, {
+            key: "onClick",
+            value: function(e) {
+                var $target = $(e.currentTarget);
+                this.$buttons.removeClass("is-checked"), this.$buttons.find(".fm-element:radio").attr("checked", !1), 
+                $target.addClass("is-checked"), $target.prev(".fm-element:radio").attr("checked", !0), 
+                e.preventDefault();
+            }
+        }, {
+            key: "onKeydown",
+            value: function(e) {
+                32 == e.which && $(e.currentTarget).trigger("click");
+            }
+        } ]), IconButtons;
+    }(), StandardMessage = function(_Message) {
+        function StandardMessage($el) {
+            var _this;
+            return _classCallCheck(this, StandardMessage), (_this = _possibleConstructorReturn(this, _getPrototypeOf(StandardMessage).call(this, $el, PreviewView$1, messagePreviewDefaults.standard))).iconButtons = new IconButtons($el.find(".fm-icon")), 
+            _this;
+        }
+        return _inherits(StandardMessage, Message), StandardMessage;
+    }(), OverrideMessage = function(_Message) {
+        function OverrideMessage() {
+            var _this;
+            _classCallCheck(this, OverrideMessage);
+            var defaults = messagePreviewDefaults.override;
+            return (_this = _possibleConstructorReturn(this, _getPrototypeOf(OverrideMessage).call(this, $(".fm-override_message"), PreviewView$1, defaults))).post = null, 
+            _this.$el.on("change", ".fm-autocomplete-hidden", function(e) {
+                return _this.onPostSelection(e);
+            }), _this;
+        }
+        return _inherits(OverrideMessage, Message), _createClass(OverrideMessage, [ {
+            key: "onPostSelection",
+            value: function(e) {
+                var _this2 = this, $postSelect = $(e.target), postId = parseInt($postSelect.val()), $group = $postSelect.closest(".fm-group-inner"), $body = $group.find(".fm-body .fm-element"), $url = $group.find(".fm-url .fm-element");
+                if (!postId) return $body.val(""), void $url.val("");
+                var data = {
+                    post_id: postId,
+                    action: "pedestal-message-spot-override"
+                };
+                $.post(ajaxurl, data, function(response) {
+                    if (response.data) {
+                        _this2.post = response.data, $body.val(_this2.post.title), _this2.setPreviewAttribute("body", _this2.post.title), 
+                        $group.find(".fm-post_title .fm-element").val(_this2.post.title), _this2.setPreviewAttribute("postTitle", _this2.post.title);
+                        var url = encodeURI(_this2.post.url);
+                        $url.val(url), _this2.setPreviewAttribute("url", url);
+                    }
+                });
+            }
+        } ]), OverrideMessage;
+    }();
+    jQuery(document).ready(function($) {
+        $(".fm-message:not(.fmjs-proto)").each(function() {
+            new StandardMessage($(this));
+        }), $(document).on("fm_added_element", function(e) {
+            var $this = $(e.target), messageID = function() {
+                for (var length = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : 8, out = "", alphabet = "23456789abdegjkmnpqrvwxyz", i = 0; i < length; i++) out += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                return out;
+            }();
+            $this.find(".fm-id .fm-element").val(messageID), new StandardMessage($this);
+        });
+        var maybeSetupOverride = function(el) {
+            var $el = $(el), $fields = $el.closest(".fm-group-inner").find(".fm-wrapper:not(.fm-enabled-wrapper)");
+            "true" === $el.val() ? (window.MessageSpotOverride = new OverrideMessage(), $fields.show()) : ($fields.hide(), 
+            window.MessageSpotOverride instanceof OverrideMessage && window.MessageSpotOverride.destroyPreview(), 
+            window.MessageSpotOverride = null);
+        };
+        maybeSetupOverride(".fm-enabled .fm-element:checked"), $(document).on("change", ".fm-enabled .fm-element", function(e) {
+            return maybeSetupOverride(e.target);
+        });
+    });
+}();

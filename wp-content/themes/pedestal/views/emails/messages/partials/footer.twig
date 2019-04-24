@@ -31,7 +31,7 @@
             {% endif %}
 
             {% if 'mc' == email_provider %}
-                <p>This email was sent to <em>*|EMAIL|*</em>. You can <a href="*|UPDATE_PROFILE|*" target="_blank">update your preferences</a> or <a href="*|UNSUB|*" target="_blank">unsubscribe</a> from all our emails. We'll miss you.<p>
+                <p>This email was sent to <em>*|EMAIL|*</em>. You can <a href="{{ site.url|esc_url }}/email-preferences/?email-id=*|UNIQID|*" target="_blank">update your preferences</a> or <a href="*|UNSUB|*" target="_blank">unsubscribe</a> from all our emails. We'll miss you.<p>
 
                 *|IF:REWARDS|* *|HTML:REWARDS|* *|END:IF|*
 

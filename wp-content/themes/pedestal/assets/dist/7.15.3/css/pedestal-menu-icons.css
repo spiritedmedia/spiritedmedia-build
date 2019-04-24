@@ -2,4 +2,21 @@
  * Version: 7.15.3
  *
  * Copyright ( c ) 2019 Spirited Media
- */.o-icon{width:1em;height:1em;stroke:currentColor}.pedestal-menu-icon-item .o-icon{font-size:16px}.pedestal-menu-icon-item span{display:inline-block;margin-left:8px}.pedestal-menu-icon-preview{font-size:18px;position:relative;top:4px}
+ */
+.o-icon {
+  width: 1em;
+  height: 1em;
+  stroke: currentColor; }
+
+.pedestal-menu-icon-item .o-icon {
+  font-size: 16px; }
+
+.pedestal-menu-icon-item span {
+  display: inline-block;
+  margin-left: 8px; }
+
+.pedestal-menu-icon-preview {
+  font-size: 18px;
+  position: relative;
+  top: 4px; }
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3Njc3MvcGVkZXN0YWwtbWVudS1pY29ucy5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUNBOzs7O0dBSUc7QUFFSDtFQUVFLFdBQVU7RUFDVixZQUFXO0VBRVgscUJBQW9CLEVBQ3JCOztBQUVEO0VBR0ksZ0JBQWUsRUFDaEI7O0FBSkg7RUFRSSxzQkFBcUI7RUFDckIsaUJBQWdCLEVBQ2pCOztBQUdIO0VBQ0UsZ0JBQWU7RUFDZixtQkFBa0I7RUFDbEIsU0FBUSxFQUNUIiwiZmlsZSI6InBlZGVzdGFsLW1lbnUtaWNvbnMuY3NzIn0= */

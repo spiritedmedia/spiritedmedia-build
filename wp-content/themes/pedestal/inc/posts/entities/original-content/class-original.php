@@ -129,4 +129,13 @@ abstract class Original extends Entity {
         ] + parent::get_context( $context );
         return $context;
     }
+
+    /**
+     * Get the filtered content for the RSS feed
+     *
+     * @return string Full post content
+     */
+    public function get_the_content_rss() {
+        return $this->get_the_content();
+    }
 }

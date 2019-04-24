@@ -1,1 +1,33 @@
-!function(){"use strict";jQuery(document).ready(function(i){var o={},n={minLength:2,source:function(e,t){var n=e.term;if(n in o)t(o[n]);else{var c={action:"recent-content-widget-cluster-autocomplete",term:n};i.post(ajaxurl,c,function(e){o[n]=e.data,t(e.data)})}},select:function(e,t){i(".js-recent-content-widget-clusters").append(t.item.selected_item),i(this).val(""),e.preventDefault()}};i("#widgets-right").on("change",".js-recent-content-widget-filter-trigger",function(){var e=i(this),t=e.parents("fieldset"),n=t.find(".js-recent-content-widget-filter"),c=t.find(".js-recent-content-widget-clusters");1==e.val()?(n.show(),c.show()):(n.hide(),c.hide().html(""))}).on("click",".js-recent-content-widget-remove-cluster",function(e){i(this).parent().remove(),e.preventDefault()}),i(".js-cluster-autocomplete").autocomplete(n),i(document).on("widget-added widget-updated",function(e,t){i(t).find(".js-cluster-autocomplete").autocomplete(n)})})}();
+!function() {
+    "use strict";
+    jQuery(document).ready(function($) {
+        var autocompleteCache = {}, autocompleteArgs = {
+            minLength: 2,
+            source: function(request, response) {
+                var term = request.term;
+                if (term in autocompleteCache) response(autocompleteCache[term]); else {
+                    var data = {
+                        action: "recent-content-widget-cluster-autocomplete",
+                        term: term
+                    };
+                    $.post(ajaxurl, data, function(ajaxResponse) {
+                        autocompleteCache[term] = ajaxResponse.data, response(ajaxResponse.data);
+                    });
+                }
+            },
+            select: function(e, ui) {
+                $(".js-recent-content-widget-clusters").append(ui.item.selected_item), $(this).val(""), 
+                e.preventDefault();
+            }
+        };
+        $("#widgets-right").on("change", ".js-recent-content-widget-filter-trigger", function() {
+            var $this = $(this), $parentElem = $this.parents("fieldset"), $filterElem = $parentElem.find(".js-recent-content-widget-filter"), $clusterElem = $parentElem.find(".js-recent-content-widget-clusters");
+            1 == $this.val() ? ($filterElem.show(), $clusterElem.show()) : ($filterElem.hide(), 
+            $clusterElem.hide().html(""));
+        }).on("click", ".js-recent-content-widget-remove-cluster", function(e) {
+            $(this).parent().remove(), e.preventDefault();
+        }), $(".js-cluster-autocomplete").autocomplete(autocompleteArgs), $(document).on("widget-added widget-updated", function(e, widget) {
+            $(widget).find(".js-cluster-autocomplete").autocomplete(autocompleteArgs);
+        });
+    });
+}();

@@ -2,4 +2,124 @@
  * Version: 7.15.3
  *
  * Copyright ( c ) 2019 Spirited Media
- */html,body{margin:0 auto !important;padding:0 !important;height:100% !important;width:100% !important}*{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}div[style*="margin: 16px 0"]{margin:0 !important}table,td{mso-table-lspace:0pt !important;mso-table-rspace:0pt !important}table{border-spacing:0 !important;border-collapse:collapse !important;table-layout:fixed !important;margin:0 auto !important}table table table{table-layout:auto}img{-ms-interpolation-mode:bicubic}*[x-apple-data-detectors]{color:inherit !important;text-decoration:none !important}.x-gmail-data-detectors,.x-gmail-data-detectors *,.aBn{border-bottom:0 !important;cursor:default !important}.a6S{display:none !important;opacity:0.01 !important}img.g-img+div{display:none !important}.button-link{text-decoration:none !important}@media only screen and (min-device-width: 375px) and (max-device-width: 413px){.email-container{min-width:375px !important}}.email-btn{margin:auto}.email-btn__inner,.email-btn__link{-webkit-transition:all 100ms ease-in;transition:all 100ms ease-in}.email-btn__inner:hover,.email-btn__link:hover{background:#3f3f3f !important;border-color:#3f3f3f !important}.email-btn__inner{border-radius:3px;background:#c73e1d;text-align:center}.email-btn__link{background:#c73e1d;border:15px solid #c73e1d;color:#fff;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:bold;font-size:18px;line-height:1.2;text-align:center;text-decoration:none;display:block;border-radius:3px}@media screen and (max-width: 480px){.fluid{width:100% !important;max-width:100% !important;height:auto !important;margin-left:auto !important;margin-right:auto !important}.stack-column,.stack-column-center{display:block !important;width:100% !important;max-width:100% !important;direction:ltr !important}.stack-column-center{text-align:center !important}.center-on-narrow{text-align:center !important;display:block !important;margin-left:auto !important;margin-right:auto !important;float:none !important}.center-on-narrowtable{display:inline-block !important}}
+ */
+/* stylelint-disable selector-max-type, declaration-no-important,
+    property-no-vendor-prefix, property-no-unknown, length-zero-no-unit */
+/**
+ * Generate icons and fallbacks from PNG/SVG
+ *
+ * @param  {string} $path:        null                Absolute URI path to the icon
+ * @param  {unit}   $size:        $icon-diameter--med Size of icons to generate
+ * @param  {bool}   $resize-only: false               Set whether to rezize only
+ * @param  {bool}   $path-only:   false               Set whether to change path without resizing
+ * @param  {bool}   $fallback:    true                Set whether to use SVG
+ * @param  {bool}   $live-url:    false               If set, base the image path off the live URL
+ */
+html,
+body {
+  margin: 0 auto !important;
+  padding: 0 !important;
+  height: 100% !important;
+  width: 100% !important; }
+
+* {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; }
+
+div[style*="margin: 16px 0"] {
+  margin: 0 !important; }
+
+table,
+td {
+  mso-table-lspace: 0pt !important;
+  mso-table-rspace: 0pt !important; }
+
+table {
+  border-spacing: 0 !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;
+  margin: 0 auto !important; }
+  table table table {
+    table-layout: auto; }
+
+img {
+  -ms-interpolation-mode: bicubic; }
+
+*[x-apple-data-detectors] {
+  color: inherit !important;
+  text-decoration: none !important; }
+
+.x-gmail-data-detectors,
+.x-gmail-data-detectors *,
+.aBn {
+  border-bottom: 0 !important;
+  cursor: default !important; }
+
+.a6S {
+  display: none !important;
+  opacity: 0.01 !important; }
+
+img.g-img + div {
+  display: none !important; }
+
+.button-link {
+  text-decoration: none !important; }
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+  .email-container {
+    min-width: 375px !important; } }
+
+.email-btn {
+  margin: auto; }
+
+.email-btn__inner,
+.email-btn__link {
+  -webkit-transition: all 100ms ease-in;
+  transition: all 100ms ease-in; }
+  .email-btn__inner:hover,
+  .email-btn__link:hover {
+    background: #3f3f3f !important;
+    border-color: #3f3f3f !important; }
+
+.email-btn__inner {
+  border-radius: 3px;
+  background: #c73e1d;
+  text-align: center; }
+
+.email-btn__link {
+  background: #c73e1d;
+  border: 15px solid #c73e1d;
+  color: #ffffff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  border-radius: 3px; }
+
+@media screen and (max-width: 480px) {
+  .fluid {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important; }
+  .stack-column,
+  .stack-column-center {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    direction: ltr !important; }
+  .stack-column-center {
+    text-align: center !important; }
+  .center-on-narrow {
+    text-align: center !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none !important; }
+    .center-on-narrowtable {
+      display: inline-block !important; } }
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3Njc3MvZW1haWwtYmFzZS5zY3NzIiwiLi4vLi4vLi4vc2Nzcy9oZWxwZXJzL19taXhpbnMuc2NzcyIsIi4uLy4uLy4uL3Njc3MvaGVscGVycy9fY29sb3JzLnNjc3MiLCIuLi8uLi8uLi9zY3NzL2hlbHBlcnMvX2VtYWlsLXNldHRpbmdzLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0E7Ozs7R0FJRztBQUdIOzBFQUMwRTtBQzBUMUU7Ozs7Ozs7OztHQVNHO0FEblRIOztFQUVFLDBCQUF5QjtFQUN6QixzQkFBcUI7RUFDckIsd0JBQXVCO0VBQ3ZCLHVCQUFzQixFQUN2Qjs7QUFHRDtFQUNFLDJCQUEwQjtFQUMxQiwrQkFBOEIsRUFDL0I7O0FBR0Q7RUFDRSxxQkFBb0IsRUFDckI7O0FBR0Q7O0VBRUUsaUNBQWdDO0VBQ2hDLGlDQUFnQyxFQUNqQzs7QUFLRDtFQUNFLDZCQUE0QjtFQUM1QixxQ0FBb0M7RUFDcEMsK0JBQThCO0VBQzlCLDBCQUF5QixFQUsxQjtFQVREO0lBT0ksbUJBQWtCLEVBQ25COztBQUlIO0VBQ0UsZ0NBQStCLEVBQ2hDOztBQUdEO0VBQ0UsMEJBQXlCO0VBQ3pCLGlDQUFnQyxFQUNqQzs7QUFHRDs7O0VBR0UsNEJBQTJCO0VBQzNCLDJCQUEwQixFQUMzQjs7QUFHRDtFQUNFLHlCQUF3QjtFQUN4Qix5QkFBd0IsRUFDekI7O0FBR0Q7RUFDRSx5QkFBd0IsRUFDekI7O0FBR0Q7RUFDRSxpQ0FBZ0MsRUFDakM7O0FBS0Q7RUFDRTtJQUNFLDRCQUEyQixFQUM1QixFQUFBOztBQWdCSDtFQUNFLGFBQVksRUFDYjs7QUFFRDs7RUFFRSxzQ0FBNkI7RUFBN0IsOEJBQTZCLEVBTTlCO0VBUkQ7O0lBS0ksK0JBQXVDO0lBQ3ZDLGlDQUF5QyxFQUMxQzs7QUFHSDtFQUNFLG1CQUFrQjtFQUNsQixvQkVwRnNDO0VGcUZ0QyxtQkFBa0IsRUFDbkI7O0FBRUQ7RUFDRSxvQkV6RnNDO0VGMEZ0QywyQkUxRnNDO0VGMkZ0QyxlRXpIc0M7RUYwSHRDLDRERzdIc0U7RUg4SHRFLGtCQUFpQjtFQUNqQixnQkd6R3VCO0VIMEd2QixpQkFBZ0I7RUFDaEIsbUJBQWtCO0VBQ2xCLHNCQUFxQjtFQUNyQixlQUFjO0VBQ2QsbUJBQWtCLEVBQ25COztBQU9EO0VBSUU7SUFDRSx1QkFBc0I7SUFDdEIsMkJBQTBCO0lBQzFCLHdCQUF1QjtJQUN2Qiw2QkFBNEI7SUFDNUIsOEJBQTZCLEVBQzlCO0VBR0Q7O0lBRUUsMEJBQXlCO0lBQ3pCLHVCQUFzQjtJQUN0QiwyQkFBMEI7SUFDMUIsMEJBQXlCLEVBQzFCO0VBRUQ7SUFDRSw4QkFBNkIsRUFDOUI7RUFJRDtJQUNFLDhCQUE2QjtJQUM3QiwwQkFBeUI7SUFDekIsNkJBQTRCO0lBQzVCLDhCQUE2QjtJQUM3Qix1QkFBc0IsRUFLdkI7SUFIQztNQUNFLGlDQUFnQyxFQUNqQyxFQUFBIiwiZmlsZSI6ImVtYWlsLWJhc2UuY3NzIn0= */

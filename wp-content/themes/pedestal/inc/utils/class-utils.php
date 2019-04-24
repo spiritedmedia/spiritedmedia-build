@@ -10,28 +10,6 @@ use Timber\Timber;
 class Utils {
 
     /**
-     * Map of common third party service domains and the name of the service
-     *
-     * @var array
-     */
-    private static $service_domain_map = [
-        'documentcloud.org' => 'documentcloud',
-        'twitter.com'       => 'twitter',
-        'instagram.com'     => 'instagram',
-        'instagr.am'        => 'instagram',
-        'youtube.com'       => 'youtube',
-        'youtu.be'          => 'youtube',
-        'vine.co'           => 'vine',
-        'facebook.com'      => 'facebook',
-        'scribd.com'        => 'scribd',
-        'flickr.com'        => 'flickr',
-        'giphy.com'         => 'giphy',
-        'infogr.am'         => 'infogram',
-        'soundcloud.com'    => 'soundcloud',
-        'linkedin.com'      => 'linkedin',
-    ];
-
-    /**
      * Instance
      *
      * @var object
@@ -204,6 +182,24 @@ class Utils {
     }
 
     /**
+     * Get a domain name from URL, including non-www subdomain
+     *
+     * @param string $url
+     * @return string
+     */
+    public static function get_domain_from_url( $url ) {
+        if ( ! $url || ! is_string( $url ) ) {
+            return '';
+        }
+
+        // Make sure the protocol is specified, which is required for parse_url()
+        $url = esc_url_raw( $url );
+
+        $url_domain = parse_url( $url, PHP_URL_HOST );
+        return str_replace( 'www.', '', $url_domain );
+    }
+
+    /**
      * Remove an item from an array by value
      *
      * Returns the original array if the value is not present.
@@ -353,15 +349,19 @@ class Utils {
      *
      * Use Utils::array_to_data_atts_str() for working with data attributes.
      *
-     * @param  array $atts HTML attribute keys and values
+     * @param array $atts HTML attribute keys and values
+     * @param bool $skip_empty Skip empty values?
      * @return string      HTML attribute string
      */
-    public static function array_to_atts_str( $atts ) {
+    public static function array_to_atts_str( $atts, $skip_empty = false ) {
         if ( ! is_array( $atts ) ) {
             return '';
         }
         $atts_str = '';
         foreach ( $atts as $key => $value ) {
+            if ( $skip_empty && empty( $value ) ) {
+                continue;
+            }
             if ( 'class' == $key && is_array( $value ) ) {
                 $value = implode( ' ', $value );
             }
@@ -474,34 +474,6 @@ class Utils {
             'success' => $success,
         ];
         return $result;
-    }
-
-    /**
-     * Get the name of a social media or embed service from a URL
-     *
-     * Not limited to services that provide embeddable content; also includes
-     * other commonly referenced sites.
-     *
-     * @param string $url URL
-     * @return string|false
-     */
-    public static function get_service_name_from_url( string $url = '' ) {
-        if ( ! $url ) {
-            return false;
-        }
-
-        // Make sure the protocol is specified, which is required for parse_url()
-        $url = esc_url_raw( $url );
-
-        $url_domain = parse_url( $url, PHP_URL_HOST );
-        $url_domain = str_replace( 'www.', '', $url_domain );
-        $services   = static::$service_domain_map;
-
-        if ( ! isset( $services[ $url_domain ] ) ) {
-            return false;
-        }
-
-        return $services[ $url_domain ];
     }
 
     /**

@@ -3,7 +3,8 @@
 namespace Pedestal\Posts\Clusters;
 
 use DateTime;
-use \Pedestal\Utils\Utils;
+use Pedestal\Utils\Services;
+use Pedestal\Utils\Utils;
 
 use Pedestal\Posts\Entities\Embed;
 
@@ -145,7 +146,7 @@ class Person extends Cluster {
      * @return string
      */
     public function get_twitter_handle() {
-        return Embed::get_twitter_username_from_url( $this->get_twitter_profile_url() );
+        return Services::get_twitter_username_from_url( $this->get_twitter_profile_url() );
     }
 
     /**
@@ -163,7 +164,7 @@ class Person extends Cluster {
      * @return string
      */
     public function get_instagram_handle() {
-        return Embed::get_instagram_username_from_url( $this->get_instagram_url() );
+        return Services::get_instagram_username_from_url( $this->get_instagram_url() );
     }
 
     /**

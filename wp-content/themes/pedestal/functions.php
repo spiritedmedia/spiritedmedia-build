@@ -6,6 +6,7 @@ use Aptoma\Twig\Extension\MarkdownEngine;
 use Aptoma\Twig\Extension\MarkdownExtension;
 use Aptoma\Twig\TokenParser\MarkdownTokenParser;
 
+use Pedestal\Utils\Services;
 use Pedestal\Utils\Utils;
 use Pedestal\Registrations\Post_Types\Types;
 use Pedestal\Registrations\Taxonomies\{
@@ -27,6 +28,7 @@ use Pedestal\Objects\User;
 use Pedestal\Email\{
     Email,
     Email_Groups,
+    Email_Preferences,
     One_Off_Emails,
     Breaking_News_Emails,
     Newsletter_Emails,
@@ -90,8 +92,6 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
             $pedestal_env = 'live';
             if ( defined( 'WP_ENV' ) && 'development' == WP_ENV ) {
                 $pedestal_env = 'dev';
-            } elseif ( isset( $_ENV['PANTHEON_ENVIRONMENT'] ) ) {
-                $pedestal_env = $_ENV['PANTHEON_ENVIRONMENT'];
             }
             if ( ! defined( 'PEDESTAL_ENV' ) ) {
                 define( 'PEDESTAL_ENV', $pedestal_env );
@@ -315,6 +315,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             // Emails
             $this->emails                  = Email::get_instance();
+            $this->email_preferences       = Email_Preferences::get_instance();
             $this->email_groups            = Email_Groups::get_instance();
             $this->breaking_news_emails    = Breaking_News_Emails::get_instance();
             $this->newsletter_emails       = Newsletter_Emails::get_instance();
@@ -696,7 +697,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
          * @return [type]       [description]
          */
         public function filter_oembed_result( $data, $url, $args ) {
-            switch ( Utils::get_service_name_from_url( $url ) ) {
+            switch ( Services::get_service_name_from_url( $url ) ) {
                 case 'documentcloud':
                 case 'instagram':
                     return $data;

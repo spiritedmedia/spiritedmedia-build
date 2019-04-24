@@ -1,1 +1,204 @@
-!function(){"use strict";function c(t){return(c="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function o(t,e){for(var a=0;a<e.length;a++){var r=e[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}function i(t,e){var a=!1;if(function(t){try{var e=window[t],a="__storage_test__";return e.setItem(a,a),e.removeItem(a),!0}catch(t){return!1}}("localStorage")&&(a=!0),null!=e&&("object"===c(e)&&(e=JSON.stringify(e)),a?localStorage.setItem(t,e):n(t,e,30)),void 0===e){if(a)var r=localStorage.getItem(t);else r=function(t){for(var e=t+"=",a=document.cookie.split(";"),r=0,o=a.length;r<o;r++){for(var n=a[r];" "===n.charAt(0);)n=n.substring(1,n.length);if(0===n.indexOf(e))return n.substring(e.length,n.length)}return null}(t);try{var o=JSON.parse(r)}catch(t){o=r}return o}function n(t,e,a){var r=new Date;r.setTime(r.getTime()+24*a*60*60*1e3);var o="; expires="+r.toGMTString();document.cookie=t+"="+e+o+"; path=/"}null===e&&(a?localStorage.removeItem(t):n(t,"",-1))}var a,s=new(function(){function t(){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.dataStorageKey="contactData",this.historyStorageKey="contactHistory",this.adblockerStorageKey="contactAdblocker",this.version=4,this.contactData(),this.contactHistory()}var e,a,r;return e=t,(a=[{key:"contactData",value:function(){var a=this;$(".js-signup-email-form").on("pedFormSubmission:success",function(t,e){"emailAddress"in e&&a.fetchData(e.emailAddress,!1)});var t=localStorageCookie("subscriberData");t&&"data"in t&&(localStorageCookie("subscriberData",""),localStorageCookie(this.dataStorageKey,t));var e=function(){var t=0<arguments.length&&void 0!==arguments[0]?arguments[0]:"",e=1<arguments.length&&void 0!==arguments[1]?arguments[1]:"",r={};return e||(e=location.search),e.replace(/[?&]+([^=&]+)=([^&]*)/gi,function(t,e,a){r[e]=a}),t?r[t]:r}("mc_eid"),r=localStorageCookie(this.dataStorageKey);if(!(r&&"object"==c(r)&&"data"in r))return this.deleteData(),void this.fetchData(e);if(!("mc_id"in r.data&&"version"in r&&"updated"in r))return this.deleteData(),void this.fetchData(e);var o=r.data.mc_id;if(e&&(o=e),r.version!=this.version)return this.deleteData(),void this.fetchData(o);var n=(new Date).getTime()/1e3,i=new Date(r.updated).getTime()/1e3;if((i+=1209600)<=n)return this.deleteData(),void this.fetchData(o);$(document).on("ready",function(){return a.triggerEvent("ready",r)})}},{key:"contactHistory",value:function(){var t=localStorageCookie(this.historyStorageKey);t&&Array.isArray(t)||(t=[]),t.unshift({t:Date.now(),u:window.location.pathname});var e=new Date;e.setDate(e.getDate()-30),t=t.filter(function(t){return t.t>e.getTime()}),localStorageCookie(this.historyStorageKey,t)}},{key:"isFrequentReader",value:function(){var t=localStorageCookie(this.historyStorageKey);if(t&&6<=t.filter(function(t){return"/20"===t.u.slice(0,3)}).length)return!0;return!1}},{key:"deleteData",value:function(){localStorageCookie(this.dataStorageKey,"")}},{key:"fetchData",value:function(t){var e=this,a=!(1<arguments.length&&void 0!==arguments[1])||arguments[1];if(t){var r=this.dataStorageKey,o={action:"get_contact_data",contactID:t};$.post(PedVars.ajaxurl,o,function(t){t.success&&(localStorageCookie(r,t.data),a&&e.triggerEvent("ready",t.data))})}}},{key:"triggerEvent",value:function(t,e){var a="pedContact:"+t;$(document).trigger(a,[e])}},{key:"adblocker",set:function(t){var e="boolean"==typeof t?t:null;localStorageCookie(this.adblockerStorageKey,e)}}])&&o(e.prototype,a),r&&o(e,r),t}());(a=jQuery).fn.serializeFormJSON=function(){var t={},e=this.serializeArray();return a.each(e,function(){t[this.name]?(t[this.name].push||(t[this.name]=[t[this.name]]),t[this.name].push(this.value||"")):t[this.name]=this.value||""}),t},jQuery(document).ready(function(r){var t=i(s.dataStorageKey),o=r("#status");function e(){var t=i(s.dataStorageKey);r("#raw-data-output").text(JSON.stringify(t,null,4))}if(t&&"data"in t)for(var n in o.text("Importing values from cookie"),e(),t.data){var a=t.data[n];switch(c(a)){case"boolean":a=a?"true":"false"}r("#"+n).val(a).change()}r("#target-audiences").on("change",function(){var t=r(this).val(),e={newsletter_subscriber:!0,current_member:!1,donate_365:!1};switch(t){case"unidentified":e.newsletter_subscriber=!1;break;case"contact":break;case"donor":e.donate_365=!0;break;case"member":e.current_member=!0}for(n in e){var a=String(e[n]);r("#"+n).val(a)}r(".the-form input").trigger("change"),o.html("Set cookie to <code>"+t+"</code> target audience")}),r(".the-form").on("change","input, select",function(){var t=r(this),a=t.parents("form").serializeFormJSON();r.each(a,function(t,e){""!==e&&(isNaN(1*e)?"false"!==e&&"true"!==e||(a[t]="true"==e):a[t]=1*e)}),i(s.dataStorageKey,{version:4,updated:(new Date).toISOString(),data:a}),o.html("Updated cookie: <code>"+t.attr("name")+"</code> set to <code>"+t.val()+"</code>"),e()})})}();
+!function() {
+    "use strict";
+    function _typeof(obj) {
+        return (_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+            return typeof obj;
+        } : function(obj) {
+            return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+        })(obj);
+    }
+    function _defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || !1, descriptor.configurable = !0, 
+            "value" in descriptor && (descriptor.writable = !0), Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }
+    function localStorageCookie$1(key, value) {
+        var lsSupport = !1;
+        if (function(type) {
+            try {
+                var storage = window[type], x = "__storage_test__";
+                return storage.setItem(x, x), storage.removeItem(x), !0;
+            } catch (e) {
+                return !1;
+            }
+        }("localStorage") && (lsSupport = !0), null != value && ("object" === _typeof(value) && (value = JSON.stringify(value)), 
+        lsSupport ? localStorage.setItem(key, value) : createCookie(key, value, 30)), void 0 === value) {
+            if (lsSupport) var data = localStorage.getItem(key); else data = function(key) {
+                for (var nameEQ = key + "=", ca = document.cookie.split(";"), i = 0, max = ca.length; i < max; i++) {
+                    for (var c = ca[i]; " " === c.charAt(0); ) c = c.substring(1, c.length);
+                    if (0 === c.indexOf(nameEQ)) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }(key);
+            try {
+                var returnData = JSON.parse(data);
+            } catch (e) {
+                returnData = data;
+            }
+            return returnData;
+        }
+        function createCookie(key, value, exp) {
+            var date = new Date();
+            date.setTime(date.getTime() + 24 * exp * 60 * 60 * 1e3);
+            var expires = "; expires=" + date.toGMTString();
+            document.cookie = key + "=" + value + expires + "; path=/";
+        }
+        null === value && (lsSupport ? localStorage.removeItem(key) : createCookie(key, "", -1));
+    }
+    var contact = new (function() {
+        function Contact() {
+            !function(instance, Constructor) {
+                if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+            }(this, Contact), this.dataStorageKey = "contactData", this.historyStorageKey = "contactHistory", 
+            this.adblockerStorageKey = "contactAdblocker", this.version = 4, this.contactData(), 
+            this.contactHistory();
+        }
+        var Constructor, protoProps, staticProps;
+        return Constructor = Contact, (protoProps = [ {
+            key: "contactData",
+            value: function() {
+                var _this = this;
+                $(".js-signup-email-form").on("pedFormSubmission:success", function(e, data) {
+                    "emailAddress" in data && _this.fetchData(data.emailAddress, !1);
+                });
+                var oldContactData = localStorageCookie("subscriberData");
+                oldContactData && "data" in oldContactData && (localStorageCookie("subscriberData", ""), 
+                localStorageCookie(this.dataStorageKey, oldContactData));
+                var queryStringId = function() {
+                    var key = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : "", url = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : "", params = {};
+                    return url || (url = location.search), url.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(match, param, val) {
+                        params[param] = val;
+                    }), key ? params[key] : params;
+                }("mc_eid"), contactData = localStorageCookie(this.dataStorageKey);
+                if (!(contactData && "object" == _typeof(contactData) && "data" in contactData)) return this.deleteData(), 
+                void this.fetchData(queryStringId);
+                if (!("mc_id" in contactData.data && "version" in contactData && "updated" in contactData)) return this.deleteData(), 
+                void this.fetchData(queryStringId);
+                var theId = contactData.data.mc_id;
+                if (queryStringId && (theId = queryStringId), contactData.version != this.version) return this.deleteData(), 
+                void this.fetchData(theId);
+                var now = new Date().getTime() / 1e3, updatedCutOff = new Date(contactData.updated).getTime() / 1e3;
+                if ((updatedCutOff += 1209600) <= now) return this.deleteData(), void this.fetchData(theId);
+                $(document).on("ready", function() {
+                    return _this.triggerEvent("ready", contactData);
+                });
+            }
+        }, {
+            key: "contactHistory",
+            value: function() {
+                var history = localStorageCookie(this.historyStorageKey);
+                history && Array.isArray(history) || (history = []), history.unshift({
+                    t: Date.now(),
+                    u: window.location.pathname
+                });
+                var dateCutoff = new Date();
+                dateCutoff.setDate(dateCutoff.getDate() - 30), history = history.filter(function(item) {
+                    return item.t > dateCutoff.getTime();
+                }), localStorageCookie(this.historyStorageKey, history);
+            }
+        }, {
+            key: "isFrequentReader",
+            value: function() {
+                var history = localStorageCookie(this.historyStorageKey);
+                if (history && 6 <= history.filter(function(item) {
+                    return "/20" === item.u.slice(0, 3);
+                }).length) return !0;
+                return !1;
+            }
+        }, {
+            key: "deleteData",
+            value: function() {
+                localStorageCookie(this.dataStorageKey, "");
+            }
+        }, {
+            key: "fetchData",
+            value: function(id) {
+                var _this2 = this, triggerReadyEvent = !(1 < arguments.length && void 0 !== arguments[1]) || arguments[1];
+                if (id) {
+                    var storageKey = this.dataStorageKey, ajaxData = {
+                        action: "get_contact_data",
+                        contactID: id
+                    };
+                    $.post(PedVars.ajaxurl, ajaxData, function(resp) {
+                        resp.success && (localStorageCookie(storageKey, resp.data), triggerReadyEvent && _this2.triggerEvent("ready", resp.data));
+                    });
+                }
+            }
+        }, {
+            key: "triggerEvent",
+            value: function(eventName, data) {
+                var evt = "pedContact:" + eventName;
+                $(document).trigger(evt, [ data ]);
+            }
+        }, {
+            key: "adblocker",
+            set: function(detected) {
+                var value = "boolean" == typeof detected ? detected : null;
+                localStorageCookie(this.adblockerStorageKey, value);
+            }
+        } ]) && _defineProperties(Constructor.prototype, protoProps), staticProps && _defineProperties(Constructor, staticProps), 
+        Contact;
+    }())();
+    !function($) {
+        $.fn.serializeFormJSON = function() {
+            var o = {}, a = this.serializeArray();
+            return $.each(a, function() {
+                o[this.name] ? (o[this.name].push || (o[this.name] = [ o[this.name] ]), o[this.name].push(this.value || "")) : o[this.name] = this.value || "";
+            }), o;
+        };
+    }(jQuery), jQuery(document).ready(function($) {
+        var data = localStorageCookie$1(contact.dataStorageKey), $status = $("#status");
+        function outputRawCookieData() {
+            var rawData = localStorageCookie$1(contact.dataStorageKey);
+            $("#raw-data-output").text(JSON.stringify(rawData, null, 4));
+        }
+        if (data && "data" in data) for (var key in $status.text("Importing values from cookie"), 
+        outputRawCookieData(), data.data) {
+            var val = data.data[key];
+            switch (_typeof(val)) {
+              case "boolean":
+                val = val ? "true" : "false";
+            }
+            $("#" + key).val(val).change();
+        }
+        $("#target-audiences").on("change", function() {
+            var val = $(this).val(), fieldsToChange = {
+                newsletter_subscriber: !0,
+                current_member: !1,
+                donate_365: !1
+            };
+            switch (val) {
+              case "unidentified":
+                fieldsToChange.newsletter_subscriber = !1;
+                break;
+
+              case "contact":
+                break;
+
+              case "donor":
+                fieldsToChange.donate_365 = !0;
+                break;
+
+              case "member":
+                fieldsToChange.current_member = !0;
+            }
+            for (key in fieldsToChange) {
+                var fieldVal = String(fieldsToChange[key]);
+                $("#" + key).val(fieldVal);
+            }
+            $(".the-form input").trigger("change"), $status.html("Set cookie to <code>" + val + "</code> target audience");
+        }), $(".the-form").on("change", "input, select", function() {
+            var $this = $(this), newData = $this.parents("form").serializeFormJSON();
+            $.each(newData, function(i, item) {
+                "" !== item && (isNaN(1 * item) ? "false" !== item && "true" !== item || (newData[i] = "true" == item) : newData[i] = 1 * item);
+            }), localStorageCookie$1(contact.dataStorageKey, {
+                version: 4,
+                updated: new Date().toISOString(),
+                data: newData
+            }), $status.html("Updated cookie: <code>" + $this.attr("name") + "</code> set to <code>" + $this.val() + "</code>"), 
+            outputRawCookieData();
+        });
+    });
+}();

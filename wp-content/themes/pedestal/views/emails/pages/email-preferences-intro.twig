@@ -1,0 +1,30 @@
+{% extends 'layouts/layout--content.twig' %}
+
+{% block content %}
+<div class="email-preferences-page">
+
+    {% if bad_email_id or not email_id %}
+        <h2>Oops! Please find the manage preferences link in an old email and try again.</h2>
+    {% endif %}
+
+    {% if email_id %}
+    <form
+        method="post"
+        name="emailPreferencesForm"
+    >
+        <input
+            type="text"
+            class="form-input"
+            name="email-preferences-mc-email-id"
+            value="{{ email_id }}"
+            placeholder="Email ID"
+            required
+        >
+        <input type="submit" value="View Your Email Preferences" class="btn">
+    </form>
+
+    <script>document.emailPreferencesForm.submit();</script>
+    {% endif %}
+
+</div>
+{% endblock %}
