@@ -35,8 +35,12 @@ class Adverts {
             if ( is_singular( Types::get_original_post_types() ) ) {
                 return;
             }
+            $id = PEDESTAL_DFP_PREFIX . '_Inline';
+            if ( 'denverite' == PEDESTAL_THEME_NAME ) {
+                $id = 'Denverite-Inline';
+            }
             echo self::render_dfp_unit(
-                PEDESTAL_DFP_PREFIX . '_Inline',
+                $id,
                 '300x250',
                 [
                     'additional_classes' => 'dfp--inline-stream stream-item',
@@ -180,6 +184,14 @@ class Adverts {
      * @return string HTML markup of the sidebar ad unit
      */
     public static function render_sidebar_ad_unit() {
+        if ( 'denverite' == PEDESTAL_THEME_NAME ) {
+            return self::render_dfp_unit(
+                'Denverite-Right-Column',
+                '300x600,160x600,300x250',
+                [],
+                '1'
+            );
+        }
         return self::render_dfp_unit(
             PEDESTAL_DFP_PREFIX . '_Sidebar',
             '300x600,160x600,300x250',
@@ -326,7 +338,10 @@ class Adverts {
             }
 
             $ad_unit_id = PEDESTAL_DFP_PREFIX . '_Inline';
-            $ad_unit    = self::render_dfp_unit(
+            if ( 'denverite' == PEDESTAL_THEME_NAME ) {
+                $ad_unit_id = 'Denverite-Inline';
+            }
+            $ad_unit = self::render_dfp_unit(
                 $ad_unit_id,
                 '300x250',
                 [
