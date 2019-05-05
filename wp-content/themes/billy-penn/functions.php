@@ -53,6 +53,8 @@ class Billy_Penn extends Pedestal {
                 'PEDESTAL_BLOG_DESCRIPTION'             => 'Original reporting plus a carefully curated mix of important and fun news about Philadelphia.',
                 'PEDESTAL_BLOG_TAGLINE'                 => 'On top of Philly news',
                 'PEDESTAL_HOMEPAGE_TITLE'               => 'Billy Penn: Philly\'s source for local news, info and things to do',
+                'PEDESTAL_SITE_OWNER'                   => 'Billy Penn',
+                'PEDESTAL_SITE_OWNER_URL'               => 'https://whyy.org/',
                 'PEDESTAL_CITY_NAME'                    => 'Philadelphia',
                 'PEDESTAL_CITY_NICKNAME'                => 'Philly',
                 'PEDESTAL_STATE_NAME'                   => 'Pennsylvania',
