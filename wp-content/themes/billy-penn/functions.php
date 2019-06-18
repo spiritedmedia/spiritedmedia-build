@@ -66,8 +66,8 @@ class Billy_Penn extends Pedestal {
                 // Account Identifiers
                 'PEDESTAL_GOOGLE_ANALYTICS_ID'          => 'UA-54099407-1',
                 'PEDESTAL_GOOGLE_ANALYTICS_WEB_VIEW_ID' => '90219011',
-                'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => 'GTM-P8PWVHM',
-                'PEDESTAL_COMSCORE_ID'                  => '23083389',
+                // 'PEDESTAL_GOOGLE_OPTIMIZE_ID'           => 'GTM-P8PWVHM',
+                // 'PEDESTAL_COMSCORE_ID'                  => '23083389',
 
                 // DFP
                 'PEDESTAL_DFP_PREFIX'                   => 'PHL',

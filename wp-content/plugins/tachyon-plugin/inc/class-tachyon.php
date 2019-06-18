@@ -245,7 +245,8 @@ class Tachyon {
 									if ( $meta['sizes'] ) {
 										$sizes = wp_list_filter( $meta['sizes'], [ 'file' => basename( $src ) ] );
 										if ( $sizes ) {
-											$size = array_pop( array_keys( $sizes ) );
+											$size_names = array_keys( $sizes );
+											$size = array_pop( $size_names );
 										}
 									}
 								}
@@ -544,6 +545,10 @@ class Tachyon {
 						// Lets make sure that we don't upscale images since wp never upscales them as well
 						$smaller_width  = ( ( $image_meta['width']  < $image_args['width']  ) ? $image_meta['width']  : $image_args['width']  );
 						$smaller_height = ( ( $image_meta['height'] < $image_args['height'] ) ? $image_meta['height'] : $image_args['height'] );
+						
+						// Reset $image_meta dimensions to resized values.
+						$image_meta['width']  = $smaller_width;
+						$image_meta['height'] = $smaller_height;
 
 						$tachyon_args[ $transform ] = $smaller_width . ',' . $smaller_height;
 						$is_intermediate = true;
